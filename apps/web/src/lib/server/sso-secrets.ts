@@ -42,21 +42,36 @@ const open = (row: unknown): unknown =>
     ? { ...row, oidcConfig: openSsoConfig((row as { oidcConfig: unknown }).oidcConfig) }
     : row;
 
-/** The database client Better Auth works with */
-export const authPrisma = prisma.$extends({
-  query: {
-    ssoProvider: {
-      async $allOperations({ args, query }) {
-        const a = args as Record<string, unknown>;
-        const sealed = {
-          ...a,
-          ...("data" in a ? { data: Array.isArray(a.data) ? a.data.map(seal) : seal(a.data) } : {}),
-          ...("create" in a ? { create: seal(a.create) } : {}),
-          ...("update" in a ? { update: seal(a.update) } : {}),
-        };
-        const result = await query(sealed as typeof args);
-        return (Array.isArray(result) ? result.map(open) : open(result)) as typeof result;
+/** The SSO providers' settings, sealed and opened on their way to and from the table */
+const extend = () =>
+  prisma.$extends({
+    query: {
+      ssoProvider: {
+        async $allOperations({ args, query }) {
+          const a = args as Record<string, unknown>;
+          const sealed = {
+            ...a,
+            ...("data" in a ? { data: Array.isArray(a.data) ? a.data.map(seal) : seal(a.data) } : {}),
+            ...("create" in a ? { create: seal(a.create) } : {}),
+            ...("update" in a ? { update: seal(a.update) } : {}),
+          };
+          const result = await query(sealed as typeof args);
+          return (Array.isArray(result) ? result.map(open) : open(result)) as typeof result;
+        },
       },
     },
+  });
+
+let client: ReturnType<typeof extend> | undefined;
+
+/**
+ * The database client Better Auth works with. Made on first use, like the one it extends: nothing reaches the
+ * database while the app is being built (no DATABASE_URL then)
+ */
+export const authPrisma = new Proxy({} as ReturnType<typeof extend>, {
+  get(_target, prop) {
+    client ??= extend();
+    const value = Reflect.get(client, prop, client) as unknown;
+    return typeof value === "function" ? (value as (...a: unknown[]) => unknown).bind(client) : value;
   },
 });
