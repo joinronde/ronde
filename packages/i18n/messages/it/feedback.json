@@ -1,0 +1,42 @@
+{
+  "title": "Invia un feedback",
+  "introTeam": "Qualcosa non funziona o ti manca qualcosa? Dillo al team di Ronde: leggiamo ogni messaggio.",
+  "introAdmins": "Qualcosa non funziona o ti manca qualcosa? Il tuo messaggio va agli amministratori di questo server Ronde.",
+  "about": "Di cosa si tratta?",
+  "kinds": {
+    "bug": "Un problema",
+    "idea": "Un'idea",
+    "other": "Altro"
+  },
+  "message": "Il tuo messaggio",
+  "placeholders": {
+    "bug": "Cosa è successo? Cosa ti aspettavi invece?",
+    "idea": "Cosa renderebbe Ronde migliore per te o per il tuo team?",
+    "other": "Cosa vuoi dirci?"
+  },
+  "count": "{count} / {max} caratteri",
+  "screenshot": "Screenshot (facoltativo)",
+  "capture": "Cattura questa pagina",
+  "addImage": "Aggiungi un'immagine",
+  "pasteHint": "oppure incollala o trascinala qui",
+  "openScreenshot": "Apri lo screenshot a grandezza intera",
+  "screenshotAlt": "Screenshot inviato con il messaggio",
+  "screenshotCheck": "Controllalo prima di inviare: mostra ciò che era sul tuo schermo.",
+  "removeScreenshot": "Rimuovi",
+  "contact": "Potete rispondermi via email",
+  "contactAt": "Potete rispondermi a {email}",
+  "sentWith": "Inviati insieme: l'indirizzo di questa pagina, il tuo browser, la dimensione della finestra, la tua lingua e la versione di Ronde.",
+  "cancel": "Annulla",
+  "send": "Invia",
+  "sending": "Invio…",
+  "failed": "Non è stato possibile inviare il messaggio. Riprova tra un momento.",
+  "offline": "Nessuna connessione: il messaggio non è stato inviato. Resta qui: riprova quando torni online.",
+  "imageUnreadable": "Impossibile leggere questa immagine. Prova con un'immagine PNG, JPEG o WebP.",
+  "captureFailed": "Non è stato possibile catturare la pagina. Puoi aggiungere un'immagine al suo posto.",
+  "doneTitle": "Grazie!",
+  "doneTeam": "Il tuo messaggio è arrivato al team di Ronde.",
+  "doneAdmins": "Il tuo messaggio è arrivato agli amministratori di questo server.",
+  "doneContact": "Se serve qualche chiarimento, riceverai una risposta via email.",
+  "doneContactAt": "Se serve qualche chiarimento, riceverai una risposta a {email}.",
+  "close": "Chiudi"
+}

@@ -1500,10 +1500,37 @@ a.userbox:hover{color:var(--ink)}
 
 
 /* Server administration (/admin) */
-.admin-counts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 16px}
+.admin-counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:0 0 16px}
 .admin-counts div{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--surface)}
 .admin-counts dt{font-size:13px;color:var(--ink-3)}
 .admin-counts dd{margin:0;font-family:var(--display);font-size:26px;font-weight:700}
+.admin-counts dt a{color:inherit}
+/* The messages of "Send feedback" (self-hosted administration) */
+.admin-feedback{display:grid;gap:12px;scroll-margin-top:72px}
+.admin-feedback-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.admin-feedback-head h2{margin:0;display:flex;align-items:center;gap:8px}
+.admin-feedback-head .pill{background:var(--live-soft);color:var(--live);font-size:12.5px}
+.admin-feedback .seg{display:inline-flex}
+.admin-feedback .seg a{padding:5px 12px;border-radius:6px;color:var(--ink-2);text-decoration:none;font-size:14px;font-weight:500;white-space:nowrap}
+.admin-feedback .seg a[aria-current="page"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgb(0 0 0 / .1)}
+.fb-empty{display:grid;justify-items:center;gap:6px;padding:18px;color:var(--ink-2);text-align:center}
+.fb-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.fb-item{display:grid;gap:10px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);transition:opacity var(--duration-fast)}
+.fb-item.new{border-inline-start:3px solid var(--accent)}
+.fb-item[aria-busy]{opacity:.6}
+.fb-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fb-kind{display:inline-flex;align-items:center;gap:5px;border-radius:99px;padding:2px 9px;font-size:13px;font-weight:600;background:var(--surface-2);color:var(--ink-2)}
+.fb-kind.bug{background:var(--live-soft);color:var(--live)}
+.fb-kind.idea{background:var(--sun-soft);color:color-mix(in srgb,var(--sun) 55%,var(--ink))}
+.fb-msg{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5}
+.fb-shot{justify-self:start;display:block;border-radius:10px}
+.fb-shot img{display:block;width:auto;height:auto;max-width:min(360px,100%);max-height:220px;border-radius:10px;border:1px solid var(--line)}
+.fb-meta{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0;font-size:13px}
+.fb-meta div{display:flex;gap:6px;min-width:0}
+.fb-meta dt{color:var(--ink-3)}
+.fb-meta dd{margin:0;color:var(--ink-2);font-family:var(--mono);font-size:12.5px;overflow-wrap:anywhere}
+.fb-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fb-issue{margin-inline-start:auto}
 /* Who can create an account: one card per policy, the picked one in the accent colour */
 .policy-cards{display:grid;gap:8px;margin-top:10px}
 .policy-card{border:1px solid var(--line);border-radius:14px;background:var(--surface);transition:border-color var(--duration-fast),background var(--duration-fast),box-shadow var(--duration-fast)}
@@ -2282,6 +2309,45 @@ a.step-tile:hover .step-mark{border-color:var(--accent)}
 .inbox-empty{display:grid;justify-items:center;text-align:center;gap:4px;padding:26px 20px}
 .inbox-empty p{margin:0}
 @media (prefers-reduced-motion:reduce){.bell.ringing .ico,.bell-count,.inbox .menu-pop{animation:none}}
+
+/* Feedback about Ronde: the button of the top bar (in the account menu on phones) and its dialog */
+.topbar-feedback{width:36px;height:36px;color:var(--ink-2)}
+.topbar-feedback:hover .ico{animation:feedback-beat .7s var(--ease-out)}
+@keyframes feedback-beat{30%{transform:scale(1.14)}60%{transform:scale(.96)}}
+@media (max-width:600px){.topbar-feedback{display:none}}
+/* Hidden while the page is captured for a screenshot */
+html[data-feedback-shot] .modal{visibility:hidden}
+.feedback-head{display:flex;gap:12px;align-items:flex-start}
+.feedback-head .hint{margin-top:4px}
+.feedback-mark{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--accent-soft);color:var(--accent)}
+.feedback-kinds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:6px}
+.feedback-kinds label{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink-2);font-weight:600;font-size:14.5px;text-align:center;cursor:pointer;transition:border-color var(--duration-fast),background var(--duration-fast),color var(--duration-fast)}
+.feedback-kinds label:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));color:var(--ink)}
+.feedback-kinds label.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--surface));color:var(--ink);box-shadow:inset 0 0 0 1px var(--accent)}
+.feedback-kinds label.on .ico{color:var(--accent);animation:feedback-beat .5s var(--ease-out)}
+.feedback-kinds input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.feedback-kinds label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.feedback-form textarea{min-height:120px;resize:vertical}
+.feedback-count{justify-self:end}
+.feedback-shot{display:grid;gap:6px}
+.feedback-drop{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px;border:1px dashed var(--line);border-radius:12px;transition:border-color var(--duration-fast),background var(--duration-fast)}
+.feedback-form[data-dragging] .feedback-drop{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.feedback-preview{display:flex;gap:12px;align-items:flex-start;animation:feedback-in var(--duration-base) var(--ease-out)}
+.feedback-preview a{flex:none;display:block;border-radius:10px;outline-offset:2px}
+.feedback-preview img{display:block;width:168px;height:105px;object-fit:cover;object-position:top;border-radius:10px;border:1px solid var(--line);background:var(--bg)}
+.feedback-preview > div{display:grid;gap:8px;justify-items:start}
+@keyframes feedback-in{from{opacity:0;transform:translateY(4px)}}
+.feedback-sent-with{display:flex;gap:6px;align-items:flex-start}
+.feedback-sent-with .ico{flex:none;margin-top:2px}
+.feedback-done{justify-items:center;text-align:center;padding-top:6px}
+.feedback-done p{max-width:36ch;line-height:1.5}
+.feedback-done > .dialog-actions{justify-content:center;width:calc(100% + 44px)}
+.feedback-done-mark{display:grid;place-items:center;width:58px;height:58px;border-radius:50%;background:var(--ok-soft);color:var(--ok);animation:feedback-pop .5s var(--ease-out)}
+.feedback-done-mark .ico path{stroke-dasharray:24;stroke-dashoffset:24;animation:feedback-tick .35s .25s var(--ease-out) forwards}
+@keyframes feedback-pop{from{opacity:0;transform:scale(.4)}60%{transform:scale(1.08)}to{opacity:1;transform:none}}
+@keyframes feedback-tick{to{stroke-dashoffset:0}}
+@media (max-width:480px){.feedback-kinds label{padding:10px 4px;font-size:13.5px}.feedback-preview{flex-direction:column}}
+@media (prefers-reduced-motion:reduce){.topbar-feedback:hover .ico,.feedback-kinds label.on .ico,.feedback-preview,.feedback-done-mark{animation:none}.feedback-done-mark .ico path{animation:none;stroke-dashoffset:0}}
 
 /* Drawn selects */
 .select{position:relative;display:inline-flex;width:100%;min-width:0;vertical-align:middle}

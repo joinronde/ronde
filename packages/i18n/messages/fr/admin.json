@@ -5,7 +5,8 @@
   "counts": {
     "users": "Comptes",
     "workspaces": "Espaces",
-    "meetings": "Réunions"
+    "meetings": "Réunions",
+    "feedback": "Nouveaux retours"
   },
   "language": "Langue",
   "defaultLocale": "Langue par défaut",
@@ -61,5 +62,40 @@
     "keyHint": "Vérifiée sur ce serveur, hors ligne : rien n'est envoyé nulle part.",
     "save": "Enregistrer la clé",
     "remove": "Retirer la licence"
+  },
+  "feedback": {
+    "title": "Retours",
+    "unread": "{count, plural, one {# nouveau} other {# nouveaux}}",
+    "filter": "Messages affichés",
+    "open": "En cours",
+    "archived": "Archivés",
+    "intro": "Ce que les gens envoient avec le bouton « Envoyer un retour ». Répondez-leur et marquez ce qui a été traité ; un problème propre à Ronde peut partir au projet Ronde sous forme de ticket GitHub. Les messages sont supprimés au bout d'un an.",
+    "empty": "Aucun message pour l'instant. Les gens les envoient avec le bouton en haut des pages.",
+    "emptyArchived": "Aucun message archivé.",
+    "kinds": {
+      "bug": "Problème",
+      "idea": "Idée",
+      "other": "Autre"
+    },
+    "someone": "Quelqu'un",
+    "statuses": {
+      "handled": "Traité",
+      "archived": "Archivé"
+    },
+    "screenshot": "Capture d'écran envoyée avec le message",
+    "page": "Page",
+    "browser": "Navigateur",
+    "version": "Version",
+    "errorRef": "Erreur",
+    "reply": "Répondre",
+    "replySubject": "Votre retour sur Ronde",
+    "noContact": "Ne souhaite pas de réponse",
+    "mark": {
+      "new": "Marquer comme nouveau",
+      "handled": "Marquer comme traité",
+      "archived": "Archiver"
+    },
+    "toGithub": "Ouvrir un ticket GitHub",
+    "toGithubHint": "Ouvre un ticket prérempli sur le projet Ronde : sans les noms ni les espaces, et modifiable avant publication."
   }
 }

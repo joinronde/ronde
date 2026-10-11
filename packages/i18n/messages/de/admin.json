@@ -5,7 +5,8 @@
   "counts": {
     "users": "Konten",
     "workspaces": "Arbeitsbereiche",
-    "meetings": "Meetings"
+    "meetings": "Meetings",
+    "feedback": "Neues Feedback"
   },
   "language": "Sprache",
   "defaultLocale": "Standardsprache",
@@ -61,5 +62,40 @@
     "keyHint": "Wird auf diesem Server offline geprüft: Nichts wird irgendwohin gesendet.",
     "save": "Schlüssel speichern",
     "remove": "Lizenz entfernen"
+  },
+  "feedback": {
+    "title": "Feedback",
+    "unread": "{count} neu",
+    "filter": "Angezeigte Nachrichten",
+    "open": "Aktuell",
+    "archived": "Archiviert",
+    "intro": "Was Leute über den Button „Feedback senden“ schicken. Antworte ihnen und markiere, was erledigt ist; ein Problem von Ronde selbst kann als GitHub-Issue an das Ronde-Projekt gehen. Nachrichten werden nach einem Jahr gelöscht.",
+    "empty": "Noch keine Nachricht. Leute senden sie über den Button oben auf den Seiten.",
+    "emptyArchived": "Keine archivierte Nachricht.",
+    "kinds": {
+      "bug": "Problem",
+      "idea": "Idee",
+      "other": "Sonstiges"
+    },
+    "someone": "Jemand",
+    "statuses": {
+      "handled": "Erledigt",
+      "archived": "Archiviert"
+    },
+    "screenshot": "Mit der Nachricht gesendeter Screenshot",
+    "page": "Seite",
+    "browser": "Browser",
+    "version": "Version",
+    "errorRef": "Fehler",
+    "reply": "Antworten",
+    "replySubject": "Dein Feedback zu Ronde",
+    "noContact": "Keine Antwort gewünscht",
+    "mark": {
+      "new": "Als neu markieren",
+      "handled": "Als erledigt markieren",
+      "archived": "Archivieren"
+    },
+    "toGithub": "GitHub-Issue öffnen",
+    "toGithubHint": "Öffnet ein vorausgefülltes Issue im Ronde-Projekt: ohne Namen und Arbeitsbereiche, und du kannst es vor dem Veröffentlichen bearbeiten."
   }
 }

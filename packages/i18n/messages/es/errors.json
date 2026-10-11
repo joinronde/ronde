@@ -156,5 +156,8 @@
   "sourceRateLimited": "{tool} limita las solicitudes por ahora. Inténtalo más tarde; si no usaste un token, añadir uno sube el límite.",
   "sourceRefusedTracker": "{tool} rechazó el token del gestor de tickets. Un administrador puede revisarlo en los ajustes del espacio.",
   "sourceServerAdminOnly": "Solo un administrador del espacio puede importar desde {host}. Los miembros importan desde github.com, gitlab.com, Atlassian Cloud y Linear.",
-  "tokenInvalid": "Este token tiene caracteres que un token no puede tener (espacios, saltos de línea). Cópialo de nuevo desde la herramienta."
+  "tokenInvalid": "Este token tiene caracteres que un token no puede tener (espacios, saltos de línea). Cópialo de nuevo desde la herramienta.",
+  "feedbackTooMany": "Has enviado varios mensajes en poco tiempo. Inténtalo de nuevo en unos minutos.",
+  "feedbackTooLarge": "El mensaje es demasiado grande para enviarlo. Prueba con una captura más pequeña.",
+  "feedbackImageFormat": "La captura de pantalla debe ser una imagen PNG, JPEG o WebP."
 }

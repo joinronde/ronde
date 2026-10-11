@@ -5,7 +5,8 @@
   "counts": {
     "users": "Cuentas",
     "workspaces": "Espacios de trabajo",
-    "meetings": "Reuniones"
+    "meetings": "Reuniones",
+    "feedback": "Comentarios nuevos"
   },
   "language": "Idioma",
   "defaultLocale": "Idioma por defecto",
@@ -61,5 +62,40 @@
     "keyHint": "Se verifica en este servidor, sin conexión: no se envía nada a ningún sitio.",
     "save": "Guardar la clave",
     "remove": "Quitar la licencia"
+  },
+  "feedback": {
+    "title": "Comentarios",
+    "unread": "{count, plural, one {# nuevo} other {# nuevos}}",
+    "filter": "Mensajes mostrados",
+    "open": "Actuales",
+    "archived": "Archivados",
+    "intro": "Lo que la gente envía con el botón «Enviar comentarios». Respóndeles y marca lo que ya está resuelto; un problema del propio Ronde puede ir al proyecto Ronde como issue de GitHub. Los mensajes se eliminan al cabo de un año.",
+    "empty": "Aún no hay mensajes. La gente los envía con el botón de la parte superior de las páginas.",
+    "emptyArchived": "No hay mensajes archivados.",
+    "kinds": {
+      "bug": "Problema",
+      "idea": "Idea",
+      "other": "Otro"
+    },
+    "someone": "Alguien",
+    "statuses": {
+      "handled": "Resuelto",
+      "archived": "Archivado"
+    },
+    "screenshot": "Captura de pantalla enviada con el mensaje",
+    "page": "Página",
+    "browser": "Navegador",
+    "version": "Versión",
+    "errorRef": "Error",
+    "reply": "Responder",
+    "replySubject": "Tus comentarios sobre Ronde",
+    "noContact": "No quiere respuesta",
+    "mark": {
+      "new": "Marcar como nuevo",
+      "handled": "Marcar como resuelto",
+      "archived": "Archivar"
+    },
+    "toGithub": "Abrir un issue en GitHub",
+    "toGithubHint": "Abre un issue prerrellenado en el proyecto Ronde: sin nombres ni espacios de trabajo, y puedes editarlo antes de publicarlo."
   }
 }

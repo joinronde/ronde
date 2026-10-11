@@ -9,5 +9,6 @@
   "retry": "Try again",
   "suspendedTitle": "This workspace is suspended",
   "suspendedBody": "{workspace} is suspended for now: its meetings, check-ins and history are kept, but nobody can open them. Its owners know why; write to the administrator of this service to reopen it.",
-  "suspendedBack": "Back to my workspaces"
+  "suspendedBack": "Back to my workspaces",
+  "report": "Tell us what happened"
 }

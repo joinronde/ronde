@@ -156,5 +156,8 @@
   "sourceRateLimited": "{tool} 暂时限制了请求。请稍后重试；如果未使用令牌，添加令牌可以提高限额。",
   "sourceRefusedTracker": "{tool} 拒绝了工单系统的令牌。管理员可以在工作空间设置中检查。",
   "sourceServerAdminOnly": "只有工作空间管理员可以从 {host} 导入。成员可以从 github.com、gitlab.com、Atlassian Cloud 和 Linear 导入。",
-  "tokenInvalid": "此令牌包含令牌中不应出现的字符（空格、换行）。请从工具中重新复制。"
+  "tokenInvalid": "此令牌包含令牌中不应出现的字符（空格、换行）。请从工具中重新复制。",
+  "feedbackTooMany": "你在短时间内发送了多条消息。请几分钟后再试。",
+  "feedbackTooLarge": "消息太大，无法发送。请换一张更小的截图。",
+  "feedbackImageFormat": "截图必须是 PNG、JPEG 或 WebP 图片。"
 }

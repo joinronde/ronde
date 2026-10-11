@@ -156,5 +156,8 @@
   "sourceRateLimited": "{tool} limite les requêtes pour le moment. Réessayez plus tard ; sans jeton, en ajouter un relève la limite.",
   "sourceRefusedTracker": "{tool} a refusé le jeton de l’outil de tickets. Un administrateur peut le vérifier dans les réglages de l’espace.",
   "sourceServerAdminOnly": "Seul un administrateur de l’espace peut importer depuis {host}. Les membres importent depuis github.com, gitlab.com, Atlassian Cloud et Linear.",
-  "tokenInvalid": "Ce jeton contient des caractères qu’un jeton ne peut pas avoir (espaces, retours à la ligne). Copiez-le à nouveau depuis l’outil."
+  "tokenInvalid": "Ce jeton contient des caractères qu’un jeton ne peut pas avoir (espaces, retours à la ligne). Copiez-le à nouveau depuis l’outil.",
+  "feedbackTooMany": "Vous avez envoyé plusieurs messages en peu de temps. Réessayez dans quelques minutes.",
+  "feedbackTooLarge": "Le message est trop lourd pour être envoyé. Essayez avec une capture plus petite.",
+  "feedbackImageFormat": "La capture d'écran doit être une image PNG, JPEG ou WebP."
 }

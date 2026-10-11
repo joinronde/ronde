@@ -22,10 +22,13 @@ export function InstanceAdminView({
   settings,
   counts,
   license,
+  children,
 }: {
   settings: InstanceSettings;
-  counts: { users: number; workspaces: number; meetings: number };
+  counts: { users: number; workspaces: number; meetings: number; feedback: number | null };
   license: LicenseInfo;
+  /** The messages of "Send feedback", below the settings */
+  children?: React.ReactNode;
 }) {
   const t = useTranslations("admin");
   const router = useRouter();
@@ -66,6 +69,14 @@ export function InstanceAdminView({
           <dt>{t("counts.meetings")}</dt>
           <dd>{counts.meetings}</dd>
         </div>
+        {counts.feedback !== null && (
+          <div>
+            <dt>
+              <a href="#admin-feedback">{t("counts.feedback")}</a>
+            </dt>
+            <dd>{counts.feedback}</dd>
+          </div>
+        )}
       </dl>
       <FormAlert>{error}</FormAlert>
       <form className="panel form" onSubmit={save}>
@@ -142,6 +153,7 @@ export function InstanceAdminView({
           </span>
         </div>
       </form>
+      {children}
       <LicensePanel info={license} />
     </div>
   );

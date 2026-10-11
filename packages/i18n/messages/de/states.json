@@ -9,5 +9,6 @@
   "retry": "Erneut versuchen",
   "suspendedTitle": "Dieser Arbeitsbereich ist gesperrt",
   "suspendedBody": "{workspace} ist vorerst gesperrt: Meetings, Check-ins und Verlauf bleiben erhalten, aber niemand kann sie öffnen. Die Inhaber kennen den Grund; schreib an die Administration dieses Dienstes, um ihn wieder zu öffnen.",
-  "suspendedBack": "Zurück zu meinen Arbeitsbereichen"
+  "suspendedBack": "Zurück zu meinen Arbeitsbereichen",
+  "report": "Erzähl uns, was passiert ist"
 }

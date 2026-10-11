@@ -5,7 +5,8 @@
   "counts": {
     "users": "Contas",
     "workspaces": "Espaços de trabalho",
-    "meetings": "Reuniões"
+    "meetings": "Reuniões",
+    "feedback": "Novos feedbacks"
   },
   "language": "Idioma",
   "defaultLocale": "Idioma padrão",
@@ -61,5 +62,40 @@
     "keyHint": "Verificada neste servidor, offline: nada é enviado para lugar nenhum.",
     "save": "Salvar a chave",
     "remove": "Remover a licença"
+  },
+  "feedback": {
+    "title": "Feedback",
+    "unread": "{count, plural, one {# novo} other {# novos}}",
+    "filter": "Mensagens exibidas",
+    "open": "Atuais",
+    "archived": "Arquivadas",
+    "intro": "O que as pessoas enviam pelo botão “Enviar feedback”. Responda e marque o que já foi tratado; um problema do próprio Ronde pode ir para o projeto Ronde como issue no GitHub. As mensagens são apagadas após um ano.",
+    "empty": "Nenhuma mensagem ainda. As pessoas enviam pelo botão no topo das páginas.",
+    "emptyArchived": "Nenhuma mensagem arquivada.",
+    "kinds": {
+      "bug": "Problema",
+      "idea": "Ideia",
+      "other": "Outro"
+    },
+    "someone": "Alguém",
+    "statuses": {
+      "handled": "Tratado",
+      "archived": "Arquivado"
+    },
+    "screenshot": "Captura de tela enviada com a mensagem",
+    "page": "Página",
+    "browser": "Navegador",
+    "version": "Versão",
+    "errorRef": "Erro",
+    "reply": "Responder",
+    "replySubject": "Seu feedback sobre o Ronde",
+    "noContact": "Não quer resposta",
+    "mark": {
+      "new": "Marcar como novo",
+      "handled": "Marcar como tratado",
+      "archived": "Arquivar"
+    },
+    "toGithub": "Abrir uma issue no GitHub",
+    "toGithubHint": "Abre uma issue pré-preenchida no projeto Ronde: sem nomes nem espaços de trabalho, e você pode editá-la antes de publicar."
   }
 }

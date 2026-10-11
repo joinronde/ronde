@@ -85,6 +85,12 @@ export const env = {
   gitlabUrl: () => (process.env.GITLAB_URL || "https://gitlab.com").replace(/\/$/, ""),
   /** Public site of Ronde (plans, docs); never written in the code */
   siteUrl: () => (process.env.RONDE_SITE_URL || "https://joinronde.com").replace(/\/$/, ""),
+  /**
+   * Where the messages of the "Send feedback" button go: the Ronde team in the cloud, the instance's
+   * administrators elsewhere (/admin); RONDE_FEEDBACK=off takes the button away
+   */
+  feedbackTo: (): "team" | "admins" | null =>
+    process.env.RONDE_FEEDBACK === "off" ? null : process.env.RONDE_CLOUD === "1" ? "team" : "admins",
   /** Self-hosted instances can turn off every mention of the paid plans */
   hideUpgradeHints: () => process.env.RONDE_HIDE_UPGRADE_HINTS === "1",
   /** Fallback when no token is entered in the settings */

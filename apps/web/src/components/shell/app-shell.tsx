@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { FeedbackDialog, type FeedbackTo } from "@/components/feedback";
 import { PersonFace } from "@/components/person-face";
 import { authClient } from "@/lib/auth-client";
 import { withBasePath } from "@/lib/shared/base-path";
@@ -30,6 +31,8 @@ export interface ShellData {
   locked: { insights: "team" | "enterprise" | null };
   /** Follow-up actions the person still has to do */
   openActions: number;
+  /** Who reads the messages of "Send feedback" (null: no button) */
+  feedback: FeedbackTo | null;
   /** The account; its person in the current workspace gives the photo of the menu */
   user: { name: string; email: string; instanceAdmin: boolean; personId: string | null; color: number; avatar: number | null };
 }
@@ -37,9 +40,15 @@ export interface ShellData {
 const COLLAPSED_KEY = "ronde:sidebar-collapsed";
 const noop = () => {};
 
-const ShellContext = createContext<{ openSidebar: () => void; openSearch: (() => void) | null; slug: string | null }>({
+const ShellContext = createContext<{
+  openSidebar: () => void;
+  openSearch: (() => void) | null;
+  openFeedback: (() => void) | null;
+  slug: string | null;
+}>({
   openSidebar: () => {},
   openSearch: null,
+  openFeedback: null,
   slug: null,
 });
 
@@ -58,7 +67,9 @@ export function AppShell({ data, children }: { data: ShellData; children: React.
   const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [search, setSearch] = useState(false);
+  const [feedback, setFeedback] = useState(false);
   const openSearch = useCallback(() => setSearch(true), []);
+  const openFeedback = useCallback(() => setFeedback(true), []);
   useSearchShortcut(data.workspace ? openSearch : noop);
   // The sidebar folded to icons is a per-device choice
   useEffect(() => {
@@ -83,7 +94,12 @@ export function AppShell({ data, children }: { data: ShellData; children: React.
 
   return (
     <ShellContext.Provider
-      value={{ openSidebar: () => setOpen(true), openSearch: data.workspace ? openSearch : null, slug: data.workspace?.slug ?? null }}
+      value={{
+        openSidebar: () => setOpen(true),
+        openSearch: data.workspace ? openSearch : null,
+        openFeedback: data.feedback ? openFeedback : null,
+        slug: data.workspace?.slug ?? null,
+      }}
     >
       <a className="skip-link" href="#main">
         {t("skipToContent")}
@@ -114,6 +130,9 @@ export function AppShell({ data, children }: { data: ShellData; children: React.
         <div className="app-main">{children}</div>
       </div>
       {search && data.workspace && <SearchPalette data={data} onClose={() => setSearch(false)} />}
+      {feedback && data.feedback && (
+        <FeedbackDialog to={data.feedback} email={data.user.email} workspace={data.workspace?.slug} onClose={() => setFeedback(false)} />
+      )}
     </ShellContext.Provider>
   );
 }
@@ -279,7 +298,7 @@ function WorkspaceSwitcher({ data }: { data: ShellData }) {
 
 function UserMenu({ user }: { user: ShellData["user"] }) {
   const t = useTranslations("shell");
-  const { slug } = useContext(ShellContext);
+  const { slug, openFeedback } = useContext(ShellContext);
   const router = useRouter();
   const signOut = async () => {
     await authClient.signOut();
@@ -311,6 +330,18 @@ function UserMenu({ user }: { user: ShellData["user"] }) {
           <Link href="/account" className="menu-item" onClick={close}>
             <Icon name="user" size={16} /> {t("account")}
           </Link>
+          {openFeedback && (
+            <button
+              type="button"
+              className="menu-item"
+              onClick={() => {
+                close();
+                openFeedback();
+              }}
+            >
+              <Icon name="feedback" size={16} /> {t("feedback")}
+            </button>
+          )}
           <hr />
           <button type="button" className="menu-item" onClick={signOut}>
             <Icon name="logout" size={16} /> {t("signOut")}
@@ -332,7 +363,7 @@ export interface Crumb {
 export function TopBar({ crumbs, children }: { crumbs: Crumb[]; children?: React.ReactNode }) {
   const t = useTranslations("shell");
   const tSearch = useTranslations("search");
-  const { openSidebar, openSearch, slug } = useContext(ShellContext);
+  const { openSidebar, openSearch, openFeedback, slug } = useContext(ShellContext);
   return (
     <header className={openSearch ? "topbar with-search" : "topbar"}>
       <button type="button" className="side-btn topbar-menu" onClick={openSidebar} aria-label={t("openMenu")}>
@@ -362,9 +393,20 @@ export function TopBar({ crumbs, children }: { crumbs: Crumb[]; children?: React
           </button>
         </div>
       )}
-      {(children || slug) && (
+      {(children || slug || openFeedback) && (
         <div className="topbar-actions">
           {children}
+          {openFeedback && (
+            <button
+              type="button"
+              className="side-btn topbar-feedback"
+              onClick={openFeedback}
+              aria-label={t("feedback")}
+              title={t("feedback")}
+            >
+              <Icon name="feedback" />
+            </button>
+          )}
           {slug && <InboxBell slug={slug} />}
         </div>
       )}

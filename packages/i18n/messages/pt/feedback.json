@@ -1,0 +1,42 @@
+{
+  "title": "Enviar feedback",
+  "introTeam": "Algo não funciona ou está faltando? Conte para a equipe do Ronde: lemos todas as mensagens.",
+  "introAdmins": "Algo não funciona ou está faltando? Sua mensagem vai para os administradores deste servidor Ronde.",
+  "about": "Sobre o que é?",
+  "kinds": {
+    "bug": "Um problema",
+    "idea": "Uma ideia",
+    "other": "Outra coisa"
+  },
+  "message": "Sua mensagem",
+  "placeholders": {
+    "bug": "O que aconteceu? O que você esperava que acontecesse?",
+    "idea": "O que deixaria o Ronde melhor para você ou sua equipe?",
+    "other": "O que você quer nos contar?"
+  },
+  "count": "{count} / {max} caracteres",
+  "screenshot": "Captura de tela (opcional)",
+  "capture": "Capturar esta página",
+  "addImage": "Adicionar uma imagem",
+  "pasteHint": "ou cole ou solte uma aqui",
+  "openScreenshot": "Abrir a captura em tamanho real",
+  "screenshotAlt": "Captura de tela enviada com a mensagem",
+  "screenshotCheck": "Confira antes de enviar: ela mostra o que estava na sua tela.",
+  "removeScreenshot": "Remover",
+  "contact": "Podem me responder por e-mail",
+  "contactAt": "Podem me responder em {email}",
+  "sentWith": "Enviados junto: o endereço desta página, seu navegador, o tamanho da janela, seu idioma e a versão do Ronde.",
+  "cancel": "Cancelar",
+  "send": "Enviar",
+  "sending": "Enviando…",
+  "failed": "Não foi possível enviar a mensagem. Tente de novo em instantes.",
+  "offline": "Sem conexão: a mensagem não foi enviada. Ela fica aqui: tente de novo quando estiver on-line.",
+  "imageUnreadable": "Não é possível ler esta imagem. Tente uma imagem PNG, JPEG ou WebP.",
+  "captureFailed": "Não foi possível capturar a página. Você pode adicionar uma imagem no lugar.",
+  "doneTitle": "Obrigado!",
+  "doneTeam": "Sua mensagem chegou à equipe do Ronde.",
+  "doneAdmins": "Sua mensagem chegou aos administradores deste servidor.",
+  "doneContact": "Se algo precisar de esclarecimento, você receberá uma resposta por e-mail.",
+  "doneContactAt": "Se algo precisar de esclarecimento, você receberá uma resposta em {email}.",
+  "close": "Fechar"
+}

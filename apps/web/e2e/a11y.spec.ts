@@ -113,10 +113,21 @@ test("the main pages pass the accessibility audit", async ({ page }) => {
   await page.getByRole("button", { name: /Notifications/ }).click();
   await audit(page, "notifications");
   await page.keyboard.press("Escape");
+  // "Send feedback": the dialog, then its thanks once sent; the shared screen and the remote have no button
+  await page.getByRole("button", { name: "Send feedback" }).click();
+  await audit(page, "feedback");
+  await page.getByRole("radio", { name: "An idea" }).check();
+  await page.getByLabel("Your message").fill("Show last week's check-ins during the round table.");
+  await page.getByRole("button", { name: "Send", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Thank you!" })).toBeVisible();
+  await audit(page, "feedback sent");
+  await expect(page.getByRole("button", { name: "Close" })).toBeFocused();
+  await page.keyboard.press("Escape");
   await page.goto(workspace);
   await audit(page, "dashboard with a meeting");
   await page.goto(`${meeting}/screen`);
   await audit(page, "shared screen");
+  await expect(page.getByRole("button", { name: "Send feedback" })).toHaveCount(0);
   await page.goto(`${meeting}/remote`);
   await audit(page, "phone remote");
   for (const tab of ["", "/security", "/notifications", "/workspaces"]) {

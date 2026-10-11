@@ -2,7 +2,7 @@
 
 import { CONNECTOR_KINDS, type ConnectorKind } from "@ronde/connectors/kinds";
 import { useRouter } from "next/navigation";
-import { useFormatter, useTranslations } from "next-intl";
+import { useFormatter, useNow, useTranslations } from "next-intl";
 import { useState } from "react";
 import { deleteConnectorAction, saveConnectorAction, testConnectorAction } from "@/app/w/[ws]/actions";
 import { Field, FormAlert } from "@/components/auth/fields";
@@ -58,6 +58,7 @@ export function ConnectorsSection({
   const t = useTranslations("connectors");
   const tCommon = useTranslations("common");
   const format = useFormatter();
+  const now = useNow({ updateInterval: 60_000 });
   const router = useRouter();
   const [draft, setDraft] = useState<Draft | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -150,7 +151,7 @@ export function ConnectorsSection({
                 <strong>{c.name}</strong> <span className="hint">· {t(`kinds.${c.kind}`)}</span>
                 <div className="hint">
                   {t("usedBy", { count: c.rules })}
-                  {c.last && ` · ${c.last.status === "failed" ? t("lastFailed") : t("lastSent")} ${format.relativeTime(c.last.at)}`}
+                  {c.last && ` · ${c.last.status === "failed" ? t("lastFailed") : t("lastSent")} ${format.relativeTime(c.last.at, now)}`}
                 </div>
               </div>
               <div className="controls wrap">

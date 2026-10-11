@@ -55,6 +55,16 @@ Adresse deiner Einrichtung.
 Admins sehen in den Einstellungen dezente Hinweise auf kostenpflichtige Funktionen (nie während eines
 Meetings). Setze `RONDE_HIDE_UPGRADE_HINTS=1`, um sie für die ganze Instanz zu entfernen.
 
+### Feedback der Nutzer
+
+Über den Sprechblasen-Button oben auf den Seiten (auf dem Handy im Kontomenü) können Leute ein Problem melden oder
+eine Idee teilen, auf Wunsch mit Screenshot. Mit der Nachricht gehen die Adresse der Seite (ohne Parameter), der
+Browser, die Fenstergröße, die Sprache und die Ronde-Version mit. Die Admins lesen die Nachrichten unter
+**Serververwaltung**, antworten per E-Mail, wenn die Person es wünscht, und können für ein Problem von Ronde selbst
+ein vorausgefülltes Issue im Ronde-Projekt öffnen. Ist `SENTRY_DSN` gesetzt, landen die Nachrichten auch als User
+Feedback in diesem Sentry-Projekt. Nachrichten werden nach einem Jahr gelöscht; `RONDE_FEEDBACK=off` entfernt den
+Button.
+
 ## Arbeitsbereiche
 
 Ein Arbeitsbereich bündelt die Personen, Meetings, Vorlagen und Connectors eines Teams. Alle, die sich

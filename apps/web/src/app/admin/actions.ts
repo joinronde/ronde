@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { run } from "@/lib/server/action";
 import { requireUser } from "@/lib/server/authz";
 import { AccessError, OpError } from "@/lib/server/errors";
+import { setFeedbackStatus } from "@/lib/server/feedback";
 import { saveInstanceSettings } from "@/lib/server/instance";
 import { isCloud, saveLicense } from "@/lib/server/license";
 
@@ -12,6 +13,7 @@ import { isCloud, saveLicense } from "@/lib/server/license";
 async function requireInstanceAdmin() {
   const user = await requireUser();
   if (user.instanceRole !== "admin" || isCloud()) throw new AccessError(403, "accessDenied");
+  return user;
 }
 
 /** Instance settings: only its administrators */
@@ -42,6 +44,16 @@ export async function saveLicenseAction(key: string) {
     const state = await saveLicense(String(key).slice(0, 4000));
     if (state.status === "invalid") throw new OpError(LICENSE_ERRORS[state.reason]);
     revalidatePath("/", "layout");
+    return null;
+  });
+}
+
+/** A message of "Send feedback" handled, archived or opened again */
+export async function feedbackStatusAction(id: string, status: string) {
+  return run(async () => {
+    const user = await requireInstanceAdmin();
+    await setFeedbackStatus(String(id), String(status), user.email);
+    revalidatePath("/admin");
     return null;
   });
 }

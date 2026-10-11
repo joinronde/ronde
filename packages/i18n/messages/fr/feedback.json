@@ -1,0 +1,42 @@
+{
+  "title": "Envoyer un retour",
+  "introTeam": "Quelque chose ne marche pas, ou vous manque ? Dites-le à l'équipe Ronde : nous lisons chaque message.",
+  "introAdmins": "Quelque chose ne marche pas, ou vous manque ? Votre message part aux administrateurs de ce serveur Ronde.",
+  "about": "De quoi s'agit-il ?",
+  "kinds": {
+    "bug": "Un problème",
+    "idea": "Une idée",
+    "other": "Autre chose"
+  },
+  "message": "Votre message",
+  "placeholders": {
+    "bug": "Que s'est-il passé ? Qu'attendiez-vous à la place ?",
+    "idea": "Qu'est-ce qui rendrait Ronde meilleur pour vous ou votre équipe ?",
+    "other": "Que souhaitez-vous nous dire ?"
+  },
+  "count": "{count} / {max} caractères",
+  "screenshot": "Capture d'écran (facultative)",
+  "capture": "Capturer cette page",
+  "addImage": "Ajouter une image",
+  "pasteHint": "ou collez-en une ici, ou déposez-la",
+  "openScreenshot": "Ouvrir la capture en grand",
+  "screenshotAlt": "Capture d'écran envoyée avec le message",
+  "screenshotCheck": "Vérifiez-la avant d'envoyer : elle montre ce qui était à l'écran.",
+  "removeScreenshot": "Retirer",
+  "contact": "Vous pouvez me répondre par e-mail",
+  "contactAt": "Vous pouvez me répondre à {email}",
+  "sentWith": "Envoyés avec : l'adresse de cette page, votre navigateur, la taille de la fenêtre, votre langue et la version de Ronde.",
+  "cancel": "Annuler",
+  "send": "Envoyer",
+  "sending": "Envoi…",
+  "failed": "Le message n'a pas pu être envoyé. Réessayez dans un instant.",
+  "offline": "Pas de connexion : le message n'est pas parti. Il reste ici : réessayez quand la connexion sera revenue.",
+  "imageUnreadable": "Cette image ne peut pas être lue. Essayez une image PNG, JPEG ou WebP.",
+  "captureFailed": "La page n'a pas pu être capturée. Vous pouvez ajouter une image à la place.",
+  "doneTitle": "Merci !",
+  "doneTeam": "Votre message est bien arrivé à l'équipe Ronde.",
+  "doneAdmins": "Votre message est bien arrivé aux administrateurs de ce serveur.",
+  "doneContact": "Si un point doit être précisé, vous recevrez une réponse par e-mail.",
+  "doneContactAt": "Si un point doit être précisé, vous recevrez une réponse à {email}.",
+  "close": "Fermer"
+}

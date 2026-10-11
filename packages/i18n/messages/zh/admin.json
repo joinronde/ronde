@@ -5,7 +5,8 @@
   "counts": {
     "users": "账户",
     "workspaces": "工作空间",
-    "meetings": "会议"
+    "meetings": "会议",
+    "feedback": "新反馈"
   },
   "language": "语言",
   "defaultLocale": "默认语言",
@@ -61,5 +62,40 @@
     "keyHint": "在本服务器离线校验：不会向任何地方发送数据。",
     "save": "保存密钥",
     "remove": "移除许可证"
+  },
+  "feedback": {
+    "title": "反馈",
+    "unread": "{count} 条新反馈",
+    "filter": "显示的消息",
+    "open": "当前",
+    "archived": "已归档",
+    "intro": "大家通过“发送反馈”按钮发送的消息。回复他们，并标记已处理的内容；Ronde 本身的问题可以作为 GitHub issue 提交给 Ronde 项目。消息会在一年后删除。",
+    "empty": "还没有消息。大家可以通过页面顶部的按钮发送。",
+    "emptyArchived": "没有已归档的消息。",
+    "kinds": {
+      "bug": "问题",
+      "idea": "想法",
+      "other": "其他"
+    },
+    "someone": "某人",
+    "statuses": {
+      "handled": "已处理",
+      "archived": "已归档"
+    },
+    "screenshot": "随消息发送的截图",
+    "page": "页面",
+    "browser": "浏览器",
+    "version": "版本",
+    "errorRef": "错误",
+    "reply": "回复",
+    "replySubject": "关于你对 Ronde 的反馈",
+    "noContact": "不需要回复",
+    "mark": {
+      "new": "标记为新",
+      "handled": "标记为已处理",
+      "archived": "归档"
+    },
+    "toGithub": "在 GitHub 创建 issue",
+    "toGithubHint": "在 Ronde 项目中打开预填的 issue：不含姓名和工作空间，发布前可以修改。"
   }
 }

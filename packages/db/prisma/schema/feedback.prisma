@@ -1,0 +1,39 @@
+// What people tell about Ronde from the app: something broken, an idea. Read by the instance's administrators
+// (/admin), in the cloud by the Ronde team in its back-office; also sent to the instance's Sentry project when it
+// has one.
+
+model Feedback {
+  id              String         @id @default(uuid(7))
+  /// bug, idea or other
+  kind            String
+  message         String
+  /// Where it was sent from: { path, version, browser, userAgent, viewport, locale, theme, errorRef }
+  context         Json           @default("{}")
+  /// The person accepts an answer by email (at the address of their account)
+  contact         Boolean        @default(false)
+  /// Who sent it: their messages go with their account
+  userId          String
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// The workspace open when it was sent (not a tenant column: the message belongs to the instance)
+  fromWorkspaceId String?
+  fromWorkspace   Workspace?     @relation(fields: [fromWorkspaceId], references: [id], onDelete: SetNull)
+  /// new, handled or archived
+  status          String         @default("new")
+  handledBy       String?
+  handledAt       DateTime?
+  createdAt       DateTime       @default(now())
+  screenshot      FeedbackImage?
+
+  @@index([status, createdAt])
+  @@index([userId, createdAt])
+}
+
+/// The screenshot sent with a feedback, re-encoded by the server (WebP, no metadata)
+model FeedbackImage {
+  feedbackId String   @id
+  feedback   Feedback @relation(fields: [feedbackId], references: [id], onDelete: Cascade)
+  data       Bytes
+  type       String
+  width      Int
+  height     Int
+}

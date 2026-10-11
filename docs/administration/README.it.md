@@ -54,6 +54,16 @@ del tuo istituto.
 Gli amministratori vedono nelle impostazioni discreti suggerimenti sulle funzioni a pagamento (mai durante
 una riunione). Imposta `RONDE_HIDE_UPGRADE_HINTS=1` per rimuoverli da tutta l'istanza.
 
+### Feedback degli utenti
+
+Il pulsante a forma di fumetto in alto nelle pagine (nel menu dell'account sul telefono) permette di segnalare un
+problema o proporre un'idea, con uno screenshot se lo si desidera. Con il messaggio partono l'indirizzo della pagina
+(senza parametri), il browser, la dimensione della finestra, la lingua e la versione di Ronde. Gli amministratori
+leggono i messaggi in **Amministrazione del server**, rispondono via email a chi l'ha chiesto e possono aprire una
+issue precompilata sul progetto Ronde per un problema di Ronde stesso. Se `SENTRY_DSN` è impostato, i messaggi
+arrivano anche a quel progetto Sentry come feedback degli utenti. I messaggi vengono eliminati dopo un anno;
+`RONDE_FEEDBACK=off` rimuove il pulsante.
+
 ## Spazi di lavoro
 
 Uno spazio di lavoro riunisce le persone, le riunioni, i modelli e i connettori di un team. Chiunque possa

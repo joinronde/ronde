@@ -92,6 +92,9 @@ export const GLOBAL_MODELS = [
   "StaffAudit",
   "IssuedLicense",
   "Lead",
+  /** What people tell about Ronde from the app, read by the instance's administrators or the Ronde team */
+  "Feedback",
+  "FeedbackImage",
 ] as const;
 
 export type TenantModel = (typeof TENANT_MODELS)[number];

@@ -9,5 +9,6 @@
   "retry": "重试",
   "suspendedTitle": "此工作空间已暂停",
   "suspendedBody": "{workspace} 目前已暂停：其会议、进展卡和历史都会保留，但任何人都无法打开。所有者知道原因；如需重新开放，请联系此服务的管理员。",
-  "suspendedBack": "返回我的工作空间"
+  "suspendedBack": "返回我的工作空间",
+  "report": "告诉我们发生了什么"
 }

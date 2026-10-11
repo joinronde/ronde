@@ -5,6 +5,7 @@ import { streamAudit } from "./audit";
 import { syncSeats } from "./billing";
 import { syncCalendars } from "./calendars";
 import { env } from "./env";
+import { purgeFeedback } from "./feedback";
 import { checkInbound } from "./inbound";
 import { isCloud } from "./license";
 import { closeAsyncSessions } from "./meeting/async";
@@ -81,6 +82,8 @@ export const JOBS = [
   // Imported projects kept in sync with their tool (Team): their name, status, dates and progress
   defineJob({ name: "projects.sync", cron: "23 * * * *", policy: "singleton", retryLimit: 0, handler: () => syncProjects() }),
   defineJob({ name: "sessions.prepare", cron: "7 * * * *", policy: "singleton", retryLimit: 0, handler: () => prepareSessions() }),
+  // Messages of "Send feedback" are kept a year
+  defineJob({ name: "feedback.purge", cron: "41 4 * * *", policy: "singleton", retryLimit: 0, handler: () => purgeFeedback() }),
 ];
 
 export function startBackgroundJobs() {

@@ -53,6 +53,15 @@ endereço da sua instituição.
 Os administradores veem sugestões discretas sobre os recursos pagos nas configurações (nunca durante uma
 reunião). Defina `RONDE_HIDE_UPGRADE_HINTS=1` para removê-las de toda a instância.
 
+### Feedback dos usuários
+
+O botão em forma de balão no topo das páginas (no menu da conta, no celular) permite relatar um problema ou sugerir
+uma ideia, com uma captura de tela se quiserem. Junto com a mensagem vão o endereço da página (sem os parâmetros), o
+navegador, o tamanho da janela, o idioma e a versão do Ronde. Os administradores leem as mensagens em
+**Administração do servidor**, respondem por e-mail a quem pediu e podem abrir uma issue pré-preenchida no projeto
+Ronde para um problema do próprio Ronde. Com `SENTRY_DSN` definido, as mensagens também chegam a esse projeto do
+Sentry como feedback de usuários. As mensagens são apagadas após um ano; `RONDE_FEEDBACK=off` remove o botão.
+
 ## Espaços de trabalho
 
 Um espaço de trabalho reúne as pessoas, as reuniões, os modelos e os conectores de uma equipe. Qualquer

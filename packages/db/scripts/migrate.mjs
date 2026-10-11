@@ -15,10 +15,10 @@ if (!process.env.DATABASE_URL) {
   process.exit(1);
 }
 
-// Staging only (RESET_WHEN_MIGRATIONS_CHANGE=1): while Ronde keeps a single initial migration, rewritten when
-// the schema changes, a database that applied an older copy of it would never get the new schema. When a
-// migration it applied differs from the file now (Prisma keeps the sha256 of each one), the database is emptied
-// and migrated from scratch. Never set it where the data matters.
+// Staging only (RESET_WHEN_MIGRATIONS_CHANGE=1): a migration rewritten after a database applied it (the initial
+// one was, during development) would leave that database without the new schema. When a migration it applied
+// differs from the file now (Prisma keeps the sha256 of each one), the database is emptied and migrated from
+// scratch. Never set it where the data matters.
 if (process.env.RESET_WHEN_MIGRATIONS_CHANGE === "1") {
   const { default: pg } = await import("pg");
   // The schema Prisma uses: ?schema=… in the address, "public" otherwise

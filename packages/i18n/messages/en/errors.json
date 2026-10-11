@@ -156,5 +156,8 @@
   "sourceRateLimited": "{tool} limits requests for now. Try again later; without a token, adding one raises the limit.",
   "sourceRefusedTracker": "{tool} refused the issue tracker’s token. An administrator can check it in the workspace settings.",
   "sourceServerAdminOnly": "Only an administrator of the workspace can import from {host}. Members import from github.com, gitlab.com, Atlassian Cloud and Linear.",
-  "tokenInvalid": "This token holds characters a token cannot have (spaces, line breaks). Copy it again from the tool."
+  "tokenInvalid": "This token holds characters a token cannot have (spaces, line breaks). Copy it again from the tool.",
+  "feedbackTooMany": "You sent several messages in a short time. Try again in a few minutes.",
+  "feedbackTooLarge": "The message is too large to send. Try a smaller screenshot.",
+  "feedbackImageFormat": "The screenshot must be a PNG, JPEG or WebP image."
 }

@@ -9,5 +9,6 @@
   "retry": "Reintentar",
   "suspendedTitle": "Este espacio de trabajo está suspendido",
   "suspendedBody": "{workspace} está suspendido por ahora: sus reuniones, fichas e historial se conservan, pero nadie puede abrirlos. Sus propietarios saben por qué; escribe al administrador de este servicio para reabrirlo.",
-  "suspendedBack": "Volver a mis espacios de trabajo"
+  "suspendedBack": "Volver a mis espacios de trabajo",
+  "report": "Cuéntanos qué ha pasado"
 }

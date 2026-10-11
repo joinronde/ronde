@@ -1,0 +1,42 @@
+{
+  "title": "发送反馈",
+  "introTeam": "有功能不正常，或缺少什么？告诉 Ronde 团队：每条消息我们都会阅读。",
+  "introAdmins": "有功能不正常，或缺少什么？你的消息会发送给这台 Ronde 服务器的管理员。",
+  "about": "关于什么？",
+  "kinds": {
+    "bug": "问题",
+    "idea": "想法",
+    "other": "其他"
+  },
+  "message": "你的消息",
+  "placeholders": {
+    "bug": "发生了什么？你原本期望怎样？",
+    "idea": "什么能让 Ronde 对你或你的团队更好用？",
+    "other": "你想告诉我们什么？"
+  },
+  "count": "{count} / {max} 个字符",
+  "screenshot": "截图（可选）",
+  "capture": "截取此页面",
+  "addImage": "添加图片",
+  "pasteHint": "或在此粘贴或拖放图片",
+  "openScreenshot": "查看完整截图",
+  "screenshotAlt": "随消息发送的截图",
+  "screenshotCheck": "发送前请检查：截图会显示你屏幕上的内容。",
+  "removeScreenshot": "移除",
+  "contact": "可以通过邮件回复我",
+  "contactAt": "可以回复到 {email}",
+  "sentWith": "同时发送：此页面的地址、你的浏览器、窗口大小、你的语言和 Ronde 版本。",
+  "cancel": "取消",
+  "send": "发送",
+  "sending": "正在发送…",
+  "failed": "消息未能发送。请稍后再试。",
+  "offline": "没有网络连接：消息未发送。内容会保留在这里，恢复联网后再试。",
+  "imageUnreadable": "无法读取此图片。请使用 PNG、JPEG 或 WebP 图片。",
+  "captureFailed": "无法截取页面。你可以改为添加图片。",
+  "doneTitle": "谢谢！",
+  "doneTeam": "你的消息已送达 Ronde 团队。",
+  "doneAdmins": "你的消息已送达这台服务器的管理员。",
+  "doneContact": "如有需要说明的地方，你会收到邮件回复。",
+  "doneContactAt": "如有需要说明的地方，你会在 {email} 收到回复。",
+  "close": "关闭"
+}

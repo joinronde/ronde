@@ -1,0 +1,42 @@
+{
+  "title": "Send feedback",
+  "introTeam": "Something not working, or something missing? Tell the Ronde team: we read every message.",
+  "introAdmins": "Something not working, or something missing? Your message goes to the administrators of this Ronde server.",
+  "about": "What is it about?",
+  "kinds": {
+    "bug": "A problem",
+    "idea": "An idea",
+    "other": "Something else"
+  },
+  "message": "Your message",
+  "placeholders": {
+    "bug": "What happened? What did you expect instead?",
+    "idea": "What would make Ronde better for you or your team?",
+    "other": "What would you like to tell us?"
+  },
+  "count": "{count} / {max} characters",
+  "screenshot": "Screenshot (optional)",
+  "capture": "Capture this page",
+  "addImage": "Add an image",
+  "pasteHint": "or paste or drop one here",
+  "openScreenshot": "Open the screenshot full size",
+  "screenshotAlt": "Screenshot sent with the message",
+  "screenshotCheck": "Check it before sending: it shows what was on your screen.",
+  "removeScreenshot": "Remove",
+  "contact": "You may answer me by email",
+  "contactAt": "You may answer me at {email}",
+  "sentWith": "Sent along: the address of this page, your browser, the window size, your language and the version of Ronde.",
+  "cancel": "Cancel",
+  "send": "Send",
+  "sending": "Sending…",
+  "failed": "The message could not be sent. Try again in a moment.",
+  "offline": "No connection: the message was not sent. It stays here: try again once you are back online.",
+  "imageUnreadable": "This image cannot be read. Try a PNG, JPEG or WebP image.",
+  "captureFailed": "The page could not be captured. You can add an image instead.",
+  "doneTitle": "Thank you!",
+  "doneTeam": "Your message reached the Ronde team.",
+  "doneAdmins": "Your message reached the administrators of this server.",
+  "doneContact": "If anything needs clarifying, you will get an answer by email.",
+  "doneContactAt": "If anything needs clarifying, you will get an answer at {email}.",
+  "close": "Close"
+}

@@ -5,7 +5,8 @@
   "counts": {
     "users": "Accounts",
     "workspaces": "Workspaces",
-    "meetings": "Meetings"
+    "meetings": "Meetings",
+    "feedback": "New feedback"
   },
   "language": "Language",
   "defaultLocale": "Default language",
@@ -61,5 +62,40 @@
     "keyHint": "Checked on this server, offline: nothing is sent anywhere.",
     "save": "Save the key",
     "remove": "Remove the license"
+  },
+  "feedback": {
+    "title": "Feedback",
+    "unread": "{count} new",
+    "filter": "Messages shown",
+    "open": "Current",
+    "archived": "Archived",
+    "intro": "What people send with the “Send feedback” button. Answer them and mark what was dealt with; a problem with Ronde itself can go to the Ronde project as a GitHub issue. Messages are deleted after a year.",
+    "empty": "No message yet. People send them with the button at the top of the pages.",
+    "emptyArchived": "No archived message.",
+    "kinds": {
+      "bug": "Problem",
+      "idea": "Idea",
+      "other": "Other"
+    },
+    "someone": "Someone",
+    "statuses": {
+      "handled": "Handled",
+      "archived": "Archived"
+    },
+    "screenshot": "Screenshot sent with the message",
+    "page": "Page",
+    "browser": "Browser",
+    "version": "Version",
+    "errorRef": "Error",
+    "reply": "Reply",
+    "replySubject": "Your feedback about Ronde",
+    "noContact": "No answer wanted",
+    "mark": {
+      "new": "Mark as new",
+      "handled": "Mark as handled",
+      "archived": "Archive"
+    },
+    "toGithub": "Open a GitHub issue",
+    "toGithubHint": "Opens a pre-filled issue on the Ronde project: names and workspaces are left out, and you can edit it before posting it."
   }
 }

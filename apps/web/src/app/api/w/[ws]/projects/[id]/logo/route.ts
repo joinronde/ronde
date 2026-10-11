@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { authorize } from "@/lib/server/authz";
 import { OpError } from "@/lib/server/errors";
-import { errorResponse } from "@/lib/server/http";
+import { errorResponse, readCapped } from "@/lib/server/http";
 import { LOGO_MAX_BYTES, setProjectLogo } from "@/lib/server/project-logo";
 import { readableMeetings, visibleWhere } from "@/lib/server/projects";
 
@@ -10,24 +10,6 @@ import { readableMeetings, visibleWhere } from "@/lib/server/projects";
 export const dynamic = "force-dynamic";
 
 type Ctx = { params: Promise<{ ws: string; id: string }> };
-
-/** The body sent, read no further than the limit (whatever length it announces, or none) */
-async function readCapped(req: Request, max: number): Promise<Uint8Array<ArrayBuffer>> {
-  const reader = req.body?.getReader();
-  const chunks: Uint8Array[] = [];
-  let size = 0;
-  for (;;) {
-    const r = reader ? await reader.read() : { done: true as const, value: undefined };
-    if (r.done) break;
-    size += r.value.byteLength;
-    if (size > max) {
-      await reader?.cancel();
-      throw new OpError("logoTooLarge", { max: max / 1000 });
-    }
-    chunks.push(r.value);
-  }
-  return new Uint8Array(Buffer.concat(chunks));
-}
 
 export async function GET(_req: Request, { params }: Ctx) {
   try {
@@ -60,7 +42,7 @@ export async function PUT(req: Request, { params }: Ctx) {
   try {
     const { ws, id } = await params;
     const ctx = await authorize(ws, "projects.read");
-    await setProjectLogo(ctx, id, await readCapped(req, LOGO_MAX_BYTES));
+    await setProjectLogo(ctx, id, await readCapped(req, LOGO_MAX_BYTES, () => new OpError("logoTooLarge", { max: LOGO_MAX_BYTES / 1000 })));
     return NextResponse.json({ ok: true });
   } catch (e) {
     return errorResponse(e);

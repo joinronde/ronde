@@ -54,6 +54,16 @@ hello@joinronde.com desde la dirección de tu institución.
 Los administradores ven en los ajustes discretas sugerencias sobre las funciones de pago (nunca durante una
 reunión). Define `RONDE_HIDE_UPGRADE_HINTS=1` para quitarlas de toda la instancia.
 
+### Comentarios de los usuarios
+
+El botón con forma de bocadillo en la parte superior de las páginas (en el menú de la cuenta en el móvil) permite
+informar de un problema o proponer una idea, con una captura de pantalla si se quiere. Con el mensaje se envían la
+dirección de la página (sin sus parámetros), el navegador, el tamaño de la ventana, el idioma y la versión de Ronde.
+Los administradores leen los mensajes en **Administración del servidor**, responden por correo a quien lo pidió y
+pueden abrir un issue prerrellenado en el proyecto Ronde para un problema del propio Ronde. Si `SENTRY_DSN` está
+definido, los mensajes también llegan a ese proyecto de Sentry como comentarios de usuarios. Los mensajes se
+eliminan al cabo de un año; `RONDE_FEEDBACK=off` quita el botón.
+
 ## Espacios de trabajo
 
 Un espacio de trabajo reúne a las personas, las reuniones, las plantillas y los conectores de un equipo.

@@ -32,6 +32,7 @@ model User {
   pushDevices      PushSubscription[]
   feedTokens       FeedToken[]
   ssoProviders     SsoProvider[]
+  feedback         Feedback[]
 }
 
 model AuthSession {

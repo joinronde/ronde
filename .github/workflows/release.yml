@@ -1,11 +1,10 @@
 name: Release
 
-# Ronde is in beta. While main is a single commit amended at each push, versions cannot come from the history
-# (semantic-release finds its tags there): a beta is published by hand, from Actions › Release › Run workflow.
-# It takes the next number after the betas already published (v1.0.0-beta.1, beta.2…), tags the commit of
-# main, writes a GitHub pre-release, then builds the images for amd64 and arm64 and pushes them to GHCR with
-# that version and the "beta" tag, never "latest". release.config.mjs takes over once main gets regular
-# commits again.
+# Ronde is in beta: a beta is published by hand, from Actions › Release › Run workflow. It takes the next number
+# after the betas already published (v1.0.0-beta.1, beta.2…), tags the commit of main, writes a GitHub
+# pre-release listing the changes since the previous beta, then builds the images for amd64 and arm64 and pushes
+# them to GHCR with that version and the "beta" tag, never "latest". release.config.mjs (semantic-release) takes
+# over for the stable versions.
 
 on:
   workflow_dispatch:
@@ -30,7 +29,10 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
+      # The whole history and its tags: the notes list the commits since the previous beta
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Next beta
         id: version
         env:
@@ -44,7 +46,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ steps.version.outputs.version }}
         run: |
-          git log -1 --format=%B > notes.md
+          # The changes since the previous beta; the first one tells the whole story (the first commit's message)
+          prev=$(git tag -l "v*-beta.*" --sort=-v:refname | head -1)
+          if [ -n "$prev" ]; then
+            git log --reverse --no-merges --format='- %s' "$prev..$GITHUB_SHA" > notes.md
+          else
+            root=$(git rev-list --max-parents=0 "$GITHUB_SHA" | tail -1)
+            { git log -1 --format=%B "$root"; git log --reverse --no-merges --format='- %s' "$root..$GITHUB_SHA"; } > notes.md
+          fi
           gh release create "v$VERSION" --target "$GITHUB_SHA" --prerelease --title "v$VERSION" --notes-file notes.md
 
   images:

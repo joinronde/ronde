@@ -59,6 +59,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const theme = (await cookies()).get("ronde-theme")?.value;
   const sentry = env.sentryDsn();
   const umami = env.umami();
+  const feedback = env.feedbackTo();
   return (
     <html lang={locale} dir={dirOf(resolveLocale(locale))} data-theme={theme === "light" || theme === "dark" ? theme : undefined}>
       <head>
@@ -71,6 +72,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             data-release={process.env.RONDE_VERSION ?? ""}
           />
         )}
+        {/* Who reads the "Send feedback" messages (the error page offers it too); absent: no button */}
+        {feedback && <meta name="ronde-feedback" content={feedback} />}
         {umami.src && umami.websiteId && (
           <>
             <script dangerouslySetInnerHTML={{ __html: UMAMI_BEFORE_SEND }} />

@@ -17,3 +17,21 @@ export async function errorResponse(e: unknown) {
   console.error(e);
   return NextResponse.json({ error: t("unexpected") }, { status: 500 });
 }
+
+/** The body sent, read no further than the limit (whatever length it announces, or none) */
+export async function readCapped(req: Request, max: number, tooLarge: () => Error): Promise<Uint8Array<ArrayBuffer>> {
+  const reader = req.body?.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  for (;;) {
+    const r = reader ? await reader.read() : { done: true as const, value: undefined };
+    if (r.done) break;
+    size += r.value.byteLength;
+    if (size > max) {
+      await reader?.cancel();
+      throw tooLarge();
+    }
+    chunks.push(r.value);
+  }
+  return new Uint8Array(Buffer.concat(chunks));
+}

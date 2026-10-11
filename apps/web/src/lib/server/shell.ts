@@ -6,6 +6,7 @@ import type { ShellData } from "@/components/shell/app-shell";
 import { LAST_WORKSPACE_COOKIE } from "@/lib/shared/cookies";
 import { type CurrentUser, workspaceContext } from "./authz";
 import { logoPath, workspaceBrand } from "./branding";
+import { env } from "./env";
 import { isCloud } from "./license";
 import { listMeetings } from "./meetings";
 import { openActionCount } from "./my-actions";
@@ -42,6 +43,7 @@ export async function shellData(user: CurrentUser, slug?: string | null): Promis
     },
     locked: { insights: insightsLocked },
     openActions,
+    feedback: env.feedbackTo(),
     user: {
       name: user.name,
       email: user.email,

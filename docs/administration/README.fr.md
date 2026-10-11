@@ -55,6 +55,16 @@ depuis l'adresse de votre établissement.
 Les administrateurs voient dans les réglages de discrètes mentions des fonctions payantes (jamais pendant
 une réunion). Renseignez `RONDE_HIDE_UPGRADE_HINTS=1` pour les retirer de toute l'instance.
 
+### Retours des utilisateurs
+
+Le bouton en forme de bulle en haut des pages (dans le menu du compte sur téléphone) permet de signaler un problème
+ou de proposer une idée, avec une capture d'écran si on le souhaite. Partent avec le message : l'adresse de la page
+(sans ses paramètres), le navigateur, la taille de la fenêtre, la langue et la version de Ronde. Les administrateurs
+lisent les messages dans **Administration du serveur**, répondent par e-mail aux personnes qui l'ont demandé, et
+peuvent ouvrir un ticket prérempli sur le projet Ronde pour un problème propre à Ronde. Si `SENTRY_DSN` est
+renseigné, les messages arrivent aussi dans ce projet Sentry comme retours d'utilisateurs. Les messages sont
+supprimés au bout d'un an ; `RONDE_FEEDBACK=off` retire le bouton.
+
 ## Espaces de travail
 
 Un espace de travail réunit les personnes, les réunions, les modèles et les connecteurs d'une équipe.

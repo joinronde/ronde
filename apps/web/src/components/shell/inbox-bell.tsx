@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useFormatter, useTranslations } from "next-intl";
+import { useFormatter, useNow, useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PersonFace } from "@/components/person-face";
 import type { InboxView } from "@/lib/server/inbox";
@@ -33,6 +33,7 @@ const ICON: Record<InboxView["kind"], IconName> = {
 export function InboxBell({ slug }: { slug: string }) {
   const t = useTranslations("inbox");
   const format = useFormatter();
+  const now = useNow({ updateInterval: 60_000 });
   const [inbox, setInbox] = useState<Inbox>({ unread: 0, items: [] });
   const [ring, setRing] = useState(false);
   const last = useRef(0);
@@ -130,7 +131,7 @@ export function InboxBell({ slug }: { slug: string }) {
                         })}
                       </span>
                       {n.text && <span className="inbox-quote">“{n.text}”</span>}
-                      <span className="hint">{format.relativeTime(new Date(n.createdAt))}</span>
+                      <span className="hint">{format.relativeTime(new Date(n.createdAt), now)}</span>
                     </span>
                     {!n.read && <span className="inbox-dot" aria-label={t("unread")} />}
                   </Link>
