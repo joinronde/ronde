@@ -1,0 +1,142 @@
+{
+  "title": "Modules",
+  "intro": "Turn on what this meeting uses. A module turned off disappears from the control room, the shared screen and everyone's screen; its settings are kept.",
+  "on": "On",
+  "off": "Off",
+  "toggle": "Use {name} in this meeting",
+  "enabled": "{name} turned on",
+  "disabled": "{name} turned off",
+  "categories": {
+    "facilitation": "Facilitation",
+    "organisation": "Organisation",
+    "formats": "Formats",
+    "integrations": "Integrations",
+    "notifications": "Notifications",
+    "reporting": "Reporting"
+  },
+  "editions": {
+    "team": "Team",
+    "enterprise": "Enterprise"
+  },
+  "paidTitle": "With a paid plan",
+  "paidIntro": "Available with Ronde Team and Enterprise, in the cloud or self-hosted with a license key.",
+  "learnMore": "See the plans",
+  "items": {
+    "icebreaker": {
+      "name": "Icebreaker",
+      "description": "A question drawn from a bank to warm up; everyone answers in one line, shown during the intro."
+    },
+    "mood": {
+      "name": "Team mood",
+      "description": "Everyone shares their mood (⛈️ to ☀️), shown anonymously and tracked in the stats."
+    },
+    "rating": {
+      "name": "Meeting usefulness",
+      "description": "At the wrap-up, everyone rates how useful the meeting was, from 1 to 5, anonymously; the average is tracked in the stats."
+    },
+    "reactions": {
+      "name": "Reactions and signals",
+      "description": "Emoji reactions and signals (too long, louder…) flying across every screen."
+    },
+    "hands": {
+      "name": "Raised hands and questions",
+      "description": "Raise a hand or ask a question during a turn: a questions step follows that turn."
+    },
+    "kudos": {
+      "name": "Kudos",
+      "description": "Thank a teammate during the meeting; kudos show on every screen and in the minutes."
+    },
+    "spotlight": {
+      "name": "Spotlight",
+      "description": "Show a check-in item, a question or a free message big on the shared screen."
+    },
+    "birthdays": {
+      "name": "Birthdays",
+      "description": "The waiting screen celebrates the birthdays of the week (day and month only)."
+    },
+    "sounds": {
+      "name": "Sounds",
+      "description": "Waiting music, cues and a soundboard, played on everyone's screen or on the shared screen."
+    },
+    "ambience": {
+      "name": "Seasonal ambience",
+      "description": "Holiday and season decorations on the waiting screen."
+    },
+    "gitlab": {
+      "name": "GitLab",
+      "description": "Recent issues and merge requests of each person, to import into their check-in."
+    },
+    "workflows": {
+      "name": "Workflow builder",
+      "description": "Your own triggers, conditions and messages to Slack, Teams, Matrix or email."
+    },
+    "aiAssistant": {
+      "name": "AI assistant",
+      "description": "Meeting summary and action extraction; bring your own key when self-hosted."
+    },
+    "writeBack": {
+      "name": "Issue write-back",
+      "description": "Turn follow-up actions into Jira, Linear, GitLab or GitHub issues, and keep them in sync."
+    },
+    "calendarSync": {
+      "name": "Calendar sync",
+      "description": "Two-way Google, Microsoft 365 and CalDAV sync, with conflict detection."
+    },
+    "analytics": {
+      "name": "Workspace analytics",
+      "description": "Dashboards across meetings: participation, engagement, recurring blockers."
+    },
+    "scheduledReports": {
+      "name": "Scheduled reports",
+      "description": "A digest of your meetings by email, every week or month."
+    },
+    "rotation": {
+      "name": "Rotating roles",
+      "description": "Who facilitates and who takes notes changes at every session, in round-table order."
+    },
+    "retro": {
+      "name": "Retrospective",
+      "description": "Anonymous sticky notes in columns, grouped by the host, voted on by the team, then discussed; add it to the agenda."
+    },
+    "timebox": {
+      "name": "Timebox",
+      "description": "A topic of its own on the agenda, with its own duration and its notes in the minutes."
+    },
+    "poker": {
+      "name": "Planning poker",
+      "description": "The team estimates items with cards kept hidden until the reveal; add it to the agenda."
+    },
+    "polls": {
+      "name": "Polls",
+      "description": "Ask the team a question during the session: choices, a scale or a word cloud, anonymous or not."
+    },
+    "random": {
+      "name": "Random tools",
+      "description": "A wheel to pick who goes next, a random speaking order, teams or heads or tails, played on every screen at once."
+    },
+    "parking": {
+      "name": "Parking lot",
+      "description": "Set aside what comes up off-topic in one click; it becomes an open topic of the next session."
+    },
+    "decisions": {
+      "name": "Decision log",
+      "description": "Every “Decision:” line of the notes, from every session, in one searchable list open to the whole team."
+    },
+    "github": {
+      "name": "GitHub",
+      "description": "Each person's recent issues and pull requests, imported into their check-in in a click."
+    },
+    "video": {
+      "name": "Video call",
+      "description": "Join the call from every page: a link to any tool, a Jitsi room or your BigBlueButton server."
+    },
+    "async": {
+      "name": "Async mode",
+      "description": "No live session: everyone fills in their check-in and comments, then the digest goes out by email at the planned time."
+    }
+  },
+  "upgrade": {
+    "comesWith": "{feature} comes with Ronde {edition}.",
+    "plans": "See the plans"
+  }
+}

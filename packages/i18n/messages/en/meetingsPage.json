@@ -1,0 +1,25 @@
+{
+  "title": "Meetings",
+  "intro": "Every meeting of the workspace you can see: when it meets next, who is in, what is still open.",
+  "new": "New meeting",
+  "filter": "Which meetings",
+  "search": "Filter by name",
+  "filters": {
+    "all": "All",
+    "mine": "I take part",
+    "run": "I run"
+  },
+  "liveNow": "Live now",
+  "next": "Next session",
+  "noNext": "No session planned",
+  "held": "{count, plural, one {session held} other {sessions held}}",
+  "openActions": "{count, plural, one {open action} other {open actions}}",
+  "last": "last on {date}",
+  "join": "Join",
+  "checkIn": "My check-in",
+  "control": "Run the meeting",
+  "history": "History",
+  "noMatch": "No meeting matches.",
+  "empty": "No meeting yet.",
+  "templates": "Templates"
+}

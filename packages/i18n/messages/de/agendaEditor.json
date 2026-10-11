@@ -1,0 +1,33 @@
+{
+  "title": "Tagesordnung",
+  "intro": "Die Schritte jeder Sitzung, in ihrer Reihenfolge. Der Abschluss beendet immer das Meeting.",
+  "blocks": {
+    "intro": "Einstieg",
+    "round": "Runde",
+    "topics": "Offene Themen",
+    "retro": "Retrospektive",
+    "timebox": "Timebox",
+    "poker": "Planning Poker",
+    "projects": "Projektrunde"
+  },
+  "timeboxTitle": "Thema",
+  "minutes": "Minuten",
+  "up": "„{label}“ nach oben",
+  "down": "„{label}“ nach unten",
+  "remove": "„{label}“ entfernen",
+  "add": "Block hinzufügen",
+  "pick": "Block wählen…",
+  "newTimebox": "Neues Thema",
+  "saved": "Tagesordnung gespeichert",
+  "turnOn": "Schalte das Modul unter „Module“ ein, um diesen Block hinzuzufügen.",
+  "locked": "Eine Sitzung läuft: Die Tagesordnung kann geändert werden, sobald sie vorbei ist.",
+  "noProjects": "Wähle unter „Projekte“ die Projekte, denen das Meeting folgt.",
+  "projectOrder": "Reihenfolge der Projekte",
+  "projectOrders": {
+    "manual": "In der Reihenfolge des Meetings",
+    "theme": "Nach Thema",
+    "health": "Projekte in Schwierigkeiten zuerst"
+  },
+  "perProject": "Min. pro Projekt",
+  "perProjectAuto": "auto"
+}

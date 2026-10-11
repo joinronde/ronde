@@ -1,0 +1,18 @@
+{
+  "title": "Gastlinks",
+  "intro": "Personen ohne Konto verfolgen den geteilten Bildschirm live und schreibgeschützt, über einen geheimen Link mit Ablaufdatum: Kunden, ein Gremium, Partner. Sie sehen, was der Raumbildschirm zeigt.",
+  "label": "Für wen",
+  "labelPlaceholder": "Z. B. Mitglieder des Aufsichtsrats",
+  "duration": "Gültig für",
+  "days": "{count, plural, one {# Tag} other {# Tage}}",
+  "create": "Link erstellen",
+  "once": "Kopiere diesen Link jetzt und teile ihn: Er wird nicht noch einmal angezeigt.",
+  "link": "Gastlink",
+  "copy": "Kopieren",
+  "copied": "Link kopiert",
+  "until": "Gültig bis {date}",
+  "expiredOn": "Abgelaufen am {date}",
+  "revoke": "Widerrufen",
+  "remove": "Entfernen",
+  "revoked": "Link widerrufen"
+}

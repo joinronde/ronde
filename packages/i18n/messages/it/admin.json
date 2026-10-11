@@ -1,0 +1,65 @@
+{
+  "title": "Amministrazione del server",
+  "back": "Indietro",
+  "intro": "Impostazioni di questo server Ronde, comuni a tutti i suoi spazi di lavoro. Quelle di ogni spazio (membri, ruoli, sicurezza) sono nelle sue Impostazioni. I valori salvati qui prevalgono sulle variabili d'ambiente.",
+  "counts": {
+    "users": "Account",
+    "workspaces": "Spazi di lavoro",
+    "meetings": "Riunioni"
+  },
+  "language": "Lingua",
+  "defaultLocale": "Lingua predefinita",
+  "defaultLocaleHint": "Per chi non ha scelto una lingua nel proprio account e il cui browser non ne propone nessuna parlata da Ronde.",
+  "signup": "Chi può creare un account",
+  "recommended": "Consigliato",
+  "policies": {
+    "invite-only": {
+      "label": "Su invito",
+      "hint": "Solo le persone invitate in uno spazio di lavoro."
+    },
+    "domains": {
+      "label": "Domini email",
+      "hint": "Le persone invitate e chiunque abbia un indirizzo dei domini qui sotto."
+    },
+    "open": {
+      "label": "Aperto",
+      "hint": "Chiunque raggiunga questo server."
+    }
+  },
+  "domains": "Domini consentiti",
+  "domainsHint": "Separati da virgole, ad es. example.org.",
+  "save": "Salva",
+  "saved": "Salvato",
+  "license": {
+    "title": "Licenza",
+    "pureCommunity": "Questa build è l'edizione Community pura: il codice delle edizioni a pagamento non è incluso.",
+    "status": {
+      "none": "Edizione Community",
+      "invalid": "Chiave di licenza non valida",
+      "active": "Licenza attiva",
+      "grace": "Licenza scaduta: periodo di tolleranza",
+      "expired": "Licenza scaduta"
+    },
+    "reasons": {
+      "format": "La chiave salvata non è leggibile.",
+      "payload": "La chiave salvata non è leggibile.",
+      "signature": "La chiave salvata è stata modificata o non è stata emessa da Ronde.",
+      "unknownKey": "La chiave salvata è firmata con una chiave che questa versione non conosce."
+    },
+    "editions": {
+      "team": "Team",
+      "enterprise": "Enterprise"
+    },
+    "summary": "{edition} per {customer}, fino al {date}.",
+    "graceUntil": "Tutto continua a funzionare fino al {date}: rinnova la licenza prima di allora.",
+    "readOnly": "Le funzioni a pagamento sono in sola lettura: il loro contenuto resta leggibile, ma non si può aggiungere nulla. Le funzioni Community non sono toccate.",
+    "seats": "{used} di {seats} posti usati",
+    "seatsUnlimited": "{used} persone, nessun limite di posti",
+    "overSeats": "Più persone usano Ronde di quante la licenza ne preveda: nulla è bloccato, ma aggiorna la tua licenza.",
+    "fromEnv": "La chiave viene dalla variabile RONDE_LICENSE: modificala lì.",
+    "key": "Chiave di licenza",
+    "keyHint": "Verificata su questo server, offline: nulla viene inviato da nessuna parte.",
+    "save": "Salva la chiave",
+    "remove": "Rimuovi la licenza"
+  }
+}

@@ -1,0 +1,17 @@
+import { SENTRY_DATA } from "./lib/shared/sentry-privacy";
+
+// Runs in the browser before the app starts. Error reports go to the instance's Sentry project when it has one:
+// the root layout gives its address (SENTRY_DSN, read at run time), and the SDK is only downloaded then.
+
+const meta = document.querySelector<HTMLMetaElement>('meta[name="ronde-sentry"]');
+if (meta?.content)
+  void import("@sentry/nextjs").then((Sentry) =>
+    Sentry.init({
+      dsn: meta.content,
+      environment: meta.dataset.environment,
+      release: meta.dataset.release || undefined,
+      dataCollection: SENTRY_DATA,
+      tracesSampleRate: 0,
+      initialScope: { tags: { component: "app" } },
+    }),
+  );

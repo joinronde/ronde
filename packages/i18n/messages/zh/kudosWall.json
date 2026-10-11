@@ -1,0 +1,12 @@
+{
+  "title": "点赞",
+  "intro": "会议中表达的感谢，展示给所有人。",
+  "given": "{count, plural, =0 {最近 30 天没有点赞} other {最近 30 天共 # 次点赞}}",
+  "people": "{count, plural, =0 {} other {给了 # 个人}}",
+  "birthdays": "本月生日",
+  "today": "就是今天！🎉",
+  "wall": "收到的点赞",
+  "fromTo": "<strong>{from}</strong> 感谢 <strong>{to}</strong>",
+  "empty": "还没有点赞。",
+  "emptyHint": "在会议中，任何人都可以通过点赞模块感谢队友：每一次感谢都会出现在这面墙上。"
+}

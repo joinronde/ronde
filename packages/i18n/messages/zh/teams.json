@@ -1,0 +1,59 @@
+{
+  "package": {
+    "fullName": "Ronde：你团队的例会",
+    "shortDescription": "团队例会的进展卡、提醒和会议纪要。",
+    "fullDescription": "Ronde 主持你团队的例会：每个人准备自己的进展卡，轮流发言把控时间，会议纪要自动生成。在 Teams 中，Ronde 通过私信提醒每个人填写进展卡，并可直接在那里填写；回复“ronde”即可查看接下来的会议和未完成的行动项；还会在频道中发布会议通知。",
+    "commandRonde": "你接下来的会议和未完成的行动项",
+    "helpWord": "帮助",
+    "commandHelp": "Ronde 在 Teams 中能做什么"
+  },
+  "bot": {
+    "welcomeTitle": "Ronde 已加入此团队",
+    "welcome": "将它关联到你的 Ronde 工作空间：进展卡提醒会在 Teams 中发送给这里的每个人，会议通知也可以发布到此频道。",
+    "welcomeWho": "由 Ronde 工作空间的所有者或管理员操作一次即可。",
+    "link": "关联到 Ronde",
+    "linked": "此频道现已关联到 Ronde 工作空间“{workspace}”。在每个会议的通知设置中选择要发布到这里的内容。",
+    "unlinked": "此频道已不再关联 Ronde：进展卡提醒恢复通过邮件发送。",
+    "alreadyLinked": "此团队已关联到 Ronde 工作空间“{workspace}”。",
+    "hello": "你好！我会提醒你填写进展卡，你可以直接在这里填写。输入“ronde”查看接下来的会议和未完成的行动项。",
+    "help": "输入“ronde”查看接下来的会议和未完成的行动项。进展卡提醒会发送到这里，并附带填写按钮。",
+    "notFound": "Ronde 找不到你的这张进展卡。你的 Microsoft 账户邮箱必须与 Ronde 个人资料的邮箱一致，并且你必须是会议参与者。",
+    "tooLong": "这张进展卡太长，无法在 Teams 中编辑。请在 Ronde 中打开。",
+    "unknown": "Ronde 还不认识你：你的 Microsoft 账户邮箱必须与你在关联此团队的 Ronde 工作空间中的资料邮箱一致。"
+  },
+  "link": {
+    "title": "关联 Microsoft Teams",
+    "intro": "团队“{team}”请求关联到一个 Ronde 工作空间：其进展卡提醒将通过 Teams 发送，其频道可以接收会议通知。",
+    "channel": "频道：{channel}",
+    "workspace": "工作空间",
+    "replaces": "已关联到“{team}”：此团队将取而代之。",
+    "submit": "关联此工作空间",
+    "none": "你没有管理任何可以关联 Microsoft Teams 的工作空间。该功能包含在 Ronde Team 中，供工作空间的所有者和管理员使用。",
+    "expired": "此链接已过期或无效。在 Teams 中，于频道里提及 Ronde 即可获取新链接。"
+  },
+  "settings": {
+    "intro": "将 Ronde 添加到 Microsoft Teams：每个人无需离开 Teams 即可填写进展卡。",
+    "locked": "Microsoft Teams 应用包含在 Ronde {edition} 中。",
+    "uses": {
+      "reminders": "通过私信发送进展卡提醒，附带一个将消息变为进展卡表单的按钮。",
+      "channel": "团队的频道成为一个连接器：在每个会议的通知中选择要发布到那里的内容。",
+      "command": "向应用发送“ronde”，即可查看接下来的会议和未完成的行动项。"
+    },
+    "emailMatch": "通过邮箱识别成员：其 Microsoft 账户与 Ronde 个人资料必须使用相同邮箱。",
+    "step1": "下载适用于 Teams 的 Ronde 应用。",
+    "step1Hint": "由 Teams 管理员为组织添加一次（Teams 管理中心 › Teams 应用 › 管理应用 › 上传新应用）。如果组织允许，你也可以自行上传（应用 › 管理你的应用 › 上传应用）。",
+    "step2": "将应用添加到其频道将接收通知的团队。",
+    "step3": "Ronde 会在该频道发布一张卡片：点击“关联到 Ronde”并选择此工作空间。",
+    "download": "下载应用（.zip）",
+    "linkedTo": "已关联到 {team}",
+    "channel": "通知发布在 {channel}",
+    "linked": "Microsoft Teams 已关联。",
+    "reminders": "在 Teams 中发送进展卡提醒",
+    "remindersHint": "通过私信代替邮件，发送给在团队中找到的成员。其他人仍会收到邮件。",
+    "unlink": "取消关联",
+    "unlinkConfirm": "取消关联 Microsoft Teams？提醒将恢复通过邮件发送，发布到其频道的通知规则将被删除。要移除应用本身，请在 Teams 中将其从团队移除。",
+    "notConfigured": "要使用 Microsoft Teams，此 Ronde 服务器的管理员需要先在 Microsoft Azure 中注册其 Teams 应用。",
+    "setup": "如何设置",
+    "openInTeams": "在 Teams 中打开应用"
+  }
+}

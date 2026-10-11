@@ -1,0 +1,20 @@
+{
+  "title": "Calendar",
+  "intro": "Every session of your meetings: planned, live and held.",
+  "months": "Months",
+  "previous": "Previous month",
+  "next": "Next month",
+  "today": "Today",
+  "upcoming": "Coming up",
+  "nothing": "Nothing planned in the next four weeks.",
+  "status": {
+    "planned": "planned",
+    "live": "Live now",
+    "held": "held",
+    "cancelled": "cancelled"
+  },
+  "attendance": {
+    "yes": "I'll be there",
+    "no": "Away"
+  }
+}

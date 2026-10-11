@@ -1,0 +1,28 @@
+{
+  "subject": "Your week with {workspace}",
+  "title": "Your week",
+  "greeting": "Hello {name},",
+  "intro": "Here is what awaits you this week in {workspace}.",
+  "preheader": "{sessions, plural, =0 {No session} one {# session} other {# sessions}} and {actions, plural, =0 {no open action} one {# open action} other {# open actions}} this week",
+  "when": "{date} at {time}",
+  "moved": "moved",
+  "sessions": "Your sessions this week",
+  "checkIn": "My check-in",
+  "actions": "Your open actions",
+  "actionsHint": "Tick them off in Ronde as soon as they are done.",
+  "carried": "{count, plural, one {open for # session} other {open for # sessions}}",
+  "kudos": "Kudos you received",
+  "from": "from {name}",
+  "open": "Open Ronde",
+  "footer": "You get this summary on Mondays as a member of {workspace}.",
+  "settings": "Change it in your account.",
+  "stop": "Stop the weekly summary",
+  "page": {
+    "title": "Stop the weekly summary?",
+    "body": "You will no longer get the Monday summary of your sessions, actions and kudos. You can turn it back on in your account.",
+    "button": "Stop the summary",
+    "done": "Done: you won't get the weekly summary anymore.",
+    "invalid": "This link is not valid.",
+    "back": "Back to Ronde"
+  }
+}

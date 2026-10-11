@@ -1,0 +1,142 @@
+{
+  "title": "Module",
+  "intro": "Schalte ein, was dieses Meeting nutzt. Ein ausgeschaltetes Modul verschwindet aus der Regie, vom geteilten Bildschirm und von den Bildschirmen aller; seine Einstellungen bleiben erhalten.",
+  "on": "An",
+  "off": "Aus",
+  "toggle": "{name} in diesem Meeting nutzen",
+  "enabled": "{name} eingeschaltet",
+  "disabled": "{name} ausgeschaltet",
+  "categories": {
+    "facilitation": "Moderation",
+    "organisation": "Organisation",
+    "formats": "Formate",
+    "integrations": "Integrationen",
+    "notifications": "Benachrichtigungen",
+    "reporting": "Berichte"
+  },
+  "editions": {
+    "team": "Team",
+    "enterprise": "Enterprise"
+  },
+  "paidTitle": "Mit einem kostenpflichtigen Tarif",
+  "paidIntro": "Verfügbar mit Ronde Team und Enterprise, in der Cloud oder selbst gehostet mit einem Lizenzschlüssel.",
+  "learnMore": "Tarife ansehen",
+  "items": {
+    "icebreaker": {
+      "name": "Eisbrecher",
+      "description": "Eine Frage aus einem Fragenpool zum Aufwärmen; alle antworten in einer Zeile, die während der Einführung angezeigt wird."
+    },
+    "mood": {
+      "name": "Stimmung im Team",
+      "description": "Alle teilen ihre Stimmung (⛈️ bis ☀️), anonym angezeigt und in den Statistiken verfolgt."
+    },
+    "rating": {
+      "name": "Nutzen des Meetings",
+      "description": "Beim Abschluss bewertet jede Person anonym von 1 bis 5, wie nützlich das Meeting war; der Durchschnitt erscheint in den Statistiken."
+    },
+    "reactions": {
+      "name": "Reaktionen und Signale",
+      "description": "Emoji-Reaktionen und Signale (zu lang, lauter…), die über alle Bildschirme fliegen."
+    },
+    "hands": {
+      "name": "Handmeldungen und Fragen",
+      "description": "Melde dich oder stell eine Frage während eines Beitrags: Danach folgt ein Fragenschritt."
+    },
+    "kudos": {
+      "name": "Kudos",
+      "description": "Bedanke dich während des Meetings bei jemandem aus dem Team; Kudos erscheinen auf allen Bildschirmen und im Protokoll."
+    },
+    "spotlight": {
+      "name": "Spotlight",
+      "description": "Zeig einen Check-in-Punkt, eine Frage oder eine freie Nachricht groß auf dem geteilten Bildschirm."
+    },
+    "birthdays": {
+      "name": "Geburtstage",
+      "description": "Der Wartebildschirm feiert die Geburtstage der Woche (nur Tag und Monat)."
+    },
+    "sounds": {
+      "name": "Sounds",
+      "description": "Wartemusik, Signaltöne und ein Soundboard, auf den Bildschirmen aller oder auf dem geteilten Bildschirm."
+    },
+    "ambience": {
+      "name": "Jahreszeitliche Stimmung",
+      "description": "Dekorationen zu Feiertagen und Jahreszeiten auf dem Wartebildschirm."
+    },
+    "gitlab": {
+      "name": "GitLab",
+      "description": "Die aktuellen Issues und Merge Requests jeder Person, zum Import in ihren Check-in."
+    },
+    "workflows": {
+      "name": "Workflow-Builder",
+      "description": "Eigene Auslöser, Bedingungen und Nachrichten an Slack, Teams, Matrix oder per E-Mail."
+    },
+    "aiAssistant": {
+      "name": "KI-Assistent",
+      "description": "Zusammenfassung des Meetings und Extraktion von Aufgaben; selbst gehostet mit eigenem Schlüssel."
+    },
+    "writeBack": {
+      "name": "Tickets anlegen",
+      "description": "Mach aus Folgeaufgaben Tickets in Jira, Linear, GitLab oder GitHub und halte sie synchron."
+    },
+    "calendarSync": {
+      "name": "Kalendersynchronisierung",
+      "description": "Zweiwege-Sync mit Google, Microsoft 365 und CalDAV, mit Konflikterkennung."
+    },
+    "analytics": {
+      "name": "Auswertungen des Arbeitsbereichs",
+      "description": "Dashboards über alle Meetings: Teilnahme, Engagement, wiederkehrende Blocker."
+    },
+    "scheduledReports": {
+      "name": "Geplante Berichte",
+      "description": "Eine Übersicht deiner Meetings per E-Mail, jede Woche oder jeden Monat."
+    },
+    "rotation": {
+      "name": "Wechselnde Rollen",
+      "description": "Wer moderiert und wer protokolliert, wechselt mit jeder Sitzung in der Reihenfolge der Runde."
+    },
+    "retro": {
+      "name": "Retrospektive",
+      "description": "Anonyme Haftnotizen in Spalten, von der Moderation gruppiert, vom Team bewertet, dann besprochen; füge sie der Agenda hinzu."
+    },
+    "timebox": {
+      "name": "Timebox",
+      "description": "Ein eigenes Thema auf der Agenda, mit eigener Dauer und Notizen im Protokoll."
+    },
+    "poker": {
+      "name": "Planning Poker",
+      "description": "Das Team schätzt Punkte mit verdeckten Karten bis zur Aufdeckung; füge es der Agenda hinzu."
+    },
+    "polls": {
+      "name": "Umfragen",
+      "description": "Stell dem Team während der Sitzung eine Frage: Auswahl, Skala oder Wortwolke, anonym oder nicht."
+    },
+    "random": {
+      "name": "Zufallswerkzeuge",
+      "description": "Ein Glücksrad für die nächste Person, eine zufällige Redereihenfolge, Teams oder Kopf oder Zahl, auf allen Bildschirmen gleichzeitig."
+    },
+    "parking": {
+      "name": "Parkplatz",
+      "description": "Leg mit einem Klick beiseite, was abseits des Themas aufkommt; es wird ein offenes Thema der nächsten Sitzung."
+    },
+    "decisions": {
+      "name": "Entscheidungslog",
+      "description": "Jede „Entscheidung:“-Zeile der Notizen aus allen Sitzungen, in einer durchsuchbaren Liste für das ganze Team."
+    },
+    "github": {
+      "name": "GitHub",
+      "description": "Die aktuellen Issues und Pull Requests jeder Person, mit einem Klick in ihren Check-in importiert."
+    },
+    "video": {
+      "name": "Videoanruf",
+      "description": "Tritt dem Anruf von jeder Seite aus bei: ein Link zu jedem Tool, ein Jitsi-Raum oder dein BigBlueButton-Server."
+    },
+    "async": {
+      "name": "Asynchroner Modus",
+      "description": "Keine Live-Sitzung: Alle füllen ihren Check-in aus und kommentieren, dann geht die Übersicht zur geplanten Zeit per E-Mail raus."
+    }
+  },
+  "upgrade": {
+    "comesWith": "{feature} gehört zu Ronde {edition}.",
+    "plans": "Tarife ansehen"
+  }
+}

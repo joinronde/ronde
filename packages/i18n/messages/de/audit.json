@@ -1,0 +1,220 @@
+{
+  "title": "Audit-Log",
+  "intro": "Wer was in diesem Arbeitsbereich geändert hat: Einstellungen, Personen, Rollen, Meetings. Live-Interaktionen werden nicht gespeichert.",
+  "window": "Es zeigt die letzten {days} Tage.",
+  "filters": {
+    "action": "Aktion",
+    "actionPlaceholder": "z. B. people, roles, meeting",
+    "actor": "Person",
+    "actorPlaceholder": "Name oder E-Mail",
+    "from": "Von",
+    "to": "Bis",
+    "apply": "Filtern"
+  },
+  "export": "Als CSV exportieren",
+  "columns": {
+    "when": "Wann",
+    "who": "Wer",
+    "what": "Was",
+    "details": "Details"
+  },
+  "empty": "Noch nichts aufgezeichnet.",
+  "noMatch": "Kein Eintrag passt zu diesen Filtern.",
+  "more": "Ältere Einträge",
+  "stream": {
+    "title": "An ein SIEM senden",
+    "hint": "Jeder Eintrag wird außerdem signiert an einen Webhook-Connector des Arbeitsbereichs gesendet, für dein SIEM oder deine Log-Plattform. Bei fehlender Antwort wird es einige Minuten lang erneut versucht.",
+    "connector": "Webhook-Connector",
+    "none": "Nicht senden",
+    "save": "Speichern",
+    "saved": "Gespeichert",
+    "noWebhook": "Füge zuerst in den allgemeinen Einstellungen einen Webhook-Connector hinzu."
+  },
+  "actions": {
+    "meeting": {
+      "create": "Sitzung vorbereitet",
+      "reset": "Sitzung zurückgesetzt",
+      "archive": "Sitzung archiviert",
+      "publish": "Zusammenfassung veröffentlicht",
+      "remove": "Meeting gelöscht",
+      "new": "Meeting erstellt",
+      "projects": "Verfolgte Projekte geändert",
+      "sample": "Beispiel-Meeting geöffnet",
+      "sampleDeleted": "Beispiel-Meeting gelöscht"
+    },
+    "settings": {
+      "save": "Meeting-Einstellungen geändert"
+    },
+    "agenda": {
+      "save": "Tagesordnung geändert"
+    },
+    "participant": {
+      "add": "Teilnehmende Person hinzugefügt",
+      "update": "Teilnehmende Person geändert",
+      "remove": "Teilnehmende Person entfernt"
+    },
+    "modules": {
+      "set": "Modul ein- oder ausgeschaltet"
+    },
+    "template": {
+      "save": "Als Vorlage gespeichert"
+    },
+    "schedule": {
+      "save": "Terminplan geändert",
+      "skip": "Sitzung übersprungen",
+      "move": "Sitzung verschoben",
+      "restore": "Sitzung wiederhergestellt"
+    },
+    "notifications": {
+      "save": "Benachrichtigungen geändert"
+    },
+    "history": {
+      "summary": "Zusammenfassung des Protokolls bearbeitet"
+    },
+    "people": {
+      "invite": "Person eingeladen",
+      "add": "Person hinzugefügt",
+      "update": "Profil geändert",
+      "remove": "Person entfernt",
+      "invitationRevoked": "Einladung widerrufen",
+      "absence": "Abwesenheit hinzugefügt"
+    },
+    "members": {
+      "role": "Rolle geändert",
+      "leave": "Hat den Arbeitsbereich verlassen",
+      "join": "Ist dem Arbeitsbereich beigetreten",
+      "customRole": "Zusätzliche Rolle geändert",
+      "captured": "Über die E-Mail-Domain beigetreten",
+      "sso": "Über die Firmenanmeldung beigetreten"
+    },
+    "workspace": {
+      "update": "Einstellungen des Arbeitsbereichs geändert",
+      "categoryAdd": "Berufskategorie hinzugefügt",
+      "categoryRename": "Berufskategorie umbenannt",
+      "categoryDelete": "Berufskategorie gelöscht",
+      "auditStream": "Audit-Versand geändert",
+      "logo": "Logo geändert",
+      "logoRemoved": "Logo entfernt"
+    },
+    "connectors": {
+      "save": "Connector gespeichert",
+      "delete": "Connector gelöscht"
+    },
+    "slack": {
+      "connect": "Slack verbunden",
+      "disconnect": "Slack getrennt"
+    },
+    "templates": {
+      "delete": "Vorlage gelöscht"
+    },
+    "roles": {
+      "save": "Rolle gespeichert",
+      "delete": "Rolle gelöscht"
+    },
+    "domains": {
+      "add": "Domain hinzugefügt",
+      "verify": "Domain verifiziert",
+      "update": "Domain-Einstellungen geändert",
+      "remove": "Domain entfernt"
+    },
+    "sso": {
+      "add": "Identitätsanbieter hinzugefügt",
+      "remove": "Identitätsanbieter entfernt"
+    },
+    "ldap": {
+      "save": "Firmenverzeichnis gespeichert",
+      "remove": "Firmenverzeichnis entfernt"
+    },
+    "scim": {
+      "create": "Bereitgestellt",
+      "update": "Vom Verzeichnis aktualisiert",
+      "deactivate": "Vom Verzeichnis deaktiviert",
+      "delete": "Vom Verzeichnis entfernt",
+      "tokenCreate": "SCIM-Token erstellt",
+      "tokenRevoke": "SCIM-Token widerrufen"
+    },
+    "reports": {
+      "save": "Bericht per E-Mail geändert"
+    },
+    "ai": {
+      "summary": "Zusammenfassung vom KI-Assistenten entworfen",
+      "actions": "Aufgaben vom KI-Assistenten vorgeschlagen",
+      "settings": "Einstellungen des KI-Assistenten geändert"
+    },
+    "trackers": {
+      "add": "Issue-Tracker hinzugefügt",
+      "update": "Issue-Tracker geändert",
+      "delete": "Issue-Tracker entfernt",
+      "ticket": "Ticket aus einer Aufgabe erstellt"
+    },
+    "video": {
+      "add": "Videokonto hinzugefügt",
+      "update": "Videokonto geändert",
+      "delete": "Videokonto entfernt",
+      "room": "Videoraum für ein Meeting erstellt"
+    },
+    "calendar": {
+      "add": "Kalenderkonto hinzugefügt",
+      "update": "Kalenderkonto geändert",
+      "delete": "Kalenderkonto entfernt",
+      "meeting": "Kalender eines Meetings geändert"
+    },
+    "transcription": {
+      "allow": "Transkription für ein Meeting erlaubt oder nicht",
+      "settings": "Transkriptionsdienst geändert"
+    },
+    "recording": {
+      "start": "Aufnahme für das Transkript gestartet",
+      "stop": "Aufnahme beendet"
+    },
+    "session": {
+      "now": "Sitzung spontan gestartet"
+    },
+    "guests": {
+      "create": "Gastlink erstellt",
+      "revoke": "Gastlink widerrufen"
+    },
+    "projects": {
+      "create": "Projekt angelegt",
+      "unsync": "Projekt nicht mehr mit seinem Tool synchronisiert",
+      "import": "Projekte aus einem Tool importiert",
+      "update": "Projekt geändert",
+      "archive": "Projekt archiviert",
+      "restore": "Projekt wiederhergestellt",
+      "delete": "Projekt gelöscht",
+      "theme": "Portfolio-Thema geändert",
+      "themeDelete": "Portfolio-Thema gelöscht"
+    },
+    "wikis": {
+      "add": "Wiki hinzugefügt",
+      "update": "Wiki geändert",
+      "delete": "Wiki entfernt",
+      "meeting": "Wiki eines Meetings geändert"
+    },
+    "teams": {
+      "connect": "Microsoft Teams verknüpft",
+      "disconnect": "Verknüpfung mit Microsoft Teams gelöst"
+    }
+  },
+  "fields": {
+    "name": "Name",
+    "slug": "Link",
+    "locale": "Sprache",
+    "timezone": "Zeitzone",
+    "meetingCreation": "Wer Meetings anlegen darf",
+    "bufferMin": "Freie Zeit rund um Meetings (Min.)",
+    "email": "E-Mail",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "role": "Rolle",
+    "birthday": "Geburtstag",
+    "phone": "Telefon",
+    "label": "Bezeichnung",
+    "days": "Tage",
+    "domain": "Domain",
+    "permissions": "Berechtigungen",
+    "enabled": "Aktiv"
+  },
+  "yes": "ja",
+  "no": "nein"
+}

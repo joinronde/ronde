@@ -1,0 +1,59 @@
+{
+  "package": {
+    "fullName": "Ronde : les réunions récurrentes de votre équipe",
+    "shortDescription": "Fiches, rappels et comptes rendus des réunions récurrentes de votre équipe.",
+    "fullDescription": "Ronde anime les réunions récurrentes de votre équipe : chacun prépare sa fiche, le tour de table tient le temps, le compte rendu s'écrit tout seul. Dans Teams, Ronde rappelle à chacun sa fiche par message personnel, la fait remplir sur place, répond à « ronde » avec ses prochaines séances et ses actions ouvertes, et publie les notifications des réunions dans un canal.",
+    "commandRonde": "Vos prochaines séances et actions ouvertes",
+    "helpWord": "aide",
+    "commandHelp": "Ce que Ronde fait dans Teams"
+  },
+  "bot": {
+    "welcomeTitle": "Ronde est dans cette équipe",
+    "welcome": "Liez-la à votre espace Ronde : les rappels de fiche arrivent à chacun ici dans Teams, et les notifications des réunions peuvent être publiées dans ce canal.",
+    "welcomeWho": "Un propriétaire ou un administrateur de l'espace Ronde le fait, une fois.",
+    "link": "Lier à Ronde",
+    "linked": "Ce canal est maintenant lié à l'espace Ronde « {workspace} ». Dans les notifications de chaque réunion, choisissez ce qui est publié ici.",
+    "unlinked": "Ce canal n'est plus lié à Ronde : les rappels de fiche repartent par e-mail.",
+    "alreadyLinked": "Cette équipe est liée à l'espace Ronde « {workspace} ».",
+    "hello": "Bonjour ! Je vous rappelle vos fiches, et vous pouvez les remplir ici même. Écrivez « ronde » pour voir vos prochaines séances et vos actions ouvertes.",
+    "help": "Écrivez « ronde » pour voir vos prochaines séances et vos actions ouvertes. Vos rappels de fiche arrivent ici, avec un bouton pour la remplir.",
+    "notFound": "Ronde ne trouve pas cette fiche pour vous. L'e-mail de votre compte Microsoft doit être celui de votre profil Ronde, et vous devez participer à la réunion.",
+    "tooLong": "Cette fiche est trop longue pour être modifiée dans Teams. Ouvrez-la dans Ronde.",
+    "unknown": "Ronde ne vous connaît pas encore : l'e-mail de votre compte Microsoft doit être celui de votre profil dans un espace Ronde lié à cette équipe."
+  },
+  "link": {
+    "title": "Lier Microsoft Teams",
+    "intro": "L'équipe « {team} » demande à être liée à un espace Ronde : ses rappels de fiche passent par Teams, et son canal peut recevoir les notifications des réunions.",
+    "channel": "Canal : {channel}",
+    "workspace": "Espace de travail",
+    "replaces": "Déjà lié à « {team} » : cette équipe prend sa place.",
+    "submit": "Lier cet espace",
+    "none": "Vous ne gérez aucun espace où lier Microsoft Teams. C'est compris dans Ronde Team, pour les propriétaires et administrateurs d'un espace.",
+    "expired": "Ce lien a expiré ou n'est pas valide. Dans Teams, mentionnez Ronde dans le canal pour en obtenir un nouveau."
+  },
+  "settings": {
+    "intro": "Ajoutez Ronde à Microsoft Teams : chacun remplit sa fiche sans quitter Teams.",
+    "locked": "L'app Microsoft Teams est incluse dans Ronde {edition}.",
+    "uses": {
+      "reminders": "Rappels de fiche par message personnel, avec un bouton qui transforme le message en formulaire de la fiche.",
+      "channel": "Le canal de l'équipe devient un connecteur : dans les notifications de chaque réunion, choisissez ce qui y est publié.",
+      "command": "Écrire « ronde » à l'app montre à chacun ses prochaines séances et ses actions ouvertes."
+    },
+    "emailMatch": "Les personnes sont reconnues par leur e-mail : leur compte Microsoft et leur profil Ronde doivent le partager.",
+    "step1": "Téléchargez l'app Ronde pour Teams.",
+    "step1Hint": "Votre administrateur Teams l'ajoute une fois pour l'organisation (centre d'administration Teams › Applications Teams › Gérer les applications › Charger une nouvelle application). Si votre organisation l'autorise, vous pouvez aussi la charger vous-même (Applications › Gérer vos applications › Charger une application).",
+    "step2": "Ajoutez l'app à l'équipe dont le canal recevra les notifications.",
+    "step3": "Dans ce canal, Ronde publie une carte : cliquez sur « Lier à Ronde » et choisissez cet espace.",
+    "download": "Télécharger l'app (.zip)",
+    "linkedTo": "Lié à {team}",
+    "channel": "notifications dans {channel}",
+    "linked": "Microsoft Teams est lié.",
+    "reminders": "Envoyer les rappels de fiche dans Teams",
+    "remindersHint": "Par message personnel, à la place de l'e-mail, aux personnes trouvées dans l'équipe. Les autres reçoivent toujours l'e-mail.",
+    "unlink": "Délier",
+    "unlinkConfirm": "Délier Microsoft Teams ? Les rappels repartent par e-mail, et les règles de notification qui publient dans son canal sont supprimées. Pour retirer l'app elle-même, retirez-la de l'équipe dans Teams.",
+    "notConfigured": "Pour utiliser Microsoft Teams, l'administrateur de ce serveur Ronde enregistre d'abord son app Teams dans Microsoft Azure.",
+    "setup": "Comment la mettre en place",
+    "openInTeams": "Ouvrir l'app dans Teams"
+  }
+}

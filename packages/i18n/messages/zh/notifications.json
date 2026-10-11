@@ -1,0 +1,44 @@
+{
+  "quoted": "“{label}”",
+  "speak": {
+    "minutes": "{m} 分钟",
+    "seconds": "{s} 秒"
+  },
+  "timing": "目标：{target} · 每人发言 {speak}",
+  "preparation": "更新你的项目和相关板块：{sections}。几条简短要点即可；没有内容的板块留空即可。",
+  "when": "{date} {time}",
+  "email": {
+    "footer": "如不想再收到此提醒，请让 {host} 在团队设置中关闭。",
+    "greeting": "{name}，你好：",
+    "intro": "下一次“{team}”会议即将到来。请提前填写或更新你的进展卡，分享你的进展以及需要帮助的地方。",
+    "subject": "Ronde · {team}：你在 {date} {time} 的进展卡",
+    "meeting": "会议：{when}",
+    "prepare": "准备你的进展卡",
+    "fillIn": "填写我的进展卡",
+    "openApp": "打开 Ronde，然后进入“我的屏幕”填写进展卡。",
+    "planned": "你在上次会议中的计划",
+    "plannedHint": "请在进展卡中回顾这些内容：",
+    "actions": "你的后续行动项",
+    "actionsHint": "记得在 Ronde 中更新进度：",
+    "joinVideo": "会议时间加入视频通话",
+    "thanks": "谢谢，会上见！",
+    "preheader": "你的团队会议：{when}。准备好进展卡并回顾你的后续行动项。",
+    "tagline": "团队会议",
+    "title": "下次会议的进展卡",
+    "appointment": "我们的约定",
+    "fallbackLink": "如果按钮无法打开：",
+    "sheets": "待填写的项目卡（状态和今日要点）",
+    "replyTitle": "没时间？直接回复这封邮件",
+    "replyHint": "每个板块的名称单独占一行，下面写你的条目，每行一条：你的回复会直接写入你的进展卡。",
+    "replyExample": "例如："
+  },
+  "replied": {
+    "subject": "Ronde · {team}：你的进展卡已更新",
+    "title": "你的进展卡已更新",
+    "intro": "谢谢 {name}，你的回复为 {team} 的进展卡添加了以下内容：",
+    "nothing": "我们没有在你的回复中找到可添加的内容。请将每个板块的名称单独写一行，下面写条目，每行一条，或者在 Ronde 中填写进展卡。",
+    "already": "你回复的内容都已在进展卡中。",
+    "open": "查看我的进展卡",
+    "footer": "你收到这封邮件，是因为你回复了 Ronde 的提醒。"
+  }
+}

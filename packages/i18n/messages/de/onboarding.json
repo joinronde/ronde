@@ -1,0 +1,19 @@
+{
+  "title": "Leg deinen Arbeitsbereich an",
+  "welcome": "Willkommen, {name}!",
+  "intro": "Ein Arbeitsbereich bündelt dein Team: Personen, Meetings und Vorlagen. Weitere kannst du später anlegen.",
+  "name": "Name des Arbeitsbereichs",
+  "namePlaceholder": "Produktteam",
+  "slug": "Adresse",
+  "slugHint": "Kleinbuchstaben, Ziffern und Bindestriche.",
+  "change": "Ändern",
+  "defaults": "Adresse {address} · {language} · {timezone}",
+  "language": "Sprache der E-Mails und Protokolle",
+  "timezone": "Zeitzone",
+  "create": "Arbeitsbereich anlegen",
+  "invitationsTitle": "Du wurdest eingeladen",
+  "join": "Beitreten",
+  "createOwn": "Oder leg deinen eigenen Arbeitsbereich an",
+  "yourWorkspaces": "Deine Arbeitsbereiche",
+  "open": "Öffnen"
+}

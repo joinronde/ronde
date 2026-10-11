@@ -1,0 +1,28 @@
+{
+  "new-year": "Buon anno! Che le tue pipeline restino verdi ✨",
+  "kings-cake": "Epifania: chi ha trovato la sorpresa? 👑",
+  "candlemas": "Candelora: chi porta le crêpe? 🥞",
+  "valentines": "Buon San Valentino, anche al tuo linter 💜",
+  "pi-day": "Buon giorno del π: 3,14159265… 🥧",
+  "april-fools": "Pesce d'aprile! Controlla la schiena 🐟",
+  "easter": "Buona Pasqua: si apre la caccia ai bug 🐣",
+  "easter-april-fools": "Pasqua e pesce d'aprile nella stessa settimana: occhio alla schiena e alla cioccolata 🐟🐣",
+  "star-wars": "Che il 4 maggio sia con te ✨",
+  "music-day": "Festa della Musica: cuffie in testa 🎸",
+  "bastille-day": "Buon 14 luglio 🎆",
+  "back-to-school": "Si torna a scuola! Zaini pronti, ticket pure 🎒",
+  "programmers-day": "Giornata dei programmatori: giorno 256 dell'anno (0x100) 💻",
+  "halloween": "Buon Halloween: attenzione ai bug zombie 🎃",
+  "christmas": "Natale si avvicina: niente rilasci in produzione il 24! 🎄",
+  "holidays": "Buone feste ✨",
+  "winter": "Un caffè caldo, e si parte ☕",
+  "spring": "È arrivata la primavera 🌸",
+  "summer": "È estate: crema solare e code review ☀️",
+  "autumn": "Cadono le foglie, la produzione no 🍂",
+  "birthday": "Buon compleanno! 🎂",
+  "birthdayNamed": "Buon compleanno, {names}! 🎂",
+  "names": {
+    "auto": "Automatico (in base alla data)",
+    "off": "Nessuna atmosfera"
+  }
+}

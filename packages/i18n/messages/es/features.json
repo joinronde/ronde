@@ -1,0 +1,75 @@
+{
+  "workspaces": {
+    "unlimited": "Espacios, reuniones y personas ilimitados"
+  },
+  "identity": {
+    "local": "Cuentas con correo y contraseña",
+    "magicLink": "Enlaces de inicio de sesión por correo",
+    "social": "Inicio de sesión con Google, GitHub o Microsoft",
+    "oidc": "Inicio de sesión único con un proveedor OpenID Connect",
+    "twoFactor": "Autenticación en dos pasos",
+    "saml": "Inicio de sesión único SAML y varios proveedores de identidad",
+    "ldap": "Inicio de sesión con LDAP y Active Directory",
+    "scim": "Aprovisionamiento de usuarios con SCIM",
+    "enforcedSso": "Inicio de sesión único obligatorio",
+    "domainCapture": "Captura de dominio"
+  },
+  "permissions": {
+    "builtInRoles": "Roles integrados para espacios y reuniones",
+    "customRoles": "Roles personalizados y permisos detallados"
+  },
+  "meetings": {
+    "unlimited": "Reuniones y sesiones ilimitadas",
+    "sectionRoles": "Secciones de ficha con comportamiento configurable",
+    "templates": "Plantillas integradas y del espacio"
+  },
+  "scheduling": {
+    "recurrence": "Recurrencia flexible con excepciones",
+    "ics": "Fuentes de calendario (ICS)",
+    "calendarSync": "Sincronización bidireccional con calendarios de Google, Microsoft 365 y CalDAV"
+  },
+  "modules": {
+    "facilitation": "Todos los módulos de dinamización",
+    "notifications": "Notificaciones por correo, chat y webhooks",
+    "formats": "Retrospectivas, planning poker, reuniones asíncronas",
+    "workflows": "Constructor de flujos de trabajo",
+    "aiAssistant": "Asistente de IA: resúmenes y acciones",
+    "transcription": "Transcripción de las sesiones, turno por turno"
+  },
+  "integrations": {
+    "gitlab": "Importación desde GitLab",
+    "github": "Importación desde GitHub",
+    "video": "Videollamadas: cualquier enlace, Jitsi, BigBlueButton",
+    "api": "API REST y webhooks salientes",
+    "writeBack": "Tickets en Jira, Linear, GitLab y GitHub a partir de las acciones",
+    "videoLinks": "Enlaces de Zoom, Google Meet y Teams creados automáticamente",
+    "sms": "Recordatorios por SMS y WhatsApp (Twilio)",
+    "slack": "App de Slack: fichas rellenadas desde Slack, actas en el canal, /ronde",
+    "wikis": "Actas publicadas en Notion y Confluence",
+    "teams": "App de Microsoft Teams: recordatorios y fichas en Teams, un canal para las notificaciones",
+    "projectSync": "Proyectos importados siempre al día: nombre, situación, fechas y avance"
+  },
+  "reporting": {
+    "meeting": "Estadísticas por reunión",
+    "export": "Exportación a Markdown, PDF y CSV",
+    "workspace": "Paneles del espacio que abarcan todas las reuniones",
+    "scheduled": "Informes enviados por correo de forma periódica",
+    "portfolio": "Panel de la cartera: estado en el tiempo, fechas límite, proyectos sin noticias, exportación CSV e informe programado"
+  },
+  "branding": {
+    "customLogo": "Tu logotipo en pantallas, correos y actas",
+    "whiteLabel": "Marca blanca y dominio propio"
+  },
+  "compliance": {
+    "auditLog": "Registro de auditoría de los últimos 90 días, con exportación CSV",
+    "auditStream": "Historial de auditoría completo, enviado a tu SIEM",
+    "retention": "Reglas de conservación de datos"
+  },
+  "projects": {
+    "portfolio": "Cartera de proyectos: descripción, tema, estado, responsable, equipo, fechas y el historial de cada reunión",
+    "round": "Ronda por proyecto: un turno por proyecto, donde sus miembros hablan juntos",
+    "programs": "Programas: proyectos agrupados en programas anidados",
+    "permissions": "Permisos por proyecto",
+    "import": "Proyectos importados desde GitHub, GitLab, Jira y Linear"
+  }
+}

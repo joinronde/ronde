@@ -1,0 +1,62 @@
+{
+  "workspace": {
+    "manage": "Change the workspace settings"
+  },
+  "members": {
+    "manage": "Change members' roles"
+  },
+  "people": {
+    "read": "See the directory",
+    "manage": "Edit and remove people",
+    "invite": "Invite people"
+  },
+  "templates": {
+    "manage": "Save and delete templates"
+  },
+  "connectors": {
+    "manage": "Manage notification connectors"
+  },
+  "audit": {
+    "read": "Read the audit log"
+  },
+  "meeting": {
+    "create": "Create meetings",
+    "read": "See every meeting",
+    "configure": "Change every meeting's settings",
+    "delete": "Delete meetings"
+  },
+  "participants": {
+    "manage": "Manage participants"
+  },
+  "session": {
+    "run": "Run sessions (control room)",
+    "participate": "Take part in sessions",
+    "observe": "Watch sessions"
+  },
+  "checkin": {
+    "write": {
+      "own": "Fill in their own check-in",
+      "any": "Edit anyone's check-in"
+    },
+    "read": {
+      "all": "Read every check-in"
+    }
+  },
+  "notes": {
+    "read": "Read the host notes"
+  },
+  "minutes": {
+    "edit": "Edit the minutes"
+  },
+  "history": {
+    "read": "Read the history"
+  },
+  "stats": {
+    "read": "See the statistics"
+  },
+  "projects": {
+    "read": "See the portfolio",
+    "create": "Create projects",
+    "manage": "Edit and archive every project"
+  }
+}

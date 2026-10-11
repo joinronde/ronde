@@ -1,0 +1,17 @@
+{
+  "options": "Параметры показа",
+  "theme": "Тема показа",
+  "themes": {
+    "auto": "Авто",
+    "light": "Светлая",
+    "dark": "Тёмная"
+  },
+  "reducedMotion": "Меньше анимации",
+  "ambience": "Атмосфера экрана ожидания",
+  "previewTheme": "Посмотреть тему",
+  "replayIntro": "Повторить заставку",
+  "fullscreen": "Во весь экран",
+  "drivenFromControl": "Эта вкладка управляется с пульта.",
+  "yourTurn": "Ваш черёд, <span>{name}</span>!",
+  "poweredBy": "Сделано на Ronde"
+}

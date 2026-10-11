@@ -1,0 +1,17 @@
+packages:
+  - apps/*
+  - packages/*
+  - ee
+  - ee-stub
+
+onlyBuiltDependencies:
+  - "@prisma/engines"
+  - esbuild
+  - prisma
+
+# Every Tiptap package at the editor's version (the React binding's optional menus would otherwise float ahead)
+overrides:
+  "@tiptap/extension-bubble-menu": 3.31.3
+  "@tiptap/extension-floating-menu": 3.31.3
+  # Pulled in by Better Auth for MySQL, which Ronde does not use: kept at a version without known flaws
+  mysql2: 3.24.4

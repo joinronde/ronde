@@ -1,0 +1,18 @@
+{
+  "title": "Transcription",
+  "intro": "Turns what is said during a session into text, turn by turn, for the minutes and the AI assistant. Each meeting allows it in its own settings.",
+  "enable": "Turn on transcription",
+  "url": "Speech-to-text service",
+  "urlHint": "Leave empty for OpenAI. A self-hosted Whisper server (faster-whisper-server, speaches…) works too: its address ends with /v1.",
+  "model": "Model",
+  "modelHint": "whisper-1 or gpt-4o-transcribe with OpenAI; the model name of your server otherwise.",
+  "language": "Spoken language",
+  "detect": "Detect it",
+  "key": "API key",
+  "keyHint": "Needed for OpenAI; optional for a self-hosted server. Stored encrypted.",
+  "keySaved": "A key is saved. Type a new one to replace it.",
+  "instance": "Service of the instance",
+  "privacy": "The sound of a recorded session is sent to this service in pieces of thirty seconds, then deleted: only the text stays, with the session.",
+  "save": "Save",
+  "saved": "Saved."
+}

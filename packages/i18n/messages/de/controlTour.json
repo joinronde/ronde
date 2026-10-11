@@ -1,0 +1,34 @@
+{
+  "chapters": {
+    "welcome": "Willkommen",
+    "prepare": "Vorbereiten",
+    "run": "Leiten",
+    "conclude": "Abschließen"
+  },
+  "steps": {
+    "welcome": {
+      "title": "Willkommen in der Regie 👋",
+      "body": "<p>Von diesem Tab aus leitest du das Meeting; deine Notizen bleiben hier, nur für dich.</p><ul><li><strong>Öffne den geteilten Bildschirm</strong>: ein Tab ohne Menüs, gemacht für die Projektion.</li><li><strong>Teile diesen Tab</strong> im Videocall, nicht deinen ganzen Bildschirm: Das sieht das Team.</li><li><strong>Komm hierher zurück</strong>, um zu steuern: Alles erscheint live auf dem geteilten Bildschirm.</li></ul><tip>Navigiere mit <kbd>→</kbd> und <kbd>←</kbd>, beende mit <kbd>Esc</kbd>.</tip>"
+    },
+    "runOrder": {
+      "title": "Tagesordnung und Reihenfolge",
+      "body": "<p>Einstieg, eine Runde pro Person, offene Themen, dann Abschluss.</p><ul><li><strong>↑ ↓</strong> ändern die Reihenfolge, <strong>Abwesend</strong> nimmt jemanden aus der Runde.</li><li><strong>Los</strong> springt direkt zu einem Schritt.</li><li>Ein grüner Punkt: Der Check-in der Person ist fertig.</li></ul>"
+    },
+    "controls": {
+      "title": "Starten und weitergehen",
+      "body": "<ul><li><strong>Meeting starten</strong> spielt den Einstieg auf dem geteilten Bildschirm ab.</li><li><strong>Weiter</strong> (<kbd>→</kbd>) gibt der nächsten Person das Wort; der Timer zeigt ihre verbleibende Redezeit.</li><li><kbd>Leertaste</kbd> pausiert den Timer, <strong>+30 s</strong> gibt etwas mehr Zeit, <strong>Meeting beenden</strong> springt zum Abschluss.</li></ul>"
+    },
+    "notes": {
+      "title": "Deine Notizen",
+      "body": "<p>Ein Notizbereich pro Schritt, <strong>beim Tippen gespeichert</strong> und nur für dich sichtbar: Die Notizen landen im Protokoll, bei der richtigen Person.</p><p><strong>+ Entscheidung</strong> hält eine Entscheidung fest; <strong>+ Aufgabe</strong> erstellt eine Folgeaufgabe mit verantwortlicher Person, die in den nächsten Sitzungen verfolgt wird.</p>"
+    },
+    "minutes": {
+      "title": "Das Protokoll",
+      "body": "<p>Es schreibt sich von selbst aus den Check-ins, deinen Notizen, den Entscheidungen und den Aufgaben.</p><p>Am Ende <strong>Meeting archivieren</strong>: Das Protokoll kommt in den Verlauf und die nächste Sitzung ist bereit.</p>"
+    },
+    "finish": {
+      "title": "Jetzt bist du dran!",
+      "body": "<p>Personen, Terminplan und Module stellst du in den Einstellungen des Meetings ein. Mit diesem Button kannst du die Tour jederzeit wiederholen. Viel Erfolg beim Meeting!</p>"
+    }
+  }
+}

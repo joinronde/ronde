@@ -1,0 +1,54 @@
+{
+  "when": "{date} um {time}",
+  "speak": {
+    "minutes": "{m} Min.",
+    "seconds": "{s} Sek."
+  },
+  "timing": "Ziel {target} · {speak} Redezeit pro Person",
+  "labels": {
+    "when": "Wann",
+    "timing": "Format",
+    "duration": "Dauer",
+    "participants": "Teilnehmende"
+  },
+  "openRonde": "Ronde öffnen",
+  "joinVideo": "🎥 Dem Videoanruf beitreten",
+  "followInApp": "🙋 Das Meeting in Ronde verfolgen",
+  "test": {
+    "title": "✅ Ronde ist verbunden",
+    "body": "Benachrichtigungen von „{team}“ kommen hier an."
+  },
+  "soon": {
+    "title": "⏰ {team} beginnt in {minutes, plural, one {# Minute} other {# Minuten}}",
+    "body": "Zeit, zum Team zu stoßen und den Check-in griffbereit zu haben. Unter „Mein Bildschirm“ kannst du den Beiträgen folgen, dich melden und Fragen stellen."
+  },
+  "started": {
+    "title": "▶️ {team} beginnt",
+    "body": "Die Runde geht gleich los: Komm dazu, um deine Fortschritte und Fragen zu teilen."
+  },
+  "minutes": {
+    "title": "📝 Protokoll von {team} · {date}",
+    "decisions": "Entscheidungen",
+    "actions": "Folgeaufgaben",
+    "action": "{text} ({owner})",
+    "read": "Protokoll lesen"
+  },
+  "checkIn": {
+    "title": "📝 Bereiten wir {team} vor",
+    "ready": "Check-ins bereit: {ready}/{total}",
+    "none": "Für diese Sitzung wird kein Check-in erwartet.",
+    "allReady": "Alle Check-ins sind bereit, danke, Team!",
+    "remaining": "{count, plural, one {# Check-in muss noch vorbereitet oder aktualisiert werden.} other {# Check-ins müssen noch vorbereitet oder aktualisiert werden.}}",
+    "prepare": "Aktualisiere deine Projekte und Abschnitte ({sections}) und prüfe deine Folgeaufgaben.",
+    "fillIn": "📝 Meinen Check-in ausfüllen"
+  },
+  "overdue": {
+    "title": "⏳ {team}: {count, plural, one {# Folgeaufgabe wartet} other {# Folgeaufgaben warten}}",
+    "item": "{text} ({owner}, {days, plural, one {# Tag} other {# Tage}})",
+    "update": "Meine Aufgaben aktualisieren"
+  },
+  "birthday": {
+    "title": "🎂 Alles Gute zum Geburtstag, {names}!",
+    "body": "Das ganze Team {team} wünscht dir einen schönen Tag."
+  }
+}

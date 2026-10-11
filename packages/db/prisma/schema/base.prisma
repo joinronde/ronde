@@ -1,0 +1,11 @@
+// Ronde data model, split per domain in this folder.
+// The client is generated into packages/db/src/generated/prisma (pnpm db:generate).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}

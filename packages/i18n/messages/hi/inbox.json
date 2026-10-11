@@ -1,0 +1,18 @@
+{
+  "label": "सूचनाएँ",
+  "labelUnread": "{count, plural, one {सूचनाएँ, # अपठित} other {सूचनाएँ, # अपठित}}",
+  "title": "सूचनाएँ",
+  "markAll": "सभी को पढ़ा हुआ चिह्नित करें",
+  "unread": "अपठित",
+  "someone": "कोई",
+  "empty": "सब कुछ देख लिया।",
+  "emptyHint": "आपको दिए गए कार्य, शुरू होते सत्र और प्रकाशित कार्यवृत्त यहाँ दिखते हैं।",
+  "kinds": {
+    "action_assigned": "<strong>{actor}</strong> ने <strong>{meeting}</strong> में आपको एक कार्य दिया",
+    "session_started": "<strong>{meeting}</strong> शुरू हो गई: सत्र में शामिल हों",
+    "minutes_published": "<strong>{meeting}</strong> का कार्यवृत्त आ गया",
+    "kudo_received": "<strong>{actor}</strong> ने <strong>{meeting}</strong> में आपको धन्यवाद दिया",
+    "meeting_joined": "<strong>{actor}</strong> ने आपको <strong>{meeting}</strong> में जोड़ा",
+    "absence_delegated": "<strong>{actor}</strong> अनुपस्थित रहेंगे: इस बीच उनकी होस्ट की गई मीटिंग आप चलाएँगे"
+  }
+}

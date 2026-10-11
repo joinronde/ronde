@@ -1,0 +1,65 @@
+{
+  "title": "Serververwaltung",
+  "back": "Zurück",
+  "intro": "Einstellungen dieses Ronde-Servers, gemeinsam für alle seine Arbeitsbereiche. Die Einstellungen eines Arbeitsbereichs (Mitglieder, Rollen, Sicherheit) stehen in dessen Einstellungen. Hier gespeicherte Werte haben Vorrang vor den Umgebungsvariablen.",
+  "counts": {
+    "users": "Konten",
+    "workspaces": "Arbeitsbereiche",
+    "meetings": "Meetings"
+  },
+  "language": "Sprache",
+  "defaultLocale": "Standardsprache",
+  "defaultLocaleHint": "Für Personen, die in ihrem Konto keine Sprache gewählt haben und deren Browser keine Sprache anbietet, die Ronde spricht.",
+  "signup": "Wer ein Konto erstellen darf",
+  "recommended": "Empfohlen",
+  "policies": {
+    "invite-only": {
+      "label": "Auf Einladung",
+      "hint": "Nur Personen, die in einen Arbeitsbereich eingeladen wurden."
+    },
+    "domains": {
+      "label": "E-Mail-Domains",
+      "hint": "Eingeladene Personen und alle mit einer Adresse der unten stehenden Domains."
+    },
+    "open": {
+      "label": "Offen",
+      "hint": "Alle, die diesen Server erreichen."
+    }
+  },
+  "domains": "Erlaubte Domains",
+  "domainsHint": "Durch Kommas getrennt, z. B. example.org.",
+  "save": "Speichern",
+  "saved": "Gespeichert",
+  "license": {
+    "title": "Lizenz",
+    "pureCommunity": "Dieser Build ist die reine Community Edition: Der Code der bezahlten Editionen ist nicht enthalten.",
+    "status": {
+      "none": "Community Edition",
+      "invalid": "Ungültiger Lizenzschlüssel",
+      "active": "Lizenz aktiv",
+      "grace": "Lizenz abgelaufen: Kulanzzeit",
+      "expired": "Lizenz abgelaufen"
+    },
+    "reasons": {
+      "format": "Der gespeicherte Schlüssel kann nicht gelesen werden.",
+      "payload": "Der gespeicherte Schlüssel kann nicht gelesen werden.",
+      "signature": "Der gespeicherte Schlüssel wurde verändert oder nicht von Ronde ausgestellt.",
+      "unknownKey": "Der gespeicherte Schlüssel wurde mit einem Schlüssel signiert, den diese Version nicht kennt."
+    },
+    "editions": {
+      "team": "Team",
+      "enterprise": "Enterprise"
+    },
+    "summary": "{edition} für {customer}, bis {date}.",
+    "graceUntil": "Alles funktioniert weiter bis {date}: Verlängere die Lizenz vorher.",
+    "readOnly": "Bezahlte Funktionen sind schreibgeschützt: Ihr Inhalt bleibt lesbar, aber nichts Neues kann hinzugefügt werden. Community-Funktionen sind nicht betroffen.",
+    "seats": "{used} von {seats} Plätzen belegt",
+    "seatsUnlimited": "{used} Personen, ohne Platzbegrenzung",
+    "overSeats": "Mehr Personen nutzen Ronde, als die Lizenz erlaubt: Nichts wird blockiert, aber bitte aktualisiere deine Lizenz.",
+    "fromEnv": "Der Schlüssel kommt aus der Variable RONDE_LICENSE: Ändere ihn dort.",
+    "key": "Lizenzschlüssel",
+    "keyHint": "Wird auf diesem Server offline geprüft: Nichts wird irgendwohin gesendet.",
+    "save": "Schlüssel speichern",
+    "remove": "Lizenz entfernen"
+  }
+}

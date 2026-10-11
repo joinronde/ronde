@@ -1,0 +1,59 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`records > renders the same minutes in English and French from one record 1`] = `
+"# Minutes · Product team
+**Monday, September 21, 2026** · duration 23:00 · 1 participant · absent: Bruno Petit
+
+## Summary
+Short **week**.
+
+## Decisions
+- ship _(Alice Martin)_
+
+## Round table
+
+### Alice Martin (design) · 2:05
+**Achievements**
+- OIDC sign-in
+  - Bruno Petit: Nice
+**Planned for next week**
+- ☐ Tests
+**Research**
+- Read
+**Notes · Host**
+- Decision: ship
+
+## Open topics
+- On-call rota
+
+Next meeting: Monday, September 28"
+`;
+
+exports[`records > renders the same minutes in English and French from one record 2`] = `
+"# Compte rendu · Product team
+**lundi 21 septembre 2026** · durée 23:00 · 1 participant · absents : Bruno Petit
+
+## Synthèse
+Semaine **courte**.
+
+## Décisions
+- ship _(Alice Martin)_
+
+## Tour de table
+
+### Alice Martin (design) · 2:05
+**Achievements**
+- OIDC sign-in
+  - Bruno Petit: Nice
+**Prévu semaine prochaine**
+- ☐ Tests
+**Research**
+- Read
+**Notes · Régisseur**
+- Decision: ship
+
+## Points divers
+- On-call rota
+
+Prochaine réunion : lundi 28 septembre"
+`;

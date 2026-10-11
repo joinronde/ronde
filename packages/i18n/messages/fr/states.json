@@ -1,0 +1,13 @@
+{
+  "loading": "Chargement…",
+  "notFoundTitle": "Page introuvable",
+  "notFoundBody": "Cette page n'existe pas, ou vous n'y avez plus accès.",
+  "home": "Retour à l'accueil",
+  "errorTitle": "Un problème est survenu",
+  "errorBody": "Cette page n'a pas pu s'afficher. Réessayez ; si le problème continue, rechargez la page.",
+  "errorRef": "Référence : {ref}",
+  "retry": "Réessayer",
+  "suspendedTitle": "Cet espace de travail est suspendu",
+  "suspendedBody": "{workspace} est suspendu pour le moment : ses réunions, fiches et historique sont conservés, mais personne ne peut les ouvrir. Ses propriétaires savent pourquoi ; écrivez à l'administrateur de ce service pour le rouvrir.",
+  "suspendedBack": "Retour à mes espaces de travail"
+}

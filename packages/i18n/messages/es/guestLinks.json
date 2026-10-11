@@ -1,0 +1,18 @@
+{
+  "title": "Enlaces de invitado",
+  "intro": "Personas sin cuenta siguen la pantalla compartida en directo, en solo lectura, con un enlace secreto que caduca: un cliente, un consejo, un socio. Ven lo que muestra la pantalla de la sala.",
+  "label": "Para quién es",
+  "labelPlaceholder": "P. ej. Miembros del consejo",
+  "duration": "Válido durante",
+  "days": "{count, plural, one {# día} other {# días}}",
+  "create": "Crear un enlace",
+  "once": "Copia este enlace ahora y compártelo: no se volverá a mostrar.",
+  "link": "Enlace de invitado",
+  "copy": "Copiar",
+  "copied": "Enlace copiado",
+  "until": "Válido hasta el {date}",
+  "expiredOn": "Caducó el {date}",
+  "revoke": "Revocar",
+  "remove": "Quitar",
+  "revoked": "Enlace revocado"
+}

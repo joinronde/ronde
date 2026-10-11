@@ -1,0 +1,27 @@
+{
+  "fallbackLink": "Se il pulsante non si apre:",
+  "verify": {
+    "subject": "Conferma il tuo indirizzo email",
+    "intro": "Benvenuto in Ronde! Conferma il tuo indirizzo email per completare la creazione dell'account.",
+    "action": "Conferma il mio indirizzo",
+    "footer": "Se non hai creato un account, puoi ignorare questa email."
+  },
+  "magicLink": {
+    "subject": "Il tuo link di accesso",
+    "intro": "Ecco il tuo link per accedere a Ronde. Funziona una sola volta e scade tra 10 minuti.",
+    "action": "Accedi",
+    "footer": "Se non hai chiesto di accedere, puoi ignorare questa email."
+  },
+  "resetPassword": {
+    "subject": "Reimposta la password",
+    "intro": "Qualcuno ha chiesto di reimpostare la password del tuo account Ronde. Il link scade tra 1 ora.",
+    "action": "Scegli una nuova password",
+    "footer": "Se non l'hai chiesto tu, puoi ignorare questa email: la tua password resta la stessa."
+  },
+  "invitation": {
+    "subject": "{inviter} ti invita in {workspace} su Ronde",
+    "intro": "{inviter} ti invita a unirti allo spazio di lavoro {workspace} su Ronde, per preparare e condurre insieme le riunioni del team.",
+    "action": "Unisciti a {workspace}",
+    "footer": "Questo invito scade tra 7 giorni. Se non te lo aspettavi, puoi ignorare questa email."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "when": "{date} {time}",
+  "speak": {
+    "minutes": "{m} 分钟",
+    "seconds": "{s} 秒"
+  },
+  "timing": "目标 {target} · 每人发言 {speak}",
+  "labels": {
+    "when": "时间",
+    "timing": "形式",
+    "duration": "时长",
+    "participants": "参与者"
+  },
+  "openRonde": "打开 Ronde",
+  "joinVideo": "🎥 加入视频通话",
+  "followInApp": "🙋 在 Ronde 中跟进会议",
+  "test": {
+    "title": "✅ Ronde 已连接",
+    "body": "“{team}”的通知将发送到这里。"
+  },
+  "soon": {
+    "title": "⏰ {team} 将在 {minutes, plural, other {# 分钟}}后开始",
+    "body": "该和团队会合了，把进展卡准备好。在“我的屏幕”中，你可以跟进发言、举手和提问。"
+  },
+  "started": {
+    "title": "▶️ {team} 开始了",
+    "body": "轮流发言即将开始：加入团队，分享你的进展和问题。"
+  },
+  "minutes": {
+    "title": "📝 {team} 会议纪要 · {date}",
+    "decisions": "决定",
+    "actions": "后续行动项",
+    "action": "{text}（{owner}）",
+    "read": "阅读会议纪要"
+  },
+  "checkIn": {
+    "title": "📝 一起准备 {team}",
+    "ready": "已准备的进展卡：{ready}/{total}",
+    "none": "本场无需进展卡。",
+    "allReady": "所有进展卡都已准备好，谢谢大家！",
+    "remaining": "{count, plural, other {还有 # 张进展卡需要准备或更新。}}",
+    "prepare": "更新你的项目和板块（{sections}），并回顾你的后续行动项。",
+    "fillIn": "📝 填写我的进展卡"
+  },
+  "overdue": {
+    "title": "⏳ {team}：{count, plural, other {# 项后续行动项待处理}}",
+    "item": "{text}（{owner}，{days, plural, other {# 天}}）",
+    "update": "更新我的行动项"
+  },
+  "birthday": {
+    "title": "🎂 {names}，生日快乐！",
+    "body": "{team} 全体成员祝你今天过得愉快。"
+  }
+}

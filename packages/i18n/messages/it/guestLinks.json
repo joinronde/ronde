@@ -1,0 +1,18 @@
+{
+  "title": "Link ospite",
+  "intro": "Persone senza account seguono lo schermo condiviso in diretta, in sola lettura, con un link segreto che scade: un cliente, un consiglio, un partner. Vedono ciò che mostra lo schermo della sala.",
+  "label": "Per chi è",
+  "labelPlaceholder": "Es. Membri del consiglio",
+  "duration": "Valido per",
+  "days": "{count, plural, one {# giorno} other {# giorni}}",
+  "create": "Crea un link",
+  "once": "Copia ora questo link e condividilo: non verrà più mostrato.",
+  "link": "Link ospite",
+  "copy": "Copia",
+  "copied": "Link copiato",
+  "until": "Valido fino al {date}",
+  "expiredOn": "Scaduto il {date}",
+  "revoke": "Revoca",
+  "remove": "Rimuovi",
+  "revoked": "Link revocato"
+}

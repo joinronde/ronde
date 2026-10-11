@@ -1,0 +1,26 @@
+{
+  "name": "@ronde/core",
+  "version": "0.0.0",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "description": "Framework-free Ronde domain logic shared by the server and the browser: agenda, timer, sections, minutes, notifications, stats.",
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ronde/i18n": "workspace:*",
+    "temporal-polyfill": "^1.0.5",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@ronde/config": "workspace:*",
+    "rrule": "^2.8.1",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.2"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "shiftKey": "Shift+",
+  "toolbar": "Formatação · {label}",
+  "boldLetter": "N",
+  "italicLetter": "I",
+  "strikeLetter": "T",
+  "bold": "Negrito ({key})",
+  "italic": "Itálico ({key})",
+  "underlineLetter": "S",
+  "underline": "Sublinhado ({key})",
+  "strike": "Tachado ({key})",
+  "bulletList": "Lista com marcadores",
+  "numberedList": "Lista numerada",
+  "indent": "Subitem (Tab em uma lista)",
+  "outdent": "Subir um nível ({key})",
+  "link": "Link ({key})",
+  "linkUrl": "Endereço do link",
+  "linkApply": "Aplicar",
+  "linkRemove": "Remover o link",
+  "linkCancel": "Cancelar"
+}

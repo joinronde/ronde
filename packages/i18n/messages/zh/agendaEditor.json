@@ -1,0 +1,33 @@
+{
+  "title": "议程",
+  "intro": "每次会议的环节，按顺序排列。会议总是以总结结束。",
+  "blocks": {
+    "intro": "开场",
+    "round": "轮流发言",
+    "topics": "开放议题",
+    "retro": "回顾会",
+    "timebox": "限时议题",
+    "poker": "计划扑克",
+    "projects": "按项目轮流"
+  },
+  "timeboxTitle": "议题",
+  "minutes": "分钟",
+  "up": "上移“{label}”",
+  "down": "下移“{label}”",
+  "remove": "移除“{label}”",
+  "add": "添加环节",
+  "pick": "选择一个环节…",
+  "newTimebox": "新议题",
+  "saved": "议程已保存",
+  "turnOn": "请先在“模块”中开启该模块，才能添加此环节。",
+  "locked": "会议正在进行：结束后才能修改议程。",
+  "noProjects": "请在“项目”中选择此会议跟进的项目。",
+  "projectOrder": "项目顺序",
+  "projectOrders": {
+    "manual": "按会议中的顺序",
+    "theme": "按主题",
+    "health": "遇到困难的项目优先"
+  },
+  "perProject": "每个项目的分钟数",
+  "perProjectAuto": "自动"
+}

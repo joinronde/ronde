@@ -1,0 +1,33 @@
+{
+  "title": "Pauta",
+  "intro": "As etapas de cada sessão, em ordem. O encerramento sempre fecha a reunião.",
+  "blocks": {
+    "intro": "Abertura",
+    "round": "Rodada",
+    "topics": "Assuntos em aberto",
+    "retro": "Retrospectiva",
+    "timebox": "Tempo limitado",
+    "poker": "Planning poker",
+    "projects": "Rodada por projeto"
+  },
+  "timeboxTitle": "Assunto",
+  "minutes": "Minutos",
+  "up": "Subir “{label}”",
+  "down": "Descer “{label}”",
+  "remove": "Remover “{label}”",
+  "add": "Adicionar um bloco",
+  "pick": "Escolha um bloco…",
+  "newTimebox": "Novo assunto",
+  "saved": "Pauta salva",
+  "turnOn": "Ative o módulo em “Módulos” para adicionar este bloco.",
+  "locked": "Uma sessão está em andamento: a pauta poderá mudar quando ela terminar.",
+  "noProjects": "escolha os projetos que a reunião acompanha em “Projetos”.",
+  "projectOrder": "Ordem dos projetos",
+  "projectOrders": {
+    "manual": "Na ordem da reunião",
+    "theme": "Por tema",
+    "health": "Projetos em dificuldade primeiro"
+  },
+  "perProject": "min por projeto",
+  "perProjectAuto": "auto"
+}

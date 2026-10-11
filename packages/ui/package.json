@@ -1,0 +1,46 @@
+{
+  "name": "@ronde/ui",
+  "version": "0.0.0",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "description": "Ronde design system: tokens, base styles and accessible React primitives shared by the product and the marketing site.",
+  "type": "module",
+  "exports": {
+    "./styles/*": "./src/styles/*",
+    "./logo": "./src/components/logo.tsx",
+    "./modal": "./src/components/modal.tsx",
+    "./tour": "./src/components/tour.tsx",
+    "./md-editor": "./src/components/md-editor.tsx",
+    "./effects": "./src/components/effects.ts",
+    "./faces": "./src/components/faces.ts",
+    "./lost-table": "./src/components/lost-table.tsx"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dicebear/collection": "^9.4.3",
+    "@dicebear/core": "^9.4.3",
+    "@ronde/core": "workspace:*",
+    "@tiptap/extension-table": "3.31.3",
+    "@tiptap/extensions": "3.31.3",
+    "@tiptap/pm": "3.31.3",
+    "@tiptap/react": "3.31.3",
+    "@tiptap/starter-kit": "3.31.3"
+  },
+  "peerDependencies": {
+    "next-intl": "^4.14.9",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@ronde/config": "workspace:*",
+    "@ronde/i18n": "workspace:*",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "next-intl": "^4.14.9",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "typescript": "~5.9.3"
+  }
+}

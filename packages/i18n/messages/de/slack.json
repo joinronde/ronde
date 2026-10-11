@@ -1,0 +1,53 @@
+{
+  "title": "Mein Check-in",
+  "save": "Speichern",
+  "cancel": "Abbrechen",
+  "close": "Schließen",
+  "fillIn": "Meinen Check-in ausfüllen",
+  "openRonde": "In Ronde öffnen",
+  "hint": {
+    "list": "Ein Punkt pro Zeile.",
+    "checklist": "Ein Punkt pro Zeile; beginne ihn mit [x], wenn er erledigt ist.",
+    "text": "Freier Text, über so viele Zeilen wie nötig."
+  },
+  "notFound": "Ronde findet diesen Check-in für dich nicht. Die E-Mail deines Slack-Kontos muss die deines Ronde-Profils sein, und du musst am Meeting teilnehmen.",
+  "tooLong": "Dieser Check-in ist zu lang, um ihn in Slack zu bearbeiten. Öffne ihn in Ronde.",
+  "tooMany": "Höchstens {max} Punkte.",
+  "itemTooLong": "Ein Punkt ist länger als {max} Zeichen.",
+  "changed": "Dein Check-in wurde inzwischen in Ronde geändert. Schließe dieses Formular und öffne es erneut, um die neueste Version zu sehen.",
+  "saved": "Dein Check-in für „{team}“ ist gespeichert. Danke!",
+  "ready": "Check-in bereit",
+  "toFill": "Check-in auszufüllen",
+  "noSession": "Keine Sitzung geplant",
+  "noMeetings": "Du nimmst an keinem Meeting dieses Arbeitsbereichs teil.",
+  "actions": "Deine offenen Folgeaktionen",
+  "summary": "Deine Meetings in Ronde",
+  "unknown": "Ronde kennt dich noch nicht: Die E-Mail deines Slack-Kontos muss die deines Profils in einem Ronde-Arbeitsbereich sein, der die App hinzugefügt hat.",
+  "unavailable": "Ronde kann gerade nicht antworten. Versuche es gleich noch einmal.",
+  "settings": {
+    "intro": "Füge Ronde deinem Slack-Workspace hinzu: Alle füllen ihren Check-in aus, ohne Slack zu verlassen.",
+    "locked": "Die Slack-App gehört zu Ronde {edition}.",
+    "uses": {
+      "reminders": "Check-in-Erinnerungen per Direktnachricht, mit einer Schaltfläche, die den Check-in als Slack-Formular öffnet.",
+      "channel": "Der gewählte Kanal wird zu einem Connector: Lege in den Benachrichtigungen jedes Meetings fest, was dort gepostet wird (Protokolle, Sitzung beginnt gleich …).",
+      "command": "/ronde zeigt allen ihre nächsten Sitzungen und offenen Folgeaktionen."
+    },
+    "emailMatch": "Personen werden an ihrer E-Mail erkannt: Ihr Slack-Konto und ihr Ronde-Profil müssen dieselbe haben.",
+    "add": "Zu Slack hinzufügen",
+    "connectedTo": "Verbunden mit {team}",
+    "channel": "Benachrichtigungen in {channel}",
+    "reminders": "Check-in-Erinnerungen in Slack senden",
+    "remindersHint": "Per Direktnachricht statt per E-Mail an die Personen, die in Slack gefunden werden. Die anderen erhalten weiterhin die E-Mail.",
+    "reinstall": "Kanal wechseln",
+    "disconnect": "Trennen",
+    "disconnectConfirm": "Ronde aus diesem Slack-Workspace entfernen? Erinnerungen laufen wieder per E-Mail, und die Benachrichtigungsregeln, die in seinen Kanal posten, werden gelöscht.",
+    "notConfigured": "Um Slack zu nutzen, legt die Administration dieser Ronde-Instanz zuerst ihre Slack-App an. Das dauert ein paar Minuten.",
+    "setup": "So wird sie eingerichtet",
+    "result": {
+      "connected": "Slack ist verbunden.",
+      "cancelled": "Die Installation wurde in Slack abgebrochen.",
+      "denied": "Nur Personen, die die Connectoren des Arbeitsbereichs verwalten, können Slack hinzufügen.",
+      "failed": "Slack konnte nicht verbunden werden. Versuche es erneut; wenn es weiter fehlschlägt, wende dich an die Administration dieser Instanz."
+    }
+  }
+}

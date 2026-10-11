@@ -1,0 +1,17 @@
+{
+  "options": "投影选项",
+  "theme": "投影主题",
+  "themes": {
+    "auto": "自动",
+    "light": "浅色",
+    "dark": "深色"
+  },
+  "reducedMotion": "减少动效",
+  "ambience": "等待屏幕氛围",
+  "previewTheme": "预览主题",
+  "replayIntro": "重播开场",
+  "fullscreen": "全屏",
+  "drivenFromControl": "此标签页由控制台控制。",
+  "yourTurn": "轮到你了，<span>{name}</span>！",
+  "poweredBy": "由 Ronde 提供支持"
+}

@@ -1,0 +1,26 @@
+{
+  "noItems": "Die Moderation fügt die zu schätzenden Punkte hinzu.",
+  "progress": "{done} von {total} Punkten geschätzt",
+  "voted": "{count, plural, =0 {Noch niemand hat eine Karte gewählt} one {# Karte gewählt} other {# Karten gewählt}}",
+  "average": "Durchschnitt: {value}",
+  "final": "Schätzung: {value}",
+  "pickTitle": "Deine Schätzung für „{title}“",
+  "deck": "Karten",
+  "hidden": "Deine Karte bleibt verdeckt, bis die Moderation alle aufdeckt.",
+  "votedOf": "{count} von {total} haben eine Karte gewählt",
+  "reveal": "Karten aufdecken",
+  "agree": "Vereinbarte Schätzung:",
+  "revote": "Neue Runde",
+  "reopen": "„{title}“ neu schätzen",
+  "remove": "„{title}“ entfernen",
+  "newItem": "Zu schätzender Punkt",
+  "newItemPlaceholder": "Eine Story, ein Ticket, eine Aufgabe…",
+  "add": "Hinzufügen",
+  "settingsTitle": "Planning Poker",
+  "deckSaved": "Kartendeck gespeichert",
+  "decks": {
+    "fibonacci": "Fibonacci (0, 1, 2, 3, 5, 8, 13, 21)",
+    "tshirt": "T-Shirt-Größen (XS bis XL)",
+    "powers": "Zweierpotenzen (1 bis 32)"
+  }
+}

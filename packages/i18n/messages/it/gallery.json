@@ -1,0 +1,21 @@
+{
+  "title": "Modelli",
+  "intro": "Parti da una riunione che funziona già: per un team, una scuola, un'associazione, un cantiere o un reparto di cura. Tutto resta modificabile.",
+  "browse": "Sfoglia tutti i modelli",
+  "categories": "Per chi è",
+  "sections": "Sezioni",
+  "category": {
+    "all": "Tutti",
+    "team": "Team",
+    "product": "Prodotto e contenuti",
+    "leadership": "Direzione e vendite",
+    "education": "Istruzione",
+    "nonprofit": "Associazioni",
+    "field": "Lavoro sul campo",
+    "health": "Team di cura",
+    "own": "I tuoi modelli"
+  },
+  "minutes": "{count} min",
+  "use": "Usa questo modello",
+  "saveHint": "Ogni riunione può diventare un modello dello spazio: apri le sue impostazioni, poi «Salva come modello»."
+}

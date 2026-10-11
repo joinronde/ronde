@@ -1,0 +1,31 @@
+{
+  "name": "@ronde/modules",
+  "version": "0.0.0",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "description": "Ronde Community Edition modules: icebreaker, mood, kudos, reactions, raised hands, spotlight, birthdays, sounds, ambience and GitLab.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./catalog": "./src/catalog.ts",
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ronde/core": "workspace:*",
+    "@ronde/db": "workspace:*",
+    "@ronde/editions": "workspace:*",
+    "@ronde/i18n": "workspace:*",
+    "@ronde/module-sdk": "workspace:*",
+    "@ronde/random-core": "workspace:*",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@ronde/config": "workspace:*",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.2"
+  }
+}

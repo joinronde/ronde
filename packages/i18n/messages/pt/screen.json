@@ -1,0 +1,17 @@
+{
+  "options": "Opções de projeção",
+  "theme": "Tema de projeção",
+  "themes": {
+    "auto": "Automático",
+    "light": "Claro",
+    "dark": "Escuro"
+  },
+  "reducedMotion": "Movimento reduzido",
+  "ambience": "Clima da tela de espera",
+  "previewTheme": "Pré-visualizar um tema",
+  "replayIntro": "Rever a introdução",
+  "fullscreen": "Tela cheia",
+  "drivenFromControl": "Esta aba é controlada pela sala de controle.",
+  "yourTurn": "Sua vez, <span>{name}</span>!",
+  "poweredBy": "Desenvolvido com Ronde"
+}

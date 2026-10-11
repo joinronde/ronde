@@ -1,0 +1,62 @@
+{
+  "workspace": {
+    "manage": "修改工作空间设置"
+  },
+  "members": {
+    "manage": "修改成员角色"
+  },
+  "people": {
+    "read": "查看目录",
+    "manage": "编辑和移除人员",
+    "invite": "邀请成员"
+  },
+  "templates": {
+    "manage": "保存和删除模板"
+  },
+  "connectors": {
+    "manage": "管理通知连接器"
+  },
+  "audit": {
+    "read": "查看审计日志"
+  },
+  "meeting": {
+    "create": "创建会议",
+    "read": "查看所有会议",
+    "configure": "修改所有会议的设置",
+    "delete": "删除会议"
+  },
+  "participants": {
+    "manage": "管理参与者"
+  },
+  "session": {
+    "run": "主持会议场次（控制台）",
+    "participate": "参加会议场次",
+    "observe": "旁观会议场次"
+  },
+  "checkin": {
+    "write": {
+      "own": "填写自己的进展卡",
+      "any": "编辑任何人的进展卡"
+    },
+    "read": {
+      "all": "查看所有进展卡"
+    }
+  },
+  "notes": {
+    "read": "查看主持人笔记"
+  },
+  "minutes": {
+    "edit": "编辑会议纪要"
+  },
+  "history": {
+    "read": "查看历史"
+  },
+  "stats": {
+    "read": "查看统计"
+  },
+  "projects": {
+    "read": "查看项目组合",
+    "create": "创建项目",
+    "manage": "编辑和归档所有项目"
+  }
+}

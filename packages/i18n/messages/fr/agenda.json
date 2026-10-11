@@ -1,0 +1,14 @@
+{
+  "intro": "Intro",
+  "topics": "Points divers",
+  "questions": "Questions",
+  "end": "Clôture",
+  "poker": "Planning poker",
+  "retro": {
+    "reflect": "Rétro : écrire",
+    "group": "Rétro : regrouper",
+    "vote": "Rétro : voter",
+    "discuss": "Discussion : {title}",
+    "done": "Bilan de la rétro"
+  }
+}

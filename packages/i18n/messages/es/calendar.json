@@ -1,0 +1,20 @@
+{
+  "title": "Calendario",
+  "intro": "Todas las sesiones de tus reuniones: previstas, en directo y celebradas.",
+  "months": "Meses",
+  "previous": "Mes anterior",
+  "next": "Mes siguiente",
+  "today": "Hoy",
+  "upcoming": "Próximamente",
+  "nothing": "Nada previsto en las próximas cuatro semanas.",
+  "status": {
+    "planned": "prevista",
+    "live": "En directo",
+    "held": "celebrada",
+    "cancelled": "cancelada"
+  },
+  "attendance": {
+    "yes": "Estaré",
+    "no": "Ausente"
+  }
+}

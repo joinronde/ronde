@@ -1,0 +1,26 @@
+{
+  "name": "@ronde/i18n",
+  "version": "0.0.0",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./messages": "./src/messages.ts",
+    "./augment": "./src/augment.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "generate": "node scripts/generate.mjs"
+  },
+  "dependencies": {
+    "next-intl": "^4.4.0"
+  },
+  "devDependencies": {
+    "@formatjs/icu-messageformat-parser": "^3.5.20",
+    "@ronde/config": "workspace:*",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.2"
+  }
+}

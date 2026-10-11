@@ -1,0 +1,12 @@
+{
+  "title": "Kudos",
+  "intro": "Los agradecimientos dados durante las sesiones, a la vista de todos.",
+  "given": "{count, plural, =0 {Ningún kudos en los últimos 30 días} one {# kudos en los últimos 30 días} other {# kudos en los últimos 30 días}}",
+  "people": "{count, plural, =0 {} one {para # persona} other {para # personas}}",
+  "birthdays": "Cumpleaños este mes",
+  "today": "¡Hoy! 🎉",
+  "wall": "Kudos dados",
+  "fromTo": "<strong>{from}</strong> para <strong>{to}</strong>",
+  "empty": "Todavía no hay kudos.",
+  "emptyHint": "Durante una sesión, el módulo de kudos permite a cualquiera dar las gracias a un compañero: cada agradecimiento llega a este muro."
+}

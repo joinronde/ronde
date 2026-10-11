@@ -1,0 +1,34 @@
+{
+  "chapters": {
+    "welcome": "Boas-vindas",
+    "prepare": "Preparar",
+    "run": "Conduzir",
+    "conclude": "Encerrar"
+  },
+  "steps": {
+    "welcome": {
+      "title": "Boas-vindas à sala de controle 👋",
+      "body": "<p>É desta aba que você conduz a reunião; suas notas ficam aqui, só para você.</p><ul><li><strong>Abra a tela compartilhada</strong>: uma aba sem menus, feita para projeção.</li><li><strong>Compartilhe essa aba</strong> na chamada de vídeo, não a tela inteira: é o que a equipe vê.</li><li><strong>Volte aqui</strong> para conduzir: tudo aparece ao vivo na tela compartilhada.</li></ul><tip>Navegue com <kbd>→</kbd> e <kbd>←</kbd>, saia com <kbd>Esc</kbd>.</tip>"
+    },
+    "runOrder": {
+      "title": "A pauta e a ordem de fala",
+      "body": "<p>Abertura, uma vez por pessoa, assuntos em aberto e encerramento.</p><ul><li><strong>↑ ↓</strong> mudam a ordem, <strong>Ausente</strong> tira alguém da rodada.</li><li><strong>Ir</strong> pula direto para uma etapa.</li><li>Um ponto verde: a ficha da pessoa está pronta.</li></ul>"
+    },
+    "controls": {
+      "title": "Começar e avançar",
+      "body": "<ul><li><strong>Começar a reunião</strong> inicia a abertura na tela compartilhada.</li><li><strong>Próximo</strong> (<kbd>→</kbd>) passa a palavra à próxima pessoa; o cronômetro mostra o tempo de fala que resta.</li><li><kbd>Espaço</kbd> pausa o cronômetro, <strong>+30 s</strong> dá um pouco mais de tempo, <strong>Encerrar a reunião</strong> pula para o encerramento.</li></ul>"
+    },
+    "notes": {
+      "title": "Suas notas",
+      "body": "<p>Uma área de notas por etapa, <strong>salva enquanto você digita</strong> e visível só para você: elas vão para a ata, sob a pessoa certa.</p><p><strong>+ Decisão</strong> registra uma decisão; <strong>+ Ação</strong> cria uma ação de acompanhamento com responsável, acompanhada nas próximas sessões.</p>"
+    },
+    "minutes": {
+      "title": "A ata",
+      "body": "<p>Ela se escreve sozinha a partir das fichas, das suas notas, das decisões e das ações.</p><p>No fim, <strong>Arquivar a reunião</strong>: a ata vai para o histórico e a próxima sessão fica pronta.</p>"
+    },
+    "finish": {
+      "title": "Sua vez!",
+      "body": "<p>Pessoas, agendamento e módulos são definidos nas configurações da reunião. Este botão refaz o tour quando você quiser. Ótima reunião!</p>"
+    }
+  }
+}

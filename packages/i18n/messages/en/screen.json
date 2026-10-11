@@ -1,0 +1,17 @@
+{
+  "options": "Projection options",
+  "theme": "Projection theme",
+  "themes": {
+    "auto": "Auto",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "reducedMotion": "Reduced motion",
+  "ambience": "Waiting-screen ambience",
+  "previewTheme": "Preview a theme",
+  "replayIntro": "Replay the intro",
+  "fullscreen": "Full screen",
+  "drivenFromControl": "This tab is driven from the control room.",
+  "yourTurn": "Your turn, <span>{name}</span>!",
+  "poweredBy": "Powered by Ronde"
+}

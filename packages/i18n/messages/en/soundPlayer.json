@@ -1,0 +1,18 @@
+{
+  "enable": "Turn sound on",
+  "monitorHint": "Hear in the control room what participants hear",
+  "muteHint": "Turn meeting sounds off on this screen",
+  "autoHint": "Sounds will turn on by themselves a quarter of an hour before the meeting (waiting music, cues…)",
+  "listenHint": "Hear the meeting sounds: waiting music, cues, applause…",
+  "monitorOn": "Monitoring in the control room",
+  "monitorOff": "Monitoring off",
+  "soundsOn": "Sounds",
+  "soundsOff": "Sounds off",
+  "monitorVolume": "Monitoring volume in the control room",
+  "volume": "Volume of sounds on this screen",
+  "musicMuteHint": "Turn the waiting music off in the control room (participants still hear it)",
+  "musicListenHint": "Also hear the waiting music in the control room",
+  "musicOn": "Music",
+  "musicOff": "Music off",
+  "allow": "Allow sound"
+}

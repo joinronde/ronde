@@ -1,0 +1,32 @@
+{
+  "title": "Facturación",
+  "current": "Plan actual",
+  "plans": {
+    "community": "Community",
+    "team": "Team"
+  },
+  "communityIntro": "Gratis: reuniones y personas ilimitadas, todos los módulos de dinamización. Team añade el asistente de IA, las transcripciones, los flujos de trabajo, los tickets, los calendarios, los enlaces de vídeo, tu logotipo y los informes por correo.",
+  "teamIntro": "Todas las funciones de Team para todo el espacio. Pagas por las personas que participaron en una reunión en los últimos 30 días; las plazas las siguen cada día.",
+  "status": "Estado",
+  "statuses": {
+    "active": "Activo",
+    "trialing": "Prueba",
+    "past_due": "Pago por reintentar",
+    "canceled": "Cancelado",
+    "other": "Pendiente"
+  },
+  "seats": "Plazas",
+  "seatsValue": "{paid} pagadas · {active} participaron en los últimos 30 días",
+  "renewsOn": "Se renueva el",
+  "endsOn": "Termina el",
+  "upgradeMonthly": "Pasar a Team, mensual",
+  "upgradeYearly": "Anual, un 25 % menos",
+  "seatsHint": "{count, plural, =0 {Nadie ha participado aún en una reunión: empiezas con una plaza.} one {# persona participó en una reunión en los últimos 30 días.} other {# personas participaron en una reunión en los últimos 30 días.}}",
+  "portal": "Facturas y pago",
+  "compare": "Comparar los planes",
+  "thanks": "¡Gracias! Tu espacio pasa a Team en cuanto Stripe confirme el pago.",
+  "cancelled": "El pago no se completó: no se ha cobrado nada.",
+  "eduTitle": "Gratis para la educación",
+  "eduText": "Las escuelas, universidades y docentes tienen gratis los planes de pago de Ronde. Cuéntanos sobre tu institución y lo activamos.",
+  "eduCta": "Pedir el plan educación"
+}

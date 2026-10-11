@@ -1,0 +1,42 @@
+{
+  "title": "अंतर्दृष्टि",
+  "intro": "वर्कस्पेस की सभी मीटिंग, {from} से {to} तक।",
+  "period": "अवधि",
+  "weeks": "{count, plural, one {# हफ़्ता} other {# हफ़्ते}}",
+  "cards": {
+    "engagement": "भागीदारी",
+    "engagementHint": "मीटिंग का औसत, 100 में से",
+    "sessions": "हुए सत्र",
+    "meetings": "{count, plural, one {# मीटिंग में} other {# मीटिंग में}}",
+    "attendance": "उपस्थिति",
+    "followThrough": "पूरी हुई योजनाएँ",
+    "followThroughHint": "योजनाबद्ध आइटम जो अगले सत्र में पूरे बताए गए",
+    "onTime": "समय पर सत्र",
+    "mood": "औसत मूड",
+    "actions": "कार्य बंद / खुले",
+    "actionsValue": "{done} / {created}",
+    "median": "{days} दिनों में बंद (माध्यिका)"
+  },
+  "weekTitle": "हर हफ़्ते के सत्र",
+  "weekLabel": "बार: हर हफ़्ते हुए सत्र; रेखा: उपस्थिति",
+  "weekLegend": "बार: हर हफ़्ते हुए सत्र। रेखा: उपस्थिति।",
+  "meetingsTitle": "मीटिंग के अनुसार",
+  "columns": {
+    "meeting": "मीटिंग",
+    "engagement": "भागीदारी",
+    "trend": "रुझान",
+    "sessions": "सत्र",
+    "attendance": "उपस्थिति",
+    "followThrough": "योजना पालन",
+    "onTime": "समय पर",
+    "mood": "मूड",
+    "openActions": "खुले कार्य"
+  },
+  "empty": "अभी कोई मीटिंग नहीं।",
+  "engagementHow": "भागीदारी, 100 में से: उपस्थिति (30%), पूरी हुई योजनाएँ (25%), सवालों, उठे हाथों, शाबाशी और आइसब्रेकर से भागीदारी (20%), मूड (15%) और समय की पाबंदी (10%)।",
+  "csv": {
+    "participation": "भागीदारी",
+    "total": "सभी मीटिंग",
+    "fileName": "antardrishti"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "done": "Fatto",
+  "toDo": "Da fare",
+  "dragHint": "Trascina per spostare (o Alt+↑ / Alt+↓)",
+  "markToDo": "Segna come da fare",
+  "markDone": "Segna come fatto",
+  "itemLabel": "{section}, voce {n}",
+  "removeItem": "Rimuovi «{text}»",
+  "emptyItem": "voce vuota",
+  "remove": "Rimuovi",
+  "addItem": "Aggiungi una voce",
+  "addTaskFirst": "Aggiungi un'attività · lascia vuoto se non c'è nulla",
+  "addItemFirst": "Aggiungi una voce · lascia vuoto se non c'è nulla",
+  "freeTextPlaceholder": "{section}: in poche frasi · lascia vuoto se non c'è nulla"
+}

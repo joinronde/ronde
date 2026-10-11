@@ -1,0 +1,44 @@
+{
+  "quoted": "„{label}“",
+  "speak": {
+    "minutes": "{m} Min.",
+    "seconds": "{s} Sek."
+  },
+  "timing": "Ziel: {target} · {speak} Redezeit pro Person",
+  "preparation": "Aktualisiere deine Projekte und die passenden Abschnitte: {sections}. Ein paar kurze Punkte genügen; lass Abschnitte ohne Inhalt leer.",
+  "when": "{date} um {time}",
+  "email": {
+    "footer": "Wenn du diese Erinnerung nicht mehr erhalten möchtest, bitte {host}, sie in den Team-Einstellungen auszuschalten.",
+    "greeting": "Hallo {name},",
+    "intro": "Das nächste Meeting „{team}“ steht bevor. Fülle deinen Check-in vorher aus oder aktualisiere ihn, um deine Fortschritte zu teilen und zu sagen, wo du Hilfe brauchst.",
+    "subject": "Ronde · {team}: dein Check-in für {date} um {time}",
+    "meeting": "Meeting: {when}",
+    "prepare": "Bereite deinen Check-in vor",
+    "fillIn": "Meinen Check-in ausfüllen",
+    "openApp": "Öffne Ronde und dann „Mein Bildschirm“, um deinen Check-in auszufüllen.",
+    "planned": "Was du im letzten Meeting geplant hast",
+    "plannedHint": "Prüfe diese Punkte in deinem Check-in:",
+    "actions": "Deine Folgeaufgaben",
+    "actionsHint": "Denk daran, ihren Stand in Ronde zu aktualisieren:",
+    "joinVideo": "Zur Meetingzeit dem Videoanruf beitreten",
+    "thanks": "Danke, und bis gleich in der Runde!",
+    "preheader": "Dein Team-Meeting: {when}. Bereite deinen Check-in vor und prüfe deine Folgeaufgaben.",
+    "tagline": "Das Team-Meeting",
+    "title": "Dein Check-in für das nächste Meeting",
+    "appointment": "Unser Termin",
+    "fallbackLink": "Falls sich die Schaltfläche nicht öffnet:",
+    "sheets": "Noch zu schreibende Projektblätter (Stand und Botschaft des Tages)",
+    "replyTitle": "Wenig Zeit? Antworte auf diese E-Mail",
+    "replyHint": "Schreib den Namen jedes Abschnitts in eine eigene Zeile, dann deine Punkte, einen pro Zeile: Deine Antwort landet direkt in deinem Check-in.",
+    "replyExample": "Zum Beispiel:"
+  },
+  "replied": {
+    "subject": "Ronde · {team}: Dein Check-in ist aktualisiert",
+    "title": "Dein Check-in ist aktualisiert",
+    "intro": "Danke {name}, das hat deine Antwort zu deinem Check-in für {team} hinzugefügt:",
+    "nothing": "In deiner Antwort haben wir nichts zum Hinzufügen gefunden. Schreib den Namen jedes Abschnitts in eine eigene Zeile, dann deine Punkte, einen pro Zeile, oder fülle deinen Check-in in Ronde aus.",
+    "already": "Alles aus deiner Antwort stand schon in deinem Check-in.",
+    "open": "Meinen Check-in ansehen",
+    "footer": "Du erhältst diese E-Mail, weil du auf eine Erinnerung von Ronde geantwortet hast."
+  }
+}

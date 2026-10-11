@@ -1,0 +1,13 @@
+{
+  "noMeeting": "此会议没有准备好的场次。",
+  "back": "控制台",
+  "now": "当前",
+  "then": "接下来：{next}",
+  "last": "最后一步",
+  "start": "开始会议",
+  "previous": "上一步",
+  "next": "下一步",
+  "pause": "暂停",
+  "resume": "继续",
+  "bonus": "+30 秒"
+}

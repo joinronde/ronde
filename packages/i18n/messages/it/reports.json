@@ -1,0 +1,26 @@
+{
+  "subject": "{workspace} · le tue riunioni, {period}",
+  "period": "dal {from} al {to}",
+  "title": "Il report delle tue riunioni",
+  "byMeeting": "Per riunione",
+  "noSession": "Nessuna sessione si è tenuta in questo periodo.",
+  "open": "Vedi le analisi in Ronde",
+  "settings": {
+    "title": "Report via email",
+    "intro": "Questi dati, inviati via email all'inizio di ogni settimana o di ogni mese.",
+    "frequency": "Frequenza",
+    "off": "Non inviato",
+    "weekly": "Ogni lunedì (la settimana precedente)",
+    "monthly": "Il 1° del mese (il mese precedente)",
+    "recipients": "Destinatari",
+    "admins": "I proprietari e gli amministratori dello spazio di lavoro",
+    "custom": "Questi indirizzi",
+    "emails": "Indirizzi, uno per riga",
+    "save": "Salva",
+    "saved": "Salvato",
+    "test": "Inviami subito una prova",
+    "testSent": "Report di prova inviato a {email}"
+  },
+  "openBranded": "Vedi le analisi",
+  "projectsToWatch": "Progetti da tenere d'occhio"
+}

@@ -1,0 +1,44 @@
+{
+  "quoted": "“{label}”",
+  "speak": {
+    "minutes": "{m} min",
+    "seconds": "{s} s"
+  },
+  "timing": "Target: {target} · {speak} of speaking time each",
+  "preparation": "Update your projects and the relevant sections: {sections}. A few short points are enough; leave sections with nothing to share empty.",
+  "when": "{date} at {time}",
+  "email": {
+    "footer": "To stop receiving this reminder, ask {host} to turn it off in the team settings.",
+    "greeting": "Hi {name},",
+    "intro": "The next “{team}” meeting is coming up. Fill in or update your check-in beforehand to share your progress and where you need help.",
+    "subject": "Ronde · {team}: your check-in for {date} at {time}",
+    "meeting": "Meeting: {when}",
+    "prepare": "Prepare your check-in",
+    "fillIn": "Fill in my check-in",
+    "openApp": "Open Ronde, then “My screen”, to fill in your check-in.",
+    "planned": "What you planned at the last meeting",
+    "plannedHint": "Review these items in your check-in:",
+    "actions": "Your follow-up actions",
+    "actionsHint": "Remember to update their progress in Ronde:",
+    "joinVideo": "Join the video call at meeting time",
+    "thanks": "Thanks, and see you around the table!",
+    "preheader": "Your team meeting: {when}. Prepare your check-in and review your follow-up actions.",
+    "tagline": "The team meeting",
+    "title": "Your check-in for the next meeting",
+    "appointment": "Our meeting",
+    "fallbackLink": "If the button does not open:",
+    "sheets": "Project sheets to write (health and message of the day)",
+    "replyTitle": "Short on time? Reply to this email",
+    "replyHint": "Write each section's name on its own line, then your items, one per line: your reply goes straight into your check-in.",
+    "replyExample": "For example:"
+  },
+  "replied": {
+    "subject": "Ronde · {team}: your check-in is updated",
+    "title": "Your check-in is updated",
+    "intro": "Thanks {name}, here is what your reply added to your check-in for {team}:",
+    "nothing": "We could not find anything to add in your reply. Write each section's name on its own line, then your items, one per line, or fill in your check-in in Ronde.",
+    "already": "Everything in your reply was already in your check-in.",
+    "open": "See my check-in",
+    "footer": "You receive this email because you replied to a Ronde reminder."
+  }
+}

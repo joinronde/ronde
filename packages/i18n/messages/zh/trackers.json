@@ -1,0 +1,38 @@
+{
+  "title": "工单系统",
+  "intro": "将后续行动项变成 Jira、Linear、GitLab 或 GitHub 中的工单。工单关闭后，行动项会在 Ronde 中标记为完成。",
+  "empty": "还没有工单系统。",
+  "add": "添加工单系统",
+  "kind": "工具",
+  "name": "名称",
+  "token": "API 令牌",
+  "tokenKept": "已保存令牌。输入新令牌即可替换。",
+  "save": "保存",
+  "cancel": "取消",
+  "test": "测试",
+  "remove": "移除",
+  "works": "✓ 已连接。",
+  "removeConfirm": "移除 {name}？现有工单会保留，但不再跟踪。",
+  "kinds": {
+    "jira": "Jira",
+    "linear": "Linear",
+    "gitlab": "GitLab",
+    "github": "GitHub"
+  },
+  "fields": {
+    "site": "站点地址",
+    "project": "项目键",
+    "email": "账户邮箱",
+    "team": "团队 ID",
+    "url": "GitLab 地址",
+    "repo": "仓库（owner/name）"
+  },
+  "hints": {
+    "jira": "在 id.atlassian.com 为上方邮箱对应的账户创建的 API 令牌。",
+    "linear": "来自 Linear 设置 → API 的个人 API 密钥。团队 ID 在团队设置中。",
+    "gitlab": "具有 api 范围的项目或个人访问令牌。项目：其路径（group/project）或编号。",
+    "github": "对该仓库具有“Issues：读写”权限的细粒度令牌。"
+  },
+  "assignee": "如果负责人的目录资料中有其用户名，会在 GitLab 和 GitHub 中自动指派。",
+  "edit": "编辑"
+}

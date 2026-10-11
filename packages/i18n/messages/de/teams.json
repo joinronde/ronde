@@ -1,0 +1,59 @@
+{
+  "package": {
+    "fullName": "Ronde: die wiederkehrenden Meetings deines Teams",
+    "shortDescription": "Check-ins, Erinnerungen und Protokolle der wiederkehrenden Meetings.",
+    "fullDescription": "Ronde leitet die wiederkehrenden Meetings deines Teams: Alle bereiten ihren Check-in vor, die Runde hält die Zeit ein, das Protokoll schreibt sich von selbst. In Teams erinnert Ronde alle per persönlicher Nachricht an ihren Check-in, lässt ihn direkt dort ausfüllen, antwortet auf „ronde“ mit den nächsten Sitzungen und offenen Aufgaben und veröffentlicht die Benachrichtigungen der Meetings in einem Kanal.",
+    "commandRonde": "Deine nächsten Sitzungen und offenen Aufgaben",
+    "helpWord": "hilfe",
+    "commandHelp": "Was Ronde in Teams macht"
+  },
+  "bot": {
+    "welcomeTitle": "Ronde ist in diesem Team",
+    "welcome": "Verknüpfe es mit deinem Ronde-Arbeitsbereich: Die Check-in-Erinnerungen erreichen alle hier in Teams, und die Benachrichtigungen der Meetings können in diesem Kanal erscheinen.",
+    "welcomeWho": "Das macht einmalig eine Person, die den Ronde-Arbeitsbereich besitzt oder verwaltet.",
+    "link": "Mit Ronde verknüpfen",
+    "linked": "Dieser Kanal ist jetzt mit dem Ronde-Arbeitsbereich „{workspace}“ verknüpft. Wähle in den Benachrichtigungen jedes Meetings, was hier erscheint.",
+    "unlinked": "Dieser Kanal ist nicht mehr mit Ronde verknüpft: Die Check-in-Erinnerungen kommen wieder per E-Mail.",
+    "alreadyLinked": "Dieses Team ist mit dem Ronde-Arbeitsbereich „{workspace}“ verknüpft.",
+    "hello": "Hallo! Ich erinnere dich an deine Check-ins, und du kannst sie direkt hier ausfüllen. Schreib „ronde“, um deine nächsten Sitzungen und offenen Aufgaben zu sehen.",
+    "help": "Schreib „ronde“, um deine nächsten Sitzungen und offenen Aufgaben zu sehen. Deine Check-in-Erinnerungen kommen hier an, mit einer Schaltfläche zum Ausfüllen.",
+    "notFound": "Ronde findet diesen Check-in für dich nicht. Die E-Mail deines Microsoft-Kontos muss die deines Ronde-Profils sein, und du musst am Meeting teilnehmen.",
+    "tooLong": "Dieser Check-in ist zu lang, um ihn in Teams zu bearbeiten. Öffne ihn in Ronde.",
+    "unknown": "Ronde kennt dich noch nicht: Die E-Mail deines Microsoft-Kontos muss die deines Profils in einem Ronde-Arbeitsbereich sein, der mit diesem Team verknüpft ist."
+  },
+  "link": {
+    "title": "Microsoft Teams verknüpfen",
+    "intro": "Das Team „{team}“ möchte mit einem Ronde-Arbeitsbereich verknüpft werden: Seine Check-in-Erinnerungen laufen über Teams, und sein Kanal kann die Benachrichtigungen der Meetings empfangen.",
+    "channel": "Kanal: {channel}",
+    "workspace": "Arbeitsbereich",
+    "replaces": "Bereits mit „{team}“ verknüpft: Dieses Team tritt an seine Stelle.",
+    "submit": "Diesen Arbeitsbereich verknüpfen",
+    "none": "Du verwaltest keinen Arbeitsbereich, mit dem sich Microsoft Teams verknüpfen lässt. Es gehört zu Ronde Team, für Owner und Admins eines Arbeitsbereichs.",
+    "expired": "Dieser Link ist abgelaufen oder ungültig. Erwähne Ronde in Teams im Kanal, um einen neuen zu erhalten."
+  },
+  "settings": {
+    "intro": "Füge Ronde zu Microsoft Teams hinzu: Alle füllen ihren Check-in aus, ohne Teams zu verlassen.",
+    "locked": "Die Microsoft-Teams-App gehört zu Ronde {edition}.",
+    "uses": {
+      "reminders": "Check-in-Erinnerungen per persönlicher Nachricht, mit einer Schaltfläche, die die Nachricht in das Formular des Check-ins verwandelt.",
+      "channel": "Der Kanal des Teams wird zum Connector: Wähle in den Benachrichtigungen jedes Meetings, was dort erscheint.",
+      "command": "Wer der App „ronde“ schreibt, sieht seine nächsten Sitzungen und offenen Aufgaben."
+    },
+    "emailMatch": "Personen werden an ihrer E-Mail erkannt: Ihr Microsoft-Konto und ihr Ronde-Profil müssen sie teilen.",
+    "step1": "Lade die Ronde-App für Teams herunter.",
+    "step1Hint": "Deine Teams-Administration fügt sie einmal für die Organisation hinzu (Teams Admin Center › Teams-Apps › Apps verwalten › Neue App hochladen). Wenn deine Organisation es erlaubt, kannst du sie auch selbst hochladen (Apps › Apps verwalten › App hochladen).",
+    "step2": "Füge die App dem Team hinzu, dessen Kanal die Benachrichtigungen erhalten soll.",
+    "step3": "In diesem Kanal veröffentlicht Ronde eine Karte: Klicke auf „Mit Ronde verknüpfen“ und wähle diesen Arbeitsbereich.",
+    "download": "App herunterladen (.zip)",
+    "linkedTo": "Verknüpft mit {team}",
+    "channel": "Benachrichtigungen in {channel}",
+    "linked": "Microsoft Teams ist verknüpft.",
+    "reminders": "Check-in-Erinnerungen in Teams senden",
+    "remindersHint": "Per persönlicher Nachricht statt E-Mail an die Personen, die im Team gefunden werden. Die anderen bekommen weiter die E-Mail.",
+    "unlink": "Verknüpfung lösen",
+    "unlinkConfirm": "Verknüpfung mit Microsoft Teams lösen? Erinnerungen kommen wieder per E-Mail, und die Benachrichtigungsregeln für seinen Kanal werden gelöscht. Um die App selbst zu entfernen, entferne sie in Teams aus dem Team.",
+    "notConfigured": "Um Microsoft Teams zu nutzen, registriert die Administration dieses Ronde-Servers zuerst seine Teams-App in Microsoft Azure.",
+    "setup": "So richtest du sie ein",
+    "openInTeams": "App in Teams öffnen"
+  }
+}

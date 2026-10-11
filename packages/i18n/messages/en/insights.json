@@ -1,0 +1,42 @@
+{
+  "title": "Insights",
+  "intro": "Every meeting of the workspace, from {from} to {to}.",
+  "period": "Period",
+  "weeks": "{count, plural, one {# week} other {# weeks}}",
+  "cards": {
+    "engagement": "Engagement",
+    "engagementHint": "Average of the meetings, out of 100",
+    "sessions": "Sessions held",
+    "meetings": "{count, plural, one {in # meeting} other {in # meetings}}",
+    "attendance": "Attendance",
+    "followThrough": "Plans followed through",
+    "followThroughHint": "Planned items reported done at the next session",
+    "onTime": "Sessions on time",
+    "mood": "Average mood",
+    "actions": "Actions closed / opened",
+    "actionsValue": "{done} / {created}",
+    "median": "Closed in {days} days (median)"
+  },
+  "weekTitle": "Sessions per week",
+  "weekLabel": "Bars: sessions held each week; line: attendance",
+  "weekLegend": "Bars: sessions held each week. Line: attendance.",
+  "meetingsTitle": "By meeting",
+  "columns": {
+    "meeting": "Meeting",
+    "engagement": "Engagement",
+    "trend": "Trend",
+    "sessions": "Sessions",
+    "attendance": "Attendance",
+    "followThrough": "Follow-through",
+    "onTime": "On time",
+    "mood": "Mood",
+    "openActions": "Open actions"
+  },
+  "empty": "No meeting yet.",
+  "engagementHow": "Engagement, out of 100: attendance (30%), plans followed through (25%), participation through questions, raised hands, kudos and icebreakers (20%), mood (15%) and punctuality (10%).",
+  "csv": {
+    "participation": "Participation",
+    "total": "All meetings",
+    "fileName": "insights"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "title": "日历",
+  "intro": "你所有会议的每一场：已计划、进行中和已举行。",
+  "months": "月份",
+  "previous": "上个月",
+  "next": "下个月",
+  "today": "今天",
+  "upcoming": "即将到来",
+  "nothing": "未来四周没有安排。",
+  "status": {
+    "planned": "已计划",
+    "live": "正在进行",
+    "held": "已举行",
+    "cancelled": "已取消"
+  },
+  "attendance": {
+    "yes": "我会参加",
+    "no": "缺席"
+  }
+}

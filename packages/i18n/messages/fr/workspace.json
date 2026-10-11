@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "label": "Espace",
+    "home": "Accueil",
+    "people": "Annuaire",
+    "settings": "Réglages"
+  },
+  "switcher": "Changer d'espace",
+  "newWorkspace": "Nouvel espace",
+  "userMenu": "Menu du compte",
+  "account": "Votre compte",
+  "roles": {
+    "owner": "Propriétaire",
+    "admin": "Admin",
+    "billing": "Facturation",
+    "organizer": "Organisateur",
+    "member": "Membre",
+    "guest": "Invité"
+  },
+  "roleHints": {
+    "owner": "Tout, y compris la facturation et la suppression de l'espace",
+    "admin": "Gère les personnes, les rôles, les modèles et les connecteurs",
+    "billing": "Gère l'abonnement, les factures et le moyen de paiement, rien d'autre",
+    "organizer": "Un membre qui crée des réunions même quand elles sont réservées aux admins, et invite les personnes nécessaires",
+    "member": "Crée des réunions et participe à celles auxquelles on l'invite",
+    "guest": "Voit uniquement les réunions auxquelles on l'invite"
+  },
+  "home": {
+    "stepInvite": "Inviter votre équipe",
+    "stepInviteHint": "{count, plural, =0 {Personne d'autre pour l'instant} one {# autre personne dans l'annuaire} other {# autres personnes dans l'annuaire}}",
+    "stepMeeting": "Créer votre première réunion",
+    "stepMeetingHint": "Le modèle point hebdo, prêt en une minute.",
+    "stepCheckIn": "Remplir votre fiche",
+    "stepCheckInHint": "Ce que vous avez fait, ce que vous prévoyez, ce qui bloque : quelques lignes avant la réunion.",
+    "stepSession": "Animer une première séance",
+    "stepSessionHint": "Ouvrez la régie, démarrez la réunion, puis archivez-la avec son compte rendu."
+  },
+  "settings": {
+    "title": "Réglages de l'espace",
+    "general": "Général",
+    "name": "Nom",
+    "slug": "Adresse",
+    "slugHint": "Utilisée dans les liens : {url}",
+    "language": "Langue des e-mails et des comptes rendus",
+    "timezone": "Fuseau horaire",
+    "meetingCreation": "Qui peut créer des réunions",
+    "meetingCreationMembers": "Tous les membres",
+    "meetingCreationAdmins": "Les organisateurs et les admins",
+    "saved": "Enregistré",
+    "categories": "Catégories de métier",
+    "categoriesHint": "Affichées sur les fiches et utilisées pour regrouper les statistiques.",
+    "categoryPlaceholder": "ex. Développement",
+    "add": "Ajouter",
+    "rename": "Renommer {name}",
+    "delete": "Supprimer {name}",
+    "noCategories": "Aucune catégorie de métier pour l'instant.",
+    "danger": "Zone de danger",
+    "leave": "Quitter l'espace",
+    "leaveHint": "Vous perdez l'accès à ses réunions. Votre profil reste dans l'annuaire.",
+    "leaveConfirm": "Quitter {workspace} ?",
+    "deleteWorkspace": "Supprimer l'espace",
+    "deleteHint": "Réunions, personnes et historique disparaissent pour tout le monde. C'est irréversible.",
+    "deleteConfirm": "Saisissez <strong>{slug}</strong> pour confirmer.",
+    "cancel": "Annuler",
+    "readOnly": "Seuls les admins peuvent modifier ces réglages.",
+    "tabs": {
+      "label": "Sections des réglages",
+      "general": "Général",
+      "security": "Sécurité",
+      "roles": "Rôles",
+      "audit": "Journal d'audit",
+      "billing": "Facturation",
+      "plans": "Offres"
+    },
+    "buffer": "Marge entre deux réunions",
+    "bufferHint": "Laissée libre avant et après chaque réunion d'une personne : la recherche de créneau la respecte, et les calendriers préviennent quand deux réunions se rapprochent davantage.",
+    "bufferNone": "Aucune marge",
+    "bufferMinutes": "{count, plural, one {# minute} other {# minutes}}"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "columns": {
+    "well": "Went well",
+    "improve": "To improve",
+    "ideas": "Ideas to try",
+    "start": "Start",
+    "stop": "Stop",
+    "continue": "Continue",
+    "liked": "Liked",
+    "learned": "Learned",
+    "lacked": "Lacked",
+    "longed": "Longed for",
+    "mad": "Mad",
+    "sad": "Sad",
+    "glad": "Glad"
+  },
+  "notes": "{count, plural, =0 {No note yet} one {# note} other {# notes}}",
+  "votes": "{count, plural, =0 {no vote} one {# vote} other {# votes}}",
+  "stage": {
+    "reflect": "{count, plural, =0 {Everyone writes, anonymously} one {# person has written} other {# people have written}}",
+    "vote": "{count, plural, =0 {Nobody has voted yet} one {# person has voted} other {# people have voted}}",
+    "done": "What we discussed"
+  },
+  "me": {
+    "writeTitle": "Your notes",
+    "writeHint": "Anonymous: the team only sees them once the host reveals them, and never who wrote them.",
+    "placeholder": "An idea, a fact, a feeling…",
+    "add": "Add",
+    "addTo": "New note in “{column}”",
+    "edit": "Edit “{text}”",
+    "delete": "Delete “{text}”",
+    "editNote": "Edit the note",
+    "save": "Save",
+    "voteTitle": "Vote for the topics to discuss",
+    "votesLeft": "{count, plural, =0 {All your votes are used} one {# vote left} other {# votes left}} out of {total}",
+    "vote": "Vote",
+    "unvote": "Remove my vote"
+  },
+  "host": {
+    "writers": "{count, plural, one {# of {total} people has written} other {# of {total} people have written}}",
+    "revealHint": "“Next” reveals the notes to the team.",
+    "voters": "{count, plural, one {# of {total} people has voted} other {# of {total} people have voted}}",
+    "voteHint": "“Next” starts the discussion of the most voted groups.",
+    "groupHint": "Click a note, then the note to put it with. Name the groups once they are formed.",
+    "pickTarget": "Now click the note to put it with (or the same one to cancel).",
+    "rename": "Group name",
+    "ungroup": "Take “{text}” out of its group"
+  },
+  "settings": {
+    "title": "Retrospective",
+    "preset": "Columns",
+    "presets": {
+      "well-improve-ideas": "Went well, to improve, ideas",
+      "start-stop-continue": "Start, stop, continue",
+      "4l": "Liked, learned, lacked, longed for",
+      "mad-sad-glad": "Mad, sad, glad",
+      "custom": "Custom"
+    },
+    "columns": "Custom columns, one per line",
+    "votes": "Votes per person",
+    "reflect": "Writing (min)",
+    "vote": "Voting (min)",
+    "discuss": "Discussion per group (min)",
+    "saved": "Retro settings saved",
+    "save": "Save the retro settings",
+    "change": "Change the columns, votes and times"
+  }
+}

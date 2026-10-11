@@ -1,0 +1,18 @@
+{
+  "title": "Entrar em {workspace}",
+  "intro": "{inviter} convidou você para entrar em {workspace} no Ronde.",
+  "role": "Seu papel: {role}",
+  "signedInAs": "Conectado como <strong>{email}</strong>",
+  "accept": "Entrar em {workspace}",
+  "otherEmail": "Este convite foi enviado para <strong>{email}</strong>. Entre com esse endereço para aceitá-lo.",
+  "signIn": "Entrar para aceitar",
+  "signUp": "Criar uma conta",
+  "switchAccount": "Usar outra conta",
+  "invalidTitle": "Convite inválido",
+  "invalid": "Este link de convite é inválido ou foi revogado. Peça um novo à pessoa que convidou você.",
+  "expiredTitle": "Convite expirado",
+  "expired": "Este convite para {workspace} expirou. Peça um novo à pessoa que convidou você.",
+  "memberTitle": "Você já está dentro",
+  "member": "Você já é membro de {workspace}.",
+  "open": "Abrir {workspace}"
+}

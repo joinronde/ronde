@@ -1,0 +1,22 @@
+{
+  "defaults": {
+    "done": "Diese Woche erledigt",
+    "next": "Für nächste Woche geplant",
+    "blockers": "Zu meldende Blocker",
+    "other": "Sonstiges"
+  },
+  "types": {
+    "list": {
+      "label": "Liste",
+      "hint": "Ein Eintrag pro Zeile, zum Hinzufügen, Umsortieren und Entfernen"
+    },
+    "checklist": {
+      "label": "Checkliste",
+      "hint": "Aufgaben, die beim Erledigen abgehakt werden"
+    },
+    "text": {
+      "label": "Freitext",
+      "hint": "Ein Absatz, bei Bedarf über mehrere Zeilen"
+    }
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "extends": "@ronde/config/tsconfig.lib.json",
+  "include": ["src/**/*.ts", "messages/**/*.json", "tests/**/*.ts"]
+}

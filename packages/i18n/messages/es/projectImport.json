@@ -1,0 +1,100 @@
+{
+  "title": "Importar proyectos",
+  "intro": "Trae a la cartera repositorios, hitos, épicas o proyectos de tus herramientas. Eliges cuáles en el siguiente paso.",
+  "trackers": "Desde tus gestores de tickets (sincronizados)",
+  "another": "O desde una herramienta, importados una sola vez",
+  "from": "Importar desde",
+  "tools": {
+    "github": "GitHub",
+    "gitlab": "GitLab",
+    "jira": "Jira",
+    "linear": "Linear"
+  },
+  "what": {
+    "github": "Repositorios o hitos",
+    "gitlab": "Proyectos o hitos",
+    "jira": "Épicas de un proyecto",
+    "linear": "Proyectos"
+  },
+  "item": {
+    "repos": "Repositorio {key}",
+    "milestones": "Hito {key}",
+    "epics": "Épica {key}",
+    "projects": "Proyecto {key}"
+  },
+  "whatLabel": "Lo que se convierte en proyecto en Ronde",
+  "modes": {
+    "repos": {
+      "github": "Cada repositorio de una organización",
+      "gitlab": "Cada proyecto de un grupo"
+    },
+    "milestones": {
+      "github": "Cada hito de un repositorio",
+      "gitlab": "Cada hito de un proyecto"
+    }
+  },
+  "modeHints": {
+    "repos": "Cada proyecto toma el nombre del repositorio, y sus tickets salen en las reuniones. Ideal cuando cada repositorio es un producto o un servicio.",
+    "milestones": "Cada proyecto se llama «repositorio · hito» y toma su fecha límite y su avance. Ideal cuando los hitos son entregables."
+  },
+  "fields": {
+    "repo": "Repositorio (propietario/nombre o su dirección)",
+    "owner": "Organización o cuenta (nombre o dirección)",
+    "gitlab": "Proyecto (ruta o dirección)",
+    "group": "Grupo (nombre o dirección)",
+    "site": "Dirección del sitio",
+    "project": "Clave del proyecto",
+    "projectHint": "Las letras antes del número en las claves de sus tickets: OPS en OPS-42.",
+    "email": "Correo de la cuenta"
+  },
+  "token": "Token de API",
+  "tokenOptional": {
+    "github": "Token de acceso (solo para repositorios privados)",
+    "gitlab": "Token de acceso (solo para grupos o proyectos privados)"
+  },
+  "tokenHint": {
+    "github": "Déjalo vacío para repositorios públicos. Para los privados: un <link>token de acceso detallado</link> que pueda leerlos (y sus issues, para los hitos).",
+    "gitlab": "Déjalo vacío para proyectos públicos. Para los privados: un token de acceso personal o de proyecto con el ámbito read_api.",
+    "gitlabGroup": "Déjalo vacío para grupos públicos. Para uno privado: un token de acceso personal o de grupo con el ámbito read_api.",
+    "jira": "Un <link>token de API</link> de la cuenta cuyo correo figura arriba.",
+    "linear": "Una clave de API personal, creada en tus ajustes de Linear."
+  },
+  "tokenNotKept": "Solo sirve para esta importación: Ronde no lo guarda.",
+  "teamHint": "Con el plan Team, los proyectos importados mediante un gestor de tickets guardado siguen sincronizados con la herramienta: nombre, situación, fechas y avance.",
+  "syncHowTo": "Para mantener sincronizados los proyectos importados, primero añade la herramienta a los gestores de tickets en los <link>ajustes del espacio</link> y luego importa desde ella.",
+  "syncAskAdmin": "Los proyectos siguen sincronizados cuando un administrador del espacio los importa mediante sus gestores de tickets. Lo que importas aquí se importa una sola vez.",
+  "look": "Buscar proyectos",
+  "looking": "Buscando…",
+  "pickTitle": {
+    "repos": "Repositorios que importar",
+    "milestones": "Hitos que importar",
+    "epics": "Épicas que importar",
+    "projects": "Proyectos que importar"
+  },
+  "nothing": {
+    "repos": "No se encontraron repositorios.",
+    "milestones": "No se encontraron hitos.",
+    "epics": "Este proyecto no tiene épicas.",
+    "projects": "No se encontraron proyectos."
+  },
+  "allImported": "Todo lo listado ya está en la cartera.",
+  "partial": {
+    "tracker": "Solo se lista lo que puede leer el token del gestor de tickets.",
+    "public": "Sin token, solo se listan los públicos."
+  },
+  "more": "Solo se listan los 100 primeros.",
+  "filter": "Filtrar",
+  "pickAll": "Seleccionar todo ({count})",
+  "pickSome": "Marca los que quieras importar.",
+  "inPortfolio": "En la cartera",
+  "progress": "{percent} hecho",
+  "themeHint": "Se aplica a cada proyecto importado.",
+  "keepSync": "Mantenerlos sincronizados con {tool}",
+  "keepSyncHint": "Su nombre, situación, fechas y avance siguen a la herramienta cada hora; lo demás lo editas tú.",
+  "keepSyncHintRepo": "Su nombre sigue a la herramienta cada hora, y pasan a «Terminado» una vez archivados; lo demás lo editas tú.",
+  "onceHint": "Importados una sola vez: desde entonces se editan en Ronde.",
+  "back": "Volver",
+  "import": "{count, plural, =0 {Importar} one {Importar # proyecto} other {Importar # proyectos}}",
+  "importing": "{count, plural, one {Importando # proyecto…} other {Importando # proyectos…}}",
+  "offline": "No se puede contactar con Ronde. Comprueba tu conexión e inténtalo de nuevo."
+}

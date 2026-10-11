@@ -1,0 +1,18 @@
+{
+  "title": "{workspace} beitreten",
+  "intro": "{inviter} hat dich eingeladen, {workspace} auf Ronde beizutreten.",
+  "role": "Deine Rolle: {role}",
+  "signedInAs": "Angemeldet als <strong>{email}</strong>",
+  "accept": "{workspace} beitreten",
+  "otherEmail": "Diese Einladung wurde an <strong>{email}</strong> gesendet. Melde dich mit dieser Adresse an, um sie anzunehmen.",
+  "signIn": "Zum Annehmen anmelden",
+  "signUp": "Konto erstellen",
+  "switchAccount": "Anderes Konto verwenden",
+  "invalidTitle": "Einladung ungültig",
+  "invalid": "Dieser Einladungslink ist ungültig oder wurde widerrufen. Bitte die Person, die dich eingeladen hat, um einen neuen.",
+  "expiredTitle": "Einladung abgelaufen",
+  "expired": "Diese Einladung zu {workspace} ist abgelaufen. Bitte die Person, die dich eingeladen hat, um eine neue.",
+  "memberTitle": "Du bist schon dabei",
+  "member": "Du bist bereits Mitglied von {workspace}.",
+  "open": "{workspace} öffnen"
+}

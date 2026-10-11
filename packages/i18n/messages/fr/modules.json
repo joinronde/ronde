@@ -1,0 +1,142 @@
+{
+  "title": "Modules",
+  "intro": "Activez ce que cette réunion utilise. Un module désactivé disparaît de la régie, de l'écran partagé et de l'écran de chacun ; ses réglages sont conservés.",
+  "on": "Activé",
+  "off": "Désactivé",
+  "toggle": "Utiliser {name} dans cette réunion",
+  "enabled": "{name} activé",
+  "disabled": "{name} désactivé",
+  "categories": {
+    "facilitation": "Animation",
+    "organisation": "Organisation",
+    "formats": "Formats",
+    "integrations": "Intégrations",
+    "notifications": "Notifications",
+    "reporting": "Rapports"
+  },
+  "editions": {
+    "team": "Team",
+    "enterprise": "Enterprise"
+  },
+  "paidTitle": "Avec une offre payante",
+  "paidIntro": "Disponibles avec Ronde Team et Enterprise, dans le cloud ou auto-hébergé avec une clé de licence.",
+  "learnMore": "Voir les offres",
+  "items": {
+    "icebreaker": {
+      "name": "Brise-glace",
+      "description": "Une question tirée d'une banque pour se mettre en route ; chacun répond en une ligne, affichée pendant l'intro."
+    },
+    "mood": {
+      "name": "Météo d'équipe",
+      "description": "Chacun partage sa météo (⛈️ à ☀️), affichée anonymement et suivie dans les statistiques."
+    },
+    "rating": {
+      "name": "Utilité de la réunion",
+      "description": "À la conclusion, chacun note l'utilité de la réunion de 1 à 5, anonymement ; la moyenne est suivie dans les statistiques."
+    },
+    "reactions": {
+      "name": "Réactions et signaux",
+      "description": "Réactions emoji et signaux (trop long, plus fort…) qui traversent tous les écrans."
+    },
+    "hands": {
+      "name": "Mains levées et questions",
+      "description": "Lever la main ou poser une question pendant un tour : une étape de questions suit ce tour."
+    },
+    "kudos": {
+      "name": "Remerciements",
+      "description": "Remercier un collègue pendant la réunion ; les remerciements s'affichent sur tous les écrans et dans le compte rendu."
+    },
+    "spotlight": {
+      "name": "Mise en avant",
+      "description": "Afficher en grand sur l'écran partagé un élément de fiche, une question ou un message libre."
+    },
+    "birthdays": {
+      "name": "Anniversaires",
+      "description": "L'écran d'attente fête les anniversaires de la semaine (jour et mois seulement)."
+    },
+    "sounds": {
+      "name": "Sons",
+      "description": "Musique d'attente, signaux sonores et table de sons, joués sur l'écran de chacun ou sur l'écran partagé."
+    },
+    "ambience": {
+      "name": "Ambiance de saison",
+      "description": "Décorations de fêtes et de saison sur l'écran d'attente."
+    },
+    "gitlab": {
+      "name": "GitLab",
+      "description": "Les tickets et merge requests récents de chacun, à importer dans sa fiche."
+    },
+    "workflows": {
+      "name": "Constructeur de workflows",
+      "description": "Vos propres déclencheurs, conditions et messages vers Slack, Teams, Matrix ou l'e-mail."
+    },
+    "aiAssistant": {
+      "name": "Assistant IA",
+      "description": "Synthèse de réunion et extraction des actions ; votre propre clé en auto-hébergé."
+    },
+    "writeBack": {
+      "name": "Création de tickets",
+      "description": "Transformer les actions de suivi en tickets Jira, Linear, GitLab ou GitHub, et les garder synchronisés."
+    },
+    "calendarSync": {
+      "name": "Synchro des agendas",
+      "description": "Synchronisation bidirectionnelle Google, Microsoft 365 et CalDAV, avec détection des conflits."
+    },
+    "analytics": {
+      "name": "Analyses de l'espace",
+      "description": "Tableaux de bord sur plusieurs réunions : participation, engagement, difficultés récurrentes."
+    },
+    "scheduledReports": {
+      "name": "Rapports programmés",
+      "description": "Un résumé de vos réunions par e-mail, chaque semaine ou chaque mois."
+    },
+    "rotation": {
+      "name": "Rôles tournants",
+      "description": "Qui anime et qui prend les notes change à chaque séance, dans l'ordre du tour de table."
+    },
+    "retro": {
+      "name": "Rétrospective",
+      "description": "Des notes anonymes en colonnes, regroupées par la régie, votées par l'équipe, puis discutées ; à ajouter à l'ordre du jour."
+    },
+    "timebox": {
+      "name": "Timebox",
+      "description": "Un sujet à part dans l'ordre du jour, avec sa propre durée et ses notes au compte rendu."
+    },
+    "poker": {
+      "name": "Planning poker",
+      "description": "L'équipe estime des éléments avec des cartes cachées jusqu'à la révélation ; à ajouter à l'ordre du jour."
+    },
+    "polls": {
+      "name": "Sondages",
+      "description": "Posez une question à l'équipe pendant la séance : choix, échelle ou nuage de mots, anonyme ou non."
+    },
+    "random": {
+      "name": "Outils aléatoires",
+      "description": "Une roue pour choisir qui passe ensuite, un ordre de passage tiré au sort, des équipes ou pile ou face, joués sur tous les écrans à la fois."
+    },
+    "parking": {
+      "name": "Parking",
+      "description": "Mettez de côté en un clic ce qui sort du sujet ; il devient un point divers de la prochaine séance."
+    },
+    "decisions": {
+      "name": "Journal des décisions",
+      "description": "Chaque ligne « Décision : » des notes, de toutes les séances, dans une liste consultable par toute l'équipe."
+    },
+    "github": {
+      "name": "GitHub",
+      "description": "Les tickets et pull requests récents de chacun, importés dans sa fiche en un clic."
+    },
+    "video": {
+      "name": "Visioconférence",
+      "description": "Rejoindre la visio depuis chaque page : un lien vers n'importe quel outil, une salle Jitsi ou votre serveur BigBlueButton."
+    },
+    "async": {
+      "name": "Mode asynchrone",
+      "description": "Pas de séance en direct : chacun remplit sa fiche et commente, puis le récapitulatif part par e-mail à l'heure prévue."
+    }
+  },
+  "upgrade": {
+    "comesWith": "{feature} est inclus dans Ronde {edition}.",
+    "plans": "Voir les offres"
+  }
+}

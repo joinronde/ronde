@@ -1,0 +1,18 @@
+{
+  "title": "Décisions",
+  "intro": "Ce qui a été décidé, dans toutes les réunions, les plus récentes d'abord. Les notes qui commencent par « Décision : » arrivent ici.",
+  "filter": "Réunion",
+  "all": "Toutes",
+  "search": "Rechercher dans les décisions",
+  "count": "{count, plural, one {# décision} other {# décisions}}",
+  "noMatch": "Aucune décision ne mentionne « {query} ».",
+  "empty": "Pas encore de décision.",
+  "emptyHint": "Pendant une séance, écrivez une note qui commence par « Décision : » : elle est gardée ici une fois la séance archivée.",
+  "csv": {
+    "date": "Date",
+    "meeting": "Réunion",
+    "decision": "Décision",
+    "context": "Contexte",
+    "fileName": "decisions"
+  }
+}

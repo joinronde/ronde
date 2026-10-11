@@ -1,0 +1,18 @@
+{
+  "label": "Notifications",
+  "labelUnread": "{count, plural, one {Notifications, # non lue} other {Notifications, # non lues}}",
+  "title": "Notifications",
+  "markAll": "Tout marquer comme lu",
+  "unread": "non lue",
+  "someone": "Quelqu'un",
+  "empty": "Vous êtes à jour.",
+  "emptyHint": "Les actions qu'on vous confie, les séances qui démarrent et les comptes rendus publiés apparaissent ici.",
+  "kinds": {
+    "action_assigned": "<strong>{actor}</strong> vous a confié une action dans <strong>{meeting}</strong>",
+    "session_started": "<strong>{meeting}</strong> a commencé : rejoignez la séance",
+    "minutes_published": "Le compte rendu de <strong>{meeting}</strong> est publié",
+    "kudo_received": "<strong>{actor}</strong> vous a remercié·e dans <strong>{meeting}</strong>",
+    "meeting_joined": "<strong>{actor}</strong> vous a ajouté·e à <strong>{meeting}</strong>",
+    "absence_delegated": "<strong>{actor}</strong> s'absente : vous animez ses réunions pendant ce temps"
+  }
+}

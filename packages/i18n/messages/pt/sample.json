@@ -1,0 +1,88 @@
+{
+  "badge": "Exemplo",
+  "exploreTitle": "Ou explore antes uma reunião de exemplo",
+  "exploreText": "Uma equipe fictícia com um mês de histórico: inicie uma sessão, leia as atas, veja as estatísticas. Nada é enviado a ninguém, e ela some com um clique.",
+  "explore": "Abrir a reunião de exemplo",
+  "preparing": "Preparando o exemplo…",
+  "banner": "Reunião de exemplo: uma equipe fictícia e um mês de histórico, para experimentar tudo. Nada é enviado a ninguém.",
+  "delete": "Excluir o exemplo",
+  "deleteConfirm": "Excluir a reunião de exemplo e sua equipe fictícia? Não é possível desfazer.",
+  "personHint": "Pessoa fictícia da reunião de exemplo",
+  "meetingName": "Reunião semanal (exemplo)",
+  "tasks": {
+    "emma": {
+      "1": "Modelo de dados das faturas",
+      "2": "Endpoint de faturas na API",
+      "3": "Autenticação por chave de API",
+      "4": "Documentação da API",
+      "5": "Filtros por cliente nas faturas",
+      "6": "Testes de carga a 500 requisições por segundo"
+    },
+    "lucas": {
+      "1": "Análise do funil de cadastro",
+      "2": "Entrevistas com cinco novos clientes",
+      "3": "Especificação do checklist de boas-vindas",
+      "4": "Textos do tour guiado",
+      "5": "Painel de ativação",
+      "6": "Teste da página de preços"
+    },
+    "sarah": {
+      "1": "Protótipos mobile aprovados",
+      "2": "Esqueleto do app mobile e sua integração contínua",
+      "3": "Telas de cadastro",
+      "4": "Foto dos comprovantes",
+      "5": "Modo offline do painel",
+      "6": "Beta aberto a dez clientes"
+    },
+    "tom": {
+      "1": "Estilos de botões e campos",
+      "2": "Paleta do tema escuro",
+      "3": "Foco de teclado visível em todo lugar",
+      "4": "Componente de tabela",
+      "5": "Testes de usabilidade com duas equipes",
+      "6": "Guia dos componentes"
+    },
+    "sofia": {
+      "1": "Painéis de monitoramento",
+      "2": "Logs reunidos em um só lugar",
+      "3": "Backups automáticos do banco de dados",
+      "4": "Checklist de implantação",
+      "5": "Alertas de erros do servidor",
+      "6": "Simulação de restauração dos backups"
+    }
+  },
+  "blockers": {
+    "staging": "Ainda sem acesso ao banco de dados de teste, chamado aberto com a TI",
+    "crm": "A exportação do CRM para em 2.000 linhas",
+    "licence": "O pacote de ícones escolhido exige uma licença paga"
+  },
+  "dayOff": "Ausente na quinta à tarde (treinamento)",
+  "actions": {
+    "staging": "Conseguir acesso ao banco de dados de teste (cobrar a TI)",
+    "crm": "Contornar o limite de exportação do CRM",
+    "licence": "Comprar a licença do pacote de ícones"
+  },
+  "kudos": {
+    "checklist": "O checklist de implantação salvou minha sexta-feira",
+    "screens": "As novas telas estão muito mais claras",
+    "export": "Obrigado por destravar a exportação em um dia"
+  },
+  "questions": {
+    "endpoint": "Quando o endpoint de faturas chega ao servidor de teste?",
+    "alerts": "Os alertas podem ir também para o canal do suporte?"
+  },
+  "decisions": {
+    "escalate": "Decisão: escalamos o chamado da TI se não houver resposta até quinta.",
+    "notes": "Decisão: o design system ganha notas de versão próprias."
+  },
+  "summary": "Uma boa semana: a documentação da API está no ar e o beta está no prazo. O acesso ao banco de dados de teste continua bloqueado, então a Emma escala o chamado na quinta.",
+  "icebreaker": "Sua pequena vitória da semana?",
+  "answers": {
+    "lucas": "Cinco entrevistas com clientes marcadas em uma manhã",
+    "sofia": "Zero alertas neste fim de semana"
+  },
+  "topics": {
+    "oncall": "Quem fica de plantão durante as férias?",
+    "flags": "Convenção de nomes para as feature flags"
+  }
+}

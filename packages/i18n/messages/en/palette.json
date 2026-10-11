@@ -1,0 +1,52 @@
+{
+  "title": "Commands",
+  "placeholder": "Type a command: next, Emma, minutes…",
+  "none": "No command matches “{query}”.",
+  "foot": "↑ ↓ to choose, Enter to run, Esc to close.",
+  "groups": {
+    "meeting": "Meeting",
+    "steps": "Go to",
+    "panes": "Panel",
+    "people": "People",
+    "pages": "Open"
+  },
+  "keys": {
+    "space": "Space"
+  },
+  "start": "Start the meeting",
+  "pause": "Pause the timer",
+  "resume": "Resume the timer",
+  "next": "Next step",
+  "previous": "Previous step",
+  "bonus": "Give 30 more seconds",
+  "resetTimer": "Reset the timer",
+  "shuffle": "Shuffle the speaking order",
+  "absent": "Mark {name} absent",
+  "present": "Mark {name} present",
+  "panes": {
+    "run": "Agenda",
+    "live": "Live",
+    "actions": "Actions",
+    "topics": "Topics",
+    "minutes": "Minutes",
+    "polls": "Polls",
+    "random": "Random tools"
+  },
+  "pages": {
+    "screen": "Shared screen",
+    "remote": "Phone remote",
+    "history": "History",
+    "stats": "Stats",
+    "settings": "Settings"
+  },
+  "help": {
+    "title": "Keyboard shortcuts",
+    "next": "Next step",
+    "previous": "Previous step",
+    "timer": "Start, pause or resume the timer",
+    "palette": "Command palette",
+    "help": "These shortcuts",
+    "close": "Close a dialog",
+    "ok": "Got it"
+  }
+}

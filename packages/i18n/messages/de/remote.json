@@ -1,0 +1,13 @@
+{
+  "noMeeting": "Für dieses Meeting ist keine Sitzung vorbereitet.",
+  "back": "Regie",
+  "now": "Jetzt",
+  "then": "Danach: {next}",
+  "last": "Letzter Schritt",
+  "start": "Meeting starten",
+  "previous": "Zurück",
+  "next": "Weiter",
+  "pause": "Pause",
+  "resume": "Fortsetzen",
+  "bonus": "+30 s"
+}

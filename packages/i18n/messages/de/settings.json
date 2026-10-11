@@ -1,0 +1,265 @@
+{
+  "hostOnlyTitle": "Einstellungen nur für die Moderation ({host})",
+  "hostOnlyBody": "Die Moderation richtet das Meeting, seine Personen und Abschnitte ein. Bitte eine moderierende Person oder eine Admin-Person des Arbeitsbereichs um Änderungen.",
+  "saved": "Einstellungen gespeichert",
+  "onePerLine": "Eins pro Zeile",
+  "remove": "Entfernen",
+  "cancel": "Abbrechen",
+  "meeting": {
+    "title": "Meeting",
+    "teamName": "Name des Meetings",
+    "hostLabel": "Angezeigter Name der Moderation",
+    "hostLabelHint": "Eine Rolle oder ein Vorname, z. B. Scrum Master, Moderation, Julia. Überall in Ronde angezeigt: „Notizen · {host}“.",
+    "locale": "Sprache des Meetings",
+    "localeHint": "Sprache der Erinnerungs-E-Mails, der Benachrichtigungen und der erzeugten Protokolle.",
+    "speakingTime": "Redezeit",
+    "perPerson": "{time} pro Person",
+    "targetRange": "Von 5 min bis 8 h.",
+    "speakRange": "Von 15 s bis 30 min.",
+    "unitSec": "s",
+    "unitMin": "min",
+    "unitH": "h",
+    "seconds": "Sekunden",
+    "minutes": "Minuten",
+    "hours": "Stunden",
+    "otherDuration": "Andere Dauer…",
+    "target": "Zieldauer",
+    "timer": "Timer",
+    "autoStart": "Startet bei jedem Beitrag",
+    "announcements": "Ankündigungen im Intro",
+    "localeWorkspace": "Sprache des Arbeitsbereichs ({language})"
+  },
+  "sections": {
+    "title": "Abschnitte des Check-ins",
+    "name": "Name des Abschnitts",
+    "nameOf": "Name von Abschnitt {n}",
+    "input": "Eingabe",
+    "inputOf": "Eingabe von „{label}“",
+    "role": "Rolle",
+    "roleOf": "Rolle von „{label}“",
+    "roles": {
+      "achievement": {
+        "label": "Erledigt",
+        "hint": "Was erledigt wurde. Bietet an, die Pläne vom letzten Mal abzuhaken."
+      },
+      "plan": {
+        "label": "Geplant",
+        "hint": "Was als Nächstes kommt. Wird in der nächsten Sitzung und in der Erinnerung wieder angezeigt."
+      },
+      "blocker": {
+        "label": "Blocker",
+        "hint": "Was blockiert. Auf dem Bildschirm hervorgehoben, kann zur Folgeaufgabe werden, in den Statistiken erfasst."
+      },
+      "note": {
+        "label": "Sonstiges",
+        "hint": "Alles andere, das sich zu teilen lohnt."
+      },
+      "custom": {
+        "label": "Eigener",
+        "hint": "Ein freier Abschnitt ohne besonderes Verhalten."
+      }
+    },
+    "taken": "bereits vergeben",
+    "carryPlansSwitch": "Die Rubrik wird zur Checkliste.",
+    "carryPlansHint": "Alle finden ihre Pläne als Kästchen wieder und haken sie nach und nach ab. Ein leeres Kästchen zählt nicht als erledigt.",
+    "carryPlans": "Übernehmen, was beim letzten Mal in „{plan}“ stand",
+    "moveUp": "„{label}“ nach oben",
+    "moveDown": "„{label}“ nach unten",
+    "removeOf": "„{label}“ entfernen",
+    "customPlaceholder": "Z. B. Recherche, Demo zum Zeigen, Brauche Hilfe",
+    "add": "Abschnitt hinzufügen",
+    "hint": "Jede Rolle (erledigt, geplant, Blocker, Sonstiges) gehört zu höchstens einem Abschnitt. Ein Abschnitt behält seine Einträge, wenn sich Name, Rolle oder Eingabe ändern."
+  },
+  "reminder": {
+    "title": "Check-in-Erinnerung",
+    "when": "Wann",
+    "dayBefore": "Am Werktag vor dem Meeting",
+    "sameDay": "Am Tag des Meetings, vor der Uhrzeit",
+    "time": "Uhrzeit",
+    "byEmail": "Per E-Mail an jede Person",
+    "emailHint": "Nur Personen, deren Check-in noch nicht ausgefüllt ist, bekommen die Erinnerung. Mit dem Feld „Erinnerung“ in der Teamliste kannst du jemanden abmelden.",
+    "noSmtp": "Kein Mailserver eingerichtet: Setze SMTP_URL im Container, um E-Mail-Erinnerungen einzuschalten.",
+    "teamHint": "Eine gemeinsame Erinnerung in einem Team-Raum richtest du unter „Benachrichtigungen“ ein."
+  },
+  "warmUp": {
+    "mood": "Stimmung im Team",
+    "moodOffer": "Allen anbieten, ihre Tagesstimmung zu teilen (anonym)",
+    "icebreaker": "Eisbrecher",
+    "bank": "Fragenpool",
+    "bankHint": "Für jedes Meeting wird zufällig eine Frage gezogen; die Regie kann sie ändern. Leer lassen, um den Eisbrecher auszuschalten."
+  },
+  "sources": {
+    "title": "Aufgabenquellen",
+    "gitlabToken": "GitLab-Token",
+    "noSecretKey": "Die Token-Verschlüsselung ist auf dem Server nicht eingerichtet: Bitte den Betrieb, SECRET_KEY zu setzen.",
+    "tokenHint": "Tokens werden vor dem Speichern verschlüsselt und nie wieder angezeigt. GitLab: ein Token mit dem Scope <code>read_api</code>.",
+    "serverToken": "(das Server-Token wird verwendet, bis du eins eingibst)",
+    "groups": "GitLab-Gruppen",
+    "projects": "Verfolgte GitLab-Projekte",
+    "projectsHint": "Nur Issues aus diesen Projekten werden zum Import angeboten. Trag außerdem den GitLab-Benutzernamen jeder Person im Block Personen ein.",
+    "save": "GitLab-Zugang speichern",
+    "turnOn": "Für dieses Meeting ist keine Integration eingeschaltet. Schalte GitLab oder GitHub unter „Module“ ein, um Issues und Merge- bzw. Pull-Requests jeder Person zu importieren.",
+    "githubTitle": "GitHub",
+    "githubToken": "GitHub-Token",
+    "githubTokenHint": "Optional für öffentliche Repositorys. Für private: ein Fine-grained-Token mit Lesezugriff auf Issues und Pull Requests. Verschlüsselt, nie wieder angezeigt.",
+    "githubRepos": "Verfolgte Repositorys",
+    "githubReposHint": "„owner/repository“ oder ein ganzer „owner“, eins pro Zeile; leer: alle Repositorys. Trag außerdem den GitHub-Benutzernamen jeder Person im Block Personen ein.",
+    "githubSave": "GitHub-Zugang speichern"
+  },
+  "preview": {
+    "title": "Vorschau der Erinnerung",
+    "to": "An: {email} · {date} um {time}",
+    "disabled": "Erinnerungen ausgeschaltet",
+    "frameTitle": "Vorschau der Erinnerungs-E-Mail für {name}"
+  },
+  "token": {
+    "removed": "Wird beim Speichern entfernt",
+    "saved": "Gespeichert · gib ein anderes ein, um es zu ersetzen",
+    "keep": "Behalten"
+  },
+  "gitlab": {
+    "unreachable": "GitLab antwortet nicht.",
+    "followed": "{count, plural, one {# Projekt oder Gruppe verfolgt} other {# Projekte oder Gruppen verfolgt}}",
+    "noFilter": "Kein Filter: Alle Projekte werden verfolgt",
+    "untickAll": "Alle abwählen",
+    "tokenFirst": "Gib das GitLab-Token ein und speichere es, um die Projekte der Gruppen zu sehen.",
+    "loading": "Projekte werden geladen…",
+    "saveForGroups": "Speichere die Einstellungen, um die Projekte der neuen Gruppen zu sehen.",
+    "filter": "Projekte filtern",
+    "filterPlaceholder": "Die {count} Projekte filtern…",
+    "outsideGroups": "außerhalb der Gruppen",
+    "wholeGroup": "ganze Gruppe · {count} Projekte"
+  },
+  "people": {
+    "title": "Personen ({count})",
+    "intro": "Die Profile kommen aus dem Verzeichnis des Arbeitsbereichs. Die Rolle legt fest, was jede Person in diesem Meeting tun kann.",
+    "roles": {
+      "host": "Moderation",
+      "cohost": "Co-Moderation",
+      "participant": "Teilnehmend",
+      "observer": "Beobachtend"
+    },
+    "roleHints": {
+      "host": "Leitet die Sitzungen und richtet das Meeting ein",
+      "cohost": "Leitet die Sitzungen",
+      "participant": "Füllt einen Check-in aus und nimmt teil",
+      "observer": "Verfolgt die Sitzungen, ohne Check-in"
+    },
+    "roleOf": "Rolle von {name}",
+    "speaks": "Ist dran",
+    "speaksHint": "Teil der Runde",
+    "remind": "Erinnerung",
+    "gitlab": "GitLab-Benutzername",
+    "remove": "Entfernen",
+    "confirmRemove": "Aus dem Meeting entfernen",
+    "removed": "{name} nimmt nicht mehr teil",
+    "added": "{name} zum Meeting hinzugefügt",
+    "updated": "Gespeichert",
+    "addTitle": "Jemanden hinzufügen",
+    "pick": "Person",
+    "pickPlaceholder": "Wähle jemanden aus dem Verzeichnis",
+    "add": "Hinzufügen",
+    "nobodyLeft": "Alle aus dem Verzeichnis nehmen bereits teil.",
+    "directory": "Verzeichnis verwalten",
+    "categoriesHint": "Berufsgruppen, Geburtstage und Namen werden im Verzeichnis des Arbeitsbereichs bearbeitet.",
+    "github": "GitHub-Benutzername"
+  },
+  "template": {
+    "title": "Dieses Format wiederverwenden",
+    "intro": "Speichere Abschnitte, Format, Module und Termine als Vorlage des Arbeitsbereichs, um daraus weitere Meetings anzulegen. Personen, Verlauf und Tokens bleiben hier.",
+    "open": "Als Vorlage speichern",
+    "name": "Name der Vorlage",
+    "description": "Beschreibung (optional)",
+    "save": "Vorlage speichern",
+    "cancel": "Abbrechen",
+    "saved": "Vorlage gespeichert: Sie wird beim Anlegen eines Meetings angeboten."
+  },
+  "nav": {
+    "label": "Kategorien der Einstellungen",
+    "general": "Allgemein",
+    "schedule": "Termine",
+    "people": "Personen und Rollen",
+    "sections": "Abschnitte",
+    "modules": "Module",
+    "appearance": "Aussehen",
+    "notifications": "Benachrichtigungen",
+    "integrations": "Integrationen",
+    "template": "Vorlage",
+    "danger": "Gefahrenzone",
+    "agenda": "Agenda",
+    "projects": "Projekte"
+  },
+  "status": {
+    "auto": "Änderungen werden automatisch gespeichert.",
+    "saving": "Wird gespeichert…",
+    "saved": "Gespeichert",
+    "invalid": "Nicht gespeichert: Prüfe die markierten Felder.",
+    "failed": "Nicht gespeichert: Die Änderung wurde abgelehnt.",
+    "undo": "Rückgängig"
+  },
+  "appearance": {
+    "accent": "Akzentfarbe",
+    "accentHint": "Für Schaltflächen, Timer und geteilten Bildschirm dieses Meetings, im hellen und dunklen Design.",
+    "accents": {
+      "ember": "Glut",
+      "ocean": "Ozean",
+      "forest": "Wald",
+      "plum": "Pflaume",
+      "slate": "Schiefer"
+    },
+    "themeHint": "Helles oder dunkles Design ist eine persönliche Wahl:",
+    "themeLink": "wähle es in deinem Konto."
+  },
+  "danger": {
+    "title": "Meeting löschen",
+    "hint": "Das Meeting verschwindet aus allen Listen und seine Seiten schließen sich für alle. Der Verlauf bleibt im Arbeitsbereich erhalten.",
+    "confirm": "Gib <strong>{name}</strong> zur Bestätigung ein",
+    "remove": "Meeting löschen"
+  },
+  "video": {
+    "title": "Videoanruf",
+    "provider": "Video-Tool",
+    "providers": {
+      "link": "Ein Link zu einem beliebigen Tool (Meet, Zoom, Teams…)",
+      "jitsi": "Jitsi Meet (ein Raum für dieses Meeting)",
+      "bbb": "BigBlueButton (dein Server)"
+    },
+    "link": "Link zum Videoanruf",
+    "linkHint": "Oben auf jeder Seite und in den E-Mails angezeigt.",
+    "jitsiUrl": "Jitsi-Server",
+    "jitsiHint": "Leer: meet.jit.si. Der Raumname wird einmal schwer erratbar gezogen und bleibt für alle Sitzungen gleich.",
+    "bbbUrl": "BigBlueButton-Server",
+    "bbbSecret": "Gemeinsames Secret des Servers",
+    "bbbHint": "Ronde öffnet den Raum, wenn jemand beitritt, und lässt jede Person mit ihrem Namen herein; die Moderation tritt als Moderator bei. Das Secret wird verschlüsselt und nie wieder angezeigt.",
+    "current": "Personen treten bei über:",
+    "tryIt": "den BigBlueButton-Raum",
+    "save": "Videoanruf speichern",
+    "createWith": "Dauerhaften Raum anlegen mit:",
+    "roomCreated": "Raum angelegt: Der Link ist gespeichert.",
+    "kinds": {
+      "zoom": "Zoom",
+      "meet": "Google Meet",
+      "teams": "Teams"
+    }
+  },
+  "logoHint": "Das Logo des Arbeitsbereichs erscheint auf dem geteilten Bildschirm, in E-Mails und Protokollen.",
+  "logoLink": "In den Einstellungen des Arbeitsbereichs ändern",
+  "icon": {
+    "title": "Symbol",
+    "hint": "Wird neben dem Namen des Meetings in Menüs und Listen angezeigt: ein Emoji oder ein eigenes Bild (ein Logo, ein Teamfoto).",
+    "upload": "Bild hochladen",
+    "changeImage": "Bild ändern",
+    "removeImage": "Bild entfernen",
+    "imageFirst": "Das Bild wird statt des Emojis angezeigt; entferne es, um das Emoji wieder zu sehen.",
+    "emoji": "Emoji",
+    "initials": "Initialen",
+    "initialsShort": "Aa",
+    "other": "Anderes Emoji",
+    "otherPlaceholder": "Emoji einfügen oder eingeben",
+    "use": "Verwenden",
+    "saved": "Symbol gespeichert",
+    "imageSaved": "Bild gespeichert",
+    "imageRemoved": "Bild entfernt",
+    "notSaved": "Das Bild konnte nicht gespeichert werden."
+  }
+}

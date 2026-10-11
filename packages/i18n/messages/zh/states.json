@@ -1,0 +1,13 @@
+{
+  "loading": "加载中……",
+  "notFoundTitle": "页面未找到",
+  "notFoundBody": "此页面不存在，或你已无权访问。",
+  "home": "返回首页",
+  "errorTitle": "出了点问题",
+  "errorBody": "无法显示此页面。请重试；如果仍然失败，请刷新页面。",
+  "errorRef": "参考编号：{ref}",
+  "retry": "重试",
+  "suspendedTitle": "此工作空间已暂停",
+  "suspendedBody": "{workspace} 目前已暂停：其会议、进展卡和历史都会保留，但任何人都无法打开。所有者知道原因；如需重新开放，请联系此服务的管理员。",
+  "suspendedBack": "返回我的工作空间"
+}

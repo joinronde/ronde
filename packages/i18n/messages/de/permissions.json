@@ -1,0 +1,62 @@
+{
+  "workspace": {
+    "manage": "Einstellungen des Arbeitsbereichs ändern"
+  },
+  "members": {
+    "manage": "Rollen der Mitglieder ändern"
+  },
+  "people": {
+    "read": "Verzeichnis sehen",
+    "manage": "Personen bearbeiten und entfernen",
+    "invite": "Personen einladen"
+  },
+  "templates": {
+    "manage": "Vorlagen speichern und löschen"
+  },
+  "connectors": {
+    "manage": "Benachrichtigungs-Connectors verwalten"
+  },
+  "audit": {
+    "read": "Audit-Log lesen"
+  },
+  "meeting": {
+    "create": "Meetings anlegen",
+    "read": "Alle Meetings sehen",
+    "configure": "Einstellungen aller Meetings ändern",
+    "delete": "Meetings löschen"
+  },
+  "participants": {
+    "manage": "Teilnehmende verwalten"
+  },
+  "session": {
+    "run": "Sitzungen leiten (Regie)",
+    "participate": "An Sitzungen teilnehmen",
+    "observe": "Sitzungen verfolgen"
+  },
+  "checkin": {
+    "write": {
+      "own": "Eigenen Check-in ausfüllen",
+      "any": "Check-ins aller bearbeiten"
+    },
+    "read": {
+      "all": "Alle Check-ins lesen"
+    }
+  },
+  "notes": {
+    "read": "Notizen der Moderation lesen"
+  },
+  "minutes": {
+    "edit": "Protokoll bearbeiten"
+  },
+  "history": {
+    "read": "Verlauf lesen"
+  },
+  "stats": {
+    "read": "Statistiken sehen"
+  },
+  "projects": {
+    "read": "Das Portfolio sehen",
+    "create": "Projekte anlegen",
+    "manage": "Alle Projekte bearbeiten und archivieren"
+  }
+}

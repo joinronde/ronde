@@ -1,0 +1,21 @@
+{
+  "name": "@ronde/ee-stub",
+  "version": "0.0.0",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "description": "Stand-in for @ronde/ee in a pure Community build (RONDE_PURE_CE=1): the Community behaviour, no paid code.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ronde/editions": "workspace:*"
+  },
+  "devDependencies": {
+    "@ronde/config": "workspace:*",
+    "typescript": "~5.9.3"
+  }
+}

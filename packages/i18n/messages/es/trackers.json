@@ -1,0 +1,38 @@
+{
+  "title": "Gestores de tickets",
+  "intro": "Convierte una acción de seguimiento en un ticket de Jira, Linear, GitLab o GitHub. Cuando el ticket se cierra, la acción se marca como hecha en Ronde.",
+  "empty": "Todavía no hay gestores de tickets.",
+  "add": "Añadir un gestor de tickets",
+  "kind": "Herramienta",
+  "name": "Nombre",
+  "token": "Token de API",
+  "tokenKept": "Hay un token guardado. Escribe uno nuevo para sustituirlo.",
+  "save": "Guardar",
+  "cancel": "Cancelar",
+  "test": "Probar",
+  "remove": "Quitar",
+  "works": "✓ Conectado.",
+  "removeConfirm": "¿Quitar {name}? Los tickets existentes se conservan, pero ya no se siguen.",
+  "kinds": {
+    "jira": "Jira",
+    "linear": "Linear",
+    "gitlab": "GitLab",
+    "github": "GitHub"
+  },
+  "fields": {
+    "site": "Dirección del sitio",
+    "project": "Clave del proyecto",
+    "email": "Correo de la cuenta",
+    "team": "ID del equipo",
+    "url": "Dirección de GitLab",
+    "repo": "Repositorio (propietario/nombre)"
+  },
+  "hints": {
+    "jira": "Un token de API creado en id.atlassian.com, para la cuenta cuyo correo figura arriba.",
+    "linear": "Una clave de API personal de Linear, en Ajustes → API. El ID del equipo está en los ajustes del equipo.",
+    "gitlab": "Un token de acceso de proyecto o personal con el alcance api. Proyecto: su ruta (grupo/proyecto) o su número.",
+    "github": "Un token detallado con «Issues: lectura y escritura» en el repositorio."
+  },
+  "assignee": "Los responsables se asignan en GitLab y GitHub cuando su usuario figura en su perfil del directorio.",
+  "edit": "Editar"
+}

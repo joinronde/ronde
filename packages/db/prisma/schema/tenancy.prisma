@@ -1,0 +1,241 @@
+// Workspaces and their directory. Every tenant row carries workspaceId. Required links reference their
+// parent through [id, workspaceId], so the database itself refuses links across workspaces; optional
+// links are checked by the tenant-scoped client and its tests.
+
+enum WorkspaceRole {
+  owner
+  admin
+  /// Plan, invoices and payment of the workspace (in the cloud), nothing else to administer
+  billing
+  /// A member who may create meetings even when the workspace keeps that to its administrators
+  organizer
+  member
+  guest
+}
+
+enum MemberStatus {
+  active
+  suspended
+}
+
+model Workspace {
+  id            String            @id @default(uuid(7))
+  /// Used in URLs: /w/<slug>
+  slug          String            @unique
+  name          String
+  /// Default language of the workspace (emails, minutes) when a meeting does not set one
+  locale        String            @default("en")
+  timezone      String            @default("UTC")
+  /// Workspace policies: { meetingCreation: "members" | "admins" }
+  settings      Json              @default("{}")
+  /// Plan of the workspace in the cloud (community, team, enterprise), kept by billing; self-hosted instances use their license
+  plan          String            @default("community")
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  deletedAt     DateTime?
+  /// Suspended by the Ronde team (unpaid, abuse…): members see a notice instead of the workspace
+  suspendedAt   DateTime?
+  suspendReason String?
+  members       WorkspaceMember[]
+  people        Person[]
+  jobCategories JobCategory[]
+  invitations   Invitation[]
+  meetings      Meeting[]
+  templates     Template[]
+  connectors    Connector[]
+  auditLogs     AuditLog[]
+  customRoles   CustomRole[]
+  domains       WorkspaceDomain[]
+  ssoProviders  SsoProvider[]
+  ldapDirectory LdapDirectory?
+  scimTokens    ScimToken[]
+  inbox         InboxItem[]
+  absences      Absence[]
+  guestLinks    GuestLink[]
+  logo          WorkspaceLogo?
+  trackers      IssueTracker[]
+  wikis         Wiki[]
+  videoAccounts VideoAccount[]
+  calendars     CalendarAccount[]
+  subscription  Subscription?
+  grants        PlanGrant[]
+  projectThemes ProjectTheme[]
+  projects      Project[]
+}
+
+/// A user's seat in a workspace, always tied to their directory profile (Person)
+model WorkspaceMember {
+  id           String        @id @default(uuid(7))
+  workspaceId  String
+  workspace    Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  personId     String        @unique
+  person       Person        @relation(fields: [personId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  role         WorkspaceRole @default(member)
+  /// Role of the workspace's own adding permissions (Enterprise)
+  customRoleId String?
+  customRole   CustomRole?   @relation(fields: [customRoleId], references: [id], onDelete: SetNull)
+  status       MemberStatus  @default(active)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@unique([workspaceId, userId])
+  @@unique([personId, workspaceId])
+  @@index([userId])
+}
+
+/// Directory profile shared by every meeting of the workspace; it can exist before the person signs up
+model Person {
+  id              String                   @id @default(uuid(7))
+  workspaceId     String
+  workspace       Workspace                @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  /// Linked account, once the person signed up and joined
+  userId          String?
+  email           String
+  firstName       String
+  lastName        String                   @default("")
+  /// Birthday "MM-DD" (never the year); null: not celebrated
+  birthday        String?
+  jobCategoryId   String?
+  jobCategory     JobCategory?             @relation(fields: [jobCategoryId], references: [id], onDelete: SetNull)
+  color           Int                      @default(0)
+  /// Usernames in other tools: { "gitlab": "…", "github": "…" }
+  handles         Json                     @default("{}")
+  /// Custom attributes (team, location, skills…)
+  attributes      Json                     @default("{}")
+  locale          String?
+  timezone        String?
+  /// Mobile number in international form (+33612345678), for SMS and WhatsApp reminders (Team)
+  phone           String?
+  active          Boolean                  @default(true)
+  /// Someone of the fictitious team of a sample meeting: deleted with it, never written to
+  sample          Boolean                  @default(false)
+  /// Identifier in the company's directory, set by SCIM provisioning (Enterprise)
+  externalId      String?
+  /// Removed by SCIM provisioning: no longer a member, history kept
+  deprovisionedAt DateTime?
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
+  member          WorkspaceMember?
+  avatar          PersonAvatar?
+  invitations     Invitation[]
+  participations  MeetingParticipant[]
+  checkIns        CheckIn[]
+  checkInItems    CheckInItem[]
+  itemsJoined     CheckInItemContributor[]
+  topicVotes      TopicVote[]
+  actions         Action[]
+  attendances     Attendance[]
+  inbox           InboxItem[]
+  absences        Absence[]
+  projectsLed     Project[]                @relation("ProjectLead")
+  projects        ProjectMember[]
+
+  @@unique([id, workspaceId])
+  @@unique([workspaceId, email])
+  @@unique([workspaceId, userId])
+  @@index([workspaceId, active])
+}
+
+/// Photo of a person: a 256 px square image, resized in the browser (~20 KB)
+model PersonAvatar {
+  personId    String   @id
+  workspaceId String
+  person      Person   @relation(fields: [personId], references: [id], onDelete: Cascade)
+  data        Bytes
+  /// image/webp, image/jpeg or image/png
+  type        String
+  updatedAt   DateTime @updatedAt
+
+  @@index([workspaceId])
+}
+
+model JobCategory {
+  id          String    @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  name        String
+  color       Int       @default(0)
+  position    Int       @default(0)
+  people      Person[]
+
+  @@unique([id, workspaceId])
+  @@unique([workspaceId, name])
+}
+
+/// Invitation to join a workspace, sent by email; only the hash of its token is stored
+model Invitation {
+  id          String        @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  personId    String?
+  person      Person?       @relation(fields: [personId], references: [id], onDelete: Cascade)
+  email       String
+  role        WorkspaceRole @default(member)
+  tokenHash   String        @unique
+  invitedById String
+  expiresAt   DateTime
+  acceptedAt  DateTime?
+  revokedAt   DateTime?
+  createdAt   DateTime      @default(now())
+
+  @@index([workspaceId, email])
+}
+
+/// What happened for a person, shown under the bell: an action given to them, a session starting, minutes published…
+model InboxItem {
+  id          String    @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  /// Who receives it
+  personId    String
+  person      Person    @relation(fields: [personId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  /// "action.assigned", "session.started", "minutes.published", "kudo.received", "meeting.joined"
+  kind        String
+  /// Who did it, when someone did
+  actorId     String?
+  meetingId   String?
+  /// What the message needs: { text }
+  data        Json      @default("{}")
+  /// Where clicking it leads, inside the workspace ("/m/<id>/me")
+  href        String
+  readAt      DateTime?
+  /// Sent as a push notification to the person's devices (or found nothing to send to)
+  pushedAt    DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([personId, createdAt])
+  @@index([workspaceId])
+  @@index([pushedAt, createdAt])
+}
+
+/// The workspace's own logo (Team): shown in the app, on the shared screen, in emails and minutes
+model WorkspaceLogo {
+  workspaceId String    @id
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  data        Bytes
+  /// image/png, image/jpeg or image/webp
+  type        String
+  updatedAt   DateTime  @updatedAt
+}
+
+/// A period a person is away (holidays, leave, training): absent from the sessions of those days, no reminders,
+/// and someone else runs the meetings they host
+model Absence {
+  id          String    @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  personId    String
+  person      Person    @relation(fields: [personId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  /// First and last day away, local dates YYYY-MM-DD (inclusive)
+  from        String
+  to          String
+  note        String    @default("")
+  /// Person who runs the meetings this person hosts, meanwhile
+  delegateId  String?
+  createdAt   DateTime  @default(now())
+
+  @@index([workspaceId, personId])
+  @@index([workspaceId, delegateId])
+}

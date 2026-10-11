@@ -1,0 +1,14 @@
+{
+  "badge": "Ronde {edition}",
+  "also": "Também com {edition}",
+  "upgrade": "Mudar para {edition}",
+  "education": "Grátis para escolas e universidades",
+  "askAdmin": "Isto faz parte de um plano pago. Um administrador do espaço de trabalho pode ativá-lo.",
+  "pitch": {
+    "reporting_workspace": "Veja como está cada reunião do espaço de trabalho: engajamento, presença, planos cumpridos, ações concluídas, semana após semana, com um relatório por e-mail.",
+    "compliance_auditLog": "Saiba quem mudou o quê, e quando: configurações, pessoas, papéis e reuniões, com filtros, exportação em CSV ou envio ao seu SIEM.",
+    "permissions_customRoles": "Dê exatamente os direitos de que as pessoas precisam: papéis próprios além de membro e convidado, para o espaço de trabalho e cada reunião.",
+    "identity_domainCapture": "O login da sua empresa para o seu domínio: domínios verificados, novas contas que entram sozinhas, login único obrigatório, SAML, LDAP e SCIM.",
+    "reporting_portfolio": "Veja todo o portfólio de relance: a situação de cada projeto semana após semana, os prazos, os projetos de que ninguém falou ultimamente, uma exportação CSV e os projetos a acompanhar no relatório por e-mail."
+  }
+}

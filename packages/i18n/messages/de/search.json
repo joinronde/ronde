@@ -1,0 +1,15 @@
+{
+  "title": "Arbeitsbereich durchsuchen",
+  "placeholder": "Meetings, Personen, Aufgaben, Entscheidungen suchen…",
+  "switchTo": "Zu {name} wechseln",
+  "none": "Nichts gefunden für „{query}“.",
+  "foot": "↑ ↓ zum Bewegen, Enter zum Öffnen, Esc zum Schließen",
+  "kinds": {
+    "page": "Gehe zu",
+    "meeting": "Meetings",
+    "person": "Personen",
+    "action": "Aufgaben",
+    "topic": "Themen",
+    "decision": "Entscheidungen"
+  }
+}

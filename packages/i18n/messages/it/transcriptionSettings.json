@@ -1,0 +1,18 @@
+{
+  "title": "Trascrizione",
+  "intro": "Trasforma in testo ciò che si dice durante una sessione, turno per turno, per il verbale e l'assistente IA. Ogni riunione lo consente nelle proprie impostazioni.",
+  "enable": "Attiva la trascrizione",
+  "url": "Servizio di trascrizione",
+  "urlHint": "Lascia vuoto per OpenAI. Funziona anche un server Whisper in self-hosting (faster-whisper-server, speaches…): il suo indirizzo termina con /v1.",
+  "model": "Modello",
+  "modelHint": "whisper-1 o gpt-4o-transcribe con OpenAI; altrimenti il nome del modello del tuo server.",
+  "language": "Lingua parlata",
+  "detect": "Rilevala",
+  "key": "Chiave API",
+  "keyHint": "Necessaria per OpenAI; facoltativa per un server in self-hosting. Conservata cifrata.",
+  "keySaved": "Una chiave è salvata. Digitane una nuova per sostituirla.",
+  "instance": "Servizio dell'istanza",
+  "privacy": "L'audio di una sessione registrata viene inviato a questo servizio in blocchi di trenta secondi, poi eliminato: resta solo il testo, con la sessione.",
+  "save": "Salva",
+  "saved": "Salvato."
+}

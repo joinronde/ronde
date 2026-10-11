@@ -1,0 +1,54 @@
+{
+  "when": "{date} at {time}",
+  "speak": {
+    "minutes": "{m} min",
+    "seconds": "{s} s"
+  },
+  "timing": "Target {target} · {speak} of speaking time each",
+  "labels": {
+    "when": "When",
+    "timing": "Format",
+    "duration": "Duration",
+    "participants": "Participants"
+  },
+  "openRonde": "Open Ronde",
+  "joinVideo": "🎥 Join the video call",
+  "followInApp": "🙋 Follow the meeting in Ronde",
+  "test": {
+    "title": "✅ Ronde is connected",
+    "body": "Notifications of “{team}” will arrive here."
+  },
+  "soon": {
+    "title": "⏰ {team} starts in {minutes, plural, one {# minute} other {# minutes}}",
+    "body": "Time to join the team and keep your check-in at hand. In “My screen”, you can follow the turns, raise your hand and ask questions."
+  },
+  "started": {
+    "title": "▶️ {team} is starting",
+    "body": "The round table is about to start: join the team to share your progress and questions."
+  },
+  "minutes": {
+    "title": "📝 Minutes of {team} · {date}",
+    "decisions": "Decisions",
+    "actions": "Follow-up actions",
+    "action": "{text} ({owner})",
+    "read": "Read the minutes"
+  },
+  "checkIn": {
+    "title": "📝 Let's prepare {team}",
+    "ready": "Check-ins ready: {ready}/{total}",
+    "none": "No check-in expected for this session.",
+    "allReady": "All check-ins are ready, thanks team!",
+    "remaining": "{count, plural, one {# check-in still needs} other {# check-ins still need}} preparing or updating.",
+    "prepare": "Update your projects and your sections ({sections}), and review your follow-up actions.",
+    "fillIn": "📝 Fill in my check-in"
+  },
+  "overdue": {
+    "title": "⏳ {team}: {count, plural, one {# follow-up action is} other {# follow-up actions are}} waiting",
+    "item": "{text} ({owner}, {days, plural, one {# day} other {# days}})",
+    "update": "Update my actions"
+  },
+  "birthday": {
+    "title": "🎂 Happy birthday {names}!",
+    "body": "The whole {team} team wishes you a great day."
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "title": "KI-Assistent",
+  "intro": "Entwirft die Zusammenfassung einer Sitzung und schlägt die Folgeaufgaben vor, die das Protokoll nahelegt. Die Moderation prüft alles, bevor es gespeichert wird.",
+  "enable": "KI-Assistent einschalten",
+  "model": "Modell",
+  "key": "Anthropic-API-Schlüssel",
+  "keyHint": "Erstelle einen Schlüssel in der Anthropic-Konsole. Er wird verschlüsselt gespeichert und nie wieder angezeigt.",
+  "keySaved": "Ein Schlüssel ist gespeichert. Gib einen neuen ein, um ihn zu ersetzen.",
+  "instanceKey": "Schlüssel der Instanz",
+  "instanceKeyHint": "Diese Instanz stellt einen Schlüssel bereit. Gib deinen eigenen ein, um stattdessen dein Anthropic-Konto zu nutzen.",
+  "noEncryption": "Schlüssel können nicht gespeichert werden: SECRET_KEY ist auf dieser Instanz nicht gesetzt.",
+  "privacy": "Auf Anfrage wird das Protokoll der Sitzung (nie die Check-ins vor der Sitzung, nie Passwörter oder Schlüssel) an Anthropic gesendet, um die Antwort zu schreiben.",
+  "save": "Speichern",
+  "test": "Assistenten testen",
+  "removeKey": "Schlüssel entfernen",
+  "saved": "Gespeichert.",
+  "works": "✓ Der Assistent antwortet."
+}

@@ -1,0 +1,59 @@
+{
+  "package": {
+    "fullName": "Ronde: your team's recurring meetings",
+    "shortDescription": "Check-ins, reminders and minutes of your team's recurring meetings.",
+    "fullDescription": "Ronde runs your team's recurring meetings: everyone prepares their check-in, the round table keeps time, the minutes write themselves. In Teams, Ronde reminds each person of their check-in by personal message, lets them fill it in right there, answers “ronde” with their next sessions and open actions, and posts the meetings' notifications in a channel.",
+    "commandRonde": "Your next sessions and open actions",
+    "helpWord": "help",
+    "commandHelp": "What Ronde does in Teams"
+  },
+  "bot": {
+    "welcomeTitle": "Ronde is in this team",
+    "welcome": "Link it to your Ronde workspace: check-in reminders reach everyone here in Teams, and the meetings' notifications can be posted in this channel.",
+    "welcomeWho": "An owner or admin of the Ronde workspace does it, once.",
+    "link": "Link to Ronde",
+    "linked": "This channel is now linked to the Ronde workspace “{workspace}”. In each meeting's notifications, choose what is posted here.",
+    "unlinked": "This channel is no longer linked to Ronde: check-in reminders go back to email.",
+    "alreadyLinked": "This team is linked to the Ronde workspace “{workspace}”.",
+    "hello": "Hi! I remind you of your check-ins, and you can fill them in right here. Write “ronde” to see your next sessions and open actions.",
+    "help": "Write “ronde” to see your next sessions and open actions. Your check-in reminders arrive here, with a button to fill them in.",
+    "notFound": "Ronde could not find this check-in for you. The email of your Microsoft account must be the one of your Ronde profile, and you must take part in the meeting.",
+    "tooLong": "This check-in is too long to edit in Teams. Please open it in Ronde.",
+    "unknown": "Ronde does not know you yet: the email of your Microsoft account must be the one of your profile in a Ronde workspace linked to this team."
+  },
+  "link": {
+    "title": "Link Microsoft Teams",
+    "intro": "The team “{team}” asks to be linked to a Ronde workspace: its check-in reminders go through Teams, and its channel can receive the meetings' notifications.",
+    "channel": "Channel: {channel}",
+    "workspace": "Workspace",
+    "replaces": "Already linked to “{team}”: this team takes its place.",
+    "submit": "Link this workspace",
+    "none": "You manage no workspace where Microsoft Teams can be linked. It comes with Ronde Team, for the owners and admins of a workspace.",
+    "expired": "This link has expired or is not valid. In Teams, mention Ronde in the channel to get a new one."
+  },
+  "settings": {
+    "intro": "Add Ronde to Microsoft Teams: everyone fills in their check-in without leaving Teams.",
+    "locked": "The Microsoft Teams app comes with Ronde {edition}.",
+    "uses": {
+      "reminders": "Check-in reminders by personal message, with a button that turns the message into the check-in's form.",
+      "channel": "The team's channel becomes a connector: in each meeting's notifications, choose what is posted there.",
+      "command": "Writing “ronde” to the app shows each person their next sessions and open actions."
+    },
+    "emailMatch": "People are recognized by their email: their Microsoft account and their Ronde profile must share it.",
+    "step1": "Download Ronde's app for Teams.",
+    "step1Hint": "Your Teams administrator adds it once for the organization (Teams admin center › Teams apps › Manage apps › Upload new app). If your organization allows it, you can also upload it yourself (Apps › Manage your apps › Upload an app).",
+    "step2": "Add the app to the team whose channel will receive the notifications.",
+    "step3": "In that channel, Ronde posts a card: click “Link to Ronde” and pick this workspace.",
+    "download": "Download the app (.zip)",
+    "linkedTo": "Linked to {team}",
+    "channel": "notifications in {channel}",
+    "linked": "Microsoft Teams is linked.",
+    "reminders": "Send check-in reminders in Teams",
+    "remindersHint": "By personal message, in place of the email, to the people found in the team. The others still get the email.",
+    "unlink": "Unlink",
+    "unlinkConfirm": "Unlink Microsoft Teams? Reminders go back to email, and the notification rules posting to its channel are deleted. To remove the app itself, remove it from the team in Teams.",
+    "notConfigured": "To use Microsoft Teams, the administrator of this Ronde instance first registers its Teams app in Microsoft Azure.",
+    "setup": "How to set it up",
+    "openInTeams": "Open the app in Teams"
+  }
+}

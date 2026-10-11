@@ -1,0 +1,13 @@
+{
+  "loading": "Loading…",
+  "notFoundTitle": "Page not found",
+  "notFoundBody": "This page does not exist, or you no longer have access to it.",
+  "home": "Back to home",
+  "errorTitle": "Something went wrong",
+  "errorBody": "This page could not be shown. Try again; if it keeps failing, reload the page.",
+  "errorRef": "Reference: {ref}",
+  "retry": "Try again",
+  "suspendedTitle": "This workspace is suspended",
+  "suspendedBody": "{workspace} is suspended for now: its meetings, check-ins and history are kept, but nobody can open them. Its owners know why; write to the administrator of this service to reopen it.",
+  "suspendedBack": "Back to my workspaces"
+}

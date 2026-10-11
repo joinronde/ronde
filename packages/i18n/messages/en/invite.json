@@ -1,0 +1,18 @@
+{
+  "title": "Join {workspace}",
+  "intro": "{inviter} invited you to join {workspace} on Ronde.",
+  "role": "Your role: {role}",
+  "signedInAs": "Signed in as <strong>{email}</strong>",
+  "accept": "Join {workspace}",
+  "otherEmail": "This invitation was sent to <strong>{email}</strong>. Sign in with that address to accept it.",
+  "signIn": "Sign in to accept",
+  "signUp": "Create an account",
+  "switchAccount": "Use another account",
+  "invalidTitle": "Invitation not valid",
+  "invalid": "This invitation link is invalid or was revoked. Ask the person who invited you for a new one.",
+  "expiredTitle": "Invitation expired",
+  "expired": "This invitation to {workspace} has expired. Ask the person who invited you for a new one.",
+  "memberTitle": "You're already in",
+  "member": "You're already a member of {workspace}.",
+  "open": "Open {workspace}"
+}

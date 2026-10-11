@@ -1,0 +1,21 @@
+{
+  "title": "Modèles",
+  "intro": "Partez d'une réunion qui fonctionne déjà : pour une équipe, une école, une association, un chantier ou un service de soins. Tout reste modifiable.",
+  "browse": "Voir tous les modèles",
+  "categories": "Pour qui",
+  "sections": "Rubriques",
+  "category": {
+    "all": "Tous",
+    "team": "Équipes",
+    "product": "Produit & contenu",
+    "leadership": "Direction & commerce",
+    "education": "Éducation",
+    "nonprofit": "Associations",
+    "field": "Terrain",
+    "health": "Soins",
+    "own": "Vos modèles"
+  },
+  "minutes": "{count} min",
+  "use": "Utiliser ce modèle",
+  "saveHint": "Toute réunion peut devenir un modèle de l'espace : ouvrez ses réglages, puis « Enregistrer comme modèle »."
+}

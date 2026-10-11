@@ -1,0 +1,28 @@
+{
+  "new-year": "新年快乐！愿你的流水线一路绿灯 ✨",
+  "kings-cake": "国王饼：谁吃到了小瓷偶？👑",
+  "candlemas": "圣烛节：谁带可丽饼来？🥞",
+  "valentines": "情人节快乐，连你的 linter 也一起 💜",
+  "pi-day": "π 日快乐：3.14159265… 🥧",
+  "april-fools": "愚人节快乐！小心背后 🐟",
+  "easter": "复活节快乐：捉 bug 的季节开始了 🐣",
+  "easter-april-fools": "复活节和愚人节在同一周：小心背后，也看好你的巧克力 🐟🐣",
+  "star-wars": "愿 5 月 4 日与你同在 ✨",
+  "music-day": "世界音乐日：戴上耳机 🎸",
+  "bastille-day": "法国国庆日快乐 🎆",
+  "back-to-school": "开学啦！书包备好，工单也备好 🎒",
+  "programmers-day": "程序员节：一年中的第 256 天（0x100）💻",
+  "halloween": "万圣节快乐：当心僵尸 bug 🎃",
+  "christmas": "圣诞将至：24 日不要发布到生产环境！🎄",
+  "holidays": "节日快乐 ✨",
+  "winter": "来杯热咖啡，开工 ☕",
+  "spring": "春天来了 🌸",
+  "summer": "夏天到了：防晒霜和代码评审 ☀️",
+  "autumn": "叶子会落，生产环境不会 🍂",
+  "birthday": "生日快乐！🎂",
+  "birthdayNamed": "{names}，生日快乐！🎂",
+  "names": {
+    "auto": "自动（根据日期）",
+    "off": "无氛围"
+  }
+}

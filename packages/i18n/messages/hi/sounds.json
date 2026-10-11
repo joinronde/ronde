@@ -1,0 +1,49 @@
+{
+  "groups": {
+    "classical": "शास्त्रीय",
+    "jazz": "जैज़",
+    "electro": "इलेक्ट्रॉनिक",
+    "rock": "रॉक",
+    "generated": "जनरेटेड"
+  },
+  "music": {
+    "satie": "साटी — जिम्नोपेडी नं. 1 (पियानो)",
+    "satie-guitar": "साटी — जिम्नोपेडी नं. 1 (गिटार)",
+    "debussy": "डेबुसी — क्लेयर दे ल्यून",
+    "uno-mas": "Uno Mas (Airmen of Note)",
+    "traveling": "Traveling in your mind (Loyalty Freak Music)",
+    "ghost-surf": "Ghost Surf Rock (Loyalty Freak Music)",
+    "secret-agent": "Secret Agent Rock (John Bartmann)",
+    "soft-pads": "कोमल पैड",
+    "bossa-lounge": "बोसा लाउंज"
+  },
+  "cues": {
+    "start": {
+      "label": "शुरुआत में घंटी",
+      "hint": "“मीटिंग शुरू करें” पर क्लिक करते समय"
+    },
+    "birthday": {
+      "label": "जन्मदिन का गीत",
+      "hint": "जन्मदिन वाले सप्ताह में घंटी के बाद हैप्पी बर्थडे"
+    },
+    "speaker": {
+      "label": "वक्ता बदलना",
+      "hint": "बारी अगले व्यक्ति को जाने पर एक छोटी घंटी"
+    },
+    "timeUp": {
+      "label": "बोलने का समय समाप्त",
+      "hint": "टाइमर 0:00 पर पहुँचने पर तीन बीप"
+    },
+    "end": {
+      "label": "अंत में तालियाँ",
+      "hint": "समापन पर पहुँचने पर"
+    }
+  },
+  "board": {
+    "applause": "तालियाँ",
+    "drumroll": "ढोल की थाप",
+    "tada": "टा-डा",
+    "rimshot": "बा डुम त्स",
+    "birthday": "हैप्पी बर्थडे"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "done": "पूरा",
+  "toDo": "करना है",
+  "dragHint": "खिसकाने के लिए खींचें (या Alt+↑ / Alt+↓)",
+  "markToDo": "करना है चिह्नित करें",
+  "markDone": "पूरा चिह्नित करें",
+  "itemLabel": "{section}, आइटम {n}",
+  "removeItem": "“{text}” हटाएँ",
+  "emptyItem": "खाली आइटम",
+  "remove": "हटाएँ",
+  "addItem": "आइटम जोड़ें",
+  "addTaskFirst": "काम जोड़ें · कुछ न हो तो खाली छोड़ें",
+  "addItemFirst": "आइटम जोड़ें · कुछ न हो तो खाली छोड़ें",
+  "freeTextPlaceholder": "{section}: कुछ वाक्यों में · कुछ न हो तो खाली छोड़ें"
+}

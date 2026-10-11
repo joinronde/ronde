@@ -1,0 +1,17 @@
+{
+  "options": "Opzioni di proiezione",
+  "theme": "Tema di proiezione",
+  "themes": {
+    "auto": "Automatico",
+    "light": "Chiaro",
+    "dark": "Scuro"
+  },
+  "reducedMotion": "Movimento ridotto",
+  "ambience": "Atmosfera dello schermo d'attesa",
+  "previewTheme": "Anteprima di un tema",
+  "replayIntro": "Rivedi l'introduzione",
+  "fullscreen": "Schermo intero",
+  "drivenFromControl": "Questa scheda è comandata dalla regia.",
+  "yourTurn": "Tocca a te, <span>{name}</span>!",
+  "poweredBy": "Realizzato con Ronde"
+}

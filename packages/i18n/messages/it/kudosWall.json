@@ -1,0 +1,12 @@
+{
+  "title": "Kudos",
+  "intro": "I ringraziamenti dati durante le sessioni, appesi in vista di tutti.",
+  "given": "{count, plural, =0 {Nessun kudos negli ultimi 30 giorni} one {# kudos negli ultimi 30 giorni} other {# kudos negli ultimi 30 giorni}}",
+  "people": "{count, plural, =0 {} one {a # persona} other {a # persone}}",
+  "birthdays": "Compleanni del mese",
+  "today": "Oggi! 🎉",
+  "wall": "Kudos dati",
+  "fromTo": "<strong>{from}</strong> a <strong>{to}</strong>",
+  "empty": "Ancora nessun kudos.",
+  "emptyHint": "Durante una sessione, il modulo kudos permette a chiunque di ringraziare un collega: ogni grazie finisce su questa bacheca."
+}

@@ -1,0 +1,40 @@
+{
+  "title": "Cuentas de vídeo",
+  "intro": "Deja que Ronde cree una sala permanente de Zoom, Google Meet o Teams para cada reunión, con una cuenta del espacio de trabajo. Nadie tiene que iniciar sesión.",
+  "empty": "Todavía no hay cuentas de vídeo.",
+  "add": "Añadir una cuenta de vídeo",
+  "kind": "Proveedor",
+  "name": "Nombre",
+  "edit": "Editar",
+  "tokenKept": "Hay un secreto guardado. Escribe uno nuevo para sustituirlo.",
+  "save": "Guardar",
+  "cancel": "Cancelar",
+  "test": "Probar",
+  "remove": "Quitar",
+  "works": "✓ Conectado.",
+  "removeConfirm": "¿Quitar {name}? Las salas ya creadas siguen funcionando.",
+  "kinds": {
+    "zoom": "Zoom",
+    "meet": "Google Meet",
+    "teams": "Microsoft Teams"
+  },
+  "fields": {
+    "accountId": "ID de la cuenta",
+    "clientId": "ID de cliente",
+    "clientEmail": "Correo de la cuenta de servicio",
+    "subject": "Usuario al que pertenecen las salas",
+    "tenant": "Inquilino (ID o dominio)",
+    "organizer": "Organizador de las reuniones"
+  },
+  "secret": {
+    "zoom": "Secreto de cliente",
+    "meet": "Clave privada de la cuenta de servicio",
+    "teams": "Secreto de cliente"
+  },
+  "hints": {
+    "zoom": "En el Zoom App Marketplace, crea una app «Server-to-Server OAuth» con el alcance meeting:write:meeting:admin y copia su ID de cuenta, ID de cliente y secreto.",
+    "meet": "En Google Cloud, crea una cuenta de servicio, dale delegación en todo el dominio para el alcance meetings.space.created en la consola de administración de Google Workspace y pega el private_key de su clave JSON.",
+    "teams": "En Microsoft Entra, registra una aplicación con el permiso de aplicación OnlineMeetings.ReadWrite.All (con consentimiento de administrador) y una directiva de acceso de aplicación para el organizador."
+  },
+  "useIt": "Después, en los ajustes de una reunión, General → Videollamada: «Crear una sala permanente»."
+}

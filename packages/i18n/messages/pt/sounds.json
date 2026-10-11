@@ -1,0 +1,49 @@
+{
+  "groups": {
+    "classical": "Clássica",
+    "jazz": "Jazz",
+    "electro": "Eletrônica",
+    "rock": "Rock",
+    "generated": "Gerada"
+  },
+  "music": {
+    "satie": "Satie — Gymnopédie nº 1 (piano)",
+    "satie-guitar": "Satie — Gymnopédie nº 1 (violão)",
+    "debussy": "Debussy — Clair de lune",
+    "uno-mas": "Uno Mas (Airmen of Note)",
+    "traveling": "Traveling in your mind (Loyalty Freak Music)",
+    "ghost-surf": "Ghost Surf Rock (Loyalty Freak Music)",
+    "secret-agent": "Secret Agent Rock (John Bartmann)",
+    "soft-pads": "Pads suaves",
+    "bossa-lounge": "Bossa lounge"
+  },
+  "cues": {
+    "start": {
+      "label": "Sininho no início",
+      "hint": "Ao clicar em “Começar a reunião”"
+    },
+    "birthday": {
+      "label": "Música de aniversário",
+      "hint": "Parabéns pra você depois do sininho, em semana de aniversário"
+    },
+    "speaker": {
+      "label": "Troca de vez",
+      "hint": "Um sininho curto quando a palavra passa para a próxima pessoa"
+    },
+    "timeUp": {
+      "label": "Fim do tempo de fala",
+      "hint": "Três bipes quando o cronômetro chega a 0:00"
+    },
+    "end": {
+      "label": "Aplausos no final",
+      "hint": "Ao chegar ao encerramento"
+    }
+  },
+  "board": {
+    "applause": "Aplausos",
+    "drumroll": "Rufar de tambores",
+    "tada": "Tcharam",
+    "rimshot": "Tum dum tss",
+    "birthday": "Parabéns pra você"
+  }
+}

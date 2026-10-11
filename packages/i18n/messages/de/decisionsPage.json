@@ -1,0 +1,18 @@
+{
+  "title": "Entscheidungen",
+  "intro": "Was in allen Meetings entschieden wurde, die neuesten zuerst. Notizen, die mit „Entscheidung:“ beginnen, landen hier.",
+  "filter": "Meeting",
+  "all": "Alle",
+  "search": "Entscheidungen durchsuchen",
+  "count": "{count, plural, one {# Entscheidung} other {# Entscheidungen}}",
+  "noMatch": "Keine Entscheidung erwähnt „{query}“.",
+  "empty": "Noch keine Entscheidung.",
+  "emptyHint": "Schreibe während einer Sitzung eine Notiz, die mit „Entscheidung:“ beginnt: Sie wird hier aufbewahrt, sobald die Sitzung archiviert ist.",
+  "csv": {
+    "date": "Datum",
+    "meeting": "Meeting",
+    "decision": "Entscheidung",
+    "context": "Kontext",
+    "fileName": "entscheidungen"
+  }
+}

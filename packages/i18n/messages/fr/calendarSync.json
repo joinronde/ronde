@@ -1,0 +1,20 @@
+{
+  "title": "Agendas",
+  "intro": "Chaque séance des huit prochaines semaines devient un événement dans l'agenda des participants, avec le lien de visio. Les déplacements, annulations et nouveaux participants suivent.",
+  "noAccount": "Aucun compte d'agenda dans cet espace pour l'instant.",
+  "addAccount": "En ajouter un dans les réglages de l'espace",
+  "account": "Compte d'agenda",
+  "none": "Ne pas inscrire les séances dans les agendas",
+  "accountHint": "Les invitations sont envoyées par l'organisateur de ce compte.",
+  "written": "{count, plural, =0 {Les agendas sont à jour.} one {# événement inscrit.} other {# événements inscrits.}}",
+  "removed": "Événements à venir retirés des agendas.",
+  "synced": "{count, plural, =0 {Les agendas sont à jour.} one {# événement mis à jour.} other {# événements mis à jour.}}",
+  "syncNow": "Synchroniser maintenant",
+  "check": "Vérifier les disponibilités",
+  "coming": "Prochaines séances",
+  "busy": "Occupé·e : {names}",
+  "allFree": "Tout le monde est libre",
+  "slots": "Créneaux où tout le monde est libre (deux prochaines semaines)",
+  "noSlot": "Aucun créneau libre commun en heures ouvrées sur les deux prochaines semaines.",
+  "unknown": "Agenda illisible pour : {names}"
+}

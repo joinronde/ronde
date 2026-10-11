@@ -1,0 +1,34 @@
+{
+  "chapters": {
+    "welcome": "欢迎",
+    "prepare": "准备",
+    "run": "主持",
+    "conclude": "总结"
+  },
+  "steps": {
+    "welcome": {
+      "title": "欢迎来到控制台 👋",
+      "body": "<p>你在这个标签页主持会议；你的笔记只留在这里，只有你能看到。</p><ul><li><strong>打开共享屏幕</strong>：一个没有菜单的标签页，专为投屏设计。</li><li><strong>在视频通话中共享这个标签页</strong>，而不是整个屏幕：团队看到的就是它。</li><li><strong>回到这里</strong>进行操作：一切都会实时显示在共享屏幕上。</li></ul><tip>用 <kbd>→</kbd> 和 <kbd>←</kbd> 翻页，按 <kbd>Esc</kbd> 退出。</tip>"
+    },
+    "runOrder": {
+      "title": "议程和发言顺序",
+      "body": "<p>开场、每人一轮、开放议题，然后总结。</p><ul><li><strong>↑ ↓</strong> 调整顺序，<strong>缺席</strong>把某人移出本轮。</li><li><strong>前往</strong>直接跳到某个环节。</li><li>绿点：此人的进展卡已准备好。</li></ul>"
+    },
+    "controls": {
+      "title": "开始与推进",
+      "body": "<ul><li><strong>开始会议</strong>会在共享屏幕上播放开场。</li><li><strong>下一步</strong>（<kbd>→</kbd>）把发言权交给下一个人；计时器显示其剩余发言时间。</li><li><kbd>空格</kbd>暂停计时器，<strong>+30 秒</strong>多给一点时间，<strong>结束会议</strong>直接跳到总结。</li></ul>"
+    },
+    "notes": {
+      "title": "你的笔记",
+      "body": "<p>每个环节一个笔记区，<strong>边写边保存</strong>，只有你能看到：笔记会写进纪要，放在对应的人名下。</p><p><strong>+ 决定</strong>记录一项决定；<strong>+ 行动项</strong>创建一个有负责人的跟进行动项，在之后的会议中持续跟踪。</p>"
+    },
+    "minutes": {
+      "title": "会议纪要",
+      "body": "<p>纪要会根据进展卡、你的笔记、决定和行动项自动生成。</p><p>最后点击<strong>归档会议</strong>：纪要存入历史记录，下一次会议也已准备好。</p>"
+    },
+    "finish": {
+      "title": "轮到你了！",
+      "body": "<p>人员、日程和模块都在会议设置中配置。这个按钮可以随时重新播放导览。祝会议顺利！</p>"
+    }
+  }
+}

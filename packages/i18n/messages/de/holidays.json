@@ -1,0 +1,18 @@
+{
+  "label": "Feiertage",
+  "none": "Keine",
+  "noneMeeting": "Keine: Alle Sitzungen finden statt",
+  "inherit": "Wie der Workspace: {name}",
+  "inheritNone": "Wie der Workspace: keine",
+  "region": "Region",
+  "wholeCountry": "Ganzes Land",
+  "hintMeeting": "Eine Sitzung, die auf einen dieser Feiertage fällt, entfällt. Du kannst jede unten trotzdem abhalten oder verschieben.",
+  "hintWorkspace": "Meetings lassen Sitzungen an diesen Feiertagen aus; jedes Meeting kann in seinem Zeitplan andere wählen.",
+  "source": "Feiertage aus dem Projekt date-holidays, nach Wikipedia (CC BY-SA 3.0).",
+  "saved": "Feiertage aktualisiert",
+  "skipped": "Feiertag · {name}",
+  "kept": "Trotz {name} abgehalten",
+  "keep": "Trotzdem abhalten",
+  "held": "Sitzung wird abgehalten",
+  "skipAgain": "Wieder auslassen"
+}

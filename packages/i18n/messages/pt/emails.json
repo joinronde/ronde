@@ -1,0 +1,27 @@
+{
+  "fallbackLink": "Se o botão não abrir:",
+  "verify": {
+    "subject": "Confirme seu endereço de e-mail",
+    "intro": "Boas-vindas ao Ronde! Confirme seu endereço de e-mail para terminar de criar sua conta.",
+    "action": "Confirmar meu endereço",
+    "footer": "Se você não criou uma conta, pode ignorar este e-mail."
+  },
+  "magicLink": {
+    "subject": "Seu link de login",
+    "intro": "Aqui está seu link para entrar no Ronde. Ele funciona uma vez e expira em 10 minutos.",
+    "action": "Entrar",
+    "footer": "Se você não pediu para entrar, pode ignorar este e-mail."
+  },
+  "resetPassword": {
+    "subject": "Redefina sua senha",
+    "intro": "Alguém pediu para redefinir a senha da sua conta Ronde. O link expira em 1 hora.",
+    "action": "Escolher uma nova senha",
+    "footer": "Se você não pediu isso, pode ignorar este e-mail: sua senha continua a mesma."
+  },
+  "invitation": {
+    "subject": "{inviter} convida você para {workspace} no Ronde",
+    "intro": "{inviter} convida você para o espaço de trabalho {workspace} no Ronde, para preparar e conduzir juntos as reuniões da equipe.",
+    "action": "Entrar em {workspace}",
+    "footer": "Este convite expira em 7 dias. Se você não esperava por ele, pode ignorar este e-mail."
+  }
+}

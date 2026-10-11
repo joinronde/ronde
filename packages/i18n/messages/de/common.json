@@ -1,0 +1,25 @@
+{
+  "host": "Moderation",
+  "duration": {
+    "minutes": "{m} Min.",
+    "hours": "{h} Std.",
+    "hoursMinutes": "{h} Std. {m} Min."
+  },
+  "noMeeting": {
+    "title": "Kein laufendes Meeting",
+    "notPrepared": "{host} hat das nächste Meeting noch nicht vorbereitet. In der Zwischenzeit kannst du deinen Check-in ausfüllen.",
+    "pickDate": "Wähle das Datum des nächsten Meetings, um die Tagesordnung vorzubereiten.",
+    "dateLabel": "Datum des Meetings",
+    "prepare": "Meeting vom {date} vorbereiten",
+    "addTeamFirst": "Füge zuerst das Team in den Einstellungen hinzu.",
+    "openSettings": "Einstellungen öffnen"
+  },
+  "loadError": {
+    "title": "Die Daten konnten nicht geladen werden",
+    "body": "Der Server hat nicht geantwortet oder einen Fehler gemeldet. Deine Daten sind sicher.",
+    "retry": "Erneut versuchen"
+  },
+  "cancel": "Abbrechen",
+  "delete": "Löschen",
+  "exportCsv": "Als CSV exportieren"
+}

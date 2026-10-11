@@ -1,0 +1,100 @@
+{
+  "title": "Import projects",
+  "intro": "Bring repositories, milestones, epics or projects from your tools into the portfolio. You choose which ones next.",
+  "trackers": "From your issue trackers (kept in sync)",
+  "another": "Or from a tool, imported once",
+  "from": "Import from",
+  "tools": {
+    "github": "GitHub",
+    "gitlab": "GitLab",
+    "jira": "Jira",
+    "linear": "Linear"
+  },
+  "what": {
+    "github": "Repositories or milestones",
+    "gitlab": "Projects or milestones",
+    "jira": "Epics of a project",
+    "linear": "Projects"
+  },
+  "item": {
+    "repos": "Repository {key}",
+    "milestones": "Milestone {key}",
+    "epics": "Epic {key}",
+    "projects": "Project {key}"
+  },
+  "whatLabel": "What becomes a project in Ronde",
+  "modes": {
+    "repos": {
+      "github": "Each repository of an organization",
+      "gitlab": "Each project of a group"
+    },
+    "milestones": {
+      "github": "Each milestone of a repository",
+      "gitlab": "Each milestone of a project"
+    }
+  },
+  "modeHints": {
+    "repos": "Each project takes the repository’s name, and its tickets come up in meetings. Best when each repository is a product or a service.",
+    "milestones": "Each project is named “repository · milestone” and takes its due date and progress. Best when milestones are deliverables."
+  },
+  "fields": {
+    "repo": "Repository (owner/name or its address)",
+    "owner": "Organization or account (name or address)",
+    "gitlab": "Project (path or address)",
+    "group": "Group (name or address)",
+    "site": "Site address",
+    "project": "Project key",
+    "projectHint": "The letters before the number in its issue keys: OPS in OPS-42.",
+    "email": "Email of the account"
+  },
+  "token": "API token",
+  "tokenOptional": {
+    "github": "Access token (only for private repositories)",
+    "gitlab": "Access token (only for private groups or projects)"
+  },
+  "tokenHint": {
+    "github": "Leave it empty for public repositories. For private ones: a <link>fine-grained token</link> that can read them (and their Issues, for milestones).",
+    "gitlab": "Leave it empty for public projects. For private ones: a personal or project access token with the read_api scope.",
+    "gitlabGroup": "Leave it empty for public groups. For a private one: a personal or group access token with the read_api scope.",
+    "jira": "An <link>API token</link> of the account whose email is above.",
+    "linear": "A personal API key, created in your Linear settings."
+  },
+  "tokenNotKept": "It serves this import only: Ronde does not keep it.",
+  "teamHint": "With the Team plan, projects imported through a saved issue tracker stay in sync with the tool: name, status, dates and progress.",
+  "syncHowTo": "To keep imported projects in sync, first add the tool to the issue trackers in the <link>workspace settings</link>, then import from it.",
+  "syncAskAdmin": "Projects stay in sync when an administrator of the workspace imports them through its issue trackers. What you import here is imported once.",
+  "look": "Find projects",
+  "looking": "Finding…",
+  "pickTitle": {
+    "repos": "Repositories to import",
+    "milestones": "Milestones to import",
+    "epics": "Epics to import",
+    "projects": "Projects to import"
+  },
+  "nothing": {
+    "repos": "No repositories found.",
+    "milestones": "No milestones found.",
+    "epics": "This project has no epics.",
+    "projects": "No projects found."
+  },
+  "allImported": "Everything listed is already in the portfolio.",
+  "partial": {
+    "tracker": "Only what the issue tracker’s token can read is listed.",
+    "public": "Without a token, only public ones are listed."
+  },
+  "more": "Only the first 100 are listed.",
+  "filter": "Filter",
+  "pickAll": "Select all ({count})",
+  "pickSome": "Tick the ones to import.",
+  "inPortfolio": "In the portfolio",
+  "progress": "{percent} done",
+  "themeHint": "Applied to every imported project.",
+  "keepSync": "Keep them in sync with {tool}",
+  "keepSyncHint": "Their name, status, dates and progress follow the tool every hour; the rest stays yours to edit.",
+  "keepSyncHintRepo": "Their name follows the tool every hour, and they are marked done once archived; the rest stays yours to edit.",
+  "onceHint": "Imported once: they are edited in Ronde from then on.",
+  "back": "Back",
+  "import": "{count, plural, =0 {Import} one {Import # project} other {Import # projects}}",
+  "importing": "{count, plural, one {Importing # project…} other {Importing # projects…}}",
+  "offline": "Ronde could not be reached. Check your connection and try again."
+}

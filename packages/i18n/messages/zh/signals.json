@@ -1,0 +1,32 @@
+{
+  "sleepy": {
+    "label": "Zzz",
+    "combo": "团队快睡着了……",
+    "comboNamed": "{name}，团队快睡着了……"
+  },
+  "hundred": {
+    "label": "完全同意",
+    "combo": "百分百赞同",
+    "comboNamed": "百分百赞同"
+  },
+  "popcorn": {
+    "label": "爆米花",
+    "combo": "越来越精彩了，拿爆米花来",
+    "comboNamed": "越来越精彩了，拿爆米花来"
+  },
+  "mindBlown": {
+    "label": "太震撼了！",
+    "combo": "全场震撼！",
+    "comboNamed": "{name} 刚刚震撼了整个团队"
+  },
+  "fire": {
+    "label": "太棒了！",
+    "combo": "团队状态火热！",
+    "comboNamed": "{name} 状态火热！"
+  },
+  "coffee": {
+    "label": "喝杯咖啡？",
+    "combo": "团队想喝咖啡了",
+    "comboNamed": "团队想喝咖啡了"
+  }
+}

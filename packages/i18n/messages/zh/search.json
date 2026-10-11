@@ -1,0 +1,15 @@
+{
+  "title": "搜索工作空间",
+  "placeholder": "搜索会议、人员、行动项、决定……",
+  "switchTo": "切换到 {name}",
+  "none": "未找到与“{query}”相关的内容。",
+  "foot": "↑ ↓ 移动，Enter 打开，Esc 关闭",
+  "kinds": {
+    "page": "前往",
+    "meeting": "会议",
+    "person": "人员",
+    "action": "行动项",
+    "topic": "议题",
+    "decision": "决定"
+  }
+}

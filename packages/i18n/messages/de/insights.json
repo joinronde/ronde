@@ -1,0 +1,42 @@
+{
+  "title": "Auswertungen",
+  "intro": "Alle Meetings des Arbeitsbereichs, vom {from} bis {to}.",
+  "period": "Zeitraum",
+  "weeks": "{count, plural, one {# Woche} other {# Wochen}}",
+  "cards": {
+    "engagement": "Engagement",
+    "engagementHint": "Durchschnitt der Meetings, von 100",
+    "sessions": "Abgehaltene Sitzungen",
+    "meetings": "{count, plural, one {in # Meeting} other {in # Meetings}}",
+    "attendance": "Teilnahme",
+    "followThrough": "Umgesetzte Pläne",
+    "followThroughHint": "Geplante Einträge, die in der nächsten Sitzung als erledigt gemeldet wurden",
+    "onTime": "Pünktliche Sitzungen",
+    "mood": "Durchschnittliche Stimmung",
+    "actions": "Aufgaben erledigt / eröffnet",
+    "actionsValue": "{done} / {created}",
+    "median": "Erledigt in {days} Tagen (Median)"
+  },
+  "weekTitle": "Sitzungen pro Woche",
+  "weekLabel": "Balken: abgehaltene Sitzungen pro Woche; Linie: Teilnahme",
+  "weekLegend": "Balken: abgehaltene Sitzungen pro Woche. Linie: Teilnahme.",
+  "meetingsTitle": "Nach Meeting",
+  "columns": {
+    "meeting": "Meeting",
+    "engagement": "Engagement",
+    "trend": "Trend",
+    "sessions": "Sitzungen",
+    "attendance": "Teilnahme",
+    "followThrough": "Umsetzung",
+    "onTime": "Pünktlich",
+    "mood": "Stimmung",
+    "openActions": "Offene Aufgaben"
+  },
+  "empty": "Noch kein Meeting.",
+  "engagementHow": "Engagement, von 100: Teilnahme (30 %), umgesetzte Pläne (25 %), Beteiligung durch Fragen, Meldungen, Kudos und Eisbrecher (20 %), Stimmung (15 %) und Pünktlichkeit (10 %).",
+  "csv": {
+    "participation": "Beteiligung",
+    "total": "Alle Meetings",
+    "fileName": "auswertungen"
+  }
+}

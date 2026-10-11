@@ -1,0 +1,13 @@
+{
+  "title": "Logo",
+  "intro": "Votre logo remplace celui de Ronde : dans le menu, sur l'écran partagé, dans les e-mails et les comptes rendus.",
+  "drop": "Déposez votre logo ici",
+  "formats": "PNG, JPEG ou WebP. Un PNG transparent rend le mieux.",
+  "current": "Logo actuel",
+  "upload": "Envoyer un logo",
+  "replace": "Remplacer",
+  "remove": "Retirer",
+  "where": "Affiché sur fond clair et sur fond sombre : vérifiez qu'il se lit bien sur les deux.",
+  "failed": "Le logo n'a pas pu être enregistré.",
+  "unreadable": "Cette image n'a pas pu être lue."
+}

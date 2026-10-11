@@ -1,0 +1,69 @@
+{
+  "title": "Wikis",
+  "intro": "Publiez le compte rendu de chaque séance comme une page dans Notion ou Confluence. Chaque réunion choisit ensuite son wiki dans Réglages › Intégrations.",
+  "empty": "Aucun wiki pour l'instant.",
+  "add": "Ajouter un wiki",
+  "kind": "Outil",
+  "name": "Nom",
+  "optional": "facultatif",
+  "kinds": {
+    "notion": "Notion",
+    "confluence": "Confluence"
+  },
+  "fields": {
+    "notion": {
+      "parent": "Page parente (son adresse)"
+    },
+    "confluence": {
+      "site": "Adresse de Confluence",
+      "space": "Clé de l'espace",
+      "parent": "Page parente (adresse ou numéro)",
+      "email": "E-mail du compte (Cloud)"
+    }
+  },
+  "token": {
+    "notion": "Secret de l'intégration",
+    "confluence": "Jeton d'API"
+  },
+  "hints": {
+    "notion": "Dans Notion, créez une intégration interne sur notion.so/profile/integrations et copiez son secret. Ouvrez ensuite la page parente et partagez-la avec l'intégration (••• › Connexions) : les pages sont créées dessous.",
+    "confluence": "Confluence Cloud : un jeton d'API créé sur id.atlassian.com, pour le compte dont l'e-mail figure ci-dessus. Data Center ou Server : un jeton d'accès personnel (profil › Jetons d'accès personnels), sans e-mail. Le compte doit pouvoir créer des pages dans l'espace."
+  },
+  "tokenKept": "Un jeton est enregistré. Saisissez-en un nouveau pour le remplacer.",
+  "save": "Enregistrer",
+  "cancel": "Annuler",
+  "test": "Tester",
+  "works": "✓ Connecté.",
+  "edit": "Modifier",
+  "remove": "Retirer",
+  "removeConfirm": "Retirer {name} ? Les réunions cessent d'y publier ; les pages déjà publiées y restent.",
+  "openInRonde": "Ouvrir dans Ronde",
+  "meeting": {
+    "title": "Publier le compte rendu",
+    "intro": "À chaque archivage, le compte rendu devient une page du wiki, nommée par la date de la séance. Quand le résumé est modifié, la page suit.",
+    "wiki": "Wiki",
+    "none": "Nulle part",
+    "hint": "Les séances déjà archivées se publient depuis l'historique.",
+    "noWiki": "Aucun wiki dans cet espace pour l'instant.",
+    "addWiki": "En ajouter un dans les réglages de l'espace",
+    "on": "Le compte rendu sera publié dans {name}.",
+    "off": "Le compte rendu n'est plus publié."
+  },
+  "history": {
+    "publish": "Publier dans {name}",
+    "update": "Mettre à jour la page",
+    "open": "Ouvrir dans {name}",
+    "publishing": "Publication…",
+    "done": "Compte rendu publié dans {name}.",
+    "failed": "La dernière publication a échoué. {error}",
+    "retry": "Réessayer"
+  },
+  "errors": {
+    "token": "Le wiki a refusé le jeton : vérifiez qu'il est juste et toujours valide.",
+    "notionPage": "Notion ne trouve pas la page parente : partagez-la avec l'intégration (••• › Connexions).",
+    "notionParent": "La page parente n'est pas l'adresse d'une page Notion.",
+    "confluenceSpace": "Confluence ne trouve pas l'espace ou la page parente, ou le compte ne peut pas les voir.",
+    "answer": "Le wiki a répondu : {detail}.",
+    "network": "Le wiki est injoignable : vérifiez son adresse."
+  }
+}

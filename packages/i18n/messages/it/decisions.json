@@ -1,0 +1,10 @@
+{
+  "off": "Il registro delle decisioni è disattivato per questa riunione.",
+  "loading": "Caricamento delle decisioni…",
+  "empty": "Ancora nessuna decisione annotata.",
+  "howTo": "Durante una sessione, inizia una riga delle note con «Decisione:»: una volta archiviata la sessione, comparirà qui.",
+  "searchPlaceholder": "Cerca nelle decisioni",
+  "searchLabel": "Cerca nelle decisioni",
+  "count": "{count, plural, one {# decisione} other {# decisioni}}",
+  "noMatch": "Nessuna decisione contiene «{query}»."
+}

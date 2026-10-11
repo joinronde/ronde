@@ -1,0 +1,12 @@
+{
+  "none": "Kein Termin geplant",
+  "weekdays": "Jeden Werktag um {time}",
+  "daily": "{count, plural, one {Jeden Tag} other {Alle # Tage}} um {time}",
+  "weekly": "{count, plural, one {Jeden {days}} =2 {Jeden zweiten {days}} other {Alle # Wochen am {days}}} um {time}",
+  "monthlyNth": "{nth, select, 1 {Am ersten} 2 {Am zweiten} 3 {Am dritten} 4 {Am vierten} other {Am letzten}} {day} {count, plural, one {jedes Monats} other {alle # Monate}} um {time}",
+  "monthlyDay": "Am {day}. {count, plural, one {jedes Monats} other {alle # Monate}} um {time}",
+  "dailyOn": "{count, plural, one {Jeden {days}} other {Alle # Tage, am {days}}} um {time}",
+  "monthlyLast": "Am letzten Tag {count, plural, one {jedes Monats} other {alle # Monate}} um {time}",
+  "alternating": "Jeden zweiten {days}, abwechselnd um {first} und {second}",
+  "withZone": "{schedule} ({timeZone})"
+}

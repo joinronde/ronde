@@ -1,0 +1,37 @@
+{
+  "name": "@ronde/ee",
+  "version": "0.0.0",
+  "private": true,
+  "license": "SEE LICENSE IN LICENSE",
+  "description": "Ronde paid editions (Team and Enterprise): commercial license, active with a license key.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@better-auth/sso": "1.7.7",
+    "@ronde/connectors": "workspace:*",
+    "@ronde/core": "workspace:*",
+    "@ronde/db": "workspace:*",
+    "@ronde/editions": "workspace:*",
+    "@ronde/i18n": "workspace:*",
+    "@ronde/module-sdk": "workspace:*",
+    "better-auth": "1.7.7",
+    "fflate": "0.8.3",
+    "jose": "6.2.12",
+    "ldapts": "9.2.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@ronde/config": "workspace:*",
+    "@types/ldapjs": "^3.0.6",
+    "@types/node": "^22.20.4",
+    "ldapjs": "3.0.7",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.2"
+  }
+}

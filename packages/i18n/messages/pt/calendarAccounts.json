@@ -1,0 +1,35 @@
+{
+  "title": "Agendas",
+  "intro": "Escreva as sessões das suas reuniões nas agendas Google ou Outlook dos participantes, com uma conta do espaço, e consulte a disponibilidade delas para evitar conflitos.",
+  "empty": "Nenhuma conta de agenda ainda.",
+  "add": "Adicionar uma conta de agenda",
+  "kind": "Provedor",
+  "name": "Nome",
+  "edit": "Editar",
+  "tokenKept": "Há um segredo salvo. Digite um novo para substituí-lo.",
+  "save": "Salvar",
+  "cancel": "Cancelar",
+  "test": "Testar",
+  "remove": "Remover",
+  "works": "✓ Conectado.",
+  "removeConfirm": "Remover {name}? As reuniões que a usam deixam de ser sincronizadas; os eventos já escritos ficam nas agendas.",
+  "kinds": {
+    "google": "Google Agenda",
+    "microsoft": "Microsoft 365"
+  },
+  "fields": {
+    "clientEmail": "E-mail da conta de serviço",
+    "organizer": "Organizador dos eventos",
+    "tenant": "Locatário (ID ou domínio)",
+    "clientId": "ID do cliente"
+  },
+  "secret": {
+    "google": "Chave privada da conta de serviço",
+    "microsoft": "Segredo do cliente"
+  },
+  "hints": {
+    "google": "No Google Cloud, crie uma conta de serviço e dê a ela delegação em todo o domínio para o escopo https://www.googleapis.com/auth/calendar no console de administração do Google Workspace. Os eventos são criados pelo organizador, que convida os participantes.",
+    "microsoft": "No Microsoft Entra, registre um aplicativo com a permissão de aplicativo Calendars.ReadWrite (consentimento do administrador). Os eventos são criados na agenda do organizador, que convida os participantes."
+  },
+  "useIt": "Depois, nas configurações de uma reunião, Agendamento → Agendas."
+}

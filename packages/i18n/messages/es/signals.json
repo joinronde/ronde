@@ -1,0 +1,32 @@
+{
+  "sleepy": {
+    "label": "Zzz",
+    "combo": "El equipo se está durmiendo…",
+    "comboNamed": "{name}, el equipo se está durmiendo…"
+  },
+  "hundred": {
+    "label": "Totalmente",
+    "combo": "100 % aprobado",
+    "comboNamed": "100 % aprobado"
+  },
+  "popcorn": {
+    "label": "Palomitas",
+    "combo": "Esto se pone interesante, sacad las palomitas",
+    "comboNamed": "Esto se pone interesante, sacad las palomitas"
+  },
+  "mindBlown": {
+    "label": "¡Alucinante!",
+    "combo": "¡Mentes alucinadas!",
+    "comboNamed": "{name} acaba de dejar alucinado al equipo"
+  },
+  "fire": {
+    "label": "¡En racha!",
+    "combo": "¡El equipo está en racha!",
+    "comboNamed": "¡{name} está en racha!"
+  },
+  "coffee": {
+    "label": "¿Pausa para el café?",
+    "combo": "El equipo quiere un café",
+    "comboNamed": "El equipo quiere un café"
+  }
+}

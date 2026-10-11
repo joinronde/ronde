@@ -1,0 +1,42 @@
+{
+  "title": "Análisis",
+  "intro": "Todas las reuniones del espacio, del {from} al {to}.",
+  "period": "Periodo",
+  "weeks": "{count, plural, one {# semana} other {# semanas}}",
+  "cards": {
+    "engagement": "Implicación",
+    "engagementHint": "Media de las reuniones, sobre 100",
+    "sessions": "Sesiones celebradas",
+    "meetings": "{count, plural, one {en # reunión} other {en # reuniones}}",
+    "attendance": "Asistencia",
+    "followThrough": "Planes cumplidos",
+    "followThroughHint": "Elementos previstos marcados como hechos en la sesión siguiente",
+    "onTime": "Sesiones a tiempo",
+    "mood": "Ánimo medio",
+    "actions": "Acciones cerradas / abiertas",
+    "actionsValue": "{done} / {created}",
+    "median": "Cerradas en {days} días (mediana)"
+  },
+  "weekTitle": "Sesiones por semana",
+  "weekLabel": "Barras: sesiones celebradas cada semana; línea: asistencia",
+  "weekLegend": "Barras: sesiones celebradas cada semana. Línea: asistencia.",
+  "meetingsTitle": "Por reunión",
+  "columns": {
+    "meeting": "Reunión",
+    "engagement": "Implicación",
+    "trend": "Tendencia",
+    "sessions": "Sesiones",
+    "attendance": "Asistencia",
+    "followThrough": "Cumplimiento",
+    "onTime": "A tiempo",
+    "mood": "Ánimo",
+    "openActions": "Acciones abiertas"
+  },
+  "empty": "Todavía no hay reuniones.",
+  "engagementHow": "Implicación, sobre 100: asistencia (30 %), planes cumplidos (25 %), participación con preguntas, manos levantadas, kudos y rompehielos (20 %), ánimo (15 %) y puntualidad (10 %).",
+  "csv": {
+    "participation": "Participación",
+    "total": "Todas las reuniones",
+    "fileName": "analisis"
+  }
+}

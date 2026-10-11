@@ -1,0 +1,35 @@
+{
+  "title": "Calendars",
+  "intro": "Write the sessions of your meetings into the participants' Google or Outlook calendars, with one account of the workspace, and read their availability to avoid conflicts.",
+  "empty": "No calendar account yet.",
+  "add": "Add a calendar account",
+  "kind": "Provider",
+  "name": "Name",
+  "edit": "Edit",
+  "tokenKept": "A secret is saved. Type a new one to replace it.",
+  "save": "Save",
+  "cancel": "Cancel",
+  "test": "Test",
+  "remove": "Remove",
+  "works": "✓ Connected.",
+  "removeConfirm": "Remove {name}? The meetings using it stop being synced; events already written stay in the calendars.",
+  "kinds": {
+    "google": "Google Calendar",
+    "microsoft": "Microsoft 365"
+  },
+  "fields": {
+    "clientEmail": "Email of the service account",
+    "organizer": "Organizer of the events",
+    "tenant": "Tenant (ID or domain)",
+    "clientId": "Client ID"
+  },
+  "secret": {
+    "google": "Private key of the service account",
+    "microsoft": "Client secret"
+  },
+  "hints": {
+    "google": "In Google Cloud, create a service account and give it domain-wide delegation for the scope https://www.googleapis.com/auth/calendar in the Google Workspace admin console. Events are created by the organizer, who invites the participants.",
+    "microsoft": "In Microsoft Entra, register an application with the Calendars.ReadWrite application permission (admin consent). Events are created in the organizer's calendar, who invites the participants."
+  },
+  "useIt": "Then, in the settings of a meeting, Schedule → Calendars."
+}

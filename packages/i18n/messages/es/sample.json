@@ -1,0 +1,88 @@
+{
+  "badge": "Ejemplo",
+  "exploreTitle": "O echa antes un vistazo a una reunión de ejemplo",
+  "exploreText": "Un equipo ficticio con un mes de historial: lanza una sesión, lee las actas, mira las estadísticas. No se envía nada a nadie y se borra con un clic.",
+  "explore": "Abrir la reunión de ejemplo",
+  "preparing": "Preparando el ejemplo…",
+  "banner": "Reunión de ejemplo: un equipo ficticio y un mes de historial, para probarlo todo. No se envía nada a nadie.",
+  "delete": "Eliminar el ejemplo",
+  "deleteConfirm": "¿Eliminar la reunión de ejemplo y su equipo ficticio? No se puede deshacer.",
+  "personHint": "Persona ficticia de la reunión de ejemplo",
+  "meetingName": "Reunión semanal (ejemplo)",
+  "tasks": {
+    "emma": {
+      "1": "Modelo de datos de las facturas",
+      "2": "Endpoint de facturas en la API",
+      "3": "Autenticación con clave de API",
+      "4": "Documentación de la API",
+      "5": "Filtros por cliente en las facturas",
+      "6": "Pruebas de carga a 500 peticiones por segundo"
+    },
+    "lucas": {
+      "1": "Análisis del embudo de alta",
+      "2": "Entrevistas con cinco clientes nuevos",
+      "3": "Especificación de la lista de bienvenida",
+      "4": "Textos del recorrido guiado",
+      "5": "Panel de activación",
+      "6": "Prueba de la página de precios"
+    },
+    "sarah": {
+      "1": "Maquetas móviles aprobadas",
+      "2": "Esqueleto de la app móvil y su integración continua",
+      "3": "Pantallas de registro",
+      "4": "Foto de los justificantes",
+      "5": "Modo sin conexión del panel",
+      "6": "Beta abierta a diez clientes"
+    },
+    "tom": {
+      "1": "Estilos de botones y campos",
+      "2": "Paleta del tema oscuro",
+      "3": "Foco de teclado visible en todas partes",
+      "4": "Componente de tabla",
+      "5": "Pruebas de usabilidad con dos equipos",
+      "6": "Guía de los componentes"
+    },
+    "sofia": {
+      "1": "Paneles de monitorización",
+      "2": "Registros reunidos en un solo sitio",
+      "3": "Copias de seguridad automáticas de la base de datos",
+      "4": "Lista de comprobación de despliegue",
+      "5": "Alertas de errores del servidor",
+      "6": "Simulacro de restauración de copias"
+    }
+  },
+  "blockers": {
+    "staging": "Sigo sin acceso a la base de datos de pruebas, ticket abierto con informática",
+    "crm": "La exportación del CRM se corta a las 2.000 filas",
+    "licence": "El juego de iconos elegido necesita una licencia de pago"
+  },
+  "dayOff": "Fuera el jueves por la tarde (formación)",
+  "actions": {
+    "staging": "Conseguir acceso a la base de datos de pruebas (insistir a informática)",
+    "crm": "Encontrar cómo sortear el límite de exportación del CRM",
+    "licence": "Comprar la licencia del juego de iconos"
+  },
+  "kudos": {
+    "checklist": "La lista de despliegue me salvó el viernes",
+    "screens": "Las pantallas nuevas son mucho más claras",
+    "export": "Gracias por desbloquear la exportación en un día"
+  },
+  "questions": {
+    "endpoint": "¿Cuándo llega el endpoint de facturas al servidor de pruebas?",
+    "alerts": "¿Las alertas pueden ir también al canal de soporte?"
+  },
+  "decisions": {
+    "escalate": "Decisión: escalamos el ticket de informática si no hay respuesta el jueves.",
+    "notes": "Decisión: el sistema de diseño tiene sus propias notas de versión."
+  },
+  "summary": "Una buena semana: la documentación de la API está publicada y la beta va según lo previsto. El acceso a la base de datos de pruebas sigue bloqueado, así que Emma lo escala el jueves.",
+  "icebreaker": "¿Tu pequeña victoria de la semana?",
+  "answers": {
+    "lucas": "Cinco entrevistas con clientes cerradas en una mañana",
+    "sofia": "Cero alertas este fin de semana"
+  },
+  "topics": {
+    "oncall": "¿Quién está de guardia durante las vacaciones?",
+    "flags": "Convención de nombres para los feature flags"
+  }
+}

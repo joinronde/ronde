@@ -1,0 +1,10 @@
+{
+  "off": "The decision log is turned off for this meeting.",
+  "loading": "Loading the decisions…",
+  "empty": "No decision noted yet.",
+  "howTo": "Start a line of the notes with “Decision:” during a session: once the session is archived, it shows here.",
+  "searchPlaceholder": "Search the decisions",
+  "searchLabel": "Search the decisions",
+  "count": "{count, plural, one {# decision} other {# decisions}}",
+  "noMatch": "No decision contains “{query}”."
+}

@@ -1,0 +1,12 @@
+{
+  "none": "لا تاريخ مخطط",
+  "weekdays": "كل يوم عمل الساعة {time}",
+  "daily": "{count, plural, =1 {كل يوم} =2 {كل يومين} few {كل # أيام} many {كل # يومًا} other {كل # يوم}} الساعة {time}",
+  "weekly": "{count, plural, =1 {كل أسبوع: {days}} =2 {كل أسبوعين: {days}} few {كل # أسابيع: {days}} many {كل # أسبوعًا: {days}} other {كل # أسبوع: {days}}}، الساعة {time}",
+  "monthlyNth": "{day} في الأسبوع {nth, select, 1 {الأول} 2 {الثاني} 3 {الثالث} 4 {الرابع} other {الأخير}} {count, plural, =1 {من كل شهر} =2 {كل شهرين} few {كل # أشهر} many {كل # شهرًا} other {كل # شهر}}، الساعة {time}",
+  "monthlyDay": "اليوم {day} {count, plural, =1 {من كل شهر} =2 {كل شهرين} few {كل # أشهر} many {كل # شهرًا} other {كل # شهر}}، الساعة {time}",
+  "dailyOn": "{count, plural, one {كل {days}} other {كل # أيام، يوم {days}}} الساعة {time}",
+  "monthlyLast": "في آخر يوم {count, plural, one {من كل شهر} other {كل # أشهر}} الساعة {time}",
+  "alternating": "كل أسبوعين ({days})، بالتناوب بين {first} و{second}",
+  "withZone": "{schedule} ({timeZone})"
+}

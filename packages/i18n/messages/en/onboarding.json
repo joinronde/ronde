@@ -1,0 +1,19 @@
+{
+  "title": "Create your workspace",
+  "welcome": "Welcome, {name}!",
+  "intro": "A workspace gathers your team: its people, meetings and templates. You can create others later.",
+  "name": "Workspace name",
+  "namePlaceholder": "Product team",
+  "slug": "Address",
+  "slugHint": "Lowercase letters, digits and dashes.",
+  "change": "Change",
+  "defaults": "Address {address} · {language} · {timezone}",
+  "language": "Language of emails and minutes",
+  "timezone": "Time zone",
+  "create": "Create the workspace",
+  "invitationsTitle": "You've been invited",
+  "join": "Join",
+  "createOwn": "Or create your own workspace",
+  "yourWorkspaces": "Your workspaces",
+  "open": "Open"
+}

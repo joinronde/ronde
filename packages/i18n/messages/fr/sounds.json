@@ -1,0 +1,49 @@
+{
+  "groups": {
+    "classical": "Classique",
+    "jazz": "Jazz",
+    "electro": "Électro",
+    "rock": "Rock",
+    "generated": "Générées"
+  },
+  "music": {
+    "satie": "Satie — Gymnopédie n°1 (piano)",
+    "satie-guitar": "Satie — Gymnopédie n°1 (guitare)",
+    "debussy": "Debussy — Clair de lune",
+    "uno-mas": "Uno Mas (Airmen of Note)",
+    "traveling": "Traveling in your mind (Loyalty Freak Music)",
+    "ghost-surf": "Ghost Surf Rock (Loyalty Freak Music)",
+    "secret-agent": "Secret Agent Rock (John Bartmann)",
+    "soft-pads": "Nappes douces",
+    "bossa-lounge": "Bossa lounge"
+  },
+  "cues": {
+    "start": {
+      "label": "Carillon au démarrage",
+      "hint": "Au clic sur « Démarrer la réunion »"
+    },
+    "birthday": {
+      "label": "Chanson d'anniversaire",
+      "hint": "Joyeux anniversaire après le carillon, la semaine d'un anniversaire"
+    },
+    "speaker": {
+      "label": "Changement d'intervenant",
+      "hint": "Petit carillon quand la parole passe à la personne suivante"
+    },
+    "timeUp": {
+      "label": "Fin du temps de parole",
+      "hint": "Trois bips quand le chrono atteint 0:00"
+    },
+    "end": {
+      "label": "Applaudissements à la fin",
+      "hint": "À l'arrivée sur la clôture"
+    }
+  },
+  "board": {
+    "applause": "Applaudissements",
+    "drumroll": "Roulement de tambour",
+    "tada": "Tada",
+    "rimshot": "Ba dum tss",
+    "birthday": "Joyeux anniversaire"
+  }
+}

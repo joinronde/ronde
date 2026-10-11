@@ -1,0 +1,35 @@
+{
+  "title": "Calendari",
+  "intro": "Scrivi le sessioni delle tue riunioni nei calendari Google o Outlook dei partecipanti, con un account dello spazio, e leggi la loro disponibilità per evitare sovrapposizioni.",
+  "empty": "Ancora nessun account calendario.",
+  "add": "Aggiungi un account calendario",
+  "kind": "Provider",
+  "name": "Nome",
+  "edit": "Modifica",
+  "tokenKept": "È salvato un segreto. Inseriscine uno nuovo per sostituirlo.",
+  "save": "Salva",
+  "cancel": "Annulla",
+  "test": "Prova",
+  "remove": "Rimuovi",
+  "works": "✓ Connesso.",
+  "removeConfirm": "Rimuovere {name}? Le riunioni che lo usano non vengono più sincronizzate; gli eventi già scritti restano nei calendari.",
+  "kinds": {
+    "google": "Google Calendar",
+    "microsoft": "Microsoft 365"
+  },
+  "fields": {
+    "clientEmail": "Email dell'account di servizio",
+    "organizer": "Organizzatore degli eventi",
+    "tenant": "Tenant (ID o dominio)",
+    "clientId": "ID client"
+  },
+  "secret": {
+    "google": "Chiave privata dell'account di servizio",
+    "microsoft": "Segreto client"
+  },
+  "hints": {
+    "google": "In Google Cloud, crea un account di servizio e concedigli la delega a livello di dominio per l'ambito https://www.googleapis.com/auth/calendar nella console di amministrazione di Google Workspace. Gli eventi vengono creati dall'organizzatore, che invita i partecipanti.",
+    "microsoft": "In Microsoft Entra, registra un'applicazione con l'autorizzazione applicativa Calendars.ReadWrite (consenso dell'amministratore). Gli eventi vengono creati nel calendario dell'organizzatore, che invita i partecipanti."
+  },
+  "useIt": "Poi, nelle impostazioni di una riunione, Programmazione → Calendari."
+}

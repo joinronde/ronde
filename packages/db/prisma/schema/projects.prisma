@@ -1,0 +1,171 @@
+// Projects of a workspace, its portfolio: shared by every meeting, like the directory of people. A meeting
+// follows some of them (MeetingProject); its project round gives each one a step where its members speak
+// together, from the shared project sheet (ProjectUpdate) and the items people tied to the project.
+
+enum ProjectStatus {
+  proposed
+  active
+  paused
+  done
+  cancelled
+}
+
+/// How a project is doing, set in its sheet before each session
+enum ProjectHealth {
+  onTrack
+  atRisk
+  offTrack
+}
+
+/// Who sees a project (Enterprise): the whole workspace, or its members and the people managing every project
+enum ProjectVisibility {
+  workspace
+  members
+}
+
+/// A theme of the portfolio: groups projects (a programme, a product line, a department…)
+model ProjectTheme {
+  id          String    @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  name        String
+  description String    @default("")
+  color       Int       @default(0)
+  position    Int       @default(0)
+  projects    Project[]
+
+  @@unique([id, workspaceId])
+  @@unique([workspaceId, name])
+}
+
+/// A project, a subject or a workstream of the workspace
+model Project {
+  id              String            @id @default(uuid(7))
+  workspaceId     String
+  workspace       Workspace         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  /// Short name in links, unique in the workspace
+  slug            String
+  name            String
+  /// One line saying what it is
+  summary         String            @default("")
+  /// Markdown
+  description     String            @default("")
+  themeId         String?
+  theme           ProjectTheme?     @relation(fields: [themeId], references: [id], onDelete: SetNull)
+  status          ProjectStatus     @default(active)
+  /// Last health given in a sheet, or set by hand; null: not given yet
+  health          ProjectHealth?
+  leadId          String?
+  lead            Person?           @relation("ProjectLead", fields: [leadId], references: [id], onDelete: SetNull)
+  /// Local dates "YYYY-MM-DD"
+  startDate       String?
+  targetDate      String?
+  /// Links to other tools: [{ "kind": "gitlab" | "github" | "jira" | "url", "label": "…", "url": "…" }]
+  links           Json              @default("[]")
+  /// Where it was imported from (a repository, a milestone, a Jira epic, a Linear project): { kind, what, id,
+  /// ref, key, url, config (where it was read, no secret), progress (0 to 1), done, total, importedAt, problem,
+  /// stopped (why it is no longer synced) }
+  source          Json?
+  /// "kind:id" of what it was imported from: an item comes into the portfolio once
+  sourceKey       String?
+  /// The issue tracker keeping it in sync (Team); removing the tracker stops the sync
+  sourceTrackerId String?
+  sourceTracker   IssueTracker?     @relation(fields: [sourceTrackerId], references: [id], onDelete: SetNull)
+  /// When the tool was last read for it
+  syncedAt        DateTime?
+  color           Int               @default(0)
+  position        Int               @default(0)
+  /// Programme it belongs to (Enterprise): a project holding others is a programme
+  parentId        String?
+  parent          Project?          @relation("ProjectProgramme", fields: [parentId], references: [id], onDelete: SetNull)
+  children        Project[]         @relation("ProjectProgramme")
+  visibility      ProjectVisibility @default(workspace)
+  /// Its members may edit it, not only its lead (Enterprise)
+  membersEdit     Boolean           @default(false)
+  archivedAt      DateTime?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  logo            ProjectLogo?
+  members         ProjectMember[]
+  meetings        MeetingProject[]
+  updates         ProjectUpdate[]
+  items           CheckInItem[]
+  actions         Action[]
+
+  @@unique([id, workspaceId])
+  @@unique([workspaceId, slug])
+  @@unique([workspaceId, sourceKey])
+  @@index([workspaceId, status])
+  @@index([sourceTrackerId])
+}
+
+/// A project's logo, beside its name in the portfolio and on its step of a meeting: a square image (WebP, JPEG or
+/// PNG) uploaded by the people editing the project, or brought by an import from GitHub, GitLab or Jira
+model ProjectLogo {
+  projectId   String   @id
+  workspaceId String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  data        Bytes
+  type        String
+  updatedAt   DateTime @updatedAt
+
+  @@index([workspaceId])
+}
+
+/// A person working on a project: they keep its sheet and speak at its step
+model ProjectMember {
+  workspaceId String
+  projectId   String
+  project     Project  @relation(fields: [projectId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  personId    String
+  person      Person   @relation(fields: [personId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@id([projectId, personId])
+  @@index([workspaceId])
+  @@index([personId])
+}
+
+/// A project followed by a meeting: it gets a step in the project round
+model MeetingProject {
+  workspaceId String
+  meetingId   String
+  meeting     Meeting @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  projectId   String
+  project     Project @relation(fields: [projectId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  /// Order in the project round
+  position    Int     @default(0)
+
+  @@id([meetingId, projectId])
+  @@index([workspaceId])
+  @@index([projectId])
+}
+
+/// The shared sheet of a project for a session of a meeting: its health and the message of the day. Like
+/// check-in items, it has no session while it is being written, then moves to the session that presented it
+/// (one sheet being written per meeting and project, enforced by a partial unique index).
+model ProjectUpdate {
+  id           String         @id @default(uuid(7))
+  workspaceId  String
+  meetingId    String
+  meeting      Meeting        @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  projectId    String
+  project      Project        @relation(fields: [projectId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  sessionId    String?
+  session      Session?       @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  health       ProjectHealth?
+  /// Markdown
+  headline     String         @default("")
+  updatedById  String?
+  /// Who wrote the message of the day (the health may be set by someone else, live)
+  headlineById String?
+  /// Who is writing it right now: the sheet is theirs until then (renewed while they write, released on save)
+  editingById  String?
+  editingUntil DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([meetingId, projectId, sessionId])
+  @@index([projectId, sessionId])
+  @@index([workspaceId])
+}

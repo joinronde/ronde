@@ -1,0 +1,25 @@
+{
+  "title": "Meetings",
+  "intro": "Alle Meetings des Arbeitsbereichs, die du sehen kannst: wann das nächste ist, wer dabei ist, was noch offen ist.",
+  "new": "Neues Meeting",
+  "filter": "Welche Meetings",
+  "search": "Nach Name filtern",
+  "filters": {
+    "all": "Alle",
+    "mine": "Ich nehme teil",
+    "run": "Ich moderiere"
+  },
+  "liveNow": "Jetzt live",
+  "next": "Nächste Sitzung",
+  "noNext": "Keine Sitzung geplant",
+  "held": "{count, plural, one {Sitzung abgehalten} other {Sitzungen abgehalten}}",
+  "openActions": "{count, plural, one {offene Aufgabe} other {offene Aufgaben}}",
+  "last": "zuletzt am {date}",
+  "join": "Beitreten",
+  "checkIn": "Mein Check-in",
+  "control": "Meeting leiten",
+  "history": "Verlauf",
+  "noMatch": "Kein Meeting passt.",
+  "empty": "Noch kein Meeting.",
+  "templates": "Vorlagen"
+}

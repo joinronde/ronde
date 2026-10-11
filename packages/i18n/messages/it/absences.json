@@ -1,0 +1,19 @@
+{
+  "title": "Assenze",
+  "add": "Aggiungi un'assenza",
+  "intro": "Ferie, permessi, formazione: vieni segnato come assente alle sessioni di quei giorni e non ricevi promemoria.",
+  "from": "Primo giorno",
+  "to": "Ultimo giorno",
+  "delegate": "Chi conduce le tue riunioni nel frattempo",
+  "noDelegate": "Nessuno: i co-conduttori proseguono",
+  "delegateHint": "Per le riunioni che conduci. Riceve una notifica.",
+  "note": "Nota",
+  "notePlaceholder": "Es. ferie, rientro lunedì",
+  "save": "Salva l'assenza",
+  "cancel": "Annulla",
+  "period": "dal {from} al {to}",
+  "standsIn": "{name} sostituisce",
+  "remove": "Rimuovi l'assenza {period}",
+  "empty": "Nessuna assenza prevista.",
+  "emptyMine": "Nessuna assenza prevista. Stai per partire? Aggiungila qui: le tue riunioni lo sapranno."
+}

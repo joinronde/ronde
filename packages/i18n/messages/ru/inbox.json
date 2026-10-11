@@ -1,0 +1,18 @@
+{
+  "label": "Уведомления",
+  "labelUnread": "{count, plural, one {Уведомления, # непрочитанное} few {Уведомления, # непрочитанных} many {Уведомления, # непрочитанных} other {Уведомления, # непрочитанного}}",
+  "title": "Уведомления",
+  "markAll": "Отметить все прочитанными",
+  "unread": "непрочитано",
+  "someone": "Кто-то",
+  "empty": "Всё прочитано.",
+  "emptyHint": "Здесь появляются назначенные вам задачи, начинающиеся сессии и опубликованные протоколы.",
+  "kinds": {
+    "action_assigned": "<strong>{actor}</strong> назначил(а) вам задачу во встрече <strong>{meeting}</strong>",
+    "session_started": "<strong>{meeting}</strong> началась: присоединяйтесь к сессии",
+    "minutes_published": "Протокол встречи <strong>{meeting}</strong> готов",
+    "kudo_received": "<strong>{actor}</strong> поблагодарил(а) вас во встрече <strong>{meeting}</strong>",
+    "meeting_joined": "<strong>{actor}</strong> добавил(а) вас во встречу <strong>{meeting}</strong>",
+    "absence_delegated": "<strong>{actor}</strong> будет отсутствовать: в это время вы ведёте встречи, которые ведёт этот человек"
+  }
+}

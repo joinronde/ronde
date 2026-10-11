@@ -1,0 +1,26 @@
+{
+  "title": "角色",
+  "intro": "自定义角色为组织者、成员和访客添加权限。会议权限适用于工作空间的所有会议。",
+  "new": "新角色",
+  "newTitle": "新角色",
+  "editTitle": "编辑角色",
+  "name": "名称",
+  "description": "描述",
+  "groups": {
+    "workspace": "工作空间",
+    "meetings": "所有会议"
+  },
+  "groupHints": {
+    "workspace": "在整个工作空间中可以做的事。",
+    "meetings": "适用于所有会议，包括他们未参加的会议。"
+  },
+  "save": "保存角色",
+  "cancel": "取消",
+  "edit": "编辑",
+  "delete": "删除",
+  "deleteConfirm": "删除角色“{name}”？{count, plural, =0 {没有人拥有此角色。} other {# 人将只保留其基本角色。}}",
+  "members": "{count, plural, =0 {无人} other {# 人}}",
+  "empty": "还没有自定义角色。",
+  "examples": "例如：“审计员”（所有会议的历史和统计）、“引导者”（主持任何会议）、“人员管理”（目录和邀请）。",
+  "readOnly": "许可证已过期：角色仍然可见，但在续期前不再授予任何权限。"
+}

@@ -1,0 +1,142 @@
+{
+  "title": "模块",
+  "intro": "启用此会议需要的功能。关闭的模块会从控制台、共享屏幕和每个人的屏幕上消失；其设置会被保留。",
+  "on": "开",
+  "off": "关",
+  "toggle": "在此会议中使用 {name}",
+  "enabled": "已启用 {name}",
+  "disabled": "已关闭 {name}",
+  "categories": {
+    "facilitation": "主持引导",
+    "organisation": "组织",
+    "formats": "形式",
+    "integrations": "集成",
+    "notifications": "通知",
+    "reporting": "报告"
+  },
+  "editions": {
+    "team": "Team",
+    "enterprise": "Enterprise"
+  },
+  "paidTitle": "付费方案提供",
+  "paidIntro": "Ronde Team 和 Enterprise 提供，可在云端使用，也可凭许可证密钥自托管。",
+  "learnMore": "查看方案",
+  "items": {
+    "icebreaker": {
+      "name": "破冰",
+      "description": "从题库抽一道题热身；每人用一行回答，在开场时展示。"
+    },
+    "mood": {
+      "name": "团队心情",
+      "description": "每个人分享自己的心情（⛈️ 到 ☀️），匿名展示并计入统计。"
+    },
+    "rating": {
+      "name": "会议价值",
+      "description": "总结时，每人匿名为会议的价值打 1 到 5 分；平均分会记录在统计中。"
+    },
+    "reactions": {
+      "name": "表情与信号",
+      "description": "表情反应和信号（太长了、大声点……）飞过所有屏幕。"
+    },
+    "hands": {
+      "name": "举手与提问",
+      "description": "在某人发言时举手或提问：该发言之后会增加一个提问环节。"
+    },
+    "kudos": {
+      "name": "致谢",
+      "description": "会议中感谢一位同事；致谢会显示在所有屏幕和会议纪要中。"
+    },
+    "spotlight": {
+      "name": "聚光灯",
+      "description": "在共享屏幕上放大显示一条进展卡内容、一个问题或一段自由文字。"
+    },
+    "birthdays": {
+      "name": "生日",
+      "description": "等待屏幕会庆祝本周的生日（仅日和月）。"
+    },
+    "sounds": {
+      "name": "声音",
+      "description": "等待音乐、提示音和音效板，在每个人的屏幕或共享屏幕上播放。"
+    },
+    "ambience": {
+      "name": "季节氛围",
+      "description": "等待屏幕上的节日和季节装饰。"
+    },
+    "gitlab": {
+      "name": "GitLab",
+      "description": "每个人最近的 issue 和合并请求，可导入其进展卡。"
+    },
+    "workflows": {
+      "name": "工作流构建器",
+      "description": "自定义触发器、条件和消息，发送到 Slack、Teams、Matrix 或电子邮件。"
+    },
+    "aiAssistant": {
+      "name": "AI 助手",
+      "description": "会议摘要和行动项提取；自托管时使用你自己的密钥。"
+    },
+    "writeBack": {
+      "name": "创建工单",
+      "description": "把后续行动项变成 Jira、Linear、GitLab 或 GitHub 工单，并保持同步。"
+    },
+    "calendarSync": {
+      "name": "日历同步",
+      "description": "与 Google、Microsoft 365 和 CalDAV 双向同步，并检测冲突。"
+    },
+    "analytics": {
+      "name": "工作空间分析",
+      "description": "跨会议的仪表板：出席、参与度、反复出现的阻碍。"
+    },
+    "scheduledReports": {
+      "name": "定期报告",
+      "description": "每周或每月通过电子邮件发送会议汇总。"
+    },
+    "rotation": {
+      "name": "角色轮换",
+      "description": "引导者和记录者每场轮换，按轮流发言的顺序。"
+    },
+    "retro": {
+      "name": "回顾",
+      "description": "按列匿名贴便签，主持人归类，团队投票，再进行讨论；请将其加入议程。"
+    },
+    "timebox": {
+      "name": "限时议题",
+      "description": "议程中的独立议题，有自己的时长，笔记写入会议纪要。"
+    },
+    "poker": {
+      "name": "计划扑克",
+      "description": "团队用翻牌前保持隐藏的卡片估算条目；请将其加入议程。"
+    },
+    "polls": {
+      "name": "投票",
+      "description": "会议中向团队提问：选项、评分或词云，可匿名也可实名。"
+    },
+    "random": {
+      "name": "随机工具",
+      "description": "转盘决定下一位、随机发言顺序、分组或抛硬币，所有屏幕同时播放。"
+    },
+    "parking": {
+      "name": "停车场",
+      "description": "一键搁置离题内容；它会成为下一场的开放议题。"
+    },
+    "decisions": {
+      "name": "决定日志",
+      "description": "所有场次笔记中的每一行“决定：”，汇集为全队可搜索的列表。"
+    },
+    "github": {
+      "name": "GitHub",
+      "description": "每个人最近的 issue 和拉取请求，一键导入其进展卡。"
+    },
+    "video": {
+      "name": "视频通话",
+      "description": "从任何页面加入通话：任意工具的链接、Jitsi 房间或你的 BigBlueButton 服务器。"
+    },
+    "async": {
+      "name": "异步模式",
+      "description": "没有实时会议：每个人填写进展卡并评论，然后在计划时间通过电子邮件发送汇总。"
+    }
+  },
+  "upgrade": {
+    "comesWith": "{feature} 包含在 Ronde {edition} 中。",
+    "plans": "查看方案"
+  }
+}

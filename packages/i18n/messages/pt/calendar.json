@@ -1,0 +1,20 @@
+{
+  "title": "Agenda",
+  "intro": "Todas as sessões das suas reuniões: previstas, ao vivo e realizadas.",
+  "months": "Meses",
+  "previous": "Mês anterior",
+  "next": "Próximo mês",
+  "today": "Hoje",
+  "upcoming": "Em breve",
+  "nothing": "Nada previsto nas próximas quatro semanas.",
+  "status": {
+    "planned": "prevista",
+    "live": "Ao vivo agora",
+    "held": "realizada",
+    "cancelled": "cancelada"
+  },
+  "attendance": {
+    "yes": "Vou estar lá",
+    "no": "Ausente"
+  }
+}

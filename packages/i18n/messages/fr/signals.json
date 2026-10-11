@@ -1,0 +1,32 @@
+{
+  "sleepy": {
+    "label": "Zzz",
+    "combo": "L'équipe pique du nez…",
+    "comboNamed": "{name}, l'équipe pique du nez…"
+  },
+  "hundred": {
+    "label": "Carrément",
+    "combo": "Validé à cent pour cent",
+    "comboNamed": "Validé à cent pour cent"
+  },
+  "popcorn": {
+    "label": "Popcorn",
+    "combo": "Ça devient croustillant, sortez le popcorn",
+    "comboNamed": "Ça devient croustillant, sortez le popcorn"
+  },
+  "mindBlown": {
+    "label": "Bluffant !",
+    "combo": "Cerveaux retournés !",
+    "comboNamed": "{name} a retourné le cerveau de l'équipe"
+  },
+  "fire": {
+    "label": "Ça déchire !",
+    "combo": "L'équipe met le feu !",
+    "comboNamed": "{name} met le feu !"
+  },
+  "coffee": {
+    "label": "Pause café ?",
+    "combo": "L'équipe réclame un café",
+    "comboNamed": "L'équipe réclame un café"
+  }
+}

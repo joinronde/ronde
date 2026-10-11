@@ -1,0 +1,21 @@
+{
+  "back": "目录",
+  "you": "你",
+  "noAccount": "尚无账户",
+  "removed": "已被公司目录移除",
+  "edit": "编辑",
+  "email": "发送邮件",
+  "meetings": "会议",
+  "noMeetings": "没有参加你能看到的会议。",
+  "actions": "未完成的行动项",
+  "seeAll": "查看全部",
+  "inProgress": "进行中",
+  "noActions": "没有未完成的行动项。",
+  "presence": "近 90 天出席情况",
+  "noSessions": "最近没有举行会议。",
+  "attended": "{held} 场中出席 {attended} 场",
+  "kudos": "收到的致谢",
+  "kudoFrom": "来自 {name}，{date}",
+  "noKudos": "还没有致谢。",
+  "awayUntil": "离开至 {date}"
+}

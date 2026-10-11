@@ -1,0 +1,21 @@
+{
+  "shiftKey": "Mayús+",
+  "toolbar": "Formato · {label}",
+  "boldLetter": "N",
+  "italicLetter": "C",
+  "strikeLetter": "T",
+  "bold": "Negrita ({key})",
+  "italic": "Cursiva ({key})",
+  "underlineLetter": "S",
+  "underline": "Subrayado ({key})",
+  "strike": "Tachado ({key})",
+  "bulletList": "Lista con viñetas",
+  "numberedList": "Lista numerada",
+  "indent": "Subelemento (Tab en una lista)",
+  "outdent": "Subir un nivel ({key})",
+  "link": "Enlace ({key})",
+  "linkUrl": "Dirección del enlace",
+  "linkApply": "Aplicar",
+  "linkRemove": "Quitar el enlace",
+  "linkCancel": "Cancelar"
+}

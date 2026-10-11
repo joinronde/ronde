@@ -1,0 +1,27 @@
+{
+  "name": "@ronde/connectors",
+  "version": "0.0.0",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "description": "Notification connectors: email, Matrix, Slack, Microsoft Teams, Discord, Mattermost and signed webhooks.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./kinds": "./src/kinds.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ronde/core": "workspace:*",
+    "@ronde/module-sdk": "workspace:*",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@ronde/config": "workspace:*",
+    "@types/node": "^22.20.4",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.2"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "badge": "Exemple",
+  "exploreTitle": "Ou faites d'abord le tour d'une réunion d'exemple",
+  "exploreText": "Une équipe fictive avec un mois d'historique : lancez une séance, lisez les comptes rendus, regardez les statistiques. Rien n'est envoyé à personne, et elle disparaît en un clic.",
+  "explore": "Ouvrir la réunion d'exemple",
+  "preparing": "Préparation de l'exemple…",
+  "banner": "Réunion d'exemple : une équipe fictive et un mois d'historique, pour tout essayer. Rien n'est envoyé à personne.",
+  "delete": "Supprimer l'exemple",
+  "deleteConfirm": "Supprimer la réunion d'exemple et son équipe fictive ? C'est définitif.",
+  "personHint": "Personne fictive de la réunion d'exemple",
+  "meetingName": "Point hebdo (exemple)",
+  "tasks": {
+    "emma": {
+      "1": "Modèle de données des factures",
+      "2": "Point d'accès factures dans l'API",
+      "3": "Authentification par clé d'API",
+      "4": "Documentation de l'API",
+      "5": "Filtres par client sur les factures",
+      "6": "Tests de charge à 500 requêtes par seconde"
+    },
+    "lucas": {
+      "1": "Analyse du tunnel d'inscription",
+      "2": "Entretiens avec cinq nouveaux clients",
+      "3": "Cahier des charges de la checklist d'accueil",
+      "4": "Textes de la visite guidée",
+      "5": "Tableau de bord d'activation",
+      "6": "Test de la page tarifs"
+    },
+    "sarah": {
+      "1": "Maquettes mobiles validées",
+      "2": "Squelette de l'app mobile et son intégration continue",
+      "3": "Écrans d'inscription",
+      "4": "Photo des justificatifs",
+      "5": "Mode hors ligne du tableau de bord",
+      "6": "Bêta ouverte à dix clients"
+    },
+    "tom": {
+      "1": "Styles des boutons et des champs",
+      "2": "Palette du thème sombre",
+      "3": "Focus clavier visible partout",
+      "4": "Composant tableau",
+      "5": "Tests utilisateurs avec deux équipes",
+      "6": "Guide des composants"
+    },
+    "sofia": {
+      "1": "Tableaux de bord de supervision",
+      "2": "Journaux centralisés",
+      "3": "Sauvegardes automatiques de la base",
+      "4": "Checklist de mise en production",
+      "5": "Alertes sur les erreurs serveur",
+      "6": "Exercice de restauration des sauvegardes"
+    }
+  },
+  "blockers": {
+    "staging": "Toujours pas d'accès à la base de test, ticket ouvert auprès de l'informatique",
+    "crm": "L'export du CRM s'arrête à 2 000 lignes",
+    "licence": "Le jeu d'icônes choisi demande une licence payante"
+  },
+  "dayOff": "Absente jeudi après-midi (formation)",
+  "actions": {
+    "staging": "Obtenir l'accès à la base de test (relancer l'informatique)",
+    "crm": "Contourner la limite d'export du CRM",
+    "licence": "Commander la licence du jeu d'icônes"
+  },
+  "kudos": {
+    "checklist": "La checklist de mise en production m'a sauvé mon vendredi",
+    "screens": "Les nouveaux écrans sont tellement plus clairs",
+    "export": "Merci d'avoir débloqué l'export en une journée"
+  },
+  "questions": {
+    "endpoint": "Quand le point d'accès factures arrive-t-il sur le serveur de test ?",
+    "alerts": "Les alertes peuvent-elles aussi partir sur le canal du support ?"
+  },
+  "decisions": {
+    "escalate": "Décision : on fait remonter le ticket informatique sans réponse d'ici jeudi.",
+    "notes": "Décision : le design system a ses propres notes de version."
+  },
+  "summary": "Une bonne semaine : la documentation de l'API est en ligne et la bêta est dans les temps. L'accès à la base de test reste bloqué, Emma fait remonter le ticket jeudi.",
+  "icebreaker": "Votre petite victoire de la semaine ?",
+  "answers": {
+    "lucas": "Cinq entretiens clients calés en une matinée",
+    "sofia": "Zéro alerte ce week-end"
+  },
+  "topics": {
+    "oncall": "Qui est d'astreinte pendant les vacances ?",
+    "flags": "Convention de nommage des feature flags"
+  }
+}

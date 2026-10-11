@@ -1,0 +1,49 @@
+{
+  "groups": {
+    "classical": "古典",
+    "jazz": "爵士",
+    "electro": "电子",
+    "rock": "摇滚",
+    "generated": "合成"
+  },
+  "music": {
+    "satie": "萨蒂 — 第一号裸体歌舞（钢琴）",
+    "satie-guitar": "萨蒂 — 第一号裸体歌舞（吉他）",
+    "debussy": "德彪西 — 月光",
+    "uno-mas": "Uno Mas (Airmen of Note)",
+    "traveling": "Traveling in your mind (Loyalty Freak Music)",
+    "ghost-surf": "Ghost Surf Rock (Loyalty Freak Music)",
+    "secret-agent": "Secret Agent Rock (John Bartmann)",
+    "soft-pads": "柔和铺底",
+    "bossa-lounge": "波萨休闲"
+  },
+  "cues": {
+    "start": {
+      "label": "开始时的铃声",
+      "hint": "点击“开始会议”时"
+    },
+    "birthday": {
+      "label": "生日歌",
+      "hint": "生日所在周，在铃声后播放生日快乐歌"
+    },
+    "speaker": {
+      "label": "换人发言",
+      "hint": "发言权交给下一位时的短提示音"
+    },
+    "timeUp": {
+      "label": "发言时间结束",
+      "hint": "计时器到 0:00 时响三声"
+    },
+    "end": {
+      "label": "结束时鼓掌",
+      "hint": "进入总结环节时"
+    }
+  },
+  "board": {
+    "applause": "鼓掌",
+    "drumroll": "鼓声",
+    "tada": "当当当",
+    "rimshot": "咚咚嚓",
+    "birthday": "生日快乐"
+  }
+}

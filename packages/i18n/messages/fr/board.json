@@ -1,0 +1,18 @@
+{
+  "editingHint": "Attrapez un bloc par sa poignée <handle></handle> et déposez-le où vous voulez, ou utilisez ses flèches. La disposition est gardée pour vous seulement.",
+  "columnCount": "Nombre de colonnes",
+  "columns": "{count, plural, one {# colonne} other {# colonnes}}",
+  "defaultLayout": "Disposition par défaut",
+  "done": "Terminé",
+  "customiseHint": "Déplacer les blocs, choisir le nombre de colonnes",
+  "customise": "Personnaliser la page",
+  "customiseCustom": "Personnaliser la page · disposition perso",
+  "dragHint": "Déplacer « {title} » : attrapez et déposez où vous voulez",
+  "move": "Déplacer le bloc « {title} »",
+  "up": "Monter",
+  "down": "Descendre",
+  "left": "Colonne de gauche",
+  "right": "Colonne de droite",
+  "dropAtEnd": "Déposez ici pour placer en bas de colonne",
+  "dropEmpty": "Colonne vide : dépose un bloc ici"
+}

@@ -1,0 +1,34 @@
+{
+  "chapters": {
+    "welcome": "Bienvenida",
+    "prepare": "Preparar",
+    "run": "Dirigir",
+    "conclude": "Cerrar"
+  },
+  "steps": {
+    "welcome": {
+      "title": "Bienvenido a la sala de control 👋",
+      "body": "<p>Desde esta pestaña diriges la reunión; tus notas se quedan aquí, solo para ti.</p><ul><li><strong>Abre la pantalla compartida</strong>: una pestaña sin menús, pensada para proyectar.</li><li><strong>Comparte esa pestaña</strong> en la videollamada, no toda tu pantalla: es lo que ve el equipo.</li><li><strong>Vuelve aquí</strong> para dirigir: todo aparece en directo en la pantalla compartida.</li></ul><tip>Navega con <kbd>→</kbd> y <kbd>←</kbd>, sal con <kbd>Esc</kbd>.</tip>"
+    },
+    "runOrder": {
+      "title": "El orden del día y el orden de palabra",
+      "body": "<p>Introducción, un turno por persona, temas abiertos y cierre.</p><ul><li><strong>↑ ↓</strong> cambian el orden, <strong>Ausente</strong> quita a alguien de la ronda.</li><li><strong>Ir</strong> salta directamente a un paso.</li><li>Un punto verde: la ficha de esa persona está lista.</li></ul>"
+    },
+    "controls": {
+      "title": "Empezar y avanzar",
+      "body": "<ul><li><strong>Empezar la reunión</strong> lanza la introducción en la pantalla compartida.</li><li><strong>Siguiente</strong> (<kbd>→</kbd>) da la palabra a la siguiente persona; el cronómetro muestra el tiempo de palabra que le queda.</li><li><kbd>Espacio</kbd> pausa el cronómetro, <strong>+30 s</strong> da un poco más de tiempo, <strong>Terminar la reunión</strong> salta al cierre.</li></ul>"
+    },
+    "notes": {
+      "title": "Tus notas",
+      "body": "<p>Un área de notas por paso, <strong>guardada mientras escribes</strong> y visible solo para ti: van a las actas, bajo la persona correspondiente.</p><p><strong>+ Decisión</strong> anota una decisión; <strong>+ Acción</strong> crea una acción de seguimiento con responsable, que se sigue en las próximas sesiones.</p>"
+    },
+    "minutes": {
+      "title": "Las actas",
+      "body": "<p>Se escriben solas a partir de las fichas, tus notas, las decisiones y las acciones.</p><p>Al final, <strong>Archivar la reunión</strong>: las actas pasan al historial y la próxima sesión queda lista.</p>"
+    },
+    "finish": {
+      "title": "¡Te toca!",
+      "body": "<p>Las personas, el calendario y los módulos se configuran en los ajustes de la reunión. Este botón repite la visita cuando quieras. ¡Que tengas una gran reunión!</p>"
+    }
+  }
+}

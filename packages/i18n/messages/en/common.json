@@ -1,0 +1,25 @@
+{
+  "host": "Host",
+  "duration": {
+    "minutes": "{m} min",
+    "hours": "{h} h",
+    "hoursMinutes": "{h} h {m} min"
+  },
+  "noMeeting": {
+    "title": "No meeting in progress",
+    "notPrepared": "{host} has not prepared the next meeting yet. Meanwhile, you can fill in your check-in.",
+    "pickDate": "Pick the date of the next meeting to set up the agenda.",
+    "dateLabel": "Meeting date",
+    "prepare": "Prepare the meeting of {date}",
+    "addTeamFirst": "Add the team in the settings first.",
+    "openSettings": "Open the settings"
+  },
+  "loadError": {
+    "title": "Could not load the data",
+    "body": "The server did not answer or returned an error. Your data is safe.",
+    "retry": "Try again"
+  },
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "exportCsv": "Export as CSV"
+}

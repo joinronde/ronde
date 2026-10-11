@@ -1,0 +1,50 @@
+// Retrospective module: anonymous sticky notes, grouped by the host, voted on by the team
+
+/// A sticky note; its author is stored only so they can edit or delete it, and never leaves the server
+model RetroCard {
+  id          String      @id @default(uuid(7))
+  workspaceId String
+  sessionId   String
+  session     Session     @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  /// Key of the column, from the module settings ("well", "improve"…)
+  column      String
+  groupId     String?
+  group       RetroGroup? @relation(fields: [groupId], references: [id], onDelete: SetNull)
+  authorId    String
+  text        String
+  createdAt   DateTime    @default(now())
+
+  @@unique([id, workspaceId])
+  @@index([sessionId])
+  @@index([workspaceId])
+}
+
+/// Sticky notes put together by the host; the team votes on groups
+model RetroGroup {
+  id          String      @id @default(uuid(7))
+  workspaceId String
+  sessionId   String
+  session     Session     @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  column      String
+  title       String      @default("")
+  position    Int         @default(0)
+  createdAt   DateTime    @default(now())
+  cards       RetroCard[]
+  votes       RetroVote[]
+
+  @@unique([id, workspaceId])
+  @@index([sessionId])
+  @@index([workspaceId])
+}
+
+/// One vote of a person on a group (several votes per person, one per group)
+model RetroVote {
+  workspaceId String
+  groupId     String
+  group       RetroGroup @relation(fields: [groupId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  personId    String
+  createdAt   DateTime   @default(now())
+
+  @@id([groupId, personId])
+  @@index([workspaceId])
+}

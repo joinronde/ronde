@@ -1,0 +1,53 @@
+{
+  "title": "Minha ficha",
+  "save": "Salvar",
+  "cancel": "Cancelar",
+  "close": "Fechar",
+  "fillIn": "Preencher minha ficha",
+  "openRonde": "Abrir no Ronde",
+  "hint": {
+    "list": "Um item por linha.",
+    "checklist": "Um item por linha; comece com [x] quando estiver feito.",
+    "text": "Texto livre, em quantas linhas precisar."
+  },
+  "notFound": "O Ronde não encontrou esta ficha para você. O e-mail da sua conta do Slack deve ser o do seu perfil no Ronde, e você deve participar da reunião.",
+  "tooLong": "Esta ficha é longa demais para editar no Slack. Abra-a no Ronde.",
+  "tooMany": "No máximo {max} itens.",
+  "itemTooLong": "Um item passa de {max} caracteres.",
+  "changed": "Sua ficha mudou no Ronde nesse meio-tempo. Feche este formulário e abra de novo para ver a versão mais recente.",
+  "saved": "Sua ficha para “{team}” foi salva. Obrigado!",
+  "ready": "Ficha pronta",
+  "toFill": "Ficha a preencher",
+  "noSession": "Nenhuma sessão prevista",
+  "noMeetings": "Você não participa de nenhuma reunião deste espaço.",
+  "actions": "Suas ações de acompanhamento em aberto",
+  "summary": "Suas reuniões no Ronde",
+  "unknown": "O Ronde ainda não conhece você: o e-mail da sua conta do Slack deve ser o do seu perfil em um espaço do Ronde que adicionou o app.",
+  "unavailable": "O Ronde não pode responder agora. Tente de novo em instantes.",
+  "settings": {
+    "intro": "Adicione o Ronde ao seu espaço do Slack: cada pessoa preenche a ficha sem sair do Slack.",
+    "locked": "O app do Slack vem com o Ronde {edition}.",
+    "uses": {
+      "reminders": "Lembretes de ficha por mensagem direta, com um botão que abre a ficha em um formulário do Slack.",
+      "channel": "O canal escolhido vira um conector: nas notificações de cada reunião, escolha o que é publicado lá (atas, sessão prestes a começar…).",
+      "command": "/ronde mostra a cada pessoa as próximas sessões e as ações de acompanhamento em aberto."
+    },
+    "emailMatch": "As pessoas são reconhecidas pelo e-mail: a conta do Slack e o perfil no Ronde devem ter o mesmo.",
+    "add": "Adicionar ao Slack",
+    "connectedTo": "Conectado a {team}",
+    "channel": "notificações em {channel}",
+    "reminders": "Enviar os lembretes de ficha no Slack",
+    "remindersHint": "Por mensagem direta, no lugar do e-mail, para as pessoas encontradas no Slack. As demais continuam recebendo o e-mail.",
+    "reinstall": "Trocar de canal",
+    "disconnect": "Desconectar",
+    "disconnectConfirm": "Remover o Ronde deste espaço do Slack? Os lembretes voltam para o e-mail, e as regras de notificação que publicam no canal são excluídas.",
+    "notConfigured": "Para usar o Slack, o administrador desta instância do Ronde primeiro cria o app do Slack. Leva alguns minutos.",
+    "setup": "Como configurar",
+    "result": {
+      "connected": "O Slack está conectado.",
+      "cancelled": "A instalação foi cancelada no Slack.",
+      "denied": "Só as pessoas que gerenciam os conectores do espaço podem adicionar o Slack.",
+      "failed": "Não foi possível conectar o Slack. Tente de novo; se continuar falhando, fale com o administrador desta instância."
+    }
+  }
+}

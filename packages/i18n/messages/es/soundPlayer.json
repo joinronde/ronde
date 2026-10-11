@@ -1,0 +1,18 @@
+{
+  "enable": "Activar el sonido",
+  "monitorHint": "Oír en la sala de control lo que oyen los participantes",
+  "muteHint": "Desactivar los sonidos de la reunión en esta pantalla",
+  "autoHint": "Los sonidos se activarán solos un cuarto de hora antes de la reunión (música de espera, avisos…)",
+  "listenHint": "Oír los sonidos de la reunión: música de espera, avisos, aplausos…",
+  "monitorOn": "Escucha en la sala de control",
+  "monitorOff": "Escucha desactivada",
+  "soundsOn": "Sonidos",
+  "soundsOff": "Sonidos desactivados",
+  "monitorVolume": "Volumen de escucha en la sala de control",
+  "volume": "Volumen de los sonidos en esta pantalla",
+  "musicMuteHint": "Desactivar la música de espera en la sala de control (los participantes la siguen oyendo)",
+  "musicListenHint": "Oír también la música de espera en la sala de control",
+  "musicOn": "Música",
+  "musicOff": "Música desactivada",
+  "allow": "Permitir el sonido"
+}

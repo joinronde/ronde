@@ -1,0 +1,88 @@
+{
+  "badge": "Beispiel",
+  "exploreTitle": "Oder sieh dir zuerst ein Beispiel-Meeting an",
+  "exploreText": "Ein fiktives Team mit einem Monat Verlauf: Starte eine Sitzung, lies die Protokolle, sieh dir die Statistiken an. Nichts wird an jemanden gesendet, und mit einem Klick ist es wieder weg.",
+  "explore": "Beispiel-Meeting öffnen",
+  "preparing": "Beispiel wird vorbereitet…",
+  "banner": "Beispiel-Meeting: ein fiktives Team und ein Monat Verlauf, um alles auszuprobieren. Nichts wird an jemanden gesendet.",
+  "delete": "Beispiel löschen",
+  "deleteConfirm": "Das Beispiel-Meeting und sein fiktives Team löschen? Das lässt sich nicht rückgängig machen.",
+  "personHint": "Fiktive Person des Beispiel-Meetings",
+  "meetingName": "Wochenrunde (Beispiel)",
+  "tasks": {
+    "emma": {
+      "1": "Datenmodell der Rechnungen",
+      "2": "Rechnungs-Endpunkt in der API",
+      "3": "Authentifizierung per API-Schlüssel",
+      "4": "API-Dokumentation",
+      "5": "Filter nach Kunde für Rechnungen",
+      "6": "Lasttests mit 500 Anfragen pro Sekunde"
+    },
+    "lucas": {
+      "1": "Analyse des Onboarding-Funnels",
+      "2": "Interviews mit fünf Neukunden",
+      "3": "Konzept der Willkommens-Checkliste",
+      "4": "Texte der In-App-Tour",
+      "5": "Aktivierungs-Dashboard",
+      "6": "Test der Preisseite"
+    },
+    "sarah": {
+      "1": "Mobile Entwürfe abgenommen",
+      "2": "Grundgerüst der mobilen App und ihre CI",
+      "3": "Registrierungs-Bildschirme",
+      "4": "Foto-Upload für Belege",
+      "5": "Offline-Modus für das Dashboard",
+      "6": "Beta für zehn Kunden"
+    },
+    "tom": {
+      "1": "Stile für Buttons und Felder",
+      "2": "Farbpalette des dunklen Designs",
+      "3": "Überall sichtbarer Tastaturfokus",
+      "4": "Tabellen-Komponente",
+      "5": "Usability-Tests mit zwei Teams",
+      "6": "Richtlinien für die Komponenten"
+    },
+    "sofia": {
+      "1": "Monitoring-Dashboards",
+      "2": "Logs an einem Ort",
+      "3": "Automatische Datenbank-Backups",
+      "4": "Release-Checkliste",
+      "5": "Alarme bei Serverfehlern",
+      "6": "Übung zur Wiederherstellung der Backups"
+    }
+  },
+  "blockers": {
+    "staging": "Immer noch kein Zugang zur Testdatenbank, Ticket bei der IT offen",
+    "crm": "Der CRM-Export bricht bei 2.000 Zeilen ab",
+    "licence": "Das gewählte Icon-Set braucht eine kostenpflichtige Lizenz"
+  },
+  "dayOff": "Donnerstagnachmittag nicht da (Schulung)",
+  "actions": {
+    "staging": "Zugang zur Testdatenbank bekommen (bei der IT nachhaken)",
+    "crm": "Einen Weg um das Exportlimit des CRM finden",
+    "licence": "Die Lizenz für das Icon-Set bestellen"
+  },
+  "kudos": {
+    "checklist": "Die Release-Checkliste hat meinen Freitag gerettet",
+    "screens": "Die neuen Bildschirme sind so viel klarer",
+    "export": "Danke, dass du den Export an einem Tag freigemacht hast"
+  },
+  "questions": {
+    "endpoint": "Wann kommt der Rechnungs-Endpunkt auf den Testserver?",
+    "alerts": "Können die Alarme auch in den Support-Kanal gehen?"
+  },
+  "decisions": {
+    "escalate": "Entscheidung: Wir eskalieren das IT-Ticket, wenn bis Donnerstag keine Antwort kommt.",
+    "notes": "Entscheidung: Das Designsystem bekommt eigene Release Notes."
+  },
+  "summary": "Eine gute Woche: Die API-Dokumentation ist online und die Beta liegt im Plan. Der Zugang zur Testdatenbank ist weiter blockiert, Emma eskaliert das am Donnerstag.",
+  "icebreaker": "Dein kleiner Erfolg der Woche?",
+  "answers": {
+    "lucas": "Fünf Kundeninterviews an einem Vormittag vereinbart",
+    "sofia": "Null Alarme an diesem Wochenende"
+  },
+  "topics": {
+    "oncall": "Wer hat in den Ferien Bereitschaft?",
+    "flags": "Namenskonvention für Feature Flags"
+  }
+}

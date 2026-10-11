@@ -1,0 +1,18 @@
+{
+  "title": "决定",
+  "intro": "所有会议中做出的决定，按时间倒序排列。以“决定:”开头的笔记会汇集到这里。",
+  "filter": "会议",
+  "all": "全部",
+  "search": "搜索决定",
+  "count": "{count, plural, other {# 项决定}}",
+  "noMatch": "没有提到“{query}”的决定。",
+  "empty": "还没有决定。",
+  "emptyHint": "在会议中写一条以“决定:”开头的笔记：会议归档后，它会保存在这里。",
+  "csv": {
+    "date": "日期",
+    "meeting": "会议",
+    "decision": "决定",
+    "context": "背景",
+    "fileName": "jueding"
+  }
+}

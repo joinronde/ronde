@@ -1,0 +1,25 @@
+{
+  "title": "Reuniões",
+  "intro": "Todas as reuniões do espaço de trabalho que você pode ver: quando é a próxima, quem participa, o que ainda está em aberto.",
+  "new": "Nova reunião",
+  "filter": "Quais reuniões",
+  "search": "Filtrar por nome",
+  "filters": {
+    "all": "Todas",
+    "mine": "De que participo",
+    "run": "Que conduzo"
+  },
+  "liveNow": "Ao vivo agora",
+  "next": "Próxima sessão",
+  "noNext": "Nenhuma sessão prevista",
+  "held": "{count, plural, one {sessão realizada} other {sessões realizadas}}",
+  "openActions": "{count, plural, one {ação em aberto} other {ações em aberto}}",
+  "last": "a última em {date}",
+  "join": "Entrar",
+  "checkIn": "Minha ficha",
+  "control": "Conduzir a reunião",
+  "history": "Histórico",
+  "noMatch": "Nenhuma reunião corresponde.",
+  "empty": "Ainda não há reuniões.",
+  "templates": "Modelos"
+}

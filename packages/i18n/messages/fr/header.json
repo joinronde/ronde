@@ -1,0 +1,12 @@
+{
+  "skipToContent": "Aller au contenu",
+  "navigation": "Affichage",
+  "screenHint": "S'ouvre dans un nouvel onglet, à partager dans la visio",
+  "videoHint": "Ouvre la visio dans un nouvel onglet",
+  "joinVideo": "Rejoindre la visio",
+  "reconnecting": "Reconnexion…",
+  "host": "régisseur",
+  "cohost": "co-régisseur",
+  "backToWorkspace": "Retour à {workspace}",
+  "breadcrumb": "Emplacement"
+}

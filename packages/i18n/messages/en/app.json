@@ -1,0 +1,10 @@
+{
+  "actionFailed": "The action did not go through. Try again.",
+  "serverUnreachable": "Server unreachable. Check your connection.",
+  "sessionExpired": "Your session expired. Sign in again: what you typed stays on the page.",
+  "reconnect": "Sign in again",
+  "kudoFrom": "{from} thanks {to}",
+  "quoted": "“{text}”",
+  "language": "Language",
+  "newTab": "(opens in a new tab)"
+}

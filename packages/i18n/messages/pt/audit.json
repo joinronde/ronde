@@ -1,0 +1,220 @@
+{
+  "title": "Log de auditoria",
+  "intro": "Quem mudou o quê neste espaço de trabalho: configurações, pessoas, papéis, reuniões. As interações ao vivo não são guardadas.",
+  "window": "Mostra os últimos {days} dias.",
+  "filters": {
+    "action": "Ação",
+    "actionPlaceholder": "ex.: people, roles, meeting",
+    "actor": "Pessoa",
+    "actorPlaceholder": "Nome ou e-mail",
+    "from": "De",
+    "to": "Até",
+    "apply": "Filtrar"
+  },
+  "export": "Exportar como CSV",
+  "columns": {
+    "when": "Quando",
+    "who": "Quem",
+    "what": "O quê",
+    "details": "Detalhes"
+  },
+  "empty": "Nada registrado ainda.",
+  "noMatch": "Nenhuma entrada corresponde a estes filtros.",
+  "more": "Entradas mais antigas",
+  "stream": {
+    "title": "Enviar para um SIEM",
+    "hint": "Cada entrada também é enviada, assinada, para um conector webhook do espaço, para o seu SIEM ou plataforma de logs. Tenta de novo por alguns minutos quando não há resposta.",
+    "connector": "Conector webhook",
+    "none": "Sem envio",
+    "save": "Salvar",
+    "saved": "Salvo",
+    "noWebhook": "Adicione primeiro um conector webhook nas configurações gerais."
+  },
+  "actions": {
+    "meeting": {
+      "create": "Sessão preparada",
+      "reset": "Sessão reiniciada",
+      "archive": "Sessão arquivada",
+      "publish": "Resumo publicado",
+      "remove": "Reunião excluída",
+      "new": "Reunião criada",
+      "projects": "Projetos acompanhados alterados",
+      "sample": "Reunião de exemplo aberta",
+      "sampleDeleted": "Reunião de exemplo excluída"
+    },
+    "settings": {
+      "save": "Configurações da reunião alteradas"
+    },
+    "agenda": {
+      "save": "Pauta alterada"
+    },
+    "participant": {
+      "add": "Participante adicionado",
+      "update": "Participante alterado",
+      "remove": "Participante removido"
+    },
+    "modules": {
+      "set": "Módulo ativado ou desativado"
+    },
+    "template": {
+      "save": "Salva como modelo"
+    },
+    "schedule": {
+      "save": "Agendamento alterado",
+      "skip": "Sessão pulada",
+      "move": "Sessão remarcada",
+      "restore": "Sessão restaurada"
+    },
+    "notifications": {
+      "save": "Notificações alteradas"
+    },
+    "history": {
+      "summary": "Resumo da ata editado"
+    },
+    "people": {
+      "invite": "Pessoa convidada",
+      "add": "Pessoa adicionada",
+      "update": "Perfil alterado",
+      "remove": "Pessoa removida",
+      "invitationRevoked": "Convite revogado",
+      "absence": "Ausência adicionada"
+    },
+    "members": {
+      "role": "Papel alterado",
+      "leave": "Saiu do espaço de trabalho",
+      "join": "Entrou no espaço de trabalho",
+      "customRole": "Papel adicional alterado",
+      "captured": "Entrou pelo domínio do e-mail",
+      "sso": "Entrou pelo login da empresa"
+    },
+    "workspace": {
+      "update": "Configurações do espaço alteradas",
+      "categoryAdd": "Categoria de cargo adicionada",
+      "categoryRename": "Categoria de cargo renomeada",
+      "categoryDelete": "Categoria de cargo excluída",
+      "auditStream": "Envio da auditoria alterado",
+      "logo": "Logo alterado",
+      "logoRemoved": "Logo removido"
+    },
+    "connectors": {
+      "save": "Conector salvo",
+      "delete": "Conector excluído"
+    },
+    "slack": {
+      "connect": "Slack conectado",
+      "disconnect": "Slack desconectado"
+    },
+    "templates": {
+      "delete": "Modelo excluído"
+    },
+    "roles": {
+      "save": "Papel salvo",
+      "delete": "Papel excluído"
+    },
+    "domains": {
+      "add": "Domínio adicionado",
+      "verify": "Domínio verificado",
+      "update": "Configurações do domínio alteradas",
+      "remove": "Domínio removido"
+    },
+    "sso": {
+      "add": "Provedor de identidade adicionado",
+      "remove": "Provedor de identidade removido"
+    },
+    "ldap": {
+      "save": "Diretório da empresa salvo",
+      "remove": "Diretório da empresa removido"
+    },
+    "scim": {
+      "create": "Provisionado",
+      "update": "Atualizado pelo diretório",
+      "deactivate": "Desativado pelo diretório",
+      "delete": "Removido pelo diretório",
+      "tokenCreate": "Token SCIM criado",
+      "tokenRevoke": "Token SCIM revogado"
+    },
+    "reports": {
+      "save": "Relatório por e-mail alterado"
+    },
+    "ai": {
+      "summary": "Resumo redigido pelo assistente de IA",
+      "actions": "Ações sugeridas pelo assistente de IA",
+      "settings": "Configurações do assistente de IA alteradas"
+    },
+    "trackers": {
+      "add": "Gerenciador de tickets adicionado",
+      "update": "Gerenciador de tickets alterado",
+      "delete": "Gerenciador de tickets removido",
+      "ticket": "Ticket criado a partir de uma ação"
+    },
+    "video": {
+      "add": "Conta de vídeo adicionada",
+      "update": "Conta de vídeo alterada",
+      "delete": "Conta de vídeo removida",
+      "room": "Sala de vídeo criada para uma reunião"
+    },
+    "calendar": {
+      "add": "Conta de agenda adicionada",
+      "update": "Conta de agenda alterada",
+      "delete": "Conta de agenda removida",
+      "meeting": "Agenda de uma reunião alterada"
+    },
+    "transcription": {
+      "allow": "Transcrição permitida ou não para uma reunião",
+      "settings": "Serviço de transcrição alterado"
+    },
+    "recording": {
+      "start": "Gravação iniciada para a transcrição",
+      "stop": "Gravação interrompida"
+    },
+    "session": {
+      "now": "Sessão iniciada na hora"
+    },
+    "guests": {
+      "create": "Link de convidado criado",
+      "revoke": "Link de convidado revogado"
+    },
+    "projects": {
+      "create": "Projeto criado",
+      "unsync": "Projeto deixou de ser sincronizado com a sua ferramenta",
+      "import": "Projetos importados de uma ferramenta",
+      "update": "Projeto alterado",
+      "archive": "Projeto arquivado",
+      "restore": "Projeto restaurado",
+      "delete": "Projeto excluído",
+      "theme": "Tema do portfólio alterado",
+      "themeDelete": "Tema do portfólio excluído"
+    },
+    "wikis": {
+      "add": "Wiki adicionado",
+      "update": "Wiki alterado",
+      "delete": "Wiki removido",
+      "meeting": "Wiki de uma reunião alterado"
+    },
+    "teams": {
+      "connect": "Microsoft Teams vinculado",
+      "disconnect": "Microsoft Teams desvinculado"
+    }
+  },
+  "fields": {
+    "name": "Nome",
+    "slug": "Link",
+    "locale": "Idioma",
+    "timezone": "Fuso horário",
+    "meetingCreation": "Quem pode criar reuniões",
+    "bufferMin": "Tempo livre em volta das reuniões (min)",
+    "email": "E-mail",
+    "firstName": "Nome",
+    "lastName": "Sobrenome",
+    "role": "Papel",
+    "birthday": "Aniversário",
+    "phone": "Telefone",
+    "label": "Rótulo",
+    "days": "Dias",
+    "domain": "Domínio",
+    "permissions": "Permissões",
+    "enabled": "Ativado"
+  },
+  "yes": "sim",
+  "no": "não"
+}

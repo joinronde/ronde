@@ -1,0 +1,54 @@
+{
+  "when": "{date} a las {time}",
+  "speak": {
+    "minutes": "{m} min",
+    "seconds": "{s} s"
+  },
+  "timing": "Objetivo {target} · {speak} de palabra por persona",
+  "labels": {
+    "when": "Cuándo",
+    "timing": "Formato",
+    "duration": "Duración",
+    "participants": "Participantes"
+  },
+  "openRonde": "Abrir Ronde",
+  "joinVideo": "🎥 Unirse a la videollamada",
+  "followInApp": "🙋 Seguir la reunión en Ronde",
+  "test": {
+    "title": "✅ Ronde está conectado",
+    "body": "Las notificaciones de «{team}» llegarán aquí."
+  },
+  "soon": {
+    "title": "⏰ {team} empieza en {minutes, plural, one {# minuto} other {# minutos}}",
+    "body": "Es hora de reunirse con el equipo y tener tu ficha a mano. En «Mi pantalla» puedes seguir los turnos, levantar la mano y hacer preguntas."
+  },
+  "started": {
+    "title": "▶️ {team} está empezando",
+    "body": "La ronda va a comenzar: únete al equipo para compartir tus avances y preguntas."
+  },
+  "minutes": {
+    "title": "📝 Actas de {team} · {date}",
+    "decisions": "Decisiones",
+    "actions": "Acciones de seguimiento",
+    "action": "{text} ({owner})",
+    "read": "Leer las actas"
+  },
+  "checkIn": {
+    "title": "📝 Preparemos {team}",
+    "ready": "Fichas listas: {ready}/{total}",
+    "none": "No se espera ninguna ficha para esta sesión.",
+    "allReady": "Todas las fichas están listas, ¡gracias, equipo!",
+    "remaining": "{count, plural, one {Queda # ficha por} other {Quedan # fichas por}} preparar o actualizar.",
+    "prepare": "Actualiza tus proyectos y tus secciones ({sections}) y revisa tus acciones de seguimiento.",
+    "fillIn": "📝 Rellenar mi ficha"
+  },
+  "overdue": {
+    "title": "⏳ {team}: {count, plural, one {# acción de seguimiento espera} other {# acciones de seguimiento esperan}}",
+    "item": "{text} ({owner}, {days, plural, one {# día} other {# días}})",
+    "update": "Actualizar mis acciones"
+  },
+  "birthday": {
+    "title": "🎂 ¡Feliz cumpleaños, {names}!",
+    "body": "Todo el equipo {team} te desea un gran día."
+  }
+}

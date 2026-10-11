@@ -1,0 +1,26 @@
+{
+  "noItems": "O anfitrião adiciona os itens a estimar.",
+  "progress": "{done} de {total} itens estimados",
+  "voted": "{count, plural, =0 {Ninguém escolheu uma carta ainda} one {# carta escolhida} other {# cartas escolhidas}}",
+  "average": "Média: {value}",
+  "final": "Estimativa: {value}",
+  "pickTitle": "Sua estimativa para “{title}”",
+  "deck": "Cartas",
+  "hidden": "Sua carta fica escondida até o anfitrião revelar todas.",
+  "votedOf": "{count} de {total} escolheram uma carta",
+  "reveal": "Revelar as cartas",
+  "agree": "Estimativa acordada:",
+  "revote": "Nova rodada",
+  "reopen": "Estimar “{title}” de novo",
+  "remove": "Remover “{title}”",
+  "newItem": "Item a estimar",
+  "newItemPlaceholder": "Uma história, um ticket, uma tarefa…",
+  "add": "Adicionar",
+  "settingsTitle": "Planning poker",
+  "deckSaved": "Baralho salvo",
+  "decks": {
+    "fibonacci": "Fibonacci (0, 1, 2, 3, 5, 8, 13, 21)",
+    "tshirt": "Tamanhos de camiseta (XS a XL)",
+    "powers": "Potências de dois (1 a 32)"
+  }
+}

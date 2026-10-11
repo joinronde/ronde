@@ -1,0 +1,12 @@
+{
+  "skipToContent": "Vai al contenuto",
+  "navigation": "Viste",
+  "screenHint": "Si apre in una nuova scheda, da condividere nella videochiamata",
+  "videoHint": "Apre la videochiamata in una nuova scheda",
+  "joinVideo": "Partecipa alla videochiamata",
+  "reconnecting": "Riconnessione…",
+  "host": "conduttore",
+  "cohost": "coconduttore",
+  "backToWorkspace": "Torna a {workspace}",
+  "breadcrumb": "Posizione"
+}

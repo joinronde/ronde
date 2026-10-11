@@ -1,0 +1,19 @@
+{
+  "title": "Absences",
+  "add": "Ajouter une absence",
+  "intro": "Congés, arrêt, formation : vous êtes noté absent des séances de ces jours-là, et ne recevez pas de rappels.",
+  "from": "Premier jour",
+  "to": "Dernier jour",
+  "delegate": "Qui anime vos réunions pendant ce temps",
+  "noDelegate": "Personne : les co-animateurs prennent le relais",
+  "delegateHint": "Pour les réunions que vous animez. La personne reçoit une notification.",
+  "note": "Note",
+  "notePlaceholder": "Ex. congés, retour lundi",
+  "save": "Enregistrer l'absence",
+  "cancel": "Annuler",
+  "period": "du {from} au {to}",
+  "standsIn": "Remplacé par {name}",
+  "remove": "Supprimer l'absence {period}",
+  "empty": "Aucune absence prévue.",
+  "emptyMine": "Aucune absence prévue. Vous partez ? Ajoutez-la ici : vos réunions le sauront."
+}

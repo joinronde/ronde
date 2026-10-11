@@ -1,0 +1,142 @@
+{
+  "title": "Moduli",
+  "intro": "Attiva ciò che usa questa riunione. Un modulo disattivato scompare dalla regia, dallo schermo condiviso e dallo schermo di ognuno; le sue impostazioni restano salvate.",
+  "on": "Attivo",
+  "off": "Disattivo",
+  "toggle": "Usa {name} in questa riunione",
+  "enabled": "{name} attivato",
+  "disabled": "{name} disattivato",
+  "categories": {
+    "facilitation": "Facilitazione",
+    "organisation": "Organizzazione",
+    "formats": "Formati",
+    "integrations": "Integrazioni",
+    "notifications": "Notifiche",
+    "reporting": "Report"
+  },
+  "editions": {
+    "team": "Team",
+    "enterprise": "Enterprise"
+  },
+  "paidTitle": "Con un piano a pagamento",
+  "paidIntro": "Disponibile con Ronde Team ed Enterprise, nel cloud o in self-hosting con una chiave di licenza.",
+  "learnMore": "Vedi i piani",
+  "items": {
+    "icebreaker": {
+      "name": "Rompighiaccio",
+      "description": "Una domanda pescata da una raccolta per scaldarsi; ognuno risponde in una riga, mostrata durante l'introduzione."
+    },
+    "mood": {
+      "name": "Umore del team",
+      "description": "Ognuno condivide il proprio umore (da ⛈️ a ☀️), mostrato in forma anonima e seguito nelle statistiche."
+    },
+    "rating": {
+      "name": "Utilità della riunione",
+      "description": "Alla chiusura, ognuno valuta da 1 a 5 quanto è stata utile la riunione, in forma anonima; la media è seguita nelle statistiche."
+    },
+    "reactions": {
+      "name": "Reazioni e segnali",
+      "description": "Reazioni emoji e segnali (troppo lungo, più forte…) che attraversano tutti gli schermi."
+    },
+    "hands": {
+      "name": "Mani alzate e domande",
+      "description": "Alza la mano o fai una domanda durante un turno: dopo quel turno arriva una fase di domande."
+    },
+    "kudos": {
+      "name": "Ringraziamenti",
+      "description": "Ringrazia un collega durante la riunione; i ringraziamenti appaiono su tutti gli schermi e nel verbale."
+    },
+    "spotlight": {
+      "name": "In evidenza",
+      "description": "Mostra in grande sullo schermo condiviso un punto di una scheda, una domanda o un messaggio libero."
+    },
+    "birthdays": {
+      "name": "Compleanni",
+      "description": "Lo schermo d'attesa festeggia i compleanni della settimana (solo giorno e mese)."
+    },
+    "sounds": {
+      "name": "Suoni",
+      "description": "Musica d'attesa, segnali sonori e una soundboard, sullo schermo di ognuno o sullo schermo condiviso."
+    },
+    "ambience": {
+      "name": "Atmosfera stagionale",
+      "description": "Decorazioni per feste e stagioni sullo schermo d'attesa."
+    },
+    "gitlab": {
+      "name": "GitLab",
+      "description": "Le issue e merge request recenti di ogni persona, da importare nella sua scheda."
+    },
+    "workflows": {
+      "name": "Costruttore di workflow",
+      "description": "I tuoi trigger, condizioni e messaggi verso Slack, Teams, Matrix o email."
+    },
+    "aiAssistant": {
+      "name": "Assistente IA",
+      "description": "Sintesi della riunione ed estrazione delle azioni; con la tua chiave in self-hosting."
+    },
+    "writeBack": {
+      "name": "Creazione di ticket",
+      "description": "Trasforma le azioni di follow-up in ticket Jira, Linear, GitLab o GitHub e mantienili sincronizzati."
+    },
+    "calendarSync": {
+      "name": "Sincronizzazione calendario",
+      "description": "Sincronizzazione bidirezionale con Google, Microsoft 365 e CalDAV, con rilevamento dei conflitti."
+    },
+    "analytics": {
+      "name": "Analisi dello spazio di lavoro",
+      "description": "Dashboard su tutte le riunioni: partecipazione, coinvolgimento, blocchi ricorrenti."
+    },
+    "scheduledReports": {
+      "name": "Report programmati",
+      "description": "Un riepilogo delle tue riunioni via email, ogni settimana o ogni mese."
+    },
+    "rotation": {
+      "name": "Ruoli a rotazione",
+      "description": "Chi facilita e chi prende appunti cambia a ogni sessione, seguendo l'ordine del giro di tavolo."
+    },
+    "retro": {
+      "name": "Retrospettiva",
+      "description": "Post-it anonimi in colonne, raggruppati dal conduttore, votati dal team e poi discussi; aggiungila all'ordine del giorno."
+    },
+    "timebox": {
+      "name": "Timebox",
+      "description": "Un argomento a sé nell'ordine del giorno, con la sua durata e le sue note nel verbale."
+    },
+    "poker": {
+      "name": "Planning poker",
+      "description": "Il team stima gli elementi con carte coperte fino alla rivelazione; aggiungilo all'ordine del giorno."
+    },
+    "polls": {
+      "name": "Sondaggi",
+      "description": "Fai una domanda al team durante la sessione: scelte, scala o nuvola di parole, anonimo o no."
+    },
+    "random": {
+      "name": "Strumenti casuali",
+      "description": "Una ruota per scegliere chi parla dopo, un ordine di parola casuale, squadre o testa o croce, su tutti gli schermi insieme."
+    },
+    "parking": {
+      "name": "Parcheggio",
+      "description": "Metti da parte con un clic ciò che esce dal tema; diventa un argomento aperto della sessione successiva."
+    },
+    "decisions": {
+      "name": "Registro delle decisioni",
+      "description": "Ogni riga «Decisione:» delle note, da tutte le sessioni, in un elenco ricercabile aperto a tutto il team."
+    },
+    "github": {
+      "name": "GitHub",
+      "description": "Le issue e pull request recenti di ogni persona, importate nella sua scheda con un clic."
+    },
+    "video": {
+      "name": "Videochiamata",
+      "description": "Entra nella chiamata da ogni pagina: un link a qualsiasi strumento, una stanza Jitsi o il tuo server BigBlueButton."
+    },
+    "async": {
+      "name": "Modalità asincrona",
+      "description": "Nessuna sessione dal vivo: ognuno compila la propria scheda e commenta, poi il riepilogo parte via email all'ora prevista."
+    }
+  },
+  "upgrade": {
+    "comesWith": "{feature} è incluso in Ronde {edition}.",
+    "plans": "Vedi i piani"
+  }
+}

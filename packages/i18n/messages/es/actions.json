@@ -1,0 +1,49 @@
+{
+  "title": "Acciones",
+  "introMine": "Lo que dijiste que harías, en todas las reuniones. Márcalo en cuanto esté hecho.",
+  "introHosted": "El seguimiento de las reuniones que diriges: quién hace qué y qué lleva demasiado tiempo esperando.",
+  "views": "Acciones de quién",
+  "mine": "Mías",
+  "hosted": "Reuniones que dirijo",
+  "filter": "Reunión",
+  "all": "Todas",
+  "count": {
+    "open": "{count, plural, =0 {nada pendiente} one {# pendiente} other {# pendientes}}",
+    "doing": "{count, plural, =0 {ninguna en curso} one {# en curso} other {# en curso}}",
+    "done": "{count, plural, =0 {ninguna hecha últimamente} one {# hecha últimamente} other {# hechas últimamente}}"
+  },
+  "group": {
+    "open": "Pendientes",
+    "doing": "En curso",
+    "done": "Hechas en las últimas dos semanas"
+  },
+  "markDone": "Marcar «{text}» como hecha",
+  "reopen": "Reabrir «{text}»",
+  "markDoneShort": "Marcar como hecha",
+  "reopenShort": "Reabrir",
+  "start": "Empezar",
+  "inProgress": "En curso",
+  "from": "decidida el {date}",
+  "carried": "{count, plural, one {abierta desde hace # sesión} other {abierta desde hace # sesiones}}",
+  "emptyMine": "No tienes nada pendiente.",
+  "emptyHosted": "No hay acciones en las reuniones que diriges.",
+  "emptyHint": "Las acciones decididas durante una sesión aparecen aquí, con la reunión de la que vienen.",
+  "openTicket": "Abrir el ticket",
+  "ticketFor": "Crear un ticket para «{text}»",
+  "ticket": "Crear un ticket",
+  "ticketing": "Creando el ticket…",
+  "ticketWhere": "¿En qué herramienta?",
+  "csv": {
+    "action": "Acción",
+    "owner": "Responsable",
+    "meeting": "Reunión",
+    "status": "Estado",
+    "decided": "Decidida el",
+    "doneOn": "Hecha el",
+    "carried": "Sesiones desde entonces",
+    "ticket": "Ticket",
+    "done": "Hecha",
+    "hint": "Todas las acciones de esta vista, también las hechas hace más de dos semanas",
+    "fileName": "acciones"
+  }
+}

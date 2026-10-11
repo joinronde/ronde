@@ -1,0 +1,18 @@
+{
+  "label": "Festività",
+  "none": "Nessuna",
+  "noneMeeting": "Nessuna: tutte le sessioni si tengono",
+  "inherit": "Come lo spazio: {name}",
+  "inheritNone": "Come lo spazio: nessuna",
+  "region": "Regione",
+  "wholeCountry": "Tutto il paese",
+  "hintMeeting": "Una sessione che cade in una di queste festività viene saltata. Puoi comunque mantenerla o spostarla qui sotto.",
+  "hintWorkspace": "Le riunioni saltano le sessioni che cadono in queste festività; ogni riunione può sceglierne altre nella sua pianificazione.",
+  "source": "Festività dal progetto date-holidays, basate su Wikipedia (CC BY-SA 3.0).",
+  "saved": "Festività aggiornate",
+  "skipped": "Festività · {name}",
+  "kept": "Mantenuta nonostante: {name}",
+  "keep": "Mantenerla comunque",
+  "held": "Sessione mantenuta",
+  "skipAgain": "Saltarla di nuovo"
+}

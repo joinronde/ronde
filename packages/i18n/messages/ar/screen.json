@@ -1,0 +1,17 @@
+{
+  "options": "خيارات العرض",
+  "theme": "سمة العرض",
+  "themes": {
+    "auto": "تلقائي",
+    "light": "فاتح",
+    "dark": "داكن"
+  },
+  "reducedMotion": "تقليل الحركة",
+  "ambience": "أجواء شاشة الانتظار",
+  "previewTheme": "معاينة سمة",
+  "replayIntro": "إعادة تشغيل المقدمة",
+  "fullscreen": "ملء الشاشة",
+  "drivenFromControl": "يُتحكَّم في علامة التبويب هذه من غرفة التحكم.",
+  "yourTurn": "دورك، <span>{name}</span>!",
+  "poweredBy": "بدعم من Ronde"
+}

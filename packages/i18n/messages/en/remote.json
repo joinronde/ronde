@@ -1,0 +1,13 @@
+{
+  "noMeeting": "No session is prepared for this meeting.",
+  "back": "Control room",
+  "now": "Now",
+  "then": "Then: {next}",
+  "last": "Last step",
+  "start": "Start the meeting",
+  "previous": "Previous",
+  "next": "Next",
+  "pause": "Pause",
+  "resume": "Resume",
+  "bonus": "+30 s"
+}

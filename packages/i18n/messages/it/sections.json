@@ -1,0 +1,22 @@
+{
+  "defaults": {
+    "done": "Fatto questa settimana",
+    "next": "Previsto per la prossima settimana",
+    "blockers": "Blocchi da segnalare",
+    "other": "Altro"
+  },
+  "types": {
+    "list": {
+      "label": "Elenco",
+      "hint": "Un elemento per riga, da aggiungere, riordinare e rimuovere"
+    },
+    "checklist": {
+      "label": "Checklist",
+      "hint": "Attività da spuntare quando completate"
+    },
+    "text": {
+      "label": "Testo libero",
+      "hint": "Un paragrafo, su più righe se serve"
+    }
+  }
+}

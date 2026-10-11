@@ -1,0 +1,75 @@
+{
+  "workspaces": {
+    "unlimited": "Unlimited workspaces, meetings and people"
+  },
+  "identity": {
+    "local": "Email and password accounts",
+    "magicLink": "Sign-in links by email",
+    "social": "Sign-in with Google, GitHub or Microsoft",
+    "oidc": "Single sign-on with one OpenID Connect provider",
+    "twoFactor": "Two-factor authentication",
+    "saml": "SAML single sign-on and several identity providers",
+    "ldap": "LDAP and Active Directory sign-in",
+    "scim": "User provisioning with SCIM",
+    "enforcedSso": "Single sign-on required",
+    "domainCapture": "Domain capture"
+  },
+  "permissions": {
+    "builtInRoles": "Built-in roles for workspaces and meetings",
+    "customRoles": "Custom roles and fine-grained permissions"
+  },
+  "meetings": {
+    "unlimited": "Unlimited meetings and sessions",
+    "sectionRoles": "Check-in sections with configurable behaviour",
+    "templates": "Built-in and workspace templates"
+  },
+  "scheduling": {
+    "recurrence": "Flexible recurrence with exceptions",
+    "ics": "Calendar feeds (ICS)",
+    "calendarSync": "Two-way sync with Google, Microsoft 365 and CalDAV calendars"
+  },
+  "modules": {
+    "facilitation": "Every facilitation module",
+    "notifications": "Notifications to email, chat and webhooks",
+    "formats": "Retrospectives, planning poker, async meetings",
+    "workflows": "Workflow builder",
+    "aiAssistant": "AI assistant: summaries and actions",
+    "transcription": "Transcript of the sessions, turn by turn"
+  },
+  "integrations": {
+    "gitlab": "GitLab import",
+    "github": "GitHub import",
+    "video": "Video calls: any link, Jitsi, BigBlueButton",
+    "api": "REST API and outgoing webhooks",
+    "writeBack": "Tickets in Jira, Linear, GitLab and GitHub from actions",
+    "videoLinks": "Zoom, Google Meet and Teams links created automatically",
+    "sms": "SMS and WhatsApp reminders (Twilio)",
+    "slack": "Slack app: check-ins filled in from Slack, minutes in the channel, /ronde",
+    "wikis": "Minutes published to Notion and Confluence",
+    "teams": "Microsoft Teams app: reminders and check-ins in Teams, a channel for notifications",
+    "projectSync": "Imported projects kept in sync: name, status, dates and progress"
+  },
+  "reporting": {
+    "meeting": "Statistics per meeting",
+    "export": "Markdown, PDF and CSV exports",
+    "workspace": "Workspace dashboards across meetings",
+    "scheduled": "Reports sent by email on a schedule",
+    "portfolio": "Portfolio dashboard: health over time, due dates, projects gone quiet, CSV export and the scheduled report"
+  },
+  "branding": {
+    "customLogo": "Your logo on screens, emails and minutes",
+    "whiteLabel": "White label and custom domain"
+  },
+  "compliance": {
+    "auditLog": "Audit log of the last 90 days, with CSV export",
+    "auditStream": "Full audit history, streamed to your SIEM",
+    "retention": "Data retention rules"
+  },
+  "projects": {
+    "portfolio": "Project portfolio: description, theme, health, lead, team, dates and the history of every meeting",
+    "round": "Project round: one turn per project, where its people speak together",
+    "programs": "Programmes: projects grouped into nested programmes",
+    "permissions": "Permissions per project",
+    "import": "Projects imported from GitHub, GitLab, Jira and Linear"
+  }
+}

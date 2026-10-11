@@ -1,0 +1,12 @@
+{
+  "title": "Remerciements",
+  "intro": "Les remerciements donnés pendant les séances, affichés pour que tout le monde les voie.",
+  "given": "{count, plural, =0 {Aucun remerciement ces 30 derniers jours} one {# remerciement ces 30 derniers jours} other {# remerciements ces 30 derniers jours}}",
+  "people": "{count, plural, =0 {} one {pour # personne} other {pour # personnes}}",
+  "birthdays": "Anniversaires du mois",
+  "today": "Aujourd'hui ! 🎉",
+  "wall": "Remerciements donnés",
+  "fromTo": "<strong>{from}</strong> à <strong>{to}</strong>",
+  "empty": "Pas encore de remerciements.",
+  "emptyHint": "Pendant une séance, le module Remerciements permet de remercier un·e collègue : chaque merci arrive sur ce mur."
+}

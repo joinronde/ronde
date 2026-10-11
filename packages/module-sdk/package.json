@@ -1,0 +1,27 @@
+{
+  "name": "@ronde/module-sdk",
+  "version": "0.0.0",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "description": "What a Ronde module is made of: definition, operations, their context, errors and real-time events. Framework-free.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ronde/core": "workspace:*",
+    "@ronde/db": "workspace:*",
+    "@ronde/editions": "workspace:*",
+    "@ronde/i18n": "workspace:*",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@ronde/config": "workspace:*",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.2"
+  }
+}

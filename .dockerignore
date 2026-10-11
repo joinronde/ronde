@@ -1,0 +1,11 @@
+**/node_modules
+**/.next
+**/.turbo
+**/coverage
+**/.env
+**/.env.local
+.git
+.github
+# docs stays: the marketing site publishes its guides
+**/tests
+**/*.tsbuildinfo

@@ -1,0 +1,12 @@
+{
+  "skipToContent": "跳到正文",
+  "navigation": "视图",
+  "screenHint": "在新标签页中打开，用于在视频通话中共享",
+  "videoHint": "在新标签页中打开视频通话",
+  "joinVideo": "加入视频通话",
+  "reconnecting": "正在重新连接…",
+  "host": "主持人",
+  "cohost": "联合主持人",
+  "backToWorkspace": "返回 {workspace}",
+  "breadcrumb": "位置"
+}

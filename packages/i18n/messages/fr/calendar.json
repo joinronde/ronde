@@ -1,0 +1,20 @@
+{
+  "title": "Calendrier",
+  "intro": "Toutes les séances de vos réunions : prévues, en cours et passées.",
+  "months": "Mois",
+  "previous": "Mois précédent",
+  "next": "Mois suivant",
+  "today": "Aujourd'hui",
+  "upcoming": "À venir",
+  "nothing": "Rien de prévu dans les quatre prochaines semaines.",
+  "status": {
+    "planned": "prévue",
+    "live": "En cours",
+    "held": "tenue",
+    "cancelled": "annulée"
+  },
+  "attendance": {
+    "yes": "Présent·e",
+    "no": "Absent·e"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "groups": {
+    "classical": "Классика",
+    "jazz": "Джаз",
+    "electro": "Электроника",
+    "rock": "Рок",
+    "generated": "Синтез"
+  },
+  "music": {
+    "satie": "Сати — Гимнопедия № 1 (фортепиано)",
+    "satie-guitar": "Сати — Гимнопедия № 1 (гитара)",
+    "debussy": "Дебюсси — Лунный свет",
+    "uno-mas": "Uno Mas (Airmen of Note)",
+    "traveling": "Traveling in your mind (Loyalty Freak Music)",
+    "ghost-surf": "Ghost Surf Rock (Loyalty Freak Music)",
+    "secret-agent": "Secret Agent Rock (John Bartmann)",
+    "soft-pads": "Мягкие пэды",
+    "bossa-lounge": "Босса-лаунж"
+  },
+  "cues": {
+    "start": {
+      "label": "Сигнал в начале",
+      "hint": "При нажатии «Начать встречу»"
+    },
+    "birthday": {
+      "label": "Песня ко дню рождения",
+      "hint": "«С днём рождения» после сигнала, в неделю дня рождения"
+    },
+    "speaker": {
+      "label": "Смена выступающего",
+      "hint": "Короткий сигнал, когда слово переходит к следующему"
+    },
+    "timeUp": {
+      "label": "Конец времени выступления",
+      "hint": "Три сигнала, когда таймер доходит до 0:00"
+    },
+    "end": {
+      "label": "Аплодисменты в конце",
+      "hint": "При переходе к завершению"
+    }
+  },
+  "board": {
+    "applause": "Аплодисменты",
+    "drumroll": "Барабанная дробь",
+    "tada": "Та-да",
+    "rimshot": "Ба-дум-тсс",
+    "birthday": "С днём рождения"
+  }
+}

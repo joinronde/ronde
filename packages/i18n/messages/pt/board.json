@@ -1,0 +1,18 @@
+{
+  "editingHint": "Pegue um bloco pela alça <handle></handle> e solte onde quiser, ou use as setas. A disposição é guardada só para você.",
+  "columnCount": "Número de colunas",
+  "columns": "{count, plural, one {# coluna} other {# colunas}}",
+  "defaultLayout": "Disposição padrão",
+  "done": "Pronto",
+  "customiseHint": "Mova os blocos, escolha o número de colunas",
+  "customise": "Personalizar a página",
+  "customiseCustom": "Personalizar a página · disposição própria",
+  "dragHint": "Mover “{title}”: pegue e solte onde quiser",
+  "move": "Mover o bloco “{title}”",
+  "up": "Subir",
+  "down": "Descer",
+  "left": "Coluna da esquerda",
+  "right": "Coluna da direita",
+  "dropAtEnd": "Solte aqui para colocar no fim da coluna",
+  "dropEmpty": "Coluna vazia: solte um bloco aqui"
+}

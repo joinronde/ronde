@@ -1,0 +1,40 @@
+{
+  "title": "वीडियो खाते",
+  "intro": "वर्कस्पेस के एक खाते से Ronde को हर मीटिंग के लिए स्थायी Zoom, Google Meet या Teams रूम बनाने दें। किसी को साइन इन नहीं करना पड़ता।",
+  "empty": "अभी कोई वीडियो खाता नहीं।",
+  "add": "वीडियो खाता जोड़ें",
+  "kind": "प्रदाता",
+  "name": "नाम",
+  "edit": "संपादित करें",
+  "tokenKept": "एक सीक्रेट सहेजा गया है। बदलने के लिए नया लिखें।",
+  "save": "सहेजें",
+  "cancel": "रद्द करें",
+  "test": "जाँचें",
+  "remove": "हटाएँ",
+  "works": "✓ जुड़ गया।",
+  "removeConfirm": "{name} हटाएँ? पहले से बने रूम चलते रहेंगे।",
+  "kinds": {
+    "zoom": "Zoom",
+    "meet": "Google Meet",
+    "teams": "Microsoft Teams"
+  },
+  "fields": {
+    "accountId": "खाता ID",
+    "clientId": "क्लाइंट ID",
+    "clientEmail": "सर्विस खाते का ईमेल",
+    "subject": "जिस उपयोगकर्ता के रूम हैं",
+    "tenant": "टेनेंट (ID या डोमेन)",
+    "organizer": "मीटिंग के आयोजक"
+  },
+  "secret": {
+    "zoom": "क्लाइंट सीक्रेट",
+    "meet": "सर्विस खाते की निजी कुंजी",
+    "teams": "क्लाइंट सीक्रेट"
+  },
+  "hints": {
+    "zoom": "Zoom App Marketplace में meeting:write:meeting:admin स्कोप वाला “Server-to-Server OAuth” ऐप बनाएँ, फिर उसका खाता ID, क्लाइंट ID और सीक्रेट कॉपी करें।",
+    "meet": "Google Cloud में एक सर्विस खाता बनाएँ, Google Workspace एडमिन कंसोल में उसे meetings.space.created स्कोप के लिए डोमेन-व्यापी डेलिगेशन दें, फिर उसकी JSON कुंजी का private_key चिपकाएँ।",
+    "teams": "Microsoft Entra में OnlineMeetings.ReadWrite.All एप्लिकेशन अनुमति (एडमिन सहमति) वाला एक एप्लिकेशन और आयोजक के लिए एप्लिकेशन एक्सेस नीति रजिस्टर करें।"
+  },
+  "useIt": "फिर किसी मीटिंग की सेटिंग में, सामान्य → वीडियो कॉल: “स्थायी रूम बनाएँ”।"
+}

@@ -1,0 +1,22 @@
+{
+  "defaults": {
+    "done": "Hecho esta semana",
+    "next": "Previsto para la semana que viene",
+    "blockers": "Bloqueos que señalar",
+    "other": "Otros"
+  },
+  "types": {
+    "list": {
+      "label": "Lista",
+      "hint": "Un elemento por línea, para añadir, reordenar y quitar"
+    },
+    "checklist": {
+      "label": "Lista de tareas",
+      "hint": "Tareas que se marcan al terminarlas"
+    },
+    "text": {
+      "label": "Texto libre",
+      "hint": "Un párrafo, en varias líneas si hace falta"
+    }
+  }
+}

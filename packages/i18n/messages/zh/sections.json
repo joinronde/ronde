@@ -1,0 +1,22 @@
+{
+  "defaults": {
+    "done": "本周完成",
+    "next": "下周计划",
+    "blockers": "需要提出的阻碍",
+    "other": "其他"
+  },
+  "types": {
+    "list": {
+      "label": "列表",
+      "hint": "每行一项，可添加、排序和删除"
+    },
+    "checklist": {
+      "label": "清单",
+      "hint": "完成后勾选的任务"
+    },
+    "text": {
+      "label": "自由文本",
+      "hint": "一段文字，必要时可多行"
+    }
+  }
+}

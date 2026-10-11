@@ -1,0 +1,19 @@
+{
+  "title": "Crea il tuo spazio di lavoro",
+  "welcome": "Benvenuto, {name}!",
+  "intro": "Uno spazio di lavoro riunisce il tuo team: persone, riunioni e modelli. Puoi crearne altri in seguito.",
+  "name": "Nome dello spazio di lavoro",
+  "namePlaceholder": "Team di prodotto",
+  "slug": "Indirizzo",
+  "slugHint": "Lettere minuscole, cifre e trattini.",
+  "change": "Modifica",
+  "defaults": "Indirizzo {address} · {language} · {timezone}",
+  "language": "Lingua di email e verbali",
+  "timezone": "Fuso orario",
+  "create": "Crea lo spazio di lavoro",
+  "invitationsTitle": "Hai ricevuto un invito",
+  "join": "Partecipa",
+  "createOwn": "Oppure crea il tuo spazio di lavoro",
+  "yourWorkspaces": "I tuoi spazi di lavoro",
+  "open": "Apri"
+}

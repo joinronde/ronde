@@ -1,0 +1,33 @@
+{
+  "title": "Ordine del giorno",
+  "intro": "Le fasi di ogni sessione, in ordine. La chiusura termina sempre la riunione.",
+  "blocks": {
+    "intro": "Apertura",
+    "round": "Giro di tavolo",
+    "topics": "Argomenti aperti",
+    "retro": "Retrospettiva",
+    "timebox": "Timebox",
+    "poker": "Planning poker",
+    "projects": "Giro per progetto"
+  },
+  "timeboxTitle": "Argomento",
+  "minutes": "Minuti",
+  "up": "Sposta su «{label}»",
+  "down": "Sposta giù «{label}»",
+  "remove": "Rimuovi «{label}»",
+  "add": "Aggiungi un blocco",
+  "pick": "Scegli un blocco…",
+  "newTimebox": "Nuovo argomento",
+  "saved": "Ordine del giorno salvato",
+  "turnOn": "Attiva il modulo in «Moduli» per aggiungere questo blocco.",
+  "locked": "È in corso una sessione: l'ordine del giorno potrà cambiare quando sarà finita.",
+  "noProjects": "scegliete in «Progetti» i progetti seguiti dalla riunione.",
+  "projectOrder": "Ordine dei progetti",
+  "projectOrders": {
+    "manual": "Nell'ordine della riunione",
+    "theme": "Per tema",
+    "health": "Prima i progetti in difficoltà"
+  },
+  "perProject": "min per progetto",
+  "perProjectAuto": "auto"
+}

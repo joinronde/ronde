@@ -1,0 +1,52 @@
+{
+  "title": "Comandos",
+  "placeholder": "Escribe un comando: siguiente, Emma, actas…",
+  "none": "Ningún comando coincide con «{query}».",
+  "foot": "↑ ↓ para elegir, Intro para ejecutar, Esc para cerrar.",
+  "groups": {
+    "meeting": "Reunión",
+    "steps": "Ir a",
+    "panes": "Panel",
+    "people": "Personas",
+    "pages": "Abrir"
+  },
+  "keys": {
+    "space": "Espacio"
+  },
+  "start": "Empezar la reunión",
+  "pause": "Pausar el cronómetro",
+  "resume": "Reanudar el cronómetro",
+  "next": "Etapa siguiente",
+  "previous": "Etapa anterior",
+  "bonus": "Dar 30 segundos más",
+  "resetTimer": "Reiniciar el cronómetro",
+  "shuffle": "Barajar el orden de palabra",
+  "absent": "Marcar a {name} como ausente",
+  "present": "Marcar a {name} como presente",
+  "panes": {
+    "run": "Orden del día",
+    "live": "En directo",
+    "actions": "Acciones",
+    "topics": "Temas",
+    "minutes": "Actas",
+    "polls": "Encuestas",
+    "random": "Herramientas de azar"
+  },
+  "pages": {
+    "screen": "Pantalla compartida",
+    "remote": "Mando en el móvil",
+    "history": "Historial",
+    "stats": "Estadísticas",
+    "settings": "Ajustes"
+  },
+  "help": {
+    "title": "Atajos de teclado",
+    "next": "Etapa siguiente",
+    "previous": "Etapa anterior",
+    "timer": "Iniciar, pausar o reanudar el cronómetro",
+    "palette": "Paleta de comandos",
+    "help": "Estos atajos",
+    "close": "Cerrar un cuadro de diálogo",
+    "ok": "Entendido"
+  }
+}

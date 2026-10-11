@@ -1,0 +1,49 @@
+{
+  "groups": {
+    "classical": "كلاسيكية",
+    "jazz": "جاز",
+    "electro": "إلكترونية",
+    "rock": "روك",
+    "generated": "مولَّدة"
+  },
+  "music": {
+    "satie": "ساتي — جيمنوبيدي رقم 1 (بيانو)",
+    "satie-guitar": "ساتي — جيمنوبيدي رقم 1 (غيتار)",
+    "debussy": "ديبوسي — ضوء القمر",
+    "uno-mas": "Uno Mas (Airmen of Note)",
+    "traveling": "Traveling in your mind (Loyalty Freak Music)",
+    "ghost-surf": "Ghost Surf Rock (Loyalty Freak Music)",
+    "secret-agent": "Secret Agent Rock (John Bartmann)",
+    "soft-pads": "خلفيات ناعمة",
+    "bossa-lounge": "بوسا لاونج"
+  },
+  "cues": {
+    "start": {
+      "label": "رنين عند البدء",
+      "hint": "عند النقر على «بدء الاجتماع»"
+    },
+    "birthday": {
+      "label": "أغنية عيد الميلاد",
+      "hint": "أغنية عيد ميلاد سعيد بعد الرنين، في أسبوع عيد ميلاد"
+    },
+    "speaker": {
+      "label": "تغيير المتحدث",
+      "hint": "رنين قصير عند انتقال الكلمة إلى الشخص التالي"
+    },
+    "timeUp": {
+      "label": "انتهاء وقت الكلام",
+      "hint": "ثلاث صفارات عند وصول المؤقت إلى 0:00"
+    },
+    "end": {
+      "label": "تصفيق في النهاية",
+      "hint": "عند الوصول إلى الختام"
+    }
+  },
+  "board": {
+    "applause": "تصفيق",
+    "drumroll": "قرع الطبول",
+    "tada": "تادا",
+    "rimshot": "با دم تس",
+    "birthday": "عيد ميلاد سعيد"
+  }
+}

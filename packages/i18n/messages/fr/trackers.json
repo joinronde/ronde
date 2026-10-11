@@ -1,0 +1,38 @@
+{
+  "title": "Outils de tickets",
+  "intro": "Transformez une action de suivi en ticket dans Jira, Linear, GitLab ou GitHub. Quand le ticket est fermé, l'action est marquée faite dans Ronde.",
+  "empty": "Aucun outil de tickets pour l'instant.",
+  "add": "Ajouter un outil de tickets",
+  "kind": "Outil",
+  "name": "Nom",
+  "token": "Jeton d'API",
+  "tokenKept": "Un jeton est enregistré. Saisissez-en un nouveau pour le remplacer.",
+  "save": "Enregistrer",
+  "cancel": "Annuler",
+  "test": "Tester",
+  "remove": "Retirer",
+  "works": "✓ Connecté.",
+  "removeConfirm": "Retirer {name} ? Les tickets existants restent, ils ne sont plus suivis.",
+  "kinds": {
+    "jira": "Jira",
+    "linear": "Linear",
+    "gitlab": "GitLab",
+    "github": "GitHub"
+  },
+  "fields": {
+    "site": "Adresse du site",
+    "project": "Clé du projet",
+    "email": "E-mail du compte",
+    "team": "Identifiant de l'équipe",
+    "url": "Adresse de GitLab",
+    "repo": "Dépôt (propriétaire/nom)"
+  },
+  "hints": {
+    "jira": "Un jeton d'API créé sur id.atlassian.com, pour le compte dont l'e-mail est ci-dessus.",
+    "linear": "Une clé d'API personnelle depuis Réglages → API de Linear. L'identifiant de l'équipe est dans ses réglages.",
+    "gitlab": "Un jeton de projet ou personnel avec la portée api. Projet : son chemin (groupe/projet) ou son numéro.",
+    "github": "Un jeton à portée fine avec « Issues : lecture et écriture » sur le dépôt."
+  },
+  "assignee": "Les responsables sont assignés dans GitLab et GitHub quand leur identifiant figure sur leur fiche de l'annuaire.",
+  "edit": "Modifier"
+}

@@ -1,0 +1,19 @@
+{
+  "title": "Prochaines séances",
+  "none": "Aucune séance prévue pour l'instant.",
+  "moved": "Déplacée",
+  "attendanceOf": "Votre présence le {date}",
+  "yes": "Je serai là",
+  "no": "Je serai absent",
+  "noted": "C'est noté : vous serez indiqué absent",
+  "hint": "Absent ? Vous êtes indiqué absent pour cette séance et ne recevez pas de rappel.",
+  "subscribe": "Ajouter à mon agenda",
+  "subscribeAll": "Obtenir mon lien d'agenda",
+  "feedLink": "Lien d'agenda",
+  "copy": "Copier",
+  "copied": "Copié",
+  "feedHint": "Collez ce lien privé dans votre application d'agenda (abonnement par URL) ; il suit chaque changement. Créer un nouveau lien désactive celui-ci.",
+  "openInApp": "Ouvrir dans mon application d'agenda",
+  "facilitator": "{name} anime",
+  "noteTaker": "{name} prend les notes"
+}

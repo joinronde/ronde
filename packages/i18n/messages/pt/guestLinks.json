@@ -1,0 +1,18 @@
+{
+  "title": "Links de convidado",
+  "intro": "Pessoas sem conta acompanham a tela compartilhada ao vivo, só para leitura, com um link secreto que expira: um cliente, um conselho, um parceiro. Elas veem o que a tela da sala mostra.",
+  "label": "Para quem é",
+  "labelPlaceholder": "Ex.: Membros do conselho",
+  "duration": "Válido por",
+  "days": "{count, plural, one {# dia} other {# dias}}",
+  "create": "Criar um link",
+  "once": "Copie este link agora e compartilhe: ele não será mostrado de novo.",
+  "link": "Link de convidado",
+  "copy": "Copiar",
+  "copied": "Link copiado",
+  "until": "Válido até {date}",
+  "expiredOn": "Expirou em {date}",
+  "revoke": "Revogar",
+  "remove": "Remover",
+  "revoked": "Link revogado"
+}

@@ -1,0 +1,10 @@
+{
+  "actionFailed": "A ação não foi concluída. Tente de novo.",
+  "serverUnreachable": "Servidor inacessível. Verifique sua conexão.",
+  "sessionExpired": "Sua sessão expirou. Entre de novo: o que você digitou continua na página.",
+  "reconnect": "Entrar de novo",
+  "kudoFrom": "{from} agradece a {to}",
+  "quoted": "“{text}”",
+  "language": "Idioma",
+  "newTab": "(abre em uma nova aba)"
+}

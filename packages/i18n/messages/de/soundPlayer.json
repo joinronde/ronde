@@ -1,0 +1,18 @@
+{
+  "enable": "Ton einschalten",
+  "monitorHint": "In der Regie hören, was die Teilnehmenden hören",
+  "muteHint": "Meeting-Sounds auf diesem Bildschirm ausschalten",
+  "autoHint": "Die Sounds schalten sich eine Viertelstunde vor dem Meeting von selbst ein (Wartemusik, Signaltöne…)",
+  "listenHint": "Die Meeting-Sounds hören: Wartemusik, Signaltöne, Applaus…",
+  "monitorOn": "Mithören in der Regie",
+  "monitorOff": "Mithören aus",
+  "soundsOn": "Sounds",
+  "soundsOff": "Sounds aus",
+  "monitorVolume": "Lautstärke zum Mithören in der Regie",
+  "volume": "Lautstärke der Sounds auf diesem Bildschirm",
+  "musicMuteHint": "Wartemusik in der Regie ausschalten (die Teilnehmenden hören sie weiter)",
+  "musicListenHint": "Auch die Wartemusik in der Regie hören",
+  "musicOn": "Musik",
+  "musicOff": "Musik aus",
+  "allow": "Ton erlauben"
+}

@@ -1,0 +1,18 @@
+// Meeting templates saved by a workspace (the built-in ones ship with the app)
+
+model Template {
+  id          String    @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  name        String
+  description String    @default("")
+  icon        String    @default("📋")
+  /// Sections, format, modules and schedule pattern ({ "v": 1, … }); never people, history or secrets
+  data        Json
+  createdById String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([id, workspaceId])
+  @@index([workspaceId])
+}

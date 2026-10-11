@@ -1,0 +1,694 @@
+// Meetings of a workspace: the recurring meeting (Meeting), its people and roles (MeetingParticipant), its
+// check-in sections (Section) and its occurrences (Session). Everything a session produces hangs off the
+// session; topics, actions and check-ins span sessions and hang off the meeting.
+// Required links reference their parent through [id, workspaceId]: no row can point into another workspace.
+
+enum MeetingRole {
+  host
+  cohost
+  participant
+  observer
+}
+
+enum SessionStatus {
+  /// The session being prepared or run (one per meeting, enforced by a partial unique index)
+  current
+  archived
+}
+
+/// What a check-in section is for; drives the screen, the reminder, the minutes and the stats
+enum SectionRole {
+  /// What was done (reviews the previous plan)
+  achievement
+  /// What is planned (shown again at the next session)
+  plan
+  /// What blocks (highlighted, can become a follow-up action)
+  blocker
+  /// Anything else
+  note
+  /// Free section with no special behaviour
+  custom
+}
+
+enum SectionInput {
+  list
+  checklist
+  text
+}
+
+enum Frequency {
+  daily
+  weekly
+  monthly
+}
+
+enum ExceptionKind {
+  cancel
+  move
+  /// Held although a public holiday would skip it
+  keep
+}
+
+enum AttendanceStatus {
+  yes
+  no
+}
+
+enum NotifyEvent {
+  session_soon
+  session_started
+  minutes_published
+  checkin_reminder
+  action_overdue
+  birthday
+}
+
+enum ActionStatus {
+  open
+  doing
+  done
+}
+
+enum InteractionType {
+  hand
+  question
+}
+
+/// A recurring meeting and its settings
+model Meeting {
+  id                  String               @id @default(uuid(7))
+  workspaceId         String
+  workspace           Workspace            @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  name                String
+  description         String               @default("")
+  /// Emoji shown next to its name in the menus (empty: its initial); an uploaded image (MeetingImage) comes first
+  icon                String               @default("")
+  /// Language of emails, messages and minutes; null: the workspace language
+  locale              String?
+  /// IANA time zone of the schedule; null: the workspace time zone
+  timezone            String?
+  /// Public holidays that skip its sessions: a country ("FR") or a region ("DE-BY"), "none" for none; null: the
+  /// workspace's choice
+  holidays            String?
+  /// Name shown for the person running the meeting; empty: the translated default ("Host")
+  hostLabel           String               @default("")
+  videoUrl            String               @default("")
+  /// Calendar account that writes the sessions into the participants' calendars (Team); null: none
+  calendarAccountId   String?
+  /// Wiki where its minutes are published at each archive (Team); null: none
+  wikiId              String?
+  /// The host may record the sessions to transcribe them (Team; off by default, everyone sees it)
+  transcription       Boolean              @default(false)
+  announcements       String[]             @default([])
+  /// Look of the meeting: { "accent": "ocean" }
+  appearance          Json                 @default("{}")
+  /// Blocks of the agenda, in order: [{ "id": "intro", "type": "intro" }, { "id": "r1", "type": "retro" }…]; null: the default one
+  agenda              Json?
+  /// Speaking time per person, in seconds
+  speakSec            Int                  @default(120)
+  /// The timer starts by itself at each step
+  autoStart           Boolean              @default(true)
+  /// Target duration, in minutes
+  targetMin           Int                  @default(25)
+  /// Email reminder to people whose check-in is not ready
+  reminderEnabled     Boolean              @default(false)
+  /// "dayBefore" (working day before the meeting) or "sameDay"
+  reminderWhen        String               @default("dayBefore")
+  reminderTime        String               @default("15:00")
+  reminderLastSentFor String?
+  /// User who created the meeting
+  createdById         String?
+  archivedAt          DateTime?
+  /// A sample meeting to look around (a fictitious team, a month of history): deleted for good in one click,
+  /// never counted (seats, first steps) and never sending anything
+  sample              Boolean              @default(false)
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  participants        MeetingParticipant[]
+  image               MeetingImage?
+  sections            Section[]
+  sessions            Session[]
+  checkIns            CheckIn[]
+  checkInItems        CheckInItem[]
+  topics              Topic[]
+  actions             Action[]
+  modules             ModuleInstallation[]
+  rules               ScheduleRule[]
+  exceptions          ScheduleException[]
+  attendances         Attendance[]
+  notificationRules   NotificationRule[]
+  calendarEvents      CalendarEvent[]
+  guestLinks          GuestLink[]
+  projects            MeetingProject[]
+  projectUpdates      ProjectUpdate[]
+
+  @@unique([id, workspaceId])
+  @@index([workspaceId])
+}
+
+/// A person of the directory taking part in a meeting, with their role in it
+model MeetingParticipant {
+  id          String      @id @default(uuid(7))
+  workspaceId String
+  meetingId   String
+  meeting     Meeting     @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  personId    String
+  person      Person      @relation(fields: [personId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  role        MeetingRole @default(participant)
+  /// Order in the round table
+  position    Int         @default(0)
+  /// Speaks in the round table (a host may only run the meeting)
+  active      Boolean     @default(true)
+  /// Receives the check-in reminder
+  remind      Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+
+  @@unique([meetingId, personId])
+  @@index([workspaceId])
+  @@index([personId])
+}
+
+/// A check-in section; its role sets its behaviour
+model Section {
+  id          String       @id @default(uuid(7))
+  workspaceId String
+  meetingId   String
+  meeting     Meeting      @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  /// Stable key of the section in check-ins and records ("done", "next"… or a short random key)
+  key         String
+  label       String
+  role        SectionRole  @default(custom)
+  input       SectionInput @default(list)
+  position    Int          @default(0)
+  /// Advanced behaviour flags, on top of the role defaults
+  behavior    Json         @default("{}")
+
+  @@unique([meetingId, key])
+  @@index([workspaceId])
+}
+
+/// An occurrence of a meeting: prepared, run, then archived with its record and minutes
+model Session {
+  id               String              @id @default(uuid(7))
+  workspaceId      String
+  meetingId        String
+  meeting          Meeting             @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  /// Local date of the session, YYYY-MM-DD (the host can move it)
+  date             String
+  /// Occurrence of the schedule it comes from: "<ruleId>:<originalDate>" (null: set by hand)
+  occurrenceKey    String?
+  /// Planned local time "HH:MM", start instant and duration
+  time             String              @default("10:00")
+  startsAt         DateTime?
+  durationMin      Int                 @default(30)
+  /// Rotating roles of this session: { "facilitator": personId, "noteTaker": personId }
+  assignments      Json                @default("{}")
+  status           SessionStatus       @default(current)
+  stepKey          String              @default("intro")
+  /// Speaking order: person ids
+  order            String[]            @default([])
+  /// Order of the project round, when the host changed it: project ids (empty: the order of the agenda block)
+  projectOrder     String[]            @default([])
+  /// Projects the host presents this session although nothing is written about them: project ids
+  projectsAdded    String[]            @default([])
+  absent           String[]            @default([])
+  /// Time spent per step, in ms: { "intro": 180000, "<personId>": 125000, ... }
+  spent            Json                @default("{}")
+  /// Extra time granted per step, in ms
+  bonus            Json                @default("{}")
+  timerRunning     Boolean             @default(false)
+  timerStartedAt   DateTime?
+  timerBaseMs      Int                 @default(0)
+  startedAt        DateTime?
+  endedAt          DateTime?
+  /// Full snapshot of the session when it was archived (versioned: { "v": 1, … })
+  record           Json?
+  /// Summary written by the host on top of the generated minutes (Markdown)
+  summary          String?
+  archivedAt       DateTime?
+  icebreaker       String?
+  /// Item highlighted on the shared screen: { label, text }
+  spotlight        Json?
+  /// Last random draw shown on the screens (wheel, order, teams, coin), with its seed: { kind, seed, entries, pick… }
+  draw             Json?
+  /// Recording for the transcript: since when, by whom (null: not recording)
+  recordingSince   DateTime?
+  recordingBy      String?
+  /// People whose turns are left out of the transcript
+  transcriptOptOut String[]            @default([])
+  /// Incremented by every change, for clients and optimistic checks
+  rev              Int                 @default(0)
+  createdAt        DateTime            @default(now())
+  notes            Note[]
+  interactions     Interaction[]
+  reactions        Reaction[]
+  answers          IcebreakerAnswer[]
+  kudos            Kudo[]
+  retroCards       RetroCard[]
+  retroGroups      RetroGroup[]
+  pokerItems       PokerItem[]
+  polls            Poll[]
+  /// Poll shown on the shared screen
+  shownPollId      String?
+  moods            Mood[]
+  ratings          Rating[]
+  comments         CheckInComment[]
+  /// Check-in items presented at this session
+  items            CheckInItem[]
+  /// Project sheets presented at this session
+  projectUpdates   ProjectUpdate[]
+  audioChunks      AudioChunk[]
+  transcript       TranscriptSegment[]
+  wikiPages        WikiPage[]
+
+  @@unique([id, workspaceId])
+  @@unique([meetingId, date])
+  @@index([workspaceId])
+  @@index([meetingId, status])
+}
+
+/// A person's check-in for the coming session of a meeting
+model CheckIn {
+  workspaceId String
+  meetingId   String
+  meeting     Meeting  @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  personId    String
+  person      Person   @relation(fields: [personId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  updatedAt   DateTime @updatedAt
+
+  @@id([meetingId, personId])
+  @@index([workspaceId])
+}
+
+/// One item of a check-in. It belongs to the person's current check-in until it is presented, then to that session.
+model CheckInItem {
+  id           String                   @id @default(uuid(7))
+  workspaceId  String
+  meetingId    String
+  meeting      Meeting                  @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  personId     String
+  person       Person                   @relation(fields: [personId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  /// Null while in the current check-in; the archived session it was presented at afterwards
+  sessionId    String?
+  session      Session?                 @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  /// Project the item is about (written in the project's tab of the check-in); null: the person's own
+  projectId    String?
+  project      Project?                 @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  sectionKey   String
+  /// Role of the section when the item was saved, then presented: the stats read it
+  role         SectionRole
+  position     Int                      @default(0)
+  /// Markdown; a checklist item starts with "[ ] " or "[x] "
+  text         String
+  /// Planned item of an earlier session this item reports on (planned → done)
+  sourceItemId String?
+  source       CheckInItem?             @relation("ItemSource", fields: [sourceItemId], references: [id], onDelete: SetNull)
+  outcomes     CheckInItem[]            @relation("ItemSource")
+  comments     CheckInComment[]
+  /// People who took part in it besides its author (a feature of a project built together)
+  contributors CheckInItemContributor[]
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @updatedAt
+
+  @@unique([id, workspaceId])
+  @@index([meetingId, personId, sessionId])
+  @@index([sessionId])
+  @@index([projectId])
+  @@index([workspaceId])
+}
+
+/// Host notes, per step of a session
+model Note {
+  workspaceId String
+  sessionId   String
+  session     Session  @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  key         String
+  text        String   @default("")
+  updatedAt   DateTime @updatedAt
+
+  @@id([sessionId, key])
+  @@index([workspaceId])
+}
+
+/// Raised hand or question during a session
+model Interaction {
+  id          String          @id @default(uuid(7))
+  workspaceId String
+  sessionId   String
+  session     Session         @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  type        InteractionType
+  /// Person id, or "host"
+  byId        String
+  targetId    String?
+  text        String          @default("")
+  stepKey     String
+  resolved    Boolean         @default(false)
+  createdAt   DateTime        @default(now())
+
+  @@index([sessionId])
+  @@index([workspaceId])
+}
+
+model Reaction {
+  id          String   @id @default(uuid(7))
+  workspaceId String
+  sessionId   String
+  session     Session  @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  emoji       String
+  byId        String?
+  stepKey     String
+  createdAt   DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([workspaceId])
+}
+
+/// Icebreaker answer
+model IcebreakerAnswer {
+  workspaceId String
+  sessionId   String
+  session     Session  @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  /// Person id, or "host"
+  byId        String
+  text        String
+  createdAt   DateTime @default(now())
+
+  @@id([sessionId, byId])
+  @@index([workspaceId])
+}
+
+/// Thanks sent during a session
+model Kudo {
+  id          String   @id @default(uuid(7))
+  workspaceId String
+  sessionId   String
+  session     Session  @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  fromId      String
+  toId        String
+  text        String
+  createdAt   DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([workspaceId])
+}
+
+/// How useful the session was, from 1 (a waste of time) to 5 (excellent), given at its end, anonymously
+model Rating {
+  workspaceId String
+  sessionId   String
+  session     Session  @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  personId    String
+  value       Int
+  updatedAt   DateTime @updatedAt
+
+  @@id([sessionId, personId])
+  @@index([workspaceId])
+}
+
+/// Mood from 1 (stormy) to 5 (sunny), shown anonymously
+model Mood {
+  workspaceId String
+  sessionId   String
+  session     Session  @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  personId    String
+  value       Int
+  updatedAt   DateTime @updatedAt
+
+  @@id([sessionId, personId])
+  @@index([workspaceId])
+}
+
+/// 👍 (empty text) or comment on an item of a teammate's check-in
+/// A person joining an item someone else wrote: their face shows on it too. It follows the item (kept while its
+/// text stays, moved to the session with it when archived).
+model CheckInItemContributor {
+  workspaceId String
+  itemId      String
+  item        CheckInItem @relation(fields: [itemId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  personId    String
+  person      Person      @relation(fields: [personId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  createdAt   DateTime    @default(now())
+
+  @@id([itemId, personId])
+  @@index([workspaceId])
+  @@index([personId])
+}
+
+model CheckInComment {
+  id          String      @id @default(uuid(7))
+  workspaceId String
+  sessionId   String
+  session     Session     @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  /// Person whose check-in is commented on
+  ownerId     String
+  itemId      String
+  item        CheckInItem @relation(fields: [itemId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  /// Person id, or "host"
+  byId        String
+  text        String      @default("")
+  createdAt   DateTime    @default(now())
+
+  @@index([sessionId, ownerId])
+  @@index([workspaceId])
+}
+
+/// Topic proposed for the open-topics part of the next session
+model Topic {
+  id          String      @id @default(uuid(7))
+  workspaceId String
+  meetingId   String
+  meeting     Meeting     @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  text        String
+  byId        String?
+  done        Boolean     @default(false)
+  /// Set aside in the parking lot during a session: it becomes an open topic of the next session
+  parked      Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  votes       TopicVote[]
+
+  @@unique([id, workspaceId])
+  @@index([meetingId])
+  @@index([workspaceId])
+}
+
+/// Vote on an open topic (3 votes per person and meeting)
+model TopicVote {
+  workspaceId String
+  topicId     String
+  topic       Topic  @relation(fields: [topicId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  personId    String
+  person      Person @relation(fields: [personId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@id([topicId, personId])
+  @@index([workspaceId])
+}
+
+/// Follow-up action: comes back at every session until it is resolved
+model Action {
+  id          String       @id @default(uuid(7))
+  workspaceId String
+  meetingId   String
+  meeting     Meeting      @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  text        String
+  ownerId     String
+  owner       Person       @relation(fields: [ownerId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  status      ActionStatus @default(open)
+  /// Date of the session it came from, and the item it came from
+  originDate  String?
+  originText  String?
+  /// Ticket created from it in an issue tracker (Team): { trackerId, key, url, closed }
+  externalRef Json?
+  /// Project it moves forward (taken from the item it came from)
+  projectId   String?
+  project     Project?     @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  createdAt   DateTime     @default(now())
+  doneAt      DateTime?
+
+  @@index([meetingId])
+  @@index([projectId])
+  @@index([workspaceId])
+}
+
+/// A module turned on or off for a meeting, with its configuration
+model ModuleInstallation {
+  workspaceId String
+  meetingId   String
+  meeting     Meeting  @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  /// Module id: "icebreaker", "kudos"…
+  moduleId    String
+  enabled     Boolean  @default(true)
+  /// Configuration, validated by the module (its defaults fill what is missing)
+  config      Json     @default("{}")
+  /// Secret of the module (token…), encrypted with SECRET_KEY; empty when none
+  secret      String   @default("")
+  updatedAt   DateTime @updatedAt
+
+  @@id([meetingId, moduleId])
+  @@index([workspaceId])
+}
+
+/// A recurrence rule of a meeting (a meeting can have several, each with its own time)
+model ScheduleRule {
+  id          String              @id @default(uuid(7))
+  workspaceId String
+  meetingId   String
+  meeting     Meeting             @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  freq        Frequency           @default(weekly)
+  /// Every N days, weeks or months
+  interval    Int                 @default(1)
+  /// ISO weekdays, 1 (Monday) to 7 (Sunday)
+  byDay       Int[]               @default([])
+  /// Monthly: nth weekday (1 to 4, -1 for the last)
+  setPos      Int?
+  /// Monthly: day of the month
+  monthDay    Int?
+  /// First possible date, YYYY-MM-DD
+  startDate   String
+  until       String?
+  count       Int?
+  /// Local time "HH:MM"
+  time        String
+  durationMin Int                 @default(30)
+  position    Int                 @default(0)
+  createdAt   DateTime            @default(now())
+  exceptions  ScheduleException[]
+
+  @@unique([id, workspaceId])
+  @@index([meetingId])
+  @@index([workspaceId])
+}
+
+/// One occurrence of a rule cancelled or moved, identified by its original date
+model ScheduleException {
+  workspaceId  String
+  meetingId    String
+  meeting      Meeting       @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  ruleId       String
+  rule         ScheduleRule  @relation(fields: [ruleId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  originalDate String
+  kind         ExceptionKind
+  /// Moved occurrence: new date, time and duration (each optional)
+  date         String?
+  time         String?
+  durationMin  Int?
+  createdAt    DateTime      @default(now())
+
+  @@id([ruleId, originalDate])
+  @@index([meetingId])
+  @@index([workspaceId])
+}
+
+/// Whether a person will attend an occurrence (RSVP)
+model Attendance {
+  workspaceId   String
+  meetingId     String
+  meeting       Meeting          @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  /// "<ruleId>:<originalDate>"
+  occurrenceKey String
+  personId      String
+  person        Person           @relation(fields: [personId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  status        AttendanceStatus
+  updatedAt     DateTime         @updatedAt
+
+  @@id([meetingId, occurrenceKey, personId])
+  @@index([workspaceId])
+}
+
+/// When an event of the meeting happens, send a message through a connector of the workspace
+model NotificationRule {
+  id          String      @id @default(uuid(7))
+  workspaceId String
+  meetingId   String
+  meeting     Meeting     @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  connectorId String
+  connector   Connector   @relation(fields: [connectorId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  event       NotifyEvent
+  /// Where to send: { "room": "!abc:example.org" } for Matrix, { "audience": "participants" } for email
+  target      Json        @default("{}")
+  /// Event options: { "minutesBefore": 10 }, { "days": 7 }
+  options     Json        @default("{}")
+  /// Workflows (Team): sent only when every condition holds: [{ field, op, value }]
+  conditions  Json        @default("[]")
+  /// Workflows (Team): the team's own words instead of the default message: { title, body }
+  message     Json?
+  enabled     Boolean     @default(true)
+  position    Int         @default(0)
+  createdAt   DateTime    @default(now())
+  deliveries  Delivery[]
+
+  @@index([meetingId])
+  @@index([workspaceId])
+}
+
+/// A piece of the session's sound waiting to be transcribed; deleted as soon as it is (Team)
+model AudioChunk {
+  id          String   @id @default(uuid(7))
+  workspaceId String
+  sessionId   String
+  session     Session  @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  data        Bytes
+  /// audio/webm, audio/ogg, audio/mp4
+  type        String
+  startAt     DateTime
+  endAt       DateTime
+  /// Steps of the meeting during this piece, to know who spoke: [{ at: ms, key }]
+  steps       Json     @default("[]")
+  /// Attempts at transcribing it, and the last failure
+  attempts    Int      @default(0)
+  error       String?
+  createdAt   DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([workspaceId])
+}
+
+/// A passage of the transcript of a session, with the person whose turn it was
+model TranscriptSegment {
+  id          String   @id @default(uuid(7))
+  workspaceId String
+  sessionId   String
+  session     Session  @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  at          DateTime
+  durationMs  Int      @default(0)
+  text        String
+  /// Step of the meeting at that moment, and its speaker for a turn of the round table
+  stepKey     String?
+  speakerId   String?
+
+  @@index([sessionId, at])
+  @@index([workspaceId])
+}
+
+/// A secret link that lets someone without an account follow a meeting's shared screen, until it expires
+model GuestLink {
+  id          String    @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  meetingId   String
+  meeting     Meeting   @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  /// SHA-256 of the token: the link itself is never stored
+  tokenHash   String    @unique
+  /// Who it is for, shown to the hosts ("Board members", "Client")
+  label       String
+  expiresAt   DateTime
+  revokedAt   DateTime?
+  createdById String?
+  createdAt   DateTime  @default(now())
+
+  @@index([workspaceId])
+  @@index([meetingId])
+}
+
+/// The meeting's own picture (a logo, a team photo), cropped square in the browser, shown in place of its icon
+model MeetingImage {
+  meetingId   String   @id
+  workspaceId String
+  meeting     Meeting  @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  data        Bytes
+  /// image/webp, image/jpeg or image/png
+  type        String
+  updatedAt   DateTime @updatedAt
+
+  @@unique([meetingId, workspaceId])
+  @@index([workspaceId])
+}

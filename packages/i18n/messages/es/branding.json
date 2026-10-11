@@ -1,0 +1,13 @@
+{
+  "title": "Logotipo",
+  "intro": "Tu logotipo sustituye al de Ronde: en la barra lateral, en la pantalla compartida, en los correos y en las actas.",
+  "drop": "Suelta aquí tu logotipo",
+  "formats": "PNG, JPEG o WebP. Un PNG transparente queda mejor.",
+  "current": "Logotipo actual",
+  "upload": "Subir un logotipo",
+  "replace": "Reemplazar",
+  "remove": "Quitar",
+  "where": "Se muestra sobre fondos claros y oscuros: comprueba que se lea bien en ambos.",
+  "failed": "No se pudo guardar el logotipo.",
+  "unreadable": "No se pudo leer esta imagen."
+}

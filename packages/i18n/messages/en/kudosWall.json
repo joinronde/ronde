@@ -1,0 +1,12 @@
+{
+  "title": "Kudos",
+  "intro": "The thanks given during the sessions, pinned for everyone to see.",
+  "given": "{count, plural, =0 {No kudos in the last 30 days} one {# kudos in the last 30 days} other {# kudos in the last 30 days}}",
+  "people": "{count, plural, =0 {} one {to # person} other {to # people}}",
+  "birthdays": "Birthdays this month",
+  "today": "Today! 🎉",
+  "wall": "Kudos given",
+  "fromTo": "<strong>{from}</strong> to <strong>{to}</strong>",
+  "empty": "No kudos yet.",
+  "emptyHint": "During a session, the kudos module lets anyone thank a teammate: every thank-you lands on this wall."
+}

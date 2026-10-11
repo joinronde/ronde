@@ -1,0 +1,12 @@
+{
+  "start": "在会议室屏幕上共享我的屏幕",
+  "startShort": "共享我的屏幕",
+  "stop": "停止共享我的屏幕",
+  "stopShort": "停止共享",
+  "screens": "{count, plural, =0 {尚未连接会议室屏幕} other {# 个会议室屏幕}}",
+  "denied": "浏览器未共享屏幕。",
+  "sharedBy": "由 {name} 共享",
+  "shared": "共享屏幕",
+  "sound": "打开声音",
+  "previewBadge": "在会议室屏幕上 · {count, plural, =0 {等待屏幕连接} other {# 个屏幕}}"
+}

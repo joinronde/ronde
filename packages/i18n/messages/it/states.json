@@ -1,0 +1,13 @@
+{
+  "loading": "Caricamento…",
+  "notFoundTitle": "Pagina non trovata",
+  "notFoundBody": "Questa pagina non esiste o non hai più accesso.",
+  "home": "Torna alla home",
+  "errorTitle": "Qualcosa è andato storto",
+  "errorBody": "Impossibile mostrare questa pagina. Riprova; se continua a non funzionare, ricarica la pagina.",
+  "errorRef": "Riferimento: {ref}",
+  "retry": "Riprova",
+  "suspendedTitle": "Questo spazio di lavoro è sospeso",
+  "suspendedBody": "{workspace} è sospeso per ora: riunioni, schede e cronologia sono conservati, ma nessuno può aprirli. I proprietari sanno perché; scrivi all'amministratore di questo servizio per riaprirlo.",
+  "suspendedBack": "Torna ai miei spazi di lavoro"
+}

@@ -1,0 +1,72 @@
+# Ronde, self-hosted: PostgreSQL, the migrations, the app. Copy .env.example to .env, fill it in, then:
+#   docker compose up -d
+# Options, as profiles:
+#   --profile https    Caddy in front, with a free HTTPS certificate for RONDE_DOMAIN
+#   --profile mail     Mailpit: catches every email (http://localhost:8025), for a trial without SMTP
+#   --profile whisper  A local speech-to-text server for transcripts (no sound leaves your servers)
+name: ronde
+
+x-app: &app
+  environment: &app-env
+    DATABASE_URL: postgres://ronde:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@db:5432/ronde
+    APP_URL: ${RONDE_URL:?set RONDE_URL in .env}
+  env_file: [.env]
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ronde
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ronde
+    volumes: [ronde-data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ronde -d ronde"]
+      interval: 3s
+      timeout: 5s
+      retries: 30
+
+  # Applies the database migrations of the version, then stops; the app starts after it
+  migrate:
+    <<: *app
+    image: ghcr.io/joinronde/ronde-migrate:${RONDE_VERSION:-beta}
+    restart: "no"
+    depends_on:
+      db: { condition: service_healthy }
+
+  web:
+    <<: *app
+    image: ghcr.io/joinronde/ronde:${RONDE_VERSION:-beta}
+    restart: unless-stopped
+    ports: ["${RONDE_PORT:-3000}:3000"]
+    depends_on:
+      db: { condition: service_healthy }
+      migrate: { condition: service_completed_successfully }
+
+  caddy:
+    image: caddy:2-alpine
+    profiles: [https]
+    restart: unless-stopped
+    command: caddy reverse-proxy --from ${RONDE_DOMAIN:-localhost} --to web:3000
+    ports: ["80:80", "443:443", "443:443/udp"]
+    volumes: [caddy-data:/data]
+    depends_on: [web]
+
+  mail:
+    image: axllent/mailpit:latest
+    profiles: [mail]
+    restart: unless-stopped
+    ports: ["127.0.0.1:8025:8025"]
+
+  # OpenAI-compatible speech to text: set TRANSCRIPTION_URL=http://whisper:8000/v1 in .env
+  whisper:
+    image: ${WHISPER_IMAGE:-ghcr.io/speaches-ai/speaches:latest-cpu}
+    profiles: [whisper]
+    restart: unless-stopped
+    volumes: [whisper-models:/home/ubuntu/.cache/huggingface/hub]
+
+volumes:
+  ronde-data:
+  caddy-data:
+  whisper-models:

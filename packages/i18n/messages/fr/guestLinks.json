@@ -1,0 +1,18 @@
+{
+  "title": "Liens invités",
+  "intro": "Des personnes sans compte suivent l'écran partagé en direct, en lecture seule, avec un lien secret qui expire : un client, un conseil d'administration, un partenaire. Elles voient ce que montre l'écran de salle.",
+  "label": "Pour qui",
+  "labelPlaceholder": "Ex. Membres du conseil",
+  "duration": "Valable",
+  "days": "{count, plural, one {# jour} other {# jours}}",
+  "create": "Créer un lien",
+  "once": "Copiez ce lien maintenant et partagez-le : il ne sera plus affiché.",
+  "link": "Lien invité",
+  "copy": "Copier",
+  "copied": "Lien copié",
+  "until": "Valable jusqu'au {date}",
+  "expiredOn": "Expiré le {date}",
+  "revoke": "Révoquer",
+  "remove": "Retirer",
+  "revoked": "Lien révoqué"
+}

@@ -1,0 +1,14 @@
+{
+  "badge": "Ronde {edition}",
+  "also": "Ebenfalls in {edition}",
+  "upgrade": "Zu {edition} wechseln",
+  "education": "Kostenlos für Schulen und Hochschulen",
+  "askAdmin": "Das gehört zu einem kostenpflichtigen Tarif. Eine Admin-Person des Arbeitsbereichs kann es freischalten.",
+  "pitch": {
+    "reporting_workspace": "Sieh, wie es um jedes Meeting des Arbeitsbereichs steht: Engagement, Anwesenheit, umgesetzte Pläne, erledigte Aufgaben, Woche für Woche, mit einem Bericht per E-Mail.",
+    "compliance_auditLog": "Wisse, wer was wann geändert hat: Einstellungen, Personen, Rollen und Meetings, gefiltert, als CSV exportiert oder an dein SIEM gestreamt.",
+    "permissions_customRoles": "Gib genau die Rechte, die Personen brauchen: eigene Rollen zusätzlich zu Mitglied und Gast, für den Arbeitsbereich und jedes Meeting.",
+    "identity_domainCapture": "Die Anmeldung deines Unternehmens für deine Domain: verifizierte Domains, neue Konten, die von selbst beitreten, verpflichtendes Single Sign-on, SAML, LDAP und SCIM.",
+    "reporting_portfolio": "Das ganze Portfolio auf einen Blick: der Stand jedes Projekts Woche für Woche, die Fälligkeiten, die Projekte, über die zuletzt niemand gesprochen hat, ein CSV-Export und die Projekte im Blick im E-Mail-Bericht."
+  }
+}

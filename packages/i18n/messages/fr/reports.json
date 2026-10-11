@@ -1,0 +1,26 @@
+{
+  "subject": "{workspace} · vos réunions, {period}",
+  "period": "du {from} au {to}",
+  "title": "Le bilan de vos réunions",
+  "byMeeting": "Par réunion",
+  "noSession": "Aucune séance tenue sur cette période.",
+  "open": "Voir les analyses dans Ronde",
+  "settings": {
+    "title": "Bilan par e-mail",
+    "intro": "Ces chiffres, envoyés par e-mail au début de chaque semaine ou de chaque mois.",
+    "frequency": "Fréquence",
+    "off": "Pas d'envoi",
+    "weekly": "Chaque lundi (la semaine précédente)",
+    "monthly": "Le 1er du mois (le mois précédent)",
+    "recipients": "Destinataires",
+    "admins": "Les propriétaires et administrateurs de l'espace",
+    "custom": "Ces adresses",
+    "emails": "Adresses, une par ligne",
+    "save": "Enregistrer",
+    "saved": "Enregistré",
+    "test": "M'envoyer un test maintenant",
+    "testSent": "Bilan de test envoyé à {email}"
+  },
+  "openBranded": "Voir les analyses",
+  "projectsToWatch": "Projets à surveiller"
+}

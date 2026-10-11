@@ -1,0 +1,26 @@
+{
+  "subject": "{workspace} · suas reuniões, {period}",
+  "period": "de {from} a {to}",
+  "title": "O relatório das suas reuniões",
+  "byMeeting": "Por reunião",
+  "noSession": "Nenhuma sessão foi realizada neste período.",
+  "open": "Ver as análises no Ronde",
+  "settings": {
+    "title": "Relatório por e-mail",
+    "intro": "Estes números, enviados por e-mail no início de cada semana ou de cada mês.",
+    "frequency": "Frequência",
+    "off": "Não enviado",
+    "weekly": "Toda segunda-feira (a semana anterior)",
+    "monthly": "No dia 1º do mês (o mês anterior)",
+    "recipients": "Destinatários",
+    "admins": "Os proprietários e administradores do espaço de trabalho",
+    "custom": "Estes endereços",
+    "emails": "Endereços, um por linha",
+    "save": "Salvar",
+    "saved": "Salvo",
+    "test": "Enviar um teste para mim agora",
+    "testSent": "Relatório de teste enviado para {email}"
+  },
+  "openBranded": "Ver as análises",
+  "projectsToWatch": "Projetos a acompanhar"
+}

@@ -1,0 +1,26 @@
+{
+  "title": "Roles",
+  "intro": "Los roles propios añaden permisos a organizadores, miembros e invitados. Los permisos de reunión se aplican a todas las reuniones del espacio de trabajo.",
+  "new": "Nuevo rol",
+  "newTitle": "Nuevo rol",
+  "editTitle": "Editar el rol",
+  "name": "Nombre",
+  "description": "Descripción",
+  "groups": {
+    "workspace": "Espacio de trabajo",
+    "meetings": "Todas las reuniones"
+  },
+  "groupHints": {
+    "workspace": "Lo que pueden hacer en todo el espacio de trabajo.",
+    "meetings": "Se concede en todas las reuniones, incluso en las que no participan."
+  },
+  "save": "Guardar el rol",
+  "cancel": "Cancelar",
+  "edit": "Editar",
+  "delete": "Eliminar",
+  "deleteConfirm": "¿Eliminar el rol «{name}»? {count, plural, =0 {Nadie lo tiene.} one {# persona vuelve a tener solo su rol.} other {# personas vuelven a tener solo su rol.}}",
+  "members": "{count, plural, =0 {nadie} one {# persona} other {# personas}}",
+  "empty": "Todavía no hay roles propios.",
+  "examples": "Por ejemplo: «Auditor» (historial y estadísticas de todas las reuniones), «Dinamizador» (dirige cualquier reunión), «Gestor de personas» (directorio e invitaciones).",
+  "readOnly": "La licencia ha caducado: los roles siguen visibles pero ya no otorgan ningún permiso hasta que se renueve."
+}

@@ -1,0 +1,30 @@
+{
+  "kinds": {
+    "wheel": "Wheel",
+    "order": "Speaking order",
+    "teams": "Teams",
+    "coin": "Heads or tails"
+  },
+  "hints": {
+    "wheel": "Picks who speaks next among the people still to speak.",
+    "order": "Shuffles the order of the people still to speak.",
+    "teams": "Splits the people present into teams.",
+    "coin": "For a decision nobody wants to make."
+  },
+  "draw": "Spin",
+  "drawAgain": "Draw again",
+  "teamSize": "People per team",
+  "applyWheel": "{name} speaks next",
+  "applyOrder": "Use this order",
+  "applied": "Applied to the speaking order",
+  "clear": "Hide from the screens",
+  "picked": "{name}!",
+  "heads": "Heads",
+  "tails": "Tails",
+  "team": "Team {n}",
+  "orderTitle": "Speaking order",
+  "drawing": "Drawing…",
+  "everyone": "Everyone sees the same draw: the server picks it, then each screen plays it.",
+  "tool": "Random tool",
+  "close": "Close"
+}

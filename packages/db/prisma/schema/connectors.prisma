@@ -1,0 +1,224 @@
+// Notification connectors of a workspace and the log of what was sent through them
+
+enum ConnectorKind {
+  email
+  matrix
+  slack
+  teams
+  discord
+  mattermost
+  webhook
+  /// Text messages through Twilio (Team)
+  sms
+  /// WhatsApp messages through Twilio (Team)
+  whatsapp
+}
+
+enum DeliveryStatus {
+  pending
+  sent
+  failed
+  /// The conditions of its workflow did not hold: nothing was sent
+  skipped
+}
+
+/// A channel the workspace can notify: a Matrix account, a Slack, Teams, Discord or Mattermost webhook…
+model Connector {
+  id          String             @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace          @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  kind        ConnectorKind
+  name        String
+  /// Settings that are not secret: { "homeserver": "https://matrix.org" }, { "url": "https://…" }
+  config      Json               @default("{}")
+  /// Token, webhook address or signing key, encrypted with SECRET_KEY
+  secret      String             @default("")
+  createdById String?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  rules       NotificationRule[]
+  deliveries  Delivery[]
+
+  @@unique([id, workspaceId])
+  @@index([workspaceId])
+}
+
+/// A message to send (or sent) for an event; its key makes each event go out once per rule
+model Delivery {
+  id          String            @id @default(uuid(7))
+  workspaceId String
+  connectorId String
+  connector   Connector         @relation(fields: [connectorId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  ruleId      String?
+  rule        NotificationRule? @relation(fields: [ruleId], references: [id], onDelete: SetNull)
+  meetingId   String?
+  event       String
+  /// "<ruleId>:<event>:<session or date>": a second send of the same event is ignored
+  key         String            @unique
+  /// Data of the event, kept so retries send the same message
+  payload     Json              @default("{}")
+  status      DeliveryStatus    @default(pending)
+  attempts    Int               @default(0)
+  error       String?
+  createdAt   DateTime          @default(now())
+  sentAt      DateTime?
+
+  @@index([workspaceId, createdAt])
+  @@index([connectorId])
+}
+
+enum TrackerKind {
+  jira
+  linear
+  gitlab
+  github
+}
+
+/// An issue tracker of the workspace where actions become tickets (Team)
+model IssueTracker {
+  id          String      @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace   @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  kind        TrackerKind
+  name        String
+  /// Where tickets go: { site, project } (Jira), { team } (Linear), { url, project } (GitLab), { repo } (GitHub)
+  config      Json        @default("{}")
+  /// API token, encrypted with SECRET_KEY
+  secret      String      @default("")
+  createdAt   DateTime    @default(now())
+  /// Projects imported through it and kept in sync
+  projects    Project[]
+
+  @@index([workspaceId])
+}
+
+enum WikiKind {
+  notion
+  confluence
+}
+
+/// Where meetings publish their minutes (Team): a Notion page, or a Confluence space
+model Wiki {
+  id          String     @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  kind        WikiKind
+  name        String
+  /// Where pages go: { parent } (Notion: the page they are created under), { site, space, parent, email } (Confluence)
+  config      Json       @default("{}")
+  /// API token, encrypted with SECRET_KEY
+  secret      String     @default("")
+  createdAt   DateTime   @default(now())
+  pages       WikiPage[]
+
+  @@unique([id, workspaceId])
+  @@index([workspaceId])
+}
+
+/// The page of a session's minutes in a wiki: created at its first publication, replaced at the next ones
+model WikiPage {
+  id          String   @id @default(uuid(7))
+  workspaceId String
+  wikiId      String
+  wiki        Wiki     @relation(fields: [wikiId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  sessionId   String
+  session     Session  @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  /// The page in the wiki (empty while the first publication has not worked)
+  pageId      String   @default("")
+  url         String   @default("")
+  /// Why the last publication failed; empty when it worked
+  error       String   @default("")
+  publishedAt DateTime @default(now())
+
+  @@unique([sessionId, wikiId])
+  @@index([workspaceId])
+  @@index([wikiId])
+}
+
+enum VideoKind {
+  zoom
+  meet
+  teams
+}
+
+/// A video account of the workspace that creates the rooms of its meetings (Team)
+model VideoAccount {
+  id          String    @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  kind        VideoKind
+  name        String
+  /// { accountId, clientId } (Zoom), { clientEmail, subject } (Meet), { tenant, clientId, organizer } (Teams)
+  config      Json      @default("{}")
+  /// Client secret (Zoom, Teams) or private key (Meet), encrypted with SECRET_KEY
+  secret      String    @default("")
+  createdAt   DateTime  @default(now())
+
+  @@index([workspaceId])
+}
+
+enum CalendarKind {
+  google
+  microsoft
+}
+
+/// A calendar account of the workspace: sessions go into the participants' calendars, their availability comes back (Team)
+model CalendarAccount {
+  id          String          @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  kind        CalendarKind
+  name        String
+  /// { clientEmail, organizer } (Google), { tenant, clientId, organizer } (Microsoft)
+  config      Json            @default("{}")
+  /// Private key (Google) or client secret (Microsoft), encrypted with SECRET_KEY
+  secret      String          @default("")
+  createdAt   DateTime        @default(now())
+  events      CalendarEvent[]
+
+  @@unique([id, workspaceId])
+  @@index([workspaceId])
+}
+
+/// A session written as an event in the organizer's calendar, its attendees invited; kept to update or remove it
+model CalendarEvent {
+  id            String          @id @default(uuid(7))
+  workspaceId   String
+  meetingId     String
+  meeting       Meeting         @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  accountId     String
+  account       CalendarAccount @relation(fields: [accountId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  occurrenceKey String
+  /// Id of the event at the provider
+  eventId       String
+  /// What was sent (times, title, attendees): an event is updated only when it changes
+  hash          String
+  startsAt      DateTime
+  updatedAt     DateTime        @updatedAt
+
+  @@unique([meetingId, occurrenceKey])
+  @@index([workspaceId])
+}
+
+/// Billing of a workspace in the cloud (Stripe): its customer, its subscription, what it pays for
+model Subscription {
+  workspaceId       String    @id
+  workspace         Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  customerId        String    @unique
+  subscriptionId    String?   @unique
+  /// trialing, active, past_due, canceled, incomplete… as Stripe says
+  status            String    @default("incomplete")
+  plan              String    @default("team")
+  /// Paid seats: the active people of the workspace
+  seats             Int       @default(1)
+  currentPeriodEnd  DateTime?
+  cancelAtPeriodEnd Boolean   @default(false)
+  updatedAt         DateTime  @updatedAt
+}
+
+/// A Stripe event already handled: webhooks are sent again, each one counts once
+model StripeEvent {
+  id         String   @id
+  type       String
+  receivedAt DateTime @default(now())
+}

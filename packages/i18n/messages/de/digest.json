@@ -1,0 +1,9 @@
+{
+  "subject": "{team} · die Zusammenfassung vom {date}",
+  "greeting": "Hallo {name},",
+  "intro": "Das hat das Team für {team} am {date} geteilt, ohne Live-Meeting.",
+  "open": "Meeting in Ronde öffnen",
+  "footer": "Du erhältst diese Zusammenfassung, weil du bei {team} auf Ronde mitmachst. Die Moderation kann diese E-Mails in den Meeting-Einstellungen abschalten.",
+  "openBranded": "Meeting öffnen",
+  "footerBranded": "Du erhältst diese Zusammenfassung, weil du bei {team} mitmachst. Die Moderation kann diese E-Mails in den Meeting-Einstellungen abschalten."
+}

@@ -1,0 +1,25 @@
+{
+  "host": "Conduttore",
+  "duration": {
+    "minutes": "{m} min",
+    "hours": "{h} h",
+    "hoursMinutes": "{h} h {m} min"
+  },
+  "noMeeting": {
+    "title": "Nessuna riunione in corso",
+    "notPrepared": "{host} non ha ancora preparato la prossima riunione. Nel frattempo puoi compilare la tua scheda.",
+    "pickDate": "Scegli la data della prossima riunione per preparare l'ordine del giorno.",
+    "dateLabel": "Data della riunione",
+    "prepare": "Prepara la riunione del {date}",
+    "addTeamFirst": "Aggiungi prima il team nelle impostazioni.",
+    "openSettings": "Apri le impostazioni"
+  },
+  "loadError": {
+    "title": "Impossibile caricare i dati",
+    "body": "Il server non ha risposto o ha restituito un errore. I tuoi dati sono al sicuro.",
+    "retry": "Riprova"
+  },
+  "cancel": "Annulla",
+  "delete": "Elimina",
+  "exportCsv": "Esporta in CSV"
+}

@@ -1,0 +1,32 @@
+{
+  "sleepy": {
+    "label": "Zzz",
+    "combo": "الفريق يغفو…",
+    "comboNamed": "{name}، الفريق يغفو…"
+  },
+  "hundred": {
+    "label": "تمامًا",
+    "combo": "موافقة 100%",
+    "comboNamed": "موافقة 100%"
+  },
+  "popcorn": {
+    "label": "فشار",
+    "combo": "الأمور تزداد إثارة، هاتوا الفشار",
+    "comboNamed": "الأمور تزداد إثارة، هاتوا الفشار"
+  },
+  "mindBlown": {
+    "label": "مذهل!",
+    "combo": "الكل مذهول!",
+    "comboNamed": "{name} أذهل الفريق للتو"
+  },
+  "fire": {
+    "label": "رائع!",
+    "combo": "الفريق في قمة حماسه!",
+    "comboNamed": "{name} في قمة حماسه!"
+  },
+  "coffee": {
+    "label": "استراحة قهوة؟",
+    "combo": "الفريق يريد قهوة",
+    "comboNamed": "الفريق يريد قهوة"
+  }
+}

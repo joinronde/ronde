@@ -1,0 +1,49 @@
+{
+  "groups": {
+    "classical": "Classical",
+    "jazz": "Jazz",
+    "electro": "Electronic",
+    "rock": "Rock",
+    "generated": "Generated"
+  },
+  "music": {
+    "satie": "Satie — Gymnopédie No. 1 (piano)",
+    "satie-guitar": "Satie — Gymnopédie No. 1 (guitar)",
+    "debussy": "Debussy — Clair de lune",
+    "uno-mas": "Uno Mas (Airmen of Note)",
+    "traveling": "Traveling in your mind (Loyalty Freak Music)",
+    "ghost-surf": "Ghost Surf Rock (Loyalty Freak Music)",
+    "secret-agent": "Secret Agent Rock (John Bartmann)",
+    "soft-pads": "Soft pads",
+    "bossa-lounge": "Bossa lounge"
+  },
+  "cues": {
+    "start": {
+      "label": "Chime at the start",
+      "hint": "When “Start the meeting” is clicked"
+    },
+    "birthday": {
+      "label": "Birthday song",
+      "hint": "Happy Birthday after the chime, in a birthday week"
+    },
+    "speaker": {
+      "label": "Speaker change",
+      "hint": "A short chime when the floor passes to the next person"
+    },
+    "timeUp": {
+      "label": "End of speaking time",
+      "hint": "Three beeps when the timer reaches 0:00"
+    },
+    "end": {
+      "label": "Applause at the end",
+      "hint": "When reaching the wrap-up"
+    }
+  },
+  "board": {
+    "applause": "Applause",
+    "drumroll": "Drumroll",
+    "tada": "Tada",
+    "rimshot": "Ba dum tss",
+    "birthday": "Happy Birthday"
+  }
+}

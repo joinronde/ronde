@@ -1,0 +1,10 @@
+{
+  "off": "Das Entscheidungsprotokoll ist für dieses Meeting ausgeschaltet.",
+  "loading": "Entscheidungen werden geladen…",
+  "empty": "Noch keine Entscheidung notiert.",
+  "howTo": "Beginne während einer Sitzung eine Notizzeile mit „Entscheidung:“: Sobald die Sitzung archiviert ist, erscheint sie hier.",
+  "searchPlaceholder": "Entscheidungen durchsuchen",
+  "searchLabel": "Entscheidungen durchsuchen",
+  "count": "{count, plural, one {# Entscheidung} other {# Entscheidungen}}",
+  "noMatch": "Keine Entscheidung enthält „{query}“."
+}

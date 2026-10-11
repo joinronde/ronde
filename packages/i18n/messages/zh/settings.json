@@ -1,0 +1,265 @@
+{
+  "hostOnlyTitle": "仅主持人可用的设置（{host}）",
+  "hostOnlyBody": "主持人负责设置会议、人员和板块。如需修改，请联系其中一位，或联系工作空间管理员。",
+  "saved": "设置已保存",
+  "onePerLine": "每行一个",
+  "remove": "移除",
+  "cancel": "取消",
+  "meeting": {
+    "title": "会议",
+    "teamName": "会议名称",
+    "hostLabel": "主持人的显示名称",
+    "hostLabelHint": "一个角色或名字，例如 Scrum Master、引导者、小李。在 Ronde 各处显示：“笔记 · {host}”。",
+    "locale": "会议语言",
+    "localeHint": "提醒邮件、通知和生成的会议纪要所用的语言。",
+    "speakingTime": "发言时间",
+    "perPerson": "每人 {time}",
+    "targetRange": "5 分钟到 8 小时。",
+    "speakRange": "15 秒到 30 分钟。",
+    "unitSec": "秒",
+    "unitMin": "分",
+    "unitH": "小时",
+    "seconds": "秒",
+    "minutes": "分钟",
+    "hours": "小时",
+    "otherDuration": "其他时长…",
+    "target": "目标时长",
+    "timer": "计时器",
+    "autoStart": "每轮自动开始",
+    "announcements": "开场公告",
+    "localeWorkspace": "工作空间语言（{language}）"
+  },
+  "sections": {
+    "title": "进展卡板块",
+    "name": "板块名称",
+    "nameOf": "板块 {n} 的名称",
+    "input": "输入方式",
+    "inputOf": "“{label}”的输入方式",
+    "role": "作用",
+    "roleOf": "“{label}”的作用",
+    "roles": {
+      "achievement": {
+        "label": "已完成",
+        "hint": "完成了什么。会提示勾选上次的计划。"
+      },
+      "plan": {
+        "label": "计划",
+        "hint": "接下来做什么。会在下一场和提醒中再次显示。"
+      },
+      "blocker": {
+        "label": "阻碍",
+        "hint": "什么卡住了。在屏幕上突出显示，可转为后续行动项，计入统计。"
+      },
+      "note": {
+        "label": "其他",
+        "hint": "任何值得分享的其他内容。"
+      },
+      "custom": {
+        "label": "自定义",
+        "hint": "自由板块，没有特殊行为。"
+      }
+    },
+    "taken": "已被使用",
+    "carryPlansSwitch": "该栏目将改为清单。",
+    "carryPlansHint": "每个人会看到自己上次的计划，以复选框形式出现，完成一项勾一项。未勾选的不算完成。",
+    "carryPlans": "带回上次“{plan}”中的内容",
+    "moveUp": "上移“{label}”",
+    "moveDown": "下移“{label}”",
+    "removeOf": "移除“{label}”",
+    "customPlaceholder": "例如：调研、要展示的演示、需要帮助",
+    "add": "添加板块",
+    "hint": "每种作用（已完成、计划、阻碍、其他）最多对应一个板块。修改板块的名称、作用或输入方式时，已填写的内容会保留。"
+  },
+  "reminder": {
+    "title": "进展卡提醒",
+    "when": "时间",
+    "dayBefore": "会议前一个工作日",
+    "sameDay": "会议当天，开会前",
+    "time": "时间",
+    "byEmail": "通过电子邮件发送给每个人",
+    "emailHint": "只有尚未填写进展卡的人会收到提醒。你可以通过团队列表中的“提醒”复选框为某人取消订阅。",
+    "noSmtp": "未配置邮件服务器：在容器中设置 SMTP_URL 以开启邮件提醒。",
+    "teamHint": "在团队聊天室中的集体提醒可在“通知”中设置。"
+  },
+  "warmUp": {
+    "mood": "团队心情",
+    "moodOffer": "邀请每个人分享今天的心情（匿名）",
+    "icebreaker": "破冰",
+    "bank": "题库",
+    "bankHint": "每次会议随机抽取一道题；控制台可以更换。留空则关闭破冰。"
+  },
+  "sources": {
+    "title": "任务来源",
+    "gitlabToken": "GitLab 令牌",
+    "noSecretKey": "服务器未配置令牌加密：请让运维人员设置 SECRET_KEY 密钥。",
+    "tokenHint": "令牌在保存前会被加密，且不会再次显示。GitLab：需要具有 <code>read_api</code> 范围的令牌。",
+    "serverToken": "（在你输入令牌之前使用服务器令牌）",
+    "groups": "GitLab 群组",
+    "projects": "关注的 GitLab 项目",
+    "projectsHint": "只有这些项目的 issue 会提供导入。另请在“人员”区块中填写每个人的 GitLab 用户名。",
+    "save": "保存 GitLab 访问",
+    "turnOn": "此会议未开启任何集成。在“模块”中开启 GitLab 或 GitHub，即可导入每个人的 issue 及合并/拉取请求。",
+    "githubTitle": "GitHub",
+    "githubToken": "GitHub 令牌",
+    "githubTokenHint": "公开仓库可不填。私有仓库：需要对 issue 和拉取请求有读取权限的细粒度令牌。已加密，不会再次显示。",
+    "githubRepos": "关注的仓库",
+    "githubReposHint": "“owner/repository”或整个“owner”，每行一个；留空：所有仓库。另请在“人员”区块中填写每个人的 GitHub 用户名。",
+    "githubSave": "保存 GitHub 访问"
+  },
+  "preview": {
+    "title": "提醒预览",
+    "to": "收件人：{email} · {date} {time}",
+    "disabled": "提醒已关闭",
+    "frameTitle": "发给 {name} 的提醒邮件预览"
+  },
+  "token": {
+    "removed": "保存时将被移除",
+    "saved": "已保存 · 输入新的令牌即可替换",
+    "keep": "保留"
+  },
+  "gitlab": {
+    "unreachable": "GitLab 无响应。",
+    "followed": "{count, plural, other {已关注 # 个项目或群组}}",
+    "noFilter": "无过滤：关注所有项目",
+    "untickAll": "全部取消勾选",
+    "tokenFirst": "输入并保存 GitLab 令牌以显示群组中的项目。",
+    "loading": "正在加载项目……",
+    "saveForGroups": "保存设置以显示新群组中的项目。",
+    "filter": "筛选项目",
+    "filterPlaceholder": "在 {count} 个项目中筛选……",
+    "outsideGroups": "群组之外",
+    "wholeGroup": "整个群组 · {count} 个项目"
+  },
+  "people": {
+    "title": "人员（{count}）",
+    "intro": "个人资料来自工作空间目录。角色决定每个人在此会议中能做什么。",
+    "roles": {
+      "host": "主持人",
+      "cohost": "联合主持人",
+      "participant": "参与者",
+      "observer": "观察者"
+    },
+    "roleHints": {
+      "host": "主持会议并设置会议",
+      "cohost": "主持会议",
+      "participant": "填写进展卡并参与",
+      "observer": "旁观会议，无需进展卡"
+    },
+    "roleOf": "{name} 的角色",
+    "speaks": "参与发言",
+    "speaksHint": "纳入轮流发言",
+    "remind": "提醒",
+    "gitlab": "GitLab 用户名",
+    "remove": "移除",
+    "confirmRemove": "从会议中移除",
+    "removed": "{name} 不再参加",
+    "added": "已将 {name} 加入会议",
+    "updated": "已保存",
+    "addTitle": "添加成员",
+    "pick": "人员",
+    "pickPlaceholder": "从目录中选择",
+    "add": "添加",
+    "nobodyLeft": "目录中的所有人都已参加。",
+    "directory": "管理目录",
+    "categoriesHint": "职位类别、生日和姓名在工作空间目录中编辑。",
+    "github": "GitHub 用户名"
+  },
+  "template": {
+    "title": "复用此形式",
+    "intro": "将板块、形式、模块和日程保存为工作空间模板，用于创建其他会议。人员、历史和令牌留在这里。",
+    "open": "保存为模板",
+    "name": "模板名称",
+    "description": "描述（可选）",
+    "save": "保存模板",
+    "cancel": "取消",
+    "saved": "模板已保存：创建会议时可选用。"
+  },
+  "nav": {
+    "label": "设置类别",
+    "general": "常规",
+    "schedule": "日程",
+    "people": "人员与角色",
+    "sections": "板块",
+    "modules": "模块",
+    "appearance": "外观",
+    "notifications": "通知",
+    "integrations": "集成",
+    "template": "模板",
+    "danger": "危险区域",
+    "agenda": "议程",
+    "projects": "项目"
+  },
+  "status": {
+    "auto": "更改会自动保存。",
+    "saving": "正在保存……",
+    "saved": "已保存",
+    "invalid": "未保存：请检查高亮的字段。",
+    "failed": "未保存：更改被拒绝。",
+    "undo": "撤销"
+  },
+  "appearance": {
+    "accent": "强调色",
+    "accentHint": "用于此会议的按钮、计时器和共享屏幕，适用于浅色和深色主题。",
+    "accents": {
+      "ember": "余烬",
+      "ocean": "海洋",
+      "forest": "森林",
+      "plum": "梅紫",
+      "slate": "石板"
+    },
+    "themeHint": "浅色或深色主题是个人选择：",
+    "themeLink": "在你的账户中选择。"
+  },
+  "danger": {
+    "title": "删除会议",
+    "hint": "会议将从所有列表中消失，其页面对所有人关闭。历史记录随工作空间保留。",
+    "confirm": "输入 <strong>{name}</strong> 以确认",
+    "remove": "删除会议"
+  },
+  "video": {
+    "title": "视频通话",
+    "provider": "视频工具",
+    "providers": {
+      "link": "任意工具的链接（Meet、Zoom、Teams……）",
+      "jitsi": "Jitsi Meet（为此会议创建的房间）",
+      "bbb": "BigBlueButton（你的服务器）"
+    },
+    "link": "视频通话链接",
+    "linkHint": "显示在每个页面顶部和邮件中。",
+    "jitsiUrl": "Jitsi 服务器",
+    "jitsiHint": "留空：meet.jit.si。房间名只抽取一次，难以猜测，且每场都相同。",
+    "bbbUrl": "BigBlueButton 服务器",
+    "bbbSecret": "服务器共享密钥",
+    "bbbHint": "有人加入时 Ronde 会打开房间，并以各自的姓名让每个人进入；主持人以主持者身份加入。密钥会被加密且不再显示。",
+    "current": "大家通过以下方式加入：",
+    "tryIt": "BigBlueButton 房间",
+    "save": "保存视频通话",
+    "createWith": "创建长期房间：",
+    "roomCreated": "房间已创建：链接已保存。",
+    "kinds": {
+      "zoom": "Zoom",
+      "meet": "Google Meet",
+      "teams": "Teams"
+    }
+  },
+  "logoHint": "工作空间徽标会显示在共享屏幕、邮件和会议纪要中。",
+  "logoLink": "在工作空间设置中修改",
+  "icon": {
+    "title": "图标",
+    "hint": "显示在菜单和列表中会议名称旁边：一个表情符号，或会议自己的图片（标志、团队合影）。",
+    "upload": "上传图片",
+    "changeImage": "更换图片",
+    "removeImage": "移除图片",
+    "imageFirst": "图片会代替表情符号显示；移除图片即可再次看到表情符号。",
+    "emoji": "表情符号",
+    "initials": "首字母",
+    "initialsShort": "Aa",
+    "other": "其他表情符号",
+    "otherPlaceholder": "粘贴或输入一个表情符号",
+    "use": "使用",
+    "saved": "图标已保存",
+    "imageSaved": "图片已保存",
+    "imageRemoved": "图片已移除",
+    "notSaved": "图片保存失败。"
+  }
+}

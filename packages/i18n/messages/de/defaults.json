@@ -1,0 +1,16 @@
+{
+  "teamName": "Mein Team",
+  "jobCategories": {
+    "engineering": "Entwicklung",
+    "product": "Produkt",
+    "design": "Design"
+  },
+  "icebreakers": {
+    "win": "Dein kleiner Erfolg der Woche?",
+    "tool": "Ein Tool, ein Tipp oder eine Lektüre, die du kürzlich entdeckt hast?",
+    "smile": "Was hat dich diese Woche bei der Arbeit zum Lächeln gebracht?",
+    "eager": "Eine Aufgabe, auf die du dich freust?",
+    "skill": "Eine Fähigkeit, die du dieses Quartal lernen möchtest?",
+    "bug": "Der seltsamste Bug, der dir je begegnet ist?"
+  }
+}

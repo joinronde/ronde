@@ -1,0 +1,19 @@
+{
+  "title": "Próximas sesiones",
+  "none": "Todavía no hay ninguna sesión prevista.",
+  "moved": "Movida",
+  "attendanceOf": "Tu asistencia el {date}",
+  "yes": "Estaré",
+  "no": "No estaré",
+  "noted": "Anotado: se te marcará como ausente",
+  "hint": "¿No vas a estar? Se te marca como ausente en esa sesión y no recibes recordatorio.",
+  "subscribe": "Añadir a mi calendario",
+  "subscribeAll": "Obtener el enlace de mi calendario",
+  "feedLink": "Enlace del calendario",
+  "copy": "Copiar",
+  "copied": "Copiado",
+  "feedHint": "Pega este enlace privado en tu aplicación de calendario (suscripción por URL); sigue todos los cambios. Crear un enlace nuevo desactiva este.",
+  "openInApp": "Abrir en mi aplicación de calendario",
+  "facilitator": "{name} dinamiza",
+  "noteTaker": "{name} toma notas"
+}

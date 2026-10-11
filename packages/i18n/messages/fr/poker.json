@@ -1,0 +1,26 @@
+{
+  "noItems": "La régie ajoute les éléments à estimer.",
+  "progress": "{done} éléments estimés sur {total}",
+  "voted": "{count, plural, =0 {Personne n'a encore choisi de carte} one {# carte choisie} other {# cartes choisies}}",
+  "average": "Moyenne : {value}",
+  "final": "Estimation : {value}",
+  "pickTitle": "Votre estimation pour « {title} »",
+  "deck": "Cartes",
+  "hidden": "Votre carte reste cachée jusqu'à ce que la régie les retourne toutes.",
+  "votedOf": "{count} sur {total} ont choisi une carte",
+  "reveal": "Retourner les cartes",
+  "agree": "Estimation retenue :",
+  "revote": "Nouveau tour",
+  "reopen": "Estimer de nouveau « {title} »",
+  "remove": "Retirer « {title} »",
+  "newItem": "Élément à estimer",
+  "newItemPlaceholder": "Une story, un ticket, une tâche…",
+  "add": "Ajouter",
+  "settingsTitle": "Planning poker",
+  "deckSaved": "Jeu de cartes enregistré",
+  "decks": {
+    "fibonacci": "Fibonacci (0, 1, 2, 3, 5, 8, 13, 21)",
+    "tshirt": "Tailles de t-shirt (XS à XL)",
+    "powers": "Puissances de deux (1 à 32)"
+  }
+}

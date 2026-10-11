@@ -1,0 +1,68 @@
+{
+  "columns": {
+    "well": "Foi bem",
+    "improve": "A melhorar",
+    "ideas": "Ideias para testar",
+    "start": "Começar",
+    "stop": "Parar",
+    "continue": "Continuar",
+    "liked": "Gostamos",
+    "learned": "Aprendemos",
+    "lacked": "Faltou",
+    "longed": "Desejamos",
+    "mad": "Irritados",
+    "sad": "Tristes",
+    "glad": "Contentes"
+  },
+  "notes": "{count, plural, =0 {Ainda não há notas} one {# nota} other {# notas}}",
+  "votes": "{count, plural, =0 {nenhum voto} one {# voto} other {# votos}}",
+  "stage": {
+    "reflect": "{count, plural, =0 {Todos escrevem, de forma anônima} one {# pessoa escreveu} other {# pessoas escreveram}}",
+    "vote": "{count, plural, =0 {Ninguém votou ainda} one {# pessoa votou} other {# pessoas votaram}}",
+    "done": "O que discutimos"
+  },
+  "me": {
+    "writeTitle": "Suas notas",
+    "writeHint": "Anônimas: a equipe só as vê quando o anfitrião as revela, e nunca quem as escreveu.",
+    "placeholder": "Uma ideia, um fato, uma sensação…",
+    "add": "Adicionar",
+    "addTo": "Nova nota em “{column}”",
+    "edit": "Editar “{text}”",
+    "delete": "Excluir “{text}”",
+    "editNote": "Editar a nota",
+    "save": "Salvar",
+    "voteTitle": "Vote nos assuntos a discutir",
+    "votesLeft": "{count, plural, =0 {Todos os seus votos foram usados} one {Resta # voto} other {Restam # votos}} de {total}",
+    "vote": "Votar",
+    "unvote": "Retirar meu voto"
+  },
+  "host": {
+    "writers": "{count, plural, one {# de {total} pessoas escreveu} other {# de {total} pessoas escreveram}}",
+    "revealHint": "“Próxima” revela as notas à equipe.",
+    "voters": "{count, plural, one {# de {total} pessoas votou} other {# de {total} pessoas votaram}}",
+    "voteHint": "“Próxima” inicia a discussão dos grupos mais votados.",
+    "groupHint": "Clique em uma nota e depois na nota com a qual agrupá-la. Dê nome aos grupos quando estiverem formados.",
+    "pickTarget": "Agora clique na nota com a qual agrupá-la (ou na mesma para cancelar).",
+    "rename": "Nome do grupo",
+    "ungroup": "Tirar “{text}” do grupo"
+  },
+  "settings": {
+    "title": "Retrospectiva",
+    "preset": "Colunas",
+    "presets": {
+      "well-improve-ideas": "Foi bem, a melhorar, ideias",
+      "start-stop-continue": "Começar, parar, continuar",
+      "4l": "Gostamos, aprendemos, faltou, desejamos",
+      "mad-sad-glad": "Irritados, tristes, contentes",
+      "custom": "Personalizadas"
+    },
+    "columns": "Colunas personalizadas, uma por linha",
+    "votes": "Votos por pessoa",
+    "reflect": "Escrita (min)",
+    "vote": "Votação (min)",
+    "discuss": "Discussão por grupo (min)",
+    "saved": "Configurações da retro salvas",
+    "save": "Salvar as configurações da retro",
+    "change": "Alterar as colunas, os votos e os tempos"
+  }
+}

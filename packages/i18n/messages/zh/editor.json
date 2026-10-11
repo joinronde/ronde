@@ -1,0 +1,21 @@
+{
+  "shiftKey": "Shift+",
+  "toolbar": "格式 · {label}",
+  "boldLetter": "B",
+  "italicLetter": "I",
+  "strikeLetter": "S",
+  "bold": "粗体（{key}）",
+  "italic": "斜体（{key}）",
+  "underlineLetter": "U",
+  "underline": "下划线（{key}）",
+  "strike": "删除线（{key}）",
+  "bulletList": "项目符号列表",
+  "numberedList": "编号列表",
+  "indent": "子项（在列表中按 Tab）",
+  "outdent": "上移一级（{key}）",
+  "link": "链接（{key}）",
+  "linkUrl": "链接地址",
+  "linkApply": "应用",
+  "linkRemove": "移除链接",
+  "linkCancel": "取消"
+}

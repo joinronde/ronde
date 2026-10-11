@@ -1,0 +1,30 @@
+{
+  "kinds": {
+    "wheel": "Roue",
+    "order": "Ordre de passage",
+    "teams": "Équipes",
+    "coin": "Pile ou face"
+  },
+  "hints": {
+    "wheel": "Choisit qui parle ensuite parmi les personnes qui ne sont pas encore passées.",
+    "order": "Mélange l'ordre des personnes qui ne sont pas encore passées.",
+    "teams": "Répartit les personnes présentes en équipes.",
+    "coin": "Pour une décision que personne ne veut prendre."
+  },
+  "draw": "Lancer",
+  "drawAgain": "Relancer",
+  "teamSize": "Personnes par équipe",
+  "applyWheel": "{name} parle ensuite",
+  "applyOrder": "Utiliser cet ordre",
+  "applied": "Appliqué à l'ordre de passage",
+  "clear": "Retirer des écrans",
+  "picked": "{name} !",
+  "heads": "Pile",
+  "tails": "Face",
+  "team": "Équipe {n}",
+  "orderTitle": "Ordre de passage",
+  "drawing": "Tirage…",
+  "everyone": "Tout le monde voit le même tirage : le serveur le décide, puis chaque écran le joue.",
+  "tool": "Outil de tirage",
+  "close": "Fermer"
+}

@@ -1,0 +1,9 @@
+{
+  "subject": "{team} · le récapitulatif du {date}",
+  "greeting": "Bonjour {name},",
+  "intro": "Voici ce que l'équipe a partagé pour {team} le {date}, sans réunion en direct.",
+  "open": "Ouvrir la réunion dans Ronde",
+  "footer": "Vous recevez ce récapitulatif car vous participez à {team} sur Ronde. Le régisseur peut arrêter ces e-mails dans les réglages de la réunion.",
+  "openBranded": "Ouvrir la réunion",
+  "footerBranded": "Vous recevez ce récapitulatif car vous participez à {team}. Le régisseur peut arrêter ces e-mails dans les réglages de la réunion."
+}

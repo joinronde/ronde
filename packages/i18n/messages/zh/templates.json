@@ -1,0 +1,273 @@
+{
+  "weekly": {
+    "name": "每周同步",
+    "description": "轮流分享已完成、计划中和受阻的事项，并处理开放议题和后续行动项。",
+    "sections": {}
+  },
+  "standup": {
+    "name": "每日站会",
+    "description": "工作日十五分钟：昨天、今天、阻碍。简短发言，仅此而已。",
+    "sections": {
+      "yesterday": "昨天",
+      "today": "今天"
+    }
+  },
+  "retro": {
+    "name": "月度回顾",
+    "description": "一起回顾这个月：做得好的、待改进的、想尝试的。",
+    "sections": {
+      "well": "做得好的",
+      "improve": "待改进的",
+      "ideas": "想尝试的"
+    }
+  },
+  "oneOnOne": {
+    "name": "一对一",
+    "description": "两人之间的每周对话：成绩、优先事项、挑战和反馈。",
+    "sections": {
+      "wins": "成绩",
+      "priorities": "优先事项",
+      "challenges": "挑战",
+      "feedback": "反馈"
+    }
+  },
+  "sprintReview": {
+    "name": "冲刺评审",
+    "description": "每两周一次：交付内容、演示、下一个冲刺和风险。",
+    "sections": {
+      "delivered": "已交付",
+      "demo": "演示",
+      "next": "下一个冲刺",
+      "risks": "风险"
+    }
+  },
+  "steering": {
+    "name": "指导委员会",
+    "description": "每月一次：进展、待做的决定、风险和下一步。",
+    "sections": {
+      "progress": "进展",
+      "decisions": "待做的决定",
+      "risks": "风险",
+      "next": "下一步"
+    }
+  },
+  "allHands": {
+    "name": "全员大会",
+    "description": "全体团队每月一次：亮点、新闻和需求。",
+    "sections": {
+      "highlights": "亮点",
+      "news": "新闻",
+      "asks": "需求"
+    }
+  },
+  "leadership": {
+    "name": "管理层会议",
+    "description": "管理层周会：关键数据、成绩、优先事项和需要上报的问题。",
+    "sections": {
+      "figures": "关键数据",
+      "wins": "成绩",
+      "priorities": "优先事项",
+      "escalations": "上报事项"
+    }
+  },
+  "salesPipeline": {
+    "name": "销售管道评审",
+    "description": "每周一：赢得的交易、管道变化、下一步和有风险的交易。",
+    "sections": {
+      "won": "赢得的交易",
+      "pipeline": "管道变化",
+      "next": "下一步",
+      "atrisk": "有风险的交易"
+    }
+  },
+  "editorial": {
+    "name": "编辑会议",
+    "description": "适用于编辑部、内容或传播团队：已发布的、进行中的、选题和需要帮助的地方。",
+    "sections": {
+      "published": "已发布",
+      "ideas": "选题",
+      "help": "需要帮助",
+      "inprogress": "进行中"
+    }
+  },
+  "classCouncil": {
+    "name": "班级会议",
+    "description": "每学期一次：班级情况、需要支持的学生和商定的措施。",
+    "sections": {
+      "progress": "班级情况",
+      "support": "需要支持的学生",
+      "agreed": "商定的措施",
+      "notes": "备注"
+    }
+  },
+  "teachingTeam": {
+    "name": "教研组",
+    "description": "教师团队周会：上周课堂情况、接下来的安排、需要关注的学生和可分享的资源。",
+    "sections": {
+      "coming": "接下来",
+      "students": "需要关注的学生",
+      "resources": "可分享的资源",
+      "lastweek": "上周课堂情况"
+    }
+  },
+  "board": {
+    "name": "协会理事会",
+    "description": "协会的月度理事会：各委员会动态、表决事项、财务和近期活动。",
+    "sections": {
+      "news": "各委员会动态",
+      "votes": "表决事项",
+      "treasury": "财务",
+      "events": "近期活动"
+    }
+  },
+  "volunteers": {
+    "name": "志愿者协调",
+    "description": "周六上午与志愿者一起：已完成的工作、接下来的任务和缺少的东西。",
+    "sections": {
+      "done": "我们做了什么",
+      "missions": "接下来的任务",
+      "needs": "我们需要什么"
+    }
+  },
+  "siteMeeting": {
+    "name": "工地例会",
+    "description": "工地周会：已完成的工作、计划的工作、安全问题和整改清单。",
+    "sections": {
+      "done": "已完成的工作",
+      "planned": "计划的工作",
+      "safety": "安全问题",
+      "punch": "整改清单"
+    }
+  },
+  "shiftHandover": {
+    "name": "交接班",
+    "description": "两班之间的十五分钟：发生了什么、需要留意什么、下一班要做什么。",
+    "sections": {
+      "events": "发生了什么",
+      "watch": "需要留意",
+      "todo": "下一班要做的"
+    }
+  },
+  "portfolio": {
+    "name": "项目组合评审",
+    "description": "每两周一次，每个项目轮流发言：参与者介绍项目状态、进展、下一个里程碑和风险；遇到困难的项目先发言。",
+    "sections": {
+      "progress": "进展",
+      "milestones": "下一个里程碑",
+      "risks": "风险与需求",
+      "decisions": "待做的决定"
+    }
+  },
+  "teamProjects": {
+    "name": "团队与项目",
+    "description": "先简短轮流分享个人近况，再按共同项目轮流发言，每个项目的成员一起讲。",
+    "sections": {}
+  },
+  "rhythm": {
+    "weekdays": "每个工作日",
+    "daily": "{count, plural, =1 {每天} other {每 # 天}}",
+    "weekly": "{count, plural, =1 {每周} =2 {每两周} other {每 # 周}}",
+    "monthly": "{count, plural, =1 {每月一次} =3 {每季度一次} other {每 # 个月}}",
+    "timesDaily": "{count, plural, other {每天 # 次}}"
+  },
+  "okrReview": {
+    "name": "OKR 回顾",
+    "description": "每月一次：每个目标的进展、关键结果、风险和需要做出的决定。",
+    "sections": {
+      "progress": "目标进展",
+      "results": "关键结果",
+      "risks": "风险",
+      "asks": "需要的决定"
+    }
+  },
+  "incidentReview": {
+    "name": "事故复盘",
+    "description": "不追究个人责任地回顾本周事故：发生了什么、影响、原因和纠正措施。",
+    "sections": {
+      "timeline": "发生了什么",
+      "impact": "影响",
+      "causes": "根本原因",
+      "actions": "纠正措施"
+    }
+  },
+  "researchLab": {
+    "name": "实验室组会",
+    "description": "研究小组的每周例会：结果、下一步、卡住的地方和值得分享的论文。",
+    "sections": {
+      "results": "实验与结果",
+      "next": "下一步",
+      "stuck": "我卡住的地方",
+      "reading": "推荐论文"
+    }
+  },
+  "studentProjects": {
+    "name": "学生项目",
+    "description": "每两周与导师一起：每个小组的进展、交付物、困难和问题。",
+    "sections": {
+      "progress": "进展",
+      "deliverables": "交付物",
+      "difficulties": "困难",
+      "questions": "给导师的问题"
+    }
+  },
+  "caseReview": {
+    "name": "多学科病例讨论",
+    "description": "每周的多学科会议：讨论的病例、意见、商定的诊疗方案和需要安排的检查。",
+    "sections": {
+      "cases": "待讨论病例",
+      "opinions": "意见与建议",
+      "plan": "商定的诊疗方案",
+      "tests": "需要安排的检查"
+    }
+  },
+  "serviceBriefing": {
+    "name": "营业前简会",
+    "description": "每天开门前十分钟：预订情况、今日特供、注意事项和需要留意的地方。",
+    "sections": {
+      "bookings": "预订与客流",
+      "specials": "今日特供",
+      "instructions": "工作安排",
+      "watch": "注意事项"
+    }
+  },
+  "onboarding": {
+    "name": "新人入职跟进",
+    "description": "新成员入职的头几个月，每周一次：学到了什么、目标、需要什么和有哪些问题。",
+    "sections": {
+      "learned": "我学到了什么",
+      "goals": "本周目标",
+      "needs": "我需要什么",
+      "questions": "我的问题"
+    }
+  },
+  "hiringReview": {
+    "name": "招聘回顾",
+    "description": "每周一次：已完成的面试、进行中的候选人、待做的决定和待开放的职位。",
+    "sections": {
+      "interviews": "已完成的面试",
+      "candidates": "进行中的候选人",
+      "decisions": "待做的决定",
+      "openings": "待开放的职位"
+    }
+  },
+  "boardOfDirectors": {
+    "name": "董事会",
+    "description": "每季度一次：工作报告、财务、待表决的决议和风险。",
+    "sections": {
+      "report": "工作报告",
+      "finances": "财务",
+      "resolutions": "待表决的决议",
+      "risks": "风险与关注点"
+    }
+  },
+  "supportReview": {
+    "name": "客服回顾",
+    "description": "每周从客户角度回顾：值得关注的工单、升级处理、产品反馈和满意度。",
+    "sections": {
+      "highlights": "值得关注的工单",
+      "escalations": "升级处理",
+      "feedback": "产品反馈",
+      "satisfaction": "满意度"
+    }
+  }
+}

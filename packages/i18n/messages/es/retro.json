@@ -1,0 +1,68 @@
+{
+  "columns": {
+    "well": "Fue bien",
+    "improve": "A mejorar",
+    "ideas": "Ideas que probar",
+    "start": "Empezar",
+    "stop": "Dejar de",
+    "continue": "Seguir",
+    "liked": "Nos gustó",
+    "learned": "Aprendimos",
+    "lacked": "Nos faltó",
+    "longed": "Deseamos",
+    "mad": "Enfadados",
+    "sad": "Tristes",
+    "glad": "Contentos"
+  },
+  "notes": "{count, plural, =0 {Aún no hay notas} one {# nota} other {# notas}}",
+  "votes": "{count, plural, =0 {ningún voto} one {# voto} other {# votos}}",
+  "stage": {
+    "reflect": "{count, plural, =0 {Todo el mundo escribe, de forma anónima} one {# persona ha escrito} other {# personas han escrito}}",
+    "vote": "{count, plural, =0 {Nadie ha votado todavía} one {# persona ha votado} other {# personas han votado}}",
+    "done": "Lo que hemos comentado"
+  },
+  "me": {
+    "writeTitle": "Tus notas",
+    "writeHint": "Anónimas: el equipo solo las ve cuando el anfitrión las revela, y nunca sabe quién las escribió.",
+    "placeholder": "Una idea, un hecho, una sensación…",
+    "add": "Añadir",
+    "addTo": "Nueva nota en «{column}»",
+    "edit": "Editar «{text}»",
+    "delete": "Eliminar «{text}»",
+    "editNote": "Editar la nota",
+    "save": "Guardar",
+    "voteTitle": "Vota los temas que comentar",
+    "votesLeft": "{count, plural, =0 {Has usado todos tus votos} one {Te queda # voto} other {Te quedan # votos}} de {total}",
+    "vote": "Votar",
+    "unvote": "Retirar mi voto"
+  },
+  "host": {
+    "writers": "{count, plural, one {# de {total} personas ha escrito} other {# de {total} personas han escrito}}",
+    "revealHint": "«Siguiente» revela las notas al equipo.",
+    "voters": "{count, plural, one {# de {total} personas ha votado} other {# de {total} personas han votado}}",
+    "voteHint": "«Siguiente» inicia la conversación sobre los grupos más votados.",
+    "groupHint": "Haz clic en una nota y luego en la nota con la que agruparla. Pon nombre a los grupos cuando estén formados.",
+    "pickTarget": "Ahora haz clic en la nota con la que agruparla (o en la misma para cancelar).",
+    "rename": "Nombre del grupo",
+    "ungroup": "Sacar «{text}» de su grupo"
+  },
+  "settings": {
+    "title": "Retrospectiva",
+    "preset": "Columnas",
+    "presets": {
+      "well-improve-ideas": "Fue bien, a mejorar, ideas",
+      "start-stop-continue": "Empezar, dejar de, seguir",
+      "4l": "Nos gustó, aprendimos, nos faltó, deseamos",
+      "mad-sad-glad": "Enfadados, tristes, contentos",
+      "custom": "Personalizadas"
+    },
+    "columns": "Columnas personalizadas, una por línea",
+    "votes": "Votos por persona",
+    "reflect": "Escritura (min)",
+    "vote": "Votación (min)",
+    "discuss": "Conversación por grupo (min)",
+    "saved": "Ajustes de la retro guardados",
+    "save": "Guardar los ajustes de la retro",
+    "change": "Cambiar las columnas, los votos y los tiempos"
+  }
+}

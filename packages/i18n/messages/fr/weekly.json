@@ -1,0 +1,28 @@
+{
+  "subject": "Votre semaine avec {workspace}",
+  "title": "Votre semaine",
+  "greeting": "Bonjour {name},",
+  "intro": "Voici ce qui vous attend cette semaine dans {workspace}.",
+  "preheader": "{sessions, plural, =0 {Aucune séance} one {# séance} other {# séances}} et {actions, plural, =0 {aucune action ouverte} one {# action ouverte} other {# actions ouvertes}} cette semaine",
+  "when": "{date} à {time}",
+  "moved": "déplacée",
+  "sessions": "Vos séances de la semaine",
+  "checkIn": "Ma fiche",
+  "actions": "Vos actions en cours",
+  "actionsHint": "Cochez-les dans Ronde dès qu'elles sont faites.",
+  "carried": "{count, plural, one {ouverte depuis # séance} other {ouverte depuis # séances}}",
+  "kudos": "Les remerciements reçus",
+  "from": "de {name}",
+  "open": "Ouvrir Ronde",
+  "footer": "Vous recevez ce récapitulatif le lundi en tant que membre de {workspace}.",
+  "settings": "Modifiable dans votre compte.",
+  "stop": "Ne plus recevoir le récapitulatif",
+  "page": {
+    "title": "Arrêter le récapitulatif hebdomadaire ?",
+    "body": "Vous ne recevrez plus le récapitulatif du lundi : vos séances, vos actions et vos bravos. Vous pourrez le réactiver dans votre compte.",
+    "button": "Arrêter le récapitulatif",
+    "done": "C'est fait : vous ne recevrez plus le récapitulatif hebdomadaire.",
+    "invalid": "Ce lien n'est pas valide.",
+    "back": "Retour à Ronde"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "package": {
+    "fullName": "Ronde: le riunioni ricorrenti del tuo team",
+    "shortDescription": "Schede, promemoria e verbali delle riunioni ricorrenti del tuo team.",
+    "fullDescription": "Ronde guida le riunioni ricorrenti del tuo team: ognuno prepara la propria scheda, il giro di tavolo rispetta i tempi, il verbale si scrive da solo. In Teams, Ronde ricorda a ognuno la propria scheda con un messaggio personale, la fa compilare lì, risponde a «ronde» con le prossime sessioni e le azioni aperte e pubblica le notifiche delle riunioni in un canale.",
+    "commandRonde": "Le tue prossime sessioni e azioni aperte",
+    "helpWord": "aiuto",
+    "commandHelp": "Cosa fa Ronde in Teams"
+  },
+  "bot": {
+    "welcomeTitle": "Ronde è in questo team",
+    "welcome": "Collegalo al tuo spazio Ronde: i promemoria della scheda arrivano a tutti qui in Teams, e le notifiche delle riunioni possono essere pubblicate in questo canale.",
+    "welcomeWho": "Lo fa un proprietario o un amministratore dello spazio Ronde, una volta.",
+    "link": "Collega a Ronde",
+    "linked": "Questo canale è ora collegato allo spazio Ronde «{workspace}». Nelle notifiche di ogni riunione, scegli cosa pubblicare qui.",
+    "unlinked": "Questo canale non è più collegato a Ronde: i promemoria della scheda tornano via email.",
+    "alreadyLinked": "Questo team è collegato allo spazio Ronde «{workspace}».",
+    "hello": "Ciao! Ti ricordo le tue schede, e puoi compilarle proprio qui. Scrivi «ronde» per vedere le tue prossime sessioni e azioni aperte.",
+    "help": "Scrivi «ronde» per vedere le tue prossime sessioni e azioni aperte. I promemoria della scheda arrivano qui, con un pulsante per compilarla.",
+    "notFound": "Ronde non trova questa scheda per te. L'email del tuo account Microsoft deve essere quella del tuo profilo Ronde, e devi partecipare alla riunione.",
+    "tooLong": "Questa scheda è troppo lunga per essere modificata in Teams. Aprila in Ronde.",
+    "unknown": "Ronde non ti conosce ancora: l'email del tuo account Microsoft deve essere quella del tuo profilo in uno spazio Ronde collegato a questo team."
+  },
+  "link": {
+    "title": "Collega Microsoft Teams",
+    "intro": "Il team «{team}» chiede di essere collegato a uno spazio Ronde: i suoi promemoria della scheda passano da Teams, e il suo canale può ricevere le notifiche delle riunioni.",
+    "channel": "Canale: {channel}",
+    "workspace": "Spazio di lavoro",
+    "replaces": "Già collegato a «{team}»: questo team ne prende il posto.",
+    "submit": "Collega questo spazio",
+    "none": "Non gestisci nessuno spazio in cui collegare Microsoft Teams. È incluso in Ronde Team, per proprietari e amministratori di uno spazio.",
+    "expired": "Questo link è scaduto o non è valido. In Teams, menziona Ronde nel canale per riceverne uno nuovo."
+  },
+  "settings": {
+    "intro": "Aggiungi Ronde a Microsoft Teams: ognuno compila la propria scheda senza lasciare Teams.",
+    "locked": "L'app Microsoft Teams è inclusa in Ronde {edition}.",
+    "uses": {
+      "reminders": "Promemoria della scheda con un messaggio personale, con un pulsante che trasforma il messaggio nel modulo della scheda.",
+      "channel": "Il canale del team diventa un connettore: nelle notifiche di ogni riunione, scegli cosa pubblicarvi.",
+      "command": "Scrivere «ronde» all'app mostra a ognuno le prossime sessioni e le azioni aperte."
+    },
+    "emailMatch": "Le persone sono riconosciute dalla loro email: l'account Microsoft e il profilo Ronde devono condividerla.",
+    "step1": "Scarica l'app Ronde per Teams.",
+    "step1Hint": "L'amministratore di Teams la aggiunge una volta per l'organizzazione (Interfaccia di amministrazione di Teams › App di Teams › Gestisci app › Carica nuova app). Se l'organizzazione lo consente, puoi anche caricarla tu (App › Gestisci le tue app › Carica un'app).",
+    "step2": "Aggiungi l'app al team il cui canale riceverà le notifiche.",
+    "step3": "In quel canale, Ronde pubblica una scheda: fai clic su «Collega a Ronde» e scegli questo spazio.",
+    "download": "Scarica l'app (.zip)",
+    "linkedTo": "Collegato a {team}",
+    "channel": "notifiche in {channel}",
+    "linked": "Microsoft Teams è collegato.",
+    "reminders": "Invia i promemoria della scheda in Teams",
+    "remindersHint": "Con un messaggio personale, al posto dell'email, alle persone trovate nel team. Le altre ricevono comunque l'email.",
+    "unlink": "Scollega",
+    "unlinkConfirm": "Scollegare Microsoft Teams? I promemoria tornano via email e le regole di notifica che pubblicano nel suo canale vengono eliminate. Per rimuovere l'app stessa, rimuovila dal team in Teams.",
+    "notConfigured": "Per usare Microsoft Teams, l'amministratore di questo server Ronde registra prima la sua app Teams in Microsoft Azure.",
+    "setup": "Come configurarla",
+    "openInTeams": "Apri l'app in Teams"
+  }
+}

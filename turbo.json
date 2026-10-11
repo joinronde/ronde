@@ -1,0 +1,32 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "ui": "stream",
+  "agentGuidance": false,
+  "cacheMaxAge": "7d",
+  "cacheMaxSize": "2GB",
+  "globalEnv": ["NODE_ENV", "NEXT_PUBLIC_BASE_PATH", "RONDE_PURE_CE"],
+  "tasks": {
+    "db:generate": {
+      "cache": false
+    },
+    "build": {
+      "dependsOn": ["^build", "^db:generate"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck", "^db:generate", "db:generate"]
+    },
+    "test": {
+      "dependsOn": ["^db:generate"]
+    },
+    "test:integration": {
+      "dependsOn": ["^db:generate", "db:generate"],
+      "cache": false,
+      "passThroughEnv": ["DATABASE_URL"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

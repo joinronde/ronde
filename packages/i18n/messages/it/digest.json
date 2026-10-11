@@ -1,0 +1,9 @@
+{
+  "subject": "{team} · il riepilogo del {date}",
+  "greeting": "Ciao {name},",
+  "intro": "Ecco cosa ha condiviso il team per {team} il {date}, senza riunione in diretta.",
+  "open": "Apri la riunione in Ronde",
+  "footer": "Ricevi questo riepilogo perché partecipi a {team} su Ronde. Chi conduce può disattivare queste email nelle impostazioni della riunione.",
+  "openBranded": "Apri la riunione",
+  "footerBranded": "Ricevi questo riepilogo perché partecipi a {team}. Chi conduce può disattivare queste email nelle impostazioni della riunione."
+}

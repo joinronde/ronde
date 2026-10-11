@@ -1,0 +1,15 @@
+{
+  "done": "منجز",
+  "toDo": "للتنفيذ",
+  "dragHint": "اسحب للنقل (أو Alt+↑ / Alt+↓)",
+  "markToDo": "وضع علامة «للتنفيذ»",
+  "markDone": "وضع علامة «منجز»",
+  "itemLabel": "{section}، البند {n}",
+  "removeItem": "إزالة «{text}»",
+  "emptyItem": "بند فارغ",
+  "remove": "إزالة",
+  "addItem": "إضافة بند",
+  "addTaskFirst": "أضف مهمة · اتركه فارغًا إن لم يكن هناك شيء",
+  "addItemFirst": "أضف بندًا · اتركه فارغًا إن لم يكن هناك شيء",
+  "freeTextPlaceholder": "{section}: في بضع جمل · اتركه فارغًا إن لم يكن هناك شيء"
+}

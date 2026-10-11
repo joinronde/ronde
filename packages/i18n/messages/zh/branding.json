@@ -1,0 +1,13 @@
+{
+  "title": "Logo",
+  "intro": "你的 Logo 将替换 Ronde 的 Logo：出现在侧边栏、共享屏幕、邮件和会议纪要中。",
+  "drop": "把你的 Logo 拖到这里",
+  "formats": "PNG、JPEG 或 WebP。透明 PNG 效果最佳。",
+  "current": "当前 Logo",
+  "upload": "上传 Logo",
+  "replace": "替换",
+  "remove": "移除",
+  "where": "会显示在浅色和深色背景上：请确认在两种背景上都清晰可见。",
+  "failed": "无法保存 Logo。",
+  "unreadable": "无法读取此图片。"
+}

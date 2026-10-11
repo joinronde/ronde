@@ -1,0 +1,13 @@
+{
+  "loading": "Wird geladen…",
+  "notFoundTitle": "Seite nicht gefunden",
+  "notFoundBody": "Diese Seite gibt es nicht, oder du hast keinen Zugriff mehr darauf.",
+  "home": "Zur Startseite",
+  "errorTitle": "Etwas ist schiefgelaufen",
+  "errorBody": "Diese Seite konnte nicht angezeigt werden. Versuch es noch einmal; wenn es weiter fehlschlägt, lade die Seite neu.",
+  "errorRef": "Referenz: {ref}",
+  "retry": "Erneut versuchen",
+  "suspendedTitle": "Dieser Arbeitsbereich ist gesperrt",
+  "suspendedBody": "{workspace} ist vorerst gesperrt: Meetings, Check-ins und Verlauf bleiben erhalten, aber niemand kann sie öffnen. Die Inhaber kennen den Grund; schreib an die Administration dieses Dienstes, um ihn wieder zu öffnen.",
+  "suspendedBack": "Zurück zu meinen Arbeitsbereichen"
+}

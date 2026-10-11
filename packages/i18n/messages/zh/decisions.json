@@ -1,0 +1,10 @@
+{
+  "off": "此会议的决定记录已关闭。",
+  "loading": "正在加载决定…",
+  "empty": "还没有记录任何决定。",
+  "howTo": "在会议中，让笔记的某一行以“决定:”开头：会议归档后，它就会出现在这里。",
+  "searchPlaceholder": "搜索决定",
+  "searchLabel": "搜索决定",
+  "count": "{count, plural, other {# 项决定}}",
+  "noMatch": "没有包含“{query}”的决定。"
+}

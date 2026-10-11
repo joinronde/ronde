@@ -1,0 +1,32 @@
+{
+  "title": "Billing",
+  "current": "Current plan",
+  "plans": {
+    "community": "Community",
+    "team": "Team"
+  },
+  "communityIntro": "Free: unlimited meetings and people, every facilitation module. Team adds the AI assistant, transcripts, workflows, tickets, calendars, video links, your logo and insights by email.",
+  "teamIntro": "Every Team feature for the whole workspace. You pay for the people who took part in a meeting in the last 30 days; the seats follow them every day.",
+  "status": "Status",
+  "statuses": {
+    "active": "Active",
+    "trialing": "Trial",
+    "past_due": "Payment to retry",
+    "canceled": "Cancelled",
+    "other": "Pending"
+  },
+  "seats": "Seats",
+  "seatsValue": "{paid} paid · {active} took part in the last 30 days",
+  "renewsOn": "Renews on",
+  "endsOn": "Ends on",
+  "upgradeMonthly": "Move to Team, monthly",
+  "upgradeYearly": "Yearly, 25% less",
+  "seatsHint": "{count, plural, =0 {Nobody has taken part in a meeting yet: you start with one seat.} one {# person took part in a meeting in the last 30 days.} other {# people took part in a meeting in the last 30 days.}}",
+  "portal": "Invoices and payment",
+  "compare": "Compare the plans",
+  "thanks": "Thank you! Your workspace moves to Team as soon as Stripe confirms the payment.",
+  "cancelled": "The payment was not completed: nothing was charged.",
+  "eduTitle": "Free for education",
+  "eduText": "Schools, universities and teachers get Ronde's paid plans for free. Tell us about your institution and we set it up.",
+  "eduCta": "Ask for the education plan"
+}

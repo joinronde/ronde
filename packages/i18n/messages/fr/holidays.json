@@ -1,0 +1,18 @@
+{
+  "label": "Jours fériés",
+  "none": "Aucun",
+  "noneMeeting": "Aucun : toutes les séances ont lieu",
+  "inherit": "Comme l'espace : {name}",
+  "inheritNone": "Comme l'espace : aucun",
+  "region": "Région",
+  "wholeCountry": "Tout le pays",
+  "hintMeeting": "Une séance qui tombe un de ces jours fériés est sautée. Vous pouvez quand même maintenir ou déplacer chacune ci-dessous.",
+  "hintWorkspace": "Les réunions sautent les séances qui tombent ces jours fériés ; chaque réunion peut en choisir d'autres dans son planning.",
+  "source": "Jours fériés du projet date-holidays, d'après Wikipédia (CC BY-SA 3.0).",
+  "saved": "Jours fériés mis à jour",
+  "skipped": "Jour férié · {name}",
+  "kept": "Maintenue malgré : {name}",
+  "keep": "La maintenir quand même",
+  "held": "Séance maintenue",
+  "skipAgain": "La sauter à nouveau"
+}

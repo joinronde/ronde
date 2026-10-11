@@ -1,0 +1,62 @@
+{
+  "workspace": {
+    "manage": "Modificare le impostazioni dello spazio di lavoro"
+  },
+  "members": {
+    "manage": "Modificare i ruoli dei membri"
+  },
+  "people": {
+    "read": "Vedere la rubrica",
+    "manage": "Modificare e rimuovere persone",
+    "invite": "Invitare persone"
+  },
+  "templates": {
+    "manage": "Salvare ed eliminare modelli"
+  },
+  "connectors": {
+    "manage": "Gestire i connettori delle notifiche"
+  },
+  "audit": {
+    "read": "Leggere il registro di audit"
+  },
+  "meeting": {
+    "create": "Creare riunioni",
+    "read": "Vedere tutte le riunioni",
+    "configure": "Modificare le impostazioni di tutte le riunioni",
+    "delete": "Eliminare riunioni"
+  },
+  "participants": {
+    "manage": "Gestire i partecipanti"
+  },
+  "session": {
+    "run": "Condurre le sessioni (regia)",
+    "participate": "Partecipare alle sessioni",
+    "observe": "Seguire le sessioni"
+  },
+  "checkin": {
+    "write": {
+      "own": "Compilare la propria scheda",
+      "any": "Modificare la scheda di chiunque"
+    },
+    "read": {
+      "all": "Leggere tutte le schede"
+    }
+  },
+  "notes": {
+    "read": "Leggere le note del conduttore"
+  },
+  "minutes": {
+    "edit": "Modificare il verbale"
+  },
+  "history": {
+    "read": "Leggere la cronologia"
+  },
+  "stats": {
+    "read": "Vedere le statistiche"
+  },
+  "projects": {
+    "read": "Vedere il portafoglio",
+    "create": "Creare progetti",
+    "manage": "Modificare e archiviare tutti i progetti"
+  }
+}

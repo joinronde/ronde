@@ -1,0 +1,13 @@
+{
+  "title": "Logo",
+  "intro": "Your logo replaces Ronde's: in the sidebar, on the shared screen, in emails and in the minutes.",
+  "drop": "Drop your logo here",
+  "formats": "PNG, JPEG or WebP. A transparent PNG looks best.",
+  "current": "Current logo",
+  "upload": "Upload a logo",
+  "replace": "Replace",
+  "remove": "Remove",
+  "where": "Shown on light and dark backgrounds: check that it reads well on both.",
+  "failed": "The logo could not be saved.",
+  "unreadable": "This image could not be read."
+}

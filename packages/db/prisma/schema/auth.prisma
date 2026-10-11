@@ -1,0 +1,164 @@
+// Accounts and sessions, in the shape Better Auth expects (session is renamed AuthSession to keep
+// "Session" for meeting occurrences).
+
+enum InstanceRole {
+  user
+  admin
+}
+
+model User {
+  id               String             @id
+  name             String
+  email            String             @unique
+  emailVerified    Boolean            @default(false)
+  image            String?
+  /// Preferred language of the interface; null: browser language
+  locale           String?
+  /// IANA time zone, e.g. Europe/Paris; null: browser time zone
+  timezone         String?
+  /// Instance administrator (the first account created on the instance)
+  instanceRole     InstanceRole       @default(user)
+  twoFactorEnabled Boolean?           @default(false)
+  /// Disabled by the Ronde team: the account can no longer sign in
+  disabledAt       DateTime?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  authSessions     AuthSession[]
+  accounts         Account[]
+  twoFactors       TwoFactor[]
+  passkeys         Passkey[]
+  memberships      WorkspaceMember[]
+  prefs            UserPref[]
+  pushDevices      PushSubscription[]
+  feedTokens       FeedToken[]
+  ssoProviders     SsoProvider[]
+}
+
+model AuthSession {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+}
+
+model TwoFactor {
+  id                      String    @id
+  secret                  String
+  backupCodes             String
+  userId                  String
+  user                    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  verified                Boolean?  @default(true)
+  failedVerificationCount Int?      @default(0)
+  lockedUntil             DateTime?
+
+  @@index([secret])
+  @@index([userId])
+}
+
+/// A passkey of a person (WebAuthn): signs in without a password, from the device or the password manager
+/// keeping it. The fields are the ones Better Auth's passkey plugin expects.
+model Passkey {
+  id           String    @id
+  /// Name the person gave it ("MacBook", "Phone")
+  name         String?
+  publicKey    String
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  credentialID String
+  counter      Int
+  deviceType   String
+  backedUp     Boolean
+  transports   String?
+  createdAt    DateTime?
+  /// Model of the authenticator, when it says (iCloud Keychain, Google Password Manager, a security key…)
+  aaguid       String?
+
+  @@index([userId])
+  @@index([credentialID])
+}
+
+/// Instance-wide settings: sign-up policy, allowed domains, branding
+model InstanceSetting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+/// Preferences of a user (block layout of each page…)
+model UserPref {
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  key       String
+  value     Json
+  updatedAt DateTime @updatedAt
+
+  @@id([userId, key])
+}
+
+/// Secret link to a calendar feed (ICS) of a user: one meeting, or every meeting they take part in
+model FeedToken {
+  id        String   @id @default(uuid(7))
+  /// SHA-256 of the token: the link itself is never stored
+  tokenHash String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// Meeting of the feed; null: every meeting of the user
+  meetingId String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+/// A browser or a phone that gets the person's notifications (Web Push), whatever the workspace
+model PushSubscription {
+  id         String    @id @default(uuid(7))
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// The push service's address for this device
+  endpoint   String    @unique
+  p256dh     String
+  auth       String
+  /// What the device is, for the list in the account ("Chrome · Android")
+  label      String    @default("")
+  createdAt  DateTime  @default(now())
+  lastSentAt DateTime?
+
+  @@index([userId])
+}

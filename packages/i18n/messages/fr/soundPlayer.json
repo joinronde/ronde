@@ -1,0 +1,18 @@
+{
+  "enable": "Activer le son",
+  "monitorHint": "Entendre dans la Régie ce qu'entendent les participants",
+  "muteHint": "Couper les sons de la réunion sur cet écran",
+  "autoHint": "Les sons s'activeront d'eux-mêmes un quart d'heure avant la réunion (musique d'attente, signaux…)",
+  "listenHint": "Entendre les sons de la réunion : musique d'attente, signaux, applaudissements…",
+  "monitorOn": "Écoute dans la Régie",
+  "monitorOff": "Écoute coupée",
+  "soundsOn": "Sons",
+  "soundsOff": "Sons coupés",
+  "monitorVolume": "Volume d'écoute dans la Régie",
+  "volume": "Volume des sons sur cet écran",
+  "musicMuteHint": "Couper la musique d'attente dans la Régie (les participants l'entendent toujours)",
+  "musicListenHint": "Entendre aussi la musique d'attente dans la Régie",
+  "musicOn": "Musique",
+  "musicOff": "Musique coupée",
+  "allow": "Autoriser le son"
+}

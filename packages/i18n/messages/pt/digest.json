@@ -1,0 +1,9 @@
+{
+  "subject": "{team} · o resumo de {date}",
+  "greeting": "Olá, {name},",
+  "intro": "Veja o que a equipe compartilhou para {team} em {date}, sem reunião ao vivo.",
+  "open": "Abrir a reunião no Ronde",
+  "footer": "Você recebe este resumo porque participa de {team} no Ronde. O anfitrião pode desativar estes e-mails nas configurações da reunião.",
+  "openBranded": "Abrir a reunião",
+  "footerBranded": "Você recebe este resumo porque participa de {team}. O anfitrião pode desativar estes e-mails nas configurações da reunião."
+}

@@ -1,0 +1,18 @@
+{
+  "editingHint": "Grab a block by its <handle></handle> handle and drop it anywhere, or use its arrows. The layout is kept for you only.",
+  "columnCount": "Number of columns",
+  "columns": "{count, plural, one {# column} other {# columns}}",
+  "defaultLayout": "Default layout",
+  "done": "Done",
+  "customiseHint": "Move the blocks, pick the number of columns",
+  "customise": "Customise the page",
+  "customiseCustom": "Customise the page · custom layout",
+  "dragHint": "Move “{title}”: grab and drop it anywhere",
+  "move": "Move the “{title}” block",
+  "up": "Move up",
+  "down": "Move down",
+  "left": "Left column",
+  "right": "Right column",
+  "dropAtEnd": "Drop here to place at the bottom of the column",
+  "dropEmpty": "Empty column: drop a block here"
+}

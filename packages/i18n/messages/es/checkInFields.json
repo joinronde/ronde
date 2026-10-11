@@ -1,0 +1,15 @@
+{
+  "done": "Hecho",
+  "toDo": "Por hacer",
+  "dragHint": "Arrastra para mover (o Alt+↑ / Alt+↓)",
+  "markToDo": "Marcar como por hacer",
+  "markDone": "Marcar como hecho",
+  "itemLabel": "{section}, elemento {n}",
+  "removeItem": "Quitar «{text}»",
+  "emptyItem": "elemento vacío",
+  "remove": "Quitar",
+  "addItem": "Añadir un elemento",
+  "addTaskFirst": "Añade una tarea · déjalo vacío si no hay nada",
+  "addItemFirst": "Añade un elemento · déjalo vacío si no hay nada",
+  "freeTextPlaceholder": "{section}: en unas frases · déjalo vacío si no hay nada"
+}

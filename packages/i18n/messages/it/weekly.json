@@ -1,0 +1,28 @@
+{
+  "subject": "La tua settimana con {workspace}",
+  "title": "La tua settimana",
+  "greeting": "Ciao {name},",
+  "intro": "Ecco cosa ti aspetta questa settimana in {workspace}.",
+  "preheader": "{sessions, plural, =0 {Nessuna seduta} one {# seduta} other {# sedute}} e {actions, plural, =0 {nessuna azione aperta} one {# azione aperta} other {# azioni aperte}} questa settimana",
+  "when": "{date} alle {time}",
+  "moved": "spostata",
+  "sessions": "Le tue sedute della settimana",
+  "checkIn": "La mia scheda",
+  "actions": "Le tue azioni aperte",
+  "actionsHint": "Spuntale in Ronde appena sono fatte.",
+  "carried": "{count, plural, one {aperta da # seduta} other {aperta da # sedute}}",
+  "kudos": "I complimenti ricevuti",
+  "from": "da {name}",
+  "open": "Apri Ronde",
+  "footer": "Ricevi questo riepilogo il lunedì come membro di {workspace}.",
+  "settings": "Puoi cambiarlo nel tuo account.",
+  "stop": "Non ricevere più il riepilogo",
+  "page": {
+    "title": "Interrompere il riepilogo settimanale?",
+    "body": "Non riceverai più il riepilogo del lunedì con le tue sedute, azioni e complimenti. Puoi riattivarlo nel tuo account.",
+    "button": "Interrompi il riepilogo",
+    "done": "Fatto: non riceverai più il riepilogo settimanale.",
+    "invalid": "Questo link non è valido.",
+    "back": "Torna a Ronde"
+  }
+}

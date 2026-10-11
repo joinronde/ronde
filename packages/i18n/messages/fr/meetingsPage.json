@@ -1,0 +1,25 @@
+{
+  "title": "Réunions",
+  "intro": "Toutes les réunions de l'espace que vous voyez : la prochaine séance, qui participe, ce qui reste ouvert.",
+  "new": "Nouvelle réunion",
+  "filter": "Quelles réunions",
+  "search": "Filtrer par nom",
+  "filters": {
+    "all": "Toutes",
+    "mine": "J'y participe",
+    "run": "Je les anime"
+  },
+  "liveNow": "En cours",
+  "next": "Prochaine séance",
+  "noNext": "Aucune séance prévue",
+  "held": "{count, plural, one {séance tenue} other {séances tenues}}",
+  "openActions": "{count, plural, one {action ouverte} other {actions ouvertes}}",
+  "last": "dernière le {date}",
+  "join": "Rejoindre",
+  "checkIn": "Ma fiche",
+  "control": "Animer la réunion",
+  "history": "Historique",
+  "noMatch": "Aucune réunion ne correspond.",
+  "empty": "Pas encore de réunion.",
+  "templates": "Modèles"
+}

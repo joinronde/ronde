@@ -1,0 +1,53 @@
+{
+  "title": "我的进展卡",
+  "save": "保存",
+  "cancel": "取消",
+  "close": "关闭",
+  "fillIn": "填写我的进展卡",
+  "openRonde": "在 Ronde 中打开",
+  "hint": {
+    "list": "每行一项。",
+    "checklist": "每行一项；完成后在开头加上 [x]。",
+    "text": "自由文本，可写多行。"
+  },
+  "notFound": "Ronde 找不到你的这张进展卡。你的 Slack 账号邮箱必须与 Ronde 个人资料的邮箱一致，并且你需要参加这个会议。",
+  "tooLong": "这张进展卡太长，无法在 Slack 中编辑。请在 Ronde 中打开。",
+  "tooMany": "最多 {max} 项。",
+  "itemTooLong": "有一项超过了 {max} 个字符。",
+  "changed": "你的进展卡在此期间已在 Ronde 中被修改。请关闭此表单后重新打开，以查看最新版本。",
+  "saved": "你在“{team}”的进展卡已保存。谢谢！",
+  "ready": "进展卡已就绪",
+  "toFill": "进展卡待填写",
+  "noSession": "暂无安排的会议",
+  "noMeetings": "你没有参加这个工作空间的任何会议。",
+  "actions": "你未完成的跟进行动",
+  "summary": "你在 Ronde 的会议",
+  "unknown": "Ronde 还不认识你：你的 Slack 账号邮箱必须与已添加该应用的 Ronde 工作空间中你个人资料的邮箱一致。",
+  "unavailable": "Ronde 暂时无法回应，请稍后再试。",
+  "settings": {
+    "intro": "将 Ronde 添加到你的 Slack 工作区：每个人无需离开 Slack 就能填写进展卡。",
+    "locked": "Slack 应用包含在 Ronde {edition} 中。",
+    "uses": {
+      "reminders": "通过私信发送进展卡提醒，附带一个按钮，以 Slack 表单打开进展卡。",
+      "channel": "所选频道会成为一个连接器：在每个会议的通知中选择要发布到那里的内容（纪要、会议即将开始……）。",
+      "command": "/ronde 向每个人显示其接下来的会议和未完成的跟进行动。"
+    },
+    "emailMatch": "通过邮箱识别成员：其 Slack 账号与 Ronde 个人资料必须使用同一个邮箱。",
+    "add": "添加到 Slack",
+    "connectedTo": "已连接到 {team}",
+    "channel": "通知发送到 {channel}",
+    "reminders": "在 Slack 中发送进展卡提醒",
+    "remindersHint": "通过私信代替邮件，发给在 Slack 中找到的成员。其他人仍会收到邮件。",
+    "reinstall": "更换频道",
+    "disconnect": "断开连接",
+    "disconnectConfirm": "要从这个 Slack 工作区移除 Ronde 吗？提醒将恢复为邮件，发布到其频道的通知规则也会被删除。",
+    "notConfigured": "要使用 Slack，此 Ronde 实例的管理员需先创建其 Slack 应用，只需几分钟。",
+    "setup": "如何配置",
+    "result": {
+      "connected": "Slack 已连接。",
+      "cancelled": "已在 Slack 中取消安装。",
+      "denied": "只有管理该工作空间连接器的人员才能添加 Slack。",
+      "failed": "无法连接 Slack。请重试；如果仍然失败，请联系此实例的管理员。"
+    }
+  }
+}

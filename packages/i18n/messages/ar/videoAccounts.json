@@ -1,0 +1,40 @@
+{
+  "title": "حسابات الفيديو",
+  "intro": "دع Ronde ينشئ غرفة دائمة في Zoom أو Google Meet أو Teams لكل اجتماع، بحساب واحد لمساحة العمل. لا يحتاج أحد إلى تسجيل الدخول.",
+  "empty": "لا حسابات فيديو بعد.",
+  "add": "إضافة حساب فيديو",
+  "kind": "المزوّد",
+  "name": "الاسم",
+  "edit": "تعديل",
+  "tokenKept": "يوجد سر محفوظ. اكتب سرًا جديدًا لاستبداله.",
+  "save": "حفظ",
+  "cancel": "إلغاء",
+  "test": "اختبار",
+  "remove": "إزالة",
+  "works": "✓ متصل.",
+  "removeConfirm": "إزالة {name}؟ تستمر الغرف المنشأة بالفعل في العمل.",
+  "kinds": {
+    "zoom": "Zoom",
+    "meet": "Google Meet",
+    "teams": "Microsoft Teams"
+  },
+  "fields": {
+    "accountId": "معرّف الحساب",
+    "clientId": "معرّف العميل",
+    "clientEmail": "بريد حساب الخدمة",
+    "subject": "المستخدم الذي تنتمي إليه الغرف",
+    "tenant": "المستأجر (المعرّف أو النطاق)",
+    "organizer": "منظّم الاجتماعات"
+  },
+  "secret": {
+    "zoom": "سر العميل",
+    "meet": "المفتاح الخاص لحساب الخدمة",
+    "teams": "سر العميل"
+  },
+  "hints": {
+    "zoom": "في Zoom App Marketplace، أنشئ تطبيق «Server-to-Server OAuth» بنطاق meeting:write:meeting:admin، ثم انسخ معرّف الحساب ومعرّف العميل والسر.",
+    "meet": "في Google Cloud، أنشئ حساب خدمة، وامنحه التفويض على مستوى النطاق للنطاق meetings.space.created في وحدة تحكم مشرف Google Workspace، ثم الصق private_key من مفتاح JSON الخاص به.",
+    "teams": "في Microsoft Entra، سجّل تطبيقًا بإذن التطبيق OnlineMeetings.ReadWrite.All (بموافقة المسؤول) وسياسة وصول للتطبيق خاصة بالمنظّم."
+  },
+  "useIt": "ثم في إعدادات الاجتماع، عام ← مكالمة الفيديو: «إنشاء غرفة دائمة»."
+}

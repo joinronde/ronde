@@ -1,0 +1,49 @@
+{
+  "title": "Actions",
+  "introMine": "Ce que vous avez prévu de faire, dans toutes vos réunions. Cochez dès que c'est fait.",
+  "introHosted": "Le suivi des réunions que vous animez : qui fait quoi, et ce qui attend depuis trop longtemps.",
+  "views": "Actions de qui",
+  "mine": "Les miennes",
+  "hosted": "Réunions que j'anime",
+  "filter": "Réunion",
+  "all": "Toutes",
+  "count": {
+    "open": "{count, plural, =0 {rien à faire} one {# à faire} other {# à faire}}",
+    "doing": "{count, plural, =0 {aucune en cours} one {# en cours} other {# en cours}}",
+    "done": "{count, plural, =0 {aucune faite récemment} one {# faite récemment} other {# faites récemment}}"
+  },
+  "group": {
+    "open": "À faire",
+    "doing": "En cours",
+    "done": "Faites ces deux dernières semaines"
+  },
+  "markDone": "Marquer « {text} » comme faite",
+  "reopen": "Rouvrir « {text} »",
+  "markDoneShort": "Marquer comme faite",
+  "reopenShort": "Rouvrir",
+  "start": "Commencer",
+  "inProgress": "En cours",
+  "from": "décidée le {date}",
+  "carried": "{count, plural, one {ouverte depuis # séance} other {ouverte depuis # séances}}",
+  "emptyMine": "Rien sur votre liste.",
+  "emptyHosted": "Aucune action dans les réunions que vous animez.",
+  "emptyHint": "Les actions décidées pendant une séance apparaissent ici, avec la réunion d'où elles viennent.",
+  "openTicket": "Ouvrir le ticket",
+  "ticketFor": "Créer un ticket pour « {text} »",
+  "ticket": "Créer un ticket",
+  "ticketing": "Création du ticket…",
+  "ticketWhere": "Dans quel outil ?",
+  "csv": {
+    "action": "Action",
+    "owner": "Responsable",
+    "meeting": "Réunion",
+    "status": "Statut",
+    "decided": "Décidée le",
+    "doneOn": "Faite le",
+    "carried": "Séances depuis",
+    "ticket": "Ticket",
+    "done": "Faite",
+    "hint": "Toutes les actions de cette vue, y compris celles faites il y a plus de deux semaines",
+    "fileName": "actions"
+  }
+}

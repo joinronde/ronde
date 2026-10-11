@@ -1,0 +1,12 @@
+{
+  "skipToContent": "सामग्री पर जाएँ",
+  "navigation": "दृश्य",
+  "screenHint": "नए टैब में खुलता है, वीडियो कॉल में साझा करने के लिए",
+  "videoHint": "वीडियो कॉल नए टैब में खोलता है",
+  "joinVideo": "वीडियो कॉल में शामिल हों",
+  "reconnecting": "फिर से जुड़ रहे हैं…",
+  "host": "होस्ट",
+  "cohost": "सह-होस्ट",
+  "backToWorkspace": "{workspace} पर वापस",
+  "breadcrumb": "स्थान"
+}

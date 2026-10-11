@@ -1,0 +1,69 @@
+{
+  "title": "Wiki",
+  "intro": "Pubblica il verbale di ogni sessione come pagina in Notion o Confluence. Poi ogni riunione sceglie il suo wiki in Impostazioni › Integrazioni.",
+  "empty": "Ancora nessun wiki.",
+  "add": "Aggiungi un wiki",
+  "kind": "Strumento",
+  "name": "Nome",
+  "optional": "facoltativo",
+  "kinds": {
+    "notion": "Notion",
+    "confluence": "Confluence"
+  },
+  "fields": {
+    "notion": {
+      "parent": "Pagina principale (il suo indirizzo)"
+    },
+    "confluence": {
+      "site": "Indirizzo di Confluence",
+      "space": "Chiave dello spazio",
+      "parent": "Pagina principale (indirizzo o numero)",
+      "email": "Email dell'account (Cloud)"
+    }
+  },
+  "token": {
+    "notion": "Segreto dell'integrazione",
+    "confluence": "Token API"
+  },
+  "hints": {
+    "notion": "In Notion, crea un'integrazione interna su notion.so/profile/integrations e copiane il segreto. Poi apri la pagina principale e condividila con l'integrazione (••• › Connessioni): le pagine vengono create sotto di essa.",
+    "confluence": "Confluence Cloud: un token API creato su id.atlassian.com, per l'account la cui email è indicata sopra. Data Center o Server: un token di accesso personale (profilo › Token di accesso personali), senza email. L'account deve poter creare pagine nello spazio."
+  },
+  "tokenKept": "Un token è salvato. Digitane uno nuovo per sostituirlo.",
+  "save": "Salva",
+  "cancel": "Annulla",
+  "test": "Prova",
+  "works": "✓ Collegato.",
+  "edit": "Modifica",
+  "remove": "Rimuovi",
+  "removeConfirm": "Rimuovere {name}? Le riunioni smettono di pubblicarvi; le pagine già pubblicate restano.",
+  "openInRonde": "Apri in Ronde",
+  "meeting": {
+    "title": "Pubblica il verbale",
+    "intro": "A ogni archiviazione, il verbale diventa una pagina del wiki, con la data della sessione come nome. Quando il riepilogo viene modificato, la pagina si aggiorna.",
+    "wiki": "Wiki",
+    "none": "Da nessuna parte",
+    "hint": "Le sessioni già archiviate si pubblicano dalla cronologia.",
+    "noWiki": "Ancora nessun wiki in questo spazio.",
+    "addWiki": "Aggiungine uno nelle impostazioni dello spazio",
+    "on": "Il verbale sarà pubblicato in {name}.",
+    "off": "Il verbale non viene più pubblicato."
+  },
+  "history": {
+    "publish": "Pubblica in {name}",
+    "update": "Aggiorna la pagina",
+    "open": "Apri in {name}",
+    "publishing": "Pubblicazione…",
+    "done": "Verbale pubblicato in {name}.",
+    "failed": "L'ultima pubblicazione non è riuscita. {error}",
+    "retry": "Riprova"
+  },
+  "errors": {
+    "token": "Il wiki ha rifiutato il token: verifica che sia corretto e ancora valido.",
+    "notionPage": "Notion non trova la pagina principale: condividila con l'integrazione (••• › Connessioni).",
+    "notionParent": "La pagina principale non è l'indirizzo di una pagina Notion.",
+    "confluenceSpace": "Confluence non trova lo spazio o la pagina principale, oppure l'account non può vederli.",
+    "answer": "Il wiki ha risposto: {detail}.",
+    "network": "Il wiki non è raggiungibile: verifica il suo indirizzo."
+  }
+}

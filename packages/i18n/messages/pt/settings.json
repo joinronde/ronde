@@ -1,0 +1,265 @@
+{
+  "hostOnlyTitle": "Configurações reservadas aos anfitriões ({host})",
+  "hostOnlyBody": "Os anfitriões configuram a reunião, as pessoas e as seções. Peça a um deles, ou a um administrador do espaço de trabalho, para mudar algo.",
+  "saved": "Configurações salvas",
+  "onePerLine": "Um por linha",
+  "remove": "Remover",
+  "cancel": "Cancelar",
+  "meeting": {
+    "title": "Reunião",
+    "teamName": "Nome da reunião",
+    "hostLabel": "Nome exibido para o anfitrião",
+    "hostLabelHint": "Um papel ou um nome, ex.: Scrum master, Facilitador, Júlia. Exibido em todo o Ronde: “Notas · {host}”.",
+    "locale": "Idioma da reunião",
+    "localeHint": "Idioma dos e-mails de lembrete, das notificações e das atas geradas.",
+    "speakingTime": "Tempo de fala",
+    "perPerson": "{time} por pessoa",
+    "targetRange": "De 5 min a 8 h.",
+    "speakRange": "De 15 s a 30 min.",
+    "unitSec": "s",
+    "unitMin": "min",
+    "unitH": "h",
+    "seconds": "Segundos",
+    "minutes": "Minutos",
+    "hours": "Horas",
+    "otherDuration": "Outra duração…",
+    "target": "Duração alvo",
+    "timer": "Cronômetro",
+    "autoStart": "Inicia a cada vez",
+    "announcements": "Avisos da introdução",
+    "localeWorkspace": "Idioma do espaço de trabalho ({language})"
+  },
+  "sections": {
+    "title": "Seções da ficha",
+    "name": "Nome da seção",
+    "nameOf": "Nome da seção {n}",
+    "input": "Entrada",
+    "inputOf": "Entrada de “{label}”",
+    "role": "Papel",
+    "roleOf": "Papel de “{label}”",
+    "roles": {
+      "achievement": {
+        "label": "Feito",
+        "hint": "O que foi feito. Propõe marcar o que foi previsto da última vez."
+      },
+      "plan": {
+        "label": "Previsto",
+        "hint": "O que vem a seguir. Mostrado de novo na próxima sessão e no lembrete."
+      },
+      "blocker": {
+        "label": "Bloqueio",
+        "hint": "O que bloqueia. Destacado na tela, pode virar uma ação de acompanhamento, acompanhado nas estatísticas."
+      },
+      "note": {
+        "label": "Outros",
+        "hint": "Qualquer outra coisa que valha compartilhar."
+      },
+      "custom": {
+        "label": "Personalizada",
+        "hint": "Uma seção livre, sem comportamento especial."
+      }
+    },
+    "taken": "já em uso",
+    "carryPlansSwitch": "A seção passa a ser um checklist.",
+    "carryPlansHint": "Cada pessoa encontra o que tinha previsto como caixas para marcar à medida que avança. Uma caixa não marcada não conta como feita.",
+    "carryPlans": "Retomar o que estava em “{plan}” da última vez",
+    "moveUp": "Subir “{label}”",
+    "moveDown": "Descer “{label}”",
+    "removeOf": "Remover “{label}”",
+    "customPlaceholder": "Ex.: Pesquisa, Demo para mostrar, Preciso de ajuda",
+    "add": "Adicionar uma seção",
+    "hint": "Cada papel (feito, previsto, bloqueio, outros) vai para no máximo uma seção. Uma seção mantém o que foi escrito quando seu nome, papel ou entrada muda."
+  },
+  "reminder": {
+    "title": "Lembrete de ficha",
+    "when": "Quando",
+    "dayBefore": "No dia útil anterior à reunião",
+    "sameDay": "No dia da reunião, antes do horário",
+    "time": "Hora",
+    "byEmail": "Por e-mail, a cada pessoa",
+    "emailHint": "Só recebem o lembrete as pessoas cuja ficha ainda não está preenchida. Você pode cancelar a inscrição de alguém com a caixa “Lembrete” na lista da equipe.",
+    "noSmtp": "Nenhum servidor de e-mail configurado: defina SMTP_URL no contêiner para ativar os lembretes por e-mail.",
+    "teamHint": "Um lembrete coletivo em uma sala da equipe é configurado em “Notificações”."
+  },
+  "warmUp": {
+    "mood": "Humor da equipe",
+    "moodOffer": "Propor a cada pessoa compartilhar o humor do dia (anônimo)",
+    "icebreaker": "Quebra-gelo",
+    "bank": "Banco de perguntas",
+    "bankHint": "Uma pergunta é sorteada para cada reunião; a sala de controle pode trocá-la. Deixe vazio para desativar o quebra-gelo."
+  },
+  "sources": {
+    "title": "Fontes de tarefas",
+    "gitlabToken": "Token do GitLab",
+    "noSecretKey": "A criptografia de tokens não está configurada no servidor: peça aos operadores para definir a chave SECRET_KEY.",
+    "tokenHint": "Os tokens são criptografados antes de serem salvos e nunca são mostrados de novo. GitLab: um token com o escopo <code>read_api</code>.",
+    "serverToken": "(o token do servidor é usado até você informar um)",
+    "groups": "Grupos do GitLab",
+    "projects": "Projetos do GitLab acompanhados",
+    "projectsHint": "Só as issues destes projetos são oferecidas para importação. Informe também o usuário do GitLab de cada pessoa no bloco Pessoas.",
+    "save": "Salvar o acesso ao GitLab",
+    "turnOn": "Nenhuma integração está ativada nesta reunião. Ative GitLab ou GitHub em “Módulos” para importar as issues e merge ou pull requests de cada pessoa.",
+    "githubTitle": "GitHub",
+    "githubToken": "Token do GitHub",
+    "githubTokenHint": "Opcional para repositórios públicos. Para os privados: um token granular com leitura de issues e pull requests. Criptografado, nunca mostrado de novo.",
+    "githubRepos": "Repositórios acompanhados",
+    "githubReposHint": "“dono/repositório” ou um “dono” inteiro, um por linha; vazio: todos os repositórios. Informe também o usuário do GitHub de cada pessoa no bloco Pessoas.",
+    "githubSave": "Salvar o acesso ao GitHub"
+  },
+  "preview": {
+    "title": "Pré-visualização do lembrete",
+    "to": "Para: {email} · {date} às {time}",
+    "disabled": "lembretes desativados",
+    "frameTitle": "Pré-visualização do e-mail de lembrete para {name}"
+  },
+  "token": {
+    "removed": "Será removido ao salvar",
+    "saved": "Salvo · informe outro para substituí-lo",
+    "keep": "Manter"
+  },
+  "gitlab": {
+    "unreachable": "O GitLab não responde.",
+    "followed": "{count, plural, one {# projeto ou grupo acompanhado} other {# projetos ou grupos acompanhados}}",
+    "noFilter": "Sem filtro: todos os projetos são acompanhados",
+    "untickAll": "Desmarcar tudo",
+    "tokenFirst": "Informe e salve o token do GitLab para mostrar os projetos dos grupos.",
+    "loading": "Carregando projetos…",
+    "saveForGroups": "Salve as configurações para mostrar os projetos dos novos grupos.",
+    "filter": "Filtrar projetos",
+    "filterPlaceholder": "Filtrar os {count} projetos…",
+    "outsideGroups": "fora dos grupos",
+    "wholeGroup": "grupo inteiro · {count} projetos"
+  },
+  "people": {
+    "title": "Pessoas ({count})",
+    "intro": "Os perfis vêm do diretório do espaço de trabalho. O papel define o que cada pessoa pode fazer nesta reunião.",
+    "roles": {
+      "host": "Anfitrião",
+      "cohost": "Coanfitrião",
+      "participant": "Participante",
+      "observer": "Observador"
+    },
+    "roleHints": {
+      "host": "Conduz as sessões e configura a reunião",
+      "cohost": "Conduz as sessões",
+      "participant": "Preenche uma ficha e participa",
+      "observer": "Acompanha as sessões, sem ficha"
+    },
+    "roleOf": "Papel de {name}",
+    "speaks": "Tem a vez",
+    "speaksHint": "Incluído na rodada",
+    "remind": "Lembrete",
+    "gitlab": "Usuário do GitLab",
+    "remove": "Remover",
+    "confirmRemove": "Remover da reunião",
+    "removed": "{name} não participa mais",
+    "added": "{name} adicionado à reunião",
+    "updated": "Salvo",
+    "addTitle": "Adicionar alguém",
+    "pick": "Pessoa",
+    "pickPlaceholder": "Escolha alguém do diretório",
+    "add": "Adicionar",
+    "nobodyLeft": "Todos do diretório já participam.",
+    "directory": "Gerenciar o diretório",
+    "categoriesHint": "Categorias profissionais, aniversários e nomes são editados no diretório do espaço de trabalho.",
+    "github": "Usuário do GitHub"
+  },
+  "template": {
+    "title": "Reutilizar este formato",
+    "intro": "Salve as seções, o formato, os módulos e a agenda como modelo do espaço de trabalho, para criar outras reuniões a partir dele. Pessoas, histórico e tokens ficam aqui.",
+    "open": "Salvar como modelo",
+    "name": "Nome do modelo",
+    "description": "Descrição (opcional)",
+    "save": "Salvar o modelo",
+    "cancel": "Cancelar",
+    "saved": "Modelo salvo: ele é oferecido ao criar uma reunião."
+  },
+  "nav": {
+    "label": "Categorias de configurações",
+    "general": "Geral",
+    "schedule": "Agenda",
+    "people": "Pessoas e papéis",
+    "sections": "Seções",
+    "modules": "Módulos",
+    "appearance": "Aparência",
+    "notifications": "Notificações",
+    "integrations": "Integrações",
+    "template": "Modelo",
+    "danger": "Zona de perigo",
+    "agenda": "Pauta",
+    "projects": "Projetos"
+  },
+  "status": {
+    "auto": "As alterações são salvas automaticamente.",
+    "saving": "Salvando…",
+    "saved": "Salvo",
+    "invalid": "Não salvo: verifique os campos destacados.",
+    "failed": "Não salvo: a alteração foi recusada.",
+    "undo": "Desfazer"
+  },
+  "appearance": {
+    "accent": "Cor de destaque",
+    "accentHint": "Usada nos botões, no cronômetro e na tela compartilhada desta reunião, nos temas claro e escuro.",
+    "accents": {
+      "ember": "Brasa",
+      "ocean": "Oceano",
+      "forest": "Floresta",
+      "plum": "Ameixa",
+      "slate": "Ardósia"
+    },
+    "themeHint": "O tema claro ou escuro é uma escolha pessoal:",
+    "themeLink": "escolha na sua conta."
+  },
+  "danger": {
+    "title": "Excluir a reunião",
+    "hint": "A reunião sai de todas as listas e suas páginas são fechadas para todos. O histórico é mantido com o espaço de trabalho.",
+    "confirm": "Digite <strong>{name}</strong> para confirmar",
+    "remove": "Excluir a reunião"
+  },
+  "video": {
+    "title": "Videochamada",
+    "provider": "Ferramenta de vídeo",
+    "providers": {
+      "link": "Um link para qualquer ferramenta (Meet, Zoom, Teams…)",
+      "jitsi": "Jitsi Meet (uma sala criada para esta reunião)",
+      "bbb": "BigBlueButton (seu servidor)"
+    },
+    "link": "Link da videochamada",
+    "linkHint": "Mostrado no topo de todas as páginas e nos e-mails.",
+    "jitsiUrl": "Servidor Jitsi",
+    "jitsiHint": "Vazio: meet.jit.si. O nome da sala é sorteado uma vez, difícil de adivinhar, e é o mesmo em todas as sessões.",
+    "bbbUrl": "Servidor BigBlueButton",
+    "bbbSecret": "Segredo compartilhado do servidor",
+    "bbbHint": "O Ronde abre a sala quando alguém entra e faz cada pessoa entrar com seu nome; os anfitriões entram como moderadores. O segredo é criptografado e nunca mostrado de novo.",
+    "current": "As pessoas entram com:",
+    "tryIt": "a sala BigBlueButton",
+    "save": "Salvar a videochamada",
+    "createWith": "Criar uma sala permanente com:",
+    "roomCreated": "Sala criada: o link foi salvo.",
+    "kinds": {
+      "zoom": "Zoom",
+      "meet": "Google Meet",
+      "teams": "Teams"
+    }
+  },
+  "logoHint": "O logotipo do espaço de trabalho aparece na tela compartilhada, nos e-mails e nas atas.",
+  "logoLink": "Altere-o nas configurações do espaço de trabalho",
+  "icon": {
+    "title": "Ícone",
+    "hint": "Exibido ao lado do nome da reunião nos menus e listas: um emoji ou uma imagem própria (um logotipo, uma foto da equipe).",
+    "upload": "Enviar uma imagem",
+    "changeImage": "Trocar a imagem",
+    "removeImage": "Remover a imagem",
+    "imageFirst": "A imagem aparece no lugar do emoji; remova-a para ver o emoji de novo.",
+    "emoji": "Emoji",
+    "initials": "Iniciais",
+    "initialsShort": "Aa",
+    "other": "Outro emoji",
+    "otherPlaceholder": "Cole ou digite um emoji",
+    "use": "Usar",
+    "saved": "Ícone salvo",
+    "imageSaved": "Imagem salva",
+    "imageRemoved": "Imagem removida",
+    "notSaved": "Não foi possível salvar a imagem."
+  }
+}

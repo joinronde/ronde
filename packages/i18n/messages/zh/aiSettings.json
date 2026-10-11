@@ -1,0 +1,18 @@
+{
+  "title": "AI 助手",
+  "intro": "起草会议总结，并根据纪要建议后续行动项。主持人会在保存前审阅全部内容。",
+  "enable": "开启 AI 助手",
+  "model": "模型",
+  "key": "Anthropic API 密钥",
+  "keyHint": "在 Anthropic 控制台创建密钥。它会加密存储，且不会再次显示。",
+  "keySaved": "已保存一个密钥。输入新密钥即可替换。",
+  "instanceKey": "实例密钥",
+  "instanceKeyHint": "此实例提供了密钥。输入你自己的密钥即可改用你的 Anthropic 账户。",
+  "noEncryption": "无法存储密钥：此实例未设置 SECRET_KEY。",
+  "privacy": "当有人请求时，会议纪要（绝不包括会前填写的进展卡，绝不包括密码或密钥）会发送给 Anthropic 以生成回答。",
+  "save": "保存",
+  "test": "测试助手",
+  "removeKey": "移除密钥",
+  "saved": "已保存。",
+  "works": "✓ 助手有响应。"
+}

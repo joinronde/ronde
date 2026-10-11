@@ -1,0 +1,13 @@
+{
+  "title": "Logo",
+  "intro": "Il tuo logo sostituisce quello di Ronde: nella barra laterale, sullo schermo condiviso, nelle email e nei verbali.",
+  "drop": "Rilascia qui il tuo logo",
+  "formats": "PNG, JPEG o WebP. Un PNG trasparente rende meglio.",
+  "current": "Logo attuale",
+  "upload": "Carica un logo",
+  "replace": "Sostituisci",
+  "remove": "Rimuovi",
+  "where": "Mostrato su sfondi chiari e scuri: verifica che si legga bene su entrambi.",
+  "failed": "Impossibile salvare il logo.",
+  "unreadable": "Impossibile leggere questa immagine."
+}

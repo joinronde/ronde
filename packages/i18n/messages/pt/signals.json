@@ -1,0 +1,32 @@
+{
+  "sleepy": {
+    "label": "Zzz",
+    "combo": "A equipe está cochilando…",
+    "comboNamed": "{name}, a equipe está cochilando…"
+  },
+  "hundred": {
+    "label": "Com certeza",
+    "combo": "100% aprovado",
+    "comboNamed": "100% aprovado"
+  },
+  "popcorn": {
+    "label": "Pipoca",
+    "combo": "Está ficando bom, pega a pipoca",
+    "comboNamed": "Está ficando bom, pega a pipoca"
+  },
+  "mindBlown": {
+    "label": "Explodiu a mente!",
+    "combo": "Mentes explodidas!",
+    "comboNamed": "{name} acabou de explodir a mente da equipe"
+  },
+  "fire": {
+    "label": "Mandou bem!",
+    "combo": "A equipe está pegando fogo!",
+    "comboNamed": "{name} está pegando fogo!"
+  },
+  "coffee": {
+    "label": "Pausa pro café?",
+    "combo": "A equipe quer um café",
+    "comboNamed": "A equipe quer um café"
+  }
+}

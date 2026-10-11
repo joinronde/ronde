@@ -1,0 +1,19 @@
+{
+  "title": "Away",
+  "add": "Add an absence",
+  "intro": "Holidays, leave, training: you are marked absent from the sessions of those days, and get no reminders.",
+  "from": "First day",
+  "to": "Last day",
+  "delegate": "Who runs your meetings meanwhile",
+  "noDelegate": "Nobody: the co-hosts carry on",
+  "delegateHint": "For the meetings you host. They get a notification.",
+  "note": "Note",
+  "notePlaceholder": "E.g. holidays, back on Monday",
+  "save": "Save the absence",
+  "cancel": "Cancel",
+  "period": "{from} to {to}",
+  "standsIn": "{name} stands in",
+  "remove": "Remove the absence of {period}",
+  "empty": "No absence planned.",
+  "emptyMine": "No absence planned. Going away? Add it here: your meetings will know."
+}

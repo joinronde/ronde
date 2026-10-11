@@ -1,0 +1,53 @@
+{
+  "title": "Ma fiche",
+  "save": "Enregistrer",
+  "cancel": "Annuler",
+  "close": "Fermer",
+  "fillIn": "Remplir ma fiche",
+  "openRonde": "Ouvrir dans Ronde",
+  "hint": {
+    "list": "Un point par ligne.",
+    "checklist": "Un point par ligne ; commencez-le par [x] une fois fait.",
+    "text": "Texte libre, sur autant de lignes que nécessaire."
+  },
+  "notFound": "Ronde ne trouve pas cette fiche pour vous. L’e-mail de votre compte Slack doit être celui de votre profil Ronde, et vous devez participer à la réunion.",
+  "tooLong": "Cette fiche est trop longue pour être modifiée dans Slack. Ouvrez-la dans Ronde.",
+  "tooMany": "{max} points au maximum.",
+  "itemTooLong": "Un point dépasse {max} caractères.",
+  "changed": "Votre fiche a changé dans Ronde entre-temps. Fermez ce formulaire et rouvrez-le pour avoir la dernière version.",
+  "saved": "Votre fiche pour « {team} » est enregistrée. Merci !",
+  "ready": "Fiche prête",
+  "toFill": "Fiche à remplir",
+  "noSession": "Aucune séance prévue",
+  "noMeetings": "Vous ne participez à aucune réunion de cet espace.",
+  "actions": "Vos actions de suivi en cours",
+  "summary": "Vos réunions dans Ronde",
+  "unknown": "Ronde ne vous connaît pas encore : l’e-mail de votre compte Slack doit être celui de votre profil dans un espace Ronde qui a ajouté l’app.",
+  "unavailable": "Ronde ne peut pas répondre pour le moment. Réessayez dans un instant.",
+  "settings": {
+    "intro": "Ajoutez Ronde à votre espace Slack : chacun remplit sa fiche sans quitter Slack.",
+    "locked": "L’app Slack est incluse dans Ronde {edition}.",
+    "uses": {
+      "reminders": "Rappels de fiche en message privé, avec un bouton qui ouvre la fiche dans un formulaire Slack.",
+      "channel": "Le canal choisi devient un connecteur : dans les notifications de chaque réunion, choisissez ce qui y est publié (comptes rendus, séance qui commence…).",
+      "command": "/ronde montre à chacun ses prochaines séances et ses actions de suivi en cours."
+    },
+    "emailMatch": "Les personnes sont reconnues par leur e-mail : leur compte Slack et leur profil Ronde doivent avoir le même.",
+    "add": "Ajouter à Slack",
+    "connectedTo": "Connecté à {team}",
+    "channel": "notifications dans {channel}",
+    "reminders": "Envoyer les rappels de fiche dans Slack",
+    "remindersHint": "En message privé, à la place de l’e-mail, aux personnes trouvées dans Slack. Les autres reçoivent toujours l’e-mail.",
+    "reinstall": "Changer de canal",
+    "disconnect": "Déconnecter",
+    "disconnectConfirm": "Retirer Ronde de cet espace Slack ? Les rappels repassent par e-mail, et les règles de notification qui publient dans son canal sont supprimées.",
+    "notConfigured": "Pour utiliser Slack, l’administrateur de cette instance Ronde crée d’abord son app Slack. Cela prend quelques minutes.",
+    "setup": "Comment la configurer",
+    "result": {
+      "connected": "Slack est connecté.",
+      "cancelled": "L’installation a été annulée dans Slack.",
+      "denied": "Seules les personnes qui gèrent les connecteurs de l’espace peuvent ajouter Slack.",
+      "failed": "Slack n’a pas pu être connecté. Réessayez ; si cela persiste, contactez l’administrateur de cette instance."
+    }
+  }
+}

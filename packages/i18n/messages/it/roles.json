@@ -1,0 +1,26 @@
+{
+  "title": "Ruoli",
+  "intro": "I ruoli personalizzati aggiungono permessi a organizzatori, membri e ospiti. I permessi di riunione valgono per tutte le riunioni dello spazio di lavoro.",
+  "new": "Nuovo ruolo",
+  "newTitle": "Nuovo ruolo",
+  "editTitle": "Modifica il ruolo",
+  "name": "Nome",
+  "description": "Descrizione",
+  "groups": {
+    "workspace": "Spazio di lavoro",
+    "meetings": "Tutte le riunioni"
+  },
+  "groupHints": {
+    "workspace": "Cosa possono fare in tutto lo spazio di lavoro.",
+    "meetings": "Concesso su tutte le riunioni, anche quelle a cui non partecipano."
+  },
+  "save": "Salva il ruolo",
+  "cancel": "Annulla",
+  "edit": "Modifica",
+  "delete": "Elimina",
+  "deleteConfirm": "Eliminare il ruolo «{name}»? {count, plural, =0 {Nessuno lo ha.} one {# persona torna al solo ruolo di base.} other {# persone tornano al solo ruolo di base.}}",
+  "members": "{count, plural, =0 {nessuno} one {# persona} other {# persone}}",
+  "empty": "Ancora nessun ruolo personalizzato.",
+  "examples": "Per esempio: «Revisore» (cronologia e statistiche di tutte le riunioni), «Facilitatore» (conduce qualsiasi riunione), «Gestione persone» (rubrica e inviti).",
+  "readOnly": "La licenza è scaduta: i ruoli restano visibili ma non danno più alcun permesso finché non viene rinnovata."
+}

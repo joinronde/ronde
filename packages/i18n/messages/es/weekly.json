@@ -1,0 +1,28 @@
+{
+  "subject": "Tu semana con {workspace}",
+  "title": "Tu semana",
+  "greeting": "Hola, {name}:",
+  "intro": "Esto es lo que te espera esta semana en {workspace}.",
+  "preheader": "{sessions, plural, =0 {Ninguna sesión} one {# sesión} other {# sesiones}} y {actions, plural, =0 {ninguna acción abierta} one {# acción abierta} other {# acciones abiertas}} esta semana",
+  "when": "{date} a las {time}",
+  "moved": "movida",
+  "sessions": "Tus sesiones de la semana",
+  "checkIn": "Mi ficha",
+  "actions": "Tus acciones abiertas",
+  "actionsHint": "Márcalas en Ronde en cuanto estén hechas.",
+  "carried": "{count, plural, one {abierta desde hace # sesión} other {abierta desde hace # sesiones}}",
+  "kudos": "Los reconocimientos recibidos",
+  "from": "de {name}",
+  "open": "Abrir Ronde",
+  "footer": "Recibes este resumen los lunes como miembro de {workspace}.",
+  "settings": "Puedes cambiarlo en tu cuenta.",
+  "stop": "Dejar de recibir el resumen",
+  "page": {
+    "title": "¿Dejar de recibir el resumen semanal?",
+    "body": "Ya no recibirás el resumen del lunes con tus sesiones, acciones y reconocimientos. Puedes volver a activarlo en tu cuenta.",
+    "button": "Dejar de recibirlo",
+    "done": "Listo: ya no recibirás el resumen semanal.",
+    "invalid": "Este enlace no es válido.",
+    "back": "Volver a Ronde"
+  }
+}

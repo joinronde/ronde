@@ -1,0 +1,25 @@
+{
+  "host": "Régisseur",
+  "duration": {
+    "minutes": "{m} min",
+    "hours": "{h} h",
+    "hoursMinutes": "{h} h {m}"
+  },
+  "noMeeting": {
+    "title": "Aucune réunion en cours",
+    "notPrepared": "La prochaine réunion n'est pas encore préparée ({host}). En attendant, vous pouvez remplir votre fiche.",
+    "pickDate": "Choisissez la date de la prochaine réunion pour lancer l'ordre du jour.",
+    "dateLabel": "Date de la réunion",
+    "prepare": "Préparer la réunion du {date}",
+    "addTeamFirst": "Ajoutez d'abord l'équipe dans les réglages.",
+    "openSettings": "Ouvrir les réglages"
+  },
+  "loadError": {
+    "title": "Chargement impossible",
+    "body": "Le serveur n'a pas répondu ou a renvoyé une erreur. Vos données ne sont pas perdues.",
+    "retry": "Réessayer"
+  },
+  "cancel": "Annuler",
+  "delete": "Supprimer",
+  "exportCsv": "Exporter en CSV"
+}

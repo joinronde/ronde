@@ -1,0 +1,10 @@
+{
+  "actionFailed": "Die Aktion ist nicht durchgegangen. Versuch es noch einmal.",
+  "serverUnreachable": "Server nicht erreichbar. Prüfe deine Verbindung.",
+  "sessionExpired": "Deine Sitzung ist abgelaufen. Melde dich erneut an: Was du eingegeben hast, bleibt auf der Seite.",
+  "reconnect": "Erneut anmelden",
+  "kudoFrom": "{from} dankt {to}",
+  "quoted": "„{text}“",
+  "language": "Sprache",
+  "newTab": "(öffnet sich in einem neuen Tab)"
+}

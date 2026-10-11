@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "label": "Spazio di lavoro",
+    "home": "Home",
+    "people": "Rubrica",
+    "settings": "Impostazioni"
+  },
+  "switcher": "Cambia spazio di lavoro",
+  "newWorkspace": "Nuovo spazio di lavoro",
+  "userMenu": "Menu dell'account",
+  "account": "Il tuo account",
+  "roles": {
+    "owner": "Proprietario",
+    "admin": "Amministratore",
+    "billing": "Fatturazione",
+    "organizer": "Organizzatore",
+    "member": "Membro",
+    "guest": "Ospite"
+  },
+  "roleHints": {
+    "owner": "Tutto, inclusa la fatturazione e l'eliminazione dello spazio di lavoro",
+    "admin": "Gestisce persone, ruoli, modelli e connettori",
+    "billing": "Gestisce il piano, le fatture e il metodo di pagamento, nient'altro",
+    "organizer": "Un membro che crea riunioni anche quando sono riservate agli amministratori e invita le persone necessarie",
+    "member": "Crea riunioni e partecipa a quelle a cui è invitato",
+    "guest": "Vede solo le riunioni a cui è invitato"
+  },
+  "home": {
+    "stepInvite": "Invita il tuo team",
+    "stepInviteHint": "{count, plural, =0 {Ancora nessun altro} one {Un'altra persona in rubrica} other {Altre # persone in rubrica}}",
+    "stepMeeting": "Crea la tua prima riunione",
+    "stepMeetingHint": "Il modello di riunione settimanale, pronto in un minuto.",
+    "stepCheckIn": "Compila la tua scheda",
+    "stepCheckInHint": "Cosa hai fatto, cosa prevedi, cosa ti blocca: qualche riga prima della riunione.",
+    "stepSession": "Conduci una prima sessione",
+    "stepSessionHint": "Apri la regia, inizia la riunione, poi archiviala con il suo verbale."
+  },
+  "settings": {
+    "title": "Impostazioni dello spazio di lavoro",
+    "general": "Generale",
+    "name": "Nome",
+    "slug": "Indirizzo",
+    "slugHint": "Usato nei link: {url}",
+    "language": "Lingua di email e verbali",
+    "timezone": "Fuso orario",
+    "meetingCreation": "Chi può creare riunioni",
+    "meetingCreationMembers": "Tutti i membri",
+    "meetingCreationAdmins": "Organizzatori e amministratori",
+    "saved": "Salvato",
+    "categories": "Categorie professionali",
+    "categoriesHint": "Mostrate sulle schede e usate per raggruppare le statistiche.",
+    "categoryPlaceholder": "es. Sviluppo",
+    "add": "Aggiungi",
+    "rename": "Rinomina {name}",
+    "delete": "Elimina {name}",
+    "noCategories": "Ancora nessuna categoria professionale.",
+    "danger": "Zona pericolosa",
+    "leave": "Lascia lo spazio di lavoro",
+    "leaveHint": "Perdi l'accesso alle sue riunioni. Il tuo profilo resta in rubrica.",
+    "leaveConfirm": "Lasciare {workspace}?",
+    "deleteWorkspace": "Elimina lo spazio di lavoro",
+    "deleteHint": "Riunioni, persone e cronologia scompaiono per tutti. Non si può annullare.",
+    "deleteConfirm": "Digita <strong>{slug}</strong> per confermare.",
+    "cancel": "Annulla",
+    "readOnly": "Solo gli amministratori possono modificare queste impostazioni.",
+    "tabs": {
+      "label": "Sezioni delle impostazioni",
+      "general": "Generale",
+      "security": "Sicurezza",
+      "roles": "Ruoli",
+      "audit": "Registro di audit",
+      "billing": "Fatturazione",
+      "plans": "Piani"
+    },
+    "buffer": "Margine tra due riunioni",
+    "bufferHint": "Lasciato libero prima e dopo ogni riunione di una persona: «trova uno slot» lo rispetta, e i calendari avvisano quando due riunioni si avvicinano di più.",
+    "bufferNone": "Nessun margine",
+    "bufferMinutes": "{count, plural, one {# minuto} other {# minuti}}"
+  }
+}

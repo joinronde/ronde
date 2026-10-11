@@ -1,0 +1,75 @@
+{
+  "workspaces": {
+    "unlimited": "工作空间、会议和人数不限"
+  },
+  "identity": {
+    "local": "邮箱和密码账户",
+    "magicLink": "邮件登录链接",
+    "social": "使用 Google、GitHub 或 Microsoft 登录",
+    "oidc": "通过一个 OpenID Connect 服务商单点登录",
+    "twoFactor": "双因素认证",
+    "saml": "SAML 单点登录和多个身份提供方",
+    "ldap": "LDAP 和 Active Directory 登录",
+    "scim": "通过 SCIM 自动开通用户",
+    "enforcedSso": "强制单点登录",
+    "domainCapture": "域名接管"
+  },
+  "permissions": {
+    "builtInRoles": "工作空间和会议的内置角色",
+    "customRoles": "自定义角色和细粒度权限"
+  },
+  "meetings": {
+    "unlimited": "会议和场次不限",
+    "sectionRoles": "可配置行为的进展卡栏目",
+    "templates": "内置模板和工作空间模板"
+  },
+  "scheduling": {
+    "recurrence": "支持例外的灵活循环",
+    "ics": "日历订阅（ICS）",
+    "calendarSync": "与 Google、Microsoft 365 和 CalDAV 日历双向同步"
+  },
+  "modules": {
+    "facilitation": "所有引导模块",
+    "notifications": "邮件、聊天和 Webhook 通知",
+    "formats": "回顾会、计划扑克、异步会议",
+    "workflows": "工作流构建器",
+    "aiAssistant": "AI 助手：总结与行动项",
+    "transcription": "按发言轮次转写会议"
+  },
+  "integrations": {
+    "gitlab": "从 GitLab 导入",
+    "github": "从 GitHub 导入",
+    "video": "视频通话：任意链接、Jitsi、BigBlueButton",
+    "api": "REST API 和外发 Webhook",
+    "writeBack": "根据行动项在 Jira、Linear、GitLab 和 GitHub 中创建工单",
+    "videoLinks": "自动创建 Zoom、Google Meet 和 Teams 链接",
+    "sms": "短信和 WhatsApp 提醒（Twilio）",
+    "slack": "Slack 应用：在 Slack 中填写进展卡，纪要发到频道，/ronde",
+    "wikis": "会议纪要发布到 Notion 和 Confluence",
+    "teams": "Microsoft Teams 应用：在 Teams 中提醒和填写进展卡，并用一个频道接收通知",
+    "projectSync": "已导入的项目保持同步：名称、阶段、日期和进度"
+  },
+  "reporting": {
+    "meeting": "单个会议统计",
+    "export": "导出为 Markdown、PDF 和 CSV",
+    "workspace": "跨会议的工作空间仪表盘",
+    "scheduled": "定期发送的邮件报告",
+    "portfolio": "项目组合仪表板：状态随时间变化、截止日期、没有消息的项目、CSV 导出和定期报告"
+  },
+  "branding": {
+    "customLogo": "在屏幕、邮件和纪要中使用你的 Logo",
+    "whiteLabel": "白标与自定义域名"
+  },
+  "compliance": {
+    "auditLog": "最近 90 天的审计日志，可导出 CSV",
+    "auditStream": "完整审计历史，可推送到你的 SIEM",
+    "retention": "数据保留规则"
+  },
+  "projects": {
+    "portfolio": "项目组合：描述、主题、状态、负责人、团队、日期以及每次会议的记录",
+    "round": "按项目轮流：每个项目一个轮次，由项目成员一起发言",
+    "programs": "计划：将项目归入多层嵌套的计划",
+    "permissions": "按项目设置权限",
+    "import": "从 GitHub、GitLab、Jira 和 Linear 导入项目"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "badge": "Ronde {edition}",
+  "also": "Also with {edition}",
+  "upgrade": "Move to {edition}",
+  "education": "Free for schools and universities",
+  "askAdmin": "This is part of a paid plan. An administrator of the workspace can turn it on.",
+  "pitch": {
+    "reporting_workspace": "See how every meeting of the workspace is doing: engagement, attendance, plans followed through, actions closed, week after week, with a report by email.",
+    "compliance_auditLog": "Know who changed what, and when: settings, people, roles and meetings, filtered, exported to CSV or streamed to your SIEM.",
+    "permissions_customRoles": "Give exactly the rights people need: roles of your own on top of member and guest, for the workspace and every meeting.",
+    "identity_domainCapture": "Your company's sign-in for your domain: verified domains, new accounts joining by themselves, single sign-on required, SAML, LDAP and SCIM.",
+    "reporting_portfolio": "See the whole portfolio at a glance: the health of every project week after week, the due dates, the projects nobody spoke of lately, a CSV export and the projects to watch in the email report."
+  }
+}

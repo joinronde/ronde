@@ -1,0 +1,26 @@
+{
+  "subject": "{workspace} · 你的会议，{period}",
+  "period": "{from} 至 {to}",
+  "title": "你的会议报告",
+  "byMeeting": "按会议",
+  "noSession": "此期间没有举行会议。",
+  "open": "在 Ronde 中查看分析",
+  "settings": {
+    "title": "邮件报告",
+    "intro": "这些数据会在每周或每月初通过电子邮件发送。",
+    "frequency": "频率",
+    "off": "不发送",
+    "weekly": "每周一（上一周）",
+    "monthly": "每月 1 日（上个月）",
+    "recipients": "接收人",
+    "admins": "工作空间的所有者和管理员",
+    "custom": "以下地址",
+    "emails": "地址，每行一个",
+    "save": "保存",
+    "saved": "已保存",
+    "test": "现在给我发一份测试",
+    "testSent": "测试报告已发送至 {email}"
+  },
+  "openBranded": "查看分析",
+  "projectsToWatch": "需要关注的项目"
+}

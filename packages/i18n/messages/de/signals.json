@@ -1,0 +1,32 @@
+{
+  "sleepy": {
+    "label": "Zzz",
+    "combo": "Das Team nickt ein…",
+    "comboNamed": "{name}, das Team nickt ein…"
+  },
+  "hundred": {
+    "label": "Absolut",
+    "combo": "100 % Zustimmung",
+    "comboNamed": "100 % Zustimmung"
+  },
+  "popcorn": {
+    "label": "Popcorn",
+    "combo": "Jetzt wird's spannend, Popcorn raus",
+    "comboNamed": "Jetzt wird's spannend, Popcorn raus"
+  },
+  "mindBlown": {
+    "label": "Umwerfend!",
+    "combo": "Alle sind baff!",
+    "comboNamed": "{name} hat das Team gerade umgehauen"
+  },
+  "fire": {
+    "label": "Läuft!",
+    "combo": "Das Team ist in Topform!",
+    "comboNamed": "{name} ist in Topform!"
+  },
+  "coffee": {
+    "label": "Kaffeepause?",
+    "combo": "Das Team will einen Kaffee",
+    "comboNamed": "Das Team will einen Kaffee"
+  }
+}

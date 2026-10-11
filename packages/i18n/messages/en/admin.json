@@ -1,0 +1,65 @@
+{
+  "title": "Server administration",
+  "back": "Back",
+  "intro": "Settings of this Ronde server, shared by all its workspaces. Each workspace's own settings (members, roles, security) are in its Settings. Values saved here win over the environment variables.",
+  "counts": {
+    "users": "Accounts",
+    "workspaces": "Workspaces",
+    "meetings": "Meetings"
+  },
+  "language": "Language",
+  "defaultLocale": "Default language",
+  "defaultLocaleHint": "For people who have not picked a language in their account and whose browser offers none Ronde speaks.",
+  "signup": "Who can create an account",
+  "recommended": "Recommended",
+  "policies": {
+    "invite-only": {
+      "label": "On invitation",
+      "hint": "Only people invited to a workspace."
+    },
+    "domains": {
+      "label": "Email domains",
+      "hint": "Invited people, and anyone with an address of the domains below."
+    },
+    "open": {
+      "label": "Open",
+      "hint": "Anyone who reaches this server."
+    }
+  },
+  "domains": "Allowed domains",
+  "domainsHint": "Separated by commas, e.g. example.org.",
+  "save": "Save",
+  "saved": "Saved",
+  "license": {
+    "title": "License",
+    "pureCommunity": "This build is the pure Community edition: the paid editions' code is not included.",
+    "status": {
+      "none": "Community edition",
+      "invalid": "Invalid license key",
+      "active": "License active",
+      "grace": "License expired: grace period",
+      "expired": "License expired"
+    },
+    "reasons": {
+      "format": "The saved key cannot be read.",
+      "payload": "The saved key cannot be read.",
+      "signature": "The saved key was changed or not issued by Ronde.",
+      "unknownKey": "The saved key was signed by a key this version does not know."
+    },
+    "editions": {
+      "team": "Team",
+      "enterprise": "Enterprise"
+    },
+    "summary": "{edition} for {customer}, until {date}.",
+    "graceUntil": "Everything keeps working until {date}: renew the license before then.",
+    "readOnly": "Paid features are read-only: what they hold stays readable, nothing new can be added. Community features are not affected.",
+    "seats": "{used} of {seats} seats used",
+    "seatsUnlimited": "{used} people, no seat limit",
+    "overSeats": "More people use Ronde than the license allows: nothing is blocked, but please update your license.",
+    "fromEnv": "The key comes from the RONDE_LICENSE variable: change it there.",
+    "key": "License key",
+    "keyHint": "Checked on this server, offline: nothing is sent anywhere.",
+    "save": "Save the key",
+    "remove": "Remove the license"
+  }
+}

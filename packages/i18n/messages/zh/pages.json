@@ -1,0 +1,12 @@
+{
+  "title": "{page} · Ronde",
+  "description": "组织生动的团队会议：控制台、共享屏幕、计时轮流发言和会议纪要。",
+  "control": "控制台",
+  "screen": "共享屏幕",
+  "me": "我的屏幕",
+  "settings": "设置",
+  "stats": "统计",
+  "history": "历史",
+  "remote": "遥控",
+  "decisions": "决定"
+}

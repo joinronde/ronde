@@ -1,0 +1,18 @@
+{
+  "title": "Unirse a {workspace}",
+  "intro": "{inviter} te invitó a unirte a {workspace} en Ronde.",
+  "role": "Tu rol: {role}",
+  "signedInAs": "Sesión iniciada como <strong>{email}</strong>",
+  "accept": "Unirme a {workspace}",
+  "otherEmail": "Esta invitación se envió a <strong>{email}</strong>. Inicia sesión con esa dirección para aceptarla.",
+  "signIn": "Iniciar sesión para aceptar",
+  "signUp": "Crear una cuenta",
+  "switchAccount": "Usar otra cuenta",
+  "invalidTitle": "Invitación no válida",
+  "invalid": "Este enlace de invitación no es válido o fue revocado. Pide uno nuevo a quien te invitó.",
+  "expiredTitle": "Invitación caducada",
+  "expired": "Esta invitación a {workspace} ha caducado. Pide una nueva a quien te invitó.",
+  "memberTitle": "Ya estás dentro",
+  "member": "Ya eres miembro de {workspace}.",
+  "open": "Abrir {workspace}"
+}

@@ -1,0 +1,52 @@
+{
+  "title": "Comandos",
+  "placeholder": "Digite um comando: próximo, Emma, ata…",
+  "none": "Nenhum comando corresponde a “{query}”.",
+  "foot": "↑ ↓ para escolher, Enter para executar, Esc para fechar.",
+  "groups": {
+    "meeting": "Reunião",
+    "steps": "Ir para",
+    "panes": "Painel",
+    "people": "Pessoas",
+    "pages": "Abrir"
+  },
+  "keys": {
+    "space": "Espaço"
+  },
+  "start": "Começar a reunião",
+  "pause": "Pausar o cronômetro",
+  "resume": "Retomar o cronômetro",
+  "next": "Próxima etapa",
+  "previous": "Etapa anterior",
+  "bonus": "Dar mais 30 segundos",
+  "resetTimer": "Zerar o cronômetro",
+  "shuffle": "Embaralhar a ordem de fala",
+  "absent": "Marcar {name} como ausente",
+  "present": "Marcar {name} como presente",
+  "panes": {
+    "run": "Pauta",
+    "live": "Ao vivo",
+    "actions": "Ações",
+    "topics": "Assuntos",
+    "minutes": "Ata",
+    "polls": "Enquetes",
+    "random": "Ferramentas de sorteio"
+  },
+  "pages": {
+    "screen": "Tela compartilhada",
+    "remote": "Controle no celular",
+    "history": "Histórico",
+    "stats": "Estatísticas",
+    "settings": "Configurações"
+  },
+  "help": {
+    "title": "Atalhos de teclado",
+    "next": "Próxima etapa",
+    "previous": "Etapa anterior",
+    "timer": "Iniciar, pausar ou retomar o cronômetro",
+    "palette": "Paleta de comandos",
+    "help": "Estes atalhos",
+    "close": "Fechar uma caixa de diálogo",
+    "ok": "Entendi"
+  }
+}

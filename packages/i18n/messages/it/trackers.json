@@ -1,0 +1,38 @@
+{
+  "title": "Sistemi di ticketing",
+  "intro": "Trasforma un'azione di follow-up in un ticket Jira, Linear, GitLab o GitHub. Quando il ticket viene chiuso, l'azione è segnata come fatta in Ronde.",
+  "empty": "Ancora nessun sistema di ticketing.",
+  "add": "Aggiungi un sistema di ticketing",
+  "kind": "Strumento",
+  "name": "Nome",
+  "token": "Token API",
+  "tokenKept": "Un token è salvato. Digitane uno nuovo per sostituirlo.",
+  "save": "Salva",
+  "cancel": "Annulla",
+  "test": "Prova",
+  "remove": "Rimuovi",
+  "works": "✓ Collegato.",
+  "removeConfirm": "Rimuovere {name}? I ticket esistenti restano, ma non vengono più seguiti.",
+  "kinds": {
+    "jira": "Jira",
+    "linear": "Linear",
+    "gitlab": "GitLab",
+    "github": "GitHub"
+  },
+  "fields": {
+    "site": "Indirizzo del sito",
+    "project": "Chiave del progetto",
+    "email": "Email dell'account",
+    "team": "ID del team",
+    "url": "Indirizzo GitLab",
+    "repo": "Repository (owner/nome)"
+  },
+  "hints": {
+    "jira": "Un token API creato su id.atlassian.com, per l'account la cui email è qui sopra.",
+    "linear": "Una chiave API personale dalle impostazioni di Linear → API. L'ID del team è nelle impostazioni del team.",
+    "gitlab": "Un token di accesso di progetto o personale con lo scope api. Progetto: il suo percorso (gruppo/progetto) o il suo numero.",
+    "github": "Un token fine-grained con «Issues: lettura e scrittura» sul repository."
+  },
+  "assignee": "I responsabili vengono assegnati in GitLab e GitHub quando il loro username è nel profilo della rubrica.",
+  "edit": "Modifica"
+}

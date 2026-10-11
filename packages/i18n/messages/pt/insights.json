@@ -1,0 +1,42 @@
+{
+  "title": "Análises",
+  "intro": "Todas as reuniões do espaço, de {from} a {to}.",
+  "period": "Período",
+  "weeks": "{count, plural, one {# semana} other {# semanas}}",
+  "cards": {
+    "engagement": "Engajamento",
+    "engagementHint": "Média das reuniões, em 100",
+    "sessions": "Sessões realizadas",
+    "meetings": "{count, plural, one {em # reunião} other {em # reuniões}}",
+    "attendance": "Presença",
+    "followThrough": "Planos cumpridos",
+    "followThroughHint": "Itens previstos marcados como feitos na sessão seguinte",
+    "onTime": "Sessões no horário",
+    "mood": "Humor médio",
+    "actions": "Ações fechadas / abertas",
+    "actionsValue": "{done} / {created}",
+    "median": "Fechadas em {days} dias (mediana)"
+  },
+  "weekTitle": "Sessões por semana",
+  "weekLabel": "Barras: sessões realizadas por semana; linha: presença",
+  "weekLegend": "Barras: sessões realizadas por semana. Linha: presença.",
+  "meetingsTitle": "Por reunião",
+  "columns": {
+    "meeting": "Reunião",
+    "engagement": "Engajamento",
+    "trend": "Tendência",
+    "sessions": "Sessões",
+    "attendance": "Presença",
+    "followThrough": "Cumprimento",
+    "onTime": "No horário",
+    "mood": "Humor",
+    "openActions": "Ações abertas"
+  },
+  "empty": "Nenhuma reunião ainda.",
+  "engagementHow": "Engajamento, em 100: presença (30%), planos cumpridos (25%), participação com perguntas, mãos levantadas, kudos e quebra-gelos (20%), humor (15%) e pontualidade (10%).",
+  "csv": {
+    "participation": "Participação",
+    "total": "Todas as reuniões",
+    "fileName": "analises"
+  }
+}

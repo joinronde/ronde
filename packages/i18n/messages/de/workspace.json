@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "label": "Arbeitsbereich",
+    "home": "Start",
+    "people": "Verzeichnis",
+    "settings": "Einstellungen"
+  },
+  "switcher": "Arbeitsbereich wechseln",
+  "newWorkspace": "Neuer Arbeitsbereich",
+  "userMenu": "Kontomenü",
+  "account": "Dein Konto",
+  "roles": {
+    "owner": "Inhaber",
+    "admin": "Admin",
+    "billing": "Abrechnung",
+    "organizer": "Organisator",
+    "member": "Mitglied",
+    "guest": "Gast"
+  },
+  "roleHints": {
+    "owner": "Alles, einschließlich Abrechnung und Löschen des Arbeitsbereichs",
+    "admin": "Verwaltet Personen, Rollen, Vorlagen und Connectors",
+    "billing": "Verwaltet Tarif, Rechnungen und Zahlungsmittel, sonst nichts",
+    "organizer": "Ein Mitglied, das auch Meetings anlegt, wenn das den Admins vorbehalten ist, und die nötigen Personen einlädt",
+    "member": "Legt Meetings an und nimmt an denen teil, zu denen er eingeladen ist",
+    "guest": "Sieht nur die Meetings, zu denen er eingeladen ist"
+  },
+  "home": {
+    "stepInvite": "Lade dein Team ein",
+    "stepInviteHint": "{count, plural, =0 {Noch niemand sonst} one {# weitere Person im Verzeichnis} other {# weitere Personen im Verzeichnis}}",
+    "stepMeeting": "Leg dein erstes Meeting an",
+    "stepMeetingHint": "Die Vorlage für das wöchentliche Team-Meeting, in einer Minute bereit.",
+    "stepCheckIn": "Füll deinen Check-in aus",
+    "stepCheckInHint": "Was du erledigt hast, was du planst, was blockiert: ein paar Zeilen vor dem Meeting.",
+    "stepSession": "Leite eine erste Sitzung",
+    "stepSessionHint": "Öffne die Regie, starte das Meeting und archiviere es dann mit seinem Protokoll."
+  },
+  "settings": {
+    "title": "Einstellungen des Arbeitsbereichs",
+    "general": "Allgemein",
+    "name": "Name",
+    "slug": "Adresse",
+    "slugHint": "Wird in Links verwendet: {url}",
+    "language": "Sprache der E-Mails und Protokolle",
+    "timezone": "Zeitzone",
+    "meetingCreation": "Wer Meetings anlegen darf",
+    "meetingCreationMembers": "Alle Mitglieder",
+    "meetingCreationAdmins": "Organisatoren und Admins",
+    "saved": "Gespeichert",
+    "categories": "Berufsgruppen",
+    "categoriesHint": "Werden auf Check-ins angezeigt und gruppieren die Statistiken.",
+    "categoryPlaceholder": "z. B. Entwicklung",
+    "add": "Hinzufügen",
+    "rename": "{name} umbenennen",
+    "delete": "{name} löschen",
+    "noCategories": "Noch keine Berufsgruppe.",
+    "danger": "Gefahrenzone",
+    "leave": "Arbeitsbereich verlassen",
+    "leaveHint": "Du verlierst den Zugriff auf seine Meetings. Dein Profil bleibt im Verzeichnis.",
+    "leaveConfirm": "{workspace} verlassen?",
+    "deleteWorkspace": "Arbeitsbereich löschen",
+    "deleteHint": "Meetings, Personen und Verlauf verschwinden für alle. Das lässt sich nicht rückgängig machen.",
+    "deleteConfirm": "Gib <strong>{slug}</strong> zur Bestätigung ein.",
+    "cancel": "Abbrechen",
+    "readOnly": "Nur Admins können diese Einstellungen ändern.",
+    "tabs": {
+      "label": "Bereiche der Einstellungen",
+      "general": "Allgemein",
+      "security": "Sicherheit",
+      "roles": "Rollen",
+      "audit": "Audit-Log",
+      "billing": "Abrechnung",
+      "plans": "Tarife"
+    },
+    "buffer": "Puffer zwischen zwei Meetings",
+    "bufferHint": "Bleibt vor und nach jedem Meeting einer Person frei: „Termin finden“ berücksichtigt ihn, und die Terminpläne warnen, wenn zwei Meetings näher zusammenrücken.",
+    "bufferNone": "Kein Puffer",
+    "bufferMinutes": "{count, plural, one {# Minute} other {# Minuten}}"
+  }
+}

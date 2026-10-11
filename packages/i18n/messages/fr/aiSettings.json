@@ -1,0 +1,18 @@
+{
+  "title": "Assistant IA",
+  "intro": "Rédige la synthèse d'une séance et propose les actions de suivi que son compte rendu appelle. Le régisseur relit tout avant d'enregistrer.",
+  "enable": "Activer l'assistant IA",
+  "model": "Modèle",
+  "key": "Clé d'API Anthropic",
+  "keyHint": "Créez une clé dans la console Anthropic. Elle est stockée chiffrée et ne sera plus jamais affichée.",
+  "keySaved": "Une clé est enregistrée. Saisissez-en une nouvelle pour la remplacer.",
+  "instanceKey": "Clé de l'instance",
+  "instanceKeyHint": "Cette instance fournit une clé. Saisissez la vôtre pour utiliser votre propre compte Anthropic.",
+  "noEncryption": "Impossible d'enregistrer une clé : SECRET_KEY n'est pas défini sur cette instance.",
+  "privacy": "À la demande, le compte rendu de la séance (jamais les fiches avant la séance, jamais les mots de passe ni les clés) est envoyé à Anthropic pour rédiger la réponse.",
+  "save": "Enregistrer",
+  "test": "Tester l'assistant",
+  "removeKey": "Retirer la clé",
+  "saved": "Enregistré.",
+  "works": "✓ L'assistant répond."
+}

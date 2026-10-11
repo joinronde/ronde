@@ -1,0 +1,69 @@
+{
+  "title": "Wiki",
+  "intro": "把每次会议的纪要发布为 Notion 或 Confluence 中的页面。之后每个会议在“设置 › 集成”中选择自己的 Wiki。",
+  "empty": "还没有 Wiki。",
+  "add": "添加 Wiki",
+  "kind": "工具",
+  "name": "名称",
+  "optional": "可选",
+  "kinds": {
+    "notion": "Notion",
+    "confluence": "Confluence"
+  },
+  "fields": {
+    "notion": {
+      "parent": "父页面（其地址）"
+    },
+    "confluence": {
+      "site": "Confluence 地址",
+      "space": "空间键",
+      "parent": "父页面（地址或编号）",
+      "email": "账户邮箱（Cloud）"
+    }
+  },
+  "token": {
+    "notion": "集成密钥",
+    "confluence": "API 令牌"
+  },
+  "hints": {
+    "notion": "在 Notion 中，到 notion.so/profile/integrations 创建一个内部集成并复制其密钥。然后打开父页面，把它共享给该集成（••• › 连接）：页面会创建在它下面。",
+    "confluence": "Confluence Cloud：在 id.atlassian.com 为上方邮箱对应的账户创建的 API 令牌。Data Center 或 Server：个人访问令牌（个人资料 › 个人访问令牌），无需邮箱。该账户必须能在空间中创建页面。"
+  },
+  "tokenKept": "已保存令牌。输入新令牌即可替换。",
+  "save": "保存",
+  "cancel": "取消",
+  "test": "测试",
+  "works": "✓ 已连接。",
+  "edit": "编辑",
+  "remove": "移除",
+  "removeConfirm": "移除 {name}？会议将不再发布到这里；已发布的页面会保留。",
+  "openInRonde": "在 Ronde 中打开",
+  "meeting": {
+    "title": "发布会议纪要",
+    "intro": "每次归档时，纪要会成为 Wiki 中的一个页面，以会议日期命名。修改摘要后，页面会同步更新。",
+    "wiki": "Wiki",
+    "none": "不发布",
+    "hint": "已归档的会议可从历史中发布。",
+    "noWiki": "此工作空间还没有 Wiki。",
+    "addWiki": "在工作空间设置中添加",
+    "on": "会议纪要将发布到 {name}。",
+    "off": "会议纪要不再发布。"
+  },
+  "history": {
+    "publish": "发布到 {name}",
+    "update": "更新页面",
+    "open": "在 {name} 中打开",
+    "publishing": "正在发布…",
+    "done": "会议纪要已发布到 {name}。",
+    "failed": "上次发布失败。{error}",
+    "retry": "重试"
+  },
+  "errors": {
+    "token": "Wiki 拒绝了令牌：请检查它是否正确且仍然有效。",
+    "notionPage": "Notion 找不到父页面：请把它共享给该集成（••• › 连接）。",
+    "notionParent": "父页面不是 Notion 页面的地址。",
+    "confluenceSpace": "Confluence 找不到该空间或父页面，或者该账户无权查看。",
+    "answer": "Wiki 返回：{detail}。",
+    "network": "无法连接 Wiki：请检查其地址。"
+  }
+}

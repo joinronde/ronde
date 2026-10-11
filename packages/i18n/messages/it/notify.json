@@ -1,0 +1,54 @@
+{
+  "when": "{date} alle {time}",
+  "speak": {
+    "minutes": "{m} min",
+    "seconds": "{s} s"
+  },
+  "timing": "Obiettivo {target} · {speak} di parola a testa",
+  "labels": {
+    "when": "Quando",
+    "timing": "Formato",
+    "duration": "Durata",
+    "participants": "Partecipanti"
+  },
+  "openRonde": "Apri Ronde",
+  "joinVideo": "🎥 Entra nella videochiamata",
+  "followInApp": "🙋 Segui la riunione in Ronde",
+  "test": {
+    "title": "✅ Ronde è collegato",
+    "body": "Le notifiche di «{team}» arriveranno qui."
+  },
+  "soon": {
+    "title": "⏰ {team} inizia tra {minutes, plural, one {# minuto} other {# minuti}}",
+    "body": "È ora di raggiungere il team con la tua scheda a portata di mano. In «Il mio schermo» puoi seguire i turni, alzare la mano e fare domande."
+  },
+  "started": {
+    "title": "▶️ {team} sta iniziando",
+    "body": "Il giro di tavolo sta per cominciare: raggiungi il team per condividere progressi e domande."
+  },
+  "minutes": {
+    "title": "📝 Verbale di {team} · {date}",
+    "decisions": "Decisioni",
+    "actions": "Azioni di follow-up",
+    "action": "{text} ({owner})",
+    "read": "Leggi il verbale"
+  },
+  "checkIn": {
+    "title": "📝 Prepariamo {team}",
+    "ready": "Schede pronte: {ready}/{total}",
+    "none": "Nessuna scheda attesa per questa sessione.",
+    "allReady": "Tutte le schede sono pronte, grazie team!",
+    "remaining": "{count, plural, one {# scheda deve ancora essere preparata o aggiornata.} other {# schede devono ancora essere preparate o aggiornate.}}",
+    "prepare": "Aggiorna i tuoi progetti e le tue sezioni ({sections}) e rivedi le tue azioni di follow-up.",
+    "fillIn": "📝 Compila la mia scheda"
+  },
+  "overdue": {
+    "title": "⏳ {team}: {count, plural, one {# azione di follow-up in attesa} other {# azioni di follow-up in attesa}}",
+    "item": "{text} ({owner}, {days, plural, one {# giorno} other {# giorni}})",
+    "update": "Aggiorna le mie azioni"
+  },
+  "birthday": {
+    "title": "🎂 Buon compleanno {names}!",
+    "body": "Tutto il team {team} ti augura una splendida giornata."
+  }
+}

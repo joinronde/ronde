@@ -1,0 +1,75 @@
+{
+  "workspaces": {
+    "unlimited": "مساحات عمل واجتماعات وأشخاص بلا حدود"
+  },
+  "identity": {
+    "local": "حسابات بالبريد وكلمة المرور",
+    "magicLink": "روابط تسجيل الدخول بالبريد",
+    "social": "تسجيل الدخول عبر Google أو GitHub أو Microsoft",
+    "oidc": "تسجيل دخول موحّد عبر مزوّد OpenID Connect واحد",
+    "twoFactor": "المصادقة الثنائية",
+    "saml": "تسجيل دخول موحّد SAML وعدة مزوّدي هوية",
+    "ldap": "تسجيل الدخول عبر LDAP وActive Directory",
+    "scim": "تزويد المستخدمين عبر SCIM",
+    "enforcedSso": "تسجيل دخول موحّد إلزامي",
+    "domainCapture": "الاستحواذ على النطاق"
+  },
+  "permissions": {
+    "builtInRoles": "أدوار مدمجة لمساحات العمل والاجتماعات",
+    "customRoles": "أدوار مخصصة وصلاحيات دقيقة"
+  },
+  "meetings": {
+    "unlimited": "اجتماعات وجلسات بلا حدود",
+    "sectionRoles": "أقسام بطاقة بسلوك قابل للضبط",
+    "templates": "قوالب مدمجة وقوالب مساحة العمل"
+  },
+  "scheduling": {
+    "recurrence": "تكرار مرن مع استثناءات",
+    "ics": "خلاصات التقويم (ICS)",
+    "calendarSync": "مزامنة ثنائية الاتجاه مع تقويمات Google وMicrosoft 365 وCalDAV"
+  },
+  "modules": {
+    "facilitation": "كل وحدات التيسير",
+    "notifications": "إشعارات بالبريد والدردشة وWebhooks",
+    "formats": "مراجعات استعادية، بوكر التخطيط، اجتماعات غير متزامنة",
+    "workflows": "منشئ سير العمل",
+    "aiAssistant": "المساعد الذكي: ملخصات وإجراءات",
+    "transcription": "تفريغ نصي للجلسات، دورًا بدور"
+  },
+  "integrations": {
+    "gitlab": "استيراد من GitLab",
+    "github": "استيراد من GitHub",
+    "video": "مكالمات فيديو: أي رابط، Jitsi، BigBlueButton",
+    "api": "REST API وWebhooks صادرة",
+    "writeBack": "تذاكر في Jira وLinear وGitLab وGitHub من الإجراءات",
+    "videoLinks": "روابط Zoom وGoogle Meet وTeams تُنشأ تلقائيًا",
+    "sms": "تذكيرات SMS وWhatsApp (Twilio)",
+    "slack": "تطبيق Slack: ملء البطاقات من Slack، والمحاضر في القناة، و‎/ronde",
+    "wikis": "المحاضر منشورة في Notion وConfluence",
+    "teams": "تطبيق Microsoft Teams: تذكيرات وبطاقات في Teams، وقناة للإشعارات",
+    "projectSync": "المشاريع المستوردة تبقى محدّثة: الاسم والمرحلة والتواريخ ونسبة الإنجاز"
+  },
+  "reporting": {
+    "meeting": "إحصاءات لكل اجتماع",
+    "export": "تصدير بصيغ Markdown وPDF وCSV",
+    "workspace": "لوحات مساحة العمل عبر كل الاجتماعات",
+    "scheduled": "تقارير تُرسل بالبريد بشكل دوري",
+    "portfolio": "لوحة متابعة المحفظة: الحالة عبر الزمن والمواعيد النهائية والمشاريع بلا أخبار والتصدير بصيغة CSV والتقرير المجدول"
+  },
+  "branding": {
+    "customLogo": "شعارك على الشاشات وفي الرسائل والمحاضر",
+    "whiteLabel": "علامة بيضاء ونطاق مخصص"
+  },
+  "compliance": {
+    "auditLog": "سجل تدقيق آخر 90 يومًا، مع تصدير CSV",
+    "auditStream": "سجل تدقيق كامل، يُرسل إلى نظام SIEM لديك",
+    "retention": "قواعد الاحتفاظ بالبيانات"
+  },
+  "projects": {
+    "portfolio": "محفظة المشاريع: الوصف والمحور والحالة والمسؤول والفريق والتواريخ وسجل كل اجتماع",
+    "round": "جولة المشاريع: دور لكل مشروع يتحدث فيه أعضاؤه معًا",
+    "programs": "البرامج: مشاريع مجمّعة في برامج متداخلة",
+    "permissions": "صلاحيات لكل مشروع",
+    "import": "استيراد المشاريع من GitHub وGitLab وJira وLinear"
+  }
+}

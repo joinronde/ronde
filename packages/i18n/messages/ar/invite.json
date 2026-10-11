@@ -1,0 +1,18 @@
+{
+  "title": "الانضمام إلى {workspace}",
+  "intro": "دعاك {inviter} للانضمام إلى {workspace} على Ronde.",
+  "role": "دورك: {role}",
+  "signedInAs": "مسجّل الدخول باسم <strong>{email}</strong>",
+  "accept": "الانضمام إلى {workspace}",
+  "otherEmail": "أُرسلت هذه الدعوة إلى <strong>{email}</strong>. سجّل الدخول بهذا العنوان لقبولها.",
+  "signIn": "تسجيل الدخول للقبول",
+  "signUp": "إنشاء حساب",
+  "switchAccount": "استخدام حساب آخر",
+  "invalidTitle": "دعوة غير صالحة",
+  "invalid": "رابط الدعوة هذا غير صالح أو أُلغي. اطلب رابطًا جديدًا ممن دعاك.",
+  "expiredTitle": "انتهت صلاحية الدعوة",
+  "expired": "انتهت صلاحية الدعوة إلى {workspace}. اطلب دعوة جديدة ممن دعاك.",
+  "memberTitle": "أنت منضم بالفعل",
+  "member": "أنت عضو في {workspace} بالفعل.",
+  "open": "فتح {workspace}"
+}

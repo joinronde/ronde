@@ -1,0 +1,44 @@
+{
+  "quoted": "«{label}»",
+  "speak": {
+    "minutes": "{m} min",
+    "seconds": "{s} s"
+  },
+  "timing": "Obiettivo: {target} · {speak} di parola a testa",
+  "preparation": "Aggiorna i tuoi progetti e le sezioni pertinenti: {sections}. Bastano pochi punti brevi; lascia vuote le sezioni senza nulla da condividere.",
+  "when": "{date} alle {time}",
+  "email": {
+    "footer": "Per non ricevere più questo promemoria, chiedi a {host} di disattivarlo nelle impostazioni del team.",
+    "greeting": "Ciao {name},",
+    "intro": "La prossima riunione «{team}» si avvicina. Compila o aggiorna la tua scheda prima, per condividere i tuoi progressi e dove ti serve aiuto.",
+    "subject": "Ronde · {team}: la tua scheda per il {date} alle {time}",
+    "meeting": "Riunione: {when}",
+    "prepare": "Prepara la tua scheda",
+    "fillIn": "Compila la mia scheda",
+    "openApp": "Apri Ronde, poi «Il mio schermo», per compilare la tua scheda.",
+    "planned": "Cosa avevi previsto all'ultima riunione",
+    "plannedHint": "Rivedi questi punti nella tua scheda:",
+    "actions": "Le tue azioni di follow-up",
+    "actionsHint": "Ricordati di aggiornarne l'avanzamento in Ronde:",
+    "joinVideo": "Entra nella videochiamata all'ora della riunione",
+    "thanks": "Grazie, e a presto intorno al tavolo!",
+    "preheader": "La tua riunione di team: {when}. Prepara la tua scheda e rivedi le tue azioni di follow-up.",
+    "tagline": "La riunione di team",
+    "title": "La tua scheda per la prossima riunione",
+    "appointment": "Il nostro appuntamento",
+    "fallbackLink": "Se il pulsante non si apre:",
+    "sheets": "Schede di progetto da scrivere (stato e messaggio del giorno)",
+    "replyTitle": "Poco tempo? Rispondi a questa email",
+    "replyHint": "Scrivi il nome di ogni sezione su una riga a sé, poi i tuoi punti, uno per riga: la tua risposta va direttamente nella tua scheda.",
+    "replyExample": "Per esempio:"
+  },
+  "replied": {
+    "subject": "Ronde · {team}: la tua scheda è aggiornata",
+    "title": "La tua scheda è aggiornata",
+    "intro": "Grazie {name}, ecco cosa ha aggiunto la tua risposta alla tua scheda per {team}:",
+    "nothing": "Non abbiamo trovato nulla da aggiungere nella tua risposta. Scrivi il nome di ogni sezione su una riga a sé, poi i tuoi punti, uno per riga, oppure compila la tua scheda in Ronde.",
+    "already": "Tutto ciò che c'era nella tua risposta era già nella tua scheda.",
+    "open": "Vedi la mia scheda",
+    "footer": "Ricevi questa email perché hai risposto a un promemoria di Ronde."
+  }
+}

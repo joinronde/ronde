@@ -1,0 +1,40 @@
+{
+  "title": "视频账户",
+  "intro": "让 Ronde 用工作空间的一个账户，为每个会议创建一个长期有效的 Zoom、Google Meet 或 Teams 房间。无需任何人登录。",
+  "empty": "还没有视频账户。",
+  "add": "添加视频账户",
+  "kind": "提供方",
+  "name": "名称",
+  "edit": "编辑",
+  "tokenKept": "已保存密钥。输入新密钥即可替换。",
+  "save": "保存",
+  "cancel": "取消",
+  "test": "测试",
+  "remove": "移除",
+  "works": "✓ 已连接。",
+  "removeConfirm": "移除 {name}？已创建的房间仍可使用。",
+  "kinds": {
+    "zoom": "Zoom",
+    "meet": "Google Meet",
+    "teams": "Microsoft Teams"
+  },
+  "fields": {
+    "accountId": "账户 ID",
+    "clientId": "客户端 ID",
+    "clientEmail": "服务账户邮箱",
+    "subject": "房间所属用户",
+    "tenant": "租户（ID 或域名）",
+    "organizer": "会议组织者"
+  },
+  "secret": {
+    "zoom": "客户端密钥",
+    "meet": "服务账户私钥",
+    "teams": "客户端密钥"
+  },
+  "hints": {
+    "zoom": "在 Zoom App Marketplace 中创建一个“Server-to-Server OAuth”应用，范围为 meeting:write:meeting:admin，然后复制其账户 ID、客户端 ID 和密钥。",
+    "meet": "在 Google Cloud 中创建服务账户，在 Google Workspace 管理控制台中为其授予 meetings.space.created 范围的全网域委派，然后粘贴其 JSON 密钥中的 private_key。",
+    "teams": "在 Microsoft Entra 中注册一个具有 OnlineMeetings.ReadWrite.All 应用权限（需管理员同意）的应用，并为组织者设置应用访问策略。"
+  },
+  "useIt": "然后在会议设置的“常规 → 视频通话”中：“创建长期房间”。"
+}

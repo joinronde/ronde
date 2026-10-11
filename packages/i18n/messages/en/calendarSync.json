@@ -1,0 +1,20 @@
+{
+  "title": "Calendars",
+  "intro": "Each session of the next eight weeks becomes an event in the participants' calendars, with the video link. Moves, cancellations and new participants follow.",
+  "noAccount": "No calendar account in this workspace yet.",
+  "addAccount": "Add one in the workspace settings",
+  "account": "Calendar account",
+  "none": "Do not write the sessions into calendars",
+  "accountHint": "Invitations are sent by the organizer of this account.",
+  "written": "{count, plural, =0 {Calendars are up to date.} one {# event written.} other {# events written.}}",
+  "removed": "Coming events removed from the calendars.",
+  "synced": "{count, plural, =0 {Calendars are up to date.} one {# event updated.} other {# events updated.}}",
+  "syncNow": "Sync now",
+  "check": "Check availability",
+  "coming": "Coming sessions",
+  "busy": "Busy: {names}",
+  "allFree": "Everyone is free",
+  "slots": "Times when everyone is free (next two weeks)",
+  "noSlot": "No common free time in working hours over the next two weeks.",
+  "unknown": "Calendar not readable for: {names}"
+}

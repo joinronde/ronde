@@ -1,0 +1,12 @@
+{
+  "skipToContent": "Skip to content",
+  "navigation": "Views",
+  "screenHint": "Opens in a new tab, to share in the video call",
+  "videoHint": "Opens the video call in a new tab",
+  "joinVideo": "Join the video call",
+  "reconnecting": "Reconnecting…",
+  "host": "host",
+  "cohost": "co-host",
+  "backToWorkspace": "Back to {workspace}",
+  "breadcrumb": "Location"
+}

@@ -1,0 +1,21 @@
+{
+  "back": "Rubrica",
+  "you": "tu",
+  "noAccount": "Ancora senza account",
+  "removed": "Rimosso dalla rubrica aziendale",
+  "edit": "Modifica",
+  "email": "Invia un'email",
+  "meetings": "Riunioni",
+  "noMeetings": "Non è in nessuna riunione che puoi vedere.",
+  "actions": "Azioni aperte",
+  "seeAll": "Vedi tutto",
+  "inProgress": "in corso",
+  "noActions": "Nessuna azione aperta.",
+  "presence": "Presenza, ultimi 90 giorni",
+  "noSessions": "Nessuna sessione tenuta di recente.",
+  "attended": "{attended} su {held} sessioni",
+  "kudos": "Ringraziamenti ricevuti",
+  "kudoFrom": "da {name}, {date}",
+  "noKudos": "Ancora nessun ringraziamento.",
+  "awayUntil": "Assente fino al {date}"
+}

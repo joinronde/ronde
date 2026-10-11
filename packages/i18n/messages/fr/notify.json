@@ -1,0 +1,54 @@
+{
+  "when": "{date} à {time}",
+  "speak": {
+    "minutes": "{m} min",
+    "seconds": "{s} s"
+  },
+  "timing": "Objectif {target} · {speak} de parole chacun",
+  "labels": {
+    "when": "Quand",
+    "timing": "Format",
+    "duration": "Durée",
+    "participants": "Participants"
+  },
+  "openRonde": "Ouvrir Ronde",
+  "joinVideo": "🎥 Rejoindre la visio",
+  "followInApp": "🙋 Suivre la réunion dans Ronde",
+  "test": {
+    "title": "✅ Ronde est connecté",
+    "body": "Les notifications de « {team} » arriveront ici."
+  },
+  "soon": {
+    "title": "⏰ {team} commence dans {minutes, plural, one {# minute} other {# minutes}}",
+    "body": "C'est le moment de rejoindre l'équipe, fiche à portée de main. Dans « Mon écran », vous suivez les tours, levez la main et posez vos questions."
+  },
+  "started": {
+    "title": "▶️ {team} commence",
+    "body": "Le tour de table va commencer : rejoignez l'équipe pour partager vos avancées et vos questions."
+  },
+  "minutes": {
+    "title": "📝 Compte rendu de {team} · {date}",
+    "decisions": "Décisions",
+    "actions": "Actions de suivi",
+    "action": "{text} ({owner})",
+    "read": "Lire le compte rendu"
+  },
+  "checkIn": {
+    "title": "📝 Préparons {team}",
+    "ready": "Fiches prêtes : {ready}/{total}",
+    "none": "Aucune fiche attendue pour cette séance.",
+    "allReady": "Toutes les fiches sont prêtes, merci l'équipe !",
+    "remaining": "{count, plural, one {# fiche reste} other {# fiches restent}} à préparer ou à mettre à jour.",
+    "prepare": "Mettez à jour vos projets et vos rubriques ({sections}), et passez en revue vos actions de suivi.",
+    "fillIn": "📝 Remplir ma fiche"
+  },
+  "overdue": {
+    "title": "⏳ {team} : {count, plural, one {# action de suivi attend} other {# actions de suivi attendent}}",
+    "item": "{text} ({owner}, {days, plural, one {# jour} other {# jours}})",
+    "update": "Mettre à jour mes actions"
+  },
+  "birthday": {
+    "title": "🎂 Joyeux anniversaire {names} !",
+    "body": "Toute l'équipe {team} vous souhaite une belle journée."
+  }
+}

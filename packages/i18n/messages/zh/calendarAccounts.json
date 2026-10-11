@@ -1,0 +1,35 @@
+{
+  "title": "日历",
+  "intro": "使用工作空间的一个账户，把会议场次写入参与者的 Google 或 Outlook 日历，并读取他们的空闲时间以避免冲突。",
+  "empty": "还没有日历账户。",
+  "add": "添加日历账户",
+  "kind": "服务商",
+  "name": "名称",
+  "edit": "编辑",
+  "tokenKept": "已保存一个密钥。输入新的即可替换。",
+  "save": "保存",
+  "cancel": "取消",
+  "test": "测试",
+  "remove": "移除",
+  "works": "✓ 已连接。",
+  "removeConfirm": "移除 {name}？使用它的会议将停止同步；已写入的日程会保留在日历中。",
+  "kinds": {
+    "google": "Google 日历",
+    "microsoft": "Microsoft 365"
+  },
+  "fields": {
+    "clientEmail": "服务账户邮箱",
+    "organizer": "日程组织者",
+    "tenant": "租户（ID 或域名）",
+    "clientId": "客户端 ID"
+  },
+  "secret": {
+    "google": "服务账户私钥",
+    "microsoft": "客户端密钥"
+  },
+  "hints": {
+    "google": "在 Google Cloud 中创建一个服务账户，并在 Google Workspace 管理控制台中为其授予范围 https://www.googleapis.com/auth/calendar 的全网域委派。日程由组织者创建，并由其邀请参与者。",
+    "microsoft": "在 Microsoft Entra 中注册一个应用，授予应用权限 Calendars.ReadWrite（需管理员同意）。日程创建在组织者的日历中，由其邀请参与者。"
+  },
+  "useIt": "然后在会议设置中：日程 → 日历。"
+}

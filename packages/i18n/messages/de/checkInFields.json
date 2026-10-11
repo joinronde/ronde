@@ -1,0 +1,15 @@
+{
+  "done": "Erledigt",
+  "toDo": "Zu tun",
+  "dragHint": "Ziehen zum Verschieben (oder Alt+↑ / Alt+↓)",
+  "markToDo": "Als zu tun markieren",
+  "markDone": "Als erledigt markieren",
+  "itemLabel": "{section}, Eintrag {n}",
+  "removeItem": "„{text}“ entfernen",
+  "emptyItem": "leerer Eintrag",
+  "remove": "Entfernen",
+  "addItem": "Eintrag hinzufügen",
+  "addTaskFirst": "Aufgabe hinzufügen · leer lassen, wenn es nichts gibt",
+  "addItemFirst": "Eintrag hinzufügen · leer lassen, wenn es nichts gibt",
+  "freeTextPlaceholder": "{section}: in ein paar Sätzen · leer lassen, wenn es nichts gibt"
+}

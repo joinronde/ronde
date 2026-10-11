@@ -1,0 +1,21 @@
+{
+  "title": "Modelos",
+  "intro": "Comece por uma reunião que já funciona: para uma equipe, uma escola, uma ONG, uma obra ou uma unidade de saúde. Tudo continua editável.",
+  "browse": "Ver todos os modelos",
+  "categories": "Para quem é",
+  "sections": "Seções",
+  "category": {
+    "all": "Todos",
+    "team": "Equipes",
+    "product": "Produto e conteúdo",
+    "leadership": "Liderança e vendas",
+    "education": "Educação",
+    "nonprofit": "ONGs",
+    "field": "Trabalho de campo",
+    "health": "Equipes de saúde",
+    "own": "Seus modelos"
+  },
+  "minutes": "{count} min",
+  "use": "Usar este modelo",
+  "saveHint": "Qualquer reunião pode virar um modelo do espaço: abra as configurações dela e depois “Salvar como modelo”."
+}

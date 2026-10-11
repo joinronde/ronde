@@ -1,0 +1,35 @@
+{
+  "title": "Agendas",
+  "intro": "Inscrivez les séances de vos réunions dans les agendas Google ou Outlook des participants, avec un compte de l'espace, et lisez leurs disponibilités pour éviter les conflits.",
+  "empty": "Aucun compte d'agenda pour l'instant.",
+  "add": "Ajouter un compte d'agenda",
+  "kind": "Fournisseur",
+  "name": "Nom",
+  "edit": "Modifier",
+  "tokenKept": "Un secret est enregistré. Saisissez-en un nouveau pour le remplacer.",
+  "save": "Enregistrer",
+  "cancel": "Annuler",
+  "test": "Tester",
+  "remove": "Retirer",
+  "works": "✓ Connecté.",
+  "removeConfirm": "Retirer {name} ? Les réunions qui l'utilisent ne sont plus synchronisées ; les événements déjà inscrits restent dans les agendas.",
+  "kinds": {
+    "google": "Google Agenda",
+    "microsoft": "Microsoft 365"
+  },
+  "fields": {
+    "clientEmail": "E-mail du compte de service",
+    "organizer": "Organisateur des événements",
+    "tenant": "Tenant (identifiant ou domaine)",
+    "clientId": "Client ID"
+  },
+  "secret": {
+    "google": "Clé privée du compte de service",
+    "microsoft": "Client secret"
+  },
+  "hints": {
+    "google": "Dans Google Cloud, créez un compte de service et donnez-lui la délégation à l'échelle du domaine pour la portée https://www.googleapis.com/auth/calendar dans la console d'administration Google Workspace. Les événements sont créés par l'organisateur, qui invite les participants.",
+    "microsoft": "Dans Microsoft Entra, enregistrez une application avec la permission d'application Calendars.ReadWrite (consentement administrateur). Les événements sont créés dans l'agenda de l'organisateur, qui invite les participants."
+  },
+  "useIt": "Ensuite, dans les réglages d'une réunion, Planification → Agendas."
+}

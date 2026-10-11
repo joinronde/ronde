@@ -1,0 +1,18 @@
+{
+  "editingHint": "Afferra un blocco dalla sua maniglia <handle></handle> e rilascialo dove vuoi, oppure usa le sue frecce. La disposizione è salvata solo per te.",
+  "columnCount": "Numero di colonne",
+  "columns": "{count, plural, one {# colonna} other {# colonne}}",
+  "defaultLayout": "Disposizione predefinita",
+  "done": "Fatto",
+  "customiseHint": "Sposta i blocchi, scegli il numero di colonne",
+  "customise": "Personalizza la pagina",
+  "customiseCustom": "Personalizza la pagina · disposizione personalizzata",
+  "dragHint": "Sposta «{title}»: afferralo e rilascialo dove vuoi",
+  "move": "Sposta il blocco «{title}»",
+  "up": "Sposta su",
+  "down": "Sposta giù",
+  "left": "Colonna di sinistra",
+  "right": "Colonna di destra",
+  "dropAtEnd": "Rilascia qui per metterlo in fondo alla colonna",
+  "dropEmpty": "Colonna vuota: rilascia qui un blocco"
+}

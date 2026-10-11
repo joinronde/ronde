@@ -1,0 +1,52 @@
+{
+  "title": "Commandes",
+  "placeholder": "Tapez une commande : suivant, Emma, compte rendu…",
+  "none": "Aucune commande ne correspond à « {query} ».",
+  "foot": "↑ ↓ pour choisir, Entrée pour lancer, Échap pour fermer.",
+  "groups": {
+    "meeting": "Réunion",
+    "steps": "Aller à",
+    "panes": "Panneau",
+    "people": "Personnes",
+    "pages": "Ouvrir"
+  },
+  "keys": {
+    "space": "Espace"
+  },
+  "start": "Démarrer la réunion",
+  "pause": "Mettre le chrono en pause",
+  "resume": "Relancer le chrono",
+  "next": "Étape suivante",
+  "previous": "Étape précédente",
+  "bonus": "Donner 30 secondes de plus",
+  "resetTimer": "Remettre le chrono à zéro",
+  "shuffle": "Mélanger l'ordre de passage",
+  "absent": "Noter l'absence de {name}",
+  "present": "Noter le retour de {name}",
+  "panes": {
+    "run": "Ordre du jour",
+    "live": "En direct",
+    "actions": "Actions",
+    "topics": "Points divers",
+    "minutes": "Compte rendu",
+    "polls": "Sondages",
+    "random": "Outils aléatoires"
+  },
+  "pages": {
+    "screen": "Écran partagé",
+    "remote": "Télécommande mobile",
+    "history": "Historique",
+    "stats": "Statistiques",
+    "settings": "Réglages"
+  },
+  "help": {
+    "title": "Raccourcis clavier",
+    "next": "Étape suivante",
+    "previous": "Étape précédente",
+    "timer": "Démarrer, mettre en pause ou relancer le chrono",
+    "palette": "Palette de commandes",
+    "help": "Ces raccourcis",
+    "close": "Fermer une fenêtre",
+    "ok": "Compris"
+  }
+}

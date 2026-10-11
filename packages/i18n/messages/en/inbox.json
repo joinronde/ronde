@@ -1,0 +1,18 @@
+{
+  "label": "Notifications",
+  "labelUnread": "{count, plural, one {Notifications, # unread} other {Notifications, # unread}}",
+  "title": "Notifications",
+  "markAll": "Mark all as read",
+  "unread": "unread",
+  "someone": "Someone",
+  "empty": "You're all caught up.",
+  "emptyHint": "Actions given to you, sessions starting and minutes published show up here.",
+  "kinds": {
+    "action_assigned": "<strong>{actor}</strong> gave you an action in <strong>{meeting}</strong>",
+    "session_started": "<strong>{meeting}</strong> has started: join the session",
+    "minutes_published": "The minutes of <strong>{meeting}</strong> are out",
+    "kudo_received": "<strong>{actor}</strong> thanked you in <strong>{meeting}</strong>",
+    "meeting_joined": "<strong>{actor}</strong> added you to <strong>{meeting}</strong>",
+    "absence_delegated": "<strong>{actor}</strong> will be away: you run the meetings they host meanwhile"
+  }
+}

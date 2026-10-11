@@ -1,0 +1,49 @@
+{
+  "title": "Actions",
+  "introMine": "What you said you would do, in every meeting. Tick it off as soon as it's done.",
+  "introHosted": "The follow-up of the meetings you run: who does what, and what has been waiting too long.",
+  "views": "Whose actions",
+  "mine": "Mine",
+  "hosted": "Meetings I run",
+  "filter": "Meeting",
+  "all": "All",
+  "count": {
+    "open": "{count, plural, =0 {nothing to do} one {# to do} other {# to do}}",
+    "doing": "{count, plural, =0 {none in progress} one {# in progress} other {# in progress}}",
+    "done": "{count, plural, =0 {none done lately} one {# done lately} other {# done lately}}"
+  },
+  "group": {
+    "open": "To do",
+    "doing": "In progress",
+    "done": "Done in the last two weeks"
+  },
+  "markDone": "Mark “{text}” as done",
+  "reopen": "Reopen “{text}”",
+  "markDoneShort": "Mark as done",
+  "reopenShort": "Reopen",
+  "start": "Start",
+  "inProgress": "In progress",
+  "from": "decided on {date}",
+  "carried": "{count, plural, one {open for # session} other {open for # sessions}}",
+  "emptyMine": "Nothing on your plate.",
+  "emptyHosted": "No actions in the meetings you run.",
+  "emptyHint": "Actions decided during a session show up here, with the meeting they come from.",
+  "openTicket": "Open the ticket",
+  "ticketFor": "Create a ticket for “{text}”",
+  "ticket": "Create a ticket",
+  "ticketing": "Creating the ticket…",
+  "ticketWhere": "In which tool?",
+  "csv": {
+    "action": "Action",
+    "owner": "Owner",
+    "meeting": "Meeting",
+    "status": "Status",
+    "decided": "Decided on",
+    "doneOn": "Done on",
+    "carried": "Sessions since",
+    "ticket": "Ticket",
+    "done": "Done",
+    "hint": "Every action of this view, also those done more than two weeks ago",
+    "fileName": "actions"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "title": "Ações",
+  "introMine": "O que você disse que faria, em todas as reuniões. Marque assim que estiver feito.",
+  "introHosted": "O acompanhamento das reuniões que você conduz: quem faz o quê e o que está esperando há tempo demais.",
+  "views": "Ações de quem",
+  "mine": "Minhas",
+  "hosted": "Reuniões que conduzo",
+  "filter": "Reunião",
+  "all": "Todas",
+  "count": {
+    "open": "{count, plural, =0 {nada a fazer} one {# a fazer} other {# a fazer}}",
+    "doing": "{count, plural, =0 {nenhuma em andamento} one {# em andamento} other {# em andamento}}",
+    "done": "{count, plural, =0 {nenhuma feita recentemente} one {# feita recentemente} other {# feitas recentemente}}"
+  },
+  "group": {
+    "open": "A fazer",
+    "doing": "Em andamento",
+    "done": "Feitas nas últimas duas semanas"
+  },
+  "markDone": "Marcar “{text}” como feita",
+  "reopen": "Reabrir “{text}”",
+  "markDoneShort": "Marcar como feita",
+  "reopenShort": "Reabrir",
+  "start": "Começar",
+  "inProgress": "Em andamento",
+  "from": "decidida em {date}",
+  "carried": "{count, plural, one {aberta há # sessão} other {aberta há # sessões}}",
+  "emptyMine": "Nada pendente para você.",
+  "emptyHosted": "Nenhuma ação nas reuniões que você conduz.",
+  "emptyHint": "As ações decididas durante uma sessão aparecem aqui, com a reunião de onde vêm.",
+  "openTicket": "Abrir o ticket",
+  "ticketFor": "Criar um ticket para “{text}”",
+  "ticket": "Criar um ticket",
+  "ticketing": "Criando o ticket…",
+  "ticketWhere": "Em qual ferramenta?",
+  "csv": {
+    "action": "Ação",
+    "owner": "Responsável",
+    "meeting": "Reunião",
+    "status": "Status",
+    "decided": "Decidida em",
+    "doneOn": "Feita em",
+    "carried": "Sessões desde então",
+    "ticket": "Ticket",
+    "done": "Feita",
+    "hint": "Todas as ações desta visão, inclusive as feitas há mais de duas semanas",
+    "fileName": "acoes"
+  }
+}

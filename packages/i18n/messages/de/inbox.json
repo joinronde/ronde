@@ -1,0 +1,18 @@
+{
+  "label": "Benachrichtigungen",
+  "labelUnread": "{count, plural, one {Benachrichtigungen, # ungelesen} other {Benachrichtigungen, # ungelesen}}",
+  "title": "Benachrichtigungen",
+  "markAll": "Alle als gelesen markieren",
+  "unread": "ungelesen",
+  "someone": "Jemand",
+  "empty": "Du bist auf dem neuesten Stand.",
+  "emptyHint": "Dir zugewiesene Aufgaben, beginnende Sitzungen und veröffentlichte Protokolle erscheinen hier.",
+  "kinds": {
+    "action_assigned": "<strong>{actor}</strong> hat dir in <strong>{meeting}</strong> eine Aufgabe zugewiesen",
+    "session_started": "<strong>{meeting}</strong> hat begonnen: Tritt der Sitzung bei",
+    "minutes_published": "Das Protokoll von <strong>{meeting}</strong> ist da",
+    "kudo_received": "<strong>{actor}</strong> hat dir in <strong>{meeting}</strong> gedankt",
+    "meeting_joined": "<strong>{actor}</strong> hat dich zu <strong>{meeting}</strong> hinzugefügt",
+    "absence_delegated": "<strong>{actor}</strong> ist abwesend: Du leitest in der Zeit die Meetings, die diese Person moderiert"
+  }
+}

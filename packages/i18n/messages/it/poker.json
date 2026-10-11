@@ -1,0 +1,26 @@
+{
+  "noItems": "Il conduttore aggiunge gli elementi da stimare.",
+  "progress": "{done} di {total} elementi stimati",
+  "voted": "{count, plural, =0 {Nessuno ha ancora scelto una carta} one {# carta scelta} other {# carte scelte}}",
+  "average": "Media: {value}",
+  "final": "Stima: {value}",
+  "pickTitle": "La tua stima per «{title}»",
+  "deck": "Carte",
+  "hidden": "La tua carta resta coperta finché il conduttore non le rivela tutte.",
+  "votedOf": "{count} su {total} hanno scelto una carta",
+  "reveal": "Rivela le carte",
+  "agree": "Stima concordata:",
+  "revote": "Nuovo giro",
+  "reopen": "Stima di nuovo «{title}»",
+  "remove": "Rimuovi «{title}»",
+  "newItem": "Elemento da stimare",
+  "newItemPlaceholder": "Una storia, un ticket, un'attività…",
+  "add": "Aggiungi",
+  "settingsTitle": "Planning poker",
+  "deckSaved": "Mazzo salvato",
+  "decks": {
+    "fibonacci": "Fibonacci (0, 1, 2, 3, 5, 8, 13, 21)",
+    "tshirt": "Taglie di maglietta (da XS a XL)",
+    "powers": "Potenze di due (da 1 a 32)"
+  }
+}

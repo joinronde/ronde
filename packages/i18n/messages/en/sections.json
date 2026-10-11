@@ -1,0 +1,22 @@
+{
+  "defaults": {
+    "done": "Done this week",
+    "next": "Planned for next week",
+    "blockers": "Blockers to flag",
+    "other": "Other"
+  },
+  "types": {
+    "list": {
+      "label": "List",
+      "hint": "One item per line, to add, reorder and remove"
+    },
+    "checklist": {
+      "label": "Checklist",
+      "hint": "Tasks, ticked off when done"
+    },
+    "text": {
+      "label": "Free text",
+      "hint": "A paragraph, over several lines if needed"
+    }
+  }
+}

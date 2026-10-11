@@ -1,0 +1,19 @@
+{
+  "title": "Crie seu espaço de trabalho",
+  "welcome": "Boas-vindas, {name}!",
+  "intro": "Um espaço de trabalho reúne sua equipe: pessoas, reuniões e modelos. Você pode criar outros depois.",
+  "name": "Nome do espaço de trabalho",
+  "namePlaceholder": "Equipe de produto",
+  "slug": "Endereço",
+  "slugHint": "Letras minúsculas, números e hifens.",
+  "change": "Alterar",
+  "defaults": "Endereço {address} · {language} · {timezone}",
+  "language": "Idioma dos e-mails e das atas",
+  "timezone": "Fuso horário",
+  "create": "Criar o espaço de trabalho",
+  "invitationsTitle": "Você foi convidado",
+  "join": "Entrar",
+  "createOwn": "Ou crie seu próprio espaço de trabalho",
+  "yourWorkspaces": "Seus espaços de trabalho",
+  "open": "Abrir"
+}

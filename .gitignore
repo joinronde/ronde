@@ -1,0 +1,27 @@
+# Dependencies and build output
+node_modules/
+.next/
+out/
+dist/
+coverage/
+.turbo/
+*.tsbuildinfo
+next-env.d.ts
+
+# Local environment
+.env
+.env.local
+.DS_Store
+
+# Generated Prisma client
+**/src/generated/prisma
+
+# Test runner artifacts
+playwright-report/
+test-results/
+.playwright-mcp/
+# Frames and pictures of the media captures (apps/web/media), before they are encoded
+.work/
+
+# License signing keys (private): never committed
+.secrets/

@@ -1,0 +1,273 @@
+{
+  "weekly": {
+    "name": "Wöchentliches Team-Meeting",
+    "description": "Eine Runde zu Erledigtem, Geplantem und Blockern, mit offenen Themen und Folgeaufgaben.",
+    "sections": {}
+  },
+  "standup": {
+    "name": "Daily Stand-up",
+    "description": "Fünfzehn Minuten an Werktagen: gestern, heute, Blocker. Kurze Beiträge, sonst nichts.",
+    "sections": {
+      "yesterday": "Gestern",
+      "today": "Heute"
+    }
+  },
+  "retro": {
+    "name": "Monatliche Retrospektive",
+    "description": "Gemeinsam auf den Monat zurückblicken: was gut lief, was besser werden soll, Ideen zum Ausprobieren.",
+    "sections": {
+      "well": "Was gut lief",
+      "improve": "Was besser werden soll",
+      "ideas": "Ideen zum Ausprobieren"
+    }
+  },
+  "oneOnOne": {
+    "name": "Einzelgespräch",
+    "description": "Ein wöchentliches Gespräch zu zweit: Erfolge, Prioritäten, Herausforderungen und Feedback.",
+    "sections": {
+      "wins": "Erfolge",
+      "priorities": "Prioritäten",
+      "challenges": "Herausforderungen",
+      "feedback": "Feedback"
+    }
+  },
+  "sprintReview": {
+    "name": "Sprint Review",
+    "description": "Alle zwei Wochen: was geliefert wurde, die Demos, der nächste Sprint und die Risiken.",
+    "sections": {
+      "delivered": "Geliefert",
+      "demo": "Demos",
+      "next": "Nächster Sprint",
+      "risks": "Risiken"
+    }
+  },
+  "steering": {
+    "name": "Lenkungsausschuss",
+    "description": "Einmal im Monat: Fortschritt, anstehende Entscheidungen, Risiken und nächste Schritte.",
+    "sections": {
+      "progress": "Fortschritt",
+      "decisions": "Anstehende Entscheidungen",
+      "risks": "Risiken",
+      "next": "Nächste Schritte"
+    }
+  },
+  "allHands": {
+    "name": "All-Hands",
+    "description": "Das ganze Team einmal im Monat: Highlights, Neuigkeiten und Anliegen.",
+    "sections": {
+      "highlights": "Highlights",
+      "news": "Neuigkeiten",
+      "asks": "Anliegen"
+    }
+  },
+  "leadership": {
+    "name": "Führungsteam",
+    "description": "Das Wochenmeeting der Führung: Kennzahlen, Erfolge, Prioritäten und was eskaliert werden muss.",
+    "sections": {
+      "figures": "Kennzahlen",
+      "wins": "Erfolge",
+      "priorities": "Prioritäten",
+      "escalations": "Eskalationen"
+    }
+  },
+  "salesPipeline": {
+    "name": "Vertriebs-Pipeline-Review",
+    "description": "Jeden Montag: gewonnene Deals, wie sich die Pipeline bewegt hat, nächste Schritte und gefährdete Deals.",
+    "sections": {
+      "won": "Gewonnene Deals",
+      "pipeline": "Bewegungen in der Pipeline",
+      "next": "Nächste Schritte",
+      "atrisk": "Gefährdete Deals"
+    }
+  },
+  "editorial": {
+    "name": "Redaktionskonferenz",
+    "description": "Für eine Redaktion, ein Content- oder Kommunikationsteam: was erschienen ist, was in Arbeit ist, Ideen und wo Hilfe gebraucht wird.",
+    "sections": {
+      "published": "Veröffentlicht",
+      "ideas": "Ideen",
+      "help": "Hilfe gebraucht",
+      "inprogress": "In Arbeit"
+    }
+  },
+  "classCouncil": {
+    "name": "Klassenkonferenz",
+    "description": "Einmal pro Halbjahr: wie es der Klasse geht, welche Schülerinnen und Schüler Unterstützung brauchen und die vereinbarten Maßnahmen.",
+    "sections": {
+      "progress": "Wie es der Klasse geht",
+      "support": "Wer Unterstützung braucht",
+      "agreed": "Vereinbarte Maßnahmen",
+      "notes": "Notizen"
+    }
+  },
+  "teachingTeam": {
+    "name": "Lehrkräfteteam",
+    "description": "Das Wochenmeeting eines Lehrkräfteteams: die letzte Woche im Unterricht, was ansteht, wen man im Blick behalten sollte und Material zum Teilen.",
+    "sections": {
+      "coming": "Was ansteht",
+      "students": "Im Blick behalten",
+      "resources": "Material zum Teilen",
+      "lastweek": "Letzte Woche im Unterricht"
+    }
+  },
+  "board": {
+    "name": "Vereinsvorstand",
+    "description": "Die monatliche Vorstandssitzung eines Vereins: Neues aus den Ausschüssen, Abstimmungen, Kasse und anstehende Veranstaltungen.",
+    "sections": {
+      "news": "Neues aus den Ausschüssen",
+      "votes": "Anstehende Abstimmungen",
+      "treasury": "Kasse",
+      "events": "Anstehende Veranstaltungen"
+    }
+  },
+  "volunteers": {
+    "name": "Ehrenamtskoordination",
+    "description": "Samstagmorgen mit den Ehrenamtlichen: was getan wurde, die nächsten Einsätze und was fehlt.",
+    "sections": {
+      "done": "Was wir getan haben",
+      "missions": "Nächste Einsätze",
+      "needs": "Was wir brauchen"
+    }
+  },
+  "siteMeeting": {
+    "name": "Baubesprechung",
+    "description": "Die wöchentliche Besprechung einer Baustelle: erledigte Arbeiten, geplante Arbeiten, Sicherheit und Mängelliste.",
+    "sections": {
+      "done": "Erledigte Arbeiten",
+      "planned": "Geplante Arbeiten",
+      "safety": "Sicherheitsthemen",
+      "punch": "Mängelliste"
+    }
+  },
+  "shiftHandover": {
+    "name": "Schichtübergabe",
+    "description": "Fünfzehn Minuten zwischen zwei Schichten: was passiert ist, worauf zu achten ist und was die nächste Schicht tun muss.",
+    "sections": {
+      "events": "Was passiert ist",
+      "watch": "Im Auge behalten",
+      "todo": "Für die nächste Schicht"
+    }
+  },
+  "portfolio": {
+    "name": "Portfolio-Review",
+    "description": "Alle zwei Wochen eine Runde pro Projekt: Wer daran arbeitet, berichtet über den Stand, die Fortschritte, die nächsten Meilensteine und die Risiken; Projekte mit Schwierigkeiten kommen zuerst.",
+    "sections": {
+      "progress": "Fortschritt",
+      "milestones": "Nächste Meilensteine",
+      "risks": "Risiken und Bedarf",
+      "decisions": "Zu treffende Entscheidungen"
+    }
+  },
+  "teamProjects": {
+    "name": "Team und Projekte",
+    "description": "Eine kurze Runde für persönliche Neuigkeiten, dann eine Runde pro gemeinsamem Projekt, in der das Projektteam gemeinsam spricht.",
+    "sections": {}
+  },
+  "rhythm": {
+    "weekdays": "Jeden Werktag",
+    "daily": "{count, plural, one {Jeden Tag} other {Alle # Tage}}",
+    "weekly": "{count, plural, one {Jede Woche} =2 {Alle zwei Wochen} other {Alle # Wochen}}",
+    "monthly": "{count, plural, one {Einmal im Monat} =3 {Einmal im Quartal} other {Alle # Monate}}",
+    "timesDaily": "{count, plural, =2 {Zweimal täglich} other {#-mal täglich}}"
+  },
+  "okrReview": {
+    "name": "OKR-Review",
+    "description": "Einmal im Monat: Fortschritt bei jedem Ziel, die Schlüsselergebnisse, die Risiken und die nötigen Entscheidungen.",
+    "sections": {
+      "progress": "Fortschritt bei den Zielen",
+      "results": "Schlüsselergebnisse",
+      "risks": "Risiken",
+      "asks": "Nötige Entscheidungen"
+    }
+  },
+  "incidentReview": {
+    "name": "Incident-Review",
+    "description": "Die Vorfälle der Woche, ohne Schuldzuweisung: was passiert ist, die Auswirkungen, die Ursachen und die Korrekturmaßnahmen.",
+    "sections": {
+      "timeline": "Was passiert ist",
+      "impact": "Auswirkungen",
+      "causes": "Grundursachen",
+      "actions": "Korrekturmaßnahmen"
+    }
+  },
+  "researchLab": {
+    "name": "Laborbesprechung",
+    "description": "Die wöchentliche Besprechung einer Forschungsgruppe: Ergebnisse, nächste Schritte, wo es hakt und Artikel zum Teilen.",
+    "sections": {
+      "results": "Experimente und Ergebnisse",
+      "next": "Nächste Schritte",
+      "stuck": "Wo ich feststecke",
+      "reading": "Artikel zum Teilen"
+    }
+  },
+  "studentProjects": {
+    "name": "Studentische Projekte",
+    "description": "Alle zwei Wochen mit der Betreuung: Fortschritt, Abgaben, Schwierigkeiten und Fragen jeder Gruppe.",
+    "sections": {
+      "progress": "Fortschritt",
+      "deliverables": "Abgaben",
+      "difficulties": "Schwierigkeiten",
+      "questions": "Fragen an die Betreuung"
+    }
+  },
+  "caseReview": {
+    "name": "Fallkonferenz",
+    "description": "Die interdisziplinäre Besprechung der Woche: vorgestellte Fälle, Einschätzungen, beschlossener Behandlungsplan und anstehende Untersuchungen.",
+    "sections": {
+      "cases": "Vorzustellende Fälle",
+      "opinions": "Einschätzungen und Vorschläge",
+      "plan": "Beschlossener Behandlungsplan",
+      "tests": "Anstehende Untersuchungen"
+    }
+  },
+  "serviceBriefing": {
+    "name": "Briefing vor dem Service",
+    "description": "Zehn Minuten vor der Öffnung, jeden Tag: Reservierungen, Tagesgerichte, Anweisungen und worauf zu achten ist.",
+    "sections": {
+      "bookings": "Reservierungen und Andrang",
+      "specials": "Tagesgerichte",
+      "instructions": "Anweisungen",
+      "watch": "Worauf zu achten ist"
+    }
+  },
+  "onboarding": {
+    "name": "Onboarding-Gespräch",
+    "description": "Die ersten Monate neuer Kolleginnen und Kollegen, jede Woche: was sie gelernt haben, ihre Ziele, was sie brauchen und ihre Fragen.",
+    "sections": {
+      "learned": "Was ich gelernt habe",
+      "goals": "Meine Ziele für die Woche",
+      "needs": "Was ich brauche",
+      "questions": "Meine Fragen"
+    }
+  },
+  "hiringReview": {
+    "name": "Recruiting-Runde",
+    "description": "Jede Woche: geführte Gespräche, laufende Bewerbungen, anstehende Entscheidungen und zu öffnende Stellen.",
+    "sections": {
+      "interviews": "Geführte Gespräche",
+      "candidates": "Laufende Bewerbungen",
+      "decisions": "Anstehende Entscheidungen",
+      "openings": "Zu öffnende Stellen"
+    }
+  },
+  "boardOfDirectors": {
+    "name": "Aufsichtsrat",
+    "description": "Einmal pro Quartal: Tätigkeitsbericht, Finanzen, Beschlüsse zur Abstimmung und Risiken.",
+    "sections": {
+      "report": "Tätigkeitsbericht",
+      "finances": "Finanzen",
+      "resolutions": "Beschlüsse zur Abstimmung",
+      "risks": "Risiken und kritische Punkte"
+    }
+  },
+  "supportReview": {
+    "name": "Support-Review",
+    "description": "Jede Woche aus Kundensicht: auffällige Tickets, Eskalationen, Produktfeedback und Zufriedenheit.",
+    "sections": {
+      "highlights": "Auffällige Tickets",
+      "escalations": "Eskalationen",
+      "feedback": "Produktfeedback",
+      "satisfaction": "Zufriedenheit"
+    }
+  }
+}

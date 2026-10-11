@@ -1,0 +1,65 @@
+{
+  "title": "Administração do servidor",
+  "back": "Voltar",
+  "intro": "Configurações deste servidor Ronde, comuns a todos os seus espaços de trabalho. As de cada espaço (membros, funções, segurança) ficam nas Configurações dele. Os valores salvos aqui prevalecem sobre as variáveis de ambiente.",
+  "counts": {
+    "users": "Contas",
+    "workspaces": "Espaços de trabalho",
+    "meetings": "Reuniões"
+  },
+  "language": "Idioma",
+  "defaultLocale": "Idioma padrão",
+  "defaultLocaleHint": "Para quem não escolheu um idioma na conta e cujo navegador não oferece nenhum que o Ronde fale.",
+  "signup": "Quem pode criar uma conta",
+  "recommended": "Recomendado",
+  "policies": {
+    "invite-only": {
+      "label": "Por convite",
+      "hint": "Somente pessoas convidadas para um espaço de trabalho."
+    },
+    "domains": {
+      "label": "Domínios de e-mail",
+      "hint": "Pessoas convidadas e qualquer pessoa com um endereço dos domínios abaixo."
+    },
+    "open": {
+      "label": "Aberto",
+      "hint": "Qualquer pessoa que chegue a este servidor."
+    }
+  },
+  "domains": "Domínios permitidos",
+  "domainsHint": "Separados por vírgulas, ex.: example.org.",
+  "save": "Salvar",
+  "saved": "Salvo",
+  "license": {
+    "title": "Licença",
+    "pureCommunity": "Esta build é a edição Community pura: o código das edições pagas não está incluído.",
+    "status": {
+      "none": "Edição Community",
+      "invalid": "Chave de licença inválida",
+      "active": "Licença ativa",
+      "grace": "Licença expirada: período de carência",
+      "expired": "Licença expirada"
+    },
+    "reasons": {
+      "format": "Não é possível ler a chave salva.",
+      "payload": "Não é possível ler a chave salva.",
+      "signature": "A chave salva foi alterada ou não foi emitida pelo Ronde.",
+      "unknownKey": "A chave salva foi assinada por uma chave que esta versão não conhece."
+    },
+    "editions": {
+      "team": "Team",
+      "enterprise": "Enterprise"
+    },
+    "summary": "{edition} para {customer}, até {date}.",
+    "graceUntil": "Tudo continua funcionando até {date}: renove a licença antes disso.",
+    "readOnly": "Os recursos pagos estão em modo somente leitura: o que eles guardam continua visível, mas nada novo pode ser adicionado. Os recursos Community não são afetados.",
+    "seats": "{used} de {seats} licenças usadas",
+    "seatsUnlimited": "{used} pessoas, sem limite de licenças",
+    "overSeats": "Mais pessoas usam o Ronde do que a licença permite: nada é bloqueado, mas atualize sua licença.",
+    "fromEnv": "A chave vem da variável RONDE_LICENSE: altere-a lá.",
+    "key": "Chave de licença",
+    "keyHint": "Verificada neste servidor, offline: nada é enviado para lugar nenhum.",
+    "save": "Salvar a chave",
+    "remove": "Remover a licença"
+  }
+}

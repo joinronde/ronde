@@ -1,0 +1,69 @@
+{
+  "title": "Wikis",
+  "intro": "Publish the minutes of each session as a page in Notion or Confluence. Each meeting then picks its wiki in Settings › Integrations.",
+  "empty": "No wiki yet.",
+  "add": "Add a wiki",
+  "kind": "Tool",
+  "name": "Name",
+  "optional": "optional",
+  "kinds": {
+    "notion": "Notion",
+    "confluence": "Confluence"
+  },
+  "fields": {
+    "notion": {
+      "parent": "Parent page (its address)"
+    },
+    "confluence": {
+      "site": "Confluence address",
+      "space": "Space key",
+      "parent": "Parent page (address or number)",
+      "email": "Email of the account (Cloud)"
+    }
+  },
+  "token": {
+    "notion": "Integration secret",
+    "confluence": "API token"
+  },
+  "hints": {
+    "notion": "In Notion, create an internal integration at notion.so/profile/integrations and copy its secret. Then open the parent page and share it with the integration (••• › Connections): pages are created under it.",
+    "confluence": "Confluence Cloud: an API token created at id.atlassian.com, for the account whose email is above. Data Center or Server: a personal access token (profile › Personal access tokens), without an email. The account must be able to create pages in the space."
+  },
+  "tokenKept": "A token is saved. Type a new one to replace it.",
+  "save": "Save",
+  "cancel": "Cancel",
+  "test": "Test",
+  "works": "✓ Connected.",
+  "edit": "Edit",
+  "remove": "Remove",
+  "removeConfirm": "Remove {name}? Meetings stop publishing there; the pages already published stay in it.",
+  "openInRonde": "Open in Ronde",
+  "meeting": {
+    "title": "Publish the minutes",
+    "intro": "At each archive, the minutes become a page of the wiki, named by the session's date. When the summary is edited, the page follows.",
+    "wiki": "Wiki",
+    "none": "Nowhere",
+    "hint": "Sessions already archived are published from the history.",
+    "noWiki": "No wiki in this workspace yet.",
+    "addWiki": "Add one in the workspace settings",
+    "on": "The minutes will be published to {name}.",
+    "off": "The minutes are no longer published."
+  },
+  "history": {
+    "publish": "Publish to {name}",
+    "update": "Update the page",
+    "open": "Open in {name}",
+    "publishing": "Publishing…",
+    "done": "Minutes published to {name}.",
+    "failed": "The last publication failed. {error}",
+    "retry": "Try again"
+  },
+  "errors": {
+    "token": "The wiki refused the token: check that it is right and still valid.",
+    "notionPage": "Notion cannot find the parent page: share it with the integration (••• › Connections).",
+    "notionParent": "The parent page is not the address of a Notion page.",
+    "confluenceSpace": "Confluence cannot find the space or the parent page, or the account cannot see them.",
+    "answer": "The wiki answered: {detail}.",
+    "network": "The wiki could not be reached: check its address."
+  }
+}

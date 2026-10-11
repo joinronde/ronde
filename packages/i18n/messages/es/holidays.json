@@ -1,0 +1,18 @@
+{
+  "label": "Festivos",
+  "none": "Ninguno",
+  "noneMeeting": "Ninguno: se celebran todas las sesiones",
+  "inherit": "Como el espacio: {name}",
+  "inheritNone": "Como el espacio: ninguno",
+  "region": "Región",
+  "wholeCountry": "Todo el país",
+  "hintMeeting": "Una sesión que cae en uno de estos festivos se salta. Aun así, puedes mantener o mover cada una abajo.",
+  "hintWorkspace": "Las reuniones saltan las sesiones que caen en estos festivos; cada reunión puede elegir otros en su calendario.",
+  "source": "Festivos del proyecto date-holidays, según Wikipedia (CC BY-SA 3.0).",
+  "saved": "Festivos actualizados",
+  "skipped": "Festivo · {name}",
+  "kept": "Mantenida pese a: {name}",
+  "keep": "Mantenerla igualmente",
+  "held": "Sesión mantenida",
+  "skipAgain": "Volver a saltarla"
+}

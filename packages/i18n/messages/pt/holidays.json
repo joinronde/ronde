@@ -1,0 +1,18 @@
+{
+  "label": "Feriados",
+  "none": "Nenhum",
+  "noneMeeting": "Nenhum: todas as sessões acontecem",
+  "inherit": "Como o espaço: {name}",
+  "inheritNone": "Como o espaço: nenhum",
+  "region": "Região",
+  "wholeCountry": "País inteiro",
+  "hintMeeting": "Uma sessão que cai em um destes feriados é pulada. Mesmo assim, você pode manter ou mover cada uma abaixo.",
+  "hintWorkspace": "As reuniões pulam as sessões que caem nestes feriados; cada reunião pode escolher outros na sua agenda.",
+  "source": "Feriados do projeto date-holidays, com base na Wikipédia (CC BY-SA 3.0).",
+  "saved": "Feriados atualizados",
+  "skipped": "Feriado · {name}",
+  "kept": "Mantida apesar de: {name}",
+  "keep": "Manter mesmo assim",
+  "held": "Sessão mantida",
+  "skipAgain": "Pular de novo"
+}

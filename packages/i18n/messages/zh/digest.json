@@ -1,0 +1,9 @@
+{
+  "subject": "{team} · {date} 摘要",
+  "greeting": "{name}，你好：",
+  "intro": "以下是团队在 {date} 为“{team}”分享的内容（未举行实时会议）。",
+  "open": "在 Ronde 中打开会议",
+  "footer": "你收到这份摘要，是因为你参加了 Ronde 上的“{team}”。主持人可以在会议设置中停止这些邮件。",
+  "openBranded": "打开会议",
+  "footerBranded": "你收到这份摘要，是因为你参加了“{team}”。主持人可以在会议设置中停止这些邮件。"
+}

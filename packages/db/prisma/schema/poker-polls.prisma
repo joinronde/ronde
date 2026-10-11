@@ -1,0 +1,75 @@
+// Planning poker and polls modules
+
+/// An item to estimate in a planning poker block
+model PokerItem {
+  id          String      @id @default(uuid(7))
+  workspaceId String
+  sessionId   String
+  session     Session     @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  title       String
+  position    Int         @default(0)
+  /// Cards shown to everyone
+  revealed    Boolean     @default(false)
+  /// Estimate agreed by the team
+  final       String?
+  createdAt   DateTime    @default(now())
+  votes       PokerVote[]
+
+  @@unique([id, workspaceId])
+  @@index([sessionId])
+  @@index([workspaceId])
+}
+
+/// The card a person picked for an item, hidden until the reveal
+model PokerVote {
+  workspaceId String
+  itemId      String
+  item        PokerItem @relation(fields: [itemId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  personId    String
+  value       String
+  createdAt   DateTime  @default(now())
+
+  @@id([itemId, personId])
+  @@index([workspaceId])
+}
+
+enum PollKind {
+  single
+  multiple
+  scale
+  words
+}
+
+/// A question asked to the team during a session
+model Poll {
+  id          String       @id @default(uuid(7))
+  workspaceId String
+  sessionId   String
+  session     Session      @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  question    String
+  kind        PollKind
+  /// Choices of a single or multiple choice poll
+  options     String[]     @default([])
+  /// Who answered what is never shown, only the totals
+  anonymous   Boolean      @default(true)
+  open        Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  answers     PollAnswer[]
+
+  @@unique([id, workspaceId])
+  @@index([sessionId])
+  @@index([workspaceId])
+}
+
+/// A person's answer: the chosen options, a value of the scale, or a few words
+model PollAnswer {
+  workspaceId String
+  pollId      String
+  poll        Poll     @relation(fields: [pollId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  personId    String
+  values      String[]
+  createdAt   DateTime @default(now())
+
+  @@id([pollId, personId])
+  @@index([workspaceId])
+}

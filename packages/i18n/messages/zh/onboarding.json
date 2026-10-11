@@ -1,0 +1,19 @@
+{
+  "title": "创建你的工作空间",
+  "welcome": "欢迎，{name}！",
+  "intro": "工作空间汇集你的团队：成员、会议和模板。之后还可以创建更多。",
+  "name": "工作空间名称",
+  "namePlaceholder": "产品团队",
+  "slug": "地址",
+  "slugHint": "小写字母、数字和连字符。",
+  "change": "修改",
+  "defaults": "地址 {address} · {language} · {timezone}",
+  "language": "邮件和会议纪要的语言",
+  "timezone": "时区",
+  "create": "创建工作空间",
+  "invitationsTitle": "你收到了邀请",
+  "join": "加入",
+  "createOwn": "或者创建你自己的工作空间",
+  "yourWorkspaces": "你的工作空间",
+  "open": "打开"
+}

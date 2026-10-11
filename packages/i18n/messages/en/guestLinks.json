@@ -1,0 +1,18 @@
+{
+  "title": "Guest links",
+  "intro": "People without an account follow the shared screen live, read-only, with a secret link that expires: a client, a board, a partner. They see what the room screen shows.",
+  "label": "Who it is for",
+  "labelPlaceholder": "E.g. Board members",
+  "duration": "Valid for",
+  "days": "{count, plural, one {# day} other {# days}}",
+  "create": "Create a link",
+  "once": "Copy this link now and share it: it will not be shown again.",
+  "link": "Guest link",
+  "copy": "Copy",
+  "copied": "Link copied",
+  "until": "Valid until {date}",
+  "expiredOn": "Expired on {date}",
+  "revoke": "Revoke",
+  "remove": "Remove",
+  "revoked": "Link revoked"
+}

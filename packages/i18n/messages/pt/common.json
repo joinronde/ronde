@@ -1,0 +1,25 @@
+{
+  "host": "Anfitrião",
+  "duration": {
+    "minutes": "{m} min",
+    "hours": "{h} h",
+    "hoursMinutes": "{h} h {m} min"
+  },
+  "noMeeting": {
+    "title": "Nenhuma reunião em andamento",
+    "notPrepared": "{host} ainda não preparou a próxima reunião. Enquanto isso, você pode preencher sua ficha.",
+    "pickDate": "Escolha a data da próxima reunião para montar a pauta.",
+    "dateLabel": "Data da reunião",
+    "prepare": "Preparar a reunião de {date}",
+    "addTeamFirst": "Adicione primeiro a equipe nas configurações.",
+    "openSettings": "Abrir as configurações"
+  },
+  "loadError": {
+    "title": "Não foi possível carregar os dados",
+    "body": "O servidor não respondeu ou retornou um erro. Seus dados estão seguros.",
+    "retry": "Tentar de novo"
+  },
+  "cancel": "Cancelar",
+  "delete": "Excluir",
+  "exportCsv": "Exportar em CSV"
+}

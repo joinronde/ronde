@@ -1,0 +1,265 @@
+{
+  "hostOnlyTitle": "Settings reserved for the hosts ({host})",
+  "hostOnlyBody": "Hosts set up the meeting, its people and its sections. Ask one of them, or a workspace admin, to change something.",
+  "saved": "Settings saved",
+  "onePerLine": "One per line",
+  "remove": "Remove",
+  "cancel": "Cancel",
+  "meeting": {
+    "title": "Meeting",
+    "teamName": "Meeting name",
+    "hostLabel": "Name shown for the host",
+    "hostLabelHint": "A role or a first name, e.g. Scrum master, Facilitator, Julie. Shown everywhere in Ronde: “Notes · {host}”.",
+    "locale": "Meeting language",
+    "localeHint": "Language of the reminder emails, the notifications and the generated minutes.",
+    "speakingTime": "Speaking time",
+    "perPerson": "{time} per person",
+    "targetRange": "From 5 min to 8 h.",
+    "speakRange": "From 15 s to 30 min.",
+    "unitSec": "s",
+    "unitMin": "min",
+    "unitH": "h",
+    "seconds": "Seconds",
+    "minutes": "Minutes",
+    "hours": "Hours",
+    "otherDuration": "Other duration…",
+    "target": "Target duration",
+    "timer": "Timer",
+    "autoStart": "Starts at each turn",
+    "announcements": "Intro announcements",
+    "localeWorkspace": "Workspace language ({language})"
+  },
+  "sections": {
+    "title": "Check-in sections",
+    "name": "Section name",
+    "nameOf": "Name of section {n}",
+    "input": "Input",
+    "inputOf": "Input of “{label}”",
+    "role": "Role",
+    "roleOf": "Role of “{label}”",
+    "roles": {
+      "achievement": {
+        "label": "Done",
+        "hint": "What was done. Offers to tick off last time's plans."
+      },
+      "plan": {
+        "label": "Planned",
+        "hint": "What comes next. Shown again at the next session and in the reminder."
+      },
+      "blocker": {
+        "label": "Blocker",
+        "hint": "What blocks. Highlighted on screen, can become a follow-up action, tracked in the stats."
+      },
+      "note": {
+        "label": "Other",
+        "hint": "Anything else worth sharing."
+      },
+      "custom": {
+        "label": "Custom",
+        "hint": "A free section, with no special behaviour."
+      }
+    },
+    "taken": "already used",
+    "carryPlansSwitch": "This section becomes a checklist.",
+    "carryPlansHint": "Everyone finds what they planned as boxes to tick as they go. A box left unticked doesn't count as done.",
+    "carryPlans": "Bring back what was in “{plan}” last time",
+    "moveUp": "Move “{label}” up",
+    "moveDown": "Move “{label}” down",
+    "removeOf": "Remove “{label}”",
+    "customPlaceholder": "E.g. Research, Demo to show, Need help",
+    "add": "Add a section",
+    "hint": "Each role (done, planned, blocker, other) goes to one section at most. A section keeps what was entered when its name, role or input changes."
+  },
+  "reminder": {
+    "title": "Check-in reminder",
+    "when": "When",
+    "dayBefore": "The working day before the meeting",
+    "sameDay": "On the meeting day, before the time",
+    "time": "Time",
+    "byEmail": "By email, to each person",
+    "emailHint": "Only people whose check-in is not filled in yet get the reminder. You can unsubscribe someone with the “Reminder” box in the team list.",
+    "noSmtp": "No mail server configured: set SMTP_URL in the container to turn email reminders on.",
+    "teamHint": "A collective reminder in a team room is set up in “Notifications”."
+  },
+  "warmUp": {
+    "mood": "Team mood",
+    "moodOffer": "Offer everyone to share their mood of the day (anonymous)",
+    "icebreaker": "Icebreaker",
+    "bank": "Question bank",
+    "bankHint": "A random question is drawn for each meeting; the control room can change it. Leave empty to turn the icebreaker off."
+  },
+  "sources": {
+    "title": "Task sources",
+    "gitlabToken": "GitLab token",
+    "noSecretKey": "Token encryption is not configured on the server: ask the operators to set the SECRET_KEY key.",
+    "tokenHint": "Tokens are encrypted before being saved and are never shown again. GitLab: a token with the <code>read_api</code> scope.",
+    "serverToken": "(the server token is used until you enter one)",
+    "groups": "GitLab groups",
+    "projects": "Followed GitLab projects",
+    "projectsHint": "Only issues from these projects are offered for import. Also enter each person's GitLab username in the People block.",
+    "save": "Save the GitLab access",
+    "turnOn": "No integration is on for this meeting. Turn GitLab or GitHub on in “Modules” to import each person's issues and merge or pull requests.",
+    "githubTitle": "GitHub",
+    "githubToken": "GitHub token",
+    "githubTokenHint": "Optional for public repositories. For private ones: a fine-grained token with read access to issues and pull requests. Encrypted, never shown again.",
+    "githubRepos": "Followed repositories",
+    "githubReposHint": "“owner/repository” or a whole “owner”, one per line; empty: every repository. Also enter each person's GitHub username in the People block.",
+    "githubSave": "Save the GitHub access"
+  },
+  "preview": {
+    "title": "Reminder preview",
+    "to": "To: {email} · {date} at {time}",
+    "disabled": "reminders turned off",
+    "frameTitle": "Preview of the reminder email for {name}"
+  },
+  "token": {
+    "removed": "Will be removed on save",
+    "saved": "Saved · enter another one to replace it",
+    "keep": "Keep"
+  },
+  "gitlab": {
+    "unreachable": "GitLab does not answer.",
+    "followed": "{count, plural, one {# project or group followed} other {# projects or groups followed}}",
+    "noFilter": "No filter: all projects are followed",
+    "untickAll": "Untick all",
+    "tokenFirst": "Enter and save the GitLab token to show the projects of the groups.",
+    "loading": "Loading projects…",
+    "saveForGroups": "Save the settings to show the projects of the new groups.",
+    "filter": "Filter projects",
+    "filterPlaceholder": "Filter the {count} projects…",
+    "outsideGroups": "outside the groups",
+    "wholeGroup": "whole group · {count} projects"
+  },
+  "people": {
+    "title": "People ({count})",
+    "intro": "Profiles come from the workspace directory. The role sets what each person can do in this meeting.",
+    "roles": {
+      "host": "Host",
+      "cohost": "Co-host",
+      "participant": "Participant",
+      "observer": "Observer"
+    },
+    "roleHints": {
+      "host": "Runs the sessions and sets up the meeting",
+      "cohost": "Runs the sessions",
+      "participant": "Fills in a check-in and takes part",
+      "observer": "Follows the sessions, no check-in"
+    },
+    "roleOf": "Role of {name}",
+    "speaks": "Takes a turn",
+    "speaksHint": "Included in the round table",
+    "remind": "Reminder",
+    "gitlab": "GitLab username",
+    "remove": "Remove",
+    "confirmRemove": "Remove from the meeting",
+    "removed": "{name} no longer takes part",
+    "added": "{name} added to the meeting",
+    "updated": "Saved",
+    "addTitle": "Add someone",
+    "pick": "Person",
+    "pickPlaceholder": "Pick someone from the directory",
+    "add": "Add",
+    "nobodyLeft": "Everyone in the directory already takes part.",
+    "directory": "Manage the directory",
+    "categoriesHint": "Job categories, birthdays and names are edited in the workspace directory.",
+    "github": "GitHub username"
+  },
+  "template": {
+    "title": "Reuse this format",
+    "intro": "Save the sections, the format, the modules and the schedule as a template of the workspace, to create other meetings from it. People, history and tokens stay here.",
+    "open": "Save as a template",
+    "name": "Template name",
+    "description": "Description (optional)",
+    "save": "Save the template",
+    "cancel": "Cancel",
+    "saved": "Template saved: it is offered when creating a meeting."
+  },
+  "nav": {
+    "label": "Settings categories",
+    "general": "General",
+    "schedule": "Schedule",
+    "people": "People and roles",
+    "sections": "Sections",
+    "modules": "Modules",
+    "appearance": "Appearance",
+    "notifications": "Notifications",
+    "integrations": "Integrations",
+    "template": "Template",
+    "danger": "Danger zone",
+    "agenda": "Agenda",
+    "projects": "Projects"
+  },
+  "status": {
+    "auto": "Changes are saved automatically.",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "invalid": "Not saved: check the highlighted fields.",
+    "failed": "Not saved: the change was refused.",
+    "undo": "Undo"
+  },
+  "appearance": {
+    "accent": "Accent colour",
+    "accentHint": "Used for the buttons, the timer and the shared screen of this meeting, in light and dark themes.",
+    "accents": {
+      "ember": "Ember",
+      "ocean": "Ocean",
+      "forest": "Forest",
+      "plum": "Plum",
+      "slate": "Slate"
+    },
+    "themeHint": "Light or dark theme is a personal choice:",
+    "themeLink": "choose it in your account."
+  },
+  "danger": {
+    "title": "Delete the meeting",
+    "hint": "The meeting leaves every list and its pages close for everyone. Its history is kept with the workspace.",
+    "confirm": "Type <strong>{name}</strong> to confirm",
+    "remove": "Delete the meeting"
+  },
+  "video": {
+    "title": "Video call",
+    "provider": "Video tool",
+    "providers": {
+      "link": "A link to any tool (Meet, Zoom, Teams…)",
+      "jitsi": "Jitsi Meet (a room created for this meeting)",
+      "bbb": "BigBlueButton (your server)"
+    },
+    "link": "Video call link",
+    "linkHint": "Shown at the top of every page and in the emails.",
+    "jitsiUrl": "Jitsi server",
+    "jitsiHint": "Empty: meet.jit.si. The room name is drawn once, hard to guess, and stays the same for every session.",
+    "bbbUrl": "BigBlueButton server",
+    "bbbSecret": "Shared secret of the server",
+    "bbbHint": "Ronde opens the room when someone joins and brings each person in with their name; hosts join as moderators. The secret is encrypted and never shown again.",
+    "current": "People join with:",
+    "tryIt": "the BigBlueButton room",
+    "save": "Save the video call",
+    "createWith": "Create a lasting room with:",
+    "roomCreated": "Room created: the link is saved.",
+    "kinds": {
+      "zoom": "Zoom",
+      "meet": "Google Meet",
+      "teams": "Teams"
+    }
+  },
+  "logoHint": "The workspace logo shows on the shared screen, in emails and minutes.",
+  "logoLink": "Change it in the workspace settings",
+  "icon": {
+    "title": "Icon",
+    "hint": "Shown next to the meeting's name in the menus and lists: an emoji, or its own image (a logo, a team photo).",
+    "upload": "Upload an image",
+    "changeImage": "Change the image",
+    "removeImage": "Remove the image",
+    "imageFirst": "The image is shown instead of the emoji; remove it to see the emoji again.",
+    "emoji": "Emoji",
+    "initials": "Initials",
+    "initialsShort": "Aa",
+    "other": "Another emoji",
+    "otherPlaceholder": "Paste or type an emoji",
+    "use": "Use",
+    "saved": "Icon saved",
+    "imageSaved": "Image saved",
+    "imageRemoved": "Image removed",
+    "notSaved": "The image could not be saved."
+  }
+}

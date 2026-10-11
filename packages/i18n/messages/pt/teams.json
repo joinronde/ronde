@@ -1,0 +1,59 @@
+{
+  "package": {
+    "fullName": "Ronde: as reuniões recorrentes da sua equipe",
+    "shortDescription": "Fichas, lembretes e atas das reuniões recorrentes da sua equipe.",
+    "fullDescription": "O Ronde conduz as reuniões recorrentes da sua equipe: cada pessoa prepara sua ficha, a rodada respeita o tempo e a ata se escreve sozinha. No Teams, o Ronde lembra cada pessoa da sua ficha por mensagem pessoal, permite preenchê-la ali mesmo, responde a “ronde” com as próximas sessões e ações em aberto e publica as notificações das reuniões em um canal.",
+    "commandRonde": "Suas próximas sessões e ações em aberto",
+    "helpWord": "ajuda",
+    "commandHelp": "O que o Ronde faz no Teams"
+  },
+  "bot": {
+    "welcomeTitle": "O Ronde está nesta equipe",
+    "welcome": "Vincule-a ao seu espaço do Ronde: os lembretes de ficha chegam a todos aqui no Teams, e as notificações das reuniões podem ser publicadas neste canal.",
+    "welcomeWho": "Uma pessoa proprietária ou administradora do espaço do Ronde faz isso, uma vez.",
+    "link": "Vincular ao Ronde",
+    "linked": "Este canal agora está vinculado ao espaço do Ronde “{workspace}”. Nas notificações de cada reunião, escolha o que é publicado aqui.",
+    "unlinked": "Este canal não está mais vinculado ao Ronde: os lembretes de ficha voltam a ir por e-mail.",
+    "alreadyLinked": "Esta equipe está vinculada ao espaço do Ronde “{workspace}”.",
+    "hello": "Olá! Eu lembro você das suas fichas, e você pode preenchê-las aqui mesmo. Escreva “ronde” para ver suas próximas sessões e ações em aberto.",
+    "help": "Escreva “ronde” para ver suas próximas sessões e ações em aberto. Seus lembretes de ficha chegam aqui, com um botão para preenchê-la.",
+    "notFound": "O Ronde não encontrou esta ficha para você. O e-mail da sua conta Microsoft deve ser o do seu perfil no Ronde, e você deve participar da reunião.",
+    "tooLong": "Esta ficha é longa demais para editar no Teams. Abra-a no Ronde.",
+    "unknown": "O Ronde ainda não conhece você: o e-mail da sua conta Microsoft deve ser o do seu perfil em um espaço do Ronde vinculado a esta equipe."
+  },
+  "link": {
+    "title": "Vincular o Microsoft Teams",
+    "intro": "A equipe “{team}” pede para ser vinculada a um espaço do Ronde: seus lembretes de ficha passam pelo Teams, e seu canal pode receber as notificações das reuniões.",
+    "channel": "Canal: {channel}",
+    "workspace": "Espaço de trabalho",
+    "replaces": "Já vinculado a “{team}”: esta equipe toma o seu lugar.",
+    "submit": "Vincular este espaço",
+    "none": "Você não gerencia nenhum espaço onde vincular o Microsoft Teams. Ele vem com o Ronde Team, para proprietários e administradores de um espaço.",
+    "expired": "Este link expirou ou não é válido. No Teams, mencione o Ronde no canal para obter um novo."
+  },
+  "settings": {
+    "intro": "Adicione o Ronde ao Microsoft Teams: cada pessoa preenche sua ficha sem sair do Teams.",
+    "locked": "O app do Microsoft Teams vem com o Ronde {edition}.",
+    "uses": {
+      "reminders": "Lembretes de ficha por mensagem pessoal, com um botão que transforma a mensagem no formulário da ficha.",
+      "channel": "O canal da equipe se torna um conector: nas notificações de cada reunião, escolha o que é publicado nele.",
+      "command": "Escrever “ronde” para o app mostra a cada pessoa suas próximas sessões e ações em aberto."
+    },
+    "emailMatch": "As pessoas são reconhecidas pelo e-mail: a conta Microsoft e o perfil no Ronde devem compartilhá-lo.",
+    "step1": "Baixe o app do Ronde para o Teams.",
+    "step1Hint": "O administrador do Teams o adiciona uma vez para a organização (Centro de administração do Teams › Aplicativos do Teams › Gerenciar aplicativos › Carregar novo aplicativo). Se a sua organização permitir, você também pode carregá-lo (Aplicativos › Gerenciar seus aplicativos › Carregar um aplicativo).",
+    "step2": "Adicione o app à equipe cujo canal receberá as notificações.",
+    "step3": "Nesse canal, o Ronde publica um cartão: clique em “Vincular ao Ronde” e escolha este espaço.",
+    "download": "Baixar o app (.zip)",
+    "linkedTo": "Vinculado a {team}",
+    "channel": "notificações em {channel}",
+    "linked": "O Microsoft Teams está vinculado.",
+    "reminders": "Enviar os lembretes de ficha no Teams",
+    "remindersHint": "Por mensagem pessoal, no lugar do e-mail, para as pessoas encontradas na equipe. As outras continuam recebendo o e-mail.",
+    "unlink": "Desvincular",
+    "unlinkConfirm": "Desvincular o Microsoft Teams? Os lembretes voltam para o e-mail, e as regras de notificação que publicam no canal são excluídas. Para remover o próprio app, remova-o da equipe no Teams.",
+    "notConfigured": "Para usar o Microsoft Teams, o administrador deste servidor do Ronde primeiro registra o app do Teams no Microsoft Azure.",
+    "setup": "Como configurar",
+    "openInTeams": "Abrir o app no Teams"
+  }
+}

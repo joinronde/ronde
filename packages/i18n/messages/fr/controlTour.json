@@ -1,0 +1,34 @@
+{
+  "chapters": {
+    "welcome": "Bienvenue",
+    "prepare": "Préparer",
+    "run": "Piloter",
+    "conclude": "Conclure"
+  },
+  "steps": {
+    "welcome": {
+      "title": "Bienvenue dans la Régie 👋",
+      "body": "<p>C'est d'ici que vous animez la réunion ; vos notes restent ici, pour vous seul.</p><ul><li><strong>Ouvrez l'écran partagé</strong> : un onglet sans menus, prévu pour la projection.</li><li><strong>Partagez cet onglet</strong> dans la visio, pas tout votre écran : c'est ce que voit l'équipe.</li><li><strong>Revenez ici</strong> pour piloter : tout s'affiche en direct sur l'écran partagé.</li></ul><tip>Naviguez avec <kbd>→</kbd> et <kbd>←</kbd>, quittez avec <kbd>Échap</kbd>.</tip>"
+    },
+    "runOrder": {
+      "title": "Le déroulé et l'ordre de passage",
+      "body": "<p>Intro, un passage par personne, points divers, puis clôture.</p><ul><li><strong>↑ ↓</strong> changent l'ordre, <strong>Absent</strong> retire quelqu'un du tour.</li><li><strong>Aller</strong> saute directement à une étape.</li><li>Un point vert : la fiche de la personne est prête.</li></ul>"
+    },
+    "controls": {
+      "title": "Démarrer et avancer",
+      "body": "<ul><li><strong>Démarrer la réunion</strong> lance le générique sur l'écran partagé.</li><li><strong>Suivant</strong> (<kbd>→</kbd>) donne la parole à la personne suivante ; le chrono affiche son temps de parole restant.</li><li><kbd>Espace</kbd> met le chrono en pause, <strong>+30 s</strong> accorde du rab, <strong>Terminer la réunion</strong> saute à la clôture.</li></ul>"
+    },
+    "notes": {
+      "title": "Vos notes",
+      "body": "<p>Une zone de notes par étape, <strong>enregistrée au fil de la frappe</strong> et visible par vous seul : elles vont dans le compte rendu, sous la bonne personne.</p><p><strong>+ Décision</strong> note une décision ; <strong>+ Action</strong> crée une action de suivi avec une personne responsable, suivie aux séances suivantes.</p>"
+    },
+    "minutes": {
+      "title": "Le compte rendu",
+      "body": "<p>Il s'écrit tout seul à partir des fiches, de vos notes, des décisions et des actions.</p><p>À la fin, <strong>Archiver la réunion</strong> : le compte rendu rejoint l'historique et la séance suivante est prête.</p>"
+    },
+    "finish": {
+      "title": "À vous de jouer !",
+      "body": "<p>Les personnes, le planning et les modules se règlent dans les réglages de la réunion. Ce bouton relance la visite quand vous voulez. Bonne réunion !</p>"
+    }
+  }
+}

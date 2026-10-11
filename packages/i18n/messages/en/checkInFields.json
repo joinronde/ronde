@@ -1,0 +1,15 @@
+{
+  "done": "Done",
+  "toDo": "To do",
+  "dragHint": "Drag to move (or Alt+↑ / Alt+↓)",
+  "markToDo": "Mark as to do",
+  "markDone": "Mark as done",
+  "itemLabel": "{section}, item {n}",
+  "removeItem": "Remove “{text}”",
+  "emptyItem": "empty item",
+  "remove": "Remove",
+  "addItem": "Add an item",
+  "addTaskFirst": "Add a task · leave empty if there is nothing",
+  "addItemFirst": "Add an item · leave empty if there is nothing",
+  "freeTextPlaceholder": "{section}: in a few sentences · leave empty if there is nothing"
+}

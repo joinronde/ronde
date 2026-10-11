@@ -1,0 +1,19 @@
+{
+  "title": "Crea tu espacio de trabajo",
+  "welcome": "¡Te damos la bienvenida, {name}!",
+  "intro": "Un espacio de trabajo reúne a tu equipo: sus personas, reuniones y plantillas. Puedes crear otros más adelante.",
+  "name": "Nombre del espacio de trabajo",
+  "namePlaceholder": "Equipo de producto",
+  "slug": "Dirección",
+  "slugHint": "Letras minúsculas, cifras y guiones.",
+  "change": "Cambiar",
+  "defaults": "Dirección {address} · {language} · {timezone}",
+  "language": "Idioma de los correos y las actas",
+  "timezone": "Zona horaria",
+  "create": "Crear el espacio de trabajo",
+  "invitationsTitle": "Te han invitado",
+  "join": "Unirse",
+  "createOwn": "O crea tu propio espacio de trabajo",
+  "yourWorkspaces": "Tus espacios de trabajo",
+  "open": "Abrir"
+}

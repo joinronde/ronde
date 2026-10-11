@@ -1,0 +1,21 @@
+{
+  "title": "模板",
+  "intro": "从一个行之有效的会议开始：适用于团队、学校、公益组织、工地或护理单元。一切都可以修改。",
+  "browse": "浏览全部模板",
+  "categories": "适用对象",
+  "sections": "栏目",
+  "category": {
+    "all": "全部",
+    "team": "团队",
+    "product": "产品与内容",
+    "leadership": "管理与销售",
+    "education": "教育",
+    "nonprofit": "公益组织",
+    "field": "一线现场",
+    "health": "医护团队",
+    "own": "你的模板"
+  },
+  "minutes": "{count} 分钟",
+  "use": "使用此模板",
+  "saveHint": "任何会议都可以成为工作空间的模板：打开其设置，然后点击“另存为模板”。"
+}

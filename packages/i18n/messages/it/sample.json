@@ -1,0 +1,88 @@
+{
+  "badge": "Esempio",
+  "exploreTitle": "Oppure dai prima un'occhiata a una riunione di esempio",
+  "exploreText": "Un team fittizio con un mese di cronologia: avvia una sessione, leggi i verbali, guarda le statistiche. Non viene inviato nulla a nessuno e sparisce con un clic.",
+  "explore": "Apri la riunione di esempio",
+  "preparing": "Preparazione dell'esempio…",
+  "banner": "Riunione di esempio: un team fittizio e un mese di cronologia, per provare tutto. Non viene inviato nulla a nessuno.",
+  "delete": "Elimina l'esempio",
+  "deleteConfirm": "Eliminare la riunione di esempio e il suo team fittizio? Non si può annullare.",
+  "personHint": "Persona fittizia della riunione di esempio",
+  "meetingName": "Riunione settimanale (esempio)",
+  "tasks": {
+    "emma": {
+      "1": "Modello dati delle fatture",
+      "2": "Endpoint delle fatture nell'API",
+      "3": "Autenticazione con chiave API",
+      "4": "Documentazione dell'API",
+      "5": "Filtri per cliente sulle fatture",
+      "6": "Test di carico a 500 richieste al secondo"
+    },
+    "lucas": {
+      "1": "Analisi del funnel di iscrizione",
+      "2": "Interviste a cinque nuovi clienti",
+      "3": "Specifiche della checklist di benvenuto",
+      "4": "Testi del tour guidato",
+      "5": "Dashboard di attivazione",
+      "6": "Test della pagina prezzi"
+    },
+    "sarah": {
+      "1": "Mockup mobile approvati",
+      "2": "Struttura dell'app mobile e la sua CI",
+      "3": "Schermate di registrazione",
+      "4": "Foto delle ricevute",
+      "5": "Modalità offline della dashboard",
+      "6": "Beta aperta a dieci clienti"
+    },
+    "tom": {
+      "1": "Stili di pulsanti e campi",
+      "2": "Palette del tema scuro",
+      "3": "Focus da tastiera visibile ovunque",
+      "4": "Componente tabella",
+      "5": "Test di usabilità con due team",
+      "6": "Linee guida dei componenti"
+    },
+    "sofia": {
+      "1": "Dashboard di monitoraggio",
+      "2": "Log raccolti in un unico posto",
+      "3": "Backup automatici del database",
+      "4": "Checklist di rilascio",
+      "5": "Avvisi sugli errori del server",
+      "6": "Esercitazione di ripristino dei backup"
+    }
+  },
+  "blockers": {
+    "staging": "Ancora nessun accesso al database di test, ticket aperto con l'IT",
+    "crm": "L'esportazione del CRM si ferma a 2.000 righe",
+    "licence": "Il set di icone scelto richiede una licenza a pagamento"
+  },
+  "dayOff": "Assente giovedì pomeriggio (formazione)",
+  "actions": {
+    "staging": "Ottenere l'accesso al database di test (sollecitare l'IT)",
+    "crm": "Aggirare il limite di esportazione del CRM",
+    "licence": "Ordinare la licenza del set di icone"
+  },
+  "kudos": {
+    "checklist": "La checklist di rilascio mi ha salvato il venerdì",
+    "screens": "Le nuove schermate sono molto più chiare",
+    "export": "Grazie per aver sbloccato l'esportazione in un giorno"
+  },
+  "questions": {
+    "endpoint": "Quando arriva l'endpoint delle fatture sul server di test?",
+    "alerts": "Gli avvisi possono andare anche nel canale del supporto?"
+  },
+  "decisions": {
+    "escalate": "Decisione: se non c'è risposta entro giovedì, facciamo salire il ticket dell'IT.",
+    "notes": "Decisione: il design system ha le sue note di rilascio."
+  },
+  "summary": "Una buona settimana: la documentazione dell'API è online e la beta è nei tempi. L'accesso al database di test è ancora bloccato, quindi giovedì Emma fa salire il ticket.",
+  "icebreaker": "La tua piccola vittoria della settimana?",
+  "answers": {
+    "lucas": "Cinque interviste con i clienti fissate in una mattina",
+    "sofia": "Zero avvisi questo weekend"
+  },
+  "topics": {
+    "oncall": "Chi è reperibile durante le ferie?",
+    "flags": "Convenzione di nomi per i feature flag"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "title": "Account video",
+  "intro": "Lascia che Ronde crei una stanza permanente Zoom, Google Meet o Teams per ogni riunione, con un account dello spazio di lavoro. Nessuno deve accedere.",
+  "empty": "Ancora nessun account video.",
+  "add": "Aggiungi un account video",
+  "kind": "Provider",
+  "name": "Nome",
+  "edit": "Modifica",
+  "tokenKept": "Un segreto è salvato. Digitane uno nuovo per sostituirlo.",
+  "save": "Salva",
+  "cancel": "Annulla",
+  "test": "Prova",
+  "remove": "Rimuovi",
+  "works": "✓ Collegato.",
+  "removeConfirm": "Rimuovere {name}? Le stanze già create continuano a funzionare.",
+  "kinds": {
+    "zoom": "Zoom",
+    "meet": "Google Meet",
+    "teams": "Microsoft Teams"
+  },
+  "fields": {
+    "accountId": "ID account",
+    "clientId": "Client ID",
+    "clientEmail": "Email dell'account di servizio",
+    "subject": "Utente a cui appartengono le stanze",
+    "tenant": "Tenant (ID o dominio)",
+    "organizer": "Organizzatore delle riunioni"
+  },
+  "secret": {
+    "zoom": "Client secret",
+    "meet": "Chiave privata dell'account di servizio",
+    "teams": "Client secret"
+  },
+  "hints": {
+    "zoom": "Nello Zoom App Marketplace, crea un'app «Server-to-Server OAuth» con lo scope meeting:write:meeting:admin, poi copia account ID, client ID e secret.",
+    "meet": "In Google Cloud, crea un account di servizio, concedigli la delega a livello di dominio per lo scope meetings.space.created nella console di amministrazione di Google Workspace, poi incolla la private_key della sua chiave JSON.",
+    "teams": "In Microsoft Entra, registra un'applicazione con il permesso applicativo OnlineMeetings.ReadWrite.All (consenso dell'amministratore) e un criterio di accesso applicativo per l'organizzatore."
+  },
+  "useIt": "Poi, nelle impostazioni di una riunione, Generale → Videochiamata: «Crea una stanza permanente»."
+}

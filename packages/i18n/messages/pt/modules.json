@@ -1,0 +1,142 @@
+{
+  "title": "Módulos",
+  "intro": "Ative o que esta reunião usa. Um módulo desativado some da sala de controle, da tela compartilhada e da tela de cada pessoa; suas configurações são mantidas.",
+  "on": "Ativado",
+  "off": "Desativado",
+  "toggle": "Usar {name} nesta reunião",
+  "enabled": "{name} ativado",
+  "disabled": "{name} desativado",
+  "categories": {
+    "facilitation": "Facilitação",
+    "organisation": "Organização",
+    "formats": "Formatos",
+    "integrations": "Integrações",
+    "notifications": "Notificações",
+    "reporting": "Relatórios"
+  },
+  "editions": {
+    "team": "Team",
+    "enterprise": "Enterprise"
+  },
+  "paidTitle": "Com um plano pago",
+  "paidIntro": "Disponível com Ronde Team e Enterprise, na nuvem ou auto-hospedado com uma chave de licença.",
+  "learnMore": "Ver os planos",
+  "items": {
+    "icebreaker": {
+      "name": "Quebra-gelo",
+      "description": "Uma pergunta tirada de um banco para aquecer; cada pessoa responde em uma linha, exibida durante a introdução."
+    },
+    "mood": {
+      "name": "Humor da equipe",
+      "description": "Cada pessoa compartilha seu humor (⛈️ a ☀️), exibido de forma anônima e acompanhado nas estatísticas."
+    },
+    "rating": {
+      "name": "Utilidade da reunião",
+      "description": "No encerramento, cada pessoa avalia de 1 a 5 o quanto a reunião foi útil, anonimamente; a média aparece nas estatísticas."
+    },
+    "reactions": {
+      "name": "Reações e sinais",
+      "description": "Reações com emojis e sinais (longo demais, mais alto…) que atravessam todas as telas."
+    },
+    "hands": {
+      "name": "Mãos levantadas e perguntas",
+      "description": "Levante a mão ou faça uma pergunta durante uma vez: uma etapa de perguntas vem depois dessa vez."
+    },
+    "kudos": {
+      "name": "Agradecimentos",
+      "description": "Agradeça um colega durante a reunião; os agradecimentos aparecem em todas as telas e na ata."
+    },
+    "spotlight": {
+      "name": "Destaque",
+      "description": "Mostre em grande na tela compartilhada um item de ficha, uma pergunta ou uma mensagem livre."
+    },
+    "birthdays": {
+      "name": "Aniversários",
+      "description": "A tela de espera celebra os aniversários da semana (só dia e mês)."
+    },
+    "sounds": {
+      "name": "Sons",
+      "description": "Música de espera, avisos e uma mesa de sons, tocados na tela de cada pessoa ou na tela compartilhada."
+    },
+    "ambience": {
+      "name": "Clima da estação",
+      "description": "Decorações de festas e estações na tela de espera."
+    },
+    "gitlab": {
+      "name": "GitLab",
+      "description": "As issues e merge requests recentes de cada pessoa, para importar na ficha."
+    },
+    "workflows": {
+      "name": "Construtor de fluxos",
+      "description": "Seus próprios gatilhos, condições e mensagens para Slack, Teams, Matrix ou e-mail."
+    },
+    "aiAssistant": {
+      "name": "Assistente de IA",
+      "description": "Resumo da reunião e extração de ações; com sua própria chave quando auto-hospedado."
+    },
+    "writeBack": {
+      "name": "Criação de tickets",
+      "description": "Transforme ações de acompanhamento em tickets do Jira, Linear, GitLab ou GitHub e mantenha-os sincronizados."
+    },
+    "calendarSync": {
+      "name": "Sincronização de agenda",
+      "description": "Sincronização bidirecional com Google, Microsoft 365 e CalDAV, com detecção de conflitos."
+    },
+    "analytics": {
+      "name": "Análises do espaço de trabalho",
+      "description": "Painéis de todas as reuniões: participação, engajamento, bloqueios recorrentes."
+    },
+    "scheduledReports": {
+      "name": "Relatórios programados",
+      "description": "Um resumo das suas reuniões por e-mail, toda semana ou todo mês."
+    },
+    "rotation": {
+      "name": "Papéis em rodízio",
+      "description": "Quem facilita e quem toma notas muda a cada sessão, na ordem da rodada."
+    },
+    "retro": {
+      "name": "Retrospectiva",
+      "description": "Notas adesivas anônimas em colunas, agrupadas pelo anfitrião, votadas pela equipe e depois discutidas; adicione-a à pauta."
+    },
+    "timebox": {
+      "name": "Timebox",
+      "description": "Um assunto próprio na pauta, com sua duração e suas notas na ata."
+    },
+    "poker": {
+      "name": "Planning poker",
+      "description": "A equipe estima itens com cartas escondidas até a revelação; adicione-o à pauta."
+    },
+    "polls": {
+      "name": "Enquetes",
+      "description": "Faça uma pergunta à equipe durante a sessão: opções, escala ou nuvem de palavras, anônima ou não."
+    },
+    "random": {
+      "name": "Ferramentas de sorteio",
+      "description": "Uma roleta para escolher quem fala em seguida, uma ordem de fala aleatória, equipes ou cara ou coroa, em todas as telas ao mesmo tempo."
+    },
+    "parking": {
+      "name": "Estacionamento",
+      "description": "Deixe de lado com um clique o que surge fora do assunto; vira um assunto em aberto da próxima sessão."
+    },
+    "decisions": {
+      "name": "Registro de decisões",
+      "description": "Cada linha “Decisão:” das notas, de todas as sessões, em uma lista pesquisável aberta a toda a equipe."
+    },
+    "github": {
+      "name": "GitHub",
+      "description": "As issues e pull requests recentes de cada pessoa, importados na ficha com um clique."
+    },
+    "video": {
+      "name": "Videochamada",
+      "description": "Entre na chamada de qualquer página: um link para qualquer ferramenta, uma sala Jitsi ou seu servidor BigBlueButton."
+    },
+    "async": {
+      "name": "Modo assíncrono",
+      "description": "Sem sessão ao vivo: cada pessoa preenche a ficha e comenta, e o resumo sai por e-mail no horário previsto."
+    }
+  },
+  "upgrade": {
+    "comesWith": "{feature} vem com o Ronde {edition}.",
+    "plans": "Ver os planos"
+  }
+}

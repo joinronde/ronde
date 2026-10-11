@@ -1,0 +1,49 @@
+{
+  "title": "Aufgaben",
+  "introMine": "Was du in allen Meetings zugesagt hast. Hake es ab, sobald es erledigt ist.",
+  "introHosted": "Die Nachverfolgung der Meetings, die du leitest: wer was tut und was schon zu lange wartet.",
+  "views": "Wessen Aufgaben",
+  "mine": "Meine",
+  "hosted": "Meetings, die ich leite",
+  "filter": "Meeting",
+  "all": "Alle",
+  "count": {
+    "open": "{count, plural, =0 {nichts offen} one {# offen} other {# offen}}",
+    "doing": "{count, plural, =0 {keine in Arbeit} one {# in Arbeit} other {# in Arbeit}}",
+    "done": "{count, plural, =0 {zuletzt keine erledigt} one {# zuletzt erledigt} other {# zuletzt erledigt}}"
+  },
+  "group": {
+    "open": "Offen",
+    "doing": "In Arbeit",
+    "done": "In den letzten zwei Wochen erledigt"
+  },
+  "markDone": "„{text}“ als erledigt markieren",
+  "reopen": "„{text}“ wieder öffnen",
+  "markDoneShort": "Als erledigt markieren",
+  "reopenShort": "Wieder öffnen",
+  "start": "Beginnen",
+  "inProgress": "In Arbeit",
+  "from": "beschlossen am {date}",
+  "carried": "{count, plural, one {seit # Sitzung offen} other {seit # Sitzungen offen}}",
+  "emptyMine": "Nichts auf deinem Tisch.",
+  "emptyHosted": "Keine Aufgaben in den Meetings, die du leitest.",
+  "emptyHint": "In einer Sitzung beschlossene Aufgaben erscheinen hier, mit dem Meeting, aus dem sie stammen.",
+  "openTicket": "Ticket öffnen",
+  "ticketFor": "Ticket für „{text}“ erstellen",
+  "ticket": "Ticket erstellen",
+  "ticketing": "Ticket wird erstellt…",
+  "ticketWhere": "In welchem Tool?",
+  "csv": {
+    "action": "Aufgabe",
+    "owner": "Verantwortlich",
+    "meeting": "Meeting",
+    "status": "Status",
+    "decided": "Beschlossen am",
+    "doneOn": "Erledigt am",
+    "carried": "Sitzungen seitdem",
+    "ticket": "Ticket",
+    "done": "Erledigt",
+    "hint": "Alle Aufgaben dieser Ansicht, auch die vor mehr als zwei Wochen erledigten",
+    "fileName": "aufgaben"
+  }
+}

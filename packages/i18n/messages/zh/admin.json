@@ -1,0 +1,65 @@
+{
+  "title": "服务器管理",
+  "back": "返回",
+  "intro": "此 Ronde 服务器的设置，适用于其所有工作空间。每个工作空间自己的设置（成员、角色、安全）在该空间的“设置”中。此处保存的值优先于环境变量。",
+  "counts": {
+    "users": "账户",
+    "workspaces": "工作空间",
+    "meetings": "会议"
+  },
+  "language": "语言",
+  "defaultLocale": "默认语言",
+  "defaultLocaleHint": "适用于未在账户中选择语言、且浏览器未提供 Ronde 支持的语言的用户。",
+  "signup": "谁可以创建账户",
+  "recommended": "推荐",
+  "policies": {
+    "invite-only": {
+      "label": "仅限邀请",
+      "hint": "只有受邀加入工作空间的人。"
+    },
+    "domains": {
+      "label": "邮箱域名",
+      "hint": "受邀者，以及使用以下域名邮箱的任何人。"
+    },
+    "open": {
+      "label": "开放",
+      "hint": "任何能访问此服务器的人。"
+    }
+  },
+  "domains": "允许的域名",
+  "domainsHint": "用逗号分隔，例如 example.org。",
+  "save": "保存",
+  "saved": "已保存",
+  "license": {
+    "title": "许可证",
+    "pureCommunity": "此构建为纯社区版：不包含付费版本的代码。",
+    "status": {
+      "none": "社区版",
+      "invalid": "许可证密钥无效",
+      "active": "许可证有效",
+      "grace": "许可证已过期：宽限期",
+      "expired": "许可证已过期"
+    },
+    "reasons": {
+      "format": "无法读取已保存的密钥。",
+      "payload": "无法读取已保存的密钥。",
+      "signature": "已保存的密钥被修改过，或不是由 Ronde 签发。",
+      "unknownKey": "已保存的密钥由此版本不认识的密钥签名。"
+    },
+    "editions": {
+      "team": "Team",
+      "enterprise": "Enterprise"
+    },
+    "summary": "{edition}，授权给 {customer}，有效期至 {date}。",
+    "graceUntil": "一切正常运行至 {date}：请在此之前续订许可证。",
+    "readOnly": "付费功能已变为只读：其中的内容仍可查看，但无法新增。社区版功能不受影响。",
+    "seats": "已使用 {used} / {seats} 个席位",
+    "seatsUnlimited": "{used} 人，席位不限",
+    "overSeats": "使用 Ronde 的人数超出了许可证允许的范围：不会阻止任何操作，但请更新许可证。",
+    "fromEnv": "密钥来自 RONDE_LICENSE 变量：请在那里修改。",
+    "key": "许可证密钥",
+    "keyHint": "在本服务器离线校验：不会向任何地方发送数据。",
+    "save": "保存密钥",
+    "remove": "移除许可证"
+  }
+}

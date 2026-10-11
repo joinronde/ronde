@@ -1,0 +1,9 @@
+{
+  "subject": "{team} · the digest of {date}",
+  "greeting": "Hello {name},",
+  "intro": "Here is what the team shared for {team} on {date}, without a live meeting.",
+  "open": "Open the meeting in Ronde",
+  "footer": "You receive this digest because you take part in {team} on Ronde. The host can stop these emails in the meeting settings.",
+  "openBranded": "Open the meeting",
+  "footerBranded": "You receive this digest because you take part in {team}. The host can stop these emails in the meeting settings."
+}

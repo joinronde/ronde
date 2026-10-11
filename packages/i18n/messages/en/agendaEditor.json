@@ -1,0 +1,33 @@
+{
+  "title": "Agenda",
+  "intro": "The steps of each session, in order. The wrap-up always closes the meeting.",
+  "blocks": {
+    "intro": "Intro",
+    "round": "Round table",
+    "topics": "Open topics",
+    "retro": "Retrospective",
+    "timebox": "Timebox",
+    "poker": "Planning poker",
+    "projects": "Project round"
+  },
+  "timeboxTitle": "Topic",
+  "minutes": "Minutes",
+  "up": "Move “{label}” up",
+  "down": "Move “{label}” down",
+  "remove": "Remove “{label}”",
+  "add": "Add a block",
+  "pick": "Choose a block…",
+  "newTimebox": "New topic",
+  "saved": "Agenda saved",
+  "turnOn": "Turn the module on in “Modules” to add this block.",
+  "locked": "A session is running: the agenda can change once it is over.",
+  "noProjects": "choose the projects the meeting follows in “Projects”.",
+  "projectOrder": "Order of the projects",
+  "projectOrders": {
+    "manual": "In the meeting's order",
+    "theme": "By theme",
+    "health": "Projects in trouble first"
+  },
+  "perProject": "min per project",
+  "perProjectAuto": "auto"
+}

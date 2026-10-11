@@ -1,0 +1,12 @@
+{
+  "title": "Kudos",
+  "intro": "Der Dank aus den Sitzungen, für alle sichtbar angepinnt.",
+  "given": "{count, plural, =0 {Keine Kudos in den letzten 30 Tagen} one {# Kudos in den letzten 30 Tagen} other {# Kudos in den letzten 30 Tagen}}",
+  "people": "{count, plural, =0 {} one {an # Person} other {an # Personen}}",
+  "birthdays": "Geburtstage diesen Monat",
+  "today": "Heute! 🎉",
+  "wall": "Vergebene Kudos",
+  "fromTo": "<strong>{from}</strong> an <strong>{to}</strong>",
+  "empty": "Noch keine Kudos.",
+  "emptyHint": "In einer Sitzung kann mit dem Kudos-Modul jede Person jemandem aus dem Team danken: Jedes Dankeschön landet an dieser Wand."
+}

@@ -1,0 +1,21 @@
+{
+  "back": "Verzeichnis",
+  "you": "du",
+  "noAccount": "Noch kein Konto",
+  "removed": "Vom Firmenverzeichnis entfernt",
+  "edit": "Bearbeiten",
+  "email": "E-Mail senden",
+  "meetings": "Meetings",
+  "noMeetings": "In keinem Meeting, das du sehen kannst.",
+  "actions": "Offene Aufgaben",
+  "seeAll": "Alle ansehen",
+  "inProgress": "in Arbeit",
+  "noActions": "Keine offene Aufgabe.",
+  "presence": "Anwesenheit, letzte 90 Tage",
+  "noSessions": "In letzter Zeit keine Sitzung abgehalten.",
+  "attended": "{attended} von {held} Sitzungen",
+  "kudos": "Erhaltene Kudos",
+  "kudoFrom": "von {name}, {date}",
+  "noKudos": "Noch keine Kudos.",
+  "awayUntil": "Abwesend bis {date}"
+}

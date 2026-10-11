@@ -1,0 +1,21 @@
+{
+  "shiftKey": "Shift+",
+  "toolbar": "फ़ॉर्मेटिंग · {label}",
+  "boldLetter": "B",
+  "italicLetter": "I",
+  "strikeLetter": "S",
+  "bold": "बोल्ड ({key})",
+  "italic": "इटैलिक ({key})",
+  "underlineLetter": "U",
+  "underline": "रेखांकित ({key})",
+  "strike": "काटा हुआ ({key})",
+  "bulletList": "बुलेट सूची",
+  "numberedList": "क्रमांकित सूची",
+  "indent": "उप-आइटम (सूची में Tab)",
+  "outdent": "एक स्तर ऊपर ({key})",
+  "link": "लिंक ({key})",
+  "linkUrl": "लिंक का पता",
+  "linkApply": "लागू करें",
+  "linkRemove": "लिंक हटाएँ",
+  "linkCancel": "रद्द करें"
+}

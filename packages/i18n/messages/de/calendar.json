@@ -1,0 +1,20 @@
+{
+  "title": "Kalender",
+  "intro": "Alle Sitzungen deiner Meetings: geplant, live und abgehalten.",
+  "months": "Monate",
+  "previous": "Vorheriger Monat",
+  "next": "Nächster Monat",
+  "today": "Heute",
+  "upcoming": "Demnächst",
+  "nothing": "In den nächsten vier Wochen ist nichts geplant.",
+  "status": {
+    "planned": "geplant",
+    "live": "Jetzt live",
+    "held": "abgehalten",
+    "cancelled": "abgesagt"
+  },
+  "attendance": {
+    "yes": "Ich bin dabei",
+    "no": "Abwesend"
+  }
+}

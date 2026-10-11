@@ -1,0 +1,10 @@
+{
+  "off": "Le journal des décisions est désactivé pour cette réunion.",
+  "loading": "Chargement des décisions…",
+  "empty": "Aucune décision notée pour l'instant.",
+  "howTo": "Commencez une ligne des notes par « Décision : » pendant une séance : une fois la séance archivée, elle apparaît ici.",
+  "searchPlaceholder": "Rechercher dans les décisions",
+  "searchLabel": "Rechercher dans les décisions",
+  "count": "{count, plural, one {# décision} other {# décisions}}",
+  "noMatch": "Aucune décision ne contient « {query} »."
+}

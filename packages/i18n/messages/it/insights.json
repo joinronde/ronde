@@ -1,0 +1,42 @@
+{
+  "title": "Analisi",
+  "intro": "Tutte le riunioni dello spazio, dal {from} al {to}.",
+  "period": "Periodo",
+  "weeks": "{count, plural, one {# settimana} other {# settimane}}",
+  "cards": {
+    "engagement": "Coinvolgimento",
+    "engagementHint": "Media delle riunioni, su 100",
+    "sessions": "Sessioni svolte",
+    "meetings": "{count, plural, one {in # riunione} other {in # riunioni}}",
+    "attendance": "Presenza",
+    "followThrough": "Piani rispettati",
+    "followThroughHint": "Voci previste segnalate come fatte alla sessione successiva",
+    "onTime": "Sessioni puntuali",
+    "mood": "Umore medio",
+    "actions": "Azioni chiuse / aperte",
+    "actionsValue": "{done} / {created}",
+    "median": "Chiuse in {days} giorni (mediana)"
+  },
+  "weekTitle": "Sessioni a settimana",
+  "weekLabel": "Barre: sessioni svolte ogni settimana; linea: presenza",
+  "weekLegend": "Barre: sessioni svolte ogni settimana. Linea: presenza.",
+  "meetingsTitle": "Per riunione",
+  "columns": {
+    "meeting": "Riunione",
+    "engagement": "Coinvolgimento",
+    "trend": "Tendenza",
+    "sessions": "Sessioni",
+    "attendance": "Presenza",
+    "followThrough": "Rispetto dei piani",
+    "onTime": "Puntuali",
+    "mood": "Umore",
+    "openActions": "Azioni aperte"
+  },
+  "empty": "Ancora nessuna riunione.",
+  "engagementHow": "Coinvolgimento, su 100: presenza (30%), piani rispettati (25%), partecipazione con domande, mani alzate, kudos e rompighiaccio (20%), umore (15%) e puntualità (10%).",
+  "csv": {
+    "participation": "Partecipazione",
+    "total": "Tutte le riunioni",
+    "fileName": "analisi"
+  }
+}

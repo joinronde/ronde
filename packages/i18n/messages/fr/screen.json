@@ -1,0 +1,17 @@
+{
+  "options": "Options de projection",
+  "theme": "Thème de projection",
+  "themes": {
+    "auto": "Auto",
+    "light": "Clair",
+    "dark": "Sombre"
+  },
+  "reducedMotion": "Animations réduites",
+  "ambience": "Ambiance de l'écran d'attente",
+  "previewTheme": "Aperçu d'un thème",
+  "replayIntro": "Rejouer le générique",
+  "fullscreen": "Plein écran",
+  "drivenFromControl": "Cet onglet est piloté depuis la Régie.",
+  "yourTurn": "À vous, <span>{name}</span> !",
+  "poweredBy": "Propulsé par Ronde"
+}

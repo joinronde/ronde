@@ -1,0 +1,12 @@
+{
+  "skipToContent": "Ir al contenido",
+  "navigation": "Vistas",
+  "screenHint": "Se abre en una pestaña nueva, para compartirla en la videollamada",
+  "videoHint": "Abre la videollamada en una pestaña nueva",
+  "joinVideo": "Unirse a la videollamada",
+  "reconnecting": "Reconectando…",
+  "host": "anfitrión",
+  "cohost": "coanfitrión",
+  "backToWorkspace": "Volver a {workspace}",
+  "breadcrumb": "Ubicación"
+}

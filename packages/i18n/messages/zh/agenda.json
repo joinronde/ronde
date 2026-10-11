@@ -1,0 +1,14 @@
+{
+  "intro": "开场",
+  "topics": "开放议题",
+  "questions": "提问",
+  "end": "总结",
+  "poker": "计划扑克",
+  "retro": {
+    "reflect": "回顾：写下想法",
+    "group": "回顾：分组",
+    "vote": "回顾：投票",
+    "discuss": "讨论：{title}",
+    "done": "回顾总结"
+  }
+}

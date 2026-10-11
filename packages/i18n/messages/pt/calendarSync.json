@@ -1,0 +1,20 @@
+{
+  "title": "Agendas",
+  "intro": "Cada sessão das próximas oito semanas vira um evento nas agendas dos participantes, com o link de vídeo. Remarcações, cancelamentos e novos participantes são acompanhados.",
+  "noAccount": "Nenhuma conta de agenda neste espaço ainda.",
+  "addAccount": "Adicione uma nas configurações do espaço",
+  "account": "Conta de agenda",
+  "none": "Não escrever as sessões nas agendas",
+  "accountHint": "Os convites são enviados pelo organizador desta conta.",
+  "written": "{count, plural, =0 {As agendas estão em dia.} one {# evento escrito.} other {# eventos escritos.}}",
+  "removed": "Próximos eventos removidos das agendas.",
+  "synced": "{count, plural, =0 {As agendas estão em dia.} one {# evento atualizado.} other {# eventos atualizados.}}",
+  "syncNow": "Sincronizar agora",
+  "check": "Verificar a disponibilidade",
+  "coming": "Próximas sessões",
+  "busy": "Ocupado: {names}",
+  "allFree": "Todos estão livres",
+  "slots": "Horários em que todos estão livres (próximas duas semanas)",
+  "noSlot": "Nenhum horário livre em comum no expediente nas próximas duas semanas.",
+  "unknown": "Agenda ilegível para: {names}"
+}

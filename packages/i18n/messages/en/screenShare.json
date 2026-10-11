@@ -1,0 +1,12 @@
+{
+  "start": "Share my screen on the room screen",
+  "startShort": "Share my screen",
+  "stop": "Stop sharing my screen",
+  "stopShort": "Stop sharing",
+  "screens": "{count, plural, =0 {No room screen connected yet} one {# room screen} other {# room screens}}",
+  "denied": "The browser did not share the screen.",
+  "sharedBy": "Shared by {name}",
+  "shared": "Shared screen",
+  "sound": "Turn the sound on",
+  "previewBadge": "On the room screen · {count, plural, =0 {waiting for the screens} one {# screen} other {# screens}}"
+}

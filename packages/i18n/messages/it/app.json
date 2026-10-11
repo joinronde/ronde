@@ -1,0 +1,10 @@
+{
+  "actionFailed": "L'azione non è andata a buon fine. Riprova.",
+  "serverUnreachable": "Server irraggiungibile. Controlla la connessione.",
+  "sessionExpired": "La tua sessione è scaduta. Accedi di nuovo: quello che hai scritto resta sulla pagina.",
+  "reconnect": "Accedi di nuovo",
+  "kudoFrom": "{from} ringrazia {to}",
+  "quoted": "«{text}»",
+  "language": "Lingua",
+  "newTab": "(si apre in una nuova scheda)"
+}

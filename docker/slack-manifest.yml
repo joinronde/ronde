@@ -1,0 +1,44 @@
+# The Slack app of a Ronde instance (Team and Enterprise).
+# 1. Replace every https://ronde.example.com below with your RONDE_URL (reachable by Slack, over HTTPS).
+# 2. At https://api.slack.com/apps: Create New App › From a manifest, pick your Slack workspace, paste this file.
+# 3. Copy Basic Information › App Credentials into .env: SLACK_CLIENT_ID, SLACK_CLIENT_SECRET, SLACK_SIGNING_SECRET.
+display_information:
+  name: Ronde
+  description: Fill in your check-in, get reminders and follow your team meetings from Slack.
+  background_color: "#b53b0a"
+features:
+  app_home:
+    home_tab_enabled: false
+    messages_tab_enabled: true
+    messages_tab_read_only_enabled: true
+  bot_user:
+    display_name: Ronde
+    always_online: true
+  slash_commands:
+    - command: /ronde
+      url: https://ronde.example.com/api/slack/command
+      description: Your next sessions and open follow-up actions
+      should_escape: false
+oauth_config:
+  redirect_urls:
+    - https://ronde.example.com/api/slack/oauth
+  scopes:
+    bot:
+      - chat:write
+      - commands
+      - im:write
+      - users:read
+      - users:read.email
+      - incoming-webhook
+settings:
+  event_subscriptions:
+    request_url: https://ronde.example.com/api/slack/events
+    bot_events:
+      - app_uninstalled
+      - tokens_revoked
+  interactivity:
+    is_enabled: true
+    request_url: https://ronde.example.com/api/slack/interact
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false

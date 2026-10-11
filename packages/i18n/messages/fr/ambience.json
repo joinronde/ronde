@@ -1,0 +1,28 @@
+{
+  "new-year": "Bonne année ! Que vos pipelines soient verts ✨",
+  "kings-cake": "Galette des rois : qui a la fève ? 👑",
+  "candlemas": "Chandeleur : qui ramène les crêpes ? 🥞",
+  "valentines": "Joyeuse Saint-Valentin, même à votre linter 💜",
+  "pi-day": "Joyeux π-day : 3,14159265… 🥧",
+  "april-fools": "Poisson d'avril ! Vérifiez votre dos 🐟",
+  "easter": "Joyeuses Pâques : la chasse aux bugs est ouverte 🐣",
+  "easter-april-fools": "Pâques et poisson d'avril la même semaine : vérifiez votre dos et vos chocolats 🐟🐣",
+  "star-wars": "May the 4th be with you ✨",
+  "music-day": "Fête de la musique : sortez le casque 🎸",
+  "bastille-day": "Bon 14 juillet 🎆",
+  "back-to-school": "Bonne rentrée ! Cartables prêts, tickets aussi 🎒",
+  "programmers-day": "Journée des programmeurs : jour 256 de l'année (0x100) 💻",
+  "halloween": "Joyeux Halloween : gare aux bugs zombies 🎃",
+  "christmas": "Bientôt Noël : pas de mise en production le 24 ! 🎄",
+  "holidays": "Bonnes fêtes de fin d'année ✨",
+  "winter": "Un café chaud, et on attaque ☕",
+  "spring": "Le printemps est là 🌸",
+  "summer": "C'est l'été : crème solaire et revue de code ☀️",
+  "autumn": "Les feuilles tombent, pas la prod 🍂",
+  "birthday": "Joyeux anniversaire ! 🎂",
+  "birthdayNamed": "Joyeux anniversaire {names} ! 🎂",
+  "names": {
+    "auto": "Automatique (selon la date)",
+    "off": "Sans ambiance"
+  }
+}

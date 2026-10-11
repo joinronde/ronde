@@ -1,0 +1,21 @@
+{
+  "title": "Vorlagen",
+  "intro": "Starte mit einem Meeting, das schon funktioniert: für ein Team, eine Schule, einen Verein, eine Baustelle oder eine Pflegestation. Alles bleibt anpassbar.",
+  "browse": "Alle Vorlagen ansehen",
+  "categories": "Für wen",
+  "sections": "Abschnitte",
+  "category": {
+    "all": "Alle",
+    "team": "Teams",
+    "product": "Produkt & Inhalte",
+    "leadership": "Führung & Vertrieb",
+    "education": "Bildung",
+    "nonprofit": "Vereine",
+    "field": "Außendienst",
+    "health": "Pflegeteams",
+    "own": "Deine Vorlagen"
+  },
+  "minutes": "{count} Min.",
+  "use": "Diese Vorlage verwenden",
+  "saveHint": "Jedes Meeting kann zur Vorlage des Arbeitsbereichs werden: Öffne seine Einstellungen, dann „Als Vorlage speichern“."
+}

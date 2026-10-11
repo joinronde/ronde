@@ -1,0 +1,20 @@
+{
+  "title": "Kalender",
+  "intro": "Jede Sitzung der nächsten acht Wochen wird zu einem Termin in den Kalendern der Teilnehmenden, mit dem Videolink. Verschiebungen, Absagen und neue Teilnehmende werden übernommen.",
+  "noAccount": "Noch kein Kalenderkonto in diesem Arbeitsbereich.",
+  "addAccount": "Füge eins in den Einstellungen des Arbeitsbereichs hinzu",
+  "account": "Kalenderkonto",
+  "none": "Sitzungen nicht in Kalender eintragen",
+  "accountHint": "Die Einladungen versendet der Organisator dieses Kontos.",
+  "written": "{count, plural, =0 {Die Kalender sind aktuell.} one {# Termin eingetragen.} other {# Termine eingetragen.}}",
+  "removed": "Kommende Termine aus den Kalendern entfernt.",
+  "synced": "{count, plural, =0 {Die Kalender sind aktuell.} one {# Termin aktualisiert.} other {# Termine aktualisiert.}}",
+  "syncNow": "Jetzt synchronisieren",
+  "check": "Verfügbarkeit prüfen",
+  "coming": "Kommende Sitzungen",
+  "busy": "Beschäftigt: {names}",
+  "allFree": "Alle haben Zeit",
+  "slots": "Zeiten, zu denen alle frei sind (nächste zwei Wochen)",
+  "noSlot": "In den nächsten zwei Wochen gibt es keine gemeinsame freie Zeit während der Arbeitszeit.",
+  "unknown": "Kalender nicht lesbar für: {names}"
+}

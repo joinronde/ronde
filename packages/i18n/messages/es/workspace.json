@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "label": "Espacio de trabajo",
+    "home": "Inicio",
+    "people": "Directorio",
+    "settings": "Ajustes"
+  },
+  "switcher": "Cambiar de espacio de trabajo",
+  "newWorkspace": "Nuevo espacio de trabajo",
+  "userMenu": "Menú de la cuenta",
+  "account": "Tu cuenta",
+  "roles": {
+    "owner": "Propietario",
+    "admin": "Administrador",
+    "billing": "Facturación",
+    "organizer": "Organizador",
+    "member": "Miembro",
+    "guest": "Invitado"
+  },
+  "roleHints": {
+    "owner": "Todo, incluida la facturación y la eliminación del espacio de trabajo",
+    "admin": "Gestiona personas, roles, plantillas y conectores",
+    "billing": "Gestiona el plan, las facturas y el método de pago, nada más",
+    "organizer": "Un miembro que crea reuniones aunque estén reservadas a los administradores e invita a las personas necesarias",
+    "member": "Crea reuniones y participa en aquellas a las que le invitan",
+    "guest": "Solo ve las reuniones a las que le invitan"
+  },
+  "home": {
+    "stepInvite": "Invita a tu equipo",
+    "stepInviteHint": "{count, plural, =0 {Todavía nadie más} one {# persona más en el directorio} other {# personas más en el directorio}}",
+    "stepMeeting": "Crea tu primera reunión",
+    "stepMeetingHint": "La plantilla de reunión semanal, lista en un minuto.",
+    "stepCheckIn": "Rellena tu ficha",
+    "stepCheckInHint": "Lo que hiciste, lo que tienes previsto, lo que te bloquea: unas líneas antes de la reunión.",
+    "stepSession": "Dirige una primera sesión",
+    "stepSessionHint": "Abre la sala de control, empieza la reunión y archívala con sus actas."
+  },
+  "settings": {
+    "title": "Ajustes del espacio de trabajo",
+    "general": "General",
+    "name": "Nombre",
+    "slug": "Dirección",
+    "slugHint": "Se usa en los enlaces: {url}",
+    "language": "Idioma de los correos y las actas",
+    "timezone": "Zona horaria",
+    "meetingCreation": "Quién puede crear reuniones",
+    "meetingCreationMembers": "Todos los miembros",
+    "meetingCreationAdmins": "Organizadores y administradores",
+    "saved": "Guardado",
+    "categories": "Categorías profesionales",
+    "categoriesHint": "Se muestran en las fichas y sirven para agrupar las estadísticas.",
+    "categoryPlaceholder": "p. ej. Ingeniería",
+    "add": "Añadir",
+    "rename": "Renombrar {name}",
+    "delete": "Eliminar {name}",
+    "noCategories": "Todavía no hay categorías profesionales.",
+    "danger": "Zona de peligro",
+    "leave": "Salir del espacio de trabajo",
+    "leaveHint": "Pierdes el acceso a sus reuniones. Tu perfil se queda en el directorio.",
+    "leaveConfirm": "¿Salir de {workspace}?",
+    "deleteWorkspace": "Eliminar el espacio de trabajo",
+    "deleteHint": "Las reuniones, las personas y el historial desaparecen para todos. No se puede deshacer.",
+    "deleteConfirm": "Escribe <strong>{slug}</strong> para confirmar.",
+    "cancel": "Cancelar",
+    "readOnly": "Solo los administradores pueden cambiar estos ajustes.",
+    "tabs": {
+      "label": "Secciones de ajustes",
+      "general": "General",
+      "security": "Seguridad",
+      "roles": "Roles",
+      "audit": "Registro de auditoría",
+      "billing": "Facturación",
+      "plans": "Planes"
+    },
+    "buffer": "Margen entre dos reuniones",
+    "bufferHint": "Se deja libre antes y después de cada reunión de una persona: «encontrar un hueco» lo respeta y los calendarios avisan cuando dos reuniones quedan más cerca.",
+    "bufferNone": "Sin margen",
+    "bufferMinutes": "{count, plural, one {# minuto} other {# minutos}}"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "label": "Workspace",
+    "home": "Home",
+    "people": "Directory",
+    "settings": "Settings"
+  },
+  "switcher": "Switch workspace",
+  "newWorkspace": "New workspace",
+  "userMenu": "Account menu",
+  "account": "Your account",
+  "roles": {
+    "owner": "Owner",
+    "admin": "Admin",
+    "billing": "Billing",
+    "organizer": "Organizer",
+    "member": "Member",
+    "guest": "Guest"
+  },
+  "roleHints": {
+    "owner": "Everything, including billing and deleting the workspace",
+    "admin": "Manages people, roles, templates and connectors",
+    "billing": "Manages the plan, the invoices and the payment method, nothing else",
+    "organizer": "A member who also creates meetings when they're kept to admins, and invites the people they need",
+    "member": "Creates meetings and takes part in the ones they're invited to",
+    "guest": "Only sees the meetings they're invited to"
+  },
+  "home": {
+    "stepInvite": "Invite your team",
+    "stepInviteHint": "{count, plural, =0 {Nobody else yet} one {# other person in the directory} other {# other people in the directory}}",
+    "stepMeeting": "Create your first meeting",
+    "stepMeetingHint": "The weekly sync template, ready in a minute.",
+    "stepCheckIn": "Fill in your check-in",
+    "stepCheckInHint": "What you did, what you plan, what blocks: a few lines before the meeting.",
+    "stepSession": "Run a first session",
+    "stepSessionHint": "Open the control room, start the meeting, then archive it with its minutes."
+  },
+  "settings": {
+    "title": "Workspace settings",
+    "general": "General",
+    "name": "Name",
+    "slug": "Address",
+    "slugHint": "Used in links: {url}",
+    "language": "Language of emails and minutes",
+    "timezone": "Time zone",
+    "meetingCreation": "Who can create meetings",
+    "meetingCreationMembers": "Every member",
+    "meetingCreationAdmins": "Organizers and admins",
+    "saved": "Saved",
+    "categories": "Job categories",
+    "categoriesHint": "Shown on check-ins and used to group stats.",
+    "categoryPlaceholder": "e.g. Engineering",
+    "add": "Add",
+    "rename": "Rename {name}",
+    "delete": "Delete {name}",
+    "noCategories": "No job category yet.",
+    "danger": "Danger zone",
+    "leave": "Leave the workspace",
+    "leaveHint": "You lose access to its meetings. Your profile stays in the directory.",
+    "leaveConfirm": "Leave {workspace}?",
+    "deleteWorkspace": "Delete the workspace",
+    "deleteHint": "Meetings, people and history disappear for everyone. This cannot be undone.",
+    "deleteConfirm": "Type <strong>{slug}</strong> to confirm.",
+    "cancel": "Cancel",
+    "readOnly": "Only admins can change these settings.",
+    "tabs": {
+      "label": "Settings sections",
+      "general": "General",
+      "security": "Security",
+      "roles": "Roles",
+      "audit": "Audit log",
+      "billing": "Billing",
+      "plans": "Plans"
+    },
+    "buffer": "Margin between two meetings",
+    "bufferHint": "Kept free before and after each meeting of a person: “find a slot” respects it, and schedules warn when two meetings come closer.",
+    "bufferNone": "No margin",
+    "bufferMinutes": "{count, plural, one {# minute} other {# minutes}}"
+  }
+}

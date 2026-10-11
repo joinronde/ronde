@@ -1,0 +1,18 @@
+{
+  "editingHint": "抓住区块的把手 <handle></handle> 拖放到任意位置，或使用它的箭头。布局只为你保存。",
+  "columnCount": "列数",
+  "columns": "{count, plural, other {# 列}}",
+  "defaultLayout": "默认布局",
+  "done": "完成",
+  "customiseHint": "移动区块，选择列数",
+  "customise": "自定义页面",
+  "customiseCustom": "自定义页面 · 自定义布局",
+  "dragHint": "移动“{title}”：抓住后拖放到任意位置",
+  "move": "移动“{title}”区块",
+  "up": "上移",
+  "down": "下移",
+  "left": "左列",
+  "right": "右列",
+  "dropAtEnd": "放在这里即可移到该列底部",
+  "dropEmpty": "空列：把区块放在这里"
+}

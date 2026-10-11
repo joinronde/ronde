@@ -1,0 +1,68 @@
+{
+  "columns": {
+    "well": "Lief gut",
+    "improve": "Zu verbessern",
+    "ideas": "Ideen zum Ausprobieren",
+    "start": "Anfangen",
+    "stop": "Aufhören",
+    "continue": "Weitermachen",
+    "liked": "Gefallen",
+    "learned": "Gelernt",
+    "lacked": "Gefehlt",
+    "longed": "Gewünscht",
+    "mad": "Wütend",
+    "sad": "Traurig",
+    "glad": "Froh"
+  },
+  "notes": "{count, plural, =0 {Noch keine Notiz} one {# Notiz} other {# Notizen}}",
+  "votes": "{count, plural, =0 {keine Stimme} one {# Stimme} other {# Stimmen}}",
+  "stage": {
+    "reflect": "{count, plural, =0 {Alle schreiben, anonym} one {# Person hat geschrieben} other {# Personen haben geschrieben}}",
+    "vote": "{count, plural, =0 {Noch niemand hat abgestimmt} one {# Person hat abgestimmt} other {# Personen haben abgestimmt}}",
+    "done": "Was wir besprochen haben"
+  },
+  "me": {
+    "writeTitle": "Deine Notizen",
+    "writeHint": "Anonym: Das Team sieht sie erst, wenn die Moderation sie aufdeckt, und nie, wer sie geschrieben hat.",
+    "placeholder": "Eine Idee, eine Tatsache, ein Gefühl…",
+    "add": "Hinzufügen",
+    "addTo": "Neue Notiz in „{column}“",
+    "edit": "„{text}“ bearbeiten",
+    "delete": "„{text}“ löschen",
+    "editNote": "Notiz bearbeiten",
+    "save": "Speichern",
+    "voteTitle": "Stimm für die Themen, die besprochen werden sollen",
+    "votesLeft": "{count, plural, =0 {Alle Stimmen vergeben} one {# Stimme übrig} other {# Stimmen übrig}} von {total}",
+    "vote": "Abstimmen",
+    "unvote": "Meine Stimme zurücknehmen"
+  },
+  "host": {
+    "writers": "{count, plural, one {# von {total} Personen hat geschrieben} other {# von {total} Personen haben geschrieben}}",
+    "revealHint": "„Weiter“ deckt die Notizen für das Team auf.",
+    "voters": "{count, plural, one {# von {total} Personen hat abgestimmt} other {# von {total} Personen haben abgestimmt}}",
+    "voteHint": "„Weiter“ startet die Diskussion der Gruppen mit den meisten Stimmen.",
+    "groupHint": "Klick auf eine Notiz und dann auf die Notiz, zu der sie gehört. Benenne die Gruppen, sobald sie stehen.",
+    "pickTarget": "Klick jetzt auf die Notiz, zu der sie gehört (oder auf dieselbe, um abzubrechen).",
+    "rename": "Gruppenname",
+    "ungroup": "„{text}“ aus der Gruppe nehmen"
+  },
+  "settings": {
+    "title": "Retrospektive",
+    "preset": "Spalten",
+    "presets": {
+      "well-improve-ideas": "Lief gut, zu verbessern, Ideen",
+      "start-stop-continue": "Anfangen, aufhören, weitermachen",
+      "4l": "Gefallen, gelernt, gefehlt, gewünscht",
+      "mad-sad-glad": "Wütend, traurig, froh",
+      "custom": "Eigene"
+    },
+    "columns": "Eigene Spalten, eine pro Zeile",
+    "votes": "Stimmen pro Person",
+    "reflect": "Schreiben (Min.)",
+    "vote": "Abstimmen (Min.)",
+    "discuss": "Diskussion pro Gruppe (Min.)",
+    "saved": "Retro-Einstellungen gespeichert",
+    "save": "Retro-Einstellungen speichern",
+    "change": "Spalten, Stimmen und Zeiten ändern"
+  }
+}

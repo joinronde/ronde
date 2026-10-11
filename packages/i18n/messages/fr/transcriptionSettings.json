@@ -1,0 +1,18 @@
+{
+  "title": "Transcription",
+  "intro": "Transforme ce qui est dit pendant une séance en texte, tour par tour, pour le compte rendu et l'assistant IA. Chaque réunion l'autorise dans ses propres réglages.",
+  "enable": "Activer la transcription",
+  "url": "Service de transcription",
+  "urlHint": "Laissez vide pour OpenAI. Un serveur Whisper auto-hébergé (faster-whisper-server, speaches…) fonctionne aussi : son adresse se termine par /v1.",
+  "model": "Modèle",
+  "modelHint": "whisper-1 ou gpt-4o-transcribe avec OpenAI ; le nom du modèle de votre serveur sinon.",
+  "language": "Langue parlée",
+  "detect": "La détecter",
+  "key": "Clé d'API",
+  "keyHint": "Nécessaire pour OpenAI ; facultative pour un serveur auto-hébergé. Stockée chiffrée.",
+  "keySaved": "Une clé est enregistrée. Saisissez-en une nouvelle pour la remplacer.",
+  "instance": "Service de l'instance",
+  "privacy": "Le son d'une séance enregistrée est envoyé à ce service par morceaux de trente secondes, puis supprimé : seul le texte reste, avec la séance.",
+  "save": "Enregistrer",
+  "saved": "Enregistré."
+}

@@ -1,0 +1,52 @@
+{
+  "title": "Befehle",
+  "placeholder": "Befehl eingeben: weiter, Emma, Protokoll…",
+  "none": "Kein Befehl passt zu „{query}“.",
+  "foot": "↑ ↓ zum Wählen, Enter zum Ausführen, Esc zum Schließen.",
+  "groups": {
+    "meeting": "Meeting",
+    "steps": "Gehe zu",
+    "panes": "Bereich",
+    "people": "Personen",
+    "pages": "Öffnen"
+  },
+  "keys": {
+    "space": "Leertaste"
+  },
+  "start": "Meeting starten",
+  "pause": "Timer pausieren",
+  "resume": "Timer fortsetzen",
+  "next": "Nächster Schritt",
+  "previous": "Vorheriger Schritt",
+  "bonus": "30 Sekunden mehr geben",
+  "resetTimer": "Timer zurücksetzen",
+  "shuffle": "Redereihenfolge mischen",
+  "absent": "{name} als abwesend markieren",
+  "present": "{name} als anwesend markieren",
+  "panes": {
+    "run": "Agenda",
+    "live": "Live",
+    "actions": "Aufgaben",
+    "topics": "Themen",
+    "minutes": "Protokoll",
+    "polls": "Umfragen",
+    "random": "Zufallswerkzeuge"
+  },
+  "pages": {
+    "screen": "Geteilter Bildschirm",
+    "remote": "Fernbedienung am Handy",
+    "history": "Verlauf",
+    "stats": "Statistiken",
+    "settings": "Einstellungen"
+  },
+  "help": {
+    "title": "Tastenkürzel",
+    "next": "Nächster Schritt",
+    "previous": "Vorheriger Schritt",
+    "timer": "Timer starten, pausieren oder fortsetzen",
+    "palette": "Befehlspalette",
+    "help": "Diese Tastenkürzel",
+    "close": "Dialog schließen",
+    "ok": "Verstanden"
+  }
+}

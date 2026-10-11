@@ -1,0 +1,12 @@
+{
+  "skipToContent": "Pular para o conteúdo",
+  "navigation": "Visualizações",
+  "screenHint": "Abre em uma nova aba, para compartilhar na chamada de vídeo",
+  "videoHint": "Abre a chamada de vídeo em uma nova aba",
+  "joinVideo": "Entrar na chamada de vídeo",
+  "reconnecting": "Reconectando…",
+  "host": "anfitrião",
+  "cohost": "coanfitrião",
+  "backToWorkspace": "Voltar para {workspace}",
+  "breadcrumb": "Localização"
+}

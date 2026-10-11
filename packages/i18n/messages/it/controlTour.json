@@ -1,0 +1,34 @@
+{
+  "chapters": {
+    "welcome": "Benvenuto",
+    "prepare": "Preparare",
+    "run": "Condurre",
+    "conclude": "Chiudere"
+  },
+  "steps": {
+    "welcome": {
+      "title": "Benvenuto in regia 👋",
+      "body": "<p>Da questa scheda conduci la riunione; le tue note restano qui, solo per te.</p><ul><li><strong>Apri lo schermo condiviso</strong>: una scheda senza menu, pensata per la proiezione.</li><li><strong>Condividi quella scheda</strong> nella videochiamata, non tutto lo schermo: è ciò che vede il team.</li><li><strong>Torna qui</strong> per guidare: tutto appare in diretta sullo schermo condiviso.</li></ul><tip>Naviga con <kbd>→</kbd> e <kbd>←</kbd>, esci con <kbd>Esc</kbd>.</tip>"
+    },
+    "runOrder": {
+      "title": "L'ordine del giorno e l'ordine degli interventi",
+      "body": "<p>Apertura, un turno per persona, argomenti aperti, poi chiusura.</p><ul><li><strong>↑ ↓</strong> cambiano l'ordine, <strong>Assente</strong> toglie qualcuno dal giro.</li><li><strong>Vai</strong> salta direttamente a una fase.</li><li>Un punto verde: la scheda di quella persona è pronta.</li></ul>"
+    },
+    "controls": {
+      "title": "Avviare e andare avanti",
+      "body": "<ul><li><strong>Avvia la riunione</strong> fa partire l'apertura sullo schermo condiviso.</li><li><strong>Avanti</strong> (<kbd>→</kbd>) dà la parola alla persona successiva; il timer mostra il tempo di parola che le resta.</li><li><kbd>Spazio</kbd> mette in pausa il timer, <strong>+30 s</strong> dà un po' di tempo in più, <strong>Termina la riunione</strong> salta alla chiusura.</li></ul>"
+    },
+    "notes": {
+      "title": "Le tue note",
+      "body": "<p>Un'area di note per fase, <strong>salvata mentre scrivi</strong> e visibile solo a te: finiscono nel verbale, sotto la persona giusta.</p><p><strong>+ Decisione</strong> registra una decisione; <strong>+ Azione</strong> crea un'azione di follow-up con un responsabile, seguita nelle sessioni successive.</p>"
+    },
+    "minutes": {
+      "title": "Il verbale",
+      "body": "<p>Si scrive da solo a partire dalle schede, dalle tue note, dalle decisioni e dalle azioni.</p><p>Alla fine, <strong>Archivia la riunione</strong>: il verbale va nella cronologia e la sessione successiva è pronta.</p>"
+    },
+    "finish": {
+      "title": "Tocca a te!",
+      "body": "<p>Persone, programmazione e moduli si impostano nelle impostazioni della riunione. Questo pulsante rifà la visita quando vuoi. Buona riunione!</p>"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "none": "कोई तारीख़ तय नहीं",
+  "weekdays": "हर कार्यदिवस {time} बजे",
+  "daily": "{count, plural, =1 {हर दिन} other {हर # दिन}} {time} बजे",
+  "weekly": "{count, plural, =1 {हर {days} को} =2 {हर दूसरे सप्ताह {days} को} other {हर # सप्ताह {days} को}} {time} बजे",
+  "monthlyNth": "{count, plural, =1 {हर महीने} other {हर # महीने}} का {nth, select, 1 {पहला} 2 {दूसरा} 3 {तीसरा} 4 {चौथा} other {आख़िरी}} {day}, {time} बजे",
+  "monthlyDay": "{count, plural, =1 {हर महीने} other {हर # महीने}} की {day} तारीख़ को {time} बजे",
+  "dailyOn": "{count, plural, one {हर {days}} other {हर # दिन, {days} को}} {time} बजे",
+  "monthlyLast": "{count, plural, one {हर महीने} other {हर # महीने}} के आख़िरी दिन {time} बजे",
+  "alternating": "हर दूसरे सप्ताह {days} को, बारी-बारी से {first} और {second} बजे",
+  "withZone": "{schedule} ({timeZone})"
+}

@@ -1,0 +1,28 @@
+{
+  "new-year": "Happy New Year! May your pipelines stay green ✨",
+  "kings-cake": "Kings' cake: who found the charm? 👑",
+  "candlemas": "Candlemas: who's bringing the crêpes? 🥞",
+  "valentines": "Happy Valentine's Day, even to your linter 💜",
+  "pi-day": "Happy π day: 3.14159265… 🥧",
+  "april-fools": "April Fools! Check your back 🐟",
+  "easter": "Happy Easter: bug hunting season is open 🐣",
+  "easter-april-fools": "Easter and April Fools' in the same week: check your back and your chocolates 🐟🐣",
+  "star-wars": "May the 4th be with you ✨",
+  "music-day": "World Music Day: headphones on 🎸",
+  "bastille-day": "Happy Bastille Day 🎆",
+  "back-to-school": "Back to school! Bags packed, tickets too 🎒",
+  "programmers-day": "Programmers' Day: day 256 of the year (0x100) 💻",
+  "halloween": "Happy Halloween: beware of zombie bugs 🎃",
+  "christmas": "Christmas is near: no production release on the 24th! 🎄",
+  "holidays": "Happy holidays ✨",
+  "winter": "A hot coffee, and off we go ☕",
+  "spring": "Spring is here 🌸",
+  "summer": "It's summer: sunscreen and code review ☀️",
+  "autumn": "Leaves fall, production doesn't 🍂",
+  "birthday": "Happy birthday! 🎂",
+  "birthdayNamed": "Happy birthday {names}! 🎂",
+  "names": {
+    "auto": "Automatic (from the date)",
+    "off": "No ambience"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "title": "Buscar en el espacio de trabajo",
+  "placeholder": "Buscar reuniones, personas, acciones, decisiones…",
+  "switchTo": "Cambiar a {name}",
+  "none": "No se ha encontrado nada para «{query}».",
+  "foot": "↑ ↓ para moverse, Intro para abrir, Esc para cerrar",
+  "kinds": {
+    "page": "Ir a",
+    "meeting": "Reuniones",
+    "person": "Personas",
+    "action": "Acciones",
+    "topic": "Temas",
+    "decision": "Decisiones"
+  }
+}

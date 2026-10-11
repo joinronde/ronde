@@ -1,0 +1,18 @@
+{
+  "editingHint": "Greif einen Block an seinem Griff <handle></handle> und leg ihn irgendwo ab, oder nutze seine Pfeile. Die Anordnung wird nur für dich gespeichert.",
+  "columnCount": "Anzahl der Spalten",
+  "columns": "{count, plural, one {# Spalte} other {# Spalten}}",
+  "defaultLayout": "Standardanordnung",
+  "done": "Fertig",
+  "customiseHint": "Blöcke verschieben, Anzahl der Spalten wählen",
+  "customise": "Seite anpassen",
+  "customiseCustom": "Seite anpassen · eigene Anordnung",
+  "dragHint": "„{title}“ verschieben: greifen und irgendwo ablegen",
+  "move": "Block „{title}“ verschieben",
+  "up": "Nach oben",
+  "down": "Nach unten",
+  "left": "Linke Spalte",
+  "right": "Rechte Spalte",
+  "dropAtEnd": "Hier ablegen, um ihn ans Ende der Spalte zu setzen",
+  "dropEmpty": "Leere Spalte: Lege hier einen Block ab"
+}

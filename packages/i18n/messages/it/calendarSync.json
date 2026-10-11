@@ -1,0 +1,20 @@
+{
+  "title": "Calendari",
+  "intro": "Ogni sessione delle prossime otto settimane diventa un evento nei calendari dei partecipanti, con il link video. Spostamenti, annullamenti e nuovi partecipanti vengono seguiti.",
+  "noAccount": "Ancora nessun account calendario in questo spazio.",
+  "addAccount": "Aggiungine uno nelle impostazioni dello spazio",
+  "account": "Account calendario",
+  "none": "Non scrivere le sessioni nei calendari",
+  "accountHint": "Gli inviti sono inviati dall'organizzatore di questo account.",
+  "written": "{count, plural, =0 {I calendari sono aggiornati.} one {# evento scritto.} other {# eventi scritti.}}",
+  "removed": "Eventi futuri rimossi dai calendari.",
+  "synced": "{count, plural, =0 {I calendari sono aggiornati.} one {# evento aggiornato.} other {# eventi aggiornati.}}",
+  "syncNow": "Sincronizza ora",
+  "check": "Verifica la disponibilità",
+  "coming": "Prossime sessioni",
+  "busy": "Occupati: {names}",
+  "allFree": "Tutti sono liberi",
+  "slots": "Orari in cui tutti sono liberi (prossime due settimane)",
+  "noSlot": "Nessun orario libero comune in orario di lavoro nelle prossime due settimane.",
+  "unknown": "Calendario non leggibile per: {names}"
+}

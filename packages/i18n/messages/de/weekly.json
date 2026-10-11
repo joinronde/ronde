@@ -1,0 +1,28 @@
+{
+  "subject": "Deine Woche mit {workspace}",
+  "title": "Deine Woche",
+  "greeting": "Hallo {name},",
+  "intro": "Das erwartet dich diese Woche in {workspace}.",
+  "preheader": "{sessions, plural, =0 {Keine Sitzung} one {# Sitzung} other {# Sitzungen}} und {actions, plural, =0 {keine offene Aufgabe} one {# offene Aufgabe} other {# offene Aufgaben}} diese Woche",
+  "when": "{date} um {time}",
+  "moved": "verschoben",
+  "sessions": "Deine Sitzungen diese Woche",
+  "checkIn": "Mein Check-in",
+  "actions": "Deine offenen Aufgaben",
+  "actionsHint": "Hake sie in Ronde ab, sobald sie erledigt sind.",
+  "carried": "{count, plural, one {seit # Sitzung offen} other {seit # Sitzungen offen}}",
+  "kudos": "Deine Kudos",
+  "from": "von {name}",
+  "open": "Ronde öffnen",
+  "footer": "Du bekommst diese Übersicht montags als Mitglied von {workspace}.",
+  "settings": "In deinem Konto änderbar.",
+  "stop": "Wochenübersicht abbestellen",
+  "page": {
+    "title": "Wochenübersicht abbestellen?",
+    "body": "Du bekommst dann keine Montagsübersicht mit deinen Sitzungen, Aufgaben und Kudos mehr. In deinem Konto kannst du sie wieder einschalten.",
+    "button": "Abbestellen",
+    "done": "Erledigt: Du bekommst keine Wochenübersicht mehr.",
+    "invalid": "Dieser Link ist nicht gültig.",
+    "back": "Zurück zu Ronde"
+  }
+}

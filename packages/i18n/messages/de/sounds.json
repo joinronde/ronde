@@ -1,0 +1,49 @@
+{
+  "groups": {
+    "classical": "Klassik",
+    "jazz": "Jazz",
+    "electro": "Elektronisch",
+    "rock": "Rock",
+    "generated": "Generiert"
+  },
+  "music": {
+    "satie": "Satie — Gymnopédie Nr. 1 (Klavier)",
+    "satie-guitar": "Satie — Gymnopédie Nr. 1 (Gitarre)",
+    "debussy": "Debussy — Clair de lune",
+    "uno-mas": "Uno Mas (Airmen of Note)",
+    "traveling": "Traveling in your mind (Loyalty Freak Music)",
+    "ghost-surf": "Ghost Surf Rock (Loyalty Freak Music)",
+    "secret-agent": "Secret Agent Rock (John Bartmann)",
+    "soft-pads": "Sanfte Flächen",
+    "bossa-lounge": "Bossa Lounge"
+  },
+  "cues": {
+    "start": {
+      "label": "Gong zum Start",
+      "hint": "Beim Klick auf „Meeting starten“"
+    },
+    "birthday": {
+      "label": "Geburtstagslied",
+      "hint": "Happy Birthday nach dem Gong, in einer Geburtstagswoche"
+    },
+    "speaker": {
+      "label": "Sprecherwechsel",
+      "hint": "Ein kurzer Ton, wenn das Wort an die nächste Person geht"
+    },
+    "timeUp": {
+      "label": "Ende der Redezeit",
+      "hint": "Drei Pieptöne, wenn der Timer 0:00 erreicht"
+    },
+    "end": {
+      "label": "Applaus zum Schluss",
+      "hint": "Beim Erreichen des Abschlusses"
+    }
+  },
+  "board": {
+    "applause": "Applaus",
+    "drumroll": "Trommelwirbel",
+    "tada": "Tadaa",
+    "rimshot": "Ba dum tss",
+    "birthday": "Happy Birthday"
+  }
+}

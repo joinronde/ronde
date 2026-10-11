@@ -1,0 +1,19 @@
+{
+  "title": "Abwesenheiten",
+  "add": "Abwesenheit hinzufügen",
+  "intro": "Urlaub, freie Tage, Fortbildung: Du wirst für die Sitzungen dieser Tage als abwesend markiert und bekommst keine Erinnerungen.",
+  "from": "Erster Tag",
+  "to": "Letzter Tag",
+  "delegate": "Wer deine Meetings in der Zeit leitet",
+  "noDelegate": "Niemand: Die Co-Moderation macht weiter",
+  "delegateHint": "Für die Meetings, die du moderierst. Die Person wird benachrichtigt.",
+  "note": "Notiz",
+  "notePlaceholder": "Z. B. Urlaub, ab Montag zurück",
+  "save": "Abwesenheit speichern",
+  "cancel": "Abbrechen",
+  "period": "{from} bis {to}",
+  "standsIn": "{name} vertritt",
+  "remove": "Abwesenheit {period} entfernen",
+  "empty": "Keine Abwesenheit geplant.",
+  "emptyMine": "Keine Abwesenheit geplant. Bist du bald weg? Trag es hier ein: Deine Meetings wissen dann Bescheid."
+}

@@ -1,0 +1,19 @@
+{
+  "title": "Nächste Sitzungen",
+  "none": "Noch keine Sitzung geplant.",
+  "moved": "Verschoben",
+  "attendanceOf": "Deine Teilnahme am {date}",
+  "yes": "Ich bin dabei",
+  "no": "Ich bin nicht da",
+  "noted": "Notiert: Du wirst als abwesend markiert",
+  "hint": "Nicht da? Du wirst für diese Sitzung als abwesend markiert und bekommst keine Erinnerung.",
+  "subscribe": "Zu meinem Kalender hinzufügen",
+  "subscribeAll": "Meinen Kalenderlink holen",
+  "feedLink": "Kalenderlink",
+  "copy": "Kopieren",
+  "copied": "Kopiert",
+  "feedHint": "Füge diesen privaten Link in deine Kalender-App ein (Abo per URL); er folgt jeder Änderung. Ein neuer Link schaltet diesen ab.",
+  "openInApp": "In meiner Kalender-App öffnen",
+  "facilitator": "{name} moderiert",
+  "noteTaker": "{name} protokolliert"
+}

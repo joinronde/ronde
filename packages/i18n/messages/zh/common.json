@@ -1,0 +1,25 @@
+{
+  "host": "主持人",
+  "duration": {
+    "minutes": "{m} 分钟",
+    "hours": "{h} 小时",
+    "hoursMinutes": "{h} 小时 {m} 分钟"
+  },
+  "noMeeting": {
+    "title": "当前没有会议",
+    "notPrepared": "{host} 还没有准备下一次会议。在此期间，你可以先填写进展卡。",
+    "pickDate": "选择下一次会议的日期以安排议程。",
+    "dateLabel": "会议日期",
+    "prepare": "准备 {date} 的会议",
+    "addTeamFirst": "请先在设置中添加团队成员。",
+    "openSettings": "打开设置"
+  },
+  "loadError": {
+    "title": "无法加载数据",
+    "body": "服务器没有响应或返回了错误。你的数据是安全的。",
+    "retry": "重试"
+  },
+  "cancel": "取消",
+  "delete": "删除",
+  "exportCsv": "导出为 CSV"
+}

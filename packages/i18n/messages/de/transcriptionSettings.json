@@ -1,0 +1,18 @@
+{
+  "title": "Transkription",
+  "intro": "Macht aus dem, was in einer Sitzung gesagt wird, Text, Beitrag für Beitrag, für das Protokoll und den KI-Assistenten. Jedes Meeting erlaubt es in seinen eigenen Einstellungen.",
+  "enable": "Transkription einschalten",
+  "url": "Sprache-zu-Text-Dienst",
+  "urlHint": "Für OpenAI leer lassen. Ein selbst gehosteter Whisper-Server (faster-whisper-server, speaches…) funktioniert auch: Seine Adresse endet auf /v1.",
+  "model": "Modell",
+  "modelHint": "whisper-1 oder gpt-4o-transcribe bei OpenAI; sonst der Modellname deines Servers.",
+  "language": "Gesprochene Sprache",
+  "detect": "Automatisch erkennen",
+  "key": "API-Schlüssel",
+  "keyHint": "Für OpenAI nötig; für einen selbst gehosteten Server optional. Verschlüsselt gespeichert.",
+  "keySaved": "Ein Schlüssel ist gespeichert. Gib einen neuen ein, um ihn zu ersetzen.",
+  "instance": "Dienst der Instanz",
+  "privacy": "Der Ton einer aufgenommenen Sitzung geht in Stücken von dreißig Sekunden an diesen Dienst und wird dann gelöscht: Nur der Text bleibt, bei der Sitzung.",
+  "save": "Speichern",
+  "saved": "Gespeichert."
+}

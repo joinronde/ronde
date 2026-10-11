@@ -1,0 +1,129 @@
+// The back-office of the Ronde cloud (admin.joinronde.com): the Ronde team's own accounts, what they do,
+// the plans granted by hand, the license keys issued for self-hosted instances and the messages of the site.
+// A self-hosted instance leaves these tables empty.
+
+/// What a member of the Ronde team may do in the back-office
+enum StaffRole {
+  superadmin
+  support
+  finance
+  sales
+}
+
+/// A member of the Ronde team: not a customer account, signs in to the back-office only
+model StaffUser {
+  id                 String         @id @default(uuid(7))
+  email              String         @unique
+  name               String
+  role               StaffRole
+  /// scrypt$<N>$<r>$<p>$<salt>$<hash>, all base64url
+  passwordHash       String
+  /// The password was set by someone else (creation, reset): it must be changed at the next sign-in
+  mustChangePassword Boolean        @default(true)
+  /// TOTP secret, encrypted with BACKOFFICE_SECRET; confirmed once the first code was right
+  totpSecret         String?
+  totpConfirmedAt    DateTime?
+  /// Last 30-second step accepted: a code cannot be used twice
+  totpLastStep       Int?
+  failedLogins       Int            @default(0)
+  lockedUntil        DateTime?
+  disabledAt         DateTime?
+  lastLoginAt        DateTime?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  sessions           StaffSession[]
+  audits             StaffAudit[]
+}
+
+model StaffSession {
+  id        String    @id @default(uuid(7))
+  staffId   String
+  staff     StaffUser @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  /// SHA-256 of the cookie's token: the token itself is never stored
+  tokenHash String    @unique
+  /// The second factor was checked: until then, the session only reaches the TOTP step
+  verified  Boolean   @default(false)
+  expiresAt DateTime
+  ip        String?
+  userAgent String?
+  createdAt DateTime  @default(now())
+
+  @@index([staffId])
+}
+
+/// Everything the Ronde team does in the back-office, and every sign-in
+model StaffAudit {
+  id         String     @id @default(uuid(7))
+  staffId    String?
+  staff      StaffUser? @relation(fields: [staffId], references: [id], onDelete: SetNull)
+  /// e.g. "staff.signIn", "workspace.suspend", "grant.create", "license.issue"
+  action     String
+  targetType String?
+  targetId   String?
+  details    Json       @default("{}")
+  ip         String?
+  createdAt  DateTime   @default(now())
+
+  @@index([createdAt])
+  @@index([targetType, targetId])
+}
+
+/// A paid plan given by hand: education, a commercial gesture, a longer trial, a partner. It adds to what
+/// Stripe says: the workspace gets the higher of the two while the grant runs.
+model PlanGrant {
+  id          String    @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  /// team or enterprise
+  plan        String
+  /// education, comp, trial or partner
+  reason      String
+  note        String    @default("")
+  startsAt    DateTime  @default(now())
+  /// null: until revoked
+  endsAt      DateTime?
+  revokedAt   DateTime?
+  /// Email of the member of the Ronde team who gave it
+  createdBy   String
+  createdAt   DateTime  @default(now())
+
+  @@index([workspaceId])
+}
+
+/// A license key issued for a self-hosted instance. Keys are checked offline: revoking one records that it
+/// must not be renewed, the key itself keeps working until it expires.
+model IssuedLicense {
+  /// The id written in the key, e.g. lic_3f9a1c2e
+  id        String    @id
+  customer  String
+  email     String?
+  /// team or enterprise
+  edition   String
+  /// 0: unlimited
+  seats     Int
+  issuedAt  DateTime  @default(now())
+  expiresAt DateTime
+  key       String
+  note      String    @default("")
+  issuedBy  String
+  revokedAt DateTime?
+}
+
+/// A message sent from the contact form of the site
+model Lead {
+  id           String    @id @default(uuid(7))
+  /// plans, education, selfHosting or other
+  topic        String
+  name         String
+  email        String
+  organisation String?
+  message      String
+  locale       String
+  /// new, handled or archived
+  status       String    @default("new")
+  handledBy    String?
+  handledAt    DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@index([status, createdAt])
+}

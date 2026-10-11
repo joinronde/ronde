@@ -1,0 +1,18 @@
+{
+  "label": "Notifiche",
+  "labelUnread": "{count, plural, one {Notifiche, # non letta} other {Notifiche, # non lette}}",
+  "title": "Notifiche",
+  "markAll": "Segna tutto come letto",
+  "unread": "non letta",
+  "someone": "Qualcuno",
+  "empty": "Sei in pari.",
+  "emptyHint": "Qui compaiono le azioni assegnate a te, le sessioni che iniziano e i verbali pubblicati.",
+  "kinds": {
+    "action_assigned": "<strong>{actor}</strong> ti ha assegnato un'azione in <strong>{meeting}</strong>",
+    "session_started": "<strong>{meeting}</strong> è iniziata: partecipa alla sessione",
+    "minutes_published": "Il verbale di <strong>{meeting}</strong> è disponibile",
+    "kudo_received": "<strong>{actor}</strong> ti ha ringraziato in <strong>{meeting}</strong>",
+    "meeting_joined": "<strong>{actor}</strong> ti ha aggiunto a <strong>{meeting}</strong>",
+    "absence_delegated": "<strong>{actor}</strong> sarà assente: nel frattempo conduci tu le riunioni che organizza"
+  }
+}

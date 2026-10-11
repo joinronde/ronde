@@ -1,0 +1,12 @@
+{
+  "title": "{page} · Ronde",
+  "description": "Le point d'équipe : régie, écran partagé, tour de table chronométré et compte rendu.",
+  "control": "Régie",
+  "screen": "Écran partagé",
+  "me": "Mon écran",
+  "settings": "Réglages",
+  "stats": "Statistiques",
+  "history": "Historique",
+  "remote": "Télécommande",
+  "decisions": "Décisions"
+}

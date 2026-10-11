@@ -1,0 +1,22 @@
+{
+  "defaults": {
+    "done": "Fait cette semaine",
+    "next": "Prévu semaine prochaine",
+    "blockers": "Difficultés à signaler",
+    "other": "Autres"
+  },
+  "types": {
+    "list": {
+      "label": "Liste",
+      "hint": "Un élément par ligne, qu'on ajoute, réordonne et retire"
+    },
+    "checklist": {
+      "label": "Liste à cocher",
+      "hint": "Des tâches, cochées quand elles sont faites"
+    },
+    "text": {
+      "label": "Texte libre",
+      "hint": "Un paragraphe, sur plusieurs lignes si besoin"
+    }
+  }
+}

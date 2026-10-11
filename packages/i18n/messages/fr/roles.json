@@ -1,0 +1,26 @@
+{
+  "title": "Rôles",
+  "intro": "Les rôles personnalisés ajoutent des permissions aux organisateurs, aux membres et aux invités. Les permissions de réunion s'appliquent à toutes les réunions de l'espace.",
+  "new": "Nouveau rôle",
+  "newTitle": "Nouveau rôle",
+  "editTitle": "Modifier le rôle",
+  "name": "Nom",
+  "description": "Description",
+  "groups": {
+    "workspace": "Espace",
+    "meetings": "Toutes les réunions"
+  },
+  "groupHints": {
+    "workspace": "Ce qu'ils peuvent faire dans tout l'espace.",
+    "meetings": "Accordé sur toutes les réunions, même celles dont ils ne font pas partie."
+  },
+  "save": "Enregistrer le rôle",
+  "cancel": "Annuler",
+  "edit": "Modifier",
+  "delete": "Supprimer",
+  "deleteConfirm": "Supprimer le rôle « {name} » ? {count, plural, =0 {Personne ne l'a.} one {# personne revient à son seul rôle.} other {# personnes reviennent à leur seul rôle.}}",
+  "members": "{count, plural, =0 {personne} one {# personne} other {# personnes}}",
+  "empty": "Aucun rôle personnalisé pour l'instant.",
+  "examples": "Par exemple : « Auditeur » (historique et statistiques de toutes les réunions), « Animateur » (anime n'importe quelle réunion), « Gestion des personnes » (annuaire et invitations).",
+  "readOnly": "La licence a expiré : les rôles restent visibles mais ne donnent plus aucune permission jusqu'à son renouvellement."
+}

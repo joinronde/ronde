@@ -1,0 +1,12 @@
+{
+  "start": "Meinen Bildschirm auf dem Raumbildschirm teilen",
+  "startShort": "Bildschirm teilen",
+  "stop": "Teilen meines Bildschirms beenden",
+  "stopShort": "Teilen beenden",
+  "screens": "{count, plural, =0 {Noch kein Raumbildschirm verbunden} one {# Raumbildschirm} other {# Raumbildschirme}}",
+  "denied": "Der Browser hat den Bildschirm nicht geteilt.",
+  "sharedBy": "Geteilt von {name}",
+  "shared": "Geteilter Bildschirm",
+  "sound": "Ton einschalten",
+  "previewBadge": "Auf dem Raumbildschirm · {count, plural, =0 {warte auf die Bildschirme} one {# Bildschirm} other {# Bildschirme}}"
+}

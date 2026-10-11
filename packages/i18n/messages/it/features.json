@@ -1,0 +1,75 @@
+{
+  "workspaces": {
+    "unlimited": "Spazi di lavoro, riunioni e persone illimitati"
+  },
+  "identity": {
+    "local": "Account con email e password",
+    "magicLink": "Link di accesso via email",
+    "social": "Accesso con Google, GitHub o Microsoft",
+    "oidc": "Accesso unico con un provider OpenID Connect",
+    "twoFactor": "Autenticazione a due fattori",
+    "saml": "Accesso unico SAML e più provider di identità",
+    "ldap": "Accesso con LDAP e Active Directory",
+    "scim": "Provisioning degli utenti con SCIM",
+    "enforcedSso": "Accesso unico obbligatorio",
+    "domainCapture": "Acquisizione del dominio"
+  },
+  "permissions": {
+    "builtInRoles": "Ruoli integrati per spazi e riunioni",
+    "customRoles": "Ruoli personalizzati e permessi granulari"
+  },
+  "meetings": {
+    "unlimited": "Riunioni e sessioni illimitate",
+    "sectionRoles": "Sezioni della scheda con comportamento configurabile",
+    "templates": "Modelli integrati e dello spazio"
+  },
+  "scheduling": {
+    "recurrence": "Ricorrenza flessibile con eccezioni",
+    "ics": "Feed di calendario (ICS)",
+    "calendarSync": "Sincronizzazione bidirezionale con calendari Google, Microsoft 365 e CalDAV"
+  },
+  "modules": {
+    "facilitation": "Tutti i moduli di facilitazione",
+    "notifications": "Notifiche via email, chat e webhook",
+    "formats": "Retrospettive, planning poker, riunioni asincrone",
+    "workflows": "Costruttore di workflow",
+    "aiAssistant": "Assistente IA: riepiloghi e azioni",
+    "transcription": "Trascrizione delle sessioni, turno per turno"
+  },
+  "integrations": {
+    "gitlab": "Importazione da GitLab",
+    "github": "Importazione da GitHub",
+    "video": "Videochiamate: qualsiasi link, Jitsi, BigBlueButton",
+    "api": "API REST e webhook in uscita",
+    "writeBack": "Ticket in Jira, Linear, GitLab e GitHub dalle azioni",
+    "videoLinks": "Link Zoom, Google Meet e Teams creati automaticamente",
+    "sms": "Promemoria via SMS e WhatsApp (Twilio)",
+    "slack": "App Slack: schede compilate da Slack, verbali nel canale, /ronde",
+    "wikis": "Verbali pubblicati in Notion e Confluence",
+    "teams": "App Microsoft Teams: promemoria e schede in Teams, un canale per le notifiche",
+    "projectSync": "Progetti importati sempre aggiornati: nome, situazione, date e avanzamento"
+  },
+  "reporting": {
+    "meeting": "Statistiche per riunione",
+    "export": "Esportazione in Markdown, PDF e CSV",
+    "workspace": "Dashboard dello spazio su tutte le riunioni",
+    "scheduled": "Report inviati via email periodicamente",
+    "portfolio": "Cruscotto del portafoglio: stato nel tempo, scadenze, progetti senza notizie, esportazione CSV e rapporto programmato"
+  },
+  "branding": {
+    "customLogo": "Il tuo logo su schermi, email e verbali",
+    "whiteLabel": "White label e dominio personalizzato"
+  },
+  "compliance": {
+    "auditLog": "Registro di audit degli ultimi 90 giorni, con esportazione CSV",
+    "auditStream": "Cronologia di audit completa, inviata al tuo SIEM",
+    "retention": "Regole di conservazione dei dati"
+  },
+  "projects": {
+    "portfolio": "Portafoglio di progetti: descrizione, tema, stato, responsabile, squadra, date e lo storico di ogni riunione",
+    "round": "Giro per progetto: un turno per progetto, in cui i suoi membri parlano insieme",
+    "programs": "Programmi: progetti raggruppati in programmi annidati",
+    "permissions": "Permessi per progetto",
+    "import": "Progetti importati da GitHub, GitLab, Jira e Linear"
+  }
+}

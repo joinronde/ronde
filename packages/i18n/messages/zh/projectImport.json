@@ -1,0 +1,100 @@
+{
+  "title": "导入项目",
+  "intro": "将工具中的仓库、里程碑、史诗或项目导入项目组合。下一步再选择要导入哪些。",
+  "trackers": "从你的工单系统导入（保持同步）",
+  "another": "或从某个工具一次性导入",
+  "from": "导入来源",
+  "tools": {
+    "github": "GitHub",
+    "gitlab": "GitLab",
+    "jira": "Jira",
+    "linear": "Linear"
+  },
+  "what": {
+    "github": "仓库或里程碑",
+    "gitlab": "项目或里程碑",
+    "jira": "项目的史诗",
+    "linear": "项目"
+  },
+  "item": {
+    "repos": "仓库 {key}",
+    "milestones": "里程碑 {key}",
+    "epics": "史诗 {key}",
+    "projects": "项目 {key}"
+  },
+  "whatLabel": "在 Ronde 中成为项目的是",
+  "modes": {
+    "repos": {
+      "github": "组织的每个仓库",
+      "gitlab": "群组的每个项目"
+    },
+    "milestones": {
+      "github": "仓库的每个里程碑",
+      "gitlab": "项目的每个里程碑"
+    }
+  },
+  "modeHints": {
+    "repos": "每个项目沿用仓库的名称，其工单会在会议中出现。适合每个仓库都是一个产品或服务的情况。",
+    "milestones": "每个项目命名为“仓库 · 里程碑”，并沿用其截止日期和进度。适合里程碑是交付物的情况。"
+  },
+  "fields": {
+    "repo": "仓库（所有者/名称或其地址）",
+    "owner": "组织或账户（名称或地址）",
+    "gitlab": "项目（路径或地址）",
+    "group": "群组（名称或地址）",
+    "site": "站点地址",
+    "project": "项目键",
+    "projectHint": "其工单键中数字前面的字母：OPS-42 中的 OPS。",
+    "email": "账户邮箱"
+  },
+  "token": "API 令牌",
+  "tokenOptional": {
+    "github": "访问令牌（仅私有仓库需要）",
+    "gitlab": "访问令牌（仅私有群组或项目需要）"
+  },
+  "tokenHint": {
+    "github": "公开仓库请留空。私有仓库需要一个可读取这些仓库（以及里程碑所需的议题）的<link>细粒度令牌</link>。",
+    "gitlab": "公开项目请留空。私有项目需要具有 read_api 范围的个人或项目访问令牌。",
+    "gitlabGroup": "公开群组请留空。私有群组需要具有 read_api 范围的个人或群组访问令牌。",
+    "jira": "上方邮箱对应账户的 <link>API 令牌</link>。",
+    "linear": "在 Linear 设置中创建的个人 API 密钥。"
+  },
+  "tokenNotKept": "它仅用于本次导入：Ronde 不会保存它。",
+  "teamHint": "使用 Team 方案时，通过已保存的工单系统导入的项目会与该工具保持同步：名称、阶段、日期和进度。",
+  "syncHowTo": "要让导入的项目保持同步，请先在<link>工作空间设置</link>中将该工具添加为工单系统，再从中导入。",
+  "syncAskAdmin": "由工作空间管理员通过其工单系统导入的项目才会保持同步。你在此导入的项目仅导入一次。",
+  "look": "查找项目",
+  "looking": "正在查找…",
+  "pickTitle": {
+    "repos": "要导入的仓库",
+    "milestones": "要导入的里程碑",
+    "epics": "要导入的史诗",
+    "projects": "要导入的项目"
+  },
+  "nothing": {
+    "repos": "未找到仓库。",
+    "milestones": "未找到里程碑。",
+    "epics": "此项目没有史诗。",
+    "projects": "未找到项目。"
+  },
+  "allImported": "列出的内容都已在项目组合中。",
+  "partial": {
+    "tracker": "仅列出工单系统令牌可读取的内容。",
+    "public": "未提供令牌时，仅列出公开的内容。"
+  },
+  "more": "仅列出前 100 个。",
+  "filter": "筛选",
+  "pickAll": "全选（{count}）",
+  "pickSome": "勾选要导入的项。",
+  "inPortfolio": "已在项目组合中",
+  "progress": "已完成 {percent}",
+  "themeHint": "应用于每个导入的项目。",
+  "keepSync": "与 {tool} 保持同步",
+  "keepSyncHint": "名称、阶段、日期和进度每小时跟随该工具更新；其余内容由你编辑。",
+  "keepSyncHintRepo": "名称每小时跟随该工具更新，归档后阶段变为“已完成”；其余内容由你编辑。",
+  "onceHint": "仅导入一次：之后在 Ronde 中编辑。",
+  "back": "返回",
+  "import": "{count, plural, =0 {导入} other {导入 # 个项目}}",
+  "importing": "{count, plural, other {正在导入 # 个项目…}}",
+  "offline": "无法连接 Ronde。请检查网络连接后重试。"
+}

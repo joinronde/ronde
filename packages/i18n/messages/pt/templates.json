@@ -1,0 +1,273 @@
+{
+  "weekly": {
+    "name": "Reunião semanal",
+    "description": "Uma rodada do que foi feito, do que está previsto e do que bloqueia, com assuntos em aberto e ações de acompanhamento.",
+    "sections": {}
+  },
+  "standup": {
+    "name": "Daily stand-up",
+    "description": "Quinze minutos nos dias úteis: ontem, hoje, bloqueios. Vezes curtas, nada mais.",
+    "sections": {
+      "yesterday": "Ontem",
+      "today": "Hoje"
+    }
+  },
+  "retro": {
+    "name": "Retrospectiva mensal",
+    "description": "Olhem juntos para o mês: o que foi bem, o que melhorar, ideias para testar.",
+    "sections": {
+      "well": "O que foi bem",
+      "improve": "O que melhorar",
+      "ideas": "Ideias para testar"
+    }
+  },
+  "oneOnOne": {
+    "name": "One-on-one",
+    "description": "Uma conversa semanal entre duas pessoas: conquistas, prioridades, desafios e feedback.",
+    "sections": {
+      "wins": "Conquistas",
+      "priorities": "Prioridades",
+      "challenges": "Desafios",
+      "feedback": "Feedback"
+    }
+  },
+  "sprintReview": {
+    "name": "Sprint review",
+    "description": "A cada duas semanas: o que foi entregue, as demos, o próximo sprint e os riscos.",
+    "sections": {
+      "delivered": "Entregue",
+      "demo": "Demos",
+      "next": "Próximo sprint",
+      "risks": "Riscos"
+    }
+  },
+  "steering": {
+    "name": "Comitê de direção",
+    "description": "Uma vez por mês: avanço, decisões a tomar, riscos e próximos passos.",
+    "sections": {
+      "progress": "Avanço",
+      "decisions": "Decisões a tomar",
+      "risks": "Riscos",
+      "next": "Próximos passos"
+    }
+  },
+  "allHands": {
+    "name": "All-hands",
+    "description": "A equipe inteira uma vez por mês: destaques, novidades e pedidos.",
+    "sections": {
+      "highlights": "Destaques",
+      "news": "Novidades",
+      "asks": "Pedidos"
+    }
+  },
+  "leadership": {
+    "name": "Equipe de liderança",
+    "description": "A semanal da liderança: números-chave, conquistas, prioridades e o que precisa ser escalado.",
+    "sections": {
+      "figures": "Números-chave",
+      "wins": "Conquistas",
+      "priorities": "Prioridades",
+      "escalations": "Escalonamentos"
+    }
+  },
+  "salesPipeline": {
+    "name": "Revisão do pipeline de vendas",
+    "description": "Toda segunda-feira: negócios fechados, como o pipeline mudou, próximos passos e negócios em risco.",
+    "sections": {
+      "won": "Negócios fechados",
+      "pipeline": "Movimentos do pipeline",
+      "next": "Próximos passos",
+      "atrisk": "Negócios em risco"
+    }
+  },
+  "editorial": {
+    "name": "Reunião de pauta",
+    "description": "Para uma redação, uma equipe de conteúdo ou comunicação: o que saiu, o que está em andamento, ideias e onde é preciso ajuda.",
+    "sections": {
+      "published": "Publicado",
+      "ideas": "Ideias",
+      "help": "Ajuda necessária",
+      "inprogress": "Em andamento"
+    }
+  },
+  "classCouncil": {
+    "name": "Conselho de classe",
+    "description": "Uma vez por bimestre: como a turma está, os alunos que precisam de apoio e as ações combinadas.",
+    "sections": {
+      "progress": "Como a turma está",
+      "support": "Alunos que precisam de apoio",
+      "agreed": "Ações combinadas",
+      "notes": "Notas"
+    }
+  },
+  "teachingTeam": {
+    "name": "Equipe pedagógica",
+    "description": "A semanal de uma equipe de professores: a semana passada em sala, o que vem, alunos a acompanhar e recursos a compartilhar.",
+    "sections": {
+      "coming": "O que vem",
+      "students": "Alunos a acompanhar",
+      "resources": "Recursos a compartilhar",
+      "lastweek": "A semana passada em sala"
+    }
+  },
+  "board": {
+    "name": "Diretoria de associação",
+    "description": "A reunião mensal da diretoria de uma associação: novidades das comissões, votações, tesouraria e próximos eventos.",
+    "sections": {
+      "news": "Novidades das comissões",
+      "votes": "Votações a fazer",
+      "treasury": "Tesouraria",
+      "events": "Próximos eventos"
+    }
+  },
+  "volunteers": {
+    "name": "Coordenação de voluntários",
+    "description": "Sábado de manhã com os voluntários: o que foi feito, as próximas missões e o que está faltando.",
+    "sections": {
+      "done": "O que fizemos",
+      "missions": "Próximas missões",
+      "needs": "Do que precisamos"
+    }
+  },
+  "siteMeeting": {
+    "name": "Reunião de obra",
+    "description": "A reunião semanal de uma obra: serviços feitos, serviços previstos, segurança e lista de pendências.",
+    "sections": {
+      "done": "Serviços feitos",
+      "planned": "Serviços previstos",
+      "safety": "Problemas de segurança",
+      "punch": "Lista de pendências"
+    }
+  },
+  "shiftHandover": {
+    "name": "Passagem de turno",
+    "description": "Quinze minutos entre dois turnos: o que aconteceu, o que observar e o que o próximo turno deve fazer.",
+    "sections": {
+      "events": "O que aconteceu",
+      "watch": "A observar",
+      "todo": "Para o próximo turno"
+    }
+  },
+  "portfolio": {
+    "name": "Revisão de portfólio",
+    "description": "A cada duas semanas, uma vez por projeto: quem trabalha nele conta como ele está, o que avançou, os próximos marcos e os riscos; os projetos em dificuldade vêm primeiro.",
+    "sections": {
+      "progress": "Avanço",
+      "milestones": "Próximos marcos",
+      "risks": "Riscos e necessidades",
+      "decisions": "Decisões a tomar"
+    }
+  },
+  "teamProjects": {
+    "name": "Equipe e projetos",
+    "description": "Uma vez rápida para as novidades de cada um e depois uma vez por projeto em comum, em que seus membros falam juntos.",
+    "sections": {}
+  },
+  "rhythm": {
+    "weekdays": "Todo dia útil",
+    "daily": "{count, plural, one {Todo dia} other {A cada # dias}}",
+    "weekly": "{count, plural, one {Toda semana} =2 {A cada duas semanas} other {A cada # semanas}}",
+    "monthly": "{count, plural, one {Uma vez por mês} =3 {Uma vez por trimestre} other {A cada # meses}}",
+    "timesDaily": "{count, plural, =2 {Duas vezes por dia} other {# vezes por dia}}"
+  },
+  "okrReview": {
+    "name": "Revisão de OKRs",
+    "description": "Uma vez por mês: o avanço de cada objetivo, os resultados-chave, os riscos e as decisões necessárias.",
+    "sections": {
+      "progress": "Avanço dos objetivos",
+      "results": "Resultados-chave",
+      "risks": "Riscos",
+      "asks": "Decisões necessárias"
+    }
+  },
+  "incidentReview": {
+    "name": "Revisão de incidentes",
+    "description": "Os incidentes da semana, sem procurar culpados: o que aconteceu, o impacto, as causas e as ações corretivas.",
+    "sections": {
+      "timeline": "O que aconteceu",
+      "impact": "Impacto",
+      "causes": "Causas raiz",
+      "actions": "Ações corretivas"
+    }
+  },
+  "researchLab": {
+    "name": "Reunião de laboratório",
+    "description": "A reunião semanal de um grupo de pesquisa: resultados, próximos passos, onde cada um está travado e artigos para compartilhar.",
+    "sections": {
+      "results": "Experimentos e resultados",
+      "next": "Próximos passos",
+      "stuck": "Onde estou travado",
+      "reading": "Artigos para compartilhar"
+    }
+  },
+  "studentProjects": {
+    "name": "Projetos de alunos",
+    "description": "A cada duas semanas com o orientador: avanço, entregas, dificuldades e perguntas de cada grupo.",
+    "sections": {
+      "progress": "Avanço",
+      "deliverables": "Entregas",
+      "difficulties": "Dificuldades",
+      "questions": "Perguntas para o orientador"
+    }
+  },
+  "caseReview": {
+    "name": "Reunião de discussão de casos",
+    "description": "A reunião multidisciplinar da semana: os casos apresentados, as opiniões, o plano de cuidados definido e os exames a agendar.",
+    "sections": {
+      "cases": "Casos a apresentar",
+      "opinions": "Opiniões e propostas",
+      "plan": "Plano de cuidados definido",
+      "tests": "Exames a agendar"
+    }
+  },
+  "serviceBriefing": {
+    "name": "Briefing antes do serviço",
+    "description": "Dez minutos antes de abrir, todos os dias: reservas, pratos do dia, instruções e pontos de atenção.",
+    "sections": {
+      "bookings": "Reservas e movimento",
+      "specials": "Pratos do dia",
+      "instructions": "Instruções",
+      "watch": "Pontos de atenção"
+    }
+  },
+  "onboarding": {
+    "name": "Acompanhamento de integração",
+    "description": "Os primeiros meses de quem chega, toda semana: o que aprendeu, seus objetivos, do que precisa e suas perguntas.",
+    "sections": {
+      "learned": "O que aprendi",
+      "goals": "Meus objetivos da semana",
+      "needs": "Do que preciso",
+      "questions": "Minhas perguntas"
+    }
+  },
+  "hiringReview": {
+    "name": "Revisão de contratações",
+    "description": "Toda semana: entrevistas feitas, candidatos em andamento, decisões a tomar e vagas a abrir.",
+    "sections": {
+      "interviews": "Entrevistas feitas",
+      "candidates": "Candidatos em andamento",
+      "decisions": "Decisões a tomar",
+      "openings": "Vagas a abrir"
+    }
+  },
+  "boardOfDirectors": {
+    "name": "Conselho de administração",
+    "description": "Uma vez por trimestre: o relatório de atividades, as finanças, as resoluções a votar e os riscos.",
+    "sections": {
+      "report": "Relatório de atividades",
+      "finances": "Finanças",
+      "resolutions": "Resoluções a votar",
+      "risks": "Riscos e pontos de atenção"
+    }
+  },
+  "supportReview": {
+    "name": "Revisão do suporte",
+    "description": "Toda semana, do lado dos clientes: chamados marcantes, escalonamentos, retornos sobre o produto e satisfação.",
+    "sections": {
+      "highlights": "Chamados marcantes",
+      "escalations": "Escalonamentos",
+      "feedback": "Retornos sobre o produto",
+      "satisfaction": "Satisfação"
+    }
+  }
+}

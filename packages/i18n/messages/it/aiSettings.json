@@ -1,0 +1,18 @@
+{
+  "title": "Assistente IA",
+  "intro": "Scrive una bozza del riepilogo di una sessione e suggerisce le azioni di follow-up richieste dal verbale. Chi conduce rivede tutto prima del salvataggio.",
+  "enable": "Attiva l'assistente IA",
+  "model": "Modello",
+  "key": "Chiave API di Anthropic",
+  "keyHint": "Crea una chiave nella console di Anthropic. Viene conservata cifrata e non viene più mostrata.",
+  "keySaved": "È salvata una chiave. Inseriscine una nuova per sostituirla.",
+  "instanceKey": "Chiave dell'istanza",
+  "instanceKeyHint": "Questa istanza fornisce una chiave. Inserisci la tua per usare il tuo account Anthropic.",
+  "noEncryption": "Impossibile salvare chiavi: SECRET_KEY non è impostata su questa istanza.",
+  "privacy": "Quando qualcuno lo chiede, il verbale della sessione (mai le schede precedenti alla sessione, mai password o chiavi) viene inviato ad Anthropic per scrivere la risposta.",
+  "save": "Salva",
+  "test": "Prova l'assistente",
+  "removeKey": "Rimuovi la chiave",
+  "saved": "Salvato.",
+  "works": "✓ L'assistente risponde."
+}

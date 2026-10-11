@@ -1,0 +1,14 @@
+{
+  "intro": "Einstieg",
+  "topics": "Offene Themen",
+  "questions": "Fragen",
+  "end": "Abschluss",
+  "poker": "Planning Poker",
+  "retro": {
+    "reflect": "Retro: schreiben",
+    "group": "Retro: gruppieren",
+    "vote": "Retro: abstimmen",
+    "discuss": "Besprechen: {title}",
+    "done": "Retro-Zusammenfassung"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "enable": "Attiva l'audio",
+  "monitorHint": "Senti in regia ciò che sentono i partecipanti",
+  "muteHint": "Disattiva i suoni della riunione su questo schermo",
+  "autoHint": "I suoni si attiveranno da soli un quarto d'ora prima della riunione (musica d'attesa, segnali…)",
+  "listenHint": "Senti i suoni della riunione: musica d'attesa, segnali, applausi…",
+  "monitorOn": "Ascolto in regia",
+  "monitorOff": "Ascolto disattivato",
+  "soundsOn": "Suoni",
+  "soundsOff": "Suoni disattivati",
+  "monitorVolume": "Volume d'ascolto in regia",
+  "volume": "Volume dei suoni su questo schermo",
+  "musicMuteHint": "Disattiva la musica d'attesa in regia (i partecipanti continuano a sentirla)",
+  "musicListenHint": "Senti anche la musica d'attesa in regia",
+  "musicOn": "Musica",
+  "musicOff": "Musica disattivata",
+  "allow": "Consenti l'audio"
+}

@@ -1,0 +1,19 @@
+{
+  "title": "接下来的场次",
+  "none": "还没有计划的场次。",
+  "moved": "已移动",
+  "attendanceOf": "你在 {date} 的出席情况",
+  "yes": "我会参加",
+  "no": "我会缺席",
+  "noted": "已记录：你将被标记为缺席",
+  "hint": "不能参加？你会被标记为该场缺席，且不会收到提醒。",
+  "subscribe": "添加到我的日历",
+  "subscribeAll": "获取我的日历链接",
+  "feedLink": "日历链接",
+  "copy": "复制",
+  "copied": "已复制",
+  "feedHint": "将此私人链接粘贴到你的日历应用中（通过 URL 订阅）；它会同步每次更改。创建新链接会使此链接失效。",
+  "openInApp": "在我的日历应用中打开",
+  "facilitator": "{name} 引导",
+  "noteTaker": "{name} 记录"
+}

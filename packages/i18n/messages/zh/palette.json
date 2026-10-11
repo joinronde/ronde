@@ -1,0 +1,52 @@
+{
+  "title": "命令",
+  "placeholder": "输入命令：下一步、Emma、会议纪要……",
+  "none": "没有与“{query}”匹配的命令。",
+  "foot": "↑ ↓ 选择，Enter 执行，Esc 关闭。",
+  "groups": {
+    "meeting": "会议",
+    "steps": "跳转到",
+    "panes": "面板",
+    "people": "人员",
+    "pages": "打开"
+  },
+  "keys": {
+    "space": "空格"
+  },
+  "start": "开始会议",
+  "pause": "暂停计时",
+  "resume": "继续计时",
+  "next": "下一步",
+  "previous": "上一步",
+  "bonus": "再给 30 秒",
+  "resetTimer": "重置计时",
+  "shuffle": "打乱发言顺序",
+  "absent": "将 {name} 标记为缺席",
+  "present": "将 {name} 标记为出席",
+  "panes": {
+    "run": "议程",
+    "live": "实时",
+    "actions": "行动项",
+    "topics": "议题",
+    "minutes": "会议纪要",
+    "polls": "投票",
+    "random": "随机工具"
+  },
+  "pages": {
+    "screen": "共享屏幕",
+    "remote": "手机遥控",
+    "history": "历史",
+    "stats": "统计",
+    "settings": "设置"
+  },
+  "help": {
+    "title": "键盘快捷键",
+    "next": "下一步",
+    "previous": "上一步",
+    "timer": "开始、暂停或继续计时",
+    "palette": "命令面板",
+    "help": "这些快捷键",
+    "close": "关闭对话框",
+    "ok": "知道了"
+  }
+}

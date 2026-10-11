@@ -1,0 +1,21 @@
+{
+  "shiftKey": "Umschalt+",
+  "toolbar": "Formatierung · {label}",
+  "boldLetter": "F",
+  "italicLetter": "K",
+  "strikeLetter": "D",
+  "bold": "Fett ({key})",
+  "italic": "Kursiv ({key})",
+  "underlineLetter": "U",
+  "underline": "Unterstrichen ({key})",
+  "strike": "Durchgestrichen ({key})",
+  "bulletList": "Aufzählung",
+  "numberedList": "Nummerierte Liste",
+  "indent": "Unterpunkt (Tab in einer Liste)",
+  "outdent": "Eine Ebene höher ({key})",
+  "link": "Link ({key})",
+  "linkUrl": "Adresse des Links",
+  "linkApply": "Übernehmen",
+  "linkRemove": "Link entfernen",
+  "linkCancel": "Abbrechen"
+}

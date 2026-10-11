@@ -1,0 +1,75 @@
+{
+  "workspaces": {
+    "unlimited": "Unbegrenzt Arbeitsbereiche, Meetings und Personen"
+  },
+  "identity": {
+    "local": "Konten mit E-Mail und Passwort",
+    "magicLink": "Anmeldelinks per E-Mail",
+    "social": "Anmeldung mit Google, GitHub oder Microsoft",
+    "oidc": "Single Sign-on mit einem OpenID-Connect-Anbieter",
+    "twoFactor": "Zwei-Faktor-Authentifizierung",
+    "saml": "SAML-Single-Sign-on und mehrere Identitätsanbieter",
+    "ldap": "Anmeldung über LDAP und Active Directory",
+    "scim": "Benutzerbereitstellung per SCIM",
+    "enforcedSso": "Single Sign-on verpflichtend",
+    "domainCapture": "Domain-Übernahme"
+  },
+  "permissions": {
+    "builtInRoles": "Eingebaute Rollen für Arbeitsbereiche und Meetings",
+    "customRoles": "Eigene Rollen und feine Berechtigungen"
+  },
+  "meetings": {
+    "unlimited": "Unbegrenzt Meetings und Sitzungen",
+    "sectionRoles": "Check-in-Abschnitte mit einstellbarem Verhalten",
+    "templates": "Eingebaute Vorlagen und Vorlagen des Arbeitsbereichs"
+  },
+  "scheduling": {
+    "recurrence": "Flexible Wiederholung mit Ausnahmen",
+    "ics": "Kalender-Feeds (ICS)",
+    "calendarSync": "Zwei-Wege-Synchronisierung mit Google-, Microsoft-365- und CalDAV-Kalendern"
+  },
+  "modules": {
+    "facilitation": "Alle Moderationsmodule",
+    "notifications": "Benachrichtigungen per E-Mail, Chat und Webhooks",
+    "formats": "Retrospektiven, Planning Poker, asynchrone Meetings",
+    "workflows": "Workflow-Baukasten",
+    "aiAssistant": "KI-Assistent: Zusammenfassungen und Aufgaben",
+    "transcription": "Transkript der Sitzungen, Runde für Runde"
+  },
+  "integrations": {
+    "gitlab": "Import aus GitLab",
+    "github": "Import aus GitHub",
+    "video": "Videocalls: jeder Link, Jitsi, BigBlueButton",
+    "api": "REST-API und ausgehende Webhooks",
+    "writeBack": "Tickets in Jira, Linear, GitLab und GitHub aus Aufgaben",
+    "videoLinks": "Automatisch erstellte Zoom-, Google-Meet- und Teams-Links",
+    "sms": "Erinnerungen per SMS und WhatsApp (Twilio)",
+    "slack": "Slack-App: Check-ins direkt in Slack, Protokolle im Kanal, /ronde",
+    "wikis": "Protokolle in Notion und Confluence veröffentlicht",
+    "teams": "Microsoft-Teams-App: Erinnerungen und Check-ins in Teams, ein Kanal für Benachrichtigungen",
+    "projectSync": "Importierte Projekte bleiben aktuell: Name, Status, Termine und Fortschritt"
+  },
+  "reporting": {
+    "meeting": "Statistiken pro Meeting",
+    "export": "Export als Markdown, PDF und CSV",
+    "workspace": "Dashboards des Arbeitsbereichs über alle Meetings",
+    "scheduled": "Regelmäßige Berichte per E-Mail",
+    "portfolio": "Portfolio-Dashboard: Stand im Zeitverlauf, Fälligkeiten, Projekte ohne Neuigkeiten, CSV-Export und geplanter Bericht"
+  },
+  "branding": {
+    "customLogo": "Dein Logo auf Bildschirmen, in E-Mails und Protokollen",
+    "whiteLabel": "White Label und eigene Domain"
+  },
+  "compliance": {
+    "auditLog": "Audit-Log der letzten 90 Tage, mit CSV-Export",
+    "auditStream": "Vollständiger Audit-Verlauf mit SIEM-Anbindung",
+    "retention": "Regeln zur Datenaufbewahrung"
+  },
+  "projects": {
+    "portfolio": "Projektportfolio: Beschreibung, Thema, Stand, Verantwortung, Team, Termine und der Verlauf aus jedem Meeting",
+    "round": "Projektrunde: eine Runde pro Projekt, in der sein Team gemeinsam spricht",
+    "programs": "Programme: Projekte in verschachtelten Programmen",
+    "permissions": "Berechtigungen pro Projekt",
+    "import": "Projekte aus GitHub, GitLab, Jira und Linear importieren"
+  }
+}

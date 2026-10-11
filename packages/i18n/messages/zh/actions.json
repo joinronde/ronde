@@ -1,0 +1,49 @@
+{
+  "title": "行动项",
+  "introMine": "你在各个会议中承诺要做的事。完成后立即勾选。",
+  "introHosted": "你主持的会议的跟进：谁在做什么，哪些事等得太久了。",
+  "views": "谁的行动项",
+  "mine": "我的",
+  "hosted": "我主持的会议",
+  "filter": "会议",
+  "all": "全部",
+  "count": {
+    "open": "{count, plural, =0 {没有待办} other {# 项待办}}",
+    "doing": "{count, plural, =0 {没有进行中的} other {# 项进行中}}",
+    "done": "{count, plural, =0 {最近没有完成的} other {最近完成 # 项}}"
+  },
+  "group": {
+    "open": "待办",
+    "doing": "进行中",
+    "done": "最近两周完成"
+  },
+  "markDone": "将“{text}”标记为完成",
+  "reopen": "重新打开“{text}”",
+  "markDoneShort": "标记为完成",
+  "reopenShort": "重新打开",
+  "start": "开始",
+  "inProgress": "进行中",
+  "from": "于 {date} 决定",
+  "carried": "{count, plural, other {已持续 # 次会议未完成}}",
+  "emptyMine": "你手上没有待办事项。",
+  "emptyHosted": "你主持的会议中没有行动项。",
+  "emptyHint": "会议中决定的行动项会显示在这里，并注明来自哪个会议。",
+  "openTicket": "打开工单",
+  "ticketFor": "为“{text}”创建工单",
+  "ticket": "创建工单",
+  "ticketing": "正在创建工单…",
+  "ticketWhere": "在哪个工具中？",
+  "csv": {
+    "action": "行动项",
+    "owner": "负责人",
+    "meeting": "会议",
+    "status": "状态",
+    "decided": "决定日期",
+    "doneOn": "完成日期",
+    "carried": "此后会议次数",
+    "ticket": "工单",
+    "done": "已完成",
+    "hint": "此视图中的所有行动项，包括两周前已完成的",
+    "fileName": "xingdongxiang"
+  }
+}

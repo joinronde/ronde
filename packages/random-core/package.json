@@ -1,0 +1,20 @@
+{
+  "name": "@ronde/random-core",
+  "version": "0.0.0",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "description": "Deterministic random engines for meeting games: seeded draws, wheel and roulette motion, team generator, races and secret santa.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@ronde/config": "workspace:*",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.2"
+  }
+}

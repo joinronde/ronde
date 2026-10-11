@@ -1,0 +1,18 @@
+{
+  "title": "Asistente de IA",
+  "intro": "Redacta el resumen de una sesión y sugiere las acciones de seguimiento que piden sus actas. El anfitrión lo revisa todo antes de guardarlo.",
+  "enable": "Activar el asistente de IA",
+  "model": "Modelo",
+  "key": "Clave de API de Anthropic",
+  "keyHint": "Crea una clave en la consola de Anthropic. Se guarda cifrada y nunca se vuelve a mostrar.",
+  "keySaved": "Hay una clave guardada. Escribe una nueva para reemplazarla.",
+  "instanceKey": "Clave de la instancia",
+  "instanceKeyHint": "Esta instancia proporciona una clave. Escribe la tuya para usar tu propia cuenta de Anthropic.",
+  "noEncryption": "No se pueden guardar claves: SECRET_KEY no está definida en esta instancia.",
+  "privacy": "Cuando alguien lo pide, las actas de la sesión (nunca las fichas previas a la sesión, nunca contraseñas ni claves) se envían a Anthropic para redactar la respuesta.",
+  "save": "Guardar",
+  "test": "Probar el asistente",
+  "removeKey": "Quitar la clave",
+  "saved": "Guardado.",
+  "works": "✓ El asistente responde."
+}

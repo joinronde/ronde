@@ -1,0 +1,30 @@
+{
+  "kinds": {
+    "wheel": "Roleta",
+    "order": "Ordem de fala",
+    "teams": "Equipes",
+    "coin": "Cara ou coroa"
+  },
+  "hints": {
+    "wheel": "Escolhe quem fala em seguida entre as pessoas que ainda não falaram.",
+    "order": "Embaralha a ordem das pessoas que ainda não falaram.",
+    "teams": "Divide as pessoas presentes em equipes.",
+    "coin": "Para uma decisão que ninguém quer tomar."
+  },
+  "draw": "Girar",
+  "drawAgain": "Sortear de novo",
+  "teamSize": "Pessoas por equipe",
+  "applyWheel": "{name} fala em seguida",
+  "applyOrder": "Usar esta ordem",
+  "applied": "Aplicado à ordem de fala",
+  "clear": "Ocultar das telas",
+  "picked": "{name}!",
+  "heads": "Cara",
+  "tails": "Coroa",
+  "team": "Equipe {n}",
+  "orderTitle": "Ordem de fala",
+  "drawing": "Sorteando…",
+  "everyone": "Todos veem o mesmo sorteio: o servidor escolhe, depois cada tela o reproduz.",
+  "tool": "Ferramenta de sorteio",
+  "close": "Fechar"
+}

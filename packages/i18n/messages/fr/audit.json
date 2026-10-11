@@ -1,0 +1,220 @@
+{
+  "title": "Journal d'audit",
+  "intro": "Qui a modifié quoi dans cet espace : réglages, personnes, rôles, réunions. Les interactions en direct ne sont pas conservées.",
+  "window": "Il montre les {days} derniers jours.",
+  "filters": {
+    "action": "Action",
+    "actionPlaceholder": "p. ex. people, roles, meeting",
+    "actor": "Personne",
+    "actorPlaceholder": "Nom ou e-mail",
+    "from": "Du",
+    "to": "Au",
+    "apply": "Filtrer"
+  },
+  "export": "Exporter en CSV",
+  "columns": {
+    "when": "Quand",
+    "who": "Qui",
+    "what": "Quoi",
+    "details": "Détails"
+  },
+  "empty": "Rien d'enregistré pour l'instant.",
+  "noMatch": "Aucune entrée ne correspond à ces filtres.",
+  "more": "Entrées plus anciennes",
+  "stream": {
+    "title": "Envoi vers un SIEM",
+    "hint": "Chaque entrée est aussi envoyée, signée, à un connecteur webhook de l'espace, pour votre SIEM ou votre plateforme de journaux. Nouvelles tentatives pendant quelques minutes s'il ne répond pas.",
+    "connector": "Connecteur webhook",
+    "none": "Pas d'envoi",
+    "save": "Enregistrer",
+    "saved": "Enregistré",
+    "noWebhook": "Ajoutez d'abord un connecteur webhook dans les réglages généraux."
+  },
+  "actions": {
+    "meeting": {
+      "create": "Séance préparée",
+      "reset": "Séance réinitialisée",
+      "archive": "Séance archivée",
+      "publish": "Récapitulatif publié",
+      "remove": "Réunion supprimée",
+      "new": "Réunion créée",
+      "projects": "Projets suivis modifiés",
+      "sample": "Réunion d'exemple ouverte",
+      "sampleDeleted": "Réunion d'exemple supprimée"
+    },
+    "settings": {
+      "save": "Réglages de la réunion modifiés"
+    },
+    "agenda": {
+      "save": "Ordre du jour modifié"
+    },
+    "participant": {
+      "add": "Participant ajouté",
+      "update": "Participant modifié",
+      "remove": "Participant retiré"
+    },
+    "modules": {
+      "set": "Module activé ou désactivé"
+    },
+    "template": {
+      "save": "Enregistrée comme modèle"
+    },
+    "schedule": {
+      "save": "Planification modifiée",
+      "skip": "Séance sautée",
+      "move": "Séance déplacée",
+      "restore": "Séance rétablie"
+    },
+    "notifications": {
+      "save": "Notifications modifiées"
+    },
+    "history": {
+      "summary": "Synthèse du compte rendu modifiée"
+    },
+    "people": {
+      "invite": "Personne invitée",
+      "add": "Personne ajoutée",
+      "update": "Profil modifié",
+      "remove": "Personne retirée",
+      "invitationRevoked": "Invitation annulée",
+      "absence": "Absence ajoutée"
+    },
+    "members": {
+      "role": "Rôle modifié",
+      "leave": "A quitté l'espace",
+      "join": "A rejoint l'espace",
+      "customRole": "Rôle supplémentaire modifié",
+      "captured": "A rejoint par son domaine e-mail",
+      "sso": "A rejoint par la connexion de son entreprise"
+    },
+    "workspace": {
+      "update": "Réglages de l'espace modifiés",
+      "categoryAdd": "Catégorie de poste ajoutée",
+      "categoryRename": "Catégorie de poste renommée",
+      "categoryDelete": "Catégorie de poste supprimée",
+      "auditStream": "Flux d'audit modifié",
+      "logo": "Logo changé",
+      "logoRemoved": "Logo retiré"
+    },
+    "connectors": {
+      "save": "Connecteur enregistré",
+      "delete": "Connecteur supprimé"
+    },
+    "slack": {
+      "connect": "Slack connecté",
+      "disconnect": "Slack déconnecté"
+    },
+    "templates": {
+      "delete": "Modèle supprimé"
+    },
+    "roles": {
+      "save": "Rôle enregistré",
+      "delete": "Rôle supprimé"
+    },
+    "domains": {
+      "add": "Domaine ajouté",
+      "verify": "Domaine vérifié",
+      "update": "Réglages du domaine modifiés",
+      "remove": "Domaine retiré"
+    },
+    "sso": {
+      "add": "Fournisseur d'identité ajouté",
+      "remove": "Fournisseur d'identité retiré"
+    },
+    "ldap": {
+      "save": "Annuaire d'entreprise enregistré",
+      "remove": "Annuaire d'entreprise retiré"
+    },
+    "scim": {
+      "create": "Provisionné",
+      "update": "Mis à jour par l'annuaire",
+      "deactivate": "Désactivé par l'annuaire",
+      "delete": "Retiré par l'annuaire",
+      "tokenCreate": "Jeton SCIM créé",
+      "tokenRevoke": "Jeton SCIM révoqué"
+    },
+    "reports": {
+      "save": "Bilan par e-mail modifié"
+    },
+    "ai": {
+      "summary": "Synthèse rédigée par l'assistant IA",
+      "actions": "Actions suggérées par l'assistant IA",
+      "settings": "Réglages de l'assistant IA changés"
+    },
+    "trackers": {
+      "add": "Outil de tickets ajouté",
+      "update": "Outil de tickets modifié",
+      "delete": "Outil de tickets retiré",
+      "ticket": "Ticket créé depuis une action"
+    },
+    "video": {
+      "add": "Compte visio ajouté",
+      "update": "Compte visio modifié",
+      "delete": "Compte visio retiré",
+      "room": "Salle de visio créée pour une réunion"
+    },
+    "calendar": {
+      "add": "Compte d'agenda ajouté",
+      "update": "Compte d'agenda modifié",
+      "delete": "Compte d'agenda retiré",
+      "meeting": "Agenda d'une réunion changé"
+    },
+    "transcription": {
+      "allow": "Transcription autorisée ou non pour une réunion",
+      "settings": "Service de transcription modifié"
+    },
+    "recording": {
+      "start": "Enregistrement démarré pour la transcription",
+      "stop": "Enregistrement arrêté"
+    },
+    "session": {
+      "now": "Séance lancée à l'improviste"
+    },
+    "guests": {
+      "create": "Lien invité créé",
+      "revoke": "Lien invité révoqué"
+    },
+    "projects": {
+      "create": "Projet créé",
+      "unsync": "Synchronisation d’un projet arrêtée",
+      "import": "Projets importés depuis un outil",
+      "update": "Projet modifié",
+      "archive": "Projet archivé",
+      "restore": "Projet restauré",
+      "delete": "Projet supprimé",
+      "theme": "Thème du portefeuille modifié",
+      "themeDelete": "Thème du portefeuille supprimé"
+    },
+    "wikis": {
+      "add": "Wiki ajouté",
+      "update": "Wiki modifié",
+      "delete": "Wiki retiré",
+      "meeting": "Wiki d'une réunion changé"
+    },
+    "teams": {
+      "connect": "Microsoft Teams lié",
+      "disconnect": "Microsoft Teams délié"
+    }
+  },
+  "fields": {
+    "name": "Nom",
+    "slug": "Lien",
+    "locale": "Langue",
+    "timezone": "Fuseau horaire",
+    "meetingCreation": "Qui peut créer des réunions",
+    "bufferMin": "Temps libre autour des réunions (min)",
+    "email": "E-mail",
+    "firstName": "Prénom",
+    "lastName": "Nom de famille",
+    "role": "Rôle",
+    "birthday": "Anniversaire",
+    "phone": "Téléphone",
+    "label": "Libellé",
+    "days": "Jours",
+    "domain": "Domaine",
+    "permissions": "Permissions",
+    "enabled": "Activé"
+  },
+  "yes": "oui",
+  "no": "non"
+}

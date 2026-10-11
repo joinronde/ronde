@@ -1,0 +1,65 @@
+{
+  "title": "Administración del servidor",
+  "back": "Volver",
+  "intro": "Ajustes de este servidor de Ronde, comunes a todos sus espacios de trabajo. Los de cada espacio (miembros, roles, seguridad) están en sus Ajustes. Los valores guardados aquí prevalecen sobre las variables de entorno.",
+  "counts": {
+    "users": "Cuentas",
+    "workspaces": "Espacios de trabajo",
+    "meetings": "Reuniones"
+  },
+  "language": "Idioma",
+  "defaultLocale": "Idioma por defecto",
+  "defaultLocaleHint": "Para quienes no han elegido idioma en su cuenta y cuyo navegador no ofrece ninguno que Ronde hable.",
+  "signup": "Quién puede crear una cuenta",
+  "recommended": "Recomendado",
+  "policies": {
+    "invite-only": {
+      "label": "Por invitación",
+      "hint": "Solo las personas invitadas a un espacio de trabajo."
+    },
+    "domains": {
+      "label": "Dominios de correo",
+      "hint": "Las personas invitadas y cualquiera con una dirección de los dominios de abajo."
+    },
+    "open": {
+      "label": "Abierto",
+      "hint": "Cualquiera que llegue a este servidor."
+    }
+  },
+  "domains": "Dominios permitidos",
+  "domainsHint": "Separados por comas, p. ej. example.org.",
+  "save": "Guardar",
+  "saved": "Guardado",
+  "license": {
+    "title": "Licencia",
+    "pureCommunity": "Esta compilación es la edición Community pura: no incluye el código de las ediciones de pago.",
+    "status": {
+      "none": "Edición Community",
+      "invalid": "Clave de licencia no válida",
+      "active": "Licencia activa",
+      "grace": "Licencia caducada: periodo de gracia",
+      "expired": "Licencia caducada"
+    },
+    "reasons": {
+      "format": "No se puede leer la clave guardada.",
+      "payload": "No se puede leer la clave guardada.",
+      "signature": "La clave guardada fue modificada o no la emitió Ronde.",
+      "unknownKey": "La clave guardada está firmada con una clave que esta versión no conoce."
+    },
+    "editions": {
+      "team": "Team",
+      "enterprise": "Enterprise"
+    },
+    "summary": "{edition} para {customer}, hasta el {date}.",
+    "graceUntil": "Todo sigue funcionando hasta el {date}: renueva la licencia antes de esa fecha.",
+    "readOnly": "Las funciones de pago están en solo lectura: lo que contienen sigue visible, pero no se puede añadir nada nuevo. Las funciones Community no se ven afectadas.",
+    "seats": "{used} de {seats} plazas usadas",
+    "seatsUnlimited": "{used} personas, sin límite de plazas",
+    "overSeats": "Más personas usan Ronde de las que permite la licencia: no se bloquea nada, pero actualiza tu licencia.",
+    "fromEnv": "La clave viene de la variable RONDE_LICENSE: cámbiala ahí.",
+    "key": "Clave de licencia",
+    "keyHint": "Se verifica en este servidor, sin conexión: no se envía nada a ningún sitio.",
+    "save": "Guardar la clave",
+    "remove": "Quitar la licencia"
+  }
+}

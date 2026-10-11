@@ -1,0 +1,17 @@
+{
+  "options": "Projektionsoptionen",
+  "theme": "Projektionsdesign",
+  "themes": {
+    "auto": "Automatisch",
+    "light": "Hell",
+    "dark": "Dunkel"
+  },
+  "reducedMotion": "Weniger Bewegung",
+  "ambience": "Stimmung des Wartebildschirms",
+  "previewTheme": "Design ansehen",
+  "replayIntro": "Intro erneut abspielen",
+  "fullscreen": "Vollbild",
+  "drivenFromControl": "Dieser Tab wird von der Regie gesteuert.",
+  "yourTurn": "Du bist dran, <span>{name}</span>!",
+  "poweredBy": "Mit Ronde"
+}

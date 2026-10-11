@@ -1,0 +1,26 @@
+{
+  "subject": "{workspace} · deine Meetings, {period}",
+  "period": "{from} bis {to}",
+  "title": "Bericht zu deinen Meetings",
+  "byMeeting": "Nach Meeting",
+  "noSession": "In diesem Zeitraum fand keine Sitzung statt.",
+  "open": "Auswertungen in Ronde ansehen",
+  "settings": {
+    "title": "Bericht per E-Mail",
+    "intro": "Diese Zahlen, per E-Mail zu Beginn jeder Woche oder jedes Monats.",
+    "frequency": "Häufigkeit",
+    "off": "Nicht senden",
+    "weekly": "Jeden Montag (die Vorwoche)",
+    "monthly": "Am 1. des Monats (der Vormonat)",
+    "recipients": "Empfänger",
+    "admins": "Die Inhaber und Admins des Arbeitsbereichs",
+    "custom": "Diese Adressen",
+    "emails": "Adressen, eine pro Zeile",
+    "save": "Speichern",
+    "saved": "Gespeichert",
+    "test": "Mir jetzt einen Test senden",
+    "testSent": "Testbericht an {email} gesendet"
+  },
+  "openBranded": "Auswertungen ansehen",
+  "projectsToWatch": "Projekte im Blick behalten"
+}

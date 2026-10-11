@@ -1,0 +1,54 @@
+{
+  "when": "{date} às {time}",
+  "speak": {
+    "minutes": "{m} min",
+    "seconds": "{s} s"
+  },
+  "timing": "Meta {target} · {speak} de fala por pessoa",
+  "labels": {
+    "when": "Quando",
+    "timing": "Formato",
+    "duration": "Duração",
+    "participants": "Participantes"
+  },
+  "openRonde": "Abrir o Ronde",
+  "joinVideo": "🎥 Entrar na videochamada",
+  "followInApp": "🙋 Acompanhar a reunião no Ronde",
+  "test": {
+    "title": "✅ O Ronde está conectado",
+    "body": "As notificações de “{team}” chegarão aqui."
+  },
+  "soon": {
+    "title": "⏰ {team} começa em {minutes, plural, one {# minuto} other {# minutos}}",
+    "body": "Hora de se juntar à equipe e ter sua ficha à mão. Em “Minha tela”, você pode acompanhar as vezes, levantar a mão e fazer perguntas."
+  },
+  "started": {
+    "title": "▶️ {team} está começando",
+    "body": "A rodada vai começar: junte-se à equipe para compartilhar seus avanços e perguntas."
+  },
+  "minutes": {
+    "title": "📝 Ata de {team} · {date}",
+    "decisions": "Decisões",
+    "actions": "Ações de acompanhamento",
+    "action": "{text} ({owner})",
+    "read": "Ler a ata"
+  },
+  "checkIn": {
+    "title": "📝 Vamos preparar {team}",
+    "ready": "Fichas prontas: {ready}/{total}",
+    "none": "Nenhuma ficha esperada para esta sessão.",
+    "allReady": "Todas as fichas estão prontas, obrigado, equipe!",
+    "remaining": "{count, plural, one {# ficha ainda precisa ser preparada ou atualizada.} other {# fichas ainda precisam ser preparadas ou atualizadas.}}",
+    "prepare": "Atualize seus projetos e suas seções ({sections}) e revise suas ações de acompanhamento.",
+    "fillIn": "📝 Preencher minha ficha"
+  },
+  "overdue": {
+    "title": "⏳ {team}: {count, plural, one {# ação de acompanhamento aguarda} other {# ações de acompanhamento aguardam}}",
+    "item": "{text} ({owner}, {days, plural, one {# dia} other {# dias}})",
+    "update": "Atualizar minhas ações"
+  },
+  "birthday": {
+    "title": "🎂 Feliz aniversário, {names}!",
+    "body": "Toda a equipe {team} deseja a você um ótimo dia."
+  }
+}

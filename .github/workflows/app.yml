@@ -1,0 +1,54 @@
+name: App
+
+# The app on staging (staging-app.joinronde.com): every push to main builds its images and pushes them with
+# the "staging" tag (and staging-<commit>); Shepherd, on the swarm, sees the new digest and rolls the staging
+# services onto it within minutes (Shepherd, in the team's deployment). Production images come from a beta release
+# (.github/workflows/release.yml), run by hand.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: app-staging
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  images:
+    name: Staging image (${{ matrix.target }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - target: web
+            image: ghcr.io/joinronde/ronde
+          - target: migrate
+            image: ghcr.io/joinronde/ronde-migrate
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      # The staging server is amd64: one platform keeps the build short
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile
+          target: ${{ matrix.target }}
+          platforms: linux/amd64
+          push: true
+          build-args: |
+            VERSION=staging-${{ github.sha }}
+          tags: |
+            ${{ matrix.image }}:staging
+            ${{ matrix.image }}:staging-${{ github.sha }}
+          cache-from: type=gha,scope=staging-${{ matrix.target }}
+          cache-to: type=gha,mode=max,scope=staging-${{ matrix.target }}

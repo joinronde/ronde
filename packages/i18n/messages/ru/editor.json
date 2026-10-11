@@ -1,0 +1,21 @@
+{
+  "shiftKey": "Shift+",
+  "toolbar": "Форматирование · {label}",
+  "boldLetter": "Ж",
+  "italicLetter": "К",
+  "strikeLetter": "З",
+  "bold": "Жирный ({key})",
+  "italic": "Курсив ({key})",
+  "underlineLetter": "Ч",
+  "underline": "Подчёркнутый ({key})",
+  "strike": "Зачёркнутый ({key})",
+  "bulletList": "Маркированный список",
+  "numberedList": "Нумерованный список",
+  "indent": "Подпункт (Tab в списке)",
+  "outdent": "На уровень выше ({key})",
+  "link": "Ссылка ({key})",
+  "linkUrl": "Адрес ссылки",
+  "linkApply": "Применить",
+  "linkRemove": "Убрать ссылку",
+  "linkCancel": "Отмена"
+}

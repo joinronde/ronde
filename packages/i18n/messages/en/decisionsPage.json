@@ -1,0 +1,18 @@
+{
+  "title": "Decisions",
+  "intro": "What was decided, in every meeting, newest first. Notes starting with “Decision:” land here.",
+  "filter": "Meeting",
+  "all": "All",
+  "search": "Search the decisions",
+  "count": "{count, plural, one {# decision} other {# decisions}}",
+  "noMatch": "No decision mentions “{query}”.",
+  "empty": "No decision yet.",
+  "emptyHint": "During a session, write a note starting with “Decision:”: it is kept here once the session is archived.",
+  "csv": {
+    "date": "Date",
+    "meeting": "Meeting",
+    "decision": "Decision",
+    "context": "Context",
+    "fileName": "decisions"
+  }
+}

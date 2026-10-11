@@ -1,0 +1,30 @@
+{
+  "kinds": {
+    "wheel": "转盘",
+    "order": "发言顺序",
+    "teams": "分组",
+    "coin": "抛硬币"
+  },
+  "hints": {
+    "wheel": "从还没发言的人中选出下一位。",
+    "order": "打乱还没发言的人的顺序。",
+    "teams": "把在场的人分成小组。",
+    "coin": "用于没人愿意做的决定。"
+  },
+  "draw": "转动",
+  "drawAgain": "再抽一次",
+  "teamSize": "每组人数",
+  "applyWheel": "下一位发言：{name}",
+  "applyOrder": "使用此顺序",
+  "applied": "已应用到发言顺序",
+  "clear": "从屏幕上隐藏",
+  "picked": "{name}！",
+  "heads": "正面",
+  "tails": "反面",
+  "team": "第 {n} 组",
+  "orderTitle": "发言顺序",
+  "drawing": "抽取中……",
+  "everyone": "所有人看到同样的结果：由服务器抽取，然后每个屏幕播放。",
+  "tool": "随机工具",
+  "close": "关闭"
+}

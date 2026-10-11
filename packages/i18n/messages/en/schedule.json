@@ -1,0 +1,12 @@
+{
+  "none": "No date planned",
+  "weekdays": "Every weekday at {time}",
+  "daily": "{count, plural, one {Every day} other {Every # days}} at {time}",
+  "weekly": "{count, plural, one {Every {days}} =2 {Every other {days}} other {Every # weeks on {days}}} at {time}",
+  "monthlyNth": "{nth, select, 1 {The first} 2 {The second} 3 {The third} 4 {The fourth} other {The last}} {day} of {count, plural, one {every month} other {every # months}} at {time}",
+  "monthlyDay": "On day {day} of {count, plural, one {every month} other {every # months}} at {time}",
+  "dailyOn": "{count, plural, one {Every {days}} other {Every # days, on {days}}} at {time}",
+  "monthlyLast": "On the last day of {count, plural, one {every month} other {every # months}} at {time}",
+  "alternating": "Every other {days}, alternating {first} and {second}",
+  "withZone": "{schedule} ({timeZone})"
+}

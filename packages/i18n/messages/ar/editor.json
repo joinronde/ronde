@@ -1,0 +1,21 @@
+{
+  "shiftKey": "Shift+",
+  "toolbar": "التنسيق · {label}",
+  "boldLetter": "B",
+  "italicLetter": "I",
+  "strikeLetter": "S",
+  "bold": "غامق ({key})",
+  "italic": "مائل ({key})",
+  "underlineLetter": "U",
+  "underline": "تسطير ({key})",
+  "strike": "يتوسطه خط ({key})",
+  "bulletList": "قائمة نقطية",
+  "numberedList": "قائمة مرقّمة",
+  "indent": "بند فرعي (Tab داخل قائمة)",
+  "outdent": "مستوى أعلى ({key})",
+  "link": "رابط ({key})",
+  "linkUrl": "عنوان الرابط",
+  "linkApply": "تطبيق",
+  "linkRemove": "إزالة الرابط",
+  "linkCancel": "إلغاء"
+}

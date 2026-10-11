@@ -1,0 +1,127 @@
+// Paid editions' data. The tables exist in every edition (one schema); only the Enterprise code fills them.
+
+/// Who did what in a workspace: configuration and membership changes, kept for compliance (Enterprise)
+model AuditLog {
+  id          String    @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  /// User who acted; null: the system (a background job)
+  actorUserId String?
+  /// "Name <email>" at the time, kept when the account goes
+  actorLabel  String    @default("")
+  /// What was done: "meeting.archive", "member.role", "workspace.update"…
+  action      String
+  /// What it was done to: "meeting", "person", "invitation"…
+  targetType  String    @default("")
+  targetId    String?
+  meetingId   String?
+  /// Details of the change, secrets left out
+  data        Json      @default("{}")
+  createdAt   DateTime  @default(now())
+
+  @@index([workspaceId, createdAt])
+  @@index([workspaceId, action])
+}
+
+/// A role of the workspace's own (Enterprise): permissions added to the built-in role of the members holding it
+model CustomRole {
+  id          String            @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  name        String
+  description String            @default("")
+  /// Permissions granted on top of the built-in role; meeting permissions apply to every meeting of the workspace
+  permissions String[]          @default([])
+  members     WorkspaceMember[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@unique([id, workspaceId])
+  @@unique([workspaceId, name])
+}
+
+/// An email domain of the workspace (Enterprise): once verified by DNS, it can capture new accounts and require SSO
+model WorkspaceDomain {
+  id          String    @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  /// "acme.com", lower case
+  domain      String
+  /// Expected in a TXT record "ronde-verification=<token>" of the domain
+  token       String
+  verifiedAt  DateTime?
+  /// New accounts with an address of this domain join the workspace as members
+  capture     Boolean   @default(false)
+  /// Addresses of this domain must sign in with single sign-on (no password, no email link)
+  enforceSso  Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+
+  @@unique([workspaceId, domain])
+  @@index([domain])
+}
+
+/// Identity provider of a workspace (Enterprise), OIDC or SAML, for the addresses of its verified domains.
+/// Table of Better Auth's SSO plugin; the workspace link and the name are Ronde's own.
+model SsoProvider {
+  id             String     @id
+  /// "ws-<slug>-<n>": used in the sign-in and callback addresses
+  providerId     String     @unique
+  issuer         String
+  /// Domains whose addresses sign in here, comma separated
+  domain         String
+  /// Settings serialized by the plugin; an OIDC client secret in them is encrypted with SECRET_KEY (sso-secrets.ts)
+  oidcConfig     String?
+  samlConfig     String?
+  /// Who registered it
+  userId         String?
+  user           User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+  /// Unused by Ronde (Better Auth organizations)
+  organizationId String?
+  workspaceId    String?
+  workspace      Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  /// Shown on the sign-in button: "Acme Okta"
+  name           String     @default("")
+  createdAt      DateTime   @default(now())
+
+  @@index([workspaceId])
+}
+
+/// Company directory of a workspace (Enterprise): LDAP or Active Directory, for the addresses of its verified domains
+model LdapDirectory {
+  id             String    @id @default(uuid(7))
+  workspaceId    String    @unique
+  workspace      Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  /// ldaps://ldap.acme.com:636 or ldap://… with StartTLS
+  url            String
+  startTls       Boolean   @default(false)
+  /// Service account that looks people up
+  bindDn         String
+  /// Its password, encrypted with SECRET_KEY
+  bindPassword   String    @default("")
+  baseDn         String
+  /// Search filter; {{email}} is replaced by the address typed (escaped)
+  userFilter     String    @default("(&(objectClass=person)(mail={{email}}))")
+  emailAttribute String    @default("mail")
+  nameAttribute  String    @default("cn")
+  enabled        Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@unique([id, workspaceId])
+}
+
+/// Token of a workspace's SCIM provisioning (Enterprise): the company directory creates and removes people
+model ScimToken {
+  id          String    @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  name        String
+  /// SHA-256 of the token; the token itself is shown once
+  tokenHash   String    @unique
+  /// First characters, to recognise it in the list
+  prefix      String
+  lastUsedAt  DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([workspaceId])
+}

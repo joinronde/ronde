@@ -1,0 +1,220 @@
+{
+  "title": "Audit log",
+  "intro": "Who changed what in this workspace: settings, people, roles, meetings. Live interactions are not kept.",
+  "window": "It shows the last {days} days.",
+  "filters": {
+    "action": "Action",
+    "actionPlaceholder": "e.g. people, roles, meeting",
+    "actor": "Person",
+    "actorPlaceholder": "Name or email",
+    "from": "From",
+    "to": "To",
+    "apply": "Filter"
+  },
+  "export": "Export as CSV",
+  "columns": {
+    "when": "When",
+    "who": "Who",
+    "what": "What",
+    "details": "Details"
+  },
+  "empty": "Nothing recorded yet.",
+  "noMatch": "No entry matches these filters.",
+  "more": "Older entries",
+  "stream": {
+    "title": "Stream to a SIEM",
+    "hint": "Each entry is also sent, signed, to a webhook connector of the workspace, for your SIEM or log platform. Retried for a few minutes when it does not answer.",
+    "connector": "Webhook connector",
+    "none": "Not streamed",
+    "save": "Save",
+    "saved": "Saved",
+    "noWebhook": "Add a webhook connector in the general settings first."
+  },
+  "actions": {
+    "meeting": {
+      "create": "Session prepared",
+      "reset": "Session reset",
+      "archive": "Session archived",
+      "publish": "Digest published",
+      "remove": "Meeting deleted",
+      "new": "Meeting created",
+      "projects": "Projects followed changed",
+      "sample": "Sample meeting opened",
+      "sampleDeleted": "Sample meeting deleted"
+    },
+    "settings": {
+      "save": "Meeting settings changed"
+    },
+    "agenda": {
+      "save": "Agenda changed"
+    },
+    "participant": {
+      "add": "Participant added",
+      "update": "Participant changed",
+      "remove": "Participant removed"
+    },
+    "modules": {
+      "set": "Module turned on or off"
+    },
+    "template": {
+      "save": "Saved as a template"
+    },
+    "schedule": {
+      "save": "Schedule changed",
+      "skip": "Session skipped",
+      "move": "Session moved",
+      "restore": "Session restored"
+    },
+    "notifications": {
+      "save": "Notifications changed"
+    },
+    "history": {
+      "summary": "Minutes summary edited"
+    },
+    "people": {
+      "invite": "Person invited",
+      "add": "Person added",
+      "update": "Profile changed",
+      "remove": "Person removed",
+      "invitationRevoked": "Invitation revoked",
+      "absence": "Absence added"
+    },
+    "members": {
+      "role": "Role changed",
+      "leave": "Left the workspace",
+      "join": "Joined the workspace",
+      "customRole": "Extra role changed",
+      "captured": "Joined through their email domain",
+      "sso": "Joined through their company sign-in"
+    },
+    "workspace": {
+      "update": "Workspace settings changed",
+      "categoryAdd": "Job category added",
+      "categoryRename": "Job category renamed",
+      "categoryDelete": "Job category deleted",
+      "auditStream": "Audit stream changed",
+      "logo": "Logo changed",
+      "logoRemoved": "Logo removed"
+    },
+    "connectors": {
+      "save": "Connector saved",
+      "delete": "Connector deleted"
+    },
+    "slack": {
+      "connect": "Slack connected",
+      "disconnect": "Slack disconnected"
+    },
+    "templates": {
+      "delete": "Template deleted"
+    },
+    "roles": {
+      "save": "Role saved",
+      "delete": "Role deleted"
+    },
+    "domains": {
+      "add": "Domain added",
+      "verify": "Domain verified",
+      "update": "Domain settings changed",
+      "remove": "Domain removed"
+    },
+    "sso": {
+      "add": "Identity provider added",
+      "remove": "Identity provider removed"
+    },
+    "ldap": {
+      "save": "Company directory saved",
+      "remove": "Company directory removed"
+    },
+    "scim": {
+      "create": "Provisioned",
+      "update": "Updated by the directory",
+      "deactivate": "Deactivated by the directory",
+      "delete": "Removed by the directory",
+      "tokenCreate": "SCIM token created",
+      "tokenRevoke": "SCIM token revoked"
+    },
+    "reports": {
+      "save": "Report by email changed"
+    },
+    "ai": {
+      "summary": "Summary drafted by the AI assistant",
+      "actions": "Actions suggested by the AI assistant",
+      "settings": "AI assistant settings changed"
+    },
+    "trackers": {
+      "add": "Issue tracker added",
+      "update": "Issue tracker changed",
+      "delete": "Issue tracker removed",
+      "ticket": "Ticket created from an action"
+    },
+    "video": {
+      "add": "Video account added",
+      "update": "Video account changed",
+      "delete": "Video account removed",
+      "room": "Video room created for a meeting"
+    },
+    "calendar": {
+      "add": "Calendar account added",
+      "update": "Calendar account changed",
+      "delete": "Calendar account removed",
+      "meeting": "Calendar of a meeting changed"
+    },
+    "transcription": {
+      "allow": "Transcription allowed or not for a meeting",
+      "settings": "Transcription service changed"
+    },
+    "recording": {
+      "start": "Recording started for the transcript",
+      "stop": "Recording stopped"
+    },
+    "session": {
+      "now": "Session started on the spot"
+    },
+    "guests": {
+      "create": "Guest link created",
+      "revoke": "Guest link revoked"
+    },
+    "projects": {
+      "create": "Project created",
+      "unsync": "Project no longer synced with its tool",
+      "import": "Projects imported from a tool",
+      "update": "Project changed",
+      "archive": "Project archived",
+      "restore": "Project restored",
+      "delete": "Project deleted",
+      "theme": "Portfolio theme changed",
+      "themeDelete": "Portfolio theme deleted"
+    },
+    "wikis": {
+      "add": "Wiki added",
+      "update": "Wiki changed",
+      "delete": "Wiki removed",
+      "meeting": "Wiki of a meeting changed"
+    },
+    "teams": {
+      "connect": "Microsoft Teams linked",
+      "disconnect": "Microsoft Teams unlinked"
+    }
+  },
+  "fields": {
+    "name": "Name",
+    "slug": "Link",
+    "locale": "Language",
+    "timezone": "Time zone",
+    "meetingCreation": "Who can create meetings",
+    "bufferMin": "Free time around meetings (min)",
+    "email": "Email",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "role": "Role",
+    "birthday": "Birthday",
+    "phone": "Phone",
+    "label": "Label",
+    "days": "Days",
+    "domain": "Domain",
+    "permissions": "Permissions",
+    "enabled": "On"
+  },
+  "yes": "yes",
+  "no": "no"
+}

@@ -1,0 +1,27 @@
+{
+  "fallbackLink": "如果按钮无法打开：",
+  "verify": {
+    "subject": "确认你的邮箱地址",
+    "intro": "欢迎使用 Ronde！请确认你的邮箱地址，完成账户创建。",
+    "action": "确认我的邮箱",
+    "footer": "如果你没有创建账户，可以忽略这封邮件。"
+  },
+  "magicLink": {
+    "subject": "你的登录链接",
+    "intro": "这是你登录 Ronde 的链接。仅可使用一次，10 分钟内有效。",
+    "action": "登录",
+    "footer": "如果你没有申请登录，可以忽略这封邮件。"
+  },
+  "resetPassword": {
+    "subject": "重置你的密码",
+    "intro": "有人申请重置你的 Ronde 账户密码。链接 1 小时内有效。",
+    "action": "设置新密码",
+    "footer": "如果不是你申请的，可以忽略这封邮件：你的密码不会改变。"
+  },
+  "invitation": {
+    "subject": "{inviter} 邀请你加入 Ronde 上的 {workspace}",
+    "intro": "{inviter} 邀请你加入 Ronde 上的工作空间 {workspace}，一起准备并主持团队会议。",
+    "action": "加入 {workspace}",
+    "footer": "此邀请 7 天后过期。如果你并不期待这封邀请，可以忽略这封邮件。"
+  }
+}

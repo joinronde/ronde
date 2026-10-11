@@ -1,0 +1,26 @@
+{
+  "title": "Papéis",
+  "intro": "Papéis próprios adicionam permissões a organizadores, membros e convidados. As permissões de reunião valem para todas as reuniões do espaço de trabalho.",
+  "new": "Novo papel",
+  "newTitle": "Novo papel",
+  "editTitle": "Editar o papel",
+  "name": "Nome",
+  "description": "Descrição",
+  "groups": {
+    "workspace": "Espaço de trabalho",
+    "meetings": "Todas as reuniões"
+  },
+  "groupHints": {
+    "workspace": "O que podem fazer em todo o espaço de trabalho.",
+    "meetings": "Concedido em todas as reuniões, mesmo as de que não participam."
+  },
+  "save": "Salvar o papel",
+  "cancel": "Cancelar",
+  "edit": "Editar",
+  "delete": "Excluir",
+  "deleteConfirm": "Excluir o papel “{name}”? {count, plural, =0 {Ninguém o possui.} one {# pessoa volta a ter só o próprio papel.} other {# pessoas voltam a ter só o próprio papel.}}",
+  "members": "{count, plural, =0 {ninguém} one {# pessoa} other {# pessoas}}",
+  "empty": "Ainda não há papéis próprios.",
+  "examples": "Por exemplo: “Auditor” (histórico e estatísticas de todas as reuniões), “Facilitador” (conduz qualquer reunião), “Gestor de pessoas” (diretório e convites).",
+  "readOnly": "A licença expirou: os papéis continuam visíveis, mas não concedem mais nenhuma permissão até a renovação."
+}

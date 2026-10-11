@@ -1,0 +1,17 @@
+{
+  "options": "प्रोजेक्शन विकल्प",
+  "theme": "प्रोजेक्शन थीम",
+  "themes": {
+    "auto": "स्वचालित",
+    "light": "हल्की",
+    "dark": "गहरी"
+  },
+  "reducedMotion": "कम एनिमेशन",
+  "ambience": "प्रतीक्षा स्क्रीन का माहौल",
+  "previewTheme": "थीम का पूर्वावलोकन",
+  "replayIntro": "परिचय फिर से चलाएँ",
+  "fullscreen": "पूर्ण स्क्रीन",
+  "drivenFromControl": "यह टैब कंट्रोल रूम से चलता है।",
+  "yourTurn": "आपकी बारी, <span>{name}</span>!",
+  "poweredBy": "Ronde द्वारा संचालित"
+}

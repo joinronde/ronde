@@ -1,0 +1,30 @@
+{
+  "kinds": {
+    "wheel": "Ruota",
+    "order": "Ordine di parola",
+    "teams": "Squadre",
+    "coin": "Testa o croce"
+  },
+  "hints": {
+    "wheel": "Sceglie chi parla dopo tra chi non ha ancora parlato.",
+    "order": "Mescola l'ordine di chi non ha ancora parlato.",
+    "teams": "Divide le persone presenti in squadre.",
+    "coin": "Per una decisione che nessuno vuole prendere."
+  },
+  "draw": "Gira",
+  "drawAgain": "Estrai di nuovo",
+  "teamSize": "Persone per squadra",
+  "applyWheel": "{name} parla dopo",
+  "applyOrder": "Usa questo ordine",
+  "applied": "Applicato all'ordine di parola",
+  "clear": "Nascondi dagli schermi",
+  "picked": "{name}!",
+  "heads": "Testa",
+  "tails": "Croce",
+  "team": "Squadra {n}",
+  "orderTitle": "Ordine di parola",
+  "drawing": "Estrazione…",
+  "everyone": "Tutti vedono la stessa estrazione: la sceglie il server, poi ogni schermo la riproduce.",
+  "tool": "Strumento casuale",
+  "close": "Chiudi"
+}

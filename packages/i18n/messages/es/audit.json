@@ -1,0 +1,220 @@
+{
+  "title": "Registro de auditoría",
+  "intro": "Quién cambió qué en este espacio de trabajo: ajustes, personas, roles, reuniones. Las interacciones en directo no se guardan.",
+  "window": "Muestra los últimos {days} días.",
+  "filters": {
+    "action": "Acción",
+    "actionPlaceholder": "p. ej. people, roles, meeting",
+    "actor": "Persona",
+    "actorPlaceholder": "Nombre o correo",
+    "from": "Desde",
+    "to": "Hasta",
+    "apply": "Filtrar"
+  },
+  "export": "Exportar como CSV",
+  "columns": {
+    "when": "Cuándo",
+    "who": "Quién",
+    "what": "Qué",
+    "details": "Detalles"
+  },
+  "empty": "Todavía no hay nada registrado.",
+  "noMatch": "Ninguna entrada coincide con estos filtros.",
+  "more": "Entradas anteriores",
+  "stream": {
+    "title": "Enviar a un SIEM",
+    "hint": "Cada entrada también se envía, firmada, a un conector webhook del espacio, para tu SIEM o plataforma de logs. Se reintenta durante unos minutos si no responde.",
+    "connector": "Conector webhook",
+    "none": "Sin envío",
+    "save": "Guardar",
+    "saved": "Guardado",
+    "noWebhook": "Primero añade un conector webhook en los ajustes generales."
+  },
+  "actions": {
+    "meeting": {
+      "create": "Sesión preparada",
+      "reset": "Sesión reiniciada",
+      "archive": "Sesión archivada",
+      "publish": "Resumen publicado",
+      "remove": "Reunión eliminada",
+      "new": "Reunión creada",
+      "projects": "Proyectos seguidos cambiados",
+      "sample": "Reunión de ejemplo abierta",
+      "sampleDeleted": "Reunión de ejemplo eliminada"
+    },
+    "settings": {
+      "save": "Ajustes de la reunión modificados"
+    },
+    "agenda": {
+      "save": "Orden del día modificado"
+    },
+    "participant": {
+      "add": "Participante añadido",
+      "update": "Participante modificado",
+      "remove": "Participante quitado"
+    },
+    "modules": {
+      "set": "Módulo activado o desactivado"
+    },
+    "template": {
+      "save": "Guardada como plantilla"
+    },
+    "schedule": {
+      "save": "Calendario modificado",
+      "skip": "Sesión omitida",
+      "move": "Sesión movida",
+      "restore": "Sesión restaurada"
+    },
+    "notifications": {
+      "save": "Notificaciones modificadas"
+    },
+    "history": {
+      "summary": "Resumen de las actas editado"
+    },
+    "people": {
+      "invite": "Persona invitada",
+      "add": "Persona añadida",
+      "update": "Perfil modificado",
+      "remove": "Persona quitada",
+      "invitationRevoked": "Invitación revocada",
+      "absence": "Ausencia añadida"
+    },
+    "members": {
+      "role": "Rol cambiado",
+      "leave": "Salió del espacio de trabajo",
+      "join": "Se unió al espacio de trabajo",
+      "customRole": "Rol adicional cambiado",
+      "captured": "Se unió por su dominio de correo",
+      "sso": "Se unió por el inicio de sesión de su empresa"
+    },
+    "workspace": {
+      "update": "Ajustes del espacio modificados",
+      "categoryAdd": "Categoría de puesto añadida",
+      "categoryRename": "Categoría de puesto renombrada",
+      "categoryDelete": "Categoría de puesto eliminada",
+      "auditStream": "Envío de auditoría modificado",
+      "logo": "Logotipo cambiado",
+      "logoRemoved": "Logotipo quitado"
+    },
+    "connectors": {
+      "save": "Conector guardado",
+      "delete": "Conector eliminado"
+    },
+    "slack": {
+      "connect": "Slack conectado",
+      "disconnect": "Slack desconectado"
+    },
+    "templates": {
+      "delete": "Plantilla eliminada"
+    },
+    "roles": {
+      "save": "Rol guardado",
+      "delete": "Rol eliminado"
+    },
+    "domains": {
+      "add": "Dominio añadido",
+      "verify": "Dominio verificado",
+      "update": "Ajustes del dominio modificados",
+      "remove": "Dominio quitado"
+    },
+    "sso": {
+      "add": "Proveedor de identidad añadido",
+      "remove": "Proveedor de identidad quitado"
+    },
+    "ldap": {
+      "save": "Directorio de la empresa guardado",
+      "remove": "Directorio de la empresa quitado"
+    },
+    "scim": {
+      "create": "Aprovisionado",
+      "update": "Actualizado por el directorio",
+      "deactivate": "Desactivado por el directorio",
+      "delete": "Eliminado por el directorio",
+      "tokenCreate": "Token SCIM creado",
+      "tokenRevoke": "Token SCIM revocado"
+    },
+    "reports": {
+      "save": "Informe por correo modificado"
+    },
+    "ai": {
+      "summary": "Resumen redactado por el asistente de IA",
+      "actions": "Acciones sugeridas por el asistente de IA",
+      "settings": "Ajustes del asistente de IA modificados"
+    },
+    "trackers": {
+      "add": "Gestor de incidencias añadido",
+      "update": "Gestor de incidencias modificado",
+      "delete": "Gestor de incidencias quitado",
+      "ticket": "Ticket creado a partir de una acción"
+    },
+    "video": {
+      "add": "Cuenta de vídeo añadida",
+      "update": "Cuenta de vídeo modificada",
+      "delete": "Cuenta de vídeo quitada",
+      "room": "Sala de vídeo creada para una reunión"
+    },
+    "calendar": {
+      "add": "Cuenta de calendario añadida",
+      "update": "Cuenta de calendario modificada",
+      "delete": "Cuenta de calendario quitada",
+      "meeting": "Calendario de una reunión modificado"
+    },
+    "transcription": {
+      "allow": "Transcripción permitida o no para una reunión",
+      "settings": "Servicio de transcripción modificado"
+    },
+    "recording": {
+      "start": "Grabación iniciada para la transcripción",
+      "stop": "Grabación detenida"
+    },
+    "session": {
+      "now": "Sesión iniciada sobre la marcha"
+    },
+    "guests": {
+      "create": "Enlace de invitado creado",
+      "revoke": "Enlace de invitado revocado"
+    },
+    "projects": {
+      "create": "Proyecto creado",
+      "unsync": "Proyecto ya no sincronizado con su herramienta",
+      "import": "Proyectos importados desde una herramienta",
+      "update": "Proyecto modificado",
+      "archive": "Proyecto archivado",
+      "restore": "Proyecto restaurado",
+      "delete": "Proyecto borrado",
+      "theme": "Tema de la cartera modificado",
+      "themeDelete": "Tema de la cartera borrado"
+    },
+    "wikis": {
+      "add": "Wiki añadido",
+      "update": "Wiki modificado",
+      "delete": "Wiki quitado",
+      "meeting": "Wiki de una reunión cambiado"
+    },
+    "teams": {
+      "connect": "Microsoft Teams vinculado",
+      "disconnect": "Microsoft Teams desvinculado"
+    }
+  },
+  "fields": {
+    "name": "Nombre",
+    "slug": "Enlace",
+    "locale": "Idioma",
+    "timezone": "Zona horaria",
+    "meetingCreation": "Quién puede crear reuniones",
+    "bufferMin": "Tiempo libre alrededor de las reuniones (min)",
+    "email": "Correo",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "role": "Rol",
+    "birthday": "Cumpleaños",
+    "phone": "Teléfono",
+    "label": "Etiqueta",
+    "days": "Días",
+    "domain": "Dominio",
+    "permissions": "Permisos",
+    "enabled": "Activado"
+  },
+  "yes": "sí",
+  "no": "no"
+}

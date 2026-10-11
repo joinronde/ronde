@@ -1,0 +1,44 @@
+{
+  "quoted": "« {label} »",
+  "speak": {
+    "minutes": "{m} min",
+    "seconds": "{s} s"
+  },
+  "timing": "Objectif : {target} · {speak} de parole par personne",
+  "preparation": "Mettez à jour vos projets et les rubriques utiles : {sections}. Quelques points courts suffisent ; laissez les rubriques sans sujet vides.",
+  "when": "{date} à {time}",
+  "email": {
+    "footer": "Pour ne plus recevoir ce rappel, demandez à la personne qui anime ({host}) de le désactiver dans les réglages de la réunion.",
+    "greeting": "Bonjour {name},",
+    "intro": "La prochaine réunion « {team} » approche. Pensez à remplir ou à actualiser votre fiche avant la réunion pour partager votre avancement et vos besoins d'aide.",
+    "subject": "Ronde · {team} : votre fiche pour {date} à {time}",
+    "meeting": "Réunion : {when}",
+    "prepare": "Préparer votre fiche",
+    "fillIn": "Remplir ma fiche",
+    "openApp": "Ouvrez Ronde puis « Mon écran » pour remplir votre fiche.",
+    "planned": "Ce que vous aviez prévu à la dernière réunion",
+    "plannedHint": "Faites le point sur ces éléments dans votre fiche :",
+    "actions": "Vos actions de suivi",
+    "actionsHint": "Pensez à mettre à jour leur avancement dans Ronde :",
+    "joinVideo": "Rejoindre la visio à l'heure de la réunion",
+    "thanks": "Merci, et à bientôt autour de la table !",
+    "preheader": "Votre réunion d'équipe : {when}. Préparez votre fiche et retrouvez vos actions de suivi.",
+    "tagline": "Le point d'équipe",
+    "title": "Votre fiche pour la prochaine réunion",
+    "appointment": "Notre rendez-vous",
+    "fallbackLink": "Si le bouton ne s'ouvre pas :",
+    "sheets": "Fiches projet à rédiger (météo et message du jour)",
+    "replyTitle": "Pas le temps ? Répondez à cet e-mail",
+    "replyHint": "Écrivez le nom de chaque rubrique sur sa propre ligne, puis vos éléments, un par ligne : votre réponse va directement dans votre fiche.",
+    "replyExample": "Par exemple :"
+  },
+  "replied": {
+    "subject": "Ronde · {team} : votre fiche est à jour",
+    "title": "Votre fiche est à jour",
+    "intro": "Merci {name}, voici ce que votre réponse a ajouté à votre fiche pour {team} :",
+    "nothing": "Nous n'avons rien trouvé à ajouter dans votre réponse. Écrivez le nom de chaque rubrique sur sa propre ligne, puis vos éléments, un par ligne, ou remplissez votre fiche dans Ronde.",
+    "already": "Tout ce que contenait votre réponse figurait déjà dans votre fiche.",
+    "open": "Voir ma fiche",
+    "footer": "Vous recevez cet e-mail parce que vous avez répondu à une relance de Ronde."
+  }
+}

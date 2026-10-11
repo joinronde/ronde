@@ -1,0 +1,27 @@
+{
+  "fallbackLink": "Si el botón no se abre:",
+  "verify": {
+    "subject": "Confirma tu dirección de correo",
+    "intro": "¡Bienvenido a Ronde! Confirma tu dirección de correo para terminar de crear tu cuenta.",
+    "action": "Confirmar mi dirección",
+    "footer": "Si no creaste una cuenta, puedes ignorar este correo."
+  },
+  "magicLink": {
+    "subject": "Tu enlace de inicio de sesión",
+    "intro": "Aquí tienes tu enlace para iniciar sesión en Ronde. Funciona una sola vez y caduca en 10 minutos.",
+    "action": "Iniciar sesión",
+    "footer": "Si no pediste iniciar sesión, puedes ignorar este correo."
+  },
+  "resetPassword": {
+    "subject": "Restablece tu contraseña",
+    "intro": "Alguien pidió restablecer la contraseña de tu cuenta de Ronde. El enlace caduca en 1 hora.",
+    "action": "Elegir una nueva contraseña",
+    "footer": "Si no lo pediste, puedes ignorar este correo: tu contraseña no cambia."
+  },
+  "invitation": {
+    "subject": "{inviter} te invita a {workspace} en Ronde",
+    "intro": "{inviter} te invita a unirte al espacio de trabajo {workspace} en Ronde, para preparar y dirigir juntos las reuniones del equipo.",
+    "action": "Unirme a {workspace}",
+    "footer": "Esta invitación caduca en 7 días. Si no la esperabas, puedes ignorar este correo."
+  }
+}

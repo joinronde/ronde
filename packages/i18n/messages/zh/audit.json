@@ -1,0 +1,220 @@
+{
+  "title": "审计日志",
+  "intro": "谁在此工作空间中修改了什么：设置、人员、角色、会议。实时互动不会被记录。",
+  "window": "显示最近 {days} 天的记录。",
+  "filters": {
+    "action": "操作",
+    "actionPlaceholder": "例如 people、roles、meeting",
+    "actor": "人员",
+    "actorPlaceholder": "姓名或邮箱",
+    "from": "从",
+    "to": "到",
+    "apply": "筛选"
+  },
+  "export": "导出为 CSV",
+  "columns": {
+    "when": "时间",
+    "who": "人员",
+    "what": "操作",
+    "details": "详情"
+  },
+  "empty": "暂无记录。",
+  "noMatch": "没有符合这些筛选条件的记录。",
+  "more": "更早的记录",
+  "stream": {
+    "title": "推送到 SIEM",
+    "hint": "每条记录还会签名后发送到工作空间的一个 Webhook 连接器，供你的 SIEM 或日志平台使用。若无响应，会在几分钟内重试。",
+    "connector": "Webhook 连接器",
+    "none": "不推送",
+    "save": "保存",
+    "saved": "已保存",
+    "noWebhook": "请先在常规设置中添加一个 Webhook 连接器。"
+  },
+  "actions": {
+    "meeting": {
+      "create": "会议场次已准备",
+      "reset": "会议场次已重置",
+      "archive": "会议场次已归档",
+      "publish": "摘要已发布",
+      "remove": "会议已删除",
+      "new": "会议已创建",
+      "projects": "跟进的项目已更改",
+      "sample": "已打开示例会议",
+      "sampleDeleted": "已删除示例会议"
+    },
+    "settings": {
+      "save": "会议设置已修改"
+    },
+    "agenda": {
+      "save": "议程已修改"
+    },
+    "participant": {
+      "add": "已添加参与者",
+      "update": "参与者已修改",
+      "remove": "已移除参与者"
+    },
+    "modules": {
+      "set": "模块已开启或关闭"
+    },
+    "template": {
+      "save": "已保存为模板"
+    },
+    "schedule": {
+      "save": "日程已修改",
+      "skip": "已跳过一次会议",
+      "move": "会议已改期",
+      "restore": "会议已恢复"
+    },
+    "notifications": {
+      "save": "通知已修改"
+    },
+    "history": {
+      "summary": "纪要摘要已编辑"
+    },
+    "people": {
+      "invite": "已邀请人员",
+      "add": "已添加人员",
+      "update": "个人资料已修改",
+      "remove": "已移除人员",
+      "invitationRevoked": "邀请已撤销",
+      "absence": "已添加离开时段"
+    },
+    "members": {
+      "role": "角色已修改",
+      "leave": "已离开工作空间",
+      "join": "已加入工作空间",
+      "customRole": "附加角色已修改",
+      "captured": "通过邮箱域名加入",
+      "sso": "通过公司登录加入"
+    },
+    "workspace": {
+      "update": "工作空间设置已修改",
+      "categoryAdd": "已添加职位类别",
+      "categoryRename": "职位类别已重命名",
+      "categoryDelete": "职位类别已删除",
+      "auditStream": "审计推送已修改",
+      "logo": "Logo 已更换",
+      "logoRemoved": "Logo 已移除"
+    },
+    "connectors": {
+      "save": "连接器已保存",
+      "delete": "连接器已删除"
+    },
+    "slack": {
+      "connect": "已连接 Slack",
+      "disconnect": "已断开 Slack"
+    },
+    "templates": {
+      "delete": "模板已删除"
+    },
+    "roles": {
+      "save": "角色已保存",
+      "delete": "角色已删除"
+    },
+    "domains": {
+      "add": "已添加域名",
+      "verify": "域名已验证",
+      "update": "域名设置已修改",
+      "remove": "已移除域名"
+    },
+    "sso": {
+      "add": "已添加身份提供方",
+      "remove": "已移除身份提供方"
+    },
+    "ldap": {
+      "save": "公司目录已保存",
+      "remove": "公司目录已移除"
+    },
+    "scim": {
+      "create": "已自动开通",
+      "update": "已由目录更新",
+      "deactivate": "已由目录停用",
+      "delete": "已由目录移除",
+      "tokenCreate": "SCIM 令牌已创建",
+      "tokenRevoke": "SCIM 令牌已撤销"
+    },
+    "reports": {
+      "save": "邮件报告已修改"
+    },
+    "ai": {
+      "summary": "AI 助手起草了总结",
+      "actions": "AI 助手建议了行动项",
+      "settings": "AI 助手设置已修改"
+    },
+    "trackers": {
+      "add": "已添加问题跟踪工具",
+      "update": "问题跟踪工具已修改",
+      "delete": "已移除问题跟踪工具",
+      "ticket": "已根据行动项创建工单"
+    },
+    "video": {
+      "add": "已添加视频账户",
+      "update": "视频账户已修改",
+      "delete": "已移除视频账户",
+      "room": "已为会议创建视频会议室"
+    },
+    "calendar": {
+      "add": "已添加日历账户",
+      "update": "日历账户已修改",
+      "delete": "已移除日历账户",
+      "meeting": "会议的日历已修改"
+    },
+    "transcription": {
+      "allow": "已允许或禁止会议转写",
+      "settings": "转写服务已修改"
+    },
+    "recording": {
+      "start": "已开始录音以便转写",
+      "stop": "已停止录音"
+    },
+    "session": {
+      "now": "已临时开始会议"
+    },
+    "guests": {
+      "create": "已创建访客链接",
+      "revoke": "已撤销访客链接"
+    },
+    "projects": {
+      "create": "项目已创建",
+      "unsync": "项目不再与其工具同步",
+      "import": "已从工具导入项目",
+      "update": "项目已修改",
+      "archive": "项目已归档",
+      "restore": "项目已恢复",
+      "delete": "项目已删除",
+      "theme": "项目组合主题已修改",
+      "themeDelete": "项目组合主题已删除"
+    },
+    "wikis": {
+      "add": "已添加 Wiki",
+      "update": "已修改 Wiki",
+      "delete": "已移除 Wiki",
+      "meeting": "已更改会议的 Wiki"
+    },
+    "teams": {
+      "connect": "已关联 Microsoft Teams",
+      "disconnect": "已取消关联 Microsoft Teams"
+    }
+  },
+  "fields": {
+    "name": "名称",
+    "slug": "链接",
+    "locale": "语言",
+    "timezone": "时区",
+    "meetingCreation": "谁可以创建会议",
+    "bufferMin": "会议前后的空闲时间（分钟）",
+    "email": "邮箱",
+    "firstName": "名",
+    "lastName": "姓",
+    "role": "角色",
+    "birthday": "生日",
+    "phone": "电话",
+    "label": "标签",
+    "days": "天数",
+    "domain": "域名",
+    "permissions": "权限",
+    "enabled": "启用"
+  },
+  "yes": "是",
+  "no": "否"
+}

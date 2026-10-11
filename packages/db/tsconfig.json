@@ -1,0 +1,5 @@
+{
+  "extends": "@ronde/config/tsconfig.lib.json",
+  "compilerOptions": { "lib": ["esnext"], "types": ["node"] },
+  "include": ["src/**/*.ts", "tests/**/*.ts", "prisma.config.ts"]
+}

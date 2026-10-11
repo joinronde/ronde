@@ -1,0 +1,12 @@
+{
+  "start": "Compartir mi pantalla en la pantalla de la sala",
+  "startShort": "Compartir mi pantalla",
+  "stop": "Dejar de compartir mi pantalla",
+  "stopShort": "Dejar de compartir",
+  "screens": "{count, plural, =0 {Todavía no hay ninguna pantalla de sala conectada} one {# pantalla de sala} other {# pantallas de sala}}",
+  "denied": "El navegador no compartió la pantalla.",
+  "sharedBy": "Compartida por {name}",
+  "shared": "Pantalla compartida",
+  "sound": "Activar el sonido",
+  "previewBadge": "En la pantalla de la sala · {count, plural, =0 {esperando las pantallas} one {# pantalla} other {# pantallas}}"
+}

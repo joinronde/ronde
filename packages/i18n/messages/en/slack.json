@@ -1,0 +1,53 @@
+{
+  "title": "My check-in",
+  "save": "Save",
+  "cancel": "Cancel",
+  "close": "Close",
+  "fillIn": "Fill in my check-in",
+  "openRonde": "Open in Ronde",
+  "hint": {
+    "list": "One item per line.",
+    "checklist": "One item per line; start it with [x] once done.",
+    "text": "Free text, on as many lines as needed."
+  },
+  "notFound": "Ronde could not find this check-in for you. The email of your Slack account must be the one of your Ronde profile, and you must take part in the meeting.",
+  "tooLong": "This check-in is too long to edit in Slack. Please open it in Ronde.",
+  "tooMany": "At most {max} items.",
+  "itemTooLong": "One item is longer than {max} characters.",
+  "changed": "Your check-in changed in Ronde in the meantime. Close this form and open it again to get the latest version.",
+  "saved": "Your check-in for “{team}” is saved. Thanks!",
+  "ready": "Check-in ready",
+  "toFill": "Check-in to fill in",
+  "noSession": "No session planned",
+  "noMeetings": "You take part in no meeting of this workspace.",
+  "actions": "Your open follow-up actions",
+  "summary": "Your meetings in Ronde",
+  "unknown": "Ronde does not know you yet: the email of your Slack account must be the one of your profile in a Ronde workspace that added the app.",
+  "unavailable": "Ronde could not answer right now. Please try again in a moment.",
+  "settings": {
+    "intro": "Add Ronde to your Slack workspace: everyone fills in their check-in without leaving Slack.",
+    "locked": "The Slack app comes with Ronde {edition}.",
+    "uses": {
+      "reminders": "Check-in reminders by direct message, with a button that opens the check-in as a Slack form.",
+      "channel": "The channel you pick becomes a connector: in each meeting’s notifications, choose what is posted there (minutes, session about to start…).",
+      "command": "/ronde shows each person their next sessions and open follow-up actions."
+    },
+    "emailMatch": "People are recognized by their email: their Slack account and their Ronde profile must share it.",
+    "add": "Add to Slack",
+    "connectedTo": "Connected to {team}",
+    "channel": "notifications in {channel}",
+    "reminders": "Send check-in reminders in Slack",
+    "remindersHint": "By direct message, in place of the email, to the people found in Slack. The others still get the email.",
+    "reinstall": "Change the channel",
+    "disconnect": "Disconnect",
+    "disconnectConfirm": "Remove Ronde from this Slack workspace? Reminders go back to email, and the notification rules posting to its channel are deleted.",
+    "notConfigured": "To use Slack, the administrator of this Ronde instance first creates its Slack app. It takes a few minutes.",
+    "setup": "How to set it up",
+    "result": {
+      "connected": "Slack is connected.",
+      "cancelled": "The installation was cancelled in Slack.",
+      "denied": "Only the people who manage the workspace’s connectors can add Slack.",
+      "failed": "Slack could not be connected. Please try again; if it keeps failing, contact the administrator of this instance."
+    }
+  }
+}

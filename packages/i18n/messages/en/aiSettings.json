@@ -1,0 +1,18 @@
+{
+  "title": "AI assistant",
+  "intro": "Drafts the summary of a session and suggests the follow-up actions its minutes call for. The host reviews everything before it is saved.",
+  "enable": "Turn on the AI assistant",
+  "model": "Model",
+  "key": "Anthropic API key",
+  "keyHint": "Create a key in the Anthropic console. It is stored encrypted and never shown again.",
+  "keySaved": "A key is saved. Type a new one to replace it.",
+  "instanceKey": "Key of the instance",
+  "instanceKeyHint": "This instance provides a key. Type your own to use your Anthropic account instead.",
+  "noEncryption": "Keys cannot be stored: SECRET_KEY is not set on this instance.",
+  "privacy": "When someone asks for it, the minutes of the session (never the check-ins before the session, never the passwords or keys) are sent to Anthropic to write the answer.",
+  "save": "Save",
+  "test": "Test the assistant",
+  "removeKey": "Remove the key",
+  "saved": "Saved.",
+  "works": "✓ The assistant answers."
+}

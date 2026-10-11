@@ -1,0 +1,21 @@
+{
+  "back": "Diretório",
+  "you": "você",
+  "noAccount": "Ainda sem conta",
+  "removed": "Removido pelo diretório da empresa",
+  "edit": "Editar",
+  "email": "Enviar um e-mail",
+  "meetings": "Reuniões",
+  "noMeetings": "Não está em nenhuma reunião que você possa ver.",
+  "actions": "Ações em aberto",
+  "seeAll": "Ver tudo",
+  "inProgress": "em andamento",
+  "noActions": "Nenhuma ação em aberto.",
+  "presence": "Presença, últimos 90 dias",
+  "noSessions": "Nenhuma sessão realizada recentemente.",
+  "attended": "{attended} de {held} sessões",
+  "kudos": "Agradecimentos recebidos",
+  "kudoFrom": "de {name}, {date}",
+  "noKudos": "Ainda não há agradecimentos.",
+  "awayUntil": "Ausente até {date}"
+}

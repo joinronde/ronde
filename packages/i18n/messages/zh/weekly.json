@@ -1,0 +1,28 @@
+{
+  "subject": "你在 {workspace} 的一周",
+  "title": "你的一周",
+  "greeting": "{name}，你好：",
+  "intro": "这是你本周在 {workspace} 的安排。",
+  "preheader": "本周{sessions, plural, =0 {没有会议} other {有 # 场会议}}，{actions, plural, =0 {没有待办事项} other {# 项待办事项}}",
+  "when": "{date} {time}",
+  "moved": "已改期",
+  "sessions": "本周的会议",
+  "checkIn": "我的进展卡",
+  "actions": "你的待办事项",
+  "actionsHint": "完成后请在 Ronde 中勾选。",
+  "carried": "{count, plural, other {已持续 # 场会议}}",
+  "kudos": "你收到的点赞",
+  "from": "来自 {name}",
+  "open": "打开 Ronde",
+  "footer": "作为 {workspace} 的成员，你每周一会收到这份周报。",
+  "settings": "可在账户中修改。",
+  "stop": "不再接收周报",
+  "page": {
+    "title": "停止接收每周周报？",
+    "body": "你将不再在周一收到会议、待办和点赞的周报。之后可在账户中重新开启。",
+    "button": "停止接收",
+    "done": "已完成：你将不再收到每周周报。",
+    "invalid": "此链接无效。",
+    "back": "返回 Ronde"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "title": "Ausencias",
+  "add": "Añadir una ausencia",
+  "intro": "Vacaciones, permisos, formación: se te marca como ausente en las sesiones de esos días y no recibes recordatorios.",
+  "from": "Primer día",
+  "to": "Último día",
+  "delegate": "Quién dirige tus reuniones mientras tanto",
+  "noDelegate": "Nadie: los coanfitriones continúan",
+  "delegateHint": "Para las reuniones que diriges. Recibe una notificación.",
+  "note": "Nota",
+  "notePlaceholder": "P. ej. vacaciones, vuelvo el lunes",
+  "save": "Guardar la ausencia",
+  "cancel": "Cancelar",
+  "period": "del {from} al {to}",
+  "standsIn": "{name} te sustituye",
+  "remove": "Quitar la ausencia {period}",
+  "empty": "Ninguna ausencia prevista.",
+  "emptyMine": "Ninguna ausencia prevista. ¿Te vas? Añádela aquí: tus reuniones lo sabrán."
+}

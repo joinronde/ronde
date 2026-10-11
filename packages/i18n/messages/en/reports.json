@@ -1,0 +1,26 @@
+{
+  "subject": "{workspace} · your meetings, {period}",
+  "period": "{from} to {to}",
+  "title": "Your meetings report",
+  "byMeeting": "By meeting",
+  "noSession": "No session was held in this period.",
+  "open": "See the insights in Ronde",
+  "settings": {
+    "title": "Report by email",
+    "intro": "These figures, sent by email at the start of each week or month.",
+    "frequency": "Frequency",
+    "off": "Not sent",
+    "weekly": "Every Monday (the week before)",
+    "monthly": "On the 1st of the month (the month before)",
+    "recipients": "Recipients",
+    "admins": "The workspace's owners and administrators",
+    "custom": "These addresses",
+    "emails": "Addresses, one per line",
+    "save": "Save",
+    "saved": "Saved",
+    "test": "Send me a test now",
+    "testSent": "Test report sent to {email}"
+  },
+  "openBranded": "See the insights",
+  "projectsToWatch": "Projects to watch"
+}

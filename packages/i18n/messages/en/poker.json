@@ -1,0 +1,26 @@
+{
+  "noItems": "The host adds the items to estimate.",
+  "progress": "{done} of {total} items estimated",
+  "voted": "{count, plural, =0 {Nobody has picked a card yet} one {# card picked} other {# cards picked}}",
+  "average": "Average: {value}",
+  "final": "Estimate: {value}",
+  "pickTitle": "Your estimate for “{title}”",
+  "deck": "Cards",
+  "hidden": "Your card stays hidden until the host reveals all of them.",
+  "votedOf": "{count} of {total} have picked a card",
+  "reveal": "Reveal the cards",
+  "agree": "Estimate agreed:",
+  "revote": "New round",
+  "reopen": "Estimate “{title}” again",
+  "remove": "Remove “{title}”",
+  "newItem": "Item to estimate",
+  "newItemPlaceholder": "A story, a ticket, a task…",
+  "add": "Add",
+  "settingsTitle": "Planning poker",
+  "deckSaved": "Deck saved",
+  "decks": {
+    "fibonacci": "Fibonacci (0, 1, 2, 3, 5, 8, 13, 21)",
+    "tshirt": "T-shirt sizes (XS to XL)",
+    "powers": "Powers of two (1 to 32)"
+  }
+}

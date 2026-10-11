@@ -1,0 +1,15 @@
+{
+  "title": "Search the workspace",
+  "placeholder": "Search meetings, people, actions, decisions…",
+  "switchTo": "Switch to {name}",
+  "none": "Nothing found for “{query}”.",
+  "foot": "↑ ↓ to move, Enter to open, Esc to close",
+  "kinds": {
+    "page": "Go to",
+    "meeting": "Meetings",
+    "person": "People",
+    "action": "Actions",
+    "topic": "Topics",
+    "decision": "Decisions"
+  }
+}

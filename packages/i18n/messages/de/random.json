@@ -1,0 +1,30 @@
+{
+  "kinds": {
+    "wheel": "Glücksrad",
+    "order": "Redereihenfolge",
+    "teams": "Teams",
+    "coin": "Kopf oder Zahl"
+  },
+  "hints": {
+    "wheel": "Wählt aus, wer als Nächstes spricht, unter denen, die noch nicht dran waren.",
+    "order": "Mischt die Reihenfolge derer, die noch nicht dran waren.",
+    "teams": "Teilt die Anwesenden in Teams auf.",
+    "coin": "Für eine Entscheidung, die niemand treffen will."
+  },
+  "draw": "Drehen",
+  "drawAgain": "Neu ziehen",
+  "teamSize": "Personen pro Team",
+  "applyWheel": "{name} spricht als Nächstes",
+  "applyOrder": "Diese Reihenfolge verwenden",
+  "applied": "In die Redereihenfolge übernommen",
+  "clear": "Von den Bildschirmen ausblenden",
+  "picked": "{name}!",
+  "heads": "Kopf",
+  "tails": "Zahl",
+  "team": "Team {n}",
+  "orderTitle": "Redereihenfolge",
+  "drawing": "Wird gezogen…",
+  "everyone": "Alle sehen dieselbe Ziehung: Der Server wählt aus, dann spielt jeder Bildschirm sie ab.",
+  "tool": "Zufallswerkzeug",
+  "close": "Schließen"
+}

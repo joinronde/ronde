@@ -1,0 +1,21 @@
+{
+  "shiftKey": "Maiusc+",
+  "toolbar": "Formattazione · {label}",
+  "boldLetter": "G",
+  "italicLetter": "C",
+  "strikeLetter": "B",
+  "bold": "Grassetto ({key})",
+  "italic": "Corsivo ({key})",
+  "underlineLetter": "S",
+  "underline": "Sottolineato ({key})",
+  "strike": "Barrato ({key})",
+  "bulletList": "Elenco puntato",
+  "numberedList": "Elenco numerato",
+  "indent": "Sottovoce (Tab in un elenco)",
+  "outdent": "Sali di un livello ({key})",
+  "link": "Link ({key})",
+  "linkUrl": "Indirizzo del link",
+  "linkApply": "Applica",
+  "linkRemove": "Rimuovi il link",
+  "linkCancel": "Annulla"
+}

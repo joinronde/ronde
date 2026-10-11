@@ -1,0 +1,35 @@
+{
+  "title": "Kalender",
+  "intro": "Trage die Sitzungen deiner Meetings mit einem Konto des Arbeitsbereichs in die Google- oder Outlook-Kalender der Teilnehmenden ein und lies ihre Verfügbarkeit, um Konflikte zu vermeiden.",
+  "empty": "Noch kein Kalenderkonto.",
+  "add": "Kalenderkonto hinzufügen",
+  "kind": "Anbieter",
+  "name": "Name",
+  "edit": "Bearbeiten",
+  "tokenKept": "Ein Geheimnis ist gespeichert. Gib ein neues ein, um es zu ersetzen.",
+  "save": "Speichern",
+  "cancel": "Abbrechen",
+  "test": "Testen",
+  "remove": "Entfernen",
+  "works": "✓ Verbunden.",
+  "removeConfirm": "{name} entfernen? Meetings, die es nutzen, werden nicht mehr synchronisiert; bereits eingetragene Termine bleiben in den Kalendern.",
+  "kinds": {
+    "google": "Google Kalender",
+    "microsoft": "Microsoft 365"
+  },
+  "fields": {
+    "clientEmail": "E-Mail des Dienstkontos",
+    "organizer": "Organisator der Termine",
+    "tenant": "Mandant (ID oder Domain)",
+    "clientId": "Client-ID"
+  },
+  "secret": {
+    "google": "Privater Schlüssel des Dienstkontos",
+    "microsoft": "Client-Geheimnis"
+  },
+  "hints": {
+    "google": "Erstelle in Google Cloud ein Dienstkonto und gib ihm in der Admin-Konsole von Google Workspace domainweite Delegierung für den Bereich https://www.googleapis.com/auth/calendar. Die Termine erstellt der Organisator, der die Teilnehmenden einlädt.",
+    "microsoft": "Registriere in Microsoft Entra eine Anwendung mit der Anwendungsberechtigung Calendars.ReadWrite (Administratorzustimmung). Die Termine werden im Kalender des Organisators erstellt, der die Teilnehmenden einlädt."
+  },
+  "useIt": "Danach in den Einstellungen eines Meetings: Terminplan → Kalender."
+}

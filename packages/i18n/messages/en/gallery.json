@@ -1,0 +1,21 @@
+{
+  "title": "Templates",
+  "intro": "Start from a meeting that already works: for a team, a school, a non-profit, a building site or a care unit. Everything stays editable.",
+  "browse": "Browse every template",
+  "categories": "Who it is for",
+  "sections": "Sections",
+  "category": {
+    "all": "All",
+    "team": "Teams",
+    "product": "Product & content",
+    "leadership": "Leadership & sales",
+    "education": "Education",
+    "nonprofit": "Non-profits",
+    "field": "Field work",
+    "health": "Care teams",
+    "own": "Your templates"
+  },
+  "minutes": "{count} min",
+  "use": "Use this template",
+  "saveHint": "Any meeting can become a template of the workspace: open its settings, then “Save as a template”."
+}

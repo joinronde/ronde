@@ -1,0 +1,21 @@
+{
+  "back": "Directory",
+  "you": "you",
+  "noAccount": "No account yet",
+  "removed": "Removed by the company directory",
+  "edit": "Edit",
+  "email": "Send an email",
+  "meetings": "Meetings",
+  "noMeetings": "Not in any meeting you can see.",
+  "actions": "Open actions",
+  "seeAll": "See all",
+  "inProgress": "in progress",
+  "noActions": "No open action.",
+  "presence": "Presence, last 90 days",
+  "noSessions": "No session held lately.",
+  "attended": "{attended} of {held} sessions",
+  "kudos": "Kudos received",
+  "kudoFrom": "from {name}, {date}",
+  "noKudos": "No kudos yet.",
+  "awayUntil": "Away until {date}"
+}

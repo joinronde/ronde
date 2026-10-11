@@ -1,0 +1,38 @@
+{
+  "title": "Issue trackers",
+  "intro": "Turn a follow-up action into a ticket in Jira, Linear, GitLab or GitHub. When the ticket is closed, the action is marked done in Ronde.",
+  "empty": "No issue tracker yet.",
+  "add": "Add an issue tracker",
+  "kind": "Tool",
+  "name": "Name",
+  "token": "API token",
+  "tokenKept": "A token is saved. Type a new one to replace it.",
+  "save": "Save",
+  "cancel": "Cancel",
+  "test": "Test",
+  "remove": "Remove",
+  "works": "✓ Connected.",
+  "removeConfirm": "Remove {name}? Existing tickets stay, they are no longer followed.",
+  "kinds": {
+    "jira": "Jira",
+    "linear": "Linear",
+    "gitlab": "GitLab",
+    "github": "GitHub"
+  },
+  "fields": {
+    "site": "Site address",
+    "project": "Project key",
+    "email": "Email of the account",
+    "team": "Team ID",
+    "url": "GitLab address",
+    "repo": "Repository (owner/name)"
+  },
+  "hints": {
+    "jira": "An API token created at id.atlassian.com, for the account whose email is above.",
+    "linear": "A personal API key from Linear settings → API. The team ID is in the team settings.",
+    "gitlab": "A project or personal access token with the api scope. Project: its path (group/project) or its number.",
+    "github": "A fine-grained token with “Issues: read and write” on the repository."
+  },
+  "assignee": "Owners are assigned in GitLab and GitHub when their username is in their directory profile.",
+  "edit": "Edit"
+}

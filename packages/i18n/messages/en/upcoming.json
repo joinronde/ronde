@@ -1,0 +1,19 @@
+{
+  "title": "Next sessions",
+  "none": "No session planned yet.",
+  "moved": "Moved",
+  "attendanceOf": "Your attendance on {date}",
+  "yes": "I'll be there",
+  "no": "I'll be away",
+  "noted": "Noted: you will be marked absent",
+  "hint": "Away? You are marked absent for that session and get no reminder.",
+  "subscribe": "Add to my calendar",
+  "subscribeAll": "Get my calendar link",
+  "feedLink": "Calendar link",
+  "copy": "Copy",
+  "copied": "Copied",
+  "feedHint": "Paste this private link in your calendar app (subscribe by URL); it follows every change. Creating a new link turns this one off.",
+  "openInApp": "Open in my calendar app",
+  "facilitator": "{name} facilitates",
+  "noteTaker": "{name} takes notes"
+}

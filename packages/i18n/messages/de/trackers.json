@@ -1,0 +1,38 @@
+{
+  "title": "Ticketsysteme",
+  "intro": "Mach aus einer Folgeaufgabe ein Ticket in Jira, Linear, GitLab oder GitHub. Wird das Ticket geschlossen, wird die Aufgabe in Ronde als erledigt markiert.",
+  "empty": "Noch kein Ticketsystem.",
+  "add": "Ticketsystem hinzufügen",
+  "kind": "Tool",
+  "name": "Name",
+  "token": "API-Token",
+  "tokenKept": "Ein Token ist gespeichert. Gib ein neues ein, um es zu ersetzen.",
+  "save": "Speichern",
+  "cancel": "Abbrechen",
+  "test": "Testen",
+  "remove": "Entfernen",
+  "works": "✓ Verbunden.",
+  "removeConfirm": "{name} entfernen? Bestehende Tickets bleiben, werden aber nicht mehr verfolgt.",
+  "kinds": {
+    "jira": "Jira",
+    "linear": "Linear",
+    "gitlab": "GitLab",
+    "github": "GitHub"
+  },
+  "fields": {
+    "site": "Adresse der Site",
+    "project": "Projektschlüssel",
+    "email": "E-Mail des Kontos",
+    "team": "Team-ID",
+    "url": "GitLab-Adresse",
+    "repo": "Repository (owner/name)"
+  },
+  "hints": {
+    "jira": "Ein API-Token, erstellt auf id.atlassian.com, für das Konto mit der E-Mail oben.",
+    "linear": "Ein persönlicher API-Schlüssel aus den Linear-Einstellungen → API. Die Team-ID steht in den Team-Einstellungen.",
+    "gitlab": "Ein Projekt- oder persönliches Zugriffstoken mit dem Scope api. Projekt: sein Pfad (gruppe/projekt) oder seine Nummer.",
+    "github": "Ein Fine-grained-Token mit „Issues: Lesen und Schreiben“ für das Repository."
+  },
+  "assignee": "Verantwortliche werden in GitLab und GitHub zugewiesen, wenn ihr Benutzername in ihrem Verzeichnisprofil steht.",
+  "edit": "Bearbeiten"
+}

@@ -1,0 +1,18 @@
+{
+  "label": "Public holidays",
+  "none": "None",
+  "noneMeeting": "None: hold every session",
+  "inherit": "Same as the workspace: {name}",
+  "inheritNone": "Same as the workspace: none",
+  "region": "Region",
+  "wholeCountry": "Whole country",
+  "hintMeeting": "A session that falls on one of these holidays is skipped. You can still hold or move each one below.",
+  "hintWorkspace": "Meetings skip the sessions that fall on these holidays; each meeting can choose others in its schedule.",
+  "source": "Holidays from the date-holidays project, based on Wikipedia (CC BY-SA 3.0).",
+  "saved": "Public holidays updated",
+  "skipped": "Public holiday · {name}",
+  "kept": "Held on {name}",
+  "keep": "Hold it anyway",
+  "held": "Session held",
+  "skipAgain": "Skip it again"
+}

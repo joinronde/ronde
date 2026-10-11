@@ -1,0 +1,21 @@
+{
+  "back": "Annuaire",
+  "you": "vous",
+  "noAccount": "Pas encore de compte",
+  "removed": "Retiré·e par l'annuaire de l'entreprise",
+  "edit": "Modifier",
+  "email": "Envoyer un e-mail",
+  "meetings": "Réunions",
+  "noMeetings": "Dans aucune réunion que vous voyez.",
+  "actions": "Actions ouvertes",
+  "seeAll": "Tout voir",
+  "inProgress": "en cours",
+  "noActions": "Aucune action ouverte.",
+  "presence": "Présence, 90 derniers jours",
+  "noSessions": "Aucune séance tenue récemment.",
+  "attended": "{attended} séances sur {held}",
+  "kudos": "Remerciements reçus",
+  "kudoFrom": "de {name}, le {date}",
+  "noKudos": "Pas encore de remerciements.",
+  "awayUntil": "Absent jusqu'au {date}"
+}

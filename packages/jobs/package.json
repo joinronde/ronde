@@ -1,0 +1,27 @@
+{
+  "name": "@ronde/jobs",
+  "version": "0.0.0",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "description": "Background jobs on PostgreSQL (pg-boss): scheduled and on-demand work, run once across replicas.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:integration": "vitest run --config vitest.integration.config.ts"
+  },
+  "devDependencies": {
+    "@ronde/config": "workspace:*",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.2",
+    "dotenv": "^17.4.2",
+    "pg": "^8.23.0",
+    "@types/pg": "^8.23.1"
+  },
+  "dependencies": {
+    "pg-boss": "^12.37.0"
+  }
+}

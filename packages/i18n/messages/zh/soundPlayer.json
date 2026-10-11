@@ -1,0 +1,18 @@
+{
+  "enable": "打开声音",
+  "monitorHint": "在控制台听到参与者听到的声音",
+  "muteHint": "关闭此屏幕上的会议声音",
+  "autoHint": "声音会在会议开始前一刻钟自动打开（等待音乐、提示音……）",
+  "listenHint": "收听会议声音：等待音乐、提示音、掌声……",
+  "monitorOn": "控制台监听",
+  "monitorOff": "监听已关闭",
+  "soundsOn": "声音",
+  "soundsOff": "声音已关闭",
+  "monitorVolume": "控制台监听音量",
+  "volume": "此屏幕的声音音量",
+  "musicMuteHint": "在控制台关闭等待音乐（参与者仍能听到）",
+  "musicListenHint": "在控制台也收听等待音乐",
+  "musicOn": "音乐",
+  "musicOff": "音乐已关闭",
+  "allow": "允许声音"
+}

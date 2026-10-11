@@ -1,0 +1,26 @@
+{
+  "noItems": "由主持人添加待估算的条目。",
+  "progress": "已估算 {done}/{total} 个条目",
+  "voted": "{count, plural, =0 {还没有人选牌} other {已选 # 张牌}}",
+  "average": "平均：{value}",
+  "final": "估算：{value}",
+  "pickTitle": "你对“{title}”的估算",
+  "deck": "卡牌",
+  "hidden": "在主持人全部翻牌前，你的牌保持隐藏。",
+  "votedOf": "{total} 人中有 {count} 人已选牌",
+  "reveal": "翻牌",
+  "agree": "约定的估算：",
+  "revote": "新一轮",
+  "reopen": "重新估算“{title}”",
+  "remove": "移除“{title}”",
+  "newItem": "待估算的条目",
+  "newItemPlaceholder": "用户故事、工单、任务……",
+  "add": "添加",
+  "settingsTitle": "计划扑克",
+  "deckSaved": "牌组已保存",
+  "decks": {
+    "fibonacci": "斐波那契（0, 1, 2, 3, 5, 8, 13, 21）",
+    "tshirt": "T 恤尺码（XS 到 XL）",
+    "powers": "2 的幂（1 到 32）"
+  }
+}

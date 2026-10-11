@@ -1,0 +1,18 @@
+{
+  "label": "公共假日",
+  "none": "无",
+  "noneMeeting": "无：所有会议照常举行",
+  "inherit": "与工作区相同：{name}",
+  "inheritNone": "与工作区相同：无",
+  "region": "地区",
+  "wholeCountry": "全国",
+  "hintMeeting": "落在这些假日的会议会被跳过。你仍可以在下方逐个保留或改期。",
+  "hintWorkspace": "会议会跳过落在这些假日的场次；每个会议都可以在其日程中选择其他假日。",
+  "source": "假日数据来自 date-holidays 项目，基于维基百科（CC BY-SA 3.0）。",
+  "saved": "公共假日已更新",
+  "skipped": "公共假日 · {name}",
+  "kept": "尽管是{name}仍照常举行",
+  "keep": "仍然举行",
+  "held": "会议照常举行",
+  "skipAgain": "再次跳过"
+}

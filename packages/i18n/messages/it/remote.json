@@ -1,0 +1,13 @@
+{
+  "noMeeting": "Nessuna sessione è preparata per questa riunione.",
+  "back": "Regia",
+  "now": "Ora",
+  "then": "Poi: {next}",
+  "last": "Ultima fase",
+  "start": "Inizia la riunione",
+  "previous": "Indietro",
+  "next": "Avanti",
+  "pause": "Pausa",
+  "resume": "Riprendi",
+  "bonus": "+30 s"
+}

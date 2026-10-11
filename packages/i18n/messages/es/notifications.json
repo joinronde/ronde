@@ -1,0 +1,44 @@
+{
+  "quoted": "«{label}»",
+  "speak": {
+    "minutes": "{m} min",
+    "seconds": "{s} s"
+  },
+  "timing": "Objetivo: {target} · {speak} de palabra por persona",
+  "preparation": "Actualiza tus proyectos y las secciones correspondientes: {sections}. Bastan unos pocos puntos breves; deja vacías las secciones sin nada que contar.",
+  "when": "{date} a las {time}",
+  "email": {
+    "footer": "Para dejar de recibir este recordatorio, pide a {host} que lo desactive en los ajustes del equipo.",
+    "greeting": "Hola, {name}:",
+    "intro": "Se acerca la próxima reunión «{team}». Rellena o actualiza tu ficha antes para compartir tus avances y dónde necesitas ayuda.",
+    "subject": "Ronde · {team}: tu ficha para el {date} a las {time}",
+    "meeting": "Reunión: {when}",
+    "prepare": "Prepara tu ficha",
+    "fillIn": "Rellenar mi ficha",
+    "openApp": "Abre Ronde y luego «Mi pantalla» para rellenar tu ficha.",
+    "planned": "Lo que previste en la última reunión",
+    "plannedHint": "Revisa estos puntos en tu ficha:",
+    "actions": "Tus acciones de seguimiento",
+    "actionsHint": "Recuerda actualizar su avance en Ronde:",
+    "joinVideo": "Únete a la videollamada a la hora de la reunión",
+    "thanks": "¡Gracias y hasta pronto en la mesa!",
+    "preheader": "Tu reunión de equipo: {when}. Prepara tu ficha y revisa tus acciones de seguimiento.",
+    "tagline": "La reunión de equipo",
+    "title": "Tu ficha para la próxima reunión",
+    "appointment": "Nuestra cita",
+    "fallbackLink": "Si el botón no se abre:",
+    "sheets": "Fichas de proyecto por redactar (estado y mensaje del día)",
+    "replyTitle": "¿Poco tiempo? Responde a este correo",
+    "replyHint": "Escribe el nombre de cada sección en su propia línea y luego tus puntos, uno por línea: tu respuesta va directamente a tu ficha.",
+    "replyExample": "Por ejemplo:"
+  },
+  "replied": {
+    "subject": "Ronde · {team}: tu ficha está actualizada",
+    "title": "Tu ficha está actualizada",
+    "intro": "Gracias, {name}. Esto es lo que tu respuesta añadió a tu ficha de {team}:",
+    "nothing": "No encontramos nada que añadir en tu respuesta. Escribe el nombre de cada sección en su propia línea y luego tus puntos, uno por línea, o rellena tu ficha en Ronde.",
+    "already": "Todo lo de tu respuesta ya estaba en tu ficha.",
+    "open": "Ver mi ficha",
+    "footer": "Recibes este correo porque respondiste a un recordatorio de Ronde."
+  }
+}

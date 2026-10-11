@@ -1,0 +1,88 @@
+{
+  "badge": "Sample",
+  "exploreTitle": "Or look around a sample meeting first",
+  "exploreText": "A fictitious team with a month of history: run a session, read the minutes, look at the stats. Nothing is sent to anyone, and it goes away in one click.",
+  "explore": "Open the sample meeting",
+  "preparing": "Preparing the sample…",
+  "banner": "Sample meeting: a fictitious team and a month of history, to try everything. Nothing is sent to anyone.",
+  "delete": "Delete the sample",
+  "deleteConfirm": "Delete the sample meeting and its fictitious team? This cannot be undone.",
+  "personHint": "Fictitious person of the sample meeting",
+  "meetingName": "Weekly sync (sample)",
+  "tasks": {
+    "emma": {
+      "1": "Invoice data model",
+      "2": "Invoices endpoint in the API",
+      "3": "API key authentication",
+      "4": "API documentation",
+      "5": "Filters by customer on the invoices",
+      "6": "Load tests at 500 requests per second"
+    },
+    "lucas": {
+      "1": "Onboarding funnel analysis",
+      "2": "Interviews with five new customers",
+      "3": "Welcome checklist spec",
+      "4": "Copy of the in-app tour",
+      "5": "Activation dashboard",
+      "6": "Pricing page experiment"
+    },
+    "sarah": {
+      "1": "Mobile mockups approved",
+      "2": "Mobile app skeleton and its CI",
+      "3": "Sign-up screens",
+      "4": "Photo upload for receipts",
+      "5": "Offline mode for the dashboard",
+      "6": "Beta release to ten customers"
+    },
+    "tom": {
+      "1": "Button and field styles",
+      "2": "Dark theme palette",
+      "3": "Visible keyboard focus everywhere",
+      "4": "Table component",
+      "5": "Usability tests with two teams",
+      "6": "Component guidelines"
+    },
+    "sofia": {
+      "1": "Monitoring dashboards",
+      "2": "Logs gathered in one place",
+      "3": "Automatic database backups",
+      "4": "Release checklist",
+      "5": "Alerts on server errors",
+      "6": "Backup restore drill"
+    }
+  },
+  "blockers": {
+    "staging": "No access to the test database yet, ticket open with IT",
+    "crm": "The CRM export stops at 2,000 rows",
+    "licence": "The icon set we picked needs a paid licence"
+  },
+  "dayOff": "Off on Thursday afternoon (training)",
+  "actions": {
+    "staging": "Get access to the test database (follow up with IT)",
+    "crm": "Find a way around the CRM export limit",
+    "licence": "Order the icon set licence"
+  },
+  "kudos": {
+    "checklist": "The release checklist saved my Friday",
+    "screens": "The new screens are so much clearer",
+    "export": "Thanks for unblocking the export in a day"
+  },
+  "questions": {
+    "endpoint": "When does the invoices endpoint reach the test server?",
+    "alerts": "Can the alerts go to the support channel too?"
+  },
+  "decisions": {
+    "escalate": "Decision: we escalate the IT ticket if there is no answer by Thursday.",
+    "notes": "Decision: the design system gets its own release notes."
+  },
+  "summary": "A good week: the API documentation is out and the beta is on track. Access to the test database is still blocked, so Emma escalates it on Thursday.",
+  "icebreaker": "Your small win of the week?",
+  "answers": {
+    "lucas": "Five customer interviews booked in one morning",
+    "sofia": "Zero alerts this weekend"
+  },
+  "topics": {
+    "oncall": "Who is on call during the holidays?",
+    "flags": "Naming convention for feature flags"
+  }
+}

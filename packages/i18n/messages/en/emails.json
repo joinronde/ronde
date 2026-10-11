@@ -1,0 +1,27 @@
+{
+  "fallbackLink": "If the button does not open:",
+  "verify": {
+    "subject": "Confirm your email address",
+    "intro": "Welcome to Ronde! Confirm your email address to finish creating your account.",
+    "action": "Confirm my address",
+    "footer": "If you did not create an account, you can ignore this email."
+  },
+  "magicLink": {
+    "subject": "Your sign-in link",
+    "intro": "Here is your link to sign in to Ronde. It works once and expires in 10 minutes.",
+    "action": "Sign in",
+    "footer": "If you did not ask to sign in, you can ignore this email."
+  },
+  "resetPassword": {
+    "subject": "Reset your password",
+    "intro": "Someone asked to reset the password of your Ronde account. The link expires in 1 hour.",
+    "action": "Choose a new password",
+    "footer": "If you did not ask for it, you can ignore this email: your password stays the same."
+  },
+  "invitation": {
+    "subject": "{inviter} invites you to {workspace} on Ronde",
+    "intro": "{inviter} invites you to join the {workspace} workspace on Ronde, to prepare and run your team meetings together.",
+    "action": "Join {workspace}",
+    "footer": "This invitation expires in 7 days. If you were not expecting it, you can ignore this email."
+  }
+}

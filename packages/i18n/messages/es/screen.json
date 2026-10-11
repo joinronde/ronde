@@ -1,0 +1,17 @@
+{
+  "options": "Opciones de proyección",
+  "theme": "Tema de proyección",
+  "themes": {
+    "auto": "Automático",
+    "light": "Claro",
+    "dark": "Oscuro"
+  },
+  "reducedMotion": "Movimiento reducido",
+  "ambience": "Ambiente de la pantalla de espera",
+  "previewTheme": "Previsualizar un tema",
+  "replayIntro": "Volver a ver la introducción",
+  "fullscreen": "Pantalla completa",
+  "drivenFromControl": "Esta pestaña se controla desde la sala de control.",
+  "yourTurn": "¡Te toca, <span>{name}</span>!",
+  "poweredBy": "Con la tecnología de Ronde"
+}

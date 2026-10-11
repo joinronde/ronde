@@ -1,0 +1,13 @@
+{
+  "noMeeting": "No hay ninguna sesión preparada para esta reunión.",
+  "back": "Sala de control",
+  "now": "Ahora",
+  "then": "Después: {next}",
+  "last": "Última etapa",
+  "start": "Empezar la reunión",
+  "previous": "Anterior",
+  "next": "Siguiente",
+  "pause": "Pausa",
+  "resume": "Reanudar",
+  "bonus": "+30 s"
+}

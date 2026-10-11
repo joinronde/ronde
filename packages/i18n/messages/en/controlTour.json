@@ -1,0 +1,34 @@
+{
+  "chapters": {
+    "welcome": "Welcome",
+    "prepare": "Prepare",
+    "run": "Run",
+    "conclude": "Wrap up"
+  },
+  "steps": {
+    "welcome": {
+      "title": "Welcome to the control room 👋",
+      "body": "<p>You run the meeting from this tab; your notes stay here, for you only.</p><ul><li><strong>Open the shared screen</strong>: a tab made for projection, without menus.</li><li><strong>Share that tab</strong> in the video call, not your whole screen: it is what the team sees.</li><li><strong>Come back here</strong> to drive: everything shows live on the shared screen.</li></ul><tip>Navigate with <kbd>→</kbd> and <kbd>←</kbd>, quit with <kbd>Esc</kbd>.</tip>"
+    },
+    "runOrder": {
+      "title": "The agenda and the speaking order",
+      "body": "<p>Intro, one turn per person, open topics, then the wrap-up.</p><ul><li><strong>↑ ↓</strong> change the order, <strong>Absent</strong> takes someone out of the round.</li><li><strong>Go</strong> jumps straight to a step.</li><li>A green dot: that person's check-in is ready.</li></ul>"
+    },
+    "controls": {
+      "title": "Start and move on",
+      "body": "<ul><li><strong>Start the meeting</strong> plays the intro on the shared screen.</li><li><strong>Next</strong> (<kbd>→</kbd>) gives the floor to the next person; the timer shows their speaking time left.</li><li><kbd>Space</kbd> pauses the timer, <strong>+30 s</strong> gives a little extra time, <strong>End the meeting</strong> jumps to the wrap-up.</li></ul>"
+    },
+    "notes": {
+      "title": "Your notes",
+      "body": "<p>One notes area per step, <strong>saved as you type</strong> and seen only by you: they go into the minutes, under the right person.</p><p><strong>+ Decision</strong> records a decision; <strong>+ Action</strong> creates a follow-up action with an owner, tracked in the next sessions.</p>"
+    },
+    "minutes": {
+      "title": "The minutes",
+      "body": "<p>They write themselves from the check-ins, your notes, the decisions and the actions.</p><p>At the end, <strong>Archive the meeting</strong>: the minutes go to the history and the next session is ready.</p>"
+    },
+    "finish": {
+      "title": "Your turn!",
+      "body": "<p>People, schedule and modules are set in the meeting's settings. This button replays the tour whenever you like. Have a great meeting!</p>"
+    }
+  }
+}

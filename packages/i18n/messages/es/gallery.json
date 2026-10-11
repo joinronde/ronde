@@ -1,0 +1,21 @@
+{
+  "title": "Plantillas",
+  "intro": "Empieza desde una reunión que ya funciona: para un equipo, una escuela, una asociación, una obra o una unidad de cuidados. Todo sigue siendo editable.",
+  "browse": "Ver todas las plantillas",
+  "categories": "Para quién es",
+  "sections": "Secciones",
+  "category": {
+    "all": "Todas",
+    "team": "Equipos",
+    "product": "Producto y contenido",
+    "leadership": "Dirección y ventas",
+    "education": "Educación",
+    "nonprofit": "Asociaciones",
+    "field": "Trabajo de campo",
+    "health": "Equipos de cuidados",
+    "own": "Tus plantillas"
+  },
+  "minutes": "{count} min",
+  "use": "Usar esta plantilla",
+  "saveHint": "Cualquier reunión puede convertirse en una plantilla del espacio: abre sus ajustes y luego «Guardar como plantilla»."
+}

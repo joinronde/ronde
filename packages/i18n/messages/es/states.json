@@ -1,0 +1,13 @@
+{
+  "loading": "Cargando…",
+  "notFoundTitle": "Página no encontrada",
+  "notFoundBody": "Esta página no existe o ya no tienes acceso a ella.",
+  "home": "Volver al inicio",
+  "errorTitle": "Algo ha fallado",
+  "errorBody": "No se ha podido mostrar esta página. Vuelve a intentarlo; si sigue fallando, recarga la página.",
+  "errorRef": "Referencia: {ref}",
+  "retry": "Reintentar",
+  "suspendedTitle": "Este espacio de trabajo está suspendido",
+  "suspendedBody": "{workspace} está suspendido por ahora: sus reuniones, fichas e historial se conservan, pero nadie puede abrirlos. Sus propietarios saben por qué; escribe al administrador de este servicio para reabrirlo.",
+  "suspendedBack": "Volver a mis espacios de trabajo"
+}

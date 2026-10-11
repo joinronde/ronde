@@ -1,0 +1,13 @@
+{
+  "title": "Logo",
+  "intro": "Dein Logo ersetzt das von Ronde: in der Seitenleiste, auf dem geteilten Bildschirm, in E-Mails und im Protokoll.",
+  "drop": "Leg dein Logo hier ab",
+  "formats": "PNG, JPEG oder WebP. Ein transparentes PNG sieht am besten aus.",
+  "current": "Aktuelles Logo",
+  "upload": "Logo hochladen",
+  "replace": "Ersetzen",
+  "remove": "Entfernen",
+  "where": "Wird auf hellem und dunklem Hintergrund gezeigt: Prüfe, ob es auf beiden gut lesbar ist.",
+  "failed": "Das Logo konnte nicht gespeichert werden.",
+  "unreadable": "Dieses Bild konnte nicht gelesen werden."
+}

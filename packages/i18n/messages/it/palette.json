@@ -1,0 +1,52 @@
+{
+  "title": "Comandi",
+  "placeholder": "Digita un comando: avanti, Emma, verbale…",
+  "none": "Nessun comando corrisponde a «{query}».",
+  "foot": "↑ ↓ per scegliere, Invio per eseguire, Esc per chiudere.",
+  "groups": {
+    "meeting": "Riunione",
+    "steps": "Vai a",
+    "panes": "Pannello",
+    "people": "Persone",
+    "pages": "Apri"
+  },
+  "keys": {
+    "space": "Spazio"
+  },
+  "start": "Inizia la riunione",
+  "pause": "Metti in pausa il timer",
+  "resume": "Riprendi il timer",
+  "next": "Fase successiva",
+  "previous": "Fase precedente",
+  "bonus": "Concedi altri 30 secondi",
+  "resetTimer": "Azzera il timer",
+  "shuffle": "Mescola l'ordine di parola",
+  "absent": "Segna {name} come assente",
+  "present": "Segna {name} come presente",
+  "panes": {
+    "run": "Ordine del giorno",
+    "live": "Diretta",
+    "actions": "Azioni",
+    "topics": "Argomenti",
+    "minutes": "Verbale",
+    "polls": "Sondaggi",
+    "random": "Strumenti casuali"
+  },
+  "pages": {
+    "screen": "Schermo condiviso",
+    "remote": "Telecomando sul telefono",
+    "history": "Cronologia",
+    "stats": "Statistiche",
+    "settings": "Impostazioni"
+  },
+  "help": {
+    "title": "Scorciatoie da tastiera",
+    "next": "Fase successiva",
+    "previous": "Fase precedente",
+    "timer": "Avvia, metti in pausa o riprendi il timer",
+    "palette": "Palette dei comandi",
+    "help": "Queste scorciatoie",
+    "close": "Chiudi una finestra di dialogo",
+    "ok": "Ho capito"
+  }
+}

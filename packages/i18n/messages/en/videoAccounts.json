@@ -1,0 +1,40 @@
+{
+  "title": "Video accounts",
+  "intro": "Let Ronde create a lasting Zoom, Google Meet or Teams room for each meeting, with one account of the workspace. Nobody has to sign in.",
+  "empty": "No video account yet.",
+  "add": "Add a video account",
+  "kind": "Provider",
+  "name": "Name",
+  "edit": "Edit",
+  "tokenKept": "A secret is saved. Type a new one to replace it.",
+  "save": "Save",
+  "cancel": "Cancel",
+  "test": "Test",
+  "remove": "Remove",
+  "works": "✓ Connected.",
+  "removeConfirm": "Remove {name}? Rooms already created keep working.",
+  "kinds": {
+    "zoom": "Zoom",
+    "meet": "Google Meet",
+    "teams": "Microsoft Teams"
+  },
+  "fields": {
+    "accountId": "Account ID",
+    "clientId": "Client ID",
+    "clientEmail": "Email of the service account",
+    "subject": "User the rooms belong to",
+    "tenant": "Tenant (ID or domain)",
+    "organizer": "Organizer of the meetings"
+  },
+  "secret": {
+    "zoom": "Client secret",
+    "meet": "Private key of the service account",
+    "teams": "Client secret"
+  },
+  "hints": {
+    "zoom": "In the Zoom App Marketplace, create a “Server-to-Server OAuth” app with the scope meeting:write:meeting:admin, then copy its account ID, client ID and secret.",
+    "meet": "In Google Cloud, create a service account, give it domain-wide delegation for the scope meetings.space.created in the Google Workspace admin console, then paste the private_key of its JSON key.",
+    "teams": "In Microsoft Entra, register an application with the OnlineMeetings.ReadWrite.All application permission (admin consent) and an application access policy for the organizer."
+  },
+  "useIt": "Then, in the settings of a meeting, General → Video call: “Create a lasting room”."
+}

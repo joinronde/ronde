@@ -1,0 +1,32 @@
+{
+  "sleepy": {
+    "label": "Zzz",
+    "combo": "The team is nodding off…",
+    "comboNamed": "{name}, the team is nodding off…"
+  },
+  "hundred": {
+    "label": "Totally",
+    "combo": "100% approved",
+    "comboNamed": "100% approved"
+  },
+  "popcorn": {
+    "label": "Popcorn",
+    "combo": "It's getting juicy, grab the popcorn",
+    "comboNamed": "It's getting juicy, grab the popcorn"
+  },
+  "mindBlown": {
+    "label": "Mind-blowing!",
+    "combo": "Minds blown!",
+    "comboNamed": "{name} just blew the team's mind"
+  },
+  "fire": {
+    "label": "On fire!",
+    "combo": "The team is on fire!",
+    "comboNamed": "{name} is on fire!"
+  },
+  "coffee": {
+    "label": "Coffee break?",
+    "combo": "The team wants a coffee",
+    "comboNamed": "The team wants a coffee"
+  }
+}

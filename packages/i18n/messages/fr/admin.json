@@ -1,0 +1,65 @@
+{
+  "title": "Administration du serveur",
+  "back": "Retour",
+  "intro": "Réglages de ce serveur Ronde, communs à tous ses espaces. Ceux de chaque espace (membres, rôles, sécurité) sont dans ses Réglages. Les valeurs enregistrées ici priment sur les variables d'environnement.",
+  "counts": {
+    "users": "Comptes",
+    "workspaces": "Espaces",
+    "meetings": "Réunions"
+  },
+  "language": "Langue",
+  "defaultLocale": "Langue par défaut",
+  "defaultLocaleHint": "Pour les personnes qui n'ont pas choisi de langue dans leur compte et dont le navigateur n'en propose aucune que Ronde parle.",
+  "signup": "Qui peut créer un compte",
+  "recommended": "Recommandé",
+  "policies": {
+    "invite-only": {
+      "label": "Sur invitation",
+      "hint": "Seulement les personnes invitées dans un espace."
+    },
+    "domains": {
+      "label": "Domaines d'e-mail",
+      "hint": "Les personnes invitées, et toute adresse des domaines ci-dessous."
+    },
+    "open": {
+      "label": "Ouvert",
+      "hint": "Toute personne qui accède à ce serveur."
+    }
+  },
+  "domains": "Domaines autorisés",
+  "domainsHint": "Séparés par des virgules, par exemple example.org.",
+  "save": "Enregistrer",
+  "saved": "Enregistré",
+  "license": {
+    "title": "Licence",
+    "pureCommunity": "Cette version est l'édition Community pure : le code des éditions payantes n'y est pas inclus.",
+    "status": {
+      "none": "Édition Community",
+      "invalid": "Clé de licence invalide",
+      "active": "Licence active",
+      "grace": "Licence expirée : période de grâce",
+      "expired": "Licence expirée"
+    },
+    "reasons": {
+      "format": "La clé enregistrée est illisible.",
+      "payload": "La clé enregistrée est illisible.",
+      "signature": "La clé enregistrée a été modifiée ou n'a pas été émise par Ronde.",
+      "unknownKey": "La clé enregistrée a été signée par une clé que cette version ne connaît pas."
+    },
+    "editions": {
+      "team": "Team",
+      "enterprise": "Enterprise"
+    },
+    "summary": "{edition} pour {customer}, jusqu'au {date}.",
+    "graceUntil": "Tout continue de fonctionner jusqu'au {date} : renouvelez la licence d'ici là.",
+    "readOnly": "Les fonctions payantes sont en lecture seule : ce qu'elles contiennent reste lisible, rien de nouveau ne peut être ajouté. Les fonctions Community ne sont pas concernées.",
+    "seats": "{used} sièges utilisés sur {seats}",
+    "seatsUnlimited": "{used} personnes, sans limite de sièges",
+    "overSeats": "Plus de personnes utilisent Ronde que la licence ne le prévoit : rien n'est bloqué, mais pensez à mettre votre licence à jour.",
+    "fromEnv": "La clé vient de la variable RONDE_LICENSE : modifiez-la à cet endroit.",
+    "key": "Clé de licence",
+    "keyHint": "Vérifiée sur ce serveur, hors ligne : rien n'est envoyé nulle part.",
+    "save": "Enregistrer la clé",
+    "remove": "Retirer la licence"
+  }
+}

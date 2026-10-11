@@ -1,0 +1,32 @@
+{
+  "title": "Abrechnung",
+  "current": "Aktueller Tarif",
+  "plans": {
+    "community": "Community",
+    "team": "Team"
+  },
+  "communityIntro": "Kostenlos: unbegrenzt Meetings und Personen, alle Moderationsmodule. Team ergänzt den KI-Assistenten, Transkripte, Workflows, Tickets, Kalender, Videolinks, dein Logo und Berichte per E-Mail.",
+  "teamIntro": "Alle Team-Funktionen für den ganzen Arbeitsbereich. Bezahlt werden die Personen, die in den letzten 30 Tagen an einem Meeting teilgenommen haben; die Plätze folgen ihnen täglich.",
+  "status": "Status",
+  "statuses": {
+    "active": "Aktiv",
+    "trialing": "Testphase",
+    "past_due": "Zahlung erneut versuchen",
+    "canceled": "Gekündigt",
+    "other": "Ausstehend"
+  },
+  "seats": "Plätze",
+  "seatsValue": "{paid} bezahlt · {active} in den letzten 30 Tagen dabei",
+  "renewsOn": "Verlängert sich am",
+  "endsOn": "Endet am",
+  "upgradeMonthly": "Zu Team wechseln, monatlich",
+  "upgradeYearly": "Jährlich, 25 % günstiger",
+  "seatsHint": "{count, plural, =0 {Noch niemand hat an einem Meeting teilgenommen: Es geht mit einem Platz los.} one {# Person hat in den letzten 30 Tagen an einem Meeting teilgenommen.} other {# Personen haben in den letzten 30 Tagen an einem Meeting teilgenommen.}}",
+  "portal": "Rechnungen und Zahlung",
+  "compare": "Tarife vergleichen",
+  "thanks": "Danke! Dein Arbeitsbereich wechselt zu Team, sobald Stripe die Zahlung bestätigt.",
+  "cancelled": "Die Zahlung wurde nicht abgeschlossen: Es wurde nichts berechnet.",
+  "eduTitle": "Kostenlos für Bildung",
+  "eduText": "Schulen, Hochschulen und Lehrkräfte erhalten die bezahlten Tarife von Ronde kostenlos. Erzähl uns von deiner Einrichtung, und wir richten es ein.",
+  "eduCta": "Bildungstarif anfragen"
+}

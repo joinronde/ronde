@@ -1,0 +1,69 @@
+{
+  "title": "Wikis",
+  "intro": "Publique a ata de cada sessão como uma página no Notion ou no Confluence. Depois, cada reunião escolhe o seu wiki em Configurações › Integrações.",
+  "empty": "Ainda não há nenhum wiki.",
+  "add": "Adicionar um wiki",
+  "kind": "Ferramenta",
+  "name": "Nome",
+  "optional": "opcional",
+  "kinds": {
+    "notion": "Notion",
+    "confluence": "Confluence"
+  },
+  "fields": {
+    "notion": {
+      "parent": "Página principal (o endereço dela)"
+    },
+    "confluence": {
+      "site": "Endereço do Confluence",
+      "space": "Chave do espaço",
+      "parent": "Página principal (endereço ou número)",
+      "email": "E-mail da conta (Cloud)"
+    }
+  },
+  "token": {
+    "notion": "Segredo da integração",
+    "confluence": "Token de API"
+  },
+  "hints": {
+    "notion": "No Notion, crie uma integração interna em notion.so/profile/integrations e copie o segredo dela. Depois abra a página principal e compartilhe-a com a integração (••• › Conexões): as páginas são criadas abaixo dela.",
+    "confluence": "Confluence Cloud: um token de API criado em id.atlassian.com, para a conta cujo e-mail está acima. Data Center ou Server: um token de acesso pessoal (perfil › Tokens de acesso pessoal), sem e-mail. A conta precisa poder criar páginas no espaço."
+  },
+  "tokenKept": "Há um token salvo. Digite um novo para substituí-lo.",
+  "save": "Salvar",
+  "cancel": "Cancelar",
+  "test": "Testar",
+  "works": "✓ Conectado.",
+  "edit": "Editar",
+  "remove": "Remover",
+  "removeConfirm": "Remover {name}? As reuniões deixam de publicar nele; as páginas já publicadas continuam lá.",
+  "openInRonde": "Abrir no Ronde",
+  "meeting": {
+    "title": "Publicar a ata",
+    "intro": "A cada arquivamento, a ata vira uma página do wiki, com a data da sessão como nome. Quando o resumo é editado, a página acompanha.",
+    "wiki": "Wiki",
+    "none": "Em nenhum lugar",
+    "hint": "As sessões já arquivadas são publicadas pelo histórico.",
+    "noWiki": "Ainda não há nenhum wiki neste espaço.",
+    "addWiki": "Adicione um nas configurações do espaço",
+    "on": "A ata será publicada em {name}.",
+    "off": "A ata não é mais publicada."
+  },
+  "history": {
+    "publish": "Publicar em {name}",
+    "update": "Atualizar a página",
+    "open": "Abrir em {name}",
+    "publishing": "Publicando…",
+    "done": "Ata publicada em {name}.",
+    "failed": "A última publicação falhou. {error}",
+    "retry": "Tentar de novo"
+  },
+  "errors": {
+    "token": "O wiki recusou o token: verifique se está correto e ainda é válido.",
+    "notionPage": "O Notion não encontra a página principal: compartilhe-a com a integração (••• › Conexões).",
+    "notionParent": "A página principal não é o endereço de uma página do Notion.",
+    "confluenceSpace": "O Confluence não encontra o espaço ou a página principal, ou a conta não pode vê-los.",
+    "answer": "O wiki respondeu: {detail}.",
+    "network": "Não foi possível acessar o wiki: verifique o endereço."
+  }
+}

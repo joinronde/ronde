@@ -1,0 +1,15 @@
+{
+  "done": "Fait",
+  "toDo": "À faire",
+  "dragHint": "Glisser pour déplacer (ou Alt+↑ / Alt+↓)",
+  "markToDo": "Marquer comme à faire",
+  "markDone": "Marquer comme fait",
+  "itemLabel": "{section}, élément {n}",
+  "removeItem": "Retirer « {text} »",
+  "emptyItem": "élément vide",
+  "remove": "Retirer",
+  "addItem": "Ajouter un élément",
+  "addTaskFirst": "Ajouter une tâche · vide s'il n'y a rien",
+  "addItemFirst": "Ajouter un élément · vide s'il n'y a rien",
+  "freeTextPlaceholder": "{section} : en quelques phrases · vide s'il n'y a rien"
+}
