@@ -43,9 +43,13 @@ const oidc = env.oidc();
 
 /**
  * The company's own ways in, the only ones that open a session for an address of a domain requiring single
- * sign-on: its identity provider (workspace SSO, the instance's OIDC provider) and its directory
+ * sign-on: its identity provider (a workspace's SSO, or the instance's OIDC provider, which comes back through
+ * the same callback as Google) and its directory
  */
-const COMPANY_SIGN_IN = ["/sso/callback/", "/sso/saml2/sp/acs/", "/sso/saml2/callback/", "/oauth2/callback/", "/sign-in/ldap"];
+const COMPANY_SIGN_IN = ["/sso/callback/", "/sso/saml2/sp/acs/", "/sso/saml2/callback/", "/sign-in/ldap"];
+const companySignIn = (path: string, provider: unknown) =>
+  COMPANY_SIGN_IN.some((p) => path.startsWith(p)) ||
+  (path === "/callback/:id" && typeof provider === "string" && SSO_PROVIDERS.has(provider));
 
 /** The account behind an address protects its sign-in with a second factor */
 async function twoFactorOn(email: string): Promise<boolean> {
@@ -186,7 +190,7 @@ export const auth = betterAuth({
           // A domain requiring single sign-on: Google, GitHub, Microsoft, a passkey, an email link or a password
           // do not open a session, whichever endpoint creates it (sessions made inside the server have no path)
           const path = ctx?.path;
-          if (user && path && !COMPANY_SIGN_IN.some((p) => path.startsWith(p)) && (await ssoRequired(user.email)))
+          if (user && path && !companySignIn(path, (ctx?.params as { id?: unknown } | undefined)?.id) && (await ssoRequired(user.email)))
             throw new APIError("FORBIDDEN", { code: "SSO_REQUIRED", message: "SSO_REQUIRED" });
           // A link asked for before the second factor was turned on does not get around it
           if (user?.twoFactorEnabled && path === "/magic-link/verify")
