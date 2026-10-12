@@ -15,7 +15,8 @@
     "signingKey": "हस्ताक्षर कुंजी",
     "accountSid": "Twilio Account SID",
     "from": "भेजने वाला नंबर",
-    "authToken": "Twilio Auth Token"
+    "authToken": "Twilio Auth Token",
+    "contentSid": "WhatsApp टेम्पलेट (वैकल्पिक)"
   },
   "help": {
     "email": "इस इंस्टेंस के मेल सर्वर (SMTP_URL) से भेजता है। हर मीटिंग चुनती है कि संदेश किसे मिलें: उसके प्रतिभागियों को या होस्ट को।",
@@ -26,7 +27,7 @@
     "mattermost": "इंटीग्रेशन › इनकमिंग वेबहुक › जोड़ें, फिर उसका पता चिपकाएँ।",
     "webhook": "Ronde हर घटना के लिए हस्ताक्षरित JSON POST भेजता है (हेडर X-Ronde-Event, X-Ronde-Delivery, X-Ronde-Timestamp, X-Ronde-Signature)।",
     "sms": "Twilio के ज़रिए लोगों के मोबाइल नंबरों पर SMS भेजता है, जैसे उनकी प्रोफ़ाइल में दर्ज हैं। Account SID और auth token: Twilio कंसोल › Account info।",
-    "whatsapp": "Twilio के ज़रिए लोगों के मोबाइल नंबरों पर WhatsApp संदेश भेजता है। भेजने वाला Twilio में स्वीकृत WhatsApp प्रेषक होना चाहिए; व्यक्ति द्वारा शुरू न की गई बातचीत में WhatsApp स्वीकृत टेम्पलेट माँग सकता है।"
+    "whatsapp": "Twilio के ज़रिए लोगों के मोबाइल नंबर पर WhatsApp संदेश भेजता है। भेजने वाला Twilio में स्वीकृत WhatsApp प्रेषक होना चाहिए, और WhatsApp किसी कारोबार को पहले संदेश केवल Meta से स्वीकृत टेम्पलेट के साथ भेजने देता है: नीचे उसका Content SID डालें।"
   },
   "kinds": {
     "email": "ईमेल",
@@ -59,5 +60,6 @@
   "noSecretKey": "सर्वर पर कोई एन्क्रिप्शन कुंजी (SECRET_KEY) नहीं है: केवल ईमेल कनेक्टर जोड़े जा सकते हैं। टोकन और वेबहुक पते सहेजने के लिए SECRET_KEY सेट करें।",
   "fromHint": "अंतरराष्ट्रीय प्रारूप में, जैसा Twilio में ख़रीदा या स्वीकृत हुआ है।",
   "testSentPhone": "जाँच संदेश आपके मोबाइल नंबर पर भेजा गया।",
-  "paidKind": "{kind} (Team)"
+  "paidKind": "{kind} (Team)",
+  "contentSidHint": "Meta से स्वीकृत टेम्पलेट का Content SID (Twilio › Content Template Builder), दो वेरिएबल के साथ: पहला संदेश के लिए, दूसरा लिंक के लिए। उन लोगों को लिखने के लिए ज़रूरी जिन्होंने पिछले 24 घंटों में नहीं लिखा।"
 }

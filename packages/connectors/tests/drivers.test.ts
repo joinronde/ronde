@@ -152,6 +152,23 @@ describe("SMS and WhatsApp (Twilio)", () => {
       `Basic ${Buffer.from(`${config.accountSid}:${"t".repeat(32)}`).toString("base64")}`,
     );
   });
+  it("sends WhatsApp as the approved template when there is one: the message and the link as its variables", async () => {
+    const { fetch, calls } = fakeFetch(201);
+    const contentSid = `HX${"b".repeat(32)}`;
+    await DRIVERS.whatsapp.send(
+      out,
+      { config: { ...config, contentSid }, secret: "t".repeat(32), target: { to: ["+33611111111"] } },
+      { fetch },
+    );
+    const form = new URLSearchParams(String(calls[0]!.init.body));
+    expect(form.get("ContentSid")).toBe(contentSid);
+    expect(form.get("Body")).toBeNull();
+    const variables = JSON.parse(form.get("ContentVariables")!) as Record<string, string>;
+    expect(variables["2"]).toBe(out.meeting.url);
+    expect(variables["1"]).not.toMatch(/\n/);
+    expect(DRIVERS.whatsapp.config.safeParse({ ...config, contentSid: "nope" }).success).toBe(false);
+    expect(DRIVERS.whatsapp.config.safeParse({ ...config, contentSid: "" }).success).toBe(true);
+  });
   it("checks the account and the sender number", () => {
     expect(DRIVERS.sms.config.safeParse({ accountSid: "nope", from: "+33600000000" }).success).toBe(false);
     expect(DRIVERS.sms.config.safeParse({ accountSid: config.accountSid, from: "0612345678" }).success).toBe(false);

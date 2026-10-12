@@ -32,9 +32,9 @@
     "facilitation": "Все модули фасилитации",
     "notifications": "Уведомления по почте, в чатах и через вебхуки",
     "formats": "Ретроспективы, покер планирования, асинхронные встречи",
-    "workflows": "Конструктор сценариев",
+    "workflows": "Сценарии уведомлений: условия и свои сообщения",
     "aiAssistant": "ИИ-ассистент: итоги и задачи",
-    "transcription": "Расшифровка сессий по выступлениям"
+    "transcription": "Расшифровка сессий по очереди круга"
   },
   "integrations": {
     "gitlab": "Импорт из GitLab",
@@ -42,7 +42,7 @@
     "video": "Видеозвонки: любая ссылка, Jitsi, BigBlueButton",
     "api": "REST API и исходящие вебхуки",
     "writeBack": "Тикеты в Jira, Linear, GitLab и GitHub из задач",
-    "videoLinks": "Автоматические ссылки Zoom, Google Meet и Teams",
+    "videoLinks": "Комнаты Zoom, Google Meet и Teams в один клик",
     "sms": "Напоминания по SMS и WhatsApp (Twilio)",
     "slack": "Приложение Slack: карточки заполняются в Slack, протоколы в канале, /ronde",
     "wikis": "Протоколы в Notion и Confluence",
@@ -62,7 +62,7 @@
   },
   "compliance": {
     "auditLog": "Журнал аудита за последние 90 дней с экспортом в CSV",
-    "auditStream": "Полная история аудита с передачей в ваш SIEM",
+    "auditStream": "Полная история аудита, новые записи передаются в ваш SIEM",
     "retention": "Правила хранения данных"
   },
   "projects": {

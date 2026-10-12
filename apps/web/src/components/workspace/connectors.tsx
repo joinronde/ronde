@@ -11,7 +11,7 @@ import type { ConnectorView } from "@/lib/server/notify/connectors";
 import { track } from "@/lib/shared/track";
 import type { useConfirm } from "./confirm";
 
-type ConfigField = "homeserver" | "url" | "accountSid" | "from";
+type ConfigField = "homeserver" | "url" | "accountSid" | "from" | "contentSid";
 /** What each kind needs: a homeserver and a token, a webhook address, a Twilio account and number… */
 const NEEDS: Record<ConnectorKind, { config?: ConfigField[]; secret?: "token" | "webhookUrl" | "signingKey" | "authToken" }> = {
   email: {},
@@ -22,14 +22,17 @@ const NEEDS: Record<ConnectorKind, { config?: ConfigField[]; secret?: "token" | 
   mattermost: { secret: "webhookUrl" },
   webhook: { config: ["url"], secret: "signingKey" },
   sms: { config: ["accountSid", "from"], secret: "authToken" },
-  whatsapp: { config: ["accountSid", "from"], secret: "authToken" },
+  whatsapp: { config: ["accountSid", "from", "contentSid"], secret: "authToken" },
 };
 const PLACEHOLDER: Record<ConfigField, string> = {
   homeserver: "https://matrix.example.org",
   url: "https://example.org/hooks/ronde",
   accountSid: "AC…",
   from: "+33612345678",
+  contentSid: "HX…",
 };
+/** Fields one may leave empty: WhatsApp's template */
+const OPTIONAL: ConfigField[] = ["contentSid"];
 const PAID: ConnectorKind[] = ["sms", "whatsapp"];
 
 interface Draft {
@@ -199,12 +202,17 @@ export function ConnectorsSection({
             )}
           </Field>
           {needs.config?.map((f) => (
-            <Field key={f} label={t(`fields.${f}`)} hint={f === "from" ? t("fromHint") : undefined}>
+            <Field
+              key={f}
+              label={t(`fields.${f}`)}
+              hint={f === "from" ? t("fromHint") : f === "contentSid" ? t("contentSidHint") : undefined}
+            >
               {(p) => (
                 <input
                   {...p}
-                  type={f === "from" ? "tel" : f === "accountSid" ? "text" : "url"}
-                  required
+                  type={f === "from" ? "tel" : f === "accountSid" || f === "contentSid" ? "text" : "url"}
+                  dir="ltr"
+                  required={!OPTIONAL.includes(f)}
                   placeholder={PLACEHOLDER[f]}
                   value={draft.config[f] ?? ""}
                   onChange={(e) => setDraft({ ...draft, config: { ...draft.config, [f]: e.target.value } })}

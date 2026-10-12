@@ -1,4 +1,5 @@
 import { dirOf, type Locale, translator } from "@ronde/i18n";
+import type { EmailBrand } from "./notifications";
 
 export type AuthEmailKind = "verify" | "magicLink" | "resetPassword" | "invitation";
 
@@ -7,7 +8,13 @@ const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&
 /** Account emails (verification, sign-in link, password reset, invitation), in the recipient's language */
 export function authEmail(
   kind: AuthEmailKind,
-  { url, locale, workspace = "", inviter = "" }: { url: string; locale: Locale; workspace?: string; inviter?: string },
+  {
+    url,
+    locale,
+    workspace = "",
+    inviter = "",
+    brand = null,
+  }: { url: string; locale: Locale; workspace?: string; inviter?: string; brand?: EmailBrand | null },
 ): { subject: string; text: string; html: string } {
   const t = translator(locale, "emails");
   const values = { workspace, inviter };
@@ -24,7 +31,12 @@ export function authEmail(
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#FBF6EC"><tr><td align="center" style="padding:20px 12px">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background-color:#FFFFFF;border:1px solid #E9DCC4;border-top:4px solid #B53B0A;border-radius:14px">
 <tr><td style="padding:24px">
-<p style="margin:0 0 18px;font-size:22px;font-weight:bold;letter-spacing:-1px">Ronde</p>
+${
+  // A workspace with its own logo (Team) invites under it
+  brand
+    ? `<img src="${esc(brand.logo)}" alt="${esc(brand.name)}" height="40" style="display:block;border:0;height:40px;width:auto;max-width:160px;margin:0 0 18px">`
+    : `<p style="margin:0 0 18px;font-size:22px;font-weight:bold;letter-spacing:-1px">Ronde</p>`
+}
 <h1 style="margin:0 0 12px;font-size:22px;line-height:1.3">${esc(subject)}</h1>
 <p style="margin:0 0 20px">${esc(intro)}</p>
 <table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 0 16px"><tr><td bgcolor="#B53B0A" style="border-radius:8px"><a href="${esc(url)}" style="display:inline-block;padding:12px 22px;border-radius:8px;background-color:#B53B0A;color:#FFFFFF;font-weight:bold;text-decoration:none">${esc(action)} ${dir === "rtl" ? "←" : "→"}</a></td></tr></table>

@@ -247,12 +247,14 @@ ricevuti. Viene inviato solo se contiene qualcosa; ognuno lo disattiva nel propr
 fondo all'email. Su un'istanza self-hosted serve `SMTP_URL`; `RONDE_WEEKLY_PER_RUN` (150 di default) limita
 gli invii per ora, gli altri partono l'ora successiva.
 
-Con Team, il costruttore di workflow aggiunge condizioni e le tue parole a ogni messaggio, e altri due
+Con Team, i workflow di notifica aggiungono condizioni e le tue parole a ogni messaggio, e altri due
 connettori inviano **SMS** e messaggi **WhatsApp** tramite Twilio: inserisci l'Account SID, il numero mittente
-e l'auth token. I messaggi vanno ai numeri di cellulare che le persone inseriscono nel profilo (formato
-internazionale, +39…), e mai alle persone assenti. Per WhatsApp, il mittente deve essere approvato in Twilio;
-al di fuori di una conversazione avviata dalla persona, WhatsApp può richiedere un modello di messaggio
-approvato.
+e l'auth token. I messaggi vanno ai numeri di cellulare che le persone indicano nel profilo (formato
+internazionale, +39…), mai alle persone assenti. Per WhatsApp, il mittente deve essere approvato in Twilio, e
+WhatsApp permette a un'azienda di scrivere per prima solo con un modello approvato da Meta: creane uno nel
+Content Template Builder di Twilio con due variabili (il messaggio, poi il link) e inserisci il suo Content
+SID nel connettore. Quando uno spazio di lavoro lascia Team, questi messaggi si fermano e il registro di ogni
+riunione dice perché.
 
 **Scheda via email**: quando l'istanza legge una casella (`INBOUND_IMAP_URL`, vedi la guida al self-hosting), il promemoria dice che basta rispondere. Il nome di ogni sezione su una riga, i punti sotto: le righe vengono aggiunte alla scheda della persona (senza sostituire nulla) e un'email conferma cosa è stato aggiunto. Contano solo le risposte dall'indirizzo del promemoria (o da quello dell'account della persona), per 14 giorni; osservatori e riunione di esempio sono esclusi.
 
@@ -324,7 +326,7 @@ Con Team, l'**assistente IA** scrive la sintesi di una sessione e propone azioni
 rivede tutto prima del salvataggio. Usa una chiave API di Anthropic: quella dell'istanza
 (`ANTHROPIC_API_KEY`) o quella dello spazio di lavoro.
 
-Le **trascrizioni** trasformano in testo ciò che si dice durante una sessione, turno per turno. Richiedono
+Le **trascrizioni** trasformano in testo ciò che si dice durante una sessione, ordinato per turno del giro di tavolo (ciò che si dice fuori dal giro non è attribuito a nessuno). Richiedono
 un servizio di trascrizione: OpenAI, oppure un tuo server Whisper (il profilo `whisper` del file Compose ne
 avvia uno sulla stessa macchina). Ogni riunione deve consentirle nelle sue impostazioni, tutti vedono un
 banner mentre una sessione è registrata, e ogni persona può escludere i propri turni. L'audio viene

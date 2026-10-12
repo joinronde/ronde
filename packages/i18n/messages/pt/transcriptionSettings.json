@@ -1,6 +1,6 @@
 {
   "title": "Transcrição",
-  "intro": "Transforma em texto o que é dito durante uma sessão, vez por vez, para a ata e o assistente de IA. Cada reunião permite isso nas próprias configurações.",
+  "intro": "Transforma em texto o que é dito durante uma sessão, organizado por vez da rodada, para a ata e o assistente de IA. Cada reunião permite isso nas próprias configurações.",
   "enable": "Ativar a transcrição",
   "url": "Serviço de voz para texto",
   "urlHint": "Deixe vazio para OpenAI. Um servidor Whisper auto-hospedado (faster-whisper-server, speaches…) também funciona: o endereço termina em /v1.",

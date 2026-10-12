@@ -32,9 +32,9 @@
     "facilitation": "Todos los módulos de dinamización",
     "notifications": "Notificaciones por correo, chat y webhooks",
     "formats": "Retrospectivas, planning poker, reuniones asíncronas",
-    "workflows": "Constructor de flujos de trabajo",
+    "workflows": "Flujos de notificación: condiciones y mensajes propios",
     "aiAssistant": "Asistente de IA: resúmenes y acciones",
-    "transcription": "Transcripción de las sesiones, turno por turno"
+    "transcription": "Transcripción de las sesiones, ordenada por turno de la ronda"
   },
   "integrations": {
     "gitlab": "Importación desde GitLab",
@@ -42,7 +42,7 @@
     "video": "Videollamadas: cualquier enlace, Jitsi, BigBlueButton",
     "api": "API REST y webhooks salientes",
     "writeBack": "Tickets en Jira, Linear, GitLab y GitHub a partir de las acciones",
-    "videoLinks": "Enlaces de Zoom, Google Meet y Teams creados automáticamente",
+    "videoLinks": "Salas de Zoom, Google Meet y Teams creadas con un clic",
     "sms": "Recordatorios por SMS y WhatsApp (Twilio)",
     "slack": "App de Slack: fichas rellenadas desde Slack, actas en el canal, /ronde",
     "wikis": "Actas publicadas en Notion y Confluence",
@@ -62,7 +62,7 @@
   },
   "compliance": {
     "auditLog": "Registro de auditoría de los últimos 90 días, con exportación CSV",
-    "auditStream": "Historial de auditoría completo, enviado a tu SIEM",
+    "auditStream": "Historial de auditoría completo, y entradas nuevas enviadas a tu SIEM",
     "retention": "Reglas de conservación de datos"
   },
   "projects": {

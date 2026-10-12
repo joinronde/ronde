@@ -8,6 +8,7 @@ import { prisma } from "@ronde/db";
 import { isLocale, type Locale, resolveLocale } from "@ronde/i18n";
 import type { CurrentUser, WorkspaceContext, WorkspaceSettings } from "./authz";
 import { billingOn } from "./billing";
+import { emailBrand } from "./branding";
 import { env } from "./env";
 import { AccessError, OpError } from "./errors";
 import { guessHolidays, isHolidayCode } from "./holidays";
@@ -286,7 +287,13 @@ export async function invite(
   const locale = resolveLocale(ctx.workspace.locale, (await instanceSettings()).defaultLocale);
   await sendEmail({
     to: data.email,
-    ...authEmail("invitation", { url, locale, workspace: ctx.workspace.name, inviter: ctx.user.name || ctx.user.email }),
+    ...authEmail("invitation", {
+      url,
+      locale,
+      workspace: ctx.workspace.name,
+      inviter: ctx.user.name || ctx.user.email,
+      brand: await emailBrand(ctx.workspace.id),
+    }),
   });
   return { url, emailed: !!env.smtpUrl() };
 }

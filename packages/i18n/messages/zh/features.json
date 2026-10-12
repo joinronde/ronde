@@ -32,9 +32,9 @@
     "facilitation": "所有引导模块",
     "notifications": "邮件、聊天和 Webhook 通知",
     "formats": "回顾会、计划扑克、异步会议",
-    "workflows": "工作流构建器",
+    "workflows": "通知工作流：条件与自定义消息",
     "aiAssistant": "AI 助手：总结与行动项",
-    "transcription": "按发言轮次转写会议"
+    "transcription": "会议转写，按轮流发言排列"
   },
   "integrations": {
     "gitlab": "从 GitLab 导入",
@@ -42,7 +42,7 @@
     "video": "视频通话：任意链接、Jitsi、BigBlueButton",
     "api": "REST API 和外发 Webhook",
     "writeBack": "根据行动项在 Jira、Linear、GitLab 和 GitHub 中创建工单",
-    "videoLinks": "自动创建 Zoom、Google Meet 和 Teams 链接",
+    "videoLinks": "一键创建 Zoom、Google Meet 和 Teams 会议室",
     "sms": "短信和 WhatsApp 提醒（Twilio）",
     "slack": "Slack 应用：在 Slack 中填写进展卡，纪要发到频道，/ronde",
     "wikis": "会议纪要发布到 Notion 和 Confluence",
@@ -62,7 +62,7 @@
   },
   "compliance": {
     "auditLog": "最近 90 天的审计日志，可导出 CSV",
-    "auditStream": "完整审计历史，可推送到你的 SIEM",
+    "auditStream": "完整审计历史，新记录推送到你的 SIEM",
     "retention": "数据保留规则"
   },
   "projects": {

@@ -1,6 +1,6 @@
 {
   "title": "Transcription",
-  "intro": "Transforme ce qui est dit pendant une séance en texte, tour par tour, pour le compte rendu et l'assistant IA. Chaque réunion l'autorise dans ses propres réglages.",
+  "intro": "Transforme ce qui est dit pendant une séance en texte, rangé par tour de table, pour le compte rendu et l'assistant IA. Chaque réunion l'autorise dans ses propres réglages.",
   "enable": "Activer la transcription",
   "url": "Service de transcription",
   "urlHint": "Laissez vide pour OpenAI. Un serveur Whisper auto-hébergé (faster-whisper-server, speaches…) fonctionne aussi : son adresse se termine par /v1.",

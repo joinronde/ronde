@@ -153,7 +153,8 @@ export function toPhoneText(m: RichMessage, url: string): string {
 }
 
 // SMS and WhatsApp through Twilio's Messages API. WhatsApp: the sender must be a WhatsApp sender approved in
-// Twilio, and messages outside a conversation the person started may need an approved template there.
+// Twilio, and WhatsApp only lets a business write first with a template Meta approved: with its Content SID, the
+// message goes as that template, its first variable the message and its second the link.
 const twilio = (kind: "sms" | "whatsapp"): Driver => ({
   kind,
   config: z.object({
@@ -162,6 +163,15 @@ const twilio = (kind: "sms" | "whatsapp"): Driver => ({
       .trim()
       .regex(/^AC[0-9a-fA-F]{32}$/, "A Twilio Account SID starts with AC"),
     from: z.string().trim().regex(PHONE_NUMBER, "An international number like +33612345678"),
+    ...(kind === "whatsapp"
+      ? {
+          contentSid: z
+            .string()
+            .trim()
+            .regex(/^(HX[0-9a-fA-F]{32})?$/, "A Twilio Content SID starts with HX")
+            .optional(),
+        }
+      : {}),
   }),
   secret: z.string().trim().min(16).max(200),
   target: z.object({ to: z.array(z.string().regex(PHONE_NUMBER)).max(500) }),
@@ -170,12 +180,20 @@ const twilio = (kind: "sms" | "whatsapp"): Driver => ({
     if (!to.length) return;
     const sid = String(config.accountSid);
     const prefix = kind === "whatsapp" ? "whatsapp:" : "";
-    const body = toPhoneText(out.message, out.meeting.url);
+    const template = kind === "whatsapp" && config.contentSid ? String(config.contentSid) : "";
+    // A template's variables hold one line each (WhatsApp refuses line breaks and long runs of spaces there)
+    const oneLine = (s: string) => s.replace(/\s+/g, " ").trim().slice(0, 1000);
+    const content: Record<string, string> = template
+      ? {
+          ContentSid: template,
+          ContentVariables: JSON.stringify({ 1: oneLine(toText(out.message)) || out.message.summary, 2: out.meeting.url || " " }),
+        }
+      : { Body: toPhoneText(out.message, out.meeting.url) };
     for (const number of to)
       await post(
         ctx,
         `https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`,
-        new URLSearchParams({ To: `${prefix}${number}`, From: `${prefix}${config.from}`, Body: body }).toString(),
+        new URLSearchParams({ To: `${prefix}${number}`, From: `${prefix}${config.from}`, ...content }).toString(),
         {
           "Content-Type": "application/x-www-form-urlencoded",
           Authorization: `Basic ${Buffer.from(`${sid}:${secret}`).toString("base64")}`,

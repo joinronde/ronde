@@ -67,8 +67,8 @@
       "description": "Die aktuellen Issues und Merge Requests jeder Person, zum Import in ihren Check-in."
     },
     "workflows": {
-      "name": "Workflow-Builder",
-      "description": "Eigene Auslöser, Bedingungen und Nachrichten an Slack, Teams, Matrix oder per E-Mail."
+      "name": "Benachrichtigungs-Workflows",
+      "description": "Sende eine Benachrichtigung nur, wenn ihre Bedingungen erfüllt sind, in deinen eigenen Worten, an Slack, Teams, Matrix oder per E-Mail."
     },
     "aiAssistant": {
       "name": "KI-Assistent",

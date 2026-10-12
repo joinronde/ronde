@@ -250,12 +250,14 @@ den Link am Ende der E-Mail ab. Auf einer selbst gehosteten Instanz braucht sie 
 `RONDE_WEEKLY_PER_RUN` (standardmäßig 150) begrenzt die Mails pro Stunde, der Rest geht in der nächsten
 Stunde.
 
-Mit Team ergänzt der Workflow-Builder jede Nachricht um Bedingungen und eigene Formulierungen, und zwei
-weitere Connectors verschicken **SMS** und **WhatsApp**-Nachrichten über Twilio: Trag die Account SID, die
-Absendernummer und den Auth Token ein. Die Nachrichten gehen an die Handynummern, die Personen in ihrem
-Profil eintragen (internationales Format, +49…), und nie an abwesende Personen. Bei WhatsApp muss der
-Absender in Twilio freigegeben sein; außerhalb einer von der Person begonnenen Unterhaltung kann WhatsApp
-eine freigegebene Nachrichtenvorlage verlangen.
+Mit Team ergänzen Benachrichtigungs-Workflows jede Nachricht um Bedingungen und eigene Formulierungen, und
+zwei weitere Connectoren senden **SMS** und **WhatsApp**-Nachrichten über Twilio: Trag die Account SID, die
+Absendernummer und das Auth Token ein. Die Nachrichten gehen an die Mobilnummern, die Personen in ihrem Profil
+angeben (internationales Format, +49…), nie an abwesende Personen. Für WhatsApp muss der Absender in Twilio
+genehmigt sein, und WhatsApp lässt ein Unternehmen nur mit einer von Meta genehmigten Vorlage zuerst
+schreiben: Leg im Content Template Builder von Twilio eine mit zwei Variablen an (die Nachricht, dann der
+Link) und trag ihre Content SID im Connector ein. Verlässt ein Arbeitsbereich Team, hören diese Nachrichten
+auf, und das Protokoll jedes Meetings sagt warum.
 
 **Check-in per E-Mail**: Wenn die Instanz ein Postfach liest (`INBOUND_IMAP_URL`, siehe die Anleitung zum Selbsthosten), sagt die Erinnerung, dass eine Antwort genügt. Der Name jedes Abschnitts in einer Zeile, die Punkte darunter: Die Zeilen werden dem Check-in der Person hinzugefügt (ohne etwas zu ersetzen), und eine E-Mail bestätigt, was hinzukam. Es zählen nur Antworten von der Adresse der Erinnerung (oder der des Kontos der Person), 14 Tage lang; Beobachter und das Beispiel-Meeting sind ausgenommen.
 
@@ -329,7 +331,7 @@ Mit Team entwirft der **KI-Assistent** die Zusammenfassung einer Sitzung und sch
 Moderation prüft alles, bevor es gespeichert wird. Er nutzt einen API-Schlüssel von Anthropic: den der
 Instanz (`ANTHROPIC_API_KEY`) oder den des Arbeitsbereichs.
 
-**Transkripte** machen aus dem, was in einer Sitzung gesagt wird, Text, Beitrag für Beitrag. Sie brauchen
+**Transkripte** machen aus dem, was in einer Sitzung gesagt wird, Text, nach den Beiträgen der Runde geordnet (was außerhalb der Runde gesagt wird, ist niemandem zugeordnet). Sie brauchen
 einen Sprache-zu-Text-Dienst: OpenAI oder einen eigenen Whisper-Server (das Profil `whisper` der
 Compose-Datei startet einen auf demselben Rechner). Jedes Meeting muss sie in seinen Einstellungen
 erlauben, alle sehen ein Banner, solange eine Sitzung aufgenommen wird, und jede Person kann ihre Beiträge

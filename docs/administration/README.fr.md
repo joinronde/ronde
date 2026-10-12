@@ -251,12 +251,14 @@ reçus. Il n'est envoyé que s'il contient quelque chose ; chacun le désactive 
 en bas de l'e-mail. Sur une instance auto-hébergée, il faut `SMTP_URL` ; `RONDE_WEEKLY_PER_RUN` (150 par
 défaut) limite les envois par heure, les autres partent l'heure suivante.
 
-Avec Team, le constructeur de workflows ajoute des conditions et vos propres formulations à chaque message,
-et deux connecteurs de plus envoient des **SMS** et des messages **WhatsApp** via Twilio : saisissez
-l'Account SID, le numéro d'envoi et l'auth token. Les messages partent vers les numéros de mobile que les
-personnes saisissent sur leur profil (format international, +33…), et jamais vers les personnes absentes.
-Pour WhatsApp, l'expéditeur doit être approuvé dans Twilio ; en dehors d'une conversation lancée par la
-personne, WhatsApp peut exiger un modèle de message approuvé.
+Avec Team, les workflows de notification ajoutent des conditions et vos propres formulations à chaque message,
+et deux connecteurs de plus envoient des **SMS** et des messages **WhatsApp** via Twilio : saisissez l'Account
+SID, le numéro d'envoi et l'auth token. Les messages partent vers les numéros de mobile que les personnes
+indiquent dans leur profil (format international, +33…), jamais vers les personnes absentes. Pour WhatsApp,
+l'expéditeur doit être approuvé dans Twilio, et WhatsApp ne laisse une entreprise écrire en premier qu'avec un
+modèle approuvé par Meta : créez-en un dans le Content Template Builder de Twilio avec deux variables (le
+message, puis le lien) et saisissez son Content SID dans le connecteur. Quand un espace quitte Team, ces
+messages s'arrêtent et le journal de chaque réunion dit pourquoi.
 
 **Fiche par e-mail** : quand l'instance lit une boîte (`INBOUND_IMAP_URL`, voir le guide d'auto-hébergement), la relance indique qu'on peut y répondre. Le nom de chaque rubrique sur une ligne, les éléments en dessous : les lignes s'ajoutent à la fiche de la personne (sans rien remplacer), et un e-mail confirme ce qui a été ajouté. Seules comptent les réponses venant de l'adresse de la relance (ou de celle du compte de la personne), pendant 14 jours ; les observateurs et la réunion d'exemple sont exclus.
 
@@ -329,7 +331,7 @@ Avec Team, l'**assistant IA** rédige la synthèse d'une séance et propose des 
 régisseur relit tout avant l'enregistrement. Il utilise une clé d'API Anthropic : celle de l'instance
 (`ANTHROPIC_API_KEY`) ou celle de l'espace de travail.
 
-Les **transcriptions** transforment en texte ce qui est dit pendant une séance, tour par tour. Elles
+Les **transcriptions** transforment en texte ce qui est dit pendant une séance, rangé par tour de table (ce qui est dit hors du tour de table n'est attribué à personne). Elles
 nécessitent un service de reconnaissance vocale : OpenAI, ou votre propre serveur Whisper (le profil
 `whisper` du fichier Compose en lance un sur la même machine). Chaque réunion doit les autoriser dans ses
 réglages, tout le monde voit un bandeau pendant qu'une séance est enregistrée, et chaque personne peut

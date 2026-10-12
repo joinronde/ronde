@@ -32,9 +32,9 @@
     "facilitation": "सभी संचालन मॉड्यूल",
     "notifications": "ईमेल, चैट और वेबहुक पर सूचनाएँ",
     "formats": "रेट्रोस्पेक्टिव, प्लानिंग पोकर, एसिंक मीटिंग",
-    "workflows": "वर्कफ़्लो बिल्डर",
+    "workflows": "सूचना वर्कफ़्लो: शर्तें और आपके अपने संदेश",
     "aiAssistant": "AI सहायक: सारांश और कार्य",
-    "transcription": "सत्रों का ट्रांसक्रिप्ट, बारी-बारी से"
+    "transcription": "सत्रों का ट्रांसक्रिप्ट, राउंड की बारी के अनुसार"
   },
   "integrations": {
     "gitlab": "GitLab से आयात",
@@ -42,7 +42,7 @@
     "video": "वीडियो कॉल: कोई भी लिंक, Jitsi, BigBlueButton",
     "api": "REST API और आउटगोइंग वेबहुक",
     "writeBack": "कार्यों से Jira, Linear, GitLab और GitHub में टिकट",
-    "videoLinks": "Zoom, Google Meet और Teams लिंक अपने आप बनते हैं",
+    "videoLinks": "एक क्लिक में बने Zoom, Google Meet और Teams रूम",
     "sms": "SMS और WhatsApp रिमाइंडर (Twilio)",
     "slack": "Slack ऐप: Slack से चेक-इन भरें, चैनल में कार्यवृत्त, /ronde",
     "wikis": "कार्यवृत्त Notion और Confluence में प्रकाशित",
@@ -62,7 +62,7 @@
   },
   "compliance": {
     "auditLog": "पिछले 90 दिनों का ऑडिट लॉग, CSV निर्यात के साथ",
-    "auditStream": "पूरा ऑडिट इतिहास, आपके SIEM पर भेजा गया",
+    "auditStream": "पूरा ऑडिट इतिहास, और नई प्रविष्टियाँ आपके SIEM पर भेजी जाती हैं",
     "retention": "डेटा प्रतिधारण नियम"
   },
   "projects": {

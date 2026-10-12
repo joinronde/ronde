@@ -1,6 +1,6 @@
 {
   "title": "Transcription",
-  "intro": "Turns what is said during a session into text, turn by turn, for the minutes and the AI assistant. Each meeting allows it in its own settings.",
+  "intro": "Turns what is said during a session into text, filed under each round-table turn, for the minutes and the AI assistant. Each meeting allows it in its own settings.",
   "enable": "Turn on transcription",
   "url": "Speech-to-text service",
   "urlHint": "Leave empty for OpenAI. A self-hosted Whisper server (faster-whisper-server, speaches…) works too: its address ends with /v1.",

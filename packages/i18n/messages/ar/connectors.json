@@ -15,7 +15,8 @@
     "signingKey": "مفتاح التوقيع",
     "accountSid": "Twilio Account SID",
     "from": "رقم المُرسِل",
-    "authToken": "Twilio Auth Token"
+    "authToken": "Twilio Auth Token",
+    "contentSid": "قالب WhatsApp (اختياري)"
   },
   "help": {
     "email": "يرسل عبر خادم البريد لهذه النسخة (SMTP_URL). يختار كل اجتماع من يتلقى الرسائل: مشاركوه أو مضيفوه.",
@@ -26,7 +27,7 @@
     "mattermost": "عمليات الدمج › Webhooks الواردة › إضافة، ثم الصق عنوانه.",
     "webhook": "يرسل Ronde طلب POST بصيغة JSON موقّعًا لكل حدث (الترويسات X-Ronde-Event وX-Ronde-Delivery وX-Ronde-Timestamp وX-Ronde-Signature).",
     "sms": "يرسل رسائل SMS عبر Twilio إلى أرقام جوال الأشخاص كما هي في ملفاتهم الشخصية. Account SID وauth token: لوحة Twilio › Account info.",
-    "whatsapp": "يرسل رسائل WhatsApp عبر Twilio إلى أرقام جوال الأشخاص. يجب أن يكون المُرسِل مُرسِل WhatsApp معتمدًا في Twilio؛ وخارج محادثة بدأها الشخص، قد يتطلب WhatsApp قالبًا معتمدًا."
+    "whatsapp": "يرسل رسائل WhatsApp عبر Twilio إلى أرقام هواتف الأشخاص. يجب أن يكون المرسل مرسل WhatsApp معتمدًا في Twilio، ولا يسمح WhatsApp لشركة بأن تبدأ المراسلة إلا بقالب وافقت عليه Meta: أضف معرّف Content SID الخاص به أدناه."
   },
   "kinds": {
     "email": "البريد الإلكتروني",
@@ -59,5 +60,6 @@
   "noSecretKey": "لا يملك الخادم مفتاح تشفير (SECRET_KEY): لا يمكن إضافة سوى موصلات البريد. عيّن SECRET_KEY لحفظ الرموز وعناوين Webhook.",
   "fromHint": "بالصيغة الدولية، كما اشتُري أو اعتُمد في Twilio.",
   "testSentPhone": "أُرسلت رسالة الاختبار إلى رقم جوالك.",
-  "paidKind": "{kind} (Team)"
+  "paidKind": "{kind} (Team)",
+  "contentSidHint": "معرّف Content SID لقالب وافقت عليه Meta ‏(Twilio › Content Template Builder) بمتغيّرين: الأول للرسالة والثاني للرابط. لازم لمراسلة من لم يكتبوا خلال آخر 24 ساعة."
 }

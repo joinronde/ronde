@@ -15,7 +15,8 @@
     "signingKey": "Chiave di firma",
     "accountSid": "Account SID di Twilio",
     "from": "Numero mittente",
-    "authToken": "Auth token di Twilio"
+    "authToken": "Auth token di Twilio",
+    "contentSid": "Modello WhatsApp (facoltativo)"
   },
   "help": {
     "email": "Invia tramite il server di posta di questa istanza (SMTP_URL). Ogni riunione sceglie chi riceve i messaggi: i partecipanti o chi conduce.",
@@ -26,7 +27,7 @@
     "mattermost": "Integrazioni › Webhook in entrata › Aggiungi, poi incolla il suo indirizzo.",
     "webhook": "Ronde invia un POST JSON firmato per ogni evento (intestazioni X-Ronde-Event, X-Ronde-Delivery, X-Ronde-Timestamp, X-Ronde-Signature).",
     "sms": "Invia SMS tramite Twilio ai numeri di cellulare delle persone, come inseriti nel loro profilo. Account SID e auth token: console Twilio › Account info.",
-    "whatsapp": "Invia messaggi WhatsApp tramite Twilio ai numeri di cellulare delle persone. Il mittente deve essere un mittente WhatsApp approvato in Twilio; al di fuori di una conversazione avviata dalla persona, WhatsApp può richiedere un modello approvato."
+    "whatsapp": "Invia messaggi WhatsApp tramite Twilio ai numeri di cellulare delle persone. Il mittente deve essere un mittente WhatsApp approvato in Twilio, e WhatsApp permette a un'azienda di scrivere per prima solo con un modello approvato da Meta: aggiungi qui sotto il suo Content SID."
   },
   "kinds": {
     "email": "Email",
@@ -59,5 +60,6 @@
   "noSecretKey": "Il server non ha una chiave di cifratura (SECRET_KEY): si possono aggiungere solo connettori email. Imposta SECRET_KEY per conservare token e indirizzi di webhook.",
   "fromHint": "In formato internazionale, come acquistato o approvato in Twilio.",
   "testSentPhone": "Messaggio di prova inviato al tuo cellulare.",
-  "paidKind": "{kind} (Team)"
+  "paidKind": "{kind} (Team)",
+  "contentSidHint": "Il Content SID di un modello approvato da Meta (Twilio › Content Template Builder), con due variabili: la prima per il messaggio, la seconda per il link. Necessario per scrivere a chi non ha scritto nelle ultime 24 ore."
 }

@@ -67,8 +67,8 @@
       "description": "每个人最近的 issue 和合并请求，可导入其进展卡。"
     },
     "workflows": {
-      "name": "工作流构建器",
-      "description": "自定义触发器、条件和消息，发送到 Slack、Teams、Matrix 或电子邮件。"
+      "name": "通知工作流",
+      "description": "仅在满足条件时发送通知，用你自己的措辞，发送到 Slack、Teams、Matrix 或电子邮件。"
     },
     "aiAssistant": {
       "name": "AI 助手",

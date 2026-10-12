@@ -15,7 +15,8 @@
     "signingKey": "Clé de signature",
     "accountSid": "Account SID Twilio",
     "from": "Numéro d'expéditeur",
-    "authToken": "Jeton d'authentification Twilio"
+    "authToken": "Jeton d'authentification Twilio",
+    "contentSid": "Modèle WhatsApp (facultatif)"
   },
   "help": {
     "email": "Envoie par le serveur de mail de cette instance (SMTP_URL). Chaque réunion choisit qui reçoit les messages : ses participants ou ses régisseurs.",
@@ -26,7 +27,7 @@
     "mattermost": "Intégrations › Webhooks entrants › Ajouter, puis collez son adresse.",
     "webhook": "Ronde envoie un POST JSON signé pour chaque événement (en-têtes X-Ronde-Event, X-Ronde-Delivery, X-Ronde-Timestamp, X-Ronde-Signature).",
     "sms": "Envoie des SMS via Twilio aux numéros de mobile des personnes, tels qu'indiqués dans leur profil. Account SID et jeton d'authentification : console Twilio › Account info.",
-    "whatsapp": "Envoie des messages WhatsApp via Twilio aux numéros de mobile des personnes. L'expéditeur doit être un expéditeur WhatsApp approuvé dans Twilio ; hors d'une conversation ouverte par la personne, WhatsApp peut exiger un modèle approuvé."
+    "whatsapp": "Envoie des messages WhatsApp via Twilio aux numéros de mobile des personnes. L'expéditeur doit être un expéditeur WhatsApp approuvé dans Twilio, et WhatsApp ne laisse une entreprise écrire en premier qu'avec un modèle approuvé par Meta : ajoutez son Content SID ci-dessous."
   },
   "kinds": {
     "email": "E-mail",
@@ -59,5 +60,6 @@
   "noSecretKey": "Le serveur n'a pas de clé de chiffrement (SECRET_KEY) : seuls les connecteurs e-mail peuvent être ajoutés. Définissez SECRET_KEY pour enregistrer jetons et adresses de webhook.",
   "fromHint": "Au format international, tel qu'acheté ou approuvé dans Twilio.",
   "testSentPhone": "Message de test envoyé sur votre mobile.",
-  "paidKind": "{kind} (Team)"
+  "paidKind": "{kind} (Team)",
+  "contentSidHint": "Le Content SID d'un modèle approuvé par Meta (Twilio › Content Template Builder), avec deux variables : la première pour le message, la seconde pour le lien. Nécessaire pour écrire aux personnes qui n'ont pas écrit dans les dernières 24 heures."
 }

@@ -67,8 +67,8 @@
       "description": "Le issue e merge request recenti di ogni persona, da importare nella sua scheda."
     },
     "workflows": {
-      "name": "Costruttore di workflow",
-      "description": "I tuoi trigger, condizioni e messaggi verso Slack, Teams, Matrix o email."
+      "name": "Workflow di notifica",
+      "description": "Invia una notifica solo quando le sue condizioni sono soddisfatte, con parole tue, verso Slack, Teams, Matrix o email."
     },
     "aiAssistant": {
       "name": "Assistente IA",

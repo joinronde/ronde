@@ -1,6 +1,6 @@
 {
   "title": "Trascrizione",
-  "intro": "Trasforma in testo ciò che si dice durante una sessione, turno per turno, per il verbale e l'assistente IA. Ogni riunione lo consente nelle proprie impostazioni.",
+  "intro": "Trasforma in testo ciò che si dice durante una sessione, ordinato per turno del giro di tavolo, per il verbale e l'assistente IA. Ogni riunione lo consente nelle proprie impostazioni.",
   "enable": "Attiva la trascrizione",
   "url": "Servizio di trascrizione",
   "urlHint": "Lascia vuoto per OpenAI. Funziona anche un server Whisper in self-hosting (faster-whisper-server, speaches…): il suo indirizzo termina con /v1.",

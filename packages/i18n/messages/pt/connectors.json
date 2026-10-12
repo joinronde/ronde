@@ -15,7 +15,8 @@
     "signingKey": "Chave de assinatura",
     "accountSid": "Account SID do Twilio",
     "from": "Número remetente",
-    "authToken": "Auth token do Twilio"
+    "authToken": "Auth token do Twilio",
+    "contentSid": "Modelo do WhatsApp (opcional)"
   },
   "help": {
     "email": "Envia pelo servidor de e-mail desta instância (SMTP_URL). Cada reunião escolhe quem recebe as mensagens: os participantes ou os anfitriões.",
@@ -26,7 +27,7 @@
     "mattermost": "Integrações › Webhooks de entrada › Adicionar, depois cole o endereço.",
     "webhook": "O Ronde envia um POST JSON assinado para cada evento (cabeçalhos X-Ronde-Event, X-Ronde-Delivery, X-Ronde-Timestamp, X-Ronde-Signature).",
     "sms": "Envia SMS pelo Twilio para os números de celular das pessoas, como estão no perfil. Account SID e auth token: console do Twilio › Account info.",
-    "whatsapp": "Envia mensagens de WhatsApp pelo Twilio para os números de celular das pessoas. O remetente deve ser um remetente de WhatsApp aprovado no Twilio; fora de uma conversa iniciada pela pessoa, o WhatsApp pode exigir um modelo aprovado."
+    "whatsapp": "Envia mensagens de WhatsApp pelo Twilio para os números de celular das pessoas. O remetente precisa ser um remetente de WhatsApp aprovado no Twilio, e o WhatsApp só deixa uma empresa escrever primeiro com um modelo aprovado pela Meta: adicione o Content SID dele abaixo."
   },
   "kinds": {
     "email": "E-mail",
@@ -59,5 +60,6 @@
   "noSecretKey": "O servidor não tem chave de criptografia (SECRET_KEY): só é possível adicionar conectores de e-mail. Defina SECRET_KEY para guardar tokens e endereços de webhook.",
   "fromHint": "No formato internacional, como comprado ou aprovado no Twilio.",
   "testSentPhone": "Mensagem de teste enviada para o seu celular.",
-  "paidKind": "{kind} (Team)"
+  "paidKind": "{kind} (Team)",
+  "contentSidHint": "O Content SID de um modelo aprovado pela Meta (Twilio › Content Template Builder), com duas variáveis: a primeira para a mensagem, a segunda para o link. Necessário para escrever a quem não escreveu nas últimas 24 horas."
 }

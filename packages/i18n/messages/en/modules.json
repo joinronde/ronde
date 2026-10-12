@@ -67,8 +67,8 @@
       "description": "Recent issues and merge requests of each person, to import into their check-in."
     },
     "workflows": {
-      "name": "Workflow builder",
-      "description": "Your own triggers, conditions and messages to Slack, Teams, Matrix or email."
+      "name": "Notification workflows",
+      "description": "Send a notification only when its conditions hold, in your own words, to Slack, Teams, Matrix or email."
     },
     "aiAssistant": {
       "name": "AI assistant",

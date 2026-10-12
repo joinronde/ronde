@@ -15,7 +15,8 @@
     "signingKey": "Ключ подписи",
     "accountSid": "Twilio Account SID",
     "from": "Номер отправителя",
-    "authToken": "Twilio Auth Token"
+    "authToken": "Twilio Auth Token",
+    "contentSid": "Шаблон WhatsApp (необязательно)"
   },
   "help": {
     "email": "Отправляет через почтовый сервер этого экземпляра (SMTP_URL). Каждая встреча выбирает, кто получает сообщения: её участники или ведущие.",
@@ -26,7 +27,7 @@
     "mattermost": "Интеграции › Входящие вебхуки › Добавить, затем вставьте его адрес.",
     "webhook": "Ronde отправляет подписанный JSON POST на каждое событие (заголовки X-Ronde-Event, X-Ronde-Delivery, X-Ronde-Timestamp, X-Ronde-Signature).",
     "sms": "Отправляет SMS через Twilio на мобильные номера людей, указанные в их профиле. Account SID и auth token: консоль Twilio › Account info.",
-    "whatsapp": "Отправляет сообщения WhatsApp через Twilio на мобильные номера людей. Отправитель должен быть одобренным отправителем WhatsApp в Twilio; вне диалога, начатого самим человеком, WhatsApp может требовать одобренный шаблон."
+    "whatsapp": "Отправляет сообщения WhatsApp через Twilio на мобильные номера людей. Отправитель должен быть одобренным в Twilio отправителем WhatsApp, а WhatsApp позволяет компании писать первой только по шаблону, одобренному Meta: укажите его Content SID ниже."
   },
   "kinds": {
     "email": "Эл. почта",
@@ -59,5 +60,6 @@
   "noSecretKey": "У сервера нет ключа шифрования (SECRET_KEY): можно добавлять только почтовые коннекторы. Задайте SECRET_KEY, чтобы хранить токены и адреса вебхуков.",
   "fromHint": "В международном формате, как куплен или одобрен в Twilio.",
   "testSentPhone": "Тестовое сообщение отправлено на ваш мобильный.",
-  "paidKind": "{kind} (Team)"
+  "paidKind": "{kind} (Team)",
+  "contentSidHint": "Content SID шаблона, одобренного Meta (Twilio › Content Template Builder), с двумя переменными: первая — для сообщения, вторая — для ссылки. Нужен, чтобы писать тем, кто не писал за последние 24 часа."
 }

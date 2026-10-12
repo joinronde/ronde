@@ -67,8 +67,8 @@
       "description": "As issues e merge requests recentes de cada pessoa, para importar na ficha."
     },
     "workflows": {
-      "name": "Construtor de fluxos",
-      "description": "Seus próprios gatilhos, condições e mensagens para Slack, Teams, Matrix ou e-mail."
+      "name": "Fluxos de notificação",
+      "description": "Envie uma notificação só quando as condições dela forem atendidas, com suas próprias palavras, para Slack, Teams, Matrix ou e-mail."
     },
     "aiAssistant": {
       "name": "Assistente de IA",

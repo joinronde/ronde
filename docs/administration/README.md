@@ -238,11 +238,13 @@ only when there is something in it; each person turns it off in their account or
 of the email. On a self-hosted instance it needs `SMTP_URL`; `RONDE_WEEKLY_PER_RUN` (150 by default) caps the
 emails sent per hour, the others go the next hour.
 
-With Team, the workflow builder adds conditions and your own wording to each message, and two more
-connectors send **SMS** and **WhatsApp** messages through Twilio: enter the Account SID, the sender number
-and the auth token. Messages go to the mobile numbers people enter on their profile (international form,
-+33…), and never to people who are away. For WhatsApp, the sender must be approved in Twilio; outside a
-conversation the person started, WhatsApp may require an approved message template.
+With Team, notification workflows add conditions and your own wording to each message, and two more connectors
+send **SMS** and **WhatsApp** messages through Twilio: enter the Account SID, the sender number and the auth
+token. Messages go to the mobile numbers people enter on their profile (international form, +33…), and never
+to people who are away. For WhatsApp, the sender must be approved in Twilio, and WhatsApp only lets a business
+write first with a template Meta approved: create one in Twilio's Content Template Builder with two variables
+(the message, then the link) and enter its Content SID in the connector. When a workspace leaves Team, these
+messages stop and the log of each meeting says why.
 
 **Check-in by email**: when the instance reads a mailbox (`INBOUND_IMAP_URL`, see the self-hosting guide), the reminder says that a reply works. Each section's name on a line, the items under it: the lines are added to the person's check-in (never replacing anything), and an email confirms what went in. Only replies from the address the reminder went to (or the person's account) count, for 14 days; observers and the sample meeting are left out.
 
@@ -312,7 +314,7 @@ With Team, the **AI assistant** drafts the summary of a session and suggests fol
 reviews everything before it is saved. It uses an Anthropic API key: the instance's (`ANTHROPIC_API_KEY`)
 or the workspace's own.
 
-**Transcripts** turn what is said during a session into text, turn by turn. They need a speech-to-text
+**Transcripts** turn what is said during a session into text, filed under each round-table turn (what is said outside the round table stays unattributed). They need a speech-to-text
 service: OpenAI, or a Whisper server of your own (the `whisper` profile of the Compose file runs one on
 the same machine). Each meeting must allow them in its settings, everyone sees a banner while a session
 is recorded, and each person can leave their turns out. The sound is deleted as soon as it is

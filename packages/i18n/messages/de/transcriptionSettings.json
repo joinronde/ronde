@@ -1,6 +1,6 @@
 {
   "title": "Transkription",
-  "intro": "Macht aus dem, was in einer Sitzung gesagt wird, Text, Beitrag für Beitrag, für das Protokoll und den KI-Assistenten. Jedes Meeting erlaubt es in seinen eigenen Einstellungen.",
+  "intro": "Macht aus dem, was in einer Sitzung gesagt wird, Text, nach den Beiträgen der Runde geordnet, für das Protokoll und den KI-Assistenten. Jedes Meeting erlaubt es in seinen eigenen Einstellungen.",
   "enable": "Transkription einschalten",
   "url": "Sprache-zu-Text-Dienst",
   "urlHint": "Für OpenAI leer lassen. Ein selbst gehosteter Whisper-Server (faster-whisper-server, speaches…) funktioniert auch: Seine Adresse endet auf /v1.",

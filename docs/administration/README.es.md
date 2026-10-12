@@ -247,12 +247,14 @@ reconocimientos recibidos. Solo se envía si contiene algo; cada persona lo desa
 enlace al pie del correo. En una instancia autoalojada necesita `SMTP_URL`; `RONDE_WEEKLY_PER_RUN` (150 por
 defecto) limita los envíos por hora y el resto sale a la hora siguiente.
 
-Con Team, el constructor de flujos añade condiciones y tus propias palabras a cada mensaje, y dos conectores
-más envían **SMS** y mensajes de **WhatsApp** a través de Twilio: introduce el Account SID, el número
-remitente y el auth token. Los mensajes van a los números de móvil que las personas introducen en su perfil
-(formato internacional, +34…), y nunca a las personas ausentes. Para WhatsApp, el remitente debe estar
-aprobado en Twilio; fuera de una conversación iniciada por la persona, WhatsApp puede exigir una plantilla de
-mensaje aprobada.
+Con Team, los flujos de notificación añaden condiciones y tus propias palabras a cada mensaje, y dos
+conectores más envían **SMS** y mensajes de **WhatsApp** a través de Twilio: introduce el Account SID, el
+número de envío y el auth token. Los mensajes van a los números de móvil que las personas indican en su perfil
+(formato internacional, +34…), nunca a las personas ausentes. Para WhatsApp, el remitente debe estar aprobado
+en Twilio, y WhatsApp solo deja que una empresa escriba primero con una plantilla aprobada por Meta: crea una
+en el Content Template Builder de Twilio con dos variables (el mensaje y luego el enlace) e introduce su
+Content SID en el conector. Cuando un espacio de trabajo deja Team, estos mensajes se detienen y el registro
+de cada reunión indica por qué.
 
 **Ficha por correo**: cuando la instancia lee un buzón (`INBOUND_IMAP_URL`, ver la guía de autoalojamiento), el recordatorio indica que basta con responder. El nombre de cada sección en una línea y los puntos debajo: las líneas se añaden a la ficha de la persona (sin reemplazar nada) y un correo confirma lo añadido. Solo cuentan las respuestas desde la dirección del recordatorio (o la de la cuenta de la persona), durante 14 días; los observadores y la reunión de ejemplo quedan fuera.
 
@@ -325,7 +327,7 @@ Con Team, el **asistente de IA** redacta el resumen de una sesión y propone acc
 anfitrión lo revisa todo antes de guardarlo. Usa una clave de API de Anthropic: la de la instancia
 (`ANTHROPIC_API_KEY`) o la del propio espacio de trabajo.
 
-Las **transcripciones** convierten en texto lo que se dice durante una sesión, turno a turno. Necesitan un
+Las **transcripciones** convierten en texto lo que se dice durante una sesión, ordenado por turno de la ronda (lo que se dice fuera de la ronda no se atribuye a nadie). Necesitan un
 servicio de voz a texto: OpenAI, o tu propio servidor Whisper (el perfil `whisper` del archivo Compose
 ejecuta uno en la misma máquina). Cada reunión debe permitirlas en sus ajustes, todos ven un aviso mientras
 se graba una sesión, y cada persona puede excluir sus turnos. El audio se elimina en cuanto se transcribe.

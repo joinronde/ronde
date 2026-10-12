@@ -67,8 +67,8 @@
       "description": "हर व्यक्ति के हाल के issue और merge request, उनके चेक-इन में आयात करने के लिए।"
     },
     "workflows": {
-      "name": "वर्कफ़्लो बिल्डर",
-      "description": "Slack, Teams, Matrix या ईमेल के लिए अपने ट्रिगर, शर्तें और संदेश।"
+      "name": "सूचना वर्कफ़्लो",
+      "description": "सूचना तभी भेजें जब उसकी शर्तें पूरी हों, अपने शब्दों में, Slack, Teams, Matrix या ईमेल पर।"
     },
     "aiAssistant": {
       "name": "AI सहायक",

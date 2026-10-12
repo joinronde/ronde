@@ -67,8 +67,8 @@
       "description": "Les tickets et merge requests récents de chacun, à importer dans sa fiche."
     },
     "workflows": {
-      "name": "Constructeur de workflows",
-      "description": "Vos propres déclencheurs, conditions et messages vers Slack, Teams, Matrix ou l'e-mail."
+      "name": "Workflows de notification",
+      "description": "N'envoyez une notification que si ses conditions sont remplies, avec vos propres mots, vers Slack, Teams, Matrix ou l'e-mail."
     },
     "aiAssistant": {
       "name": "Assistant IA",

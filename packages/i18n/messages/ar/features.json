@@ -32,9 +32,9 @@
     "facilitation": "كل وحدات التيسير",
     "notifications": "إشعارات بالبريد والدردشة وWebhooks",
     "formats": "مراجعات استعادية، بوكر التخطيط، اجتماعات غير متزامنة",
-    "workflows": "منشئ سير العمل",
+    "workflows": "سير عمل الإشعارات: شروط ورسائلك الخاصة",
     "aiAssistant": "المساعد الذكي: ملخصات وإجراءات",
-    "transcription": "تفريغ نصي للجلسات، دورًا بدور"
+    "transcription": "تفريغ نصي للجلسات، مرتّب حسب أدوار الجولة"
   },
   "integrations": {
     "gitlab": "استيراد من GitLab",
@@ -42,7 +42,7 @@
     "video": "مكالمات فيديو: أي رابط، Jitsi، BigBlueButton",
     "api": "REST API وWebhooks صادرة",
     "writeBack": "تذاكر في Jira وLinear وGitLab وGitHub من الإجراءات",
-    "videoLinks": "روابط Zoom وGoogle Meet وTeams تُنشأ تلقائيًا",
+    "videoLinks": "غرف Zoom وGoogle Meet وTeams تُنشأ بنقرة واحدة",
     "sms": "تذكيرات SMS وWhatsApp (Twilio)",
     "slack": "تطبيق Slack: ملء البطاقات من Slack، والمحاضر في القناة، و‎/ronde",
     "wikis": "المحاضر منشورة في Notion وConfluence",
@@ -62,7 +62,7 @@
   },
   "compliance": {
     "auditLog": "سجل تدقيق آخر 90 يومًا، مع تصدير CSV",
-    "auditStream": "سجل تدقيق كامل، يُرسل إلى نظام SIEM لديك",
+    "auditStream": "سجل تدقيق كامل، وتُرسل الإدخالات الجديدة إلى نظام SIEM لديك",
     "retention": "قواعد الاحتفاظ بالبيانات"
   },
   "projects": {
