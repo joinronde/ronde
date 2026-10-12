@@ -189,5 +189,15 @@
       "4": "Useful",
       "5": "Excellent"
     }
-  }
+  },
+  "emojis": {
+    "like": "I agree",
+    "clap": "Well done",
+    "party": "Let's celebrate",
+    "think": "I have a question"
+  },
+  "focus": "Focus",
+  "focusOn": "Focus: hide the reactions and animations on this screen",
+  "focusOff": "Show the reactions and animations again (still hidden during your turn)",
+  "focusTurn": "Your turn: reactions and animations are hidden until it ends"
 }

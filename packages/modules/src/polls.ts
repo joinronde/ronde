@@ -39,12 +39,14 @@ export const polls = defineModule({
         kind: z.enum(["single", "multiple", "scale", "words"]),
         options: z.array(str(80).min(1)).max(10).default([]),
         anonymous: z.boolean().default(true),
+        /** Shown on the shared screen at once (a quick yes or no) */
+        show: z.boolean().default(false),
       }),
       run: async ({ db, requireSession, workspaceId }, o) => {
         const s = requireSession();
         const options = [...new Set(o.options)];
         if ((o.kind === "single" || o.kind === "multiple") && options.length < 2) throw new OpError("pollNeedsOptions");
-        await db.poll.create({
+        const poll = await db.poll.create({
           data: {
             workspaceId,
             sessionId: s.id,
@@ -54,6 +56,7 @@ export const polls = defineModule({
             anonymous: o.anonymous,
           },
         });
+        if (o.show) await db.session.update({ where: { id: s.id }, data: { shownPollId: poll.id } });
       },
     }),
     defineOp({

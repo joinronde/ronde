@@ -262,5 +262,13 @@
   "presentAnyway": "Presenta comunque",
   "projectAdded": "{name} entra nel giro per progetto di questa sessione.",
   "projectAddedTag": "aggiunto",
-  "projectUnadd": "Togli {name} dal giro di questa sessione"
+  "projectUnadd": "Togli {name} dal giro di questa sessione",
+  "sheets": {
+    "title": "Schede progetto",
+    "todo": "{count, plural, one {# da completare} other {# da completare}}",
+    "allDone": "Tutte complete",
+    "health": "salute",
+    "headline": "messaggio del giorno",
+    "lines": "{count, plural, one {# riga} other {# righe}}"
+  }
 }

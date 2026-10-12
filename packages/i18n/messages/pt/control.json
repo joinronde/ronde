@@ -262,5 +262,13 @@
   "presentAnyway": "Apresentar mesmo assim",
   "projectAdded": "{name} entra na rodada por projeto desta sessão.",
   "projectAddedTag": "adicionado",
-  "projectUnadd": "Tirar {name} da rodada desta sessão"
+  "projectUnadd": "Tirar {name} da rodada desta sessão",
+  "sheets": {
+    "title": "Fichas de projeto",
+    "todo": "{count, plural, one {# a completar} other {# a completar}}",
+    "allDone": "Todas completas",
+    "health": "saúde",
+    "headline": "mensagem do dia",
+    "lines": "{count, plural, one {# linha} other {# linhas}}"
+  }
 }

@@ -262,5 +262,13 @@
   "presentAnyway": "Présenter quand même",
   "projectAdded": "{name} est ajouté au tour par projet de cette séance.",
   "projectAddedTag": "ajouté",
-  "projectUnadd": "Retirer {name} du tour de cette séance"
+  "projectUnadd": "Retirer {name} du tour de cette séance",
+  "sheets": {
+    "title": "Fiches projet",
+    "todo": "{count, plural, one {# à compléter} other {# à compléter}}",
+    "allDone": "Toutes complètes",
+    "health": "santé",
+    "headline": "message du jour",
+    "lines": "{count, plural, one {# ligne} other {# lignes}}"
+  }
 }

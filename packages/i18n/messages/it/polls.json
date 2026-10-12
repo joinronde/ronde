@@ -30,5 +30,10 @@
   "reopen": "Riapri",
   "show": "Mostra sullo schermo condiviso",
   "hide": "Nascondi dallo schermo",
-  "delete": "Elimina il sondaggio «{question}»"
+  "delete": "Elimina il sondaggio «{question}»",
+  "yes": "Sì",
+  "no": "No",
+  "yesNo": "Sì o no, subito",
+  "yesNoHint": "La domanda scritta sotto, o «Sei d'accordo?», subito sullo schermo, con chi ha risposto cosa.",
+  "yesNoQuestion": "Sei d'accordo?"
 }

@@ -189,5 +189,15 @@
       "4": "Nützlich",
       "5": "Ausgezeichnet"
     }
-  }
+  },
+  "emojis": {
+    "like": "Ich stimme zu",
+    "clap": "Gut gemacht",
+    "party": "Das feiern wir",
+    "think": "Ich habe eine Frage"
+  },
+  "focus": "Fokus",
+  "focusOn": "Fokus: Reaktionen und Animationen auf diesem Bildschirm ausblenden",
+  "focusOff": "Reaktionen und Animationen wieder zeigen (während deines Beitrags bleiben sie aus)",
+  "focusTurn": "Du bist dran: Reaktionen und Animationen sind bis zum Ende ausgeblendet"
 }

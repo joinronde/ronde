@@ -30,5 +30,10 @@
   "reopen": "Reabrir",
   "show": "Mostrar en la pantalla compartida",
   "hide": "Ocultar de la pantalla",
-  "delete": "Eliminar la encuesta «{question}»"
+  "delete": "Eliminar la encuesta «{question}»",
+  "yes": "Sí",
+  "no": "No",
+  "yesNo": "Sí o no, ya",
+  "yesNoHint": "La pregunta escrita abajo, o «¿Estás de acuerdo?», en pantalla al momento, con quién respondió qué.",
+  "yesNoQuestion": "¿Estás de acuerdo?"
 }

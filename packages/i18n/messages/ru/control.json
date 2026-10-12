@@ -262,5 +262,13 @@
   "presentAnyway": "Всё равно представить",
   "projectAdded": "Проект «{name}» добавлен в круг по проектам этой встречи.",
   "projectAddedTag": "добавлен",
-  "projectUnadd": "Убрать «{name}» из круга этой встречи"
+  "projectUnadd": "Убрать «{name}» из круга этой встречи",
+  "sheets": {
+    "title": "Карточки проектов",
+    "todo": "{count, plural, one {# нужно дополнить} few {# нужно дополнить} many {# нужно дополнить} other {# нужно дополнить}}",
+    "allDone": "Все заполнены",
+    "health": "состояние",
+    "headline": "сообщение дня",
+    "lines": "{count, plural, one {# строка} few {# строки} many {# строк} other {# строки}}"
+  }
 }

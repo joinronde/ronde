@@ -189,5 +189,15 @@
       "4": "Utile",
       "5": "Eccellente"
     }
-  }
+  },
+  "emojis": {
+    "like": "Sono d'accordo",
+    "clap": "Ben fatto",
+    "party": "Festeggiamo",
+    "think": "Ho una domanda"
+  },
+  "focus": "Concentrazione",
+  "focusOn": "Concentrazione: nascondi reazioni e animazioni su questo schermo",
+  "focusOff": "Mostra di nuovo reazioni e animazioni (sempre nascoste durante il tuo turno)",
+  "focusTurn": "È il tuo turno: reazioni e animazioni sono nascoste fino alla fine"
 }

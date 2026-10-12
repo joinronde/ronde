@@ -38,6 +38,10 @@ interface RondeCtx {
   /** Last ping from the projection tab open in this browser */
   liveSeen: number;
   nameOf: (id: string | null | undefined) => string;
+  /** Focus mode chosen in this browser, and whether it is on now (by choice, or during one's own turn) */
+  focus: boolean;
+  focusNow: boolean;
+  setFocus: (on: boolean) => void;
   /** Name shown for the person running the meeting, from the settings */
   host: string;
   /** Check-in sections, from the settings */
@@ -58,6 +62,7 @@ interface RondeCtx {
 }
 
 const Ctx = createContext<RondeCtx | null>(null);
+const FOCUS_KEY = "ronde.focus";
 
 export function useRonde(): RondeCtx {
   const c = useContext(Ctx);
@@ -135,6 +140,24 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
   const refetchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sRef = useRef(s);
   sRef.current = s;
+  // Focus: no flying reactions, combos or confetti, to keep to the content; on by choice, and always during one's
+  // own turn (kept in this browser only)
+  const [focus, setFocusState] = useState(false);
+  useEffect(() => {
+    try {
+      setFocusState(localStorage.getItem(FOCUS_KEY) === "1");
+    } catch {}
+  }, []);
+  const setFocus = useCallback((on: boolean) => {
+    setFocusState(on);
+    try {
+      localStorage.setItem(FOCUS_KEY, on ? "1" : "0");
+    } catch {}
+  }, []);
+  const myTurn = !!s.meeting?.startedAt && !!s.viewer.memberId && s.meeting.stepKey === s.viewer.memberId;
+  const focusNow = focus || myTurn;
+  const focusRef = useRef(focusNow);
+  focusRef.current = focusNow;
 
   const toast = useCallback((msg: string, tone?: ToastTone) => {
     const id = Math.random();
@@ -283,6 +306,8 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
       src.addEventListener("reaction", (e) => {
         alive();
         const d = JSON.parse((e as MessageEvent).data) as { emoji: string; byId: string | null };
+        // Counted on the step all the same (with the state); only the show is left out
+        if (focusRef.current) return;
         const m = sRef.current.members.find((x) => x.id === d.byId);
         const sig = signalOf(d.emoji);
         const fly = {
@@ -414,6 +439,9 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
   const sections = useMemo(() => resolveSections(s.settings, locale), [s.settings, locale]);
   const value: RondeCtx = {
     s,
+    focus,
+    focusNow,
+    setFocus,
     members,
     agenda,
     cur,

@@ -51,6 +51,9 @@ import { Assignments, UpcomingSessions } from "./upcoming-sessions";
 
 type MeTab = "checkIn" | "follow" | "team" | "past" | "decisions";
 
+/** What each reaction says, for its tooltip */
+const EMOJI_NAMES: Record<string, "like" | "clap" | "party" | "think"> = { "👍": "like", "👏": "clap", "🎉": "party", "🤔": "think" };
+
 export function MeView() {
   const t = useTranslations("me");
   const { s } = useRonde();
@@ -336,8 +339,11 @@ function Follow() {
       <RetroPanel />
       <PokerPanel />
       <PollsPanel />
-      <Strip viewKey={viewKey} onPick={(k) => setBrowse(k === m.stepKey ? null : k)} />
-      <Stage stepKey={viewKey} />
+      {/* Kept in view while scrolling down the stage: where the meeting is, and the people and projects to come */}
+      <div className="follow-strip">
+        <Strip viewKey={viewKey} onPick={(k) => setBrowse(k === m.stepKey ? null : k)} />
+      </div>
+      <Stage stepKey={viewKey} joinable />
       {m.stepKey !== "end" && <Dock />}
     </div>
   );
@@ -347,7 +353,7 @@ function Follow() {
 function Dock() {
   const t = useTranslations("me");
   const tSignals = useTranslations("signals");
-  const { s, rpc, members, mod } = useRonde();
+  const { s, rpc, members, mod, focus, focusNow, setFocus } = useRonde();
   const [text, setText] = useState("");
   const [kudoMode, setKudoMode] = useState(false);
   const [kudoTo, setKudoTo] = useState("");
@@ -389,6 +395,17 @@ function Dock() {
           </button>
         )}
         {reactions && (
+          <button
+            type="button"
+            className={"btn focus-btn" + (focusNow ? " on" : "")}
+            aria-pressed={focus}
+            title={focus ? t("focusOff") : focusNow ? t("focusTurn") : t("focusOn")}
+            onClick={() => setFocus(!focus)}
+          >
+            <span aria-hidden="true">🎯</span> <span className="focus-label">{t("focus")}</span>
+          </button>
+        )}
+        {reactions && (
           <>
             <button
               type="button"
@@ -403,7 +420,12 @@ function Dock() {
               <span className="dock-sep" aria-hidden="true" />
               <span className="reacts" role="group" aria-label={t("reactions")}>
                 {EMOJIS.map((e) => (
-                  <button key={e} aria-label={t("react", { emoji: e })} onClick={() => rpc({ op: "reactions.add", emoji: e })}>
+                  <button
+                    key={e}
+                    title={t(`emojis.${EMOJI_NAMES[e] ?? "like"}`)}
+                    aria-label={t(`emojis.${EMOJI_NAMES[e] ?? "like"}`)}
+                    onClick={() => rpc({ op: "reactions.add", emoji: e })}
+                  >
                     {e}
                   </button>
                 ))}

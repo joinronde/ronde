@@ -162,6 +162,8 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
   const visible = (personId: string, projectId: string | null) =>
     !shown || personId === viewer.memberId || shown.speakers.has(personId) || (!!projectId && shown.projects.has(projectId));
   const guestLink = !ctx.ws.member.personId;
+  // Whose votes are "mine" on the topics: the person running the meeting votes too, round or not
+  const voter = viewer.memberId ?? (ctx.can("session.run") ? ctx.ws.member.personId || null : null);
   return {
     serverNow: Date.now(),
     context: { ...ctx.links, sample: ctx.meeting.sample },
@@ -198,8 +200,8 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
     interactions: on("hands") ? interactions.map(toInteraction) : [],
     reactions: on("reactions") ? reactions.map(toReaction) : [],
     // Parking lot turned off: what was parked shows with the other topics
-    topics: topics.filter((t) => !t.parked || !on("parking")).map((t) => toTopic(t, viewer.memberId)),
-    parking: on("parking") ? topics.filter((t) => t.parked).map((t) => toTopic(t, viewer.memberId)) : [],
+    topics: topics.filter((t) => !t.parked || !on("parking")).map((t) => toTopic(t, voter)),
+    parking: on("parking") ? topics.filter((t) => t.parked).map((t) => toTopic(t, voter)) : [],
     answers: on("icebreaker") ? answers.map(toAnswer) : [],
     kudos: on("kudos") ? kudos.map(toKudo) : [],
     mood: toMood(on("mood") ? moods : [], viewer.memberId ?? (viewer.isHost ? HOST_ID : null)),

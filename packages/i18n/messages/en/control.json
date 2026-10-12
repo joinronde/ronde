@@ -262,5 +262,13 @@
   "presentAnyway": "Present anyway",
   "projectAdded": "{name} joins this session's project round.",
   "projectAddedTag": "added",
-  "projectUnadd": "Take {name} out of this session's round"
+  "projectUnadd": "Take {name} out of this session's round",
+  "sheets": {
+    "title": "Project sheets",
+    "todo": "{count, plural, one {# to complete} other {# to complete}}",
+    "allDone": "All complete",
+    "health": "health",
+    "headline": "message of the day",
+    "lines": "{count, plural, one {# line} other {# lines}}"
+  }
 }

@@ -262,5 +262,13 @@
   "presentAnyway": "仍然介绍",
   "projectAdded": "{name} 已加入本次会议的按项目轮流。",
   "projectAddedTag": "已添加",
-  "projectUnadd": "将 {name} 移出本次轮流"
+  "projectUnadd": "将 {name} 移出本次轮流",
+  "sheets": {
+    "title": "项目卡片",
+    "todo": "{count, plural, other {# 个待完善}}",
+    "allDone": "全部已完成",
+    "health": "健康度",
+    "headline": "今日要点",
+    "lines": "{count, plural, other {# 行}}"
+  }
 }

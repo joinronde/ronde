@@ -6,7 +6,7 @@ import { baseKeyOf, type Step, spentOf } from "@ronde/core/meeting";
 import { buildMinutes, decisionsOf, MINUTES_PARTS, type MinutesPart } from "@ronde/core/minutes";
 import type { RecordV1 } from "@ronde/core/record";
 import { BOARD_SOUNDS, CUES, MUSIC_GROUPS, MUSIC_STYLES, type MusicStyle, type SoundKey, type SoundOutput } from "@ronde/core/sound";
-import type { ActionStatus, InteractionDTO } from "@ronde/core/types";
+import type { ActionStatus, InteractionDTO, Snapshot } from "@ronde/core/types";
 import {
   ACTION_STATUSES,
   first,
@@ -46,7 +46,7 @@ import { Icon } from "./shell/icons";
 import { ModKey } from "./shell/mod-key";
 import { NewTab } from "./shell/new-tab";
 import { controlMonitorOn, SoundPlayer } from "./sound-player";
-import { Avatar, BLOCK_ICON, projectEntries, projectsWithTurn, Stage, sectionsHave, Timer, UpCount, writersOf } from "./stage";
+import { Avatar, BLOCK_ICON, linesAbout, projectEntries, projectsWithTurn, Stage, sectionsHave, Timer, UpCount, writersOf } from "./stage";
 import { SwipeRow } from "./swipe-row";
 import { soundLength } from "./synth";
 import { Assignments } from "./upcoming-sessions";
@@ -354,6 +354,7 @@ export function ControlRoomView() {
                     )}
                   </div>
                   {step.type === "project" && <ProjectHost step={step} />}
+                  {!m.endedAt && <ProjectSheets />}
                   {!m.endedAt && <ProjectOrder />}
                   {step.type === "block" && step.block === "retro" && <RetroHost />}
                   {step.type === "block" && step.block === "poker" && <PokerHost />}
@@ -901,7 +902,8 @@ function NotesBox({ stepKey, label, autoFocus }: { stepKey: string; label: strin
     requestAnimationFrame(() => ta.current?.focus());
   };
 
-  const active = s.members.filter((x) => x.active);
+  // Anyone of the meeting can own an action: the host who does not speak in the round, an observer following it
+  const active = actionOwners(s);
   const openAction = () => {
     const who = memberOfStep(key);
     setAction({ text: "", owner: members[who] ? who : "" });
@@ -1369,9 +1371,10 @@ function PaneActions() {
   const t = useTranslations("control");
   const tStatus = useTranslations("actionStatus");
   const fmt = formatters(useLocale());
-  const { s, agenda, rpc, members, sections } = useRonde();
+  const { s, agenda, rpc, sections } = useRonde();
   const [text, setText] = useState("");
   const [owner, setOwner] = useState(s.members[0]?.id ?? "");
+  const owners = actionOwners(s);
   const [confirmDel, setConfirmDel] = useState<string | null>(null);
   const sp = agenda.filter((x) => x.type === "speaker");
   const withTurn = projectsWithTurn(agenda);
@@ -1442,7 +1445,7 @@ function PaneActions() {
                   value={a.ownerId}
                   onChange={(e) => rpc({ op: "action.update", id: a.id, ownerId: e.target.value })}
                 >
-                  {s.members.map((x) => (
+                  {owners.map((x) => (
                     <option key={x.id} value={x.id}>
                       {x.name}
                     </option>
@@ -1501,9 +1504,9 @@ function PaneActions() {
           style={{ flex: 1, minWidth: 140 }}
         />
         <Select aria-label={t("owner")} value={owner} onChange={(e) => setOwner(e.target.value)} style={{ width: "auto" }}>
-          {s.members.map((x) => (
+          {owners.map((x) => (
             <option key={x.id} value={x.id}>
-              {first(members[x.id]?.name)}
+              {first(x.name)}
             </option>
           ))}
         </Select>
@@ -1517,6 +1520,7 @@ function PaneActions() {
 
 function PaneTopics() {
   const t = useTranslations("control");
+  const tMe = useTranslations("me");
   const { s, rpc, nameOf, host } = useRonde();
   const [text, setText] = useState("");
   const topics = [...s.topics].sort((a, b) => Number(a.done) - Number(b.done) || b.votes - a.votes || a.createdAt - b.createdAt);
@@ -1533,11 +1537,17 @@ function PaneTopics() {
             />
             <div className="body">
               {x.text}
-              <div className="meta">
-                {nameOf(x.byId) || host}
-                {x.votes > 0 && ` · ${t("topics.votes", { count: x.votes })}`}
-              </div>
+              <div className="meta">{nameOf(x.byId) || host}</div>
             </div>
+            <button
+              type="button"
+              className="vote-btn"
+              aria-pressed={x.mine}
+              title={x.mine ? tMe("unvote") : tMe("vote")}
+              onClick={() => rpc({ op: "topic.vote", id: x.id })}
+            >
+              ▲ {x.votes}
+            </button>
             <button
               className="icon-btn"
               title={t("topics.showBig")}
@@ -2037,5 +2047,65 @@ function ProjectOrder() {
         </details>
       )}
     </>
+  );
+}
+
+/** The people an action can go to: the meeting's members, whether they speak in the round or not, then its observers */
+function actionOwners(s: Snapshot): { id: string; name: string }[] {
+  const seen = new Set<string>();
+  return [...s.members, ...s.observers].filter((x) => !seen.has(x.id) && seen.add(x.id));
+}
+
+/**
+ * The project sheets at a glance, for whoever leads: which are complete (health, message of the day, a line from
+ * each of their people in the meeting) and which still need someone; the incomplete ones first
+ */
+function ProjectSheets() {
+  const t = useTranslations("control");
+  const { s, sections, nameOf } = useRonde();
+  if (!s.projects.length) return null;
+  const inMeeting = new Set(s.members.map((x) => x.id));
+  const rows = s.projects.map((p) => {
+    const people = p.memberIds.filter((id) => inMeeting.has(id));
+    const lines = people.map((id) => ({ id, n: linesAbout(s, id, p.id, sections) }));
+    const health = !!p.sheet?.health;
+    const headline = !!p.sheet?.headline.trim();
+    const missing = lines.filter((x) => !x.n).length;
+    return { p, lines, health, headline, complete: health && headline && !missing };
+  });
+  rows.sort((a, b) => Number(a.complete) - Number(b.complete) || a.p.position - b.p.position);
+  const todo = rows.filter((r) => !r.complete).length;
+  return (
+    // Open while preparing, when some still need someone; folded during the meeting, to keep it out of the way
+    <details className="project-sheets" open={todo > 0 && !s.meeting?.startedAt}>
+      <summary>
+        {t("sheets.title")}{" "}
+        <span className={"pill " + (todo ? "warn" : "ok")}>{todo ? t("sheets.todo", { count: todo }) : t("sheets.allDone")}</span>
+      </summary>
+      <ul>
+        {rows.map(({ p, lines, health, headline, complete }) => (
+          <li key={p.id} className={complete ? "complete" : "incomplete"}>
+            <div className="sheet-head">
+              <strong>{p.name}</strong>
+              <span className={"mark " + (health ? "ok" : "no")}>
+                {health ? "✓" : "○"} {t("sheets.health")}
+              </span>
+              <span className={"mark " + (headline ? "ok" : "no")}>
+                {headline ? "✓" : "○"} {t("sheets.headline")}
+              </span>
+            </div>
+            {lines.length > 0 && (
+              <ul className="sheet-people">
+                {lines.map((x) => (
+                  <li key={x.id} className={x.n ? "ok" : "no"}>
+                    {x.n ? "✓" : "○"} {nameOf(x.id)} {x.n ? <span className="hint">{t("sheets.lines", { count: x.n })}</span> : null}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </details>
   );
 }

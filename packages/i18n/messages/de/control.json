@@ -262,5 +262,13 @@
   "presentAnyway": "Trotzdem vorstellen",
   "projectAdded": "{name} kommt in dieser Sitzung in die Projektrunde.",
   "projectAddedTag": "hinzugefügt",
-  "projectUnadd": "{name} aus der Projektrunde dieser Sitzung nehmen"
+  "projectUnadd": "{name} aus der Projektrunde dieser Sitzung nehmen",
+  "sheets": {
+    "title": "Projektblätter",
+    "todo": "{count, plural, one {# zu ergänzen} other {# zu ergänzen}}",
+    "allDone": "Alle vollständig",
+    "health": "Zustand",
+    "headline": "Botschaft des Tages",
+    "lines": "{count, plural, one {# Zeile} other {# Zeilen}}"
+  }
 }

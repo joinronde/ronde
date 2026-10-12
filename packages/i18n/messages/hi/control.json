@@ -262,5 +262,13 @@
   "presentAnyway": "फिर भी प्रस्तुत करें",
   "projectAdded": "{name} इस सत्र के प्रोजेक्ट राउंड में जोड़ा गया।",
   "projectAddedTag": "जोड़ा गया",
-  "projectUnadd": "{name} को इस सत्र के राउंड से हटाएँ"
+  "projectUnadd": "{name} को इस सत्र के राउंड से हटाएँ",
+  "sheets": {
+    "title": "प्रोजेक्ट शीट",
+    "todo": "{count, plural, one {# पूरी करनी है} other {# पूरी करनी हैं}}",
+    "allDone": "सभी पूरी",
+    "health": "स्थिति",
+    "headline": "आज का संदेश",
+    "lines": "{count, plural, one {# पंक्ति} other {# पंक्तियाँ}}"
+  }
 }
