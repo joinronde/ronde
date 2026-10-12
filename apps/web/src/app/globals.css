@@ -3035,3 +3035,24 @@ details.snd-fold[open] > summary::after{transform:rotate(-135deg)}
 .duration-part input{width:5.5em;text-align:end}
 .duration-exact .hint{flex-basis:100%;margin:0}
 .duration-out{color:var(--live)}
+
+/* Minutes printed, or saved as PDF from the print dialog: the sheet alone, in the app's fonts (every script) */
+.print-sheet{display:none}
+@page{margin:16mm}
+@media print{
+  html[data-printing] body{background:#fff}
+  html[data-printing] body > :not(.print-sheet){display:none!important}
+  .print-sheet{display:block;color:#2b1d0e;font-size:11pt;line-height:1.45;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .print-sheet h1{font-size:19pt;line-height:1.2;margin:0 0 8pt}
+  .print-sheet h2{font-size:13.5pt;color:#b53b0a;margin:14pt 0 4pt;break-after:avoid}
+  .print-sheet h3{font-size:11.5pt;margin:8pt 0 3pt;break-after:avoid}
+  .print-sheet p{margin:0 0 3pt;overflow-wrap:anywhere}
+  .print-sheet .print-strong{font-weight:700;margin-top:4pt}
+  .print-sheet .print-li{display:flex;gap:6pt;margin-inline-start:calc(14pt * var(--level, 0) + 4pt);break-inside:avoid}
+  .print-sheet .print-marker{flex:none;min-width:8pt;color:#8a6a45}
+  .print-sheet table{border-collapse:collapse;width:100%;margin:4pt 0 8pt;font-size:10pt;break-inside:auto}
+  .print-sheet tr{break-inside:avoid}
+  .print-sheet th,.print-sheet td{border:.5pt solid #d9cbb6;padding:3pt 5pt;text-align:start;vertical-align:top}
+  .print-sheet th{background:#f6efe4}
+  .print-sheet .print-logo{display:block;max-height:34pt;max-width:160pt;margin-bottom:12pt}
+}

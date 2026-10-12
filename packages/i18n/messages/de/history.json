@@ -8,6 +8,7 @@
   "copied": "Protokoll kopiert",
   "fileName": "protokoll",
   "pdfFailed": "Das PDF konnte nicht erstellt werden.",
+  "pdfHint": "Protokoll drucken oder im Druckdialog als PDF speichern",
   "minutes": "Protokoll",
   "copyManually": "Automatisches Kopieren ist nicht verfügbar. Markiere den Text und kopiere ihn (Strg+C).",
   "close": "Schließen",

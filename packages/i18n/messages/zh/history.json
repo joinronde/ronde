@@ -8,6 +8,7 @@
   "copied": "纪要已复制",
   "fileName": "会议纪要",
   "pdfFailed": "PDF 生成失败。",
+  "pdfHint": "打印会议纪要，或在打印对话框中另存为 PDF",
   "minutes": "会议纪要",
   "copyManually": "无法自动复制。请选中文字后复制（Ctrl+C）。",
   "close": "关闭",

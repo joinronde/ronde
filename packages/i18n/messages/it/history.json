@@ -8,6 +8,7 @@
   "copied": "Verbale copiato",
   "fileName": "verbale",
   "pdfFailed": "Generazione del PDF non riuscita.",
+  "pdfHint": "Stampa il verbale o salvalo in PDF dalla finestra di stampa",
   "minutes": "Verbale",
   "copyManually": "La copia automatica non è disponibile. Seleziona il testo e copialo (Ctrl+C).",
   "close": "Chiudi",

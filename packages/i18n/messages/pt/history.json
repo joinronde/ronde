@@ -8,6 +8,7 @@
   "copied": "Ata copiada",
   "fileName": "ata",
   "pdfFailed": "Falha ao gerar o PDF.",
+  "pdfHint": "Imprimir a ata ou salvá-la em PDF pela janela de impressão",
   "minutes": "Ata",
   "copyManually": "A cópia automática não está disponível. Selecione o texto e copie (Ctrl+C).",
   "close": "Fechar",

@@ -8,6 +8,7 @@
   "copied": "Compte rendu copié",
   "fileName": "compte-rendu",
   "pdfFailed": "La génération du PDF a échoué.",
+  "pdfHint": "Imprimer le compte rendu, ou l'enregistrer en PDF depuis la fenêtre d'impression",
   "minutes": "Compte rendu",
   "copyManually": "La copie automatique n'est pas disponible. Sélectionnez le texte et copiez-le (Ctrl+C).",
   "close": "Fermer",

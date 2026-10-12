@@ -8,6 +8,7 @@
   "copied": "Actas copiadas",
   "fileName": "actas",
   "pdfFailed": "No se pudo generar el PDF.",
+  "pdfHint": "Imprimir el acta o guardarla en PDF desde el cuadro de impresión",
   "minutes": "Actas",
   "copyManually": "La copia automática no está disponible. Selecciona el texto y cópialo (Ctrl+C).",
   "close": "Cerrar",

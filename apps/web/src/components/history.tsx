@@ -14,7 +14,7 @@ import { withBasePath } from "@/lib/shared/base-path";
 import { readWikiError } from "@/lib/shared/wiki-error";
 import { copyText, downloadBlob, LoadError, Modal } from "./common";
 import { MinutesView } from "./minutes-view";
-import { markdownToPdf } from "./pdf";
+import { printMinutes } from "./print-minutes";
 import { useRonde } from "./ronde-provider";
 import { Icon } from "./shell/icons";
 import { NewTab } from "./shell/new-tab";
@@ -132,10 +132,10 @@ export function HistoryView() {
           }}
           onPdf={async () => {
             try {
-              downloadBlob(
-                `${t("fileName")}-${h.date}.pdf`,
-                await markdownToPdf(minutesToMarkdown(docs.get(h.date)!), s.brand.logo && withBasePath(s.brand.logo)),
-              );
+              await printMinutes(minutesToMarkdown(docs.get(h.date)!), {
+                title: `${t("fileName")}-${h.date}`,
+                logo: s.brand.logo && withBasePath(s.brand.logo),
+              });
             } catch {
               toast(t("pdfFailed"));
             }
@@ -274,7 +274,7 @@ function HistCard({
             >
               Markdown
             </button>
-            <button type="button" className="btn sm primary" onClick={onPdf}>
+            <button type="button" className="btn sm primary" onClick={onPdf} title={t("pdfHint")}>
               PDF
             </button>
             <WikiTools h={h} />

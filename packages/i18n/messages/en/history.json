@@ -8,6 +8,7 @@
   "copied": "Minutes copied",
   "fileName": "minutes",
   "pdfFailed": "PDF generation failed.",
+  "pdfHint": "Print the minutes, or save them as PDF from the print dialog",
   "minutes": "Minutes",
   "copyManually": "Automatic copy is not available. Select the text and copy it (Ctrl+C).",
   "close": "Close",

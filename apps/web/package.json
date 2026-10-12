@@ -41,7 +41,6 @@
     "date-holidays": "3.37.0",
     "email-reply-parser": "2.3.9",
     "imapflow": "2.1.0",
-    "jspdf": "^4.2.1",
     "mailparser": "3.9.29",
     "next": "^16.3.6",
     "next-intl": "^4.14.9",
