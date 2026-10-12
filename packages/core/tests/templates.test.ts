@@ -1,9 +1,11 @@
 import { BUILTIN_TEMPLATES, builtinTemplate, describeRhythm, parseTemplate, templateData } from "@ronde/core/templates";
+import { locales } from "@ronde/i18n";
 import { describe, expect, it } from "vitest";
 
 describe("built-in templates", () => {
   it.each(BUILTIN_TEMPLATES)("%s is a valid template in every language", (id) => {
-    for (const locale of ["en", "fr"] as const) {
+    // Every language of the interface: a missing or broken translation would show up here
+    for (const locale of locales) {
       const t = builtinTemplate(id, locale);
       expect(templateData.safeParse(t).success).toBe(true);
       expect(new Set(t.sections.map((s) => s.key)).size).toBe(t.sections.length);

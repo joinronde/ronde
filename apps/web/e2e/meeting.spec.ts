@@ -126,6 +126,18 @@ test("a host creates a meeting, a participant fills in their check-in and raises
   await expect(minutes.getByText("A productive week for the login page.")).toBeVisible();
   await expect(minutes.getByText("Shipped the login page")).toBeVisible();
   await expect(minutes.getByRole("heading", { name: "Round table" })).toBeVisible();
+  // PDF: the print dialog on the minutes alone (kept closed here), named after them; Markdown downloaded as is
+  await page.evaluate(() => {
+    window.print = () => {};
+  });
+  await page.getByRole("button", { name: "PDF", exact: true }).click();
+  const sheet = page.locator(".print-sheet");
+  await expect(sheet).toContainText("A productive week for the login page.");
+  await expect(sheet).toContainText("Shipped the login page");
+  expect(await page.title()).toMatch(/^minutes-\d{4}-\d{2}-\d{2}$/);
+  const markdown = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Markdown", exact: true }).click();
+  expect((await markdown).suggestedFilename()).toMatch(/^minutes-\d{4}-\d{2}-\d{2}\.md$/);
 
   // Stats, computed by the server
   await page.goto(`${meeting}/stats`);

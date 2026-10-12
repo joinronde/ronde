@@ -159,9 +159,19 @@ async function forget(workspaceId: string, s: SlackSettings) {
   if (s.connectorId) await prisma.connector.deleteMany({ where: { id: s.connectorId, workspaceId } });
 }
 
-/** The app was removed from Slack (or its token revoked) there: the workspaces it served forget it */
+/**
+ * The app was removed from Slack (or its token revoked) there: the workspaces it served forget it, whatever their
+ * plan now (one back on Community keeps no dead installation, nor its token)
+ */
 export async function slackUninstalled(teamId: string): Promise<void> {
-  for (const w of await slackWorkspaces(teamId)) await forget(w.id, w.slack);
+  const rows = await prisma.workspace.findMany({
+    where: { settings: { path: ["slack", "teamId"], equals: teamId } },
+    select: { id: true, settings: true },
+  });
+  for (const w of rows) {
+    const slack = (w.settings as WorkspaceSettings).slack;
+    if (slack) await forget(w.id, slack);
+  }
 }
 
 export async function setSlackReminders(ctx: WorkspaceContext, on: boolean): Promise<void> {
