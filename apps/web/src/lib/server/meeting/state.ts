@@ -1,5 +1,6 @@
 import "server-only";
-import type { SectionDef, Snapshot, WikiChoice } from "@ronde/core/types";
+import { buildAgenda } from "@ronde/core/meeting";
+import type { CheckInDTO, SectionDef, Snapshot, WikiChoice } from "@ronde/core/types";
 import { HOST_ID, plainItem } from "@ronde/core/util";
 import { prisma, type ScopedClient, type ScopedTx } from "@ronde/db";
 import { resolveLocale } from "@ronde/i18n";
@@ -86,7 +87,7 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
   const checkIns = await loadCheckIns(db, meeting.id, sections);
   const sid = session?.id ?? "-";
   const [notes, interactions, reactions, answers, kudos, moods, ratings, comments, contributors] = await Promise.all([
-    viewer.isHost ? db.note.findMany({ where: { sessionId: sid } }) : Promise.resolve([]),
+    ctx.can("notes.read") ? db.note.findMany({ where: { sessionId: sid } }) : Promise.resolve([]),
     db.interaction.findMany({ where: { sessionId: sid }, orderBy: { createdAt: "asc" } }),
     db.reaction.findMany({ where: { sessionId: sid }, orderBy: { createdAt: "asc" } }),
     db.icebreakerAnswer.findMany({ where: { sessionId: sid }, orderBy: { createdAt: "asc" } }),
@@ -138,7 +139,29 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
   if (dto && !on("icebreaker")) dto.icebreaker = null;
   if (dto && !on("spotlight")) dto.spotlight = null;
   if (dto && !on("random")) dto.draw = null;
-  const people = (list: typeof participants) => list.map(toMember).map((p) => (on("birthdays") ? p : { ...p, birthday: null }));
+  // Addresses, birthdays and handles are the directory's: for the people who read it, not an observer from
+  // outside, a workspace guest or a guest link
+  const directory = ctx.can("people.read");
+  const people = (list: typeof participants) =>
+    list
+      .map(toMember)
+      .map((p) => (on("birthdays") && directory ? p : { ...p, birthday: null }))
+      .map((p) => (directory ? p : { ...p, email: "", gitlabUsername: "", githubUsername: "" }));
+  // Without the right to read every check-in (an observer, a guest link, a custom role), only what the session
+  // running has presented so far, and one's own: a draft stays its writer's until their turn
+  const shown = ctx.can("checkin.read.all")
+    ? null
+    : presentedSoFar(
+        dto,
+        Object.fromEntries(participants.map((p) => [p.personId, toMember(p)])),
+        interactions.map(toInteraction),
+        locale,
+        blocks,
+        blocksData,
+      );
+  const visible = (personId: string, projectId: string | null) =>
+    !shown || personId === viewer.memberId || shown.speakers.has(personId) || (!!projectId && shown.projects.has(projectId));
+  const guestLink = !ctx.ws.member.personId;
   return {
     serverNow: Date.now(),
     context: { ...ctx.links, sample: ctx.meeting.sample },
@@ -151,13 +174,15 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
           gitlabProjects: "",
           gitlabGroups: "",
           githubRepos: "",
-          video: { ...settings.video, bbbUrl: "" },
+          // A guest link watches the shared screen: the team's call is not its to join
+          ...(guestLink ? { videoUrl: "" } : {}),
+          video: guestLink ? { ...settings.video, link: "", jitsiUrl: "", bbbUrl: "" } : { ...settings.video, bbbUrl: "" },
           tokensSet: { gitlab: false, github: false, bbb: false },
         },
     members: people(participants),
     observers: people(observers),
     meeting: dto,
-    checkIns,
+    checkIns: shown ? visibleCheckIns(checkIns, visible) : checkIns,
     projects: projects.map((p) => toProjectDTO(p, new Set([...participants, ...observers].map((x) => x.personId)))),
     projectChoices: ctx.can("meeting.configure")
       ? (
@@ -179,13 +204,14 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
     kudos: on("kudos") ? kudos.map(toKudo) : [],
     mood: toMood(on("mood") ? moods : [], viewer.memberId ?? (viewer.isHost ? HOST_ID : null)),
     rating: toRating(on("rating") ? ratings : [], viewer.memberId ?? (viewer.isHost ? HOST_ID : null)),
-    comments: comments.map((c) => toComment(c, sections)),
-    contributors: contributors.map((c) => toContributor(c, sections)),
+    comments: comments.filter((c) => visible(c.item.personId, c.item.projectId)).map((c) => toComment(c, sections)),
+    contributors: contributors.filter((c) => visible(c.item.personId, c.item.projectId)).map((c) => toContributor(c, sections)),
     actions: actions.map(toAction),
     lastWeek,
     lastArchivedAt: ms(lastArchived?.archivedAt),
     prefs: Object.fromEntries(prefs.map((p) => [p.key, p.value])),
-    attendance,
+    // Who comes to the coming sessions: the team's business, not a guest link's
+    attendance: guestLink ? {} : attendance,
     modules: Object.fromEntries(Object.entries(mods).map(([id, m]) => [id, m.enabled])),
     // Paid plans: suggested to the people who choose the plan, unless hidden by the instance, by them, or already owned
     upgradeHints: prefs.some((p) => p.key === HIDE_UPGRADE_HINTS) ? null : upgradeTarget(ctx.ws.workspace, ctx.ws.member.role),
@@ -242,4 +268,31 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
     },
     notifications: viewer.isAdmin ? { ...notify, canManageConnectors: ctx.can("connectors.manage") } : null,
   };
+}
+
+/** The speakers and projects the session running has presented so far (its current step included) */
+function presentedSoFar(...args: Parameters<typeof buildAgenda>): { speakers: Set<string>; projects: Set<string> } {
+  const meeting = args[0];
+  const agenda = meeting?.startedAt ? buildAgenda(...args) : [];
+  const at = agenda.findIndex((x) => x.key === meeting?.stepKey);
+  const passed = at < 0 ? [] : agenda.slice(0, at + 1);
+  return {
+    speakers: new Set(passed.flatMap((x) => (x.type === "speaker" && x.id ? [x.id] : []))),
+    projects: new Set(passed.flatMap((x) => (x.type === "project" && x.projectId ? [x.projectId] : []))),
+  };
+}
+
+const NO_FIELDS = { done: [], next: [], blockers: [], other: [], extra: {} };
+
+/** Check-ins held to what may be seen: whole for a person presented, by project for the projects presented */
+function visibleCheckIns(all: Record<string, CheckInDTO>, visible: (personId: string, projectId: string | null) => boolean) {
+  const out: Record<string, CheckInDTO> = {};
+  for (const [id, c] of Object.entries(all)) {
+    if (visible(id, null)) out[id] = c;
+    else {
+      const byProject = Object.fromEntries(Object.entries(c.byProject).filter(([projectId]) => visible(id, projectId)));
+      if (Object.keys(byProject).length) out[id] = { ...NO_FIELDS, byProject, updatedAt: c.updatedAt };
+    }
+  }
+  return out;
 }

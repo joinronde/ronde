@@ -62,7 +62,7 @@ export async function sendReport(w: Workspace, period: { from: string; to: strin
 export async function checkReports(now = new Date()): Promise<number> {
   await loadLicense();
   const workspaces = await prisma.workspace.findMany({
-    where: { deletedAt: null },
+    where: { deletedAt: null, suspendedAt: null },
     select: { id: true, slug: true, name: true, locale: true, timezone: true, plan: true, settings: true },
   });
   let sent = 0;

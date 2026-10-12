@@ -28,6 +28,8 @@ describe("Slack app", () => {
     // Another body, another secret, a replay, no secret at all
     expect(verify(`${body}&text=x`, String(ts), signed(body, ts), SECRET, now)).toBe(false);
     expect(verify(body, String(ts), signed(body, ts, "other"), SECRET, now)).toBe(false);
+    // As many characters as a real signature, some beyond ASCII: refused, not a crash
+    expect(verify(body, String(ts), `v0=${"é".repeat(64)}`, SECRET, now)).toBe(false);
     expect(verify(body, String(ts - 301), signed(body, ts - 301), SECRET, now)).toBe(false);
     expect(verify(body, String(ts), signed(body, ts, ""), "", now)).toBe(false);
     expect(verify(body, "", "v0=", SECRET, now)).toBe(false);

@@ -136,6 +136,24 @@ describe("notification rules", () => {
     expect(posts).toHaveLength(2);
   });
 
+  it("never reaches the server's own network in the cloud, whatever the connector says", async () => {
+    vi.stubEnv("RONDE_CLOUD", "1");
+    try {
+      const hook = await prisma.connector.create({
+        data: { workspaceId, kind: "webhook", name: "Inside", config: { url: "https://127.0.0.1:9/hook" } },
+      });
+      const d = await prisma.delivery.create({
+        data: { workspaceId, connectorId: hook.id, meetingId, event: "session.started", key: `inside-${Date.now()}` },
+      });
+      await deliver(d.id).catch(() => undefined);
+      expect(await prisma.delivery.findUniqueOrThrow({ where: { id: d.id } })).toMatchObject({ status: "failed" });
+      // The fake network was never asked: the guard refused the connection itself
+      expect(posts).toHaveLength(0);
+    } finally {
+      vi.stubEnv("RONDE_CLOUD", "");
+    }
+  });
+
   it("emails the audience of the rule: the hosts", async () => {
     vi.stubEnv("SMTP_URL", "smtp://localhost");
     const transport = nodemailer.createTransport({ streamTransport: true, buffer: true });

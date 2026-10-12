@@ -55,12 +55,13 @@
   "inviteAgain": "Invia un invito",
   "revoke": "Revoca l'invito",
   "remove": "Rimuovi",
-  "removeConfirm": "Rimuovere {name} da {workspace}? Profilo e accesso vengono eliminati.",
+  "removeConfirm": "Rimuovere {name} da {workspace}? Profilo e accesso vengono eliminati; ciò che ha detto nelle riunioni resta, firmato da un ex membro.",
   "removed": "{name} rimosso.",
   "changeRole": "Ruolo di {name}",
   "saved": "Salvato",
   "customRoleOf": "Ruolo aggiuntivo di {name}",
   "noCustomRole": "Nessun ruolo aggiuntivo",
   "phone": "Numero di cellulare",
-  "phoneHint": "Per i promemoria via SMS e WhatsApp, in formato internazionale (+39…). Facoltativo."
+  "phoneHint": "Per i promemoria via SMS e WhatsApp, in formato internazionale (+39…). Facoltativo.",
+  "formerMember": "Ex membro"
 }

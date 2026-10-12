@@ -130,7 +130,9 @@ export function readLinkToken(token: string, now = Date.now()): Omit<LinkRef, "u
   const [payload, mac, ...rest] = token.split(".");
   if (!payload || !mac || rest.length) return null;
   const expected = linkMac(payload);
-  if (mac.length !== expected.length || !timingSafeEqual(Buffer.from(mac), Buffer.from(expected))) return null;
+  // Compared as bytes: a character beyond ASCII must not make two lengths differ there and throw
+  const [a, b] = [Buffer.from(mac), Buffer.from(expected)];
+  if (a.length !== b.length || !timingSafeEqual(a, b)) return null;
   try {
     const { until, ...ref } = JSON.parse(Buffer.from(payload, "base64url").toString()) as LinkRef;
     return until > now ? ref : null;
@@ -418,7 +420,7 @@ export async function remindInTeams(
     );
     return true;
   } catch (e) {
-    console.error(`[teams] reminder to ${person.email}`, e);
+    console.error(`[teams] reminder to person ${person.id}`, e);
     return false;
   }
 }

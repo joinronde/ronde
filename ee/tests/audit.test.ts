@@ -24,6 +24,15 @@ describe("audit details", () => {
       text: `${"a".repeat(500)}…`,
     });
   });
+
+  it("keeps no phone number or birthday, whoever passes them", () => {
+    expect(sanitize({ email: "ana@acme.com", phone: "+33612345678", birthday: "1990-04-02", set: ["phone"] })).toEqual({
+      email: "ana@acme.com",
+      phone: "[hidden]",
+      birthday: "[hidden]",
+      set: ["phone"],
+    });
+  });
 });
 
 describe("CSV export", () => {

@@ -146,7 +146,7 @@ function customMessage(input: NotifyInput, custom: { title: string; body: string
 }
 
 /** Sends a delivery. Throws on failure (the job queue retries); the outcome is recorded either way. */
-export async function deliver(deliveryId: string, fetchImpl: typeof fetch = fetch): Promise<void> {
+export async function deliver(deliveryId: string, fetchImpl: typeof fetch = outboundFetch): Promise<void> {
   const d = await prisma.delivery.findUnique({ where: { id: deliveryId }, include: { connector: true, rule: true } });
   if (!d || d.status === "sent" || !d.meetingId) return;
   const n = await notifiedMeeting(d.meetingId);
@@ -220,15 +220,19 @@ export async function sendThrough(
   meetingId: string | null,
   out: Outgoing,
   fetchImpl: typeof fetch = outboundFetch,
+  /** Addresses or numbers to send to instead of the rule's audience (a test goes to the person testing) */
+  only?: string[],
 ) {
   const driver = DRIVERS[connector.kind];
   // Email rules name an audience, resolved to addresses when sending
   const resolved =
-    connector.kind === "email" && meetingId
-      ? { to: await audience(meetingId, target.audience) }
-      : isPhoneKind(connector.kind) && meetingId
-        ? { to: await audience(meetingId, target.audience, "phone") }
-        : target;
+    only && (connector.kind === "email" || isPhoneKind(connector.kind))
+      ? { to: only }
+      : connector.kind === "email" && meetingId
+        ? { to: await audience(meetingId, target.audience) }
+        : isPhoneKind(connector.kind) && meetingId
+          ? { to: await audience(meetingId, target.audience, "phone") }
+          : target;
   await driver.send(
     out,
     {

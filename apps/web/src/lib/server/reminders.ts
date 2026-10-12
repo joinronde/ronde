@@ -54,7 +54,7 @@ export async function checkReminders(now = new Date()): Promise<number> {
       archivedAt: null,
       // A sample meeting sends nothing
       sample: false,
-      workspace: { deletedAt: null },
+      workspace: { deletedAt: null, suspendedAt: null },
       OR: [
         { reminderEnabled: true },
         { notificationRules: { some: { enabled: true, event: { in: ["session_soon", "checkin_reminder"] } } } },
@@ -224,7 +224,7 @@ async function sendReminders(
       });
       sent++;
     } catch (e) {
-      console.error(`[reminders] sending to ${p.person.email} failed`, e);
+      console.error(`[reminders] sending to person ${p.personId} failed`, e);
     }
   }
   console.log(`[reminders] ${sent} reminder(s) sent for the ${session.date} session of meeting ${meetingId}`);
@@ -241,7 +241,7 @@ export async function checkDaily(now = new Date()): Promise<number> {
     where: {
       enabled: true,
       event: { in: ["action_overdue", "birthday"] },
-      meeting: { archivedAt: null, sample: false, workspace: { deletedAt: null } },
+      meeting: { archivedAt: null, sample: false, workspace: { deletedAt: null, suspendedAt: null } },
     },
     select: {
       meetingId: true,

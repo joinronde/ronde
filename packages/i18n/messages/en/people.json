@@ -55,12 +55,13 @@
   "inviteAgain": "Send an invitation",
   "revoke": "Revoke the invitation",
   "remove": "Remove",
-  "removeConfirm": "Remove {name} from {workspace}? Their profile and access are deleted.",
+  "removeConfirm": "Remove {name} from {workspace}? Their profile and access are deleted; what they said in meetings stays, signed by a former member.",
   "removed": "{name} removed.",
   "changeRole": "Role of {name}",
   "saved": "Saved",
   "customRoleOf": "Extra role of {name}",
   "noCustomRole": "No extra role",
   "phone": "Mobile number",
-  "phoneHint": "For SMS and WhatsApp reminders, in international form (+33…). Optional."
+  "phoneHint": "For SMS and WhatsApp reminders, in international form (+33…). Optional.",
+  "formerMember": "Former member"
 }

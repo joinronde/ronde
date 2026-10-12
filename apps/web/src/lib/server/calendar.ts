@@ -21,7 +21,7 @@ export async function createFeedLink(userId: string, meetingId: string | null): 
 /** Meetings a user may still see: they take part in them, or administer their workspace */
 async function visibleMeetings(userId: string, meetingId: string | null) {
   const memberships = await prisma.workspaceMember.findMany({
-    where: { userId, status: "active", workspace: { deletedAt: null } },
+    where: { userId, status: "active", user: { disabledAt: null }, workspace: { deletedAt: null, suspendedAt: null } },
     select: { workspaceId: true, personId: true, role: true, workspace: { select: { slug: true, timezone: true } } },
   });
   const out = [];

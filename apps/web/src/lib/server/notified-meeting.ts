@@ -20,7 +20,7 @@ export interface NotifiedMeeting {
 
 export async function notifiedMeeting(meetingId: string): Promise<NotifiedMeeting | null> {
   const meeting = await prisma.meeting.findFirst({
-    where: { id: meetingId, archivedAt: null, workspace: { deletedAt: null } },
+    where: { id: meetingId, archivedAt: null, workspace: { deletedAt: null, suspendedAt: null } },
     include: {
       workspace: { select: { slug: true, locale: true, timezone: true } },
       sections: { orderBy: { position: "asc" } },

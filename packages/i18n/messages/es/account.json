@@ -79,5 +79,15 @@
   "passkeySynced": "sincronizada en tus dispositivos",
   "passkeyDevice": "en un solo dispositivo",
   "passkeySince": "añadida el {date}",
-  "passkeyUnsupported": "Este navegador no puede crear llaves de acceso. Prueba una versión reciente de Chrome, Edge, Firefox o Safari."
+  "passkeyUnsupported": "Este navegador no puede crear llaves de acceso. Prueba una versión reciente de Chrome, Edge, Firefox o Safari.",
+  "data": {
+    "title": "Tus datos",
+    "export": "Descargar mis datos",
+    "exportHint": "Tu cuenta, tus métodos de acceso y dispositivos, y en cada espacio tu perfil, tus check-ins, acciones, respuestas y ausencias, en un archivo JSON.",
+    "delete": "Eliminar mi cuenta",
+    "deleteHint": "Tu cuenta, tus accesos y tus dispositivos se eliminan al momento. En cada espacio se borra tu perfil; lo que dijiste en las reuniones se queda con el equipo, firmado por un antiguo miembro. No se puede deshacer.",
+    "deleteConfirm": "Escribe <strong>{email}</strong> para confirmar",
+    "deleteForGood": "Eliminar para siempre",
+    "cancel": "Cancelar"
+  }
 }

@@ -167,8 +167,9 @@ export async function dashboard(ctx: WorkspaceContext): Promise<DashboardData> {
   });
 
   // Birthdays in the next 30 days, the year turning included
+  // The directory's birthdays, for the people who read it (not a workspace guest)
   const birthdays = people
-    .filter((p) => p.birthday)
+    .filter((p) => p.birthday && ctx.can("people.read"))
     .map((p) => {
       const [m, d] = p.birthday!.split("-").map(Number) as [number, number];
       let at = Date.UTC(now.getUTCFullYear(), m - 1, d);

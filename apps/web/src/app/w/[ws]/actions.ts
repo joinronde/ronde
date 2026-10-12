@@ -1,7 +1,7 @@
 "use server";
 
 import { randomBytes } from "node:crypto";
-import type { WorkspaceRole } from "@ronde/core/permissions";
+import type { Permission, WorkspaceRole } from "@ronde/core/permissions";
 import { prisma } from "@ronde/db";
 import type { SsoProviderInput } from "@ronde/editions/ee";
 import { resolveLocale } from "@ronde/i18n";
@@ -33,6 +33,7 @@ import { meetingContext } from "@/lib/server/meeting/context";
 import { runOp } from "@/lib/server/meeting/ops";
 import { createMeeting, type NewMeeting } from "@/lib/server/meetings";
 import { type ConnectorInput, deleteConnector, saveConnector, testConnector } from "@/lib/server/notify/connectors";
+import { assertPublicUrl } from "@/lib/server/outbound";
 import { publicUrl } from "@/lib/server/public-url";
 import { reportsOn, sendReport } from "@/lib/server/reports";
 import { customRolesOn } from "@/lib/server/roles";
@@ -99,6 +100,14 @@ export async function deleteSampleAction(slug: string, meetingId: string) {
   });
 }
 
+/** What the audit log keeps of a profile: who it is, and which other fields were set, not their values */
+const personLogged = (input: PersonInput) => ({
+  email: input.email,
+  firstName: input.firstName,
+  lastName: input.lastName ?? "",
+  set: (["phone", "birthday", "jobCategoryId"] as const).filter((k) => !!input[k]),
+});
+
 export async function inviteAction(slug: string, input: PersonInput & { role: WorkspaceRole }) {
   return run(async () => {
     const ctx = await authorize(slug, "people.invite");
@@ -113,7 +122,7 @@ export async function addPersonAction(slug: string, input: PersonInput) {
   return run(async () => {
     const ctx = await authorize(slug, "people.manage");
     await addPerson(ctx, input);
-    await log(ctx, "people.add", "person", null, input);
+    await log(ctx, "people.add", "person", null, personLogged(input));
     refresh(slug);
     return null;
   });
@@ -124,7 +133,7 @@ export async function updatePersonAction(slug: string, personId: string, input: 
     // Permission checked inside: managers edit anyone, everyone edits their own profile
     const ctx = await authorize(slug, "people.read");
     await updatePerson(ctx, personId, input);
-    await log(ctx, "people.update", "person", personId, input);
+    await log(ctx, "people.update", "person", personId, personLogged(input));
     refresh(slug);
     return null;
   });
@@ -222,7 +231,9 @@ export async function leaveWorkspaceAction(slug: string) {
 
 export async function deleteWorkspaceAction(slug: string, confirmation: string) {
   return run(async () => {
-    await deleteWorkspace(await authorize(slug, "workspace.delete"), confirmation);
+    const ctx = await authorize(slug, "workspace.delete");
+    await deleteWorkspace(ctx, confirmation);
+    await log(ctx, "workspace.delete", "workspace", ctx.workspace.id);
     return null;
   });
 }
@@ -306,6 +317,13 @@ async function rolesContext(slug: string) {
 export async function saveRoleAction(slug: string, input: { id?: string; name: string; description: string; permissions: string[] }) {
   return run(async () => {
     const ctx = await rolesContext(slug);
+    // Nobody hands out a permission they do not hold, nor changes the role they hold themselves
+    if (input.permissions.some((p) => !ctx.can(p as Permission))) throw new AccessError(403, "accessDenied");
+    if (
+      input.id &&
+      (await ctx.db.workspaceMember.findFirst({ where: { personId: ctx.member.personId, customRoleId: input.id }, select: { id: true } }))
+    )
+      throw new AccessError(403, "accessDenied");
     const result = await enterprise.roles.save(ctx.db, ctx.workspace.id, input);
     await log(ctx, "roles.save", "role", result.id, input);
     refresh(slug);
@@ -326,6 +344,12 @@ export async function deleteRoleAction(slug: string, id: string) {
 export async function assignRoleAction(slug: string, personId: string, roleId: string | null) {
   return run(async () => {
     const ctx = await rolesContext(slug);
+    // Not to oneself, and not a role giving more than one holds
+    if (personId === ctx.member.personId) throw new AccessError(403, "accessDenied");
+    if (roleId) {
+      const role = await ctx.db.customRole.findFirst({ where: { id: roleId }, select: { permissions: true } });
+      if (role?.permissions.some((p) => !ctx.can(p as Permission))) throw new AccessError(403, "accessDenied");
+    }
     await enterprise.roles.assign(ctx.db, personId, roleId);
     await log(ctx, "members.customRole", "person", personId, { roleId });
     refresh(slug);
@@ -365,8 +389,13 @@ export async function verifyDomainAction(slug: string, id: string) {
   });
 }
 
-export async function updateDomainAction(slug: string, id: string, patch: { capture?: boolean; enforceSso?: boolean }) {
+export async function updateDomainAction(slug: string, id: string, input: { capture?: boolean; enforceSso?: boolean }) {
   return run(async () => {
+    // What the browser sends is anything: only the two switches are read
+    const patch = {
+      ...(typeof input?.capture === "boolean" ? { capture: input.capture } : {}),
+      ...(typeof input?.enforceSso === "boolean" ? { enforceSso: input.enforceSso } : {}),
+    };
     const ctx = await domainsContext(slug);
     if (patch.enforceSso && !ssoEnforcementOn(ctx.workspace)) throw new AccessError(403, "featureNotInPlan");
     // Requiring SSO without a provider would lock everyone of the domain out
@@ -421,6 +450,14 @@ export async function addSsoProviderAction(slug: string, input: SsoProviderInput
       select: { domain: true },
     });
     if (!domains.length || verified.length !== domains.length) throw new OpError("ssoDomainNotVerified");
+    // The provider's addresses: https, and never one of the server's own network (the library fetches them itself)
+    for (const u of input.oidc ? [input.oidc.discoveryUrl, input.oidc.issuer] : [input.saml?.entryPoint]) {
+      if (!u) continue;
+      if (!/^https:\/\//i.test(u.trim())) throw new OpError("ssoProviderRefused", { details: "https://" });
+      await assertPublicUrl(u.trim()).catch(() => {
+        throw new OpError("ssoProviderRefused", { details: new URL(u.trim()).host });
+      });
+    }
     const providerId = `ws-${ctx.workspace.slug}-${randomBytes(3).toString("hex")}`;
     const reg = enterprise.identity.ssoRegistration({ ...input, name, domains }, { appUrl: await publicUrl(""), providerId });
     const h = new Headers(await headers());

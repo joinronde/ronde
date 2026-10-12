@@ -1,4 +1,5 @@
 import { locales } from "@ronde/i18n";
+import { removeMeetingEvents } from "../../calendars";
 import "server-only";
 import { randomBytes } from "node:crypto";
 import { agendaSchema, BLOCK_MODULE } from "@ronde/core/agenda";
@@ -208,9 +209,11 @@ export const configOps = [
     permission: "meeting.delete",
     input: z.object({ confirm: str(100) }),
     // The meeting leaves the lists and its pages; its rows stay until the workspace is deleted
-    run: async ({ db, meetingId, m }, o) => {
+    run: async ({ db, meetingId, workspaceId, m, after }, o) => {
       if (o.confirm.trim() !== m.meeting.name.trim()) throw new OpError("confirmationMismatch");
       await db.meeting.update({ where: { id: meetingId }, data: { archivedAt: new Date() } });
+      // Its coming sessions leave the calendars
+      if (m.meeting.calendarAccountId) after(() => removeMeetingEvents(workspaceId, meetingId));
     },
   }),
   defineOp({

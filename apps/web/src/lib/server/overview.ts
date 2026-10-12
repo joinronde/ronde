@@ -170,8 +170,9 @@ export async function kudosWall(ctx: WorkspaceContext): Promise<KudosWall> {
       to: byId.get(r.toId) ?? unknown,
     })),
     month: { given: recent.length, people: new Set(recent.map((r) => r.toId)).size },
+    // The directory's birthdays, for the people who read it (not a workspace guest)
     birthdays: people
-      .filter((p) => p.birthday?.startsWith(`${month}-`) && !p.deprovisionedAt)
+      .filter((p) => ctx.can("people.read") && p.birthday?.startsWith(`${month}-`) && !p.deprovisionedAt)
       .sort((a, b) => a.birthday!.localeCompare(b.birthday!))
       .map((p) => ({ ...person(p), birthday: p.birthday! })),
   };

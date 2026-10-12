@@ -77,7 +77,7 @@ export async function guestContext(token: string): Promise<MeetingCtx | null> {
   if (!link || link.revokedAt || link.expiresAt.getTime() < Date.now()) return null;
   await loadLicense();
   const workspace = await prisma.workspace.findFirst({
-    where: { id: link.workspaceId, deletedAt: null },
+    where: { id: link.workspaceId, deletedAt: null, suspendedAt: null },
     select: { id: true, slug: true, name: true, locale: true, timezone: true, plan: true, settings: true },
   });
   if (!workspace) return null;

@@ -79,5 +79,15 @@
   "passkeySynced": "已在你的设备间同步",
   "passkeyDevice": "仅在一台设备上",
   "passkeySince": "添加于 {date}",
-  "passkeyUnsupported": "此浏览器无法创建通行密钥。请尝试较新版本的 Chrome、Edge、Firefox 或 Safari。"
+  "passkeyUnsupported": "此浏览器无法创建通行密钥。请尝试较新版本的 Chrome、Edge、Firefox 或 Safari。",
+  "data": {
+    "title": "你的数据",
+    "export": "下载我的数据",
+    "exportHint": "你的账户、登录方式和设备，以及每个工作区中的个人资料、签到、待办、回复和缺席，汇总为一个 JSON 文件。",
+    "delete": "删除我的账户",
+    "deleteHint": "你的账户、登录和设备会立即删除。在每个工作区中，你的个人资料会被抹去；你在会议中的发言会保留给团队，署名为前成员。此操作无法撤销。",
+    "deleteConfirm": "输入 <strong>{email}</strong> 以确认",
+    "deleteForGood": "永久删除",
+    "cancel": "取消"
+  }
 }

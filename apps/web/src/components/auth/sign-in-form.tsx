@@ -77,7 +77,8 @@ export function SignInForm({
       method: "POST",
       body: { email, callbackURL: withBasePath(next), errorCallbackURL: withBasePath("/sign-in") },
     });
-    if (error || !data?.url) {
+    // Only a web address: the provider's page, never a script
+    if (error || !data?.url || !/^https?:\/\//i.test(data.url)) {
       setBusy(false);
       setError("ssoNoProvider");
       return;

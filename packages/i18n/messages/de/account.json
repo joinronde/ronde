@@ -79,5 +79,15 @@
   "passkeySynced": "auf deinen Geräten synchronisiert",
   "passkeyDevice": "auf einem Gerät",
   "passkeySince": "hinzugefügt am {date}",
-  "passkeyUnsupported": "Dieser Browser kann keine Passkeys erstellen. Versuche eine aktuelle Version von Chrome, Edge, Firefox oder Safari."
+  "passkeyUnsupported": "Dieser Browser kann keine Passkeys erstellen. Versuche eine aktuelle Version von Chrome, Edge, Firefox oder Safari.",
+  "data": {
+    "title": "Deine Daten",
+    "export": "Meine Daten herunterladen",
+    "exportHint": "Dein Konto, deine Anmeldemethoden und Geräte, und in jedem Workspace dein Profil, deine Check-ins, Aufgaben, Antworten und Abwesenheiten, in einer JSON-Datei.",
+    "delete": "Mein Konto löschen",
+    "deleteHint": "Dein Konto, deine Anmeldungen und Geräte werden sofort gelöscht. In jedem Workspace wird dein Profil gelöscht; was du in Meetings gesagt hast, bleibt beim Team, gezeichnet von einem ehemaligen Mitglied. Das lässt sich nicht rückgängig machen.",
+    "deleteConfirm": "Gib <strong>{email}</strong> zur Bestätigung ein",
+    "deleteForGood": "Endgültig löschen",
+    "cancel": "Abbrechen"
+  }
 }

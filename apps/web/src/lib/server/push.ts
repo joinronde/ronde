@@ -86,6 +86,13 @@ export async function sendPush(
   }
 }
 
+/**
+ * The push services of the browsers (Chrome and Edge's FCM, Firefox's autopush, Safari's, Windows'): a device's
+ * address is at one of them, never anywhere else the server would then be sent to
+ */
+const PUSH_SERVICES =
+  /(^|\.)(fcm\.googleapis\.com|android\.googleapis\.com|push\.services\.mozilla\.com|push\.apple\.com|notify\.windows\.com)$/i;
+
 /** A device turned on for this person (the same browser signed in as someone else moves to them) */
 export async function savePushDevice(
   userId: string,
@@ -94,7 +101,13 @@ export async function savePushDevice(
 ): Promise<void> {
   const url = new URL(sub.endpoint);
   const key = /^[\w-]{20,200}$/;
-  if (url.protocol !== "https:" || sub.endpoint.length > 1000 || !key.test(sub.keys.p256dh) || !key.test(sub.keys.auth))
+  if (
+    url.protocol !== "https:" ||
+    !PUSH_SERVICES.test(url.hostname) ||
+    sub.endpoint.length > 1000 ||
+    !key.test(sub.keys.p256dh) ||
+    !key.test(sub.keys.auth)
+  )
     throw new Error("invalid subscription");
   const data = { userId, p256dh: sub.keys.p256dh, auth: sub.keys.auth, label: label.slice(0, 80) };
   await prisma.pushSubscription.upsert({ where: { endpoint: sub.endpoint }, create: { endpoint: sub.endpoint, ...data }, update: data });
@@ -157,7 +170,17 @@ export async function pushInbox(now = new Date()): Promise<number> {
   const [people, meetings, workspaces] = await Promise.all([
     prisma.person.findMany({
       where: { id: { in: [...new Set(items.flatMap((i) => [i.personId, ...(i.actorId ? [i.actorId] : [])]))] } },
-      select: { id: true, userId: true, firstName: true, lastName: true, email: true, locale: true },
+      select: {
+        id: true,
+        userId: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        locale: true,
+        active: true,
+        deprovisionedAt: true,
+        member: { select: { status: true } },
+      },
     }),
     prisma.meeting.findMany({
       where: { id: { in: [...new Set(items.flatMap((i) => (i.meetingId ? [i.meetingId] : [])))] } },
@@ -180,7 +203,8 @@ export async function pushInbox(now = new Date()): Promise<number> {
   for (const item of items) {
     const person = people.find((p) => p.id === item.personId);
     const ws = workspaces.find((w) => w.id === item.workspaceId);
-    if (!person?.userId || !ws) continue;
+    // Only to a member still there: not someone who left, was suspended or removed by the directory
+    if (!person?.userId || !ws || !person.active || person.deprovisionedAt || person.member?.status !== "active") continue;
     const locale = resolveLocale(users.find((u) => u.id === person.userId)?.locale, person.locale, ws.locale);
     const t = translator(locale, "inbox");
     const meeting = meetings.find((m) => m.id === item.meetingId)?.name ?? "";

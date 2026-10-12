@@ -18,7 +18,8 @@ export function verify(body: string, timestamp: string, signature: string, signi
   const ts = Number(timestamp);
   if (!ts || !signature.startsWith("v0=") || !signingSecret || Math.abs(now / 1000 - ts) > TOLERANCE_S) return false;
   const expected = `v0=${createHmac("sha256", signingSecret).update(`v0:${timestamp}:${body}`).digest("hex")}`;
-  return expected.length === signature.length && timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
+  // Compared as bytes: a character beyond ASCII must not make two lengths differ there and throw
+  return Buffer.byteLength(signature) === expected.length && timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
 }
 
 /** The page where a Slack workspace's administrator adds the app */

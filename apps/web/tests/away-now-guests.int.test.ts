@@ -53,11 +53,28 @@ describe("absences", () => {
 
   it("let the person they name run the meetings they host, during the absence only", async () => {
     const delegate = await other();
+    // Only a member of the workspace stands in: someone of the directory without an account could not
+    await expect(
+      addAbsence(f.ctx.ws, { personId: f.hostPersonId, from: today, to: addDays(today, 3), delegateId: delegate }),
+    ).rejects.toThrow("unknownMember");
+    const user = await prisma.user.create({ data: { id: crypto.randomUUID(), email: `stand-in-${n}@away.test`, name: "Sam" } });
+    await prisma.person.update({ where: { id: delegate }, data: { userId: user.id } });
+    await prisma.workspaceMember.create({ data: { workspaceId: f.workspaceId, userId: user.id, personId: delegate, role: "member" } });
     await addAbsence(f.ctx.ws, { personId: f.hostPersonId, from: today, to: addDays(today, 3), delegateId: delegate });
     expect(await standsInAsHost(f.ctx.ws.db, f.meetingId, delegate, today)).toBe(true);
     expect(await standsInAsHost(f.ctx.ws.db, f.meetingId, delegate, addDays(today, 10))).toBe(false);
     // The delegate is told
     expect(await prisma.inboxItem.count({ where: { personId: delegate, kind: "absence.delegated" } })).toBe(1);
+  });
+
+  it("never let someone name themselves to stand in for another person", async () => {
+    const colleague = await other();
+    const own = { ...f.ctx.ws, member: { ...f.ctx.ws.member, personId: colleague } };
+    await expect(
+      addAbsence(own, { personId: f.hostPersonId, from: today, to: addDays(today, 3), delegateId: colleague }),
+    ).rejects.toMatchObject({
+      status: 403,
+    });
   });
 
   it("refuse a period backwards", async () => {

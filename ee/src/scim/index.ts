@@ -121,7 +121,8 @@ const select = {
   active: true,
   createdAt: true,
   updatedAt: true,
-  member: { select: { status: true } },
+  userId: true,
+  member: { select: { status: true, role: true } },
 } as const;
 
 async function setActive(db: Db, personId: string, active: boolean) {
@@ -184,14 +185,22 @@ async function users(db: Db, workspaceId: string, req: ScimRequest): Promise<Sci
   const current = await db.person.findFirst({ where: { id, ...visible }, select });
   if (!current) return error(404, "User not found");
   if (req.method === "GET") return { status: 200, body: toScimUser(current, req.baseUrl) };
+  // The workspace's owners are managed in Ronde: a directory cannot remove, suspend or rename them
+  const owner = current.member?.role === "owner";
   if (req.method === "DELETE") {
+    if (owner) return error(403, "The workspace's owners are managed in Ronde", "mutability");
     await db.workspaceMember.deleteMany({ where: { personId: id } });
-    await db.person.update({ where: { id }, data: { active: false, deprovisionedAt: new Date(), externalId: null } });
+    // Their account is no longer tied to the card: nothing of the workspace reaches it any more
+    await db.person.update({ where: { id }, data: { active: false, deprovisionedAt: new Date(), externalId: null, userId: null } });
     return { status: 204, change: { action: "scim.delete", personId: id, email: current.email } };
   }
   const c = req.method === "PATCH" ? fromPatch(req.body) : req.method === "PUT" ? fromScimUser(req.body) : null;
   if (!c) return req.method === "PATCH" ? error(400, `PATCH needs ${PATCH} Operations`, "invalidSyntax") : error(405, "Method not allowed");
   if (c.email !== undefined && !ADDRESS.test(c.email)) return error(400, "userName must be an email address", "invalidValue");
+  if (owner && c.active === false) return error(403, "The workspace's owners are managed in Ronde", "mutability");
+  // The address of someone with an account is the one they sign in with: theirs to change, not the directory's
+  if (c.email && c.email !== current.email.toLowerCase() && current.userId)
+    return error(409, "This person signs in with their address: it changes from their account", "mutability");
   if (c.email && c.email !== current.email.toLowerCase()) {
     if (await db.person.findFirst({ where: { email: { equals: c.email, mode: "insensitive" }, NOT: { id } }, select: { id: true } }))
       return error(409, "A person with this address already exists", "uniqueness");

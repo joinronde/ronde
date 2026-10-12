@@ -24,6 +24,8 @@ export default async function PeoplePage({
   const now = new Date();
   const [people, categories] = await Promise.all([
     ctx.db.person.findMany({
+      // Not the people removed (by an administrator or the company's directory): their card only signs history
+      where: { deprovisionedAt: null },
       orderBy: [{ firstName: "asc" }, { lastName: "asc" }],
       select: {
         id: true,
@@ -48,15 +50,18 @@ export default async function PeoplePage({
     }),
     ctx.db.jobCategory.findMany({ orderBy: { position: "asc" }, select: { id: true, name: true } }),
   ]);
+  // A mobile number and a birthday are for the person and the people managing the directory, not every member
+  const manages = ctx.can("people.manage");
   const rows: PersonRow[] = people.map((p) => {
     const invitation = p.invitations[0];
+    const own = manages || p.id === ctx.member.personId;
     return {
       id: p.id,
       firstName: p.firstName,
       lastName: p.lastName,
       email: p.email,
-      birthday: p.birthday,
-      phone: p.phone,
+      birthday: own ? p.birthday : null,
+      phone: own ? p.phone : null,
       jobCategoryId: p.jobCategoryId,
       color: p.color,
       avatar: p.avatar ? p.avatar.updatedAt.getTime() : null,

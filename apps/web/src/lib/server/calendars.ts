@@ -106,6 +106,9 @@ export async function saveCalendarAccount(ctx: WorkspaceContext, input: Calendar
 }
 
 export async function deleteCalendarAccount(ctx: WorkspaceContext, id: string): Promise<void> {
+  // Its coming events leave the calendar with it
+  for (const m of await ctx.db.meeting.findMany({ where: { calendarAccountId: id }, select: { id: true } }))
+    await removeEvents(ctx.workspace.id, m.id, (e) => e.accountId === id);
   await ctx.db.meeting.updateMany({ where: { calendarAccountId: id }, data: { calendarAccountId: null } });
   await ctx.db.calendarAccount.deleteMany({ where: { id } });
   await audit(ctx, ctx.db, { action: "calendar.delete", targetType: "calendarAccount", targetId: id });
@@ -138,6 +141,11 @@ export async function setMeetingCalendar(m: MeetingCtx, accountId: string | null
   const changed = accountId ? await syncMeetingCalendar(meetingId) : 0;
   await publish(meetingId, { kind: "state" });
   return changed;
+}
+
+/** A meeting archived or deleted, a workspace deleted: its coming sessions leave the calendars */
+export async function removeMeetingEvents(workspaceId: string, meetingId: string): Promise<void> {
+  await removeEvents(workspaceId, meetingId, () => true);
 }
 
 async function removeEvents(workspaceId: string, meetingId: string, which: (e: { accountId: string; startsAt: Date }) => boolean) {
@@ -308,7 +316,7 @@ const running = new Map<string, Promise<number>>();
 
 async function syncNow(meetingId: string): Promise<number> {
   const meeting = await prisma.meeting.findFirst({
-    where: { id: meetingId, archivedAt: null, calendarAccountId: { not: null } },
+    where: { id: meetingId, archivedAt: null, calendarAccountId: { not: null }, workspace: { deletedAt: null, suspendedAt: null } },
     include: { workspace: { select: { slug: true, timezone: true, plan: true } } },
   });
   if (!meeting?.calendarAccountId || !calendarSyncOn(meeting.workspace)) return 0;
@@ -412,7 +420,10 @@ async function syncNow(meetingId: string): Promise<number> {
 
 /** Every 15 minutes: the calendars of every meeting that has one, a few at once, within the run's budget */
 export async function syncCalendars(): Promise<number> {
-  const meetings = await prisma.meeting.findMany({ where: { archivedAt: null, calendarAccountId: { not: null } }, select: { id: true } });
+  const meetings = await prisma.meeting.findMany({
+    where: { archivedAt: null, calendarAccountId: { not: null }, workspace: { deletedAt: null, suspendedAt: null } },
+    select: { id: true },
+  });
   const deadline = Date.now() + SYNC_BUDGET_MS;
   let changed = 0;
   let next = 0;

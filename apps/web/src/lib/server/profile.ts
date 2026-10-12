@@ -99,7 +99,12 @@ export async function personProfile(ctx: WorkspaceContext, personId: string): Pr
   const canEdit = isMe || ctx.can("people.manage");
   const delegates = canEdit
     ? await ctx.db.person.findMany({
-        where: { id: { not: personId }, active: true, member: { isNot: null } },
+        // Members who can run a meeting (not a guest), never the person setting someone else's absence
+        where: {
+          id: { notIn: [personId, ...(personId !== ctx.member.personId ? [ctx.member.personId] : [])] },
+          active: true,
+          member: { is: { status: "active", role: { not: "guest" } } },
+        },
         orderBy: { firstName: "asc" },
         select: { id: true, firstName: true, lastName: true, email: true },
       })

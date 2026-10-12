@@ -68,6 +68,8 @@ export const auth = betterAuth({
   // The SSO providers' client secrets are encrypted in the table (sso-secrets.ts)
   database: prismaAdapter(authPrisma as unknown as typeof prisma, { provider: "postgresql" }),
   session: { modelName: "authSession", expiresIn: 60 * 60 * 24 * 30, updateAge: 60 * 60 * 24 },
+  // Links sent by email (sign-in, address check, reset) are kept hashed: a copy of the table opens nothing
+  verification: { storeIdentifier: "hashed" },
   user: {
     additionalFields: {
       locale: { type: "string", required: false },
@@ -76,7 +78,9 @@ export const auth = betterAuth({
     },
   },
   account: {
-    accountLinking: { enabled: true, trustedProviders: ["google", "github", "microsoft", "oidc"] },
+    // Linked to an existing account without asking: Google (it vouches for its addresses) and the instance's own
+    // provider. GitHub and Microsoft can hand an address their user never proved: those link only once verified
+    accountLinking: { enabled: true, trustedProviders: ["google", "oidc"] },
     // The tokens Google, GitHub, Microsoft or the identity provider give at sign-in are kept encrypted
     encryptOAuthTokens: true,
   },
@@ -85,6 +89,8 @@ export const auth = betterAuth({
     minPasswordLength: 10,
     // Without a mail server nobody could ever confirm an address: verification is then skipped
     requireEmailVerification: canSendEmail(),
+    // A reset ends every session: whoever had the old password is out
+    revokeSessionsOnPasswordReset: true,
     sendResetPassword: async ({ user, url }) => {
       await sendEmail({ to: user.email, ...authEmail("resetPassword", { url, locale: await emailLocale(user as { locale?: string }) }) });
     },
@@ -93,6 +99,10 @@ export const auth = betterAuth({
     sendOnSignUp: true,
     sendOnSignIn: true,
     autoSignInAfterVerification: true,
+    // A proven address: the workspaces capturing its domain take it now (not at sign-up, before the proof)
+    afterEmailVerification: async (user) => {
+      await captureNewUser(user).catch((e) => console.error("[domains] capture failed", e));
+    },
     sendVerificationEmail: async ({ user, url }) => {
       await sendEmail({ to: user.email, ...authEmail("verify", { url, locale: await emailLocale(user as { locale?: string }) }) });
     },
@@ -209,9 +219,9 @@ export const auth = betterAuth({
           const first = (await prisma.user.count()) === 0;
           return { data: { ...user, instanceRole: first ? "admin" : "user" } };
         },
-        // Workspaces capturing the address's domain get their new member (Enterprise)
+        // Workspaces capturing the address's domain get their new member (Enterprise), once the address is proven
         after: async (user) => {
-          await captureNewUser(user).catch((e) => console.error("[domains] capture failed", e));
+          if (user.emailVerified) await captureNewUser(user).catch((e) => console.error("[domains] capture failed", e));
         },
       },
     },

@@ -55,12 +55,13 @@
   "inviteAgain": "Enviar una invitación",
   "revoke": "Revocar la invitación",
   "remove": "Quitar",
-  "removeConfirm": "¿Quitar a {name} de {workspace}? Se eliminan su perfil y su acceso.",
+  "removeConfirm": "¿Quitar a {name} de {workspace}? Se eliminan su perfil y su acceso; lo que dijo en las reuniones se queda, firmado por un antiguo miembro.",
   "removed": "{name} quitado.",
   "changeRole": "Rol de {name}",
   "saved": "Guardado",
   "customRoleOf": "Rol adicional de {name}",
   "noCustomRole": "Sin rol adicional",
   "phone": "Número de móvil",
-  "phoneHint": "Para los recordatorios por SMS y WhatsApp, en formato internacional (+34…). Opcional."
+  "phoneHint": "Para los recordatorios por SMS y WhatsApp, en formato internacional (+34…). Opcional.",
+  "formerMember": "Antiguo miembro"
 }

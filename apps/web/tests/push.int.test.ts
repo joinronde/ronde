@@ -23,7 +23,7 @@ vi.mock("web-push", () => ({
 let f: Fixture;
 let hostUser: string;
 const device = (n: number) => ({
-  endpoint: `https://push.example.com/send/${n}-${Date.now()}`,
+  endpoint: `https://fcm.googleapis.com/fcm/send/${n}-${Date.now()}`,
   keys: { p256dh: "p".repeat(30), auth: "a".repeat(22) },
 });
 
@@ -44,6 +44,8 @@ describe("push notifications", () => {
     const one = device(1);
     await savePushDevice(hostUser, one, "Chrome · Android");
     await expect(savePushDevice(hostUser, { ...one, endpoint: "http://insecure.example.com/x" }, "")).rejects.toThrow();
+    // Only a browser's push service: not any address the server would then be sent to
+    await expect(savePushDevice(hostUser, { ...one, endpoint: "https://internal.example.com/x" }, "")).rejects.toThrow();
     const message = { title: "T", body: "B", url: "https://ronde.test/x" };
     expect(await sendPush([{ userId: hostUser, message }], "inbox")).toBe(1);
     expect(sent[0]).toMatchObject({ endpoint: one.endpoint, payload: message });

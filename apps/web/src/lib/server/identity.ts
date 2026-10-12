@@ -53,7 +53,7 @@ export async function joinWorkspace(user: { id: string; email: string; name: str
 /** Workspaces that verified the address's domain */
 async function verifiedWorkspaces(email: string): Promise<string[]> {
   const rows = await prisma.workspaceDomain.findMany({
-    where: { domain: domainOf(email), verifiedAt: { not: null }, workspace: { deletedAt: null } },
+    where: { domain: domainOf(email), verifiedAt: { not: null }, workspace: { deletedAt: null, suspendedAt: null } },
     select: { workspaceId: true },
   });
   return rows.map((r) => r.workspaceId);
@@ -144,9 +144,11 @@ export const refreshTrustedOrigins = () => {
  * registered is not trusted: its administrator could otherwise send another person's reset link to it.
  */
 export async function trustedOrigins(request?: Request): Promise<string[]> {
-  const own = [...(env.appUrl() ? [new URL(env.appUrl()).origin] : []), ...pending];
-  // Single sign-on only: signing in, the provider's way back, and the server's own calls registering one
-  if (request && !/\/sign-in\/sso$|\/sso\//.test(new URL(request.url).pathname)) return [...new Set(own)];
+  const own = env.appUrl() ? [new URL(env.appUrl()).origin] : [];
+  // Single sign-on only: signing in, the provider's way back, and the server's own calls registering one (a
+  // provider being registered is trusted there only, never for a reset link's way back or anything else)
+  if (request && !/\/sign-in\/sso$|\/sso\//.test(new URL(request.url).pathname)) return own;
+  own.push(...pending);
   if (Date.now() - providerOrigins.at > 30_000) {
     const rows = await prisma.ssoProvider.findMany({ where: { oidcConfig: { not: null } }, select: { issuer: true } }).catch(() => []);
     const list: string[] = [];

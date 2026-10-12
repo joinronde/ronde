@@ -79,5 +79,15 @@
   "passkeySynced": "synced across your devices",
   "passkeyDevice": "on one device",
   "passkeySince": "added {date}",
-  "passkeyUnsupported": "This browser cannot create passkeys. Try a recent Chrome, Edge, Firefox or Safari."
+  "passkeyUnsupported": "This browser cannot create passkeys. Try a recent Chrome, Edge, Firefox or Safari.",
+  "data": {
+    "title": "Your data",
+    "export": "Download my data",
+    "exportHint": "Your account, sign-in methods and devices, and in each workspace your profile, check-ins, actions, answers and absences, in one JSON file.",
+    "delete": "Delete my account",
+    "deleteHint": "Your account, sign-in and devices are deleted at once. In each workspace your profile is erased; what you said in meetings stays the team's, signed by a former member. This cannot be undone.",
+    "deleteConfirm": "Type <strong>{email}</strong> to confirm",
+    "deleteForGood": "Delete for good",
+    "cancel": "Cancel"
+  }
 }

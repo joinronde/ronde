@@ -202,7 +202,8 @@ async function declined(db: Db, meetingId: string, key: string): Promise<string[
 /** Speaking order of a new session: the participants who speak, in round-table order */
 export async function freshOrder(db: Db, meetingId: string): Promise<string[]> {
   const rows = await db.meetingParticipant.findMany({
-    where: { meetingId, active: true, role: { not: "observer" } },
+    // Someone who left the workspace, or was removed by its directory, has no turn
+    where: { meetingId, active: true, role: { not: "observer" }, person: { active: true, deprovisionedAt: null } },
     orderBy: [{ position: "asc" }, { createdAt: "asc" }],
     select: { personId: true },
   });

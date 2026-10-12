@@ -38,9 +38,11 @@ export async function searchWorkspace(ctx: WorkspaceContext, raw: string, locale
   const words = q.split(/\s+/).filter(Boolean);
 
   const [people, actions, topics] = await Promise.all([
+    // The directory, for the people who read it (a workspace guest only finds their meetings' things)
     ctx.db.person.findMany({
       where: {
         deprovisionedAt: null,
+        ...(ctx.can("people.read") ? {} : { id: { in: [] } }),
         AND: words.map((w) => ({
           OR: [
             { firstName: { contains: w, mode: "insensitive" as const } },

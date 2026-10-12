@@ -53,7 +53,7 @@ export async function captureNewUser(user: { id: string; email: string; name: st
 /** Another workspace already verified this domain: a domain belongs to one workspace */
 export async function domainTakenElsewhere(domain: string, workspaceId: string): Promise<boolean> {
   return !!(await prisma.workspaceDomain.findFirst({
-    where: { domain, verifiedAt: { not: null }, NOT: { workspaceId } },
+    where: { domain, verifiedAt: { not: null }, NOT: { workspaceId }, workspace: { deletedAt: null } },
     select: { id: true },
   }));
 }

@@ -6,9 +6,11 @@ import { assignableRoles, type WorkspaceRole } from "@ronde/core/permissions";
 import { availableSlug, isSlugFormat, RESERVED_SLUGS, slugify, splitName } from "@ronde/core/slug";
 import { prisma } from "@ronde/db";
 import { isLocale, type Locale, resolveLocale } from "@ronde/i18n";
+import { erasePerson } from "./account-data";
 import type { CurrentUser, WorkspaceContext, WorkspaceSettings } from "./authz";
-import { billingOn } from "./billing";
+import { billingOn, endSubscription } from "./billing";
 import { emailBrand } from "./branding";
+import { removeMeetingEvents } from "./calendars";
 import { env } from "./env";
 import { AccessError, OpError } from "./errors";
 import { guessHolidays, isHolidayCode } from "./holidays";
@@ -17,6 +19,7 @@ import { isCloud } from "./license";
 import { isSampleAddress, sendEmail } from "./mailer";
 import { resyncSession } from "./meeting/schedule";
 import { publicUrl } from "./public-url";
+import { disconnectSlack } from "./slack";
 
 const INVITATION_DAYS = 14;
 const PALETTE_SIZE = 6;
@@ -141,9 +144,17 @@ export async function updateWorkspace(
   return { slug };
 }
 
-/** Soft delete: the workspace disappears at once; its data is purged later by the retention job */
+/**
+ * The workspace disappears at once, and everything it holds is erased 30 days later (purgeDeleted). Before:
+ * its subscription ends (refused by Stripe, nothing is deleted), its coming sessions leave the calendars, Slack
+ * forgets it.
+ */
 export async function deleteWorkspace(ctx: WorkspaceContext, confirmation: string): Promise<void> {
   if (confirmation.trim() !== ctx.workspace.slug) throw new OpError("confirmationMismatch");
+  await endSubscription(ctx.workspace.id);
+  for (const m of await ctx.db.meeting.findMany({ where: { calendarAccountId: { not: null } }, select: { id: true } }))
+    await removeMeetingEvents(ctx.workspace.id, m.id).catch((e) => console.error(`[workspace] calendar of meeting ${m.id}`, e));
+  await disconnectSlack(ctx).catch((e) => console.error("[workspace] slack", e));
   await prisma.workspace.update({
     where: { id: ctx.workspace.id },
     data: { deletedAt: new Date(), slug: `${ctx.workspace.slug}-deleted-${Date.now()}` },
@@ -206,7 +217,9 @@ export async function removePerson(ctx: WorkspaceContext, personId: string): Pro
   const person = await ctx.db.person.findFirst({ where: { id: personId }, select: { id: true, member: { select: { role: true } } } });
   if (!person) throw new OpError("notFound");
   if (person.member) await assertCanChangeRole(ctx, person.member.role, null);
-  await ctx.db.person.delete({ where: { id: person.id } });
+  // Their profile and access go; what they said stays the team's, signed by a former member (their open actions
+  // included, to hand over)
+  await erasePerson(ctx.db, ctx.workspace.id, person.id);
 }
 
 // ---------- Roles ----------
@@ -228,14 +241,17 @@ export async function changeRole(ctx: WorkspaceContext, personId: string, role: 
   await ctx.db.workspaceMember.update({ where: { id: member.id }, data: { role } });
 }
 
-/** Leaves the workspace; the directory profile stays, unlinked from the account */
+/**
+ * Leaves the workspace; the directory profile stays, unlinked from the account and inactive: no reminder, digest,
+ * notification or turn reaches the person any more
+ */
 export async function leaveWorkspace(ctx: WorkspaceContext): Promise<void> {
   if (ctx.member.role === "owner" && (await ctx.db.workspaceMember.count({ where: { role: "owner", status: "active" } })) <= 1) {
     throw new OpError("lastOwner");
   }
   await prisma.$transaction([
     prisma.workspaceMember.delete({ where: { id: ctx.member.id } }),
-    prisma.person.update({ where: { id: ctx.member.personId }, data: { userId: null } }),
+    prisma.person.update({ where: { id: ctx.member.personId }, data: { userId: null, active: false } }),
   ]);
 }
 

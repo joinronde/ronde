@@ -1,5 +1,6 @@
 import "server-only";
 import { lookup } from "node:dns";
+import { lookup as lookupPromise } from "node:dns/promises";
 import { BlockList, isIP } from "node:net";
 import { Agent, buildConnector, fetch as undiciFetch } from "undici";
 import { env } from "./env";
@@ -81,6 +82,27 @@ const agent = new Agent({
     });
   },
 });
+
+/**
+ * For an address a library fetches on its own (an identity provider's discovery): https, and when guarded a
+ * name whose every address is public. Throws OutboundBlocked otherwise.
+ */
+export async function assertPublicUrl(value: string): Promise<void> {
+  let u: URL;
+  try {
+    u = new URL(value);
+  } catch {
+    throw new OutboundBlocked(value);
+  }
+  if (!guarded()) return;
+  if (u.protocol !== "https:") throw new OutboundBlocked(u.host);
+  const host = u.hostname.replace(/^\[|\]$/g, "");
+  if (allowedHosts().has(host.toLowerCase())) return;
+  const addresses = isIP(host) ? [{ address: host }] : await lookupAll(host).catch(() => []);
+  if (!addresses.length || addresses.some((a) => isPrivateAddress(a.address))) throw new OutboundBlocked(host);
+}
+
+const lookupAll = (host: string) => lookupPromise(host, { all: true });
 
 /** fetch for configured addresses: when guarded, the check above on every connection, redirects included */
 export const outboundFetch = ((input: Parameters<typeof fetch>[0], init?: RequestInit) =>
