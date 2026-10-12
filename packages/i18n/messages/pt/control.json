@@ -48,7 +48,8 @@
     "topics": "Assuntos",
     "minutes": "Ata",
     "polls": "Enquetes",
-    "random": "Sorteio"
+    "random": "Sorteio",
+    "sheets": "Fichas"
   },
   "icebreaker": {
     "answers": "{count}/{total} respostas",
@@ -269,6 +270,12 @@
     "allDone": "Todas completas",
     "health": "saúde",
     "headline": "mensagem do dia",
-    "lines": "{count, plural, one {# linha} other {# linhas}}"
+    "lines": "{count, plural, one {# linha} other {# linhas}}",
+    "showAll": "Mostrar também as completas ({count} no total)",
+    "search": "Procurar um projeto",
+    "complete": "Completa",
+    "missing": "Falta: {what}",
+    "noMatch": "Nenhum projeto com esse nome a completar.",
+    "allDoneHint": "Todas as fichas estão completas: saúde, mensagem do dia e uma linha de cada uma das suas pessoas."
   }
 }

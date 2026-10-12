@@ -6,7 +6,7 @@ import { baseKeyOf, type Step, spentOf } from "@ronde/core/meeting";
 import { buildMinutes, decisionsOf, MINUTES_PARTS, type MinutesPart } from "@ronde/core/minutes";
 import type { RecordV1 } from "@ronde/core/record";
 import { BOARD_SOUNDS, CUES, MUSIC_GROUPS, MUSIC_STYLES, type MusicStyle, type SoundKey, type SoundOutput } from "@ronde/core/sound";
-import type { ActionStatus, InteractionDTO, Snapshot } from "@ronde/core/types";
+import type { ActionStatus, InteractionDTO, Section, Snapshot } from "@ronde/core/types";
 import {
   ACTION_STATUSES,
   first,
@@ -129,7 +129,7 @@ const localToday = () => {
 export function ControlRoomView() {
   const t = useTranslations("control");
   const tStage = useTranslations("stage");
-  const { s, agenda, cur, rpc, liveSeen, mod } = useRonde();
+  const { s, agenda, cur, rpc, liveSeen, mod, sections } = useRonde();
   const tour_ = useControlTour(s.modules);
   const [pane, setPane] = useState<Pane>("run");
   const [beep, setBeep] = useState(false);
@@ -354,7 +354,23 @@ export function ControlRoomView() {
                     )}
                   </div>
                   {step.type === "project" && <ProjectHost step={step} />}
-                  {!m.endedAt && <ProjectSheets />}
+                  {!m.endedAt && (
+                    <SheetsSummary
+                      onOpen={() => {
+                        setPane("sheets");
+                        // On a narrow screen the side panel sits far below: brought into view
+                        requestAnimationFrame(() =>
+                          document
+                            .querySelector('[data-tour="pane"]')
+                            ?.closest(".panel")
+                            ?.scrollIntoView({
+                              behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+                              block: "start",
+                            }),
+                        );
+                      }}
+                    />
+                  )}
                   {!m.endedAt && <ProjectOrder />}
                   {step.type === "block" && step.block === "retro" && <RetroHost />}
                   {step.type === "block" && step.block === "poker" && <PokerHost />}
@@ -429,6 +445,7 @@ export function ControlRoomView() {
                         ["live", pend],
                         ["actions", 0],
                         ["topics", tops],
+                        ...(s.projects.length ? [["sheets", sheetsToComplete(s, sections)]] : []),
                         ...(s.modules.polls ? [["polls", s.polls.filter((p) => p.open).length]] : []),
                         ...(s.modules.random ? [["random", 0]] : []),
                         ["minutes", 0],
@@ -454,6 +471,7 @@ export function ControlRoomView() {
                     {pane === "live" && <PaneLive />}
                     {pane === "actions" && <PaneActions />}
                     {pane === "topics" && <PaneTopics />}
+                    {pane === "sheets" && <PaneSheets />}
                     {pane === "polls" && <PollsHost />}
                     {pane === "random" && <RandomHost />}
                     {pane === "minutes" && <PaneMinutes draft={minutesDraft} setDraft={setMinutesDraft} />}
@@ -2056,56 +2074,102 @@ function actionOwners(s: Snapshot): { id: string; name: string }[] {
   return [...s.members, ...s.observers].filter((x) => !seen.has(x.id) && seen.add(x.id));
 }
 
+type SheetRow = { p: Snapshot["projects"][number]; missing: string[]; lines: { id: string; n: number }[]; complete: boolean };
+
+/** What each project sheet still needs: its health, its message of the day, a line from each of its people here */
+function sheetRows(
+  s: Snapshot,
+  sections: Section[],
+  nameOf: (id: string) => string,
+  t: (k: "sheets.health" | "sheets.headline") => string,
+): SheetRow[] {
+  const inMeeting = new Set(s.members.map((x) => x.id));
+  return s.projects.map((p) => {
+    const lines = p.memberIds.filter((id) => inMeeting.has(id)).map((id) => ({ id, n: linesAbout(s, id, p.id, sections) }));
+    const missing = [
+      ...(p.sheet?.health ? [] : [t("sheets.health")]),
+      ...(p.sheet?.headline.trim() ? [] : [t("sheets.headline")]),
+      ...lines.filter((x) => !x.n).map((x) => first(nameOf(x.id))),
+    ];
+    return { p, missing, lines, complete: !missing.length };
+  });
+}
+
+const sheetsToComplete = (s: Snapshot, sections: Section[]) =>
+  sheetRows(
+    s,
+    sections,
+    () => "",
+    () => "",
+  ).filter((r) => !r.complete).length;
+
+/** One line in the main column: how many sheets need someone, opening the "Sheets" tab */
+function SheetsSummary({ onOpen }: { onOpen: () => void }) {
+  const t = useTranslations("control");
+  const { s, sections } = useRonde();
+  if (!s.projects.length) return null;
+  const todo = sheetsToComplete(s, sections);
+  return (
+    <button type="button" className="sheets-summary" onClick={onOpen}>
+      <span>{t("sheets.title")}</span>
+      <span className={"pill " + (todo ? "warn" : "ok")}>{todo ? t("sheets.todo", { count: todo }) : t("sheets.allDone")}</span>
+      <span className="go" aria-hidden="true">
+        →
+      </span>
+    </button>
+  );
+}
+
 /**
- * The project sheets at a glance, for whoever leads: which are complete (health, message of the day, a line from
- * each of their people in the meeting) and which still need someone; the incomplete ones first
+ * The project sheets, one line each however many there are: what each still needs (health, message of the
+ * day, who has not written); the ones to complete by default, all of them on demand, a search past a dozen
  */
-function ProjectSheets() {
+function PaneSheets() {
   const t = useTranslations("control");
   const { s, sections, nameOf } = useRonde();
-  if (!s.projects.length) return null;
-  const inMeeting = new Set(s.members.map((x) => x.id));
-  const rows = s.projects.map((p) => {
-    const people = p.memberIds.filter((id) => inMeeting.has(id));
-    const lines = people.map((id) => ({ id, n: linesAbout(s, id, p.id, sections) }));
-    const health = !!p.sheet?.health;
-    const headline = !!p.sheet?.headline.trim();
-    const missing = lines.filter((x) => !x.n).length;
-    return { p, lines, health, headline, complete: health && headline && !missing };
-  });
-  rows.sort((a, b) => Number(a.complete) - Number(b.complete) || a.p.position - b.p.position);
+  const [all, setAll] = useState(false);
+  const [q, setQ] = useState("");
+  const rows = sheetRows(s, sections, nameOf, t);
   const todo = rows.filter((r) => !r.complete).length;
+  const needle = q.trim().toLowerCase();
+  const shown = rows
+    .filter((r) => (all || !r.complete) && (!needle || r.p.name.toLowerCase().includes(needle)))
+    .sort((a, b) => Number(a.complete) - Number(b.complete) || b.missing.length - a.missing.length || a.p.position - b.p.position);
   return (
-    // Open while preparing, when some still need someone; folded during the meeting, to keep it out of the way
-    <details className="project-sheets" open={todo > 0 && !s.meeting?.startedAt}>
-      <summary>
-        {t("sheets.title")}{" "}
+    <div className="pane-sheets">
+      <div className="controls">
         <span className={"pill " + (todo ? "warn" : "ok")}>{todo ? t("sheets.todo", { count: todo }) : t("sheets.allDone")}</span>
-      </summary>
-      <ul>
-        {rows.map(({ p, lines, health, headline, complete }) => (
-          <li key={p.id} className={complete ? "complete" : "incomplete"}>
-            <div className="sheet-head">
-              <strong>{p.name}</strong>
-              <span className={"mark " + (health ? "ok" : "no")}>
-                {health ? "✓" : "○"} {t("sheets.health")}
+        <label className="check">
+          <input type="checkbox" checked={all} onChange={(e) => setAll(e.target.checked)} /> {t("sheets.showAll", { count: rows.length })}
+        </label>
+      </div>
+      {rows.length > 12 && (
+        <input
+          type="search"
+          className="sheets-search"
+          aria-label={t("sheets.search")}
+          placeholder={t("sheets.search")}
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+        />
+      )}
+      {shown.length ? (
+        <ul className="sheets-list">
+          {shown.map(({ p, missing, lines, complete }) => (
+            <li key={p.id} className={complete ? "complete" : "incomplete"}>
+              <span className="mark" aria-hidden="true">
+                {complete ? "✓" : "○"}
               </span>
-              <span className={"mark " + (headline ? "ok" : "no")}>
-                {headline ? "✓" : "○"} {t("sheets.headline")}
+              <span className="name">{p.name}</span>
+              <span className="what" title={lines.map((x) => `${nameOf(x.id)} · ${t("sheets.lines", { count: x.n })}`).join("\n")}>
+                {complete ? t("sheets.complete") : t("sheets.missing", { what: missing.join(", ") })}
               </span>
-            </div>
-            {lines.length > 0 && (
-              <ul className="sheet-people">
-                {lines.map((x) => (
-                  <li key={x.id} className={x.n ? "ok" : "no"}>
-                    {x.n ? "✓" : "○"} {nameOf(x.id)} {x.n ? <span className="hint">{t("sheets.lines", { count: x.n })}</span> : null}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
-      </ul>
-    </details>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="muted">{todo ? t("sheets.noMatch") : t("sheets.allDoneHint")}</p>
+      )}
+    </div>
   );
 }

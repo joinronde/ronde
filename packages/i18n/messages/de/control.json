@@ -48,7 +48,8 @@
     "topics": "Themen",
     "minutes": "Protokoll",
     "polls": "Umfragen",
-    "random": "Zufall"
+    "random": "Zufall",
+    "sheets": "Blätter"
   },
   "icebreaker": {
     "answers": "{count}/{total} Antworten",
@@ -269,6 +270,12 @@
     "allDone": "Alle vollständig",
     "health": "Zustand",
     "headline": "Botschaft des Tages",
-    "lines": "{count, plural, one {# Zeile} other {# Zeilen}}"
+    "lines": "{count, plural, one {# Zeile} other {# Zeilen}}",
+    "showAll": "Auch die vollständigen zeigen ({count} insgesamt)",
+    "search": "Projekt suchen",
+    "complete": "Vollständig",
+    "missing": "Fehlt: {what}",
+    "noMatch": "Kein Projekt mit diesem Namen zu ergänzen.",
+    "allDoneHint": "Alle Blätter sind vollständig: Zustand, Botschaft des Tages und eine Zeile von jeder ihrer Personen."
   }
 }

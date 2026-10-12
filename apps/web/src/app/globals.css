@@ -3071,18 +3071,21 @@ details.snd-fold[open] > summary::after{transform:rotate(-135deg)}
 .poll-bars.yesno li:first-child .poll-bar i{background:var(--ok)}
 .poll-bars.yesno li:nth-child(2) .poll-bar i{background:var(--live)}
 .poll-bars.yesno .poll-label,.poll-bars.yesno .poll-n{font-weight:700;font-size:1.15em}
-/* Project sheets in the control room: what each still needs, readable at a glance */
-.project-sheets{margin-top:12px}
-.project-sheets summary{cursor:pointer;font-weight:600;display:flex;align-items:center;gap:8px}
-.project-sheets > ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
-.project-sheets > ul > li{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface)}
-.project-sheets > ul > li.incomplete{border-color:color-mix(in srgb,var(--warn) 45%,var(--line));background:var(--warn-soft)}
-.sheet-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
-.sheet-head strong{flex:1;min-width:8em}
-.project-sheets .mark{font-size:13.5px}
-.project-sheets .mark.no,.sheet-people li.no{color:var(--warn)}
-.project-sheets .mark.ok,.sheet-people li.ok{color:var(--ok)}
-.sheet-people{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:4px 14px;font-size:14px}
+/* Project sheets: a line in the main column, the list in its side tab (one line each, however many) */
+.sheets-summary{display:flex;align-items:center;gap:8px;width:100%;margin-top:10px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font:inherit;font-weight:600;color:var(--ink);cursor:pointer;text-align:start}
+.sheets-summary:hover{border-color:var(--ink-3)}
+.sheets-summary .go{margin-inline-start:auto;color:var(--ink-3)}
+[dir="rtl"] .sheets-summary .go{transform:scaleX(-1)}
+.pane-sheets .controls{justify-content:space-between}
+.sheets-search{width:100%;margin:6px 0}
+.sheets-list{list-style:none;margin:6px 0 0;padding:0;max-height:min(60vh,520px);overflow-y:auto}
+.sheets-list li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1px 8px;align-items:baseline;padding:7px 4px;border-bottom:1px solid var(--line);font-size:14px}
+.sheets-list li:last-child{border-bottom:0}
+.sheets-list .mark{font-weight:700}
+.sheets-list .incomplete .mark,.sheets-list .incomplete .what{color:var(--warn)}
+.sheets-list .complete .mark,.sheets-list .complete .what{color:var(--ok)}
+.sheets-list .name{font-weight:600;overflow-wrap:anywhere}
+.sheets-list .what{grid-column:2;font-size:13px}
 .pill.warn{background:var(--warn-soft);color:var(--ink)}
 .pill.ok{background:var(--ok-soft);color:var(--ink)}
 .poll-quick{align-items:center}.poll-quick .hint{flex:1;min-width:12em}
@@ -3090,3 +3093,4 @@ details.snd-fold[open] > summary::after{transform:rotate(-135deg)}
 .line-actions{display:inline-flex;align-items:center;gap:6px;margin-inline-start:.5em;vertical-align:middle}
 .line-actions .vote-btn,.line-actions .join-btn{font-size:12.5px;padding:1px 8px}
 @media (hover:hover){li:not(:hover):not(:focus-within) > .line-actions .vote-btn:not([aria-pressed="true"]),li:not(:hover):not(:focus-within) > .line-actions .join-btn:not(.on){opacity:.35}}
+.panel:has([data-tour="pane"]){scroll-margin-top:72px}

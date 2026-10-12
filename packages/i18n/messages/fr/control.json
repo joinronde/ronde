@@ -48,7 +48,8 @@
     "topics": "Divers",
     "minutes": "Compte rendu",
     "polls": "Sondages",
-    "random": "Hasard"
+    "random": "Hasard",
+    "sheets": "Fiches"
   },
   "icebreaker": {
     "answers": "{count}/{total} réponses",
@@ -269,6 +270,12 @@
     "allDone": "Toutes complètes",
     "health": "santé",
     "headline": "message du jour",
-    "lines": "{count, plural, one {# ligne} other {# lignes}}"
+    "lines": "{count, plural, one {# ligne} other {# lignes}}",
+    "showAll": "Afficher aussi les complètes ({count} en tout)",
+    "search": "Chercher un projet",
+    "complete": "Complète",
+    "missing": "Manque : {what}",
+    "noMatch": "Aucun projet de ce nom à compléter.",
+    "allDoneHint": "Toutes les fiches sont complètes : santé, message du jour et une ligne de chacune de leurs personnes."
   }
 }

@@ -48,7 +48,8 @@
     "topics": "Argomenti",
     "minutes": "Verbale",
     "polls": "Sondaggi",
-    "random": "Sorteggio"
+    "random": "Sorteggio",
+    "sheets": "Schede"
   },
   "icebreaker": {
     "answers": "{count}/{total} risposte",
@@ -269,6 +270,12 @@
     "allDone": "Tutte complete",
     "health": "salute",
     "headline": "messaggio del giorno",
-    "lines": "{count, plural, one {# riga} other {# righe}}"
+    "lines": "{count, plural, one {# riga} other {# righe}}",
+    "showAll": "Mostra anche quelle complete ({count} in tutto)",
+    "search": "Cerca un progetto",
+    "complete": "Completa",
+    "missing": "Manca: {what}",
+    "noMatch": "Nessun progetto con quel nome da completare.",
+    "allDoneHint": "Tutte le schede sono complete: salute, messaggio del giorno e una riga da ciascuna delle loro persone."
   }
 }

@@ -2,7 +2,7 @@ import type { TourStep } from "@ronde/ui/tour";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
-export type ControlPane = "run" | "live" | "actions" | "topics" | "polls" | "random" | "minutes";
+export type ControlPane = "run" | "live" | "actions" | "topics" | "sheets" | "polls" | "random" | "minutes";
 
 /** A step of the control-room tour, with the right-hand pane to open */
 export type ControlTourStep = TourStep & { pane?: ControlPane };

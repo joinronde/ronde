@@ -123,6 +123,7 @@ export function CommandPalette({ onClose, onPane }: { onClose: () => void; onPan
         });
     }
     const panes: ControlPane[] = ["run", "live", "actions", "topics"];
+    if (s.projects.length) panes.push("sheets");
     if (s.modules.polls) panes.push("polls");
     if (s.modules.random) panes.push("random");
     for (const pane of [...panes, "minutes"] as const)

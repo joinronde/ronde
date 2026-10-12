@@ -48,7 +48,8 @@
     "topics": "议题",
     "minutes": "纪要",
     "polls": "投票",
-    "random": "随机"
+    "random": "随机",
+    "sheets": "卡片"
   },
   "icebreaker": {
     "answers": "{count}/{total} 人已回答",
@@ -269,6 +270,12 @@
     "allDone": "全部已完成",
     "health": "健康度",
     "headline": "今日要点",
-    "lines": "{count, plural, other {# 行}}"
+    "lines": "{count, plural, other {# 行}}",
+    "showAll": "也显示已完成的（共 {count} 个）",
+    "search": "查找项目",
+    "complete": "已完成",
+    "missing": "缺少：{what}",
+    "noMatch": "没有该名称的待完善项目。",
+    "allDoneHint": "所有卡片均已完成：健康度、今日要点，以及每位相关成员的一行内容。"
   }
 }
