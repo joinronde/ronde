@@ -157,7 +157,8 @@ export async function removeAbsence(ctx: WorkspaceContext, id: string) {
       : null;
     // Taken out of the list as it is now, not as it was read (a decision made meanwhile is kept)
     if (!no)
-      await ctx.db.$executeRaw`UPDATE "Session" SET "absent" = array_remove("absent", ${row.personId}) WHERE "id" = ${s.id} AND "workspaceId" = ${ctx.workspace.id}`;
+      await ctx.db
+        .$executeRaw`UPDATE "Session" SET "absent" = array_remove("absent", ${row.personId}) WHERE "id" = ${s.id} AND "workspaceId" = ${ctx.workspace.id}`;
   }
 }
 

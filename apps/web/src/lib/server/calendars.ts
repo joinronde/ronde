@@ -430,7 +430,11 @@ async function cleanCalendars(): Promise<void> {
   const stale = await prisma.calendarEvent.findMany({
     where: {
       startsAt: { gt: new Date() },
-      OR: [{ meeting: { archivedAt: { not: null } } }, { meeting: { calendarAccountId: null } }, { meeting: { workspace: { deletedAt: { not: null } } } }],
+      OR: [
+        { meeting: { archivedAt: { not: null } } },
+        { meeting: { calendarAccountId: null } },
+        { meeting: { workspace: { deletedAt: { not: null } } } },
+      ],
     },
     distinct: ["meetingId"],
     select: { workspaceId: true, meetingId: true },
