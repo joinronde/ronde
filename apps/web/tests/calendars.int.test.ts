@@ -1,10 +1,11 @@
 import { generateKeyPairSync, sign } from "node:crypto";
 import { localDate, localTime } from "@ronde/core/schedule";
-import { prisma } from "@ronde/db";
+import { prisma, scoped } from "@ronde/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { meetingAvailability, saveCalendarAccount, setMeetingCalendar, syncMeetingCalendar } from "@/lib/server/calendars";
 import { saveLicense } from "@/lib/server/license";
 import { runOp } from "@/lib/server/meeting/ops";
+import { resyncSession } from "@/lib/server/meeting/schedule";
 import { type Fixture, meeting, workspace } from "./fixtures";
 
 // Calendar sync (Team): sessions written as events, kept in line with the schedule; conflicts read back
@@ -174,5 +175,113 @@ describe("calendar sync", () => {
     expect(await prisma.calendarEvent.findFirst({ where: { id: e.id } })).toBeNull();
     // Not written again
     expect(await syncMeetingCalendar(f.meetingId)).toBe(0);
+  });
+
+  const coming = () => prisma.calendarEvent.findMany({ where: { meetingId: f.meetingId }, orderBy: { startsAt: "asc" } });
+  const writesTo = (eventId: string) => calls.filter((c) => c.method === "PUT" && c.url.includes(`/events/${eventId}`)).length;
+  const exceptionOf = (key: string) => {
+    const at = key.lastIndexOf(":");
+    return prisma.scheduleException.findUnique({
+      where: { ruleId_originalDate: { ruleId: key.slice(0, at), originalDate: key.slice(at + 1) } },
+    });
+  };
+
+  it("puts the calendar back when a session is moved there onto another session's day", async () => {
+    const [, e, other] = await coming();
+    const ev = store.get(e!.eventId)!;
+    const start = other!.startsAt.getTime() + 3_600_000;
+    ev.start = { dateTime: new Date(start).toISOString() };
+    ev.end = { dateTime: new Date(start + 30 * 60_000).toISOString() };
+    const writes = writesTo(e!.eventId);
+    expect(await syncMeetingCalendar(f.meetingId)).toBe(1);
+    expect(await exceptionOf(e!.occurrenceKey)).toBeNull();
+    // Written again at Ronde's time; the calendar and Ronde agree from then on
+    expect(writesTo(e!.eventId)).toBe(writes + 1);
+    expect(store.get(e!.eventId)!.start.dateTime).toContain(e!.startsAt.toISOString().slice(0, 19));
+    expect(await syncMeetingCalendar(f.meetingId)).toBe(0);
+  });
+
+  it("marks someone absent from the session being prepared when they decline it in the calendar, and back", async () => {
+    // The session waiting for the next occurrence
+    await prisma.session.update({ where: { id: f.sessionId }, data: { startedAt: null } });
+    await resyncSession(
+      scoped(prisma, f.workspaceId),
+      { id: f.meetingId, workspaceId: f.workspaceId, timezone: null },
+      { timezone: await zone() },
+    );
+    const session = await prisma.session.findUniqueOrThrow({ where: { id: f.sessionId } });
+    const e = await prisma.calendarEvent.findFirstOrThrow({ where: { meetingId: f.meetingId, occurrenceKey: session.occurrenceKey! } });
+    const host = await prisma.person.findUniqueOrThrow({ where: { id: f.hostPersonId } });
+    const answer = (responseStatus: string) => {
+      const ev = store.get(e.eventId)!;
+      ev.attendees = ev.attendees.map((a) => (a.email === host.email.toLowerCase() ? { ...a, responseStatus } : a));
+    };
+    answer("declined");
+    expect(await syncMeetingCalendar(f.meetingId)).toBe(1);
+    expect((await prisma.session.findUniqueOrThrow({ where: { id: f.sessionId } })).absent).toEqual([host.id]);
+    answer("accepted");
+    expect(await syncMeetingCalendar(f.meetingId)).toBe(1);
+    expect((await prisma.session.findUniqueOrThrow({ where: { id: f.sessionId } })).absent).toEqual([]);
+  });
+
+  it("keeps a session moved in the calendar further than the weeks written ahead", async () => {
+    const [, e] = await coming();
+    const ev = store.get(e!.eventId)!;
+    // Ten weeks later, on a Tuesday: no other session that day
+    const start = e!.startsAt.getTime() + 71 * 86_400_000;
+    ev.start = { dateTime: new Date(start).toISOString() };
+    ev.end = { dateTime: new Date(start + 30 * 60_000).toISOString() };
+    expect(await syncMeetingCalendar(f.meetingId)).toBe(1);
+    expect(await exceptionOf(e!.occurrenceKey)).toMatchObject({ kind: "move", date: localDate(start, await zone()) });
+    expect(await syncMeetingCalendar(f.meetingId)).toBe(0);
+    expect(await prisma.calendarEvent.findUniqueOrThrow({ where: { id: e!.id } })).toMatchObject({ startsAt: new Date(start) });
+    expect(calls.some((c) => c.method === "DELETE" && c.url.includes(`/events/${e!.eventId}`))).toBe(false);
+    expect(store.has(e!.eventId)).toBe(true);
+  });
+
+  it("syncs a meeting once at a time: two runs together write a missing event once", async () => {
+    const [, , e] = await coming();
+    await prisma.calendarEvent.delete({ where: { id: e!.id } });
+    const posts = () => calls.filter((c) => c.method === "POST" && c.url.includes("/events")).length;
+    const before = posts();
+    const [a, b] = await Promise.all([syncMeetingCalendar(f.meetingId), syncMeetingCalendar(f.meetingId)]);
+    expect(a + b).toBe(1);
+    expect(posts()).toBe(before + 1);
+  });
+
+  it("moves the events to another organizer's calendar when the account changes", async () => {
+    const old = await coming();
+    await saveCalendarAccount(f.ctx.ws, {
+      id: accountId,
+      kind: "google",
+      name: "Google",
+      config: { clientEmail: "sa@acme.iam.gserviceaccount.com", organizer: "team@acme.com" },
+    });
+    // Waits for the sync the change started
+    expect(await syncMeetingCalendar(f.meetingId)).toBe(0);
+    const now = Date.now();
+    for (const e of old.filter((x) => x.startsAt.getTime() > now)) expect(store.has(e.eventId)).toBe(false);
+    const fresh = await coming();
+    expect(fresh.length).toBeGreaterThanOrEqual(old.filter((x) => x.startsAt.getTime() > now).length - 1);
+    expect(fresh.every((e) => !old.some((o) => o.eventId === e.eventId))).toBe(true);
+  });
+
+  it("asks for https to a CalDAV server in the cloud", async () => {
+    const caldav = (url: string) =>
+      saveCalendarAccount(f.ctx.ws, {
+        kind: "caldav",
+        name: "DAV",
+        config: { url, username: "ana", organizer: "ana@acme.com" },
+        secret: "p",
+      });
+    vi.stubEnv("RONDE_CLOUD", "1");
+    try {
+      await expect(caldav("http://dav.acme.com/dav/")).rejects.toMatchObject({ key: "connectorInvalid" });
+      await expect(caldav("https://dav.acme.com/dav/")).resolves.toMatchObject({ id: expect.any(String) });
+    } finally {
+      vi.unstubAllEnvs();
+    }
+    // A server of the instance's own network, self-hosted
+    await expect(caldav("http://radicale:5232/ana/")).resolves.toMatchObject({ id: expect.any(String) });
   });
 });

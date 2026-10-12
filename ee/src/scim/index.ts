@@ -50,6 +50,9 @@ export function toScimUser(p: PersonRow, baseUrl: string) {
   };
 }
 
+/** An email address, with nothing that could break out of a line where it is written (calendar files, headers) */
+const ADDRESS = /^[^@\s;:,"<>\\\x00-\x1f\x7f]+@[^@\s;:,"<>\\\x00-\x1f\x7f]+$/;
+
 /** Filters the directories send to find someone: userName, externalId or emails.value, with "eq" */
 export function parseFilter(filter: string | null): { field: "email" | "externalId"; value: string } | null | "unsupported" {
   if (!filter) return null;
@@ -156,7 +159,7 @@ async function users(db: Db, workspaceId: string, req: ScimRequest): Promise<Sci
   }
   if (req.method === "POST" && !id) {
     const c = fromScimUser(req.body);
-    if (!c.email || !/^[^@\s]+@[^@\s]+$/.test(c.email)) return error(400, "userName or a primary email is required", "invalidValue");
+    if (!c.email || !ADDRESS.test(c.email)) return error(400, "userName or a primary email is required", "invalidValue");
     const existing = await db.person.findFirst({
       where: { email: { equals: c.email, mode: "insensitive" } },
       select: { id: true, deprovisionedAt: true },
@@ -188,6 +191,7 @@ async function users(db: Db, workspaceId: string, req: ScimRequest): Promise<Sci
   }
   const c = req.method === "PATCH" ? fromPatch(req.body) : req.method === "PUT" ? fromScimUser(req.body) : null;
   if (!c) return req.method === "PATCH" ? error(400, `PATCH needs ${PATCH} Operations`, "invalidSyntax") : error(405, "Method not allowed");
+  if (c.email !== undefined && !ADDRESS.test(c.email)) return error(400, "userName must be an email address", "invalidValue");
   if (c.email && c.email !== current.email.toLowerCase()) {
     if (await db.person.findFirst({ where: { email: { equals: c.email, mode: "insensitive" }, NOT: { id } }, select: { id: true } }))
       return error(409, "A person with this address already exists", "uniqueness");

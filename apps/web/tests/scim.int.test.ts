@@ -106,6 +106,12 @@ describe("SCIM provisioning", () => {
       body: { userName: "grace@acme.test", name: { givenName: "Grace", familyName: "Hopper" }, active: true },
     });
     expect(put.json).toMatchObject({ name: { givenName: "Grace", familyName: "Hopper" } });
+    // Not an address: refused, by PATCH as when created
+    for (const value of ["grace", "grace@acme.test\r\nBCC:x@evil.test", "grace;x@acme.test"]) {
+      const bad = await call(PATCH, ["Users", id], { method: "PATCH", body: { Operations: [{ op: "replace", path: "userName", value }] } });
+      expect(bad.status).toBe(400);
+    }
+    expect((await call(GET, ["Users", id])).json).toMatchObject({ userName: "grace@acme.test" });
   });
 
   it("deactivates the member, and removing them keeps their history but stops their way back", async () => {

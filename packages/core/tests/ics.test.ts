@@ -64,6 +64,8 @@ describe("ICS feed", () => {
 
   it("escapes text and folds long lines without breaking characters", () => {
     expect(icsText("a,b;c\\d\ne")).toBe("a\\,b\\;c\\\\d\\ne");
+    // A lone CR is a line break too; a control character cannot end the line either
+    expect(icsText("a\rb\r\nc\u0000d\te")).toBe("a\\nb\\ncd\te");
     const long = `DESCRIPTION:${"é".repeat(60)}`;
     const folded = foldLine(long);
     for (const part of folded.split("\r\n")) expect(new TextEncoder().encode(part).length).toBeLessThanOrEqual(75);

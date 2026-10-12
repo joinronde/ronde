@@ -160,7 +160,7 @@ describe("calendars", () => {
 });
 
 /** A CalDAV server: a principal, its calendar home with a task list and a calendar, the events stored as files */
-function caldavServer(opts: { freeBusy?: boolean } = {}) {
+function caldavServer(opts: { freeBusy?: "none" | "forbidden" } = {}) {
   const files = new Map<string, string>();
   const calls: { method: string; url: string; body: string; depth: string | null; auth: string | null }[] = [];
   const multistatus = (responses: string) =>
@@ -191,7 +191,8 @@ function caldavServer(opts: { freeBusy?: boolean } = {}) {
         [
           `<d:response><d:href>/dav/calendars/ana/</d:href><d:propstat><d:prop><d:resourcetype><d:collection/></d:resourcetype></d:prop></d:propstat></d:response>`,
           `<d:response><d:href>/dav/calendars/ana/tasks/</d:href><d:propstat><d:prop><d:resourcetype><d:collection/><cal:calendar/></d:resourcetype><cal:supported-calendar-component-set><cal:comp name="VTODO"/></cal:supported-calendar-component-set></d:prop></d:propstat></d:response>`,
-          `<d:response><d:href>/dav/calendars/ana/work/</d:href><d:propstat><d:prop><d:resourcetype><d:collection/><cal:calendar/></d:resourcetype><cal:supported-calendar-component-set><cal:comp name="VEVENT"/></cal:supported-calendar-component-set></d:prop></d:propstat></d:response>`,
+          // Written with a character reference, as some servers do
+          `<d:response><d:href>/dav/calendars/ana/w&#111;rk/</d:href><d:propstat><d:prop><d:resourcetype><d:collection/><cal:calendar/></d:resourcetype><cal:supported-calendar-component-set><cal:comp name="VEVENT"/></cal:supported-calendar-component-set></d:prop></d:propstat></d:response>`,
         ].join(""),
       );
     if (method === "PROPFIND" && path === "/dav/calendars/ana/work/")
@@ -205,10 +206,11 @@ function caldavServer(opts: { freeBusy?: boolean } = {}) {
     if (method === "GET") return files.has(path) ? new Response(files.get(path)) : new Response("", { status: 404 });
     if (method === "DELETE") return new Response(null, { status: files.delete(path) ? 204 : 404 });
     if (method === "REPORT" && body.includes("free-busy-query"))
-      return opts.freeBusy === false
-        ? new Response("", { status: 501 })
+      return opts.freeBusy
+        ? new Response("", { status: opts.freeBusy === "none" ? 501 : 403 })
         : new Response(
             "BEGIN:VCALENDAR\r\nBEGIN:VFREEBUSY\r\nFREEBUSY;FBTYPE=BUSY:20300107T090000Z/20300107T100000Z,20300108T140000Z/PT30M\r\nFREEBUSY;FBTYPE=FREE:20300109T090000Z/20300109T100000Z\r\nEND:VFREEBUSY\r\nEND:VCALENDAR\r\n",
+            { headers: { "content-type": "text/calendar; charset=utf-8" } },
           );
     if (method === "REPORT")
       return multistatus(
@@ -311,10 +313,26 @@ describe("CalDAV calendars", () => {
       ],
     });
     expect(await busy(account(server.fetch), ["emma@acme.com"], range)).toEqual({});
-    const old = caldavServer({ freeBusy: false });
-    expect(await busy(account(old.fetch), ["ana@acme.com"], range)).toEqual({
-      "ana@acme.com": [{ start: "2030-01-07T14:00:00.000Z", end: "2030-01-07T15:00:00.000Z" }],
+    // No free-busy report, or one the account may not run: the events of the period
+    for (const freeBusy of ["none", "forbidden"] as const) {
+      const old = caldavServer({ freeBusy });
+      expect(await busy(account(old.fetch), ["ana@acme.com"], range)).toEqual({
+        "ana@acme.com": [{ start: "2030-01-07T14:00:00.000Z", end: "2030-01-07T15:00:00.000Z" }],
+      });
+    }
+  });
+
+  it("leaves out an address that would break out of its line", async () => {
+    const server = caldavServer();
+    const a = account(server.fetch, "https://dav.example.test/dav/calendars/ana/work/");
+    const href = await upsert(a, {
+      ...event,
+      attendees: ["emma@acme.com", "eve@acme.com\r\nATTENDEE:mailto:x@evil.test", "bob@acme.com;PARTSTAT=ACCEPTED"],
     });
+    const ics = server.files.get(new URL(href).pathname)!.replace(/\r\n /g, "");
+    expect(ics.match(/^ATTENDEE/gm)).toHaveLength(1);
+    expect(ics).not.toContain("evil.test");
+    expect(ics).not.toContain("bob@acme.com");
   });
 
   it("says when the password is refused", async () => {

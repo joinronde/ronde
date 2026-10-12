@@ -19,7 +19,14 @@ export interface IcsMeeting {
 const DAYS = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
 
 /** Text value: backslash, semicolon, comma and line breaks escaped */
-export const icsText = (v: string) => v.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n");
+export const icsText = (v: string) =>
+  v
+    .replace(/\\/g, "\\\\")
+    .replace(/;/g, "\\;")
+    .replace(/,/g, "\\,")
+    // Every line break, a lone CR included, stays inside the value; other control characters go
+    .replace(/\r\n|\r|\n/g, "\\n")
+    .replace(/[\x00-\x08\x0b-\x1f\x7f]/g, "");
 
 /** Lines longer than 75 octets are folded: CRLF then a space (never splitting a UTF-8 character) */
 export function foldLine(line: string): string {

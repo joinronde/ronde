@@ -10,7 +10,7 @@ import { audit } from "./audit";
 import type { WorkspaceContext } from "./authz";
 import { publish } from "./bus";
 import { AccessError, OpError } from "./errors";
-import { featureOn, type PlanScope } from "./license";
+import { featureOn, isCloud, type PlanScope } from "./license";
 import type { MeetingCtx } from "./meeting/context";
 import { personName } from "./meeting/dto";
 import { loadSchedule, resyncSession, timeZoneOf } from "./meeting/schedule";
@@ -28,6 +28,12 @@ export const CALENDAR_KINDS = ["google", "microsoft", "caldav"] as const;
 
 /** Sessions written ahead into the calendars */
 const HORIZON_DAYS = 56;
+/** What is read back each run: the coming four weeks, a dozen events at most */
+const READ_BACK_DAYS = 28;
+const READ_BACK_MAX = 12;
+/** Meetings synced at once, and the time a run may take (it comes back every 15 minutes) */
+const SYNC_AT_ONCE = 4;
+const SYNC_BUDGET_MS = 10 * 60_000;
 
 const CONFIG: Record<CalendarKind, z.ZodType<Record<string, string>>> = {
   google: z.object({ clientEmail: z.string().email().max(200), organizer: z.string().email().max(200) }),
@@ -77,10 +83,19 @@ export async function saveCalendarAccount(ctx: WorkspaceContext, input: Calendar
   const secret = input.secret?.trim();
   if (!secret && !existing?.secret) throw new OpError("connectorSecretRequired");
   if (secret && !canEncrypt()) throw new OpError("encryptionNotConfigured");
+  // A CalDAV password does not travel in clear across the internet
+  if (input.kind === "caldav" && isCloud() && !String(config.data.url).startsWith("https://"))
+    throw new OpError("connectorInvalid", { detail: "https://…" });
   const data = { name, config: config.data as Prisma.InputJsonObject, ...(secret ? { secret: encryptSecret(secret.slice(0, 5000)) } : {}) };
+  // Another organizer, server or account: the events written with the old one are removed with it (its ids mean
+  // nothing to the new one, which would read them as deleted), then written again with the new one
+  const moved = existing && JSON.stringify(existing.config) !== JSON.stringify(config.data);
+  const meetings = moved ? await ctx.db.meeting.findMany({ where: { calendarAccountId: existing.id }, select: { id: true } }) : [];
+  for (const m of meetings) await removeEvents(ctx.workspace.id, m.id, (e) => e.accountId === existing!.id);
   const row = existing
     ? await ctx.db.calendarAccount.update({ where: { id: existing.id }, data })
     : await ctx.db.calendarAccount.create({ data: { ...data, workspaceId: ctx.workspace.id, kind: input.kind } });
+  for (const m of meetings) void syncMeetingCalendar(m.id).catch(() => 0);
   await audit(ctx, ctx.db, {
     action: existing ? "calendar.update" : "calendar.add",
     targetType: "calendarAccount",
@@ -154,14 +169,23 @@ async function readBack(
   timeZone: string,
 ): Promise<number> {
   const now = Date.now();
-  const mine = events.filter((e) => e.accountId === account.id && e.startsAt.getTime() > now);
+  // The coming four weeks, a dozen events at most per run: the next runs follow as the weeks go by
+  const mine = events
+    .filter((e) => e.accountId === account.id && e.startsAt.getTime() > now && e.startsAt.getTime() < now + READ_BACK_DAYS * 86_400_000)
+    .sort((a, b) => a.startsAt.getTime() - b.startsAt.getTime())
+    .slice(0, READ_BACK_MAX);
   if (!mine.length) return 0;
   const meetingId = meeting.id;
-  const [rules, people, started] = await Promise.all([
+  const [rules, people, started, open] = await Promise.all([
     db.scheduleRule.findMany({ where: { meetingId } }),
     db.meetingParticipant.findMany({ where: { meetingId }, select: { personId: true, person: { select: { email: true } } } }),
     db.session.findMany({ where: { meetingId, startedAt: { not: null } }, select: { occurrenceKey: true } }),
+    db.session.findFirst({
+      where: { meetingId, status: "current", startedAt: null },
+      select: { id: true, occurrenceKey: true, absent: true },
+    }),
   ]);
+  const absent = new Set(open?.absent ?? []);
   const ruleById = new Map(rules.map((r) => [r.id, r]));
   const personByEmail = new Map(people.map((p) => [p.person.email.toLowerCase(), p.personId]));
   const begun = new Set(started.map((s) => s.occurrenceKey));
@@ -175,8 +199,9 @@ async function readBack(
     try {
       state = await enterprise.calendar.read(cal, e.eventId);
     } catch (err) {
+      // The calendar does not answer: nothing more is asked of it this time (the next run tries again)
       console.error(`[calendar] reading ${e.eventId}`, err);
-      continue;
+      break;
     }
     const where = { ruleId_originalDate: { ruleId: rule.id, originalDate } };
     if (!state || state.cancelled) {
@@ -189,20 +214,27 @@ async function readBack(
       changed++;
       continue;
     }
-    // Answers given since the last read: yes or no in Ronde (a "maybe" changes nothing)
+    // Answers given since the last read: yes or no in Ronde (a "maybe" changes nothing). An event written before
+    // the answers were kept only records them: what people answered in Ronde since stays theirs
     const before = (e.answers ?? {}) as Record<string, string>;
+    const firstRead = !e.endsAt;
     for (const [email, answer] of Object.entries(state.answers)) {
       const personId = personByEmail.get(email);
-      if (!personId || before[email] === answer || (answer !== "accepted" && answer !== "declined")) continue;
+      if (firstRead || !personId || before[email] === answer || (answer !== "accepted" && answer !== "declined")) continue;
       const status = answer === "accepted" ? "yes" : "no";
       await db.attendance.upsert({
         where: { meetingId_occurrenceKey_personId: { meetingId, occurrenceKey: e.occurrenceKey, personId } },
         create: { workspaceId: meeting.workspaceId, meetingId, occurrenceKey: e.occurrenceKey, personId, status },
         update: { status },
       });
+      // The session of that occurrence, not started yet: absences follow the answers, as in Ronde
+      if (open?.occurrenceKey === e.occurrenceKey) {
+        if (status === "no") absent.add(personId);
+        else absent.delete(personId);
+      }
       changed++;
     }
-    const data: { answers?: Prisma.InputJsonObject; startsAt?: Date; endsAt?: Date } = {};
+    const data: { answers?: Prisma.InputJsonObject; startsAt?: Date; endsAt?: Date; hash?: string } = {};
     if (JSON.stringify(state.answers) !== JSON.stringify(before)) data.answers = state.answers;
     // Moved in the calendar (a minute or more), the end known since Ronde wrote it
     const start = state.start ? Date.parse(state.start) : null;
@@ -223,7 +255,9 @@ async function readBack(
         date !== originalDate &&
         (occurrences(all, exceptions, timeZone, { from: date, to: date }).some((x) => x.key !== e.occurrenceKey) ||
           !!(await db.session.findFirst({ where: { meetingId, date, NOT: { occurrenceKey: e.occurrenceKey } }, select: { id: true } })));
-      if (!taken) {
+      // Taken: the event is written again as Ronde has it
+      if (taken) data.hash = "";
+      else {
         const move = {
           kind: "move" as const,
           date: date !== originalDate ? date : null,
@@ -246,6 +280,8 @@ async function readBack(
     }
     if (Object.keys(data).length) await db.calendarEvent.update({ where: { id: e.id }, data });
   }
+  if (open && [...absent].sort().join() !== [...open.absent].sort().join())
+    await db.session.update({ where: { id: open.id }, data: { absent: [...absent] } });
   return changed;
 }
 
@@ -254,7 +290,23 @@ async function readBack(
  * readBack), then the coming sessions written there: missing events created, changed ones updated (moved,
  * renamed, people added or gone), cancelled ones removed. Returns how many changed.
  */
-export async function syncMeetingCalendar(meetingId: string): Promise<number> {
+export function syncMeetingCalendar(meetingId: string): Promise<number> {
+  // One sync of a meeting at a time: two at once (a schedule change, the job) could each take the other's write
+  // for a change made in the calendar
+  const previous = running.get(meetingId) ?? Promise.resolve(0);
+  const next = previous.catch(() => 0).then(() => syncNow(meetingId));
+  running.set(meetingId, next);
+  void next
+    .finally(() => {
+      if (running.get(meetingId) === next) running.delete(meetingId);
+    })
+    .catch(() => {});
+  return next;
+}
+
+const running = new Map<string, Promise<number>>();
+
+async function syncNow(meetingId: string): Promise<number> {
   const meeting = await prisma.meeting.findFirst({
     where: { id: meetingId, archivedAt: null, calendarAccountId: { not: null } },
     include: { workspace: { select: { slug: true, timezone: true, plan: true } } },
@@ -287,6 +339,15 @@ export async function syncMeetingCalendar(meetingId: string): Promise<number> {
     to: until,
   }).filter((o) => !o.cancelled && o.startsAt > now);
   const attendees = [...new Set(participants.map((p) => p.person.email.toLowerCase()))].filter((e) => e && e !== organizer).sort();
+  // Sessions further than the window still exist: their events stay where they are (moved there from the calendar)
+  const later = new Set(
+    occurrences(schedule.rules, schedule.exceptions, timeZone, {
+      from: until,
+      to: new Date(now + 366 * 86_400_000).toISOString().slice(0, 10),
+    })
+      .filter((o) => !o.cancelled)
+      .map((o) => o.key),
+  );
   const link = await publicUrl(`/w/${meeting.workspace.slug}/m/${meetingId}/me`);
   const byKey = new Map(mapped.map((e) => [e.occurrenceKey, e]));
   for (const o of coming) {
@@ -331,11 +392,15 @@ export async function syncMeetingCalendar(meetingId: string): Promise<number> {
       });
       changed++;
     } catch (e) {
+      // The calendar does not take it: the next run tries again, without waiting on every session now
       console.error(`[calendar] session ${o.key} of meeting ${meetingId}`, e);
+      for (const k of coming.map((x) => x.key)) byKey.delete(k);
+      break;
     }
   }
-  // What is left was cancelled, or moved out of the window: removed when still to come
+  // What is left was cancelled or is gone: removed when still to come (one beyond the window stays)
   for (const e of byKey.values()) {
+    if (later.has(e.occurrenceKey)) continue;
     if (e.startsAt.getTime() > now) {
       await enterprise.calendar.remove(cal, e.eventId).catch((err) => console.error(`[calendar] removing ${e.eventId}`, err));
       changed++;
@@ -345,11 +410,19 @@ export async function syncMeetingCalendar(meetingId: string): Promise<number> {
   return changed;
 }
 
-/** Every 15 minutes: the calendars of every meeting that has one */
+/** Every 15 minutes: the calendars of every meeting that has one, a few at once, within the run's budget */
 export async function syncCalendars(): Promise<number> {
   const meetings = await prisma.meeting.findMany({ where: { archivedAt: null, calendarAccountId: { not: null } }, select: { id: true } });
+  const deadline = Date.now() + SYNC_BUDGET_MS;
   let changed = 0;
-  for (const m of meetings) changed += await syncMeetingCalendar(m.id).catch(() => 0);
+  let next = 0;
+  const worker = async () => {
+    while (next < meetings.length && Date.now() < deadline) {
+      const m = meetings[next++]!;
+      changed += await syncMeetingCalendar(m.id).catch(() => 0);
+    }
+  };
+  await Promise.all(Array.from({ length: SYNC_AT_ONCE }, worker));
   return changed;
 }
 

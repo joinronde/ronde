@@ -20,18 +20,19 @@ async function dav(a: CalendarAccess, url: string, method: string, body?: string
     ...(body === undefined ? {} : { body }),
     signal: AbortSignal.timeout(20_000),
   });
-  if (res.status === 401 || res.status === 403)
-    throw new ProviderError(`${res.status}: the server refused the user name or password`, res.status);
+  // Only a 401 is about the credentials: a 403 refuses one request (a report the server does not allow…)
+  if (res.status === 401) throw new ProviderError("401: the server refused the user name or password", 401);
   return res;
 }
 
+const ENTITIES: Record<string, string> = { lt: "<", gt: ">", quot: '"', apos: "'", amp: "&" };
+/** In one pass, so that "&amp;lt;" stays "&lt;" */
 const decodeXml = (s: string) =>
-  s
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&apos;/g, "'")
-    .replace(/&amp;/g, "&");
+  s.replace(/&(#x[0-9a-f]{1,6}|#\d{1,7}|lt|gt|quot|apos|amp);/gi, (whole, name: string) => {
+    if (name[0] !== "#") return ENTITIES[name.toLowerCase()] ?? whole;
+    const code = name[1] === "x" || name[1] === "X" ? Number.parseInt(name.slice(2), 16) : Number(name.slice(1));
+    return code > 0 && code <= 0x10ffff ? String.fromCodePoint(code) : "";
+  });
 
 /** The responses of a multistatus answer: each one's address and the XML of its properties */
 function responses(xml: string): { href: string; body: string }[] {
@@ -104,6 +105,9 @@ export async function calendarUrl(a: CalendarAccess): Promise<string> {
   return url;
 }
 
+/** An address that can stand in a line of the file: no space, separator or control character to break out of it */
+const EMAIL = /^[^\s;:,"<>\\\x00-\x1f\x7f]+@[^\s;:,"<>\\\x00-\x1f\x7f]+$/;
+
 const stamp = (ms: number) => `${new Date(ms).toISOString().replace(/[-:]/g, "").slice(0, 15)}Z`;
 
 /** The event as an iCalendar file: in UTC, the organizer and the attendees with their answers so far */
@@ -123,10 +127,13 @@ function eventIcs(a: CalendarAccess, e: CalendarEventInput, uid: string, answers
     `SUMMARY:${icsText(e.title)}`,
     `DESCRIPTION:${icsText(e.description)}`,
     ...(e.location ? [`LOCATION:${icsText(e.location)}`] : []),
-    `ORGANIZER:mailto:${a.config.organizer ?? ""}`,
-    ...e.attendees.map(
-      (m) => `ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=${answers[m.toLowerCase()] ?? "NEEDS-ACTION"};RSVP=TRUE:mailto:${m}`,
-    ),
+    ...(EMAIL.test(a.config.organizer ?? "") ? [`ORGANIZER:mailto:${a.config.organizer}`] : []),
+    ...e.attendees
+      .filter((m) => EMAIL.test(m))
+      .map(
+        (m) =>
+          `ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=${answers[m.toLowerCase()] ?? "NEEDS-ACTION"};RSVP=TRUE:mailto:${m}`,
+      ),
     "STATUS:CONFIRMED",
     "END:VEVENT",
     "END:VCALENDAR",
@@ -292,7 +299,8 @@ export async function busy(
     { depth: "1", "content-type": "application/xml; charset=utf-8" },
   );
   let text: string;
-  if (res.ok) text = await res.text();
+  // A free-busy answer is a calendar file; anything else (refused, unknown report, a multistatus) falls back
+  if (res.status === 200 && /text\/calendar/i.test(res.headers.get("content-type") ?? "")) text = await res.text();
   else {
     // No free-busy report on this server: the events of the period, recurring ones expanded
     res = await dav(
