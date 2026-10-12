@@ -2,32 +2,15 @@
 // shell entrypoint, then loads the Next.js server. Migrations run separately, in the "migrate" image.
 import { readFileSync } from "node:fs";
 
-// Docker secrets: any <NAME>_FILE variable is read from the given file
-for (const name of [
-  "DATABASE_URL",
-  "SMTP_URL",
-  "GITLAB_TOKEN",
-  "SECRET_KEY",
-  "AUTH_SECRET",
-  "OIDC_CLIENT_SECRET",
-  "GOOGLE_CLIENT_SECRET",
-  "GITHUB_CLIENT_SECRET",
-  "MICROSOFT_CLIENT_SECRET",
-  "RONDE_LICENSE",
-  "ANTHROPIC_API_KEY",
-  "TRANSCRIPTION_API_KEY",
-  "STRIPE_SECRET_KEY",
-  "STRIPE_WEBHOOK_SECRET",
-  "SLACK_CLIENT_SECRET",
-  "SLACK_SIGNING_SECRET",
-  "TEAMS_APP_PASSWORD",
-]) {
-  const file = process.env[`${name}_FILE`];
-  if (!file) continue;
+// Docker secrets: any <NAME>_FILE variable is read from the given file into <NAME> (one set directly wins).
+// Every one: no list to keep in step with the variables the app reads.
+for (const [key, file] of Object.entries(process.env)) {
+  const m = /^([A-Z][A-Z0-9_]*)_FILE$/.exec(key);
+  if (!m || !file || process.env[m[1]]) continue;
   try {
-    process.env[name] = readFileSync(file, "utf8").trim();
+    process.env[m[1]] = readFileSync(file, "utf8").trim();
   } catch {
-    console.error(`Cannot read ${name}_FILE=${file}`);
+    console.error(`Cannot read ${key}=${file}`);
     process.exit(1);
   }
 }
@@ -37,5 +20,9 @@ if (missing.length > 0) {
   console.error(`Missing required variables: ${missing.join(", ")} (or <NAME>_FILE)`);
   process.exit(1);
 }
+
+// The app stops itself on SIGTERM (instrumentation.ts): the background jobs running end first, so a deploy never
+// leaves one half done to be run again
+process.env.NEXT_MANUAL_SIG_HANDLE ??= "true";
 
 await import("./server.js");

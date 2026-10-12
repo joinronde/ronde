@@ -11,7 +11,8 @@
     "./scoped": "./src/scoped.ts",
     "./tenancy": "./src/tenancy.ts",
     "./package.json": "./package.json",
-    "./plans": "./src/plans.ts"
+    "./plans": "./src/plans.ts",
+    "./migrations": "./src/migrations.ts"
   },
   "scripts": {
     "db:generate": "prisma generate",
