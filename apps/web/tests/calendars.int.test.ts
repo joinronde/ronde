@@ -1,4 +1,5 @@
 import { generateKeyPairSync, sign } from "node:crypto";
+import { localDate, localTime } from "@ronde/core/schedule";
 import { prisma } from "@ronde/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { meetingAvailability, saveCalendarAccount, setMeetingCalendar, syncMeetingCalendar } from "@/lib/server/calendars";
@@ -29,6 +30,14 @@ let f: Fixture;
 let accountId = "";
 const calls: { method: string; url: string }[] = [];
 let n = 0;
+type GoogleEvent = {
+  id: string;
+  status?: string;
+  start: { dateTime: string };
+  end: { dateTime: string };
+  attendees: { email: string; responseStatus?: string }[];
+};
+const store = new Map<string, GoogleEvent>();
 
 beforeAll(async () => {
   await saveLicense(KEY);
@@ -36,6 +45,7 @@ beforeAll(async () => {
   // Sessions every Monday from last week: about eight in the next eight weeks
   const start = new Date(Date.now() - 7 * 86_400_000).toISOString().slice(0, 10);
   await prisma.scheduleRule.updateMany({ where: { meetingId: f.meetingId }, data: { startDate: start } });
+  // A Google Calendar holding the organizer's events: written, changed, read and deleted like the real one
   vi.stubGlobal(
     "fetch",
     vi.fn(async (url: string, init: RequestInit) => {
@@ -51,8 +61,22 @@ beforeAll(async () => {
           calendars: { [host.email]: { busy: [{ start, end: new Date(next.startsAt.getTime() + 15 * 60_000).toISOString() }] } },
         });
       }
-      if (method === "DELETE") return new Response(null, { status: 204 });
-      return Response.json({ id: `ev${++n}` });
+      const id = /\/events\/([^?]+)/.exec(url)?.[1];
+      if (method === "POST") {
+        const ev = { ...JSON.parse(String(init.body)), id: `ev${++n}` };
+        store.set(ev.id, ev);
+        return Response.json(ev);
+      }
+      if (method === "PUT" && id) {
+        store.set(id, { ...JSON.parse(String(init.body)), id });
+        return Response.json(store.get(id));
+      }
+      if (method === "DELETE" && id) {
+        store.delete(id);
+        return new Response(null, { status: 204 });
+      }
+      if (id) return store.has(id) ? Response.json(store.get(id)) : Response.json({}, { status: 404 });
+      return Response.json({});
     }),
   );
   ({ id: accountId } = await saveCalendarAccount(f.ctx.ws, {
@@ -92,5 +116,63 @@ describe("calendar sync", () => {
     const a = await meetingAvailability(m);
     expect(a.sessions[0]?.busy).toEqual(["Host"]);
     expect(a.sessions.slice(1).every((s) => s.busy.length === 0)).toBe(true);
+  });
+
+  // Both ways: what changes in the calendar comes back to the meeting
+
+  const second = async () => (await prisma.calendarEvent.findMany({ where: { meetingId: f.meetingId }, orderBy: { startsAt: "asc" } }))[1]!;
+  const zone = async () => {
+    const m = await prisma.meeting.findUniqueOrThrow({ where: { id: f.meetingId }, include: { workspace: true } });
+    return m.timezone ?? m.workspace.timezone;
+  };
+
+  it("moves a session moved in the calendar, without writing it back", async () => {
+    const e = await second();
+    const ev = store.get(e.eventId)!;
+    const start = e.startsAt.getTime() + 2 * 3_600_000;
+    ev.start.dateTime = new Date(start).toISOString();
+    ev.end.dateTime = new Date(start + 45 * 60_000).toISOString();
+    const writes = calls.filter((c) => c.url.includes("/events") && (c.method === "PUT" || c.method === "POST")).length;
+    expect(await syncMeetingCalendar(f.meetingId)).toBe(1);
+    const [ruleId, originalDate] = [e.occurrenceKey.slice(0, e.occurrenceKey.lastIndexOf(":")), e.occurrenceKey.slice(-10)];
+    const tz = await zone();
+    expect(await prisma.scheduleException.findUniqueOrThrow({ where: { ruleId_originalDate: { ruleId, originalDate } } })).toMatchObject({
+      kind: "move",
+      time: localTime(start, tz),
+      durationMin: 45,
+      date: localDate(start, tz) === originalDate ? null : localDate(start, tz),
+    });
+    // The calendar already says so: nothing written to it, nothing more to do next time
+    expect(calls.filter((c) => c.url.includes("/events") && (c.method === "PUT" || c.method === "POST")).length).toBe(writes);
+    expect(await syncMeetingCalendar(f.meetingId)).toBe(0);
+  });
+
+  it("turns an answer given in the calendar into the person's RSVP, once", async () => {
+    const e = await second();
+    const host = await prisma.person.findUniqueOrThrow({ where: { id: f.hostPersonId } });
+    const ev = store.get(e.eventId)!;
+    ev.attendees = ev.attendees.map((a) => (a.email === host.email.toLowerCase() ? { ...a, responseStatus: "declined" } : a));
+    expect(await syncMeetingCalendar(f.meetingId)).toBe(1);
+    const where = { meetingId_occurrenceKey_personId: { meetingId: f.meetingId, occurrenceKey: e.occurrenceKey, personId: host.id } };
+    expect(await prisma.attendance.findUniqueOrThrow({ where })).toMatchObject({ status: "no" });
+    // Changed in Ronde afterwards: the calendar's old answer does not take it back
+    await prisma.attendance.update({ where, data: { status: "yes" } });
+    expect(await syncMeetingCalendar(f.meetingId)).toBe(0);
+    expect(await prisma.attendance.findUniqueOrThrow({ where })).toMatchObject({ status: "yes" });
+  });
+
+  it("skips a session whose event was deleted in the calendar", async () => {
+    const e = await second();
+    store.delete(e.eventId);
+    expect(await syncMeetingCalendar(f.meetingId)).toBe(1);
+    const at = e.occurrenceKey.lastIndexOf(":");
+    expect(
+      await prisma.scheduleException.findUniqueOrThrow({
+        where: { ruleId_originalDate: { ruleId: e.occurrenceKey.slice(0, at), originalDate: e.occurrenceKey.slice(at + 1) } },
+      }),
+    ).toMatchObject({ kind: "cancel" });
+    expect(await prisma.calendarEvent.findFirst({ where: { id: e.id } })).toBeNull();
+    // Not written again
+    expect(await syncMeetingCalendar(f.meetingId)).toBe(0);
   });
 });

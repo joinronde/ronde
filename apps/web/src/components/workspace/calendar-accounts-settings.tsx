@@ -16,7 +16,7 @@ type ConfirmFn = ReturnType<typeof useConfirm>[1];
 type Kind = CalendarAccountView["kind"];
 
 /** Fields each provider asks for, with an example */
-const FIELDS: Record<Kind, { key: "clientEmail" | "organizer" | "tenant" | "clientId"; placeholder: string }[]> = {
+const FIELDS: Record<Kind, { key: "clientEmail" | "organizer" | "tenant" | "clientId" | "url" | "username"; placeholder: string }[]> = {
   google: [
     { key: "clientEmail", placeholder: "ronde@acme.iam.gserviceaccount.com" },
     { key: "organizer", placeholder: "rooms@acme.com" },
@@ -24,6 +24,11 @@ const FIELDS: Record<Kind, { key: "clientEmail" | "organizer" | "tenant" | "clie
   microsoft: [
     { key: "tenant", placeholder: "acme.onmicrosoft.com" },
     { key: "clientId", placeholder: "00000000-0000-0000-0000-000000000000" },
+    { key: "organizer", placeholder: "rooms@acme.com" },
+  ],
+  caldav: [
+    { key: "url", placeholder: "https://caldav.fastmail.com/dav/" },
+    { key: "username", placeholder: "rooms@acme.com" },
     { key: "organizer", placeholder: "rooms@acme.com" },
   ],
 };
@@ -187,7 +192,7 @@ function AccountForm({
         <div className="field">
           <label htmlFor="trKind">{t("kind")}</label>
           <Select id="trKind" value={kind} disabled={!!tracker} onChange={(e) => setKind(e.target.value as Kind)}>
-            {(["google", "microsoft"] as const).map((k) => (
+            {(["google", "microsoft", "caldav"] as const).map((k) => (
               <option key={k} value={k}>
                 {t(`kinds.${k}`)}
               </option>
@@ -204,6 +209,8 @@ function AccountForm({
             <input
               id={`tr-${f.key}`}
               required
+              type={f.key === "url" ? "url" : "text"}
+              dir="ltr"
               value={config[f.key] ?? ""}
               placeholder={f.placeholder}
               onChange={(e) => setConfig((c) => ({ ...c, [f.key]: e.target.value }))}

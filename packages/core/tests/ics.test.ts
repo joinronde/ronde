@@ -63,7 +63,7 @@ describe("ICS feed", () => {
   });
 
   it("escapes text and folds long lines without breaking characters", () => {
-    expect(icsText("a,b;c\\d\ne")).toBe("a\\,b\;c\\\\d\\ne");
+    expect(icsText("a,b;c\\d\ne")).toBe("a\\,b\\;c\\\\d\\ne");
     const long = `DESCRIPTION:${"é".repeat(60)}`;
     const folded = foldLine(long);
     for (const part of folded.split("\r\n")) expect(new TextEncoder().encode(part).length).toBeLessThanOrEqual(75);

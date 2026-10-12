@@ -1,6 +1,6 @@
 {
   "title": "Calendars",
-  "intro": "Write the sessions of your meetings into the participants' Google or Outlook calendars, with one account of the workspace, and read their availability to avoid conflicts.",
+  "intro": "Write the sessions of your meetings into the participants' calendars (Google, Microsoft 365 or a CalDAV server such as iCloud, Fastmail or Nextcloud) with one account of the workspace. What changes there comes back, and their availability helps avoid conflicts.",
   "empty": "No calendar account yet.",
   "add": "Add a calendar account",
   "kind": "Provider",
@@ -15,21 +15,26 @@
   "removeConfirm": "Remove {name}? The meetings using it stop being synced; events already written stay in the calendars.",
   "kinds": {
     "google": "Google Calendar",
-    "microsoft": "Microsoft 365"
+    "microsoft": "Microsoft 365",
+    "caldav": "CalDAV"
   },
   "fields": {
     "clientEmail": "Email of the service account",
     "organizer": "Organizer of the events",
     "tenant": "Tenant (ID or domain)",
-    "clientId": "Client ID"
+    "clientId": "Client ID",
+    "url": "CalDAV address",
+    "username": "User name"
   },
   "secret": {
     "google": "Private key of the service account",
-    "microsoft": "Client secret"
+    "microsoft": "Client secret",
+    "caldav": "Password (an app password for iCloud or Fastmail)"
   },
   "hints": {
     "google": "In Google Cloud, create a service account and give it domain-wide delegation for the scope https://www.googleapis.com/auth/calendar in the Google Workspace admin console. Events are created by the organizer, who invites the participants.",
-    "microsoft": "In Microsoft Entra, register an application with the Calendars.ReadWrite application permission (admin consent). Events are created in the organizer's calendar, who invites the participants."
+    "microsoft": "In Microsoft Entra, register an application with the Calendars.ReadWrite application permission (admin consent). Events are created in the organizer's calendar, who invites the participants.",
+    "caldav": "The address of the server (https://caldav.icloud.com, https://caldav.fastmail.com/dav/, https://cloud.example.com/remote.php/dav) or of one of its calendars. Sessions go into the account's first calendar of events, unless you give a calendar's address, and the server invites the participants. Only the organizer's own busy times can be read."
   },
   "useIt": "Then, in the settings of a meeting, Schedule → Calendars."
 }

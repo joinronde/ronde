@@ -1,6 +1,6 @@
 {
   "title": "Agendas",
-  "intro": "Escreva as sessões das suas reuniões nas agendas Google ou Outlook dos participantes, com uma conta do espaço, e consulte a disponibilidade delas para evitar conflitos.",
+  "intro": "Registre as sessões das suas reuniões nos calendários dos participantes (Google, Microsoft 365 ou um servidor CalDAV como iCloud, Fastmail ou Nextcloud) com uma conta do espaço de trabalho. O que muda lá volta para cá, e a disponibilidade deles ajuda a evitar conflitos.",
   "empty": "Nenhuma conta de agenda ainda.",
   "add": "Adicionar uma conta de agenda",
   "kind": "Provedor",
@@ -15,21 +15,26 @@
   "removeConfirm": "Remover {name}? As reuniões que a usam deixam de ser sincronizadas; os eventos já escritos ficam nas agendas.",
   "kinds": {
     "google": "Google Agenda",
-    "microsoft": "Microsoft 365"
+    "microsoft": "Microsoft 365",
+    "caldav": "CalDAV"
   },
   "fields": {
     "clientEmail": "E-mail da conta de serviço",
     "organizer": "Organizador dos eventos",
     "tenant": "Locatário (ID ou domínio)",
-    "clientId": "ID do cliente"
+    "clientId": "ID do cliente",
+    "url": "Endereço CalDAV",
+    "username": "Nome de usuário"
   },
   "secret": {
     "google": "Chave privada da conta de serviço",
-    "microsoft": "Segredo do cliente"
+    "microsoft": "Segredo do cliente",
+    "caldav": "Senha (uma senha de app no iCloud ou no Fastmail)"
   },
   "hints": {
     "google": "No Google Cloud, crie uma conta de serviço e dê a ela delegação em todo o domínio para o escopo https://www.googleapis.com/auth/calendar no console de administração do Google Workspace. Os eventos são criados pelo organizador, que convida os participantes.",
-    "microsoft": "No Microsoft Entra, registre um aplicativo com a permissão de aplicativo Calendars.ReadWrite (consentimento do administrador). Os eventos são criados na agenda do organizador, que convida os participantes."
+    "microsoft": "No Microsoft Entra, registre um aplicativo com a permissão de aplicativo Calendars.ReadWrite (consentimento do administrador). Os eventos são criados na agenda do organizador, que convida os participantes.",
+    "caldav": "O endereço do servidor (https://caldav.icloud.com, https://caldav.fastmail.com/dav/, https://cloud.example.com/remote.php/dav) ou de um dos seus calendários. As sessões vão para o primeiro calendário de eventos da conta, a menos que você informe o endereço de um calendário, e o servidor convida os participantes. Só os horários ocupados do organizador podem ser lidos."
   },
   "useIt": "Depois, nas configurações de uma reunião, Agendamento → Agendas."
 }

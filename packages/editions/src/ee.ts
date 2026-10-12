@@ -277,6 +277,11 @@ export interface EnterpriseEdition {
     upsert: (account: CalendarAccess, event: CalendarEventInput, eventId?: string) => Promise<string>;
     /** Removes an event (cancelled session); an event already gone is fine */
     remove: (account: CalendarAccess, eventId: string) => Promise<void>;
+    /**
+     * An event as it is now in the calendar, to bring back what changed there (moved, cancelled, answered);
+     * null when it no longer exists
+     */
+    read: (account: CalendarAccess, eventId: string) => Promise<CalendarEventState | null>;
     /** Busy times of people between two instants (ISO), by address */
     busy: (
       account: CalendarAccess,
@@ -482,12 +487,15 @@ export interface VideoAccess {
   fetch?: typeof fetch;
 }
 
-export type CalendarKind = "google" | "microsoft";
+export type CalendarKind = "google" | "microsoft" | "caldav";
 
 /** A calendar account of the workspace, with its decrypted secret */
 export interface CalendarAccess {
   kind: CalendarKind;
-  /** { clientEmail, organizer } (Google), { tenant, clientId, organizer } (Microsoft) */
+  /**
+   * { clientEmail, organizer } (Google), { tenant, clientId, organizer } (Microsoft), { url, username, organizer }
+   * (CalDAV: the server's or the calendar's address; the secret is the account's password, an app password)
+   */
   config: Record<string, string>;
   secret: string;
   fetch?: typeof fetch;
@@ -502,6 +510,17 @@ export interface CalendarEventInput {
   attendees: string[];
   /** The video link, when the meeting has one */
   location: string;
+}
+
+/** An event read back from a calendar */
+export interface CalendarEventState {
+  /** Cancelled by its organizer (still listed, marked cancelled) */
+  cancelled: boolean;
+  /** Instants, ISO; null for an event turned into a whole day */
+  start: string | null;
+  end: string | null;
+  /** What each invited address answered, lower case */
+  answers: Record<string, "accepted" | "declined" | "tentative" | "none">;
 }
 
 /** A speech-to-text service with the OpenAI transcription API (OpenAI, or a self-hosted Whisper) */

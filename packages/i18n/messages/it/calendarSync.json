@@ -1,6 +1,6 @@
 {
   "title": "Calendari",
-  "intro": "Ogni sessione delle prossime otto settimane diventa un evento nei calendari dei partecipanti, con il link video. Spostamenti, annullamenti e nuovi partecipanti vengono seguiti.",
+  "intro": "Ogni sessione delle prossime otto settimane diventa un evento nei calendari dei partecipanti, con il link video. Funziona nei due sensi: ciò che cambia qui segue là, una sessione spostata o eliminata nel calendario viene spostata o annullata qui, e le risposte dei partecipanti diventano la loro presenza.",
   "noAccount": "Ancora nessun account calendario in questo spazio.",
   "addAccount": "Aggiungine uno nelle impostazioni dello spazio",
   "account": "Account calendario",

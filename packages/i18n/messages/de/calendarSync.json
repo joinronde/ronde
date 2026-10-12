@@ -1,6 +1,6 @@
 {
   "title": "Kalender",
-  "intro": "Jede Sitzung der nächsten acht Wochen wird zu einem Termin in den Kalendern der Teilnehmenden, mit dem Videolink. Verschiebungen, Absagen und neue Teilnehmende werden übernommen.",
+  "intro": "Jede Sitzung der nächsten acht Wochen wird zu einem Termin in den Kalendern der Teilnehmenden, mit dem Videolink. Das funktioniert in beide Richtungen: Änderungen hier folgen dort, eine im Kalender verschobene oder gelöschte Sitzung wird hier verschoben oder abgesagt, und die Antworten der Teilnehmenden werden zu ihrer Teilnahme.",
   "noAccount": "Noch kein Kalenderkonto in diesem Arbeitsbereich.",
   "addAccount": "Füge eins in den Einstellungen des Arbeitsbereichs hinzu",
   "account": "Kalenderkonto",

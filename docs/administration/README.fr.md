@@ -274,7 +274,7 @@ Les jetons des comptes qui se connectent avec Google, GitHub, Microsoft ou l'aut
 | GitLab et GitHub : importer tickets et merge requests dans les fiches | Réglages de la réunion | Community |
 | Visio : n'importe quel lien, Jitsi, BigBlueButton | Réglages de la réunion | Community |
 | Salles Zoom, Google Meet et Teams créées pour chaque réunion | Espace de travail, Général | Team |
-| Agendas Google et Outlook : séances inscrites dans les agendas des participants, disponibilités lues | Espace de travail, Général | Team |
+| Agendas Google, Outlook et CalDAV (iCloud, Fastmail, Nextcloud…), dans les deux sens : séances inscrites dans les agendas des participants, déplacements, suppressions et réponses faits là-bas repris ici, disponibilités lues | Espace de travail, Général | Team |
 | Tickets Jira, Linear, GitLab et GitHub depuis les actions de suivi, fermés en même temps | Espace de travail, Général | Team |
 | GitHub, GitLab, Jira et Linear : dépôts, jalons, epics et projets importés dans le portefeuille | Projets › Importer | Community |
 | Projets importés synchronisés avec leur outil : nom, statut, dates et avancement | Projets › Importer, via un outil de tickets | Team |

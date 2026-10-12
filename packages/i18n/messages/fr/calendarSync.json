@@ -1,6 +1,6 @@
 {
   "title": "Agendas",
-  "intro": "Chaque séance des huit prochaines semaines devient un événement dans l'agenda des participants, avec le lien de visio. Les déplacements, annulations et nouveaux participants suivent.",
+  "intro": "Chaque séance des huit prochaines semaines devient un événement dans l'agenda des participants, avec le lien de visio. La synchro va dans les deux sens : ce qui change ici suit là-bas, une séance déplacée ou supprimée dans l'agenda est déplacée ou annulée ici, et les réponses des participants deviennent leur présence.",
   "noAccount": "Aucun compte d'agenda dans cet espace pour l'instant.",
   "addAccount": "En ajouter un dans les réglages de l'espace",
   "account": "Compte d'agenda",

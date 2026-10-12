@@ -1,6 +1,6 @@
 {
   "title": "Calendars",
-  "intro": "Each session of the next eight weeks becomes an event in the participants' calendars, with the video link. Moves, cancellations and new participants follow.",
+  "intro": "Each session of the next eight weeks becomes an event in the participants' calendars, with the video link. It works both ways: what changes here follows there, a session moved or deleted in the calendar is moved or skipped here, and the participants' answers become their attendance.",
   "noAccount": "No calendar account in this workspace yet.",
   "addAccount": "Add one in the workspace settings",
   "account": "Calendar account",

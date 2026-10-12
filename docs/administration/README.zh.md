@@ -181,7 +181,7 @@ Team 和 Enterprise 功能通过许可证密钥开启，可在服务器管理中
 | GitLab 和 GitHub：将 issue 和合并请求导入进展卡 | 会议设置 | Community |
 | 视频通话：任意链接、Jitsi、BigBlueButton | 会议设置 | Community |
 | 为每个会议创建 Zoom、Google Meet 和 Teams 房间 | 工作空间，常规 | Team |
-| Google 和 Outlook 日历：将场次写入参与者日历，读取空闲状态 | 工作空间，常规 | Team |
+| Google、Outlook 和 CalDAV 日历（iCloud、Fastmail、Nextcloud…），双向同步：将场次写入参与者日历，并同步回在日历中的改期、删除和答复，读取空闲状态 | 工作空间，常规 | Team |
 | 从后续行动项创建 Jira、Linear、GitLab 和 GitHub 工单，并同步关闭 | 工作空间，常规 | Team |
 | GitHub、GitLab、Jira 和 Linear：将仓库、里程碑、史诗和项目导入项目组合 | 项目 › 导入 | Community |
 | 已导入的项目与其工具保持同步：名称、阶段、日期和进度 | 项目 › 导入，通过工单系统 | Team |

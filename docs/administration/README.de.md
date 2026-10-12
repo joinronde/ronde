@@ -273,7 +273,7 @@ Auch die Tokens von Konten, die sich mit Google, GitHub, Microsoft oder Single S
 | GitLab und GitHub: Issues und Merge Requests in Check-ins importieren | Einstellungen des Meetings | Community |
 | Videoanruf: beliebiger Link, Jitsi, BigBlueButton | Einstellungen des Meetings | Community |
 | Räume in Zoom, Google Meet und Teams für jedes Meeting angelegt | Arbeitsbereich, Allgemein | Team |
-| Google- und Outlook-Kalender: Sitzungen in die Kalender der Teilnehmenden geschrieben, Verfügbarkeit gelesen | Arbeitsbereich, Allgemein | Team |
+| Google-, Outlook- und CalDAV-Kalender (iCloud, Fastmail, Nextcloud…), in beide Richtungen: Sitzungen in die Kalender der Teilnehmenden geschrieben, dort gemachte Verschiebungen, Löschungen und Antworten übernommen, Verfügbarkeit gelesen | Arbeitsbereich, Allgemein | Team |
 | Tickets in Jira, Linear, GitLab und GitHub aus Folgeaufgaben, gemeinsam geschlossen | Arbeitsbereich, Allgemein | Team |
 | GitHub, GitLab, Jira und Linear: Repositorys, Meilensteine, Epics und Projekte ins Portfolio importiert | Projekte › Importieren | Community |
 | Importierte Projekte bleiben mit ihrem Tool synchron: Name, Status, Termine und Fortschritt | Projekte › Importieren, über ein Ticketsystem | Team |

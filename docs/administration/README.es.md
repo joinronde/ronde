@@ -270,7 +270,7 @@ Los tokens de las cuentas que inician sesión con Google, GitHub, Microsoft o el
 | GitLab y GitHub: importar incidencias y merge requests en las fichas | Ajustes de la reunión | Community |
 | Videollamada: cualquier enlace, Jitsi, BigBlueButton | Ajustes de la reunión | Community |
 | Salas de Zoom, Google Meet y Teams creadas para cada reunión | Espacio de trabajo, General | Team |
-| Calendarios de Google y Outlook: sesiones escritas en los calendarios de los participantes, disponibilidad leída | Espacio de trabajo, General | Team |
+| Calendarios de Google, Outlook y CalDAV (iCloud, Fastmail, Nextcloud…), en ambos sentidos: sesiones escritas en los calendarios de los participantes, cambios de hora, eliminaciones y respuestas hechos allí recuperados, disponibilidad leída | Espacio de trabajo, General | Team |
 | Tickets de Jira, Linear, GitLab y GitHub a partir de las acciones de seguimiento, cerrados a la vez | Espacio de trabajo, General | Team |
 | GitHub, GitLab, Jira y Linear: repositorios, hitos, épicas y proyectos importados a la cartera | Proyectos › Importar | Community |
 | Proyectos importados sincronizados con su herramienta: nombre, situación, fechas y avance | Proyectos › Importar, mediante un gestor de tickets | Team |

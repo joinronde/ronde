@@ -1,6 +1,6 @@
 {
   "title": "日历",
-  "intro": "使用工作空间的一个账户，把会议场次写入参与者的 Google 或 Outlook 日历，并读取他们的空闲时间以避免冲突。",
+  "intro": "通过工作空间的一个账户，把会议的各次会议写入参会者的日历（Google、Microsoft 365，或 iCloud、Fastmail、Nextcloud 等 CalDAV 服务器）。日历中的改动会同步回来，参会者的忙闲情况有助于避免冲突。",
   "empty": "还没有日历账户。",
   "add": "添加日历账户",
   "kind": "服务商",
@@ -15,21 +15,26 @@
   "removeConfirm": "移除 {name}？使用它的会议将停止同步；已写入的日程会保留在日历中。",
   "kinds": {
     "google": "Google 日历",
-    "microsoft": "Microsoft 365"
+    "microsoft": "Microsoft 365",
+    "caldav": "CalDAV"
   },
   "fields": {
     "clientEmail": "服务账户邮箱",
     "organizer": "日程组织者",
     "tenant": "租户（ID 或域名）",
-    "clientId": "客户端 ID"
+    "clientId": "客户端 ID",
+    "url": "CalDAV 地址",
+    "username": "用户名"
   },
   "secret": {
     "google": "服务账户私钥",
-    "microsoft": "客户端密钥"
+    "microsoft": "客户端密钥",
+    "caldav": "密码（iCloud 或 Fastmail 请使用应用专用密码）"
   },
   "hints": {
     "google": "在 Google Cloud 中创建一个服务账户，并在 Google Workspace 管理控制台中为其授予范围 https://www.googleapis.com/auth/calendar 的全网域委派。日程由组织者创建，并由其邀请参与者。",
-    "microsoft": "在 Microsoft Entra 中注册一个应用，授予应用权限 Calendars.ReadWrite（需管理员同意）。日程创建在组织者的日历中，由其邀请参与者。"
+    "microsoft": "在 Microsoft Entra 中注册一个应用，授予应用权限 Calendars.ReadWrite（需管理员同意）。日程创建在组织者的日历中，由其邀请参与者。",
+    "caldav": "服务器地址（https://caldav.icloud.com、https://caldav.fastmail.com/dav/、https://cloud.example.com/remote.php/dav）或其中某个日历的地址。除非你填写日历地址，否则会议会写入该账户的第一个事件日历，并由服务器邀请参会者。只能读取组织者自己的忙闲时间。"
   },
   "useIt": "然后在会议设置中：日程 → 日历。"
 }

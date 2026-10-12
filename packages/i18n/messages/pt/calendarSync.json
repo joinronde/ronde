@@ -1,6 +1,6 @@
 {
   "title": "Agendas",
-  "intro": "Cada sessão das próximas oito semanas vira um evento nas agendas dos participantes, com o link de vídeo. Remarcações, cancelamentos e novos participantes são acompanhados.",
+  "intro": "Cada sessão das próximas oito semanas vira um evento nos calendários dos participantes, com o link de vídeo. Funciona nos dois sentidos: o que muda aqui segue lá, uma sessão movida ou excluída no calendário é movida ou cancelada aqui, e as respostas dos participantes viram a presença deles.",
   "noAccount": "Nenhuma conta de agenda neste espaço ainda.",
   "addAccount": "Adicione uma nas configurações do espaço",
   "account": "Conta de agenda",

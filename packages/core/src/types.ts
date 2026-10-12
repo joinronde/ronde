@@ -451,7 +451,7 @@ export interface Snapshot {
   /** Video accounts of the workspace that create rooms, for the people configuring the meeting (Team) */
   videoAccounts: { id: string; name: string; kind: "zoom" | "meet" | "teams" }[];
   /** Calendar sync of the meeting, for the people configuring it (Team): the accounts, the one in use */
-  calendars: { accounts: { id: string; name: string; kind: "google" | "microsoft" }[]; current: string | null } | null;
+  calendars: { accounts: { id: string; name: string; kind: "google" | "microsoft" | "caldav" }[]; current: string | null } | null;
   /**
    * Where the minutes are published (Team; null without the plan, or for people who neither configure the
    * meeting nor edit its minutes): the wikis of the workspace (for those who configure it), the one in use

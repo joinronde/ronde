@@ -160,6 +160,7 @@ model VideoAccount {
 enum CalendarKind {
   google
   microsoft
+  caldav
 }
 
 /// A calendar account of the workspace: sessions go into the participants' calendars, their availability comes back (Team)
@@ -194,6 +195,11 @@ model CalendarEvent {
   /// What was sent (times, title, attendees): an event is updated only when it changes
   hash          String
   startsAt      DateTime
+  /// End written, to tell an event moved in the calendar from one Ronde moved
+  endsAt        DateTime?
+  /// What the attendees had answered at the last read ({ email: accepted | declined | tentative | none }): only a
+  /// new answer becomes the person's RSVP, so one changed in Ronde since is not overwritten
+  answers       Json            @default("{}")
   updatedAt     DateTime        @updatedAt
 
   @@unique([meetingId, occurrenceKey])

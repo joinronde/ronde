@@ -1,6 +1,6 @@
 {
   "title": "Kalender",
-  "intro": "Trage die Sitzungen deiner Meetings mit einem Konto des Arbeitsbereichs in die Google- oder Outlook-Kalender der Teilnehmenden ein und lies ihre Verfügbarkeit, um Konflikte zu vermeiden.",
+  "intro": "Trage die Sitzungen deiner Meetings mit einem Konto des Arbeitsbereichs in die Kalender der Teilnehmenden ein (Google, Microsoft 365 oder ein CalDAV-Server wie iCloud, Fastmail oder Nextcloud). Änderungen dort kommen zurück, und ihre Verfügbarkeit hilft, Konflikte zu vermeiden.",
   "empty": "Noch kein Kalenderkonto.",
   "add": "Kalenderkonto hinzufügen",
   "kind": "Anbieter",
@@ -15,21 +15,26 @@
   "removeConfirm": "{name} entfernen? Meetings, die es nutzen, werden nicht mehr synchronisiert; bereits eingetragene Termine bleiben in den Kalendern.",
   "kinds": {
     "google": "Google Kalender",
-    "microsoft": "Microsoft 365"
+    "microsoft": "Microsoft 365",
+    "caldav": "CalDAV"
   },
   "fields": {
     "clientEmail": "E-Mail des Dienstkontos",
     "organizer": "Organisator der Termine",
     "tenant": "Mandant (ID oder Domain)",
-    "clientId": "Client-ID"
+    "clientId": "Client-ID",
+    "url": "CalDAV-Adresse",
+    "username": "Benutzername"
   },
   "secret": {
     "google": "Privater Schlüssel des Dienstkontos",
-    "microsoft": "Client-Geheimnis"
+    "microsoft": "Client-Geheimnis",
+    "caldav": "Passwort (ein App-Passwort bei iCloud oder Fastmail)"
   },
   "hints": {
     "google": "Erstelle in Google Cloud ein Dienstkonto und gib ihm in der Admin-Konsole von Google Workspace domainweite Delegierung für den Bereich https://www.googleapis.com/auth/calendar. Die Termine erstellt der Organisator, der die Teilnehmenden einlädt.",
-    "microsoft": "Registriere in Microsoft Entra eine Anwendung mit der Anwendungsberechtigung Calendars.ReadWrite (Administratorzustimmung). Die Termine werden im Kalender des Organisators erstellt, der die Teilnehmenden einlädt."
+    "microsoft": "Registriere in Microsoft Entra eine Anwendung mit der Anwendungsberechtigung Calendars.ReadWrite (Administratorzustimmung). Die Termine werden im Kalender des Organisators erstellt, der die Teilnehmenden einlädt.",
+    "caldav": "Die Adresse des Servers (https://caldav.icloud.com, https://caldav.fastmail.com/dav/, https://cloud.example.com/remote.php/dav) oder eines seiner Kalender. Die Sitzungen landen im ersten Terminkalender des Kontos, außer du gibst die Adresse eines Kalenders an, und der Server lädt die Teilnehmenden ein. Nur die belegten Zeiten des Organisators lassen sich lesen."
   },
   "useIt": "Danach in den Einstellungen eines Meetings: Terminplan → Kalender."
 }

@@ -1,6 +1,6 @@
 {
   "title": "Calendarios",
-  "intro": "Cada sesión de las próximas ocho semanas se convierte en un evento en los calendarios de los participantes, con el enlace de vídeo. Los cambios de fecha, las cancelaciones y los nuevos participantes se reflejan.",
+  "intro": "Cada sesión de las próximas ocho semanas se convierte en un evento en los calendarios de los participantes, con el enlace de vídeo. Funciona en ambos sentidos: lo que cambia aquí se refleja allí, una sesión movida o eliminada en el calendario se mueve o se cancela aquí, y las respuestas de los participantes se convierten en su asistencia.",
   "noAccount": "Todavía no hay cuenta de calendario en este espacio.",
   "addAccount": "Añade una en los ajustes del espacio",
   "account": "Cuenta de calendario",

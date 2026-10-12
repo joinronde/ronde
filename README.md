@@ -149,7 +149,7 @@ The Community Edition is the whole product for a team, free and self-hosted. Tea
 #### Scheduling and notifications
 
 - **Flexible schedule**: several patterns per meeting (every week, every other week, the first Monday of the month…), any date skipped or moved, time zones and daylight saving handled; public holidays skipped per country.
-- **Calendars**: private ICS feeds; with Team, sessions written into Google, Microsoft 365 or CalDAV calendars and video rooms created for each meeting.
+- **Calendars**: private ICS feeds; with Team, sessions synced both ways with Google, Microsoft 365 or CalDAV calendars (moves, cancellations and answers made there come back) and video rooms created for each meeting.
 - **Reminders and notifications**: email, push notifications of the installable app, and connectors to Matrix, Slack, Microsoft Teams, Discord, Mattermost or a signed webhook. Team adds the Slack app and, on self-hosted servers, the Microsoft Teams app.
 
 #### Accounts and workspaces

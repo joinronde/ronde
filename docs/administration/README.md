@@ -260,7 +260,7 @@ The tokens of accounts signing in with Google, GitHub, Microsoft or single sign-
 | GitLab and GitHub: import issues and merge requests into check-ins | Meeting settings | Community |
 | Video call: any link, Jitsi, BigBlueButton | Meeting settings | Community |
 | Zoom, Google Meet and Teams rooms created for each meeting | Workspace, General | Team |
-| Google and Outlook calendars: sessions written into the participants' calendars, availability read | Workspace, General | Team |
+| Google, Outlook and CalDAV calendars (iCloud, Fastmail, Nextcloud…), both ways: sessions written into the participants' calendars, moves, deletions and answers made there brought back, availability read | Workspace, General | Team |
 | Jira, Linear, GitLab and GitHub tickets from follow-up actions, closed in step | Workspace, General | Team |
 | GitHub, GitLab, Jira and Linear: repositories, milestones, epics and projects imported into the portfolio | Projects › Import | Community |
 | Imported projects kept in sync with their tool: name, status, dates and progress | Projects › Import, through an issue tracker | Team |
