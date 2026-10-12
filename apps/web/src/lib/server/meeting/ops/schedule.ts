@@ -1,5 +1,5 @@
 import "server-only";
-import { occurrences } from "@ronde/core/schedule";
+import { isRealDate, occurrences } from "@ronde/core/schedule";
 import { z } from "zod";
 import { AccessError, OpError } from "../../errors";
 import { isHolidayCode, NO_HOLIDAYS } from "../../holidays";
@@ -8,9 +8,12 @@ import { defineOp, type OpContext } from "./define";
 
 // Recurrence of a meeting (rules, exceptions per occurrence) and attendance answers
 
-const isoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date");
+const isoDate = z.string().refine(isRealDate, "Invalid date");
 const hhmm = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Invalid time");
-const key = z.string().regex(/^[\w-]{1,60}:\d{4}-\d{2}-\d{2}$/, "Invalid occurrence");
+const key = z
+  .string()
+  .regex(/^[\w-]{1,60}:\d{4}-\d{2}-\d{2}$/, "Invalid occurrence")
+  .refine((k) => isRealDate(k.slice(-10)), "Invalid occurrence");
 
 const RuleInput = z
   .object({
@@ -76,6 +79,16 @@ export const scheduleOps = [
     run: async (ctx, o) => {
       const { db, meetingId, workspaceId } = ctx;
       if (o.timeZone && !isTimeZone(o.timeZone)) throw new OpError("invalidRequest", { details: "timeZone" });
+      // A meeting holds one session a day: rules meeting on the same day could never both be held
+      const from = new Date().toISOString().slice(0, 10);
+      const to = new Date(Date.now() + 366 * 86_400_000).toISOString().slice(0, 10);
+      const dates = occurrences(
+        o.rules.map((r, i) => ({ ...r, id: r.id ?? `new-${i}` })),
+        [],
+        o.timeZone || "UTC",
+        { from, to },
+      ).map((x) => x.date);
+      if (new Set(dates).size !== dates.length) throw new OpError("scheduleSameDay");
       await db.meeting.update({ where: { id: meetingId }, data: { timezone: o.timeZone || null } });
       ctx.m.meeting.timezone = o.timeZone || null;
       const existing = await db.scheduleRule.findMany({ where: { meetingId }, select: { id: true } });

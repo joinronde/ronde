@@ -165,9 +165,9 @@
   },
   "rhythm": {
     "weekdays": "Каждый рабочий день",
-    "daily": "{count, plural, one {Каждый день} few {Раз в # дня} many {Раз в # дней} other {Раз в # дня}}",
-    "weekly": "{count, plural, one {Каждую неделю} =2 {Раз в две недели} few {Раз в # недели} many {Раз в # недель} other {Раз в # недели}}",
-    "monthly": "{count, plural, one {Раз в месяц} =3 {Раз в квартал} few {Раз в # месяца} many {Раз в # месяцев} other {Раз в # месяца}}",
+    "daily": "{count, plural, =1 {Каждый день} one {Раз в # день} few {Раз в # дня} many {Раз в # дней} other {Раз в # дня}}",
+    "weekly": "{count, plural, =1 {Каждую неделю} =2 {Раз в две недели} one {Раз в # неделю} few {Раз в # недели} many {Раз в # недель} other {Раз в # недели}}",
+    "monthly": "{count, plural, =1 {Раз в месяц} =3 {Раз в квартал} one {Раз в # месяц} few {Раз в # месяца} many {Раз в # месяцев} other {Раз в # месяца}}",
     "timesDaily": "{count, plural, =2 {Два раза в день} few {# раза в день} other {# раз в день}}"
   },
   "okrReview": {

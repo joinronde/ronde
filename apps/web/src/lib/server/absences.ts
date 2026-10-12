@@ -138,10 +138,25 @@ export async function addAbsence(ctx: WorkspaceContext, input: AbsenceInput): Pr
 }
 
 export async function removeAbsence(ctx: WorkspaceContext, id: string) {
-  const row = await ctx.db.absence.findFirst({ where: { id }, select: { personId: true } });
+  const row = await ctx.db.absence.findFirst({ where: { id }, select: { personId: true, from: true, to: true } });
   if (!row) throw new OpError("notFound");
   mayEdit(ctx, row.personId);
   await ctx.db.absence.delete({ where: { id } });
+  // Back after all: the sessions of those days count them again, unless they said no or another leave covers them
+  const sessions = await ctx.db.session.findMany({
+    where: { status: "current", startedAt: null, date: { gte: row.from, lte: row.to }, absent: { has: row.personId } },
+    select: { id: true, date: true, absent: true, meetingId: true, occurrenceKey: true },
+  });
+  for (const s of sessions) {
+    if ((await awayPeople(ctx.db, s.date, [row.personId])).length) continue;
+    const no = s.occurrenceKey
+      ? await ctx.db.attendance.findFirst({
+          where: { meetingId: s.meetingId, occurrenceKey: s.occurrenceKey, personId: row.personId, status: "no" },
+          select: { status: true },
+        })
+      : null;
+    if (!no) await ctx.db.session.update({ where: { id: s.id }, data: { absent: s.absent.filter((x) => x !== row.personId) } });
+  }
 }
 
 /** Current sessions (not started) on days of the period: the person is marked absent there */

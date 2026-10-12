@@ -162,10 +162,10 @@ export function ControlRoomView() {
       if ((e.key === "ArrowRight" || e.key === "ArrowLeft") && !m.startedAt) return;
       if (e.key === "ArrowRight") {
         e.preventDefault();
-        void rpc({ op: "meeting.step", delta: 1 });
+        void rpc({ op: "meeting.step", delta: 1, from: m.stepKey });
       } else if (e.key === "ArrowLeft") {
         e.preventDefault();
-        void rpc({ op: "meeting.step", delta: -1 });
+        void rpc({ op: "meeting.step", delta: -1, from: m.stepKey });
       } else if (e.key === " ") {
         e.preventDefault();
         void rpc({ op: "meeting.togglePlay" });
@@ -295,14 +295,18 @@ export function ControlRoomView() {
                     ) : null}
                   </div>
                   <div className="controls" data-tour="controls">
-                    <button className="btn big" disabled={cur <= 0 || !m.startedAt} onClick={() => rpc({ op: "meeting.step", delta: -1 })}>
+                    <button
+                      className="btn big"
+                      disabled={cur <= 0 || !m.startedAt}
+                      onClick={() => rpc({ op: "meeting.step", delta: -1, from: m.stepKey })}
+                    >
                       ← {t("previous")}
                     </button>
                     <button
                       className={"btn big" + (m.startedAt ? " primary" : "")}
                       disabled={!next || !m.startedAt}
                       title={m.startedAt ? undefined : t("startFirst")}
-                      onClick={() => rpc({ op: "meeting.step", delta: 1 })}
+                      onClick={() => rpc({ op: "meeting.step", delta: 1, from: m.stepKey })}
                     >
                       {next ? `${t("next", { label: nextLabel })} →` : t("lastStep")}
                     </button>

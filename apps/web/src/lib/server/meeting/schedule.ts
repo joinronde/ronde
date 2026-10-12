@@ -76,7 +76,7 @@ export async function loadSchedule(db: Db, meetingId: string): Promise<{ rules: 
   const own = new Map(exceptions.map((e) => [occurrenceKey(e.ruleId, e.originalDate), e]));
   const skipped: ScheduleException[] = [];
   for (const rule of rules)
-    for (const date of ruleDates(rule, to)) {
+    for (const date of ruleDates(rule, to, { from })) {
       const name = date >= from ? days.get(date) : undefined;
       if (!name) continue;
       const ex = own.get(occurrenceKey(rule.id, date));
@@ -303,13 +303,27 @@ export async function resyncSession(
     return;
   }
   if (!next) return;
+  // The same instant too: a time zone changed moves the session though its date and time read the same
   if (
     next.key === session.occurrenceKey &&
     next.date === session.date &&
     next.time === session.time &&
-    next.durationMin === session.durationMin
+    next.durationMin === session.durationMin &&
+    session.startsAt?.getTime() === next.startsAt
   )
     return;
-  const absent = (await declined(db, meeting.id, next.key)).filter((id) => session.order.includes(id));
+  // The same occurrence moved, or another one the same day (the schedule rewritten): the absences already marked
+  // stay (by hand, or a leave); another day: those who said no to it and those away on its date
+  const sameDay = next.key === session.occurrenceKey || next.date === session.date;
+  const absent =
+    next.key === session.occurrenceKey
+      ? session.absent
+      : [
+          ...new Set([
+            ...(sameDay ? session.absent : []),
+            ...(await declined(db, meeting.id, next.key)),
+            ...(await awayPeople(db, next.date, session.order)),
+          ]),
+        ].filter((id) => session.order.includes(id));
   await db.session.update({ where: { id: session.id }, data: { ...occurrenceData(next), absent } });
 }

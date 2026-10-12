@@ -77,7 +77,15 @@ export async function checkReports(now = new Date()): Promise<number> {
       UPDATE "Workspace" SET "settings" = jsonb_set("settings", '{reports,lastSentFor}', to_jsonb(${due.key}::text))
       WHERE "id" = ${w.id} AND ("settings" #>> '{reports,lastSentFor}') IS DISTINCT FROM ${due.key}`;
     if (!taken) continue;
-    sent += await sendReport(w, due, await recipients(w, report));
+    try {
+      sent += await sendReport(w, due, await recipients(w, report));
+    } catch (e) {
+      // Not sent: handed back, the next run tries again; the other workspaces go on
+      console.error(`[reports] workspace ${w.id}`, e);
+      await prisma.$executeRaw`
+        UPDATE "Workspace" SET "settings" = jsonb_set("settings", '{reports,lastSentFor}', to_jsonb(${report.lastSentFor ?? ""}::text))
+        WHERE "id" = ${w.id}`.catch(() => undefined);
+    }
   }
   return sent;
 }

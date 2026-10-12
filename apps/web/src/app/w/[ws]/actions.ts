@@ -33,7 +33,7 @@ import { meetingContext } from "@/lib/server/meeting/context";
 import { runOp } from "@/lib/server/meeting/ops";
 import { createMeeting, type NewMeeting } from "@/lib/server/meetings";
 import { type ConnectorInput, deleteConnector, saveConnector, testConnector } from "@/lib/server/notify/connectors";
-import { assertPublicUrl } from "@/lib/server/outbound";
+import { assertPublicHost, assertPublicUrl } from "@/lib/server/outbound";
 import { publicUrl } from "@/lib/server/public-url";
 import { reportsOn, sendReport } from "@/lib/server/reports";
 import { customRolesOn } from "@/lib/server/roles";
@@ -511,6 +511,13 @@ async function ldapContext(slug: string) {
   return ctx;
 }
 
+/** In the cloud, a directory on the server's own network is out of reach (nor probed through the test) */
+async function ldapReachable(url: string) {
+  await assertPublicHost(new URL(url).hostname).catch(() => {
+    throw new OpError("ldapUrlInvalid");
+  });
+}
+
 function cleanLdap(input: LdapInput) {
   const url = input.url.trim();
   if (!/^ldaps?:\/\/[^\s/]+/i.test(url)) throw new OpError("ldapUrlInvalid");
@@ -531,6 +538,7 @@ export async function saveLdapAction(slug: string, input: LdapInput) {
   return run(async () => {
     const ctx = await ldapContext(slug);
     const data = cleanLdap(input);
+    await ldapReachable(data.url);
     if (input.bindPassword !== null && input.bindPassword && !canEncrypt()) throw new OpError("encryptionNotConfigured");
     const secret = input.bindPassword === null ? {} : { bindPassword: input.bindPassword ? encryptSecret(input.bindPassword) : "" };
     await ctx.db.ldapDirectory.upsert({
@@ -550,6 +558,7 @@ export async function testLdapAction(slug: string, sampleEmail: string) {
     const ctx = await ldapContext(slug);
     const d = await ctx.db.ldapDirectory.findFirst({});
     if (!d) throw new OpError("notFound");
+    await ldapReachable(d.url);
     return enterprise.identity.ldapTest({ ...d, bindPassword: decryptSecret(d.bindPassword) }, sampleEmail);
   });
 }

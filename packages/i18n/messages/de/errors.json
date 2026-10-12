@@ -147,6 +147,7 @@
   "testTooOften": "Höchstens ein paar Tests pro Minute: Versuch es gleich noch einmal.",
   "testNoPhone": "Der Test geht an deine eigene Handynummer: Trag sie zuerst in deinem Profil ein.",
   "accountOwnsWorkspaces": "Du bist der einzige Eigentümer von {workspaces}: Übertrage den Besitz an jemand anderen oder lösche den Workspace, bevor du dein Konto löschst.",
+  "scheduleSameDay": "Zwei dieser Regeln fallen auf denselben Tag: Ein Meeting hat eine Sitzung pro Tag. Ändere einen Tag oder mach aus der zweiten Uhrzeit ein eigenes Meeting.",
   "absencePeriod": "Wähle einen ersten und einen letzten Tag, in dieser Reihenfolge, höchstens ein Jahr auseinander.",
   "phoneMissing": "Trag zuerst deine Handynummer in dein Profil ein: Der Test geht dorthin.",
   "phoneInvalid": "Gib die Handynummer im internationalen Format ein, etwa +4915123456789.",

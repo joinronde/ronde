@@ -155,3 +155,40 @@ describe("meetings too close to each other", () => {
     expect(margin.conflicts[first.key]?.[0]?.meeting).toBe("Planning");
   });
 });
+
+describe("the session being prepared", () => {
+  it("keeps the absences marked when its occurrence only moves, and follows a time zone change", async () => {
+    const personId = await other();
+    const s = await current();
+    await prisma.session.update({ where: { id: s.id }, data: { absent: [personId] } });
+    // The same occurrence, later in the day
+    await runOp(f.ctx, { op: "schedule.save", timeZone: "", rules: [weekly(nextMonday, "11:00")] });
+    const moved = await current();
+    expect([moved.time, moved.absent]).toEqual(["11:00", [personId]]);
+    // Another time zone: same date and time on the clock, another instant
+    await runOp(f.ctx, { op: "schedule.save", timeZone: "America/New_York", rules: [weekly(nextMonday, "11:00")] });
+    const there = await current();
+    expect(there.startsAt?.getTime()).not.toBe(moved.startsAt?.getTime());
+    expect(there.absent).toEqual([personId]);
+  });
+});
+
+describe("a leave removed", () => {
+  it("counts the person in the sessions of those days again", async () => {
+    const personId = await other();
+    const s = await current();
+    const id = await addAbsence(f.ctx.ws, { personId, from: s.date, to: s.date });
+    expect((await current()).absent).toContain(personId);
+    const { removeAbsence } = await import("@/lib/server/absences");
+    await removeAbsence(f.ctx.ws, id);
+    expect((await current()).absent).not.toContain(personId);
+  });
+});
+
+describe("a schedule", () => {
+  it("is refused when two of its rules meet on the same day", async () => {
+    await expect(
+      runOp(f.ctx, { op: "schedule.save", timeZone: "", rules: [weekly(nextMonday, "09:00"), weekly(nextMonday, "17:00")] }),
+    ).rejects.toMatchObject({ key: "scheduleSameDay" });
+  });
+});

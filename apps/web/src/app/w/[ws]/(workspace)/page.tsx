@@ -1,3 +1,4 @@
+import { localDate } from "@ronde/core/schedule";
 import { splitName } from "@ronde/core/slug";
 import { TEMPLATE_ICONS } from "@ronde/core/templates";
 import type { Locale } from "@ronde/i18n";
@@ -98,7 +99,7 @@ export default async function WorkspaceHome({ params }: { params: Promise<{ ws: 
       slug={ctx.workspace.slug}
       moment={moment}
       firstName={splitName(ctx.user.name)[0] || ctx.user.email}
-      today={new Date().toISOString().slice(0, 10)}
+      today={localDate(Date.now(), ctx.user.timezone ?? ctx.workspace.timezone)}
       data={data}
       meetings={meetings.map((m, color) => ({
         id: m.id,

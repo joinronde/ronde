@@ -6,7 +6,7 @@
   "askAdmin": "这是付费方案的一部分。工作空间管理员可以开启。",
   "pitch": {
     "reporting_workspace": "了解工作空间每个会议的情况：参与度、出席率、计划落实、行动项完成，一周接一周，并通过邮件发送报告。",
-    "compliance_auditLog": "清楚谁在何时改了什么：设置、人员、角色和会议，可筛选、导出为 CSV 或推送到你的 SIEM。",
+    "compliance_auditLog": "了解谁在何时更改了什么：设置、人员、角色和会议，可筛选最近 90 天并导出为 CSV。",
     "permissions_customRoles": "精确授予所需权限：在成员和访客之上设置自定义角色，适用于工作空间和每个会议。",
     "identity_domainCapture": "为你的域名启用公司登录：已验证域名、新账户自动加入、强制单点登录、SAML、LDAP 和 SCIM。",
     "reporting_portfolio": "一眼看清整个项目组合：每个项目每周的状态、截止日期、最近没人提起的项目、CSV 导出，以及邮件报告中需要关注的项目。"

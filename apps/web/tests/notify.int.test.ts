@@ -142,8 +142,11 @@ describe("notification rules", () => {
       const hook = await prisma.connector.create({
         data: { workspaceId, kind: "webhook", name: "Inside", config: { url: "https://127.0.0.1:9/hook" } },
       });
+      const rule = await prisma.notificationRule.create({
+        data: { workspaceId, meetingId, connectorId: hook.id, event: "session_started" },
+      });
       const d = await prisma.delivery.create({
-        data: { workspaceId, connectorId: hook.id, meetingId, event: "session.started", key: `inside-${Date.now()}` },
+        data: { workspaceId, connectorId: hook.id, ruleId: rule.id, meetingId, event: "session.started", key: `inside-${Date.now()}` },
       });
       await deliver(d.id).catch(() => undefined);
       expect(await prisma.delivery.findUniqueOrThrow({ where: { id: d.id } })).toMatchObject({ status: "failed" });

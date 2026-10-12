@@ -40,7 +40,8 @@
       "new": "会议已创建",
       "projects": "跟进的项目已更改",
       "sample": "已打开示例会议",
-      "sampleDeleted": "已删除示例会议"
+      "sampleDeleted": "已删除示例会议",
+      "icon": "已更改会议图标"
     },
     "settings": {
       "save": "会议设置已修改"
@@ -63,10 +64,12 @@
       "save": "日程已修改",
       "skip": "已跳过一次会议",
       "move": "会议已改期",
-      "restore": "会议已恢复"
+      "restore": "会议已恢复",
+      "holidays": "已更改会议的公共假日"
     },
     "notifications": {
-      "save": "通知已修改"
+      "save": "通知已修改",
+      "test": "已发送通知测试"
     },
     "history": {
       "summary": "纪要摘要已编辑"
@@ -94,7 +97,8 @@
       "categoryDelete": "职位类别已删除",
       "auditStream": "审计推送已修改",
       "logo": "Logo 已更换",
-      "logoRemoved": "Logo 已移除"
+      "logoRemoved": "Logo 已移除",
+      "delete": "已删除工作区"
     },
     "connectors": {
       "save": "连接器已保存",
@@ -151,7 +155,8 @@
       "add": "已添加视频账户",
       "update": "视频账户已修改",
       "delete": "已移除视频账户",
-      "room": "已为会议创建视频会议室"
+      "room": "已为会议创建视频会议室",
+      "configure": "已设置视频通话"
     },
     "calendar": {
       "add": "已添加日历账户",
@@ -194,6 +199,24 @@
     "teams": {
       "connect": "已关联 Microsoft Teams",
       "disconnect": "已取消关联 Microsoft Teams"
+    },
+    "github": {
+      "configure": "已设置 GitHub 模块"
+    },
+    "gitlab": {
+      "configure": "已设置 GitLab 模块"
+    },
+    "icebreaker": {
+      "configure": "已设置破冰"
+    },
+    "poker": {
+      "configure": "已设置估算扑克"
+    },
+    "retro": {
+      "configure": "已设置回顾"
+    },
+    "rotation": {
+      "configure": "已设置轮换角色"
     }
   },
   "fields": {

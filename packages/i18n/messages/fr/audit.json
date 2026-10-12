@@ -40,7 +40,8 @@
       "new": "Réunion créée",
       "projects": "Projets suivis modifiés",
       "sample": "Réunion d'exemple ouverte",
-      "sampleDeleted": "Réunion d'exemple supprimée"
+      "sampleDeleted": "Réunion d'exemple supprimée",
+      "icon": "Icône de la réunion modifiée"
     },
     "settings": {
       "save": "Réglages de la réunion modifiés"
@@ -63,10 +64,12 @@
       "save": "Planification modifiée",
       "skip": "Séance sautée",
       "move": "Séance déplacée",
-      "restore": "Séance rétablie"
+      "restore": "Séance rétablie",
+      "holidays": "Jours fériés de la réunion modifiés"
     },
     "notifications": {
-      "save": "Notifications modifiées"
+      "save": "Notifications modifiées",
+      "test": "Test de notification envoyé"
     },
     "history": {
       "summary": "Synthèse du compte rendu modifiée"
@@ -94,7 +97,8 @@
       "categoryDelete": "Catégorie de poste supprimée",
       "auditStream": "Flux d'audit modifié",
       "logo": "Logo changé",
-      "logoRemoved": "Logo retiré"
+      "logoRemoved": "Logo retiré",
+      "delete": "Espace supprimé"
     },
     "connectors": {
       "save": "Connecteur enregistré",
@@ -151,7 +155,8 @@
       "add": "Compte visio ajouté",
       "update": "Compte visio modifié",
       "delete": "Compte visio retiré",
-      "room": "Salle de visio créée pour une réunion"
+      "room": "Salle de visio créée pour une réunion",
+      "configure": "Visioconférence configurée"
     },
     "calendar": {
       "add": "Compte d'agenda ajouté",
@@ -194,6 +199,24 @@
     "teams": {
       "connect": "Microsoft Teams lié",
       "disconnect": "Microsoft Teams délié"
+    },
+    "github": {
+      "configure": "Module GitHub configuré"
+    },
+    "gitlab": {
+      "configure": "Module GitLab configuré"
+    },
+    "icebreaker": {
+      "configure": "Brise-glace configuré"
+    },
+    "poker": {
+      "configure": "Poker d'estimation configuré"
+    },
+    "retro": {
+      "configure": "Rétrospective configurée"
+    },
+    "rotation": {
+      "configure": "Rôles tournants configurés"
     }
   },
   "fields": {

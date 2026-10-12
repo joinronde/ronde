@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 // Runs before every page and API call:
 // - security headers: no framing by other sites (RONDE_FRAME_ANCESTORS widens it, e.g. for a digital signage
-//   host), no MIME sniffing, the origin only in the referrer of a link leaving Ronde;
+//   host), no MIME sniffing, the origin only in the referrer of a link leaving Ronde, https kept to;
 // - a browser request coming from another site never changes anything through the API (on top of the
 //   SameSite session cookie). The routes other servers call (Stripe, Slack, SCIM, identity providers' replies
 //   to the sign-in) are left to their own checks;
@@ -22,6 +22,10 @@ function secured(res: NextResponse): NextResponse {
   if (ancestors === "'self'") res.headers.set("X-Frame-Options", "SAMEORIGIN");
   res.headers.set("X-Content-Type-Options", "nosniff");
   res.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  // Served over https: browsers keep to it for a year (never set for a plain http instance on a local network)
+  if (process.env.APP_URL?.startsWith("https://")) res.headers.set("Strict-Transport-Security", "max-age=31536000");
+  // No camera, microphone or location for other sites framing the app; the app itself asks for the microphone
+  res.headers.set("Permissions-Policy", "camera=(self), microphone=(self), geolocation=(), payment=()");
   return res;
 }
 

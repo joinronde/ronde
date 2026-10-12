@@ -29,6 +29,9 @@ export function BillingView({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const team = b.plan === "team" || b.plan === "enterprise";
+  const paid = b.source === "subscription";
+  // A plan given by the Ronde team for a while (a trial): it can be paid for before it ends
+  const canPay = !paid && (!team || (b.source === "grant" && !!b.grantEndsAt && !b.education));
   // Back from Stripe with the subscription paid
   useEffect(() => {
     if (checkout === "done") track("subscription_started");
@@ -49,9 +52,12 @@ export function BillingView({
       <FormAlert>{error}</FormAlert>
       <section className={`panel billing-plan${team ? " team" : ""}`} aria-labelledby="plan-title">
         <p className="lbl-s">{t("current")}</p>
-        <h2 id="plan-title">{t(`plans.${team ? "team" : "community"}`)}</h2>
-        <p className="muted">{team ? t("teamIntro") : t("communityIntro")}</p>
-        {team && b.status && (
+        <h2 id="plan-title">{t(`plans.${b.plan === "enterprise" ? "enterprise" : team ? "team" : "community"}`)}</h2>
+        <p className="muted">{!team ? t("communityIntro") : paid ? t("teamIntro") : b.education ? t("grantedEducation") : t("granted")}</p>
+        {canPay && b.source === "grant" && b.grantEndsAt && (
+          <p className="hint">{t("grantEnds", { date: fmt.date(b.grantEndsAt.slice(0, 10)) })}</p>
+        )}
+        {paid && b.status && (
           <dl className="billing-facts">
             <dt>{t("status")}</dt>
             <dd>
@@ -68,7 +74,7 @@ export function BillingView({
           </dl>
         )}
         <div className="controls">
-          {!team && (
+          {canPay && (
             <>
               <button
                 type="button"
@@ -107,16 +113,18 @@ export function BillingView({
             <NewTab />
           </a>
         </div>
-        {!team && <p className="hint">{t("seatsHint", { count: b.activeSeats })}</p>}
+        {canPay && <p className="hint">{t("seatsHint", { count: b.activeSeats })}</p>}
       </section>
-      <section className="panel billing-edu" aria-labelledby="edu-title">
-        <h2 id="edu-title">🎓 {t("eduTitle")}</h2>
-        <p className="muted">{t("eduText")}</p>
-        <a className="btn" href={`${siteUrl}/education`} target="_blank" rel="noopener">
-          {t("eduCta")}
-          <NewTab />
-        </a>
-      </section>
+      {!b.education && (
+        <section className="panel billing-edu" aria-labelledby="edu-title">
+          <h2 id="edu-title">🎓 {t("eduTitle")}</h2>
+          <p className="muted">{t("eduText")}</p>
+          <a className="btn" href={`${siteUrl}/education`} target="_blank" rel="noopener">
+            {t("eduCta")}
+            <NewTab />
+          </a>
+        </section>
+      )}
     </div>
   );
 }

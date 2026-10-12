@@ -26,6 +26,8 @@ export interface DriverContext {
   teamsBot?: (ref: { serviceUrl: string; conversationId: string }, activity: object) => Promise<void>;
   /** Email through the instance SMTP server */
   sendMail?: (mail: { to: string[]; subject: string; text: string; html: string }) => Promise<void>;
+  /** Told of each address or number reached, so a retry after a partial failure skips them */
+  sent?: (recipient: string) => void;
   now?: () => number;
 }
 
@@ -194,16 +196,24 @@ const twilio = (kind: "sms" | "whatsapp"): Driver => ({
           ContentVariables: JSON.stringify({ 1: oneLine(words) || out.message.summary, 2: out.meeting.url || " " }),
         }
       : { Body: toPhoneText(out.message, out.meeting.url) };
+    // Every number is tried: one that refuses (a landline, a STOP) does not keep the others from theirs
+    let failure: unknown = null;
     for (const number of to)
-      await post(
-        ctx,
-        `https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`,
-        new URLSearchParams({ To: `${prefix}${number}`, From: `${prefix}${config.from}`, ...content }).toString(),
-        {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization: `Basic ${Buffer.from(`${sid}:${secret}`).toString("base64")}`,
-        },
-      );
+      try {
+        await post(
+          ctx,
+          `https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`,
+          new URLSearchParams({ To: `${prefix}${number}`, From: `${prefix}${config.from}`, ...content }).toString(),
+          {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Basic ${Buffer.from(`${sid}:${secret}`).toString("base64")}`,
+          },
+        );
+        ctx.sent?.(number);
+      } catch (e) {
+        failure ??= e;
+      }
+    if (failure) throw failure;
   },
 });
 

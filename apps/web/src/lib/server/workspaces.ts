@@ -136,9 +136,13 @@ export async function updateWorkspace(
     data: { name, slug, locale: input.locale, timezone: input.timezone, settings: settings as object },
   });
   // Other holidays (or another time zone): the sessions planned by the meetings that follow the workspace move along
-  if (settings.holidays !== ctx.workspace.settings.holidays || input.timezone !== ctx.workspace.timezone) {
+  // (the meetings following the workspace's holidays for the first, its time zone for the second)
+  const holidaysMoved = settings.holidays !== ctx.workspace.settings.holidays;
+  const zoneMoved = input.timezone !== ctx.workspace.timezone;
+  if (holidaysMoved || zoneMoved) {
     const workspace = { timezone: input.timezone };
-    for (const meeting of await ctx.db.meeting.findMany({ where: { archivedAt: null, holidays: null } }))
+    const following = [...(holidaysMoved ? [{ holidays: null }] : []), ...(zoneMoved ? [{ timezone: null }] : [])];
+    for (const meeting of await ctx.db.meeting.findMany({ where: { archivedAt: null, OR: following } }))
       await resyncSession(ctx.db, meeting, workspace);
   }
   return { slug };
@@ -394,6 +398,11 @@ export async function acceptInvitation(user: CurrentUser, token: string): Promis
 }
 
 /** Pending invitations sent to a user's address, for the onboarding page */
+/** The account's address was proven (by email, or by a provider that vouches for it) */
+export async function addressProven(userId: string): Promise<boolean> {
+  return !!(await prisma.user.findUnique({ where: { id: userId }, select: { emailVerified: true } }))?.emailVerified;
+}
+
 export function pendingInvitationsFor(email: string) {
   return prisma.invitation.findMany({
     where: {
@@ -410,6 +419,8 @@ export function pendingInvitationsFor(email: string) {
 
 /** Joins a workspace from an invitation listed on the onboarding page (same address, no token needed) */
 export async function acceptInvitationById(user: CurrentUser, invitationId: string): Promise<{ slug: string }> {
+  // Without the link, only a proven address vouches for the person (anyone may sign up with any address)
+  if (!(await addressProven(user.id))) throw new OpError("invitationInvalid");
   const invitation = await prisma.invitation.findFirst({
     where: { id: invitationId, email: normalizeEmail(user.email), acceptedAt: null, revokedAt: null, expiresAt: { gt: new Date() } },
     select: { id: true },

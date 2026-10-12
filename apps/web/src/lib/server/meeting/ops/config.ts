@@ -13,6 +13,7 @@ import { saveTemplate } from "../../templates";
 import { saveCheckIn } from "../checkins";
 import { toSection } from "../dto";
 import { ALL_MODULES, moduleAllowed, moduleStates } from "../modules";
+import { agendaFor, goToKey } from "../session";
 import { sectionsOf } from "../state";
 import { defineOp } from "./define";
 
@@ -268,7 +269,7 @@ export const configOps = [
   defineOp({
     name: "participant.update",
     permission: "participants.manage",
-    session: "read",
+    session: "lock",
     input: z.object({
       id: str(50),
       role: z.enum(["host", "cohost", "participant", "observer"]).optional(),
@@ -281,7 +282,7 @@ export const configOps = [
         .nullable()
         .optional(),
     }),
-    run: async ({ db, session, meetingId }, o) => {
+    run: async ({ db, session, meetingId, m }, o) => {
       const p = await db.meetingParticipant.findFirst({ where: { meetingId, personId: o.id }, include: { person: true } });
       if (!p) throw new OpError("unknownMember");
       if (
@@ -291,6 +292,8 @@ export const configOps = [
         (await db.meetingParticipant.count({ where: { meetingId, role: "host" } })) <= 1
       )
         throw new OpError("lastHost");
+      // Made an observer during their turn: the session goes on to the next step
+      if (o.role === "observer" && session) await leaveTurn(db, session, o.id, m.meeting.autoStart);
       const { gitlabUsername, githubUsername, id: _id, ...patch } = o;
       await db.meetingParticipant.update({ where: { id: p.id }, data: patch });
       if (gitlabUsername !== undefined || githubUsername !== undefined) {
@@ -314,13 +317,15 @@ export const configOps = [
   defineOp({
     name: "participant.remove",
     permission: "participants.manage",
-    session: "read",
+    session: "lock",
     input: z.object({ id: str(50) }),
-    run: async ({ db, session, meetingId }, o) => {
+    run: async ({ db, session, meetingId, m }, o) => {
       const p = await db.meetingParticipant.findFirst({ where: { meetingId, personId: o.id } });
       if (!p) return;
       if (p.role === "host" && (await db.meetingParticipant.count({ where: { meetingId, role: "host" } })) <= 1)
         throw new OpError("lastHost");
+      // Removed during their turn: the session goes on to the next step, not back to the first speaker
+      if (session) await leaveTurn(db, session, o.id, m.meeting.autoStart);
       await db.meetingParticipant.delete({ where: { id: p.id } });
       if (session)
         await db.session.update({
@@ -330,3 +335,12 @@ export const configOps = [
     },
   }),
 ];
+
+/** Someone whose turn it is leaves the round (removed, made an observer): the session moves to the next step */
+async function leaveTurn(db: Parameters<typeof agendaFor>[0], s: Parameters<typeof agendaFor>[1], personId: string, autoStart: boolean) {
+  if (s.stepKey !== personId) return;
+  const agenda = await agendaFor(db, s);
+  const i = agenda.findIndex((x) => x.key === personId);
+  const to = agenda[i + 1] ?? agenda[i - 1];
+  if (to) await goToKey(db, s, to.key, autoStart);
+}

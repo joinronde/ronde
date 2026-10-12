@@ -147,6 +147,7 @@
   "testTooOften": "No máximo alguns testes por minuto: tente novamente em instantes.",
   "testNoPhone": "O teste vai para o seu próprio celular: adicione-o primeiro ao seu perfil.",
   "accountOwnsWorkspaces": "Você é o único proprietário de {workspaces}: passe a propriedade para outra pessoa, ou exclua o espaço, antes de excluir sua conta.",
+  "scheduleSameDay": "Duas destas regras caem no mesmo dia: uma reunião tem uma sessão por dia. Mude um dia, ou faça do segundo horário uma reunião à parte.",
   "absencePeriod": "Escolha um primeiro e um último dia, em ordem, com no máximo um ano de diferença.",
   "phoneMissing": "Adicione antes seu número de celular ao perfil: o teste vai para lá.",
   "phoneInvalid": "Digite o número de celular no formato internacional, como +5511912345678.",

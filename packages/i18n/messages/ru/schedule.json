@@ -5,8 +5,8 @@
   "weekly": "{count, plural, =1 {Каждую неделю: {days}} =2 {Раз в две недели: {days}} one {Каждую # неделю: {days}} few {Каждые # недели: {days}} many {Каждые # недель: {days}} other {Каждые # недели: {days}}}, в {time}",
   "monthlyNth": "В {nth, select, 1 {первую} 2 {вторую} 3 {третью} 4 {четвёртую} other {последнюю}} неделю {count, plural, =1 {каждого месяца} one {раз в # месяц} few {раз в # месяца} many {раз в # месяцев} other {раз в # месяца}}: {day}, в {time}",
   "monthlyDay": "{day}-го числа {count, plural, =1 {каждого месяца} one {раз в # месяц} few {раз в # месяца} many {раз в # месяцев} other {раз в # месяца}} в {time}",
-  "dailyOn": "{count, plural, one {Каждый {days}} other {Каждые # дн., в {days}}} в {time}",
-  "monthlyLast": "В последний день {count, plural, one {каждого месяца} other {каждые # мес.}} в {time}",
+  "dailyOn": "{count, plural, =1 {Каждый {days}} other {Каждые # дн., в {days}}} в {time}",
+  "monthlyLast": "В последний день {count, plural, =1 {каждого месяца} other {каждые # мес.}} в {time}",
   "alternating": "Раз в две недели ({days}), попеременно в {first} и {second}",
   "withZone": "{schedule} ({timeZone})"
 }

@@ -3,7 +3,8 @@
   "current": "Offre actuelle",
   "plans": {
     "community": "Community",
-    "team": "Team"
+    "team": "Team",
+    "enterprise": "Enterprise"
   },
   "communityIntro": "Gratuit : réunions et personnes illimitées, tous les modules d'animation. Team ajoute l'assistant IA, la transcription, les workflows, les tickets, les agendas, les liens visio, votre logo et les analyses par e-mail.",
   "teamIntro": "Toutes les fonctionnalités Team pour tout l'espace. Vous payez pour les personnes qui ont participé à une réunion ces 30 derniers jours ; les places les suivent chaque jour.",
@@ -28,5 +29,10 @@
   "cancelled": "Le paiement n'a pas abouti : rien n'a été débité.",
   "eduTitle": "Gratuit pour l'éducation",
   "eduText": "Les écoles, universités et enseignants ont les offres payantes de Ronde gratuitement. Présentez-nous votre établissement et nous l'activons.",
-  "eduCta": "Demander l'offre éducation"
+  "eduCta": "Demander l'offre éducation",
+  "granted": "Offert à cet espace par l'équipe Ronde : rien à payer.",
+  "grantedEducation": "Gratuit pour l'éducation : toutes les fonctionnalités payantes, rien à payer.",
+  "grantEnds": "Jusqu'au {date} : abonnez-vous avant pour le garder.",
+  "paymentFailed": "Le dernier paiement a échoué : Stripe réessaie pendant quelques jours, puis l'espace repasse en Community.",
+  "paymentFix": "Mettre à jour le moyen de paiement"
 }

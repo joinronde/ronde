@@ -172,6 +172,24 @@ describe("SMS and WhatsApp (Twilio)", () => {
     expect(DRIVERS.whatsapp.config.safeParse({ ...config, contentSid: "nope" }).success).toBe(false);
     expect(DRIVERS.whatsapp.config.safeParse({ ...config, contentSid: "" }).success).toBe(true);
   });
+  it("tries every number when one refuses, and tells which were reached", async () => {
+    const calls: string[] = [];
+    const fetch = (async (_url: string, init: RequestInit) => {
+      const to = new URLSearchParams(String(init.body)).get("To")!;
+      calls.push(to);
+      return new Response("{}", { status: to.endsWith("222") ? 400 : 201 });
+    }) as unknown as typeof globalThis.fetch;
+    const sent: string[] = [];
+    await expect(
+      DRIVERS.sms.send(
+        out,
+        { config, secret: "t".repeat(32), target: { to: ["+33611111111", "+33622222222", "+33633333333"] } },
+        { fetch, sent: (r) => sent.push(r) },
+      ),
+    ).rejects.toThrow();
+    expect(calls).toHaveLength(3);
+    expect(sent).toEqual(["+33611111111", "+33633333333"]);
+  });
   it("checks the account and the sender number", () => {
     expect(DRIVERS.sms.config.safeParse({ accountSid: "nope", from: "+33600000000" }).success).toBe(false);
     expect(DRIVERS.sms.config.safeParse({ accountSid: config.accountSid, from: "0612345678" }).success).toBe(false);

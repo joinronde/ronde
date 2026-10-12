@@ -6,7 +6,7 @@
   "askAdmin": "Cela fait partie d'une offre payante. Un administrateur de l'espace peut l'activer.",
   "pitch": {
     "reporting_workspace": "Voyez comment se portent toutes les réunions de l'espace : implication, présence, plans tenus, actions closes, semaine après semaine, avec un rapport par e-mail.",
-    "compliance_auditLog": "Sachez qui a changé quoi, et quand : réglages, personnes, rôles et réunions, filtrés, exportés en CSV ou envoyés à votre SIEM.",
+    "compliance_auditLog": "Sachez qui a changé quoi, et quand : réglages, personnes, rôles et réunions, filtrés sur les 90 derniers jours et exportés en CSV.",
     "permissions_customRoles": "Donnez exactement les droits nécessaires : des rôles à vous, en plus de membre et d'invité, pour l'espace et chaque réunion.",
     "identity_domainCapture": "La connexion de votre entreprise pour votre domaine : domaines vérifiés, nouveaux comptes rattachés d'eux-mêmes, authentification unique obligatoire, SAML, LDAP et SCIM.",
     "reporting_portfolio": "Voyez tout le portefeuille d'un coup d'œil : la météo de chaque projet semaine après semaine, les échéances, les projets dont personne n'a parlé récemment, un export CSV et les projets à surveiller dans le rapport par e-mail."

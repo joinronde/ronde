@@ -3,7 +3,8 @@
   "current": "Aktueller Tarif",
   "plans": {
     "community": "Community",
-    "team": "Team"
+    "team": "Team",
+    "enterprise": "Enterprise"
   },
   "communityIntro": "Kostenlos: unbegrenzt Meetings und Personen, alle Moderationsmodule. Team ergänzt den KI-Assistenten, Transkripte, Workflows, Tickets, Kalender, Videolinks, dein Logo und Berichte per E-Mail.",
   "teamIntro": "Alle Team-Funktionen für den ganzen Arbeitsbereich. Bezahlt werden die Personen, die in den letzten 30 Tagen an einem Meeting teilgenommen haben; die Plätze folgen ihnen täglich.",
@@ -28,5 +29,10 @@
   "cancelled": "Die Zahlung wurde nicht abgeschlossen: Es wurde nichts berechnet.",
   "eduTitle": "Kostenlos für Bildung",
   "eduText": "Schulen, Hochschulen und Lehrkräfte erhalten die bezahlten Tarife von Ronde kostenlos. Erzähl uns von deiner Einrichtung, und wir richten es ein.",
-  "eduCta": "Bildungstarif anfragen"
+  "eduCta": "Bildungstarif anfragen",
+  "granted": "Diesem Workspace vom Ronde-Team geschenkt: nichts zu bezahlen.",
+  "grantedEducation": "Kostenlos für Bildung: alle bezahlten Funktionen, nichts zu bezahlen.",
+  "grantEnds": "Bis {date}: Schließ vorher ein Abo ab, um es zu behalten.",
+  "paymentFailed": "Die letzte Zahlung ist fehlgeschlagen: Stripe versucht es ein paar Tage lang erneut, dann wechselt der Workspace zurück zu Community.",
+  "paymentFix": "Zahlungsmethode aktualisieren"
 }

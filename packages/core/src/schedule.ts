@@ -69,6 +69,16 @@ export interface Occurrence {
 
 export const occurrenceKey = (ruleId: string, originalDate: string) => `${ruleId}:${originalDate}`;
 
+/** A "YYYY-MM-DD" that exists on the calendar (not February 30th) */
+export function isRealDate(value: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  try {
+    return Temporal.PlainDate.from(value, { overflow: "reject" }).toString() === value;
+  } catch {
+    return false;
+  }
+}
+
 const plain = (iso: string) => Temporal.PlainDate.from(iso);
 /** Monday of the week of a date */
 const weekStart = (d: Temporal.PlainDate) => d.subtract({ days: d.dayOfWeek - 1 });
@@ -116,18 +126,29 @@ function matches(rule: ScheduleRule, d: Temporal.PlainDate, start: Temporal.Plai
   return d.day === (rule.monthDay ?? start.day);
 }
 
-/** Original dates of a rule from its start up to `to` (inclusive), COUNT applied */
-export function ruleDates(rule: ScheduleRule, to: string): string[] {
+/**
+ * Original dates of a rule up to `to` (inclusive), COUNT applied. From its start, or from `from` when the rule
+ * has no COUNT (whether a date matches depends on the start alone, so the days before need no walking); `max`
+ * stops at that many dates.
+ */
+export function ruleDates(rule: ScheduleRule, to: string, o: { from?: string; max?: number } = {}): string[] {
   const start = plain(rule.startDate);
   const end = plain(to);
   const out: string[] = [];
-  // Walking day by day keeps the rules simple; a few years of dates is a few hundred iterations
-  for (let d = start; Temporal.PlainDate.compare(d, end) <= 0; d = d.add({ days: 1 })) {
+  const first = !rule.count && o.from && o.from > rule.startDate ? plain(o.from) : start;
+  // Walking day by day keeps the rules simple; the walk covers the dates asked for, not the rule's whole past
+  for (let d = first; Temporal.PlainDate.compare(d, end) <= 0; d = d.add({ days: 1 })) {
     if (!matches(rule, d, start)) continue;
     out.push(d.toString());
-    if (rule.count && out.length >= rule.count) break;
+    if ((rule.count && out.length >= rule.count) || (o.max && out.length >= o.max)) break;
   }
   return out;
+}
+
+/** Whether a date is one of a rule's original dates */
+function isRuleDate(rule: ScheduleRule, date: string): boolean {
+  if (date < rule.startDate) return false;
+  return rule.count ? ruleDates(rule, date).at(-1) === date : matches(rule, plain(date), plain(rule.startDate));
 }
 
 export interface OccurrenceQuery {
@@ -139,19 +160,52 @@ export interface OccurrenceQuery {
   withCancelled?: boolean;
 }
 
+/** Recent answers of occurrences(): every screen of a meeting asks the same thing again at each change */
+const remembered = new Map<string, Occurrence[]>();
+const REMEMBERED = 500;
+
 /** Occurrences of every rule between two dates, exceptions applied, sorted by start */
 export function occurrences(
+  rules: ScheduleRule[],
+  exceptions: ScheduleException[],
+  timeZone: string,
+  query: OccurrenceQuery,
+): Occurrence[] {
+  const key = JSON.stringify([rules, exceptions, timeZone, query.from, query.to, !!query.withCancelled]);
+  let hit = remembered.get(key);
+  if (hit) remembered.delete(key);
+  else {
+    hit = computeOccurrences(rules, exceptions, timeZone, query);
+    if (remembered.size >= REMEMBERED) remembered.delete(remembered.keys().next().value!);
+  }
+  remembered.set(key, hit);
+  // Copies: a caller changing what it got changes nothing for the next one
+  return hit.map((o) => ({ ...o }));
+}
+
+function computeOccurrences(
   rules: ScheduleRule[],
   exceptions: ScheduleException[],
   timeZone: string,
   { from, to, withCancelled = false }: OccurrenceQuery,
 ): Occurrence[] {
   const byKey = new Map(exceptions.map((e) => [occurrenceKey(e.ruleId, e.originalDate), e]));
-  // A moved occurrence may come from outside the range: look a year around it
-  const scanTo = plain(to).add({ years: 1 }).toString();
   const out: Occurrence[] = [];
   for (const rule of rules) {
-    for (const originalDate of ruleDates(rule, scanTo)) {
+    // The original dates in the range, and those moved into it from elsewhere
+    const movedIn = exceptions
+      .filter(
+        (e) =>
+          e.ruleId === rule.id &&
+          e.kind === "move" &&
+          !!e.date &&
+          e.date >= from &&
+          e.date <= to &&
+          (e.originalDate < from || e.originalDate > to) &&
+          isRuleDate(rule, e.originalDate),
+      )
+      .map((e) => e.originalDate);
+    for (const originalDate of [...ruleDates(rule, to, { from }), ...movedIn]) {
       const key = occurrenceKey(rule.id, originalDate);
       const ex = byKey.get(key);
       const cancelled = ex?.kind === "cancel";

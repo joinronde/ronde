@@ -15,7 +15,7 @@ import { lastPlans, loadCheckIns } from "./meeting/checkins";
 import { personName } from "./meeting/dto";
 import { type NotifiedMeeting, notifiedMeeting } from "./notified-meeting";
 import { birthdayPayload, notifyEvent, overduePayload, sessionPayload } from "./notify/dispatch";
-import { type PushMessage, sendPush } from "./push";
+import { type PushMessage, pushOn, sendPush } from "./push";
 import { remindInSlack, slackReminders } from "./slack";
 import { remindInTeams, teamsReminders } from "./teams";
 
@@ -73,6 +73,9 @@ export async function checkReminders(now = new Date()): Promise<number> {
   return sent;
 }
 
+/** The date before a "YYYY-MM-DD" */
+const dayBefore = (iso: string) => new Date(Date.parse(`${iso}T12:00:00Z`) - 86_400_000).toISOString().slice(0, 10);
+
 async function checkMeeting(meetingId: string, now: Date): Promise<number> {
   const n = await notifiedMeeting(meetingId);
   if (!n) return 0;
@@ -85,14 +88,16 @@ async function checkMeeting(meetingId: string, now: Date): Promise<number> {
 
   // "Session soon" a few minutes before the time (not after: a late session needs no second announcement)
   const start = minutesOf(session.time, 600);
-  if (clock.date === target && clock.minutes < start)
+  // (a session just after midnight is announced from the evening before)
+  const minutesTo = clock.date === target ? start - clock.minutes : clock.date === dayBefore(target) ? start + 1440 - clock.minutes : -1;
+  if (minutesTo > 0)
     await notifyEvent(
       meetingId,
       "session.soon",
       `${session.id}@${target}`,
-      { ...sessionPayload(session), minutesBefore: start - clock.minutes },
+      { ...sessionPayload(session), minutesBefore: minutesTo },
       {
-        filter: (o) => clock.minutes >= start - Number(o.minutesBefore ?? 10),
+        filter: (o) => minutesTo <= Number(o.minutesBefore ?? 10),
       },
     );
 
@@ -110,7 +115,8 @@ async function checkMeeting(meetingId: string, now: Date): Promise<number> {
 
   if (!m.reminderEnabled || m.reminderLastSentFor === target) return 0;
   const [slack, teams] = await Promise.all([slackReminders(m.workspaceId), teamsReminders(m.workspaceId)]);
-  if (!env.smtpUrl() && !slack) return 0;
+  // Some way to reach people: email, Slack, Teams or their devices
+  if (!env.smtpUrl() && !slack && !teams && !pushOn()) return 0;
   const { count } = await prisma.meeting.updateMany({
     where: { id: meetingId, OR: [{ reminderLastSentFor: null }, { reminderLastSentFor: { not: target } }] },
     data: { reminderLastSentFor: target },

@@ -6,7 +6,7 @@
   "askAdmin": "Forma parte de un plan de pago. Un administrador del espacio de trabajo puede activarlo.",
   "pitch": {
     "reporting_workspace": "Mira cómo va cada reunión del espacio de trabajo: implicación, asistencia, planes cumplidos, acciones cerradas, semana a semana, con un informe por correo.",
-    "compliance_auditLog": "Sabe quién cambió qué y cuándo: ajustes, personas, roles y reuniones, con filtros, exportación a CSV o envío a tu SIEM.",
+    "compliance_auditLog": "Sabe quién cambió qué y cuándo: ajustes, personas, roles y reuniones, filtrados en los últimos 90 días y exportados a CSV.",
     "permissions_customRoles": "Da exactamente los derechos que cada persona necesita: roles propios además de miembro e invitado, para el espacio de trabajo y cada reunión.",
     "identity_domainCapture": "El inicio de sesión de tu empresa para tu dominio: dominios verificados, cuentas nuevas que se unen solas, inicio de sesión único obligatorio, SAML, LDAP y SCIM.",
     "reporting_portfolio": "Ve toda la cartera de un vistazo: el estado de cada proyecto semana tras semana, las fechas límite, los proyectos de los que nadie habló últimamente, una exportación CSV y los proyectos a vigilar en el informe por correo."

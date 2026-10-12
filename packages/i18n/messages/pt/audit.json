@@ -40,7 +40,8 @@
       "new": "Reunião criada",
       "projects": "Projetos acompanhados alterados",
       "sample": "Reunião de exemplo aberta",
-      "sampleDeleted": "Reunião de exemplo excluída"
+      "sampleDeleted": "Reunião de exemplo excluída",
+      "icon": "Ícone da reunião alterado"
     },
     "settings": {
       "save": "Configurações da reunião alteradas"
@@ -63,10 +64,12 @@
       "save": "Agendamento alterado",
       "skip": "Sessão pulada",
       "move": "Sessão remarcada",
-      "restore": "Sessão restaurada"
+      "restore": "Sessão restaurada",
+      "holidays": "Feriados da reunião alterados"
     },
     "notifications": {
-      "save": "Notificações alteradas"
+      "save": "Notificações alteradas",
+      "test": "Teste de notificação enviado"
     },
     "history": {
       "summary": "Resumo da ata editado"
@@ -94,7 +97,8 @@
       "categoryDelete": "Categoria de cargo excluída",
       "auditStream": "Envio da auditoria alterado",
       "logo": "Logo alterado",
-      "logoRemoved": "Logo removido"
+      "logoRemoved": "Logo removido",
+      "delete": "Espaço excluído"
     },
     "connectors": {
       "save": "Conector salvo",
@@ -151,7 +155,8 @@
       "add": "Conta de vídeo adicionada",
       "update": "Conta de vídeo alterada",
       "delete": "Conta de vídeo removida",
-      "room": "Sala de vídeo criada para uma reunião"
+      "room": "Sala de vídeo criada para uma reunião",
+      "configure": "Videochamada configurada"
     },
     "calendar": {
       "add": "Conta de agenda adicionada",
@@ -194,6 +199,24 @@
     "teams": {
       "connect": "Microsoft Teams vinculado",
       "disconnect": "Microsoft Teams desvinculado"
+    },
+    "github": {
+      "configure": "Módulo GitHub configurado"
+    },
+    "gitlab": {
+      "configure": "Módulo GitLab configurado"
+    },
+    "icebreaker": {
+      "configure": "Quebra-gelo configurado"
+    },
+    "poker": {
+      "configure": "Pôquer de estimativa configurado"
+    },
+    "retro": {
+      "configure": "Retrospectiva configurada"
+    },
+    "rotation": {
+      "configure": "Papéis rotativos configurados"
     }
   },
   "fields": {

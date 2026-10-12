@@ -430,11 +430,9 @@ const SPECS: Record<BuiltinTemplateId, Spec> = {
       sounds: false,
       rating: false,
     },
-    // One at each change of shift, morning and evening (12-hour shifts; add or move times for other rotas)
-    schedule: [
-      { freq: "daily", interval: 1, byDay: [1, 2, 3, 4, 5, 6, 7], setPos: null, monthDay: null, time: "07:00", durationMin: 15 },
-      { freq: "daily", interval: 1, byDay: [1, 2, 3, 4, 5, 6, 7], setPos: null, monthDay: null, time: "19:00", durationMin: 15 },
-    ],
+    // Every morning at the change of shift (a meeting holds one session a day: a second shift's handover is a
+    // meeting of its own, made from the same template)
+    schedule: [{ freq: "daily", interval: 1, byDay: [1, 2, 3, 4, 5, 6, 7], setPos: null, monthDay: null, time: "07:00", durationMin: 15 }],
   },
   // Objectives once a month: how each key result moves, and what needs a decision
   okrReview: {

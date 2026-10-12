@@ -96,7 +96,13 @@ export async function assertPublicUrl(value: string): Promise<void> {
   }
   if (!guarded()) return;
   if (u.protocol !== "https:") throw new OutboundBlocked(u.host);
-  const host = u.hostname.replace(/^\[|\]$/g, "");
+  await assertPublicHost(u.hostname);
+}
+
+/** A server reached another way than fetch (an LDAP directory): when guarded, every address of it is public */
+export async function assertPublicHost(name: string): Promise<void> {
+  if (!guarded()) return;
+  const host = name.replace(/^\[|\]$/g, "");
   if (allowedHosts().has(host.toLowerCase())) return;
   const addresses = isIP(host) ? [{ address: host }] : await lookupAll(host).catch(() => []);
   if (!addresses.length || addresses.some((a) => isPrivateAddress(a.address))) throw new OutboundBlocked(host);

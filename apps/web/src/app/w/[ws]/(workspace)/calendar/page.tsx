@@ -1,3 +1,4 @@
+import { localDate } from "@ronde/core/schedule";
 import { getTranslations } from "next-intl/server";
 import { CalendarView } from "@/components/workspace/calendar";
 import { pageWorkspace } from "@/lib/server/authz";
@@ -18,7 +19,8 @@ export default async function CalendarPage({
   searchParams: Promise<{ month?: string }>;
 }) {
   const ctx = await pageWorkspace((await params).ws);
-  const today = new Date().toISOString().slice(0, 10);
+  // Today where the person is (not in UTC: an evening in America is already tomorrow there)
+  const today = localDate(Date.now(), ctx.user.timezone ?? ctx.workspace.timezone);
   const asked = (await searchParams).month;
   const month = asked && /^\d{4}-\d{2}$/.test(asked) ? asked : today.slice(0, 7);
   const [y, m] = month.split("-").map(Number) as [number, number];

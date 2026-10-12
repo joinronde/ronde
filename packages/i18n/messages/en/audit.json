@@ -40,7 +40,8 @@
       "new": "Meeting created",
       "projects": "Projects followed changed",
       "sample": "Sample meeting opened",
-      "sampleDeleted": "Sample meeting deleted"
+      "sampleDeleted": "Sample meeting deleted",
+      "icon": "Meeting icon changed"
     },
     "settings": {
       "save": "Meeting settings changed"
@@ -63,10 +64,12 @@
       "save": "Schedule changed",
       "skip": "Session skipped",
       "move": "Session moved",
-      "restore": "Session restored"
+      "restore": "Session restored",
+      "holidays": "Public holidays of the meeting changed"
     },
     "notifications": {
-      "save": "Notifications changed"
+      "save": "Notifications changed",
+      "test": "Notification test sent"
     },
     "history": {
       "summary": "Minutes summary edited"
@@ -94,7 +97,8 @@
       "categoryDelete": "Job category deleted",
       "auditStream": "Audit stream changed",
       "logo": "Logo changed",
-      "logoRemoved": "Logo removed"
+      "logoRemoved": "Logo removed",
+      "delete": "Workspace deleted"
     },
     "connectors": {
       "save": "Connector saved",
@@ -151,7 +155,8 @@
       "add": "Video account added",
       "update": "Video account changed",
       "delete": "Video account removed",
-      "room": "Video room created for a meeting"
+      "room": "Video room created for a meeting",
+      "configure": "Video call set up"
     },
     "calendar": {
       "add": "Calendar account added",
@@ -194,6 +199,24 @@
     "teams": {
       "connect": "Microsoft Teams linked",
       "disconnect": "Microsoft Teams unlinked"
+    },
+    "github": {
+      "configure": "GitHub module set up"
+    },
+    "gitlab": {
+      "configure": "GitLab module set up"
+    },
+    "icebreaker": {
+      "configure": "Icebreaker set up"
+    },
+    "poker": {
+      "configure": "Estimation poker set up"
+    },
+    "retro": {
+      "configure": "Retrospective set up"
+    },
+    "rotation": {
+      "configure": "Rotating roles set up"
     }
   },
   "fields": {

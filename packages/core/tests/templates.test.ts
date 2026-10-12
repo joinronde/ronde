@@ -50,7 +50,7 @@ describe("template rhythm", () => {
     expect(rhythm(builtinTemplate("portfolio", "fr").schedule, "fr")).toBe("Une semaine sur deux · 1 h");
     expect(rhythm(builtinTemplate("classCouncil", "fr").schedule, "fr")).toBe("Une fois par trimestre · 1 h 30 min");
     // A handover at each change of shift, morning and evening
-    expect(rhythm(builtinTemplate("shiftHandover", "en").schedule, "en")).toBe("Twice a day · 15 min");
-    expect(rhythm(builtinTemplate("shiftHandover", "fr").schedule, "fr")).toBe("Deux fois par jour · 15 min");
+    expect(rhythm(builtinTemplate("shiftHandover", "en").schedule, "en")).toBe("Every day · 15 min");
+    expect(rhythm(builtinTemplate("shiftHandover", "fr").schedule, "fr")).toBe("Chaque jour · 15 min");
   });
 });
