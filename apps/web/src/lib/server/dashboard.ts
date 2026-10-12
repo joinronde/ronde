@@ -1,5 +1,6 @@
 import "server-only";
 import { agendaOf, hasTurns } from "@ronde/core/agenda";
+import { localDate } from "@ronde/core/schedule";
 import type { WorkspaceContext } from "./authz";
 import { type CalendarEvent, calendarEvents } from "./calendar-view";
 import { sheetWritten } from "./meeting/projects";
@@ -56,8 +57,9 @@ const fullName = (p: { firstName: string; lastName: string; email: string }) =>
 
 export async function dashboard(ctx: WorkspaceContext): Promise<DashboardData> {
   const now = new Date();
-  const today = iso(now);
-  const monday = new Date(Date.parse(`${today}T00:00:00Z`) - ((now.getUTCDay() + 6) % 7) * DAY);
+  // Today where the person is (not in UTC: an evening in America is already tomorrow there)
+  const today = localDate(now.getTime(), ctx.user.timezone ?? ctx.workspace.timezone);
+  const monday = new Date(Date.parse(`${today}T00:00:00Z`) - ((new Date(`${today}T12:00:00Z`).getUTCDay() + 6) % 7) * DAY);
   const horizon = iso(new Date(now.getTime() + 35 * DAY));
   const from = iso(monday) < today ? iso(monday) : today;
   const [events, actions, people] = await Promise.all([
@@ -167,8 +169,9 @@ export async function dashboard(ctx: WorkspaceContext): Promise<DashboardData> {
   });
 
   // Birthdays in the next 30 days, the year turning included
+  // The directory's birthdays, for the people who read it (not a workspace guest)
   const birthdays = people
-    .filter((p) => p.birthday)
+    .filter((p) => p.birthday && ctx.can("people.read"))
     .map((p) => {
       const [m, d] = p.birthday!.split("-").map(Number) as [number, number];
       let at = Date.UTC(now.getUTCFullYear(), m - 1, d);

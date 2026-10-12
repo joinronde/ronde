@@ -58,7 +58,9 @@ export function unsubscribeOneClick(userId: string): Promise<string> {
 /** Whether a way-out link is genuine */
 export function validUnsubscribe(userId: string, token: string): boolean {
   const expected = mac(userId);
-  return token.length === expected.length && timingSafeEqual(Buffer.from(token), Buffer.from(expected));
+  // Compared as bytes: a character beyond ASCII must not make two lengths differ there and throw
+  const [a, b] = [Buffer.from(token), Buffer.from(expected)];
+  return a.length === b.length && timingSafeEqual(a, b);
 }
 
 export async function setWeeklySummary(userId: string, on: boolean): Promise<void> {

@@ -66,7 +66,11 @@ export async function closeAsyncSessions(now = new Date()): Promise<number> {
       status: "current",
       startedAt: null,
       startsAt: { lte: now },
-      meeting: { archivedAt: null, workspace: { deletedAt: null }, modules: { some: { moduleId: "async", enabled: true } } },
+      meeting: {
+        archivedAt: null,
+        workspace: { deletedAt: null, suspendedAt: null },
+        modules: { some: { moduleId: "async", enabled: true } },
+      },
     },
     include: { meeting: { include: { workspace: true } } },
   });

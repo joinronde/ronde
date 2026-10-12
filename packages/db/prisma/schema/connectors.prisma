@@ -217,8 +217,12 @@ model Subscription {
   plan              String    @default("team")
   /// Paid seats: the active people of the workspace
   seats             Int       @default(1)
+  /// month or year, as the price says
+  interval          String?
   currentPeriodEnd  DateTime?
   cancelAtPeriodEnd Boolean   @default(false)
+  /// The last Checkout page opened, closed when another one is asked for (one subscription per workspace)
+  checkoutSessionId String?
   updatedAt         DateTime  @updatedAt
 }
 

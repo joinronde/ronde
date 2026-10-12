@@ -55,12 +55,13 @@
   "inviteAgain": "Enviar um convite",
   "revoke": "Revogar o convite",
   "remove": "Remover",
-  "removeConfirm": "Remover {name} de {workspace}? O perfil e o acesso são excluídos.",
+  "removeConfirm": "Remover {name} de {workspace}? O perfil e o acesso são excluídos; o que essa pessoa disse nas reuniões fica, assinado por um ex-membro.",
   "removed": "{name} removido.",
   "changeRole": "Papel de {name}",
   "saved": "Salvo",
   "customRoleOf": "Papel adicional de {name}",
   "noCustomRole": "Sem papel adicional",
   "phone": "Número de celular",
-  "phoneHint": "Para lembretes por SMS e WhatsApp, no formato internacional (+55…). Opcional."
+  "phoneHint": "Para lembretes por SMS e WhatsApp, no formato internacional (+55…). Opcional.",
+  "formerMember": "Ex-membro"
 }

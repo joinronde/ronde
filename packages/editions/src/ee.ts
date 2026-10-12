@@ -253,8 +253,18 @@ export interface EnterpriseEdition {
     ) => Promise<{ action: "continue" } | { action: "link"; userId: string; profile: "preserve" } | { action: "reject"; code: string }>;
   };
   billing: {
-    /** A Stripe Checkout page to subscribe a workspace; Stripe creates the customer when there is none */
-    checkout: (account: BillingAccess, input: CheckoutInput) => Promise<{ url: string }>;
+    /** The workspace's Stripe customer, made before its first checkout: every subscription is then found by it */
+    customer: (account: BillingAccess, input: { workspaceId: string; email: string }) => Promise<string>;
+    /** A Stripe Checkout page to subscribe a workspace's customer */
+    checkout: (account: BillingAccess, input: CheckoutInput) => Promise<{ url: string; id: string }>;
+    /** Closes a checkout page still open; "complete" when it was paid already */
+    closeCheckout: (account: BillingAccess, sessionId: string) => Promise<"complete" | "closed">;
+    /** A subscription as Stripe has it now; null when Stripe does not know it */
+    subscription: (account: BillingAccess, subscriptionId: string) => Promise<BillingSubscription | null>;
+    /** The subscriptions of a customer that are not over (paid, tried, being paid or retried) */
+    liveSubscriptions: (account: BillingAccess, customerId: string) => Promise<BillingSubscription[]>;
+    /** Ends a subscription now (its workspace is deleted) */
+    cancel: (account: BillingAccess, subscriptionId: string) => Promise<void>;
     /** The Stripe customer portal: invoices, payment method, cancellation */
     portal: (account: BillingAccess, input: { customerId: string; returnUrl: string }) => Promise<{ url: string }>;
     /** Checks the signature of a webhook and reads its event; null when the signature is wrong or too old */
@@ -596,6 +606,22 @@ export interface CheckoutInput {
   cancelUrl: string;
 }
 
+/** A subscription as Stripe has it */
+export interface BillingSubscription {
+  id: string;
+  customerId: string | null;
+  /** The workspace Ronde put in its metadata */
+  workspaceId: string | null;
+  status: string;
+  seats: number;
+  priceId: string | null;
+  interval: "month" | "year" | null;
+  /** When it renews, or ends when it is set to end (seconds) */
+  currentPeriodEnd: number | null;
+  /** Set to end (at the end of the period, or on a date) */
+  cancelAtPeriodEnd: boolean;
+}
+
 /** What a webhook says about a workspace's subscription */
 export type BillingEvent = {
   id: string;
@@ -603,14 +629,8 @@ export type BillingEvent = {
   /** The workspace, when Ronde put it on the object (checkout and subscription metadata) */
   workspaceId: string | null;
   customerId: string | null;
-  subscription: {
-    id: string;
-    status: string;
-    seats: number;
-    priceId: string | null;
-    currentPeriodEnd: number | null;
-    cancelAtPeriodEnd: boolean;
-  } | null;
+  /** The subscription it is about (the subscription itself, a checkout or an invoice of it) */
+  subscriptionId: string | null;
   /** A paid invoice (invoice.paid): what was paid, in the currency's main unit */
   payment: { amount: number; currency: string } | null;
 };

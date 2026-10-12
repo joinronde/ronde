@@ -5,8 +5,8 @@
   "weekly": "{count, plural, =1 {每{days}} =2 {隔周{days}} other {每 # 周的{days}}} {time}",
   "monthlyNth": "{count, plural, =1 {每月} other {每 # 个月}}{nth, select, 1 {第一个} 2 {第二个} 3 {第三个} 4 {第四个} other {最后一个}}{day} {time}",
   "monthlyDay": "{count, plural, =1 {每月} other {每 # 个月}} {day} 日 {time}",
-  "dailyOn": "{count, plural, one {每{days}} other {每 # 天，在{days}}} {time}",
-  "monthlyLast": "{count, plural, one {每月} other {每 # 个月的}}最后一天 {time}",
+  "dailyOn": "{count, plural, =1 {每{days}} other {每 # 天，在{days}}} {time}",
+  "monthlyLast": "{count, plural, =1 {每月} other {每 # 个月的}}最后一天 {time}",
   "alternating": "隔周{days}，交替于 {first} 和 {second}",
   "withZone": "{schedule}（{timeZone}）"
 }

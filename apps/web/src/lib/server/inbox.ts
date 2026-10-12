@@ -55,7 +55,11 @@ export async function deliver(db: ScopedClient | ScopedTx, workspaceId: string, 
 
 /** Everyone taking part in a meeting (observers included) */
 export async function meetingPeople(db: ScopedClient | ScopedTx, meetingId: string): Promise<string[]> {
-  const rows = await db.meetingParticipant.findMany({ where: { meetingId }, select: { personId: true } });
+  // Not someone who left the workspace or was removed by its directory
+  const rows = await db.meetingParticipant.findMany({
+    where: { meetingId, person: { active: true, deprovisionedAt: null } },
+    select: { personId: true },
+  });
   return rows.map((r) => r.personId);
 }
 

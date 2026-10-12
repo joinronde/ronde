@@ -55,12 +55,13 @@
   "inviteAgain": "Einladung senden",
   "revoke": "Einladung widerrufen",
   "remove": "Entfernen",
-  "removeConfirm": "{name} aus {workspace} entfernen? Profil und Zugang werden gelöscht.",
+  "removeConfirm": "{name} aus {workspace} entfernen? Profil und Zugang werden gelöscht; Beiträge aus Meetings bleiben, gezeichnet von einem ehemaligen Mitglied.",
   "removed": "{name} entfernt.",
   "changeRole": "Rolle von {name}",
   "saved": "Gespeichert",
   "customRoleOf": "Zusätzliche Rolle von {name}",
   "noCustomRole": "Keine zusätzliche Rolle",
   "phone": "Handynummer",
-  "phoneHint": "Für SMS- und WhatsApp-Erinnerungen, im internationalen Format (+49…). Optional."
+  "phoneHint": "Für SMS- und WhatsApp-Erinnerungen, im internationalen Format (+49…). Optional.",
+  "formerMember": "Ehemaliges Mitglied"
 }

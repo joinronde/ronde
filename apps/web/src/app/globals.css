@@ -2614,6 +2614,9 @@ html[data-feedback-shot] .modal{visibility:hidden}
 .billing-facts dd{margin:0}
 .billing-edu{border-style:dashed}
 .note-box.ok{border-color:color-mix(in srgb,var(--ok) 45%,var(--line));background:var(--ok-soft)}
+.note-box.warn{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);color:var(--ink)}
+.payment-failed{margin:12px 24px 0}
+.payment-failed a{font-weight:600}
 [dir="rtl"] .ice-pages button i{transform-origin:right}
 
 /* Last 30 days: the period as a quiet label, each figure on its own coloured tile */

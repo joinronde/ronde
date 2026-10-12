@@ -107,6 +107,18 @@ export async function publish(meetingId: string, event: BusEvent): Promise<void>
   await prisma.$executeRaw`SELECT pg_notify(${CHANNEL}, ${JSON.stringify(envelope)})`;
 }
 
+/**
+ * The open meetings of one workspace refresh (its logo changed), or only those of some of its people (their
+ * photo): never every meeting of the instance
+ */
+export async function publishWorkspace(workspaceId: string, personIds?: string[]): Promise<void> {
+  const meetings = await prisma.meeting.findMany({
+    where: { workspaceId, archivedAt: null, ...(personIds ? { participants: { some: { personId: { in: personIds } } } } : {}) },
+    select: { id: true },
+  });
+  for (const m of meetings) await publish(m.id, { kind: "state" });
+}
+
 export async function subscribe(meetingId: string, fn: (e: BusEvent) => void): Promise<() => void> {
   bus.emitter.on(meetingId, fn);
   try {

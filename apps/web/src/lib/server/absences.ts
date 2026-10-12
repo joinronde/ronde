@@ -98,11 +98,22 @@ export async function addAbsence(ctx: WorkspaceContext, input: AbsenceInput): Pr
   mayEdit(ctx, input.personId);
   if (!validPeriod(input.from, input.to)) throw new OpError("absencePeriod");
   if (input.delegateId === input.personId) throw new OpError("pickSomeoneElse");
+  // Naming oneself to stand in for someone else would make anyone managing people the host of their meetings
+  if (input.delegateId && input.delegateId === ctx.member.personId) throw new AccessError(403, "accessDenied");
   const people = await ctx.db.person.findMany({
     where: { id: { in: [input.personId, ...(input.delegateId ? [input.delegateId] : [])] } },
     select: { id: true },
   });
   if (people.length !== (input.delegateId ? 2 : 1)) throw new OpError("unknownMember");
+  // A stand-in is a member of the workspace, not one of its guests
+  if (
+    input.delegateId &&
+    !(await ctx.db.workspaceMember.findFirst({
+      where: { personId: input.delegateId, status: "active", role: { not: "guest" } },
+      select: { id: true },
+    }))
+  )
+    throw new OpError("unknownMember");
   const row = await ctx.db.absence.create({
     data: {
       workspaceId: ctx.workspace.id,
@@ -127,10 +138,28 @@ export async function addAbsence(ctx: WorkspaceContext, input: AbsenceInput): Pr
 }
 
 export async function removeAbsence(ctx: WorkspaceContext, id: string) {
-  const row = await ctx.db.absence.findFirst({ where: { id }, select: { personId: true } });
+  const row = await ctx.db.absence.findFirst({ where: { id }, select: { personId: true, from: true, to: true } });
   if (!row) throw new OpError("notFound");
   mayEdit(ctx, row.personId);
   await ctx.db.absence.delete({ where: { id } });
+  // Back after all: the sessions of those days count them again, unless they said no or another leave covers them
+  const sessions = await ctx.db.session.findMany({
+    where: { status: "current", startedAt: null, date: { gte: row.from, lte: row.to }, absent: { has: row.personId } },
+    select: { id: true, date: true, absent: true, meetingId: true, occurrenceKey: true },
+  });
+  for (const s of sessions) {
+    if ((await awayPeople(ctx.db, s.date, [row.personId])).length) continue;
+    const no = s.occurrenceKey
+      ? await ctx.db.attendance.findFirst({
+          where: { meetingId: s.meetingId, occurrenceKey: s.occurrenceKey, personId: row.personId, status: "no" },
+          select: { status: true },
+        })
+      : null;
+    // Taken out of the list as it is now, not as it was read (a decision made meanwhile is kept)
+    if (!no)
+      await ctx.db
+        .$executeRaw`UPDATE "Session" SET "absent" = array_remove("absent", ${row.personId}) WHERE "id" = ${s.id} AND "workspaceId" = ${ctx.workspace.id}`;
+  }
 }
 
 /** Current sessions (not started) on days of the period: the person is marked absent there */

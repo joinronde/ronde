@@ -3,7 +3,8 @@
   "current": "当前方案",
   "plans": {
     "community": "Community",
-    "team": "Team"
+    "team": "Team",
+    "enterprise": "Enterprise"
   },
   "communityIntro": "免费：会议和人数不限，所有引导模块。Team 额外提供 AI 助手、转写、工作流、工单、日历、视频链接、你的 Logo 和邮件报告。",
   "teamIntro": "整个工作空间都可使用 Team 的全部功能。你只为最近 30 天参加过会议的人付费；席位每天随之调整。",
@@ -28,5 +29,10 @@
   "cancelled": "付款未完成：未产生任何费用。",
   "eduTitle": "教育免费",
   "eduText": "学校、大学和教师可免费使用 Ronde 的付费方案。告诉我们你的机构信息，我们来为你开通。",
-  "eduCta": "申请教育方案"
+  "eduCta": "申请教育方案",
+  "granted": "由 Ronde 团队赠予此工作区：无需付费。",
+  "grantedEducation": "教育免费：所有付费功能，无需付费。",
+  "grantEnds": "截至 {date}：请在此之前订阅以继续使用。",
+  "paymentFailed": "上一次付款失败：Stripe 会在几天内重试，之后工作区将恢复为 Community。",
+  "paymentFix": "更新付款方式"
 }

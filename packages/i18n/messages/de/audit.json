@@ -40,7 +40,8 @@
       "new": "Meeting erstellt",
       "projects": "Verfolgte Projekte geändert",
       "sample": "Beispiel-Meeting geöffnet",
-      "sampleDeleted": "Beispiel-Meeting gelöscht"
+      "sampleDeleted": "Beispiel-Meeting gelöscht",
+      "icon": "Meeting-Symbol geändert"
     },
     "settings": {
       "save": "Meeting-Einstellungen geändert"
@@ -63,10 +64,12 @@
       "save": "Terminplan geändert",
       "skip": "Sitzung übersprungen",
       "move": "Sitzung verschoben",
-      "restore": "Sitzung wiederhergestellt"
+      "restore": "Sitzung wiederhergestellt",
+      "holidays": "Feiertage des Meetings geändert"
     },
     "notifications": {
-      "save": "Benachrichtigungen geändert"
+      "save": "Benachrichtigungen geändert",
+      "test": "Testbenachrichtigung gesendet"
     },
     "history": {
       "summary": "Zusammenfassung des Protokolls bearbeitet"
@@ -94,7 +97,8 @@
       "categoryDelete": "Berufskategorie gelöscht",
       "auditStream": "Audit-Versand geändert",
       "logo": "Logo geändert",
-      "logoRemoved": "Logo entfernt"
+      "logoRemoved": "Logo entfernt",
+      "delete": "Workspace gelöscht"
     },
     "connectors": {
       "save": "Connector gespeichert",
@@ -151,7 +155,8 @@
       "add": "Videokonto hinzugefügt",
       "update": "Videokonto geändert",
       "delete": "Videokonto entfernt",
-      "room": "Videoraum für ein Meeting erstellt"
+      "room": "Videoraum für ein Meeting erstellt",
+      "configure": "Videoanruf eingerichtet"
     },
     "calendar": {
       "add": "Kalenderkonto hinzugefügt",
@@ -194,6 +199,24 @@
     "teams": {
       "connect": "Microsoft Teams verknüpft",
       "disconnect": "Verknüpfung mit Microsoft Teams gelöst"
+    },
+    "github": {
+      "configure": "GitHub-Modul eingerichtet"
+    },
+    "gitlab": {
+      "configure": "GitLab-Modul eingerichtet"
+    },
+    "icebreaker": {
+      "configure": "Eisbrecher eingerichtet"
+    },
+    "poker": {
+      "configure": "Schätzpoker eingerichtet"
+    },
+    "retro": {
+      "configure": "Retrospektive eingerichtet"
+    },
+    "rotation": {
+      "configure": "Wechselnde Rollen eingerichtet"
     }
   },
   "fields": {

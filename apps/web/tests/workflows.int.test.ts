@@ -30,6 +30,8 @@ beforeAll(async () => {
   );
   // Workflows come with Team: a cloud workspace on that plan
   vi.stubEnv("RONDE_CLOUD", "1");
+  // The fake network above stands for the internet: the cloud's guard against private addresses is lifted for it
+  vi.stubEnv("RONDE_ALLOW_PRIVATE_URLS", "1");
   const ws = await prisma.workspace.create({ data: { slug: `wf-${Date.now().toString(36)}`, name: "Workflows", plan: "team" } });
   workspaceId = ws.id;
   const meeting = await prisma.meeting.create({ data: { workspaceId: ws.id, name: "Weekly" } });

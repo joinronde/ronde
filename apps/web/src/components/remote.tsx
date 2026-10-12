@@ -87,10 +87,20 @@ export function RemoteView() {
         </div>
       ) : (
         <div className="remote-pad">
-          <button type="button" className="btn remote-big" disabled={cur <= 0} onClick={() => press({ op: "meeting.step", delta: -1 })}>
+          <button
+            type="button"
+            className="btn remote-big"
+            disabled={cur <= 0}
+            onClick={() => press({ op: "meeting.step", delta: -1, from: m?.stepKey })}
+          >
             ← {t("previous")}
           </button>
-          <button type="button" className="btn primary remote-big" disabled={!next} onClick={() => press({ op: "meeting.step", delta: 1 })}>
+          <button
+            type="button"
+            className="btn primary remote-big"
+            disabled={!next}
+            onClick={() => press({ op: "meeting.step", delta: 1, from: m?.stepKey })}
+          >
             {t("next")} →
           </button>
           <button type="button" className="btn remote-mid" onClick={() => press({ op: "meeting.togglePlay" })}>

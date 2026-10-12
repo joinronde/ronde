@@ -1,6 +1,6 @@
 import { createHmac } from "node:crypto";
 import { describe, expect, it } from "vitest";
-import { checkout, event, setSeats } from "../src/billing";
+import { cancel, checkout, closeCheckout, event, liveSubscriptions, setSeats, subscription } from "../src/billing";
 
 // Billing of the cloud: Stripe Checkout for a workspace, webhooks checked before they count
 
@@ -32,16 +32,22 @@ describe("billing", () => {
       type: "customer.subscription.updated",
       workspaceId: "ws_1",
       customerId: "cus_1",
-      subscription: {
-        id: "sub_1",
-        status: "active",
-        seats: 7,
-        priceId: "price_team",
-        currentPeriodEnd: 1_800_000_000,
-        cancelAtPeriodEnd: false,
-      },
+      subscriptionId: "sub_1",
       payment: null,
     });
+    // A checkout, an invoice: the subscription they belong to
+    const done = JSON.stringify({
+      id: "evt_3",
+      type: "checkout.session.completed",
+      data: { object: { object: "checkout.session", customer: "cus_1", subscription: "sub_9", client_reference_id: "ws_1" } },
+    });
+    expect(event(done, signed(done), SECRET, NOW)).toMatchObject({ workspaceId: "ws_1", subscriptionId: "sub_9" });
+    const failed = JSON.stringify({
+      id: "evt_4",
+      type: "invoice.payment_failed",
+      data: { object: { object: "invoice", customer: "cus_1", parent: { subscription_details: { subscription: "sub_9" } } } },
+    });
+    expect(event(failed, signed(failed), SECRET, NOW)).toMatchObject({ subscriptionId: "sub_9", payment: null });
   });
 
   it("reads what a paid invoice brought, for the revenue figures", () => {
@@ -57,6 +63,81 @@ describe("billing", () => {
     expect(event(subscriptionEvent, signed(subscriptionEvent, NOW / 1000, "whsec_other"), SECRET, NOW)).toBeNull();
     expect(event(subscriptionEvent.replace("active", "trialing"), signed(subscriptionEvent), SECRET, NOW)).toBeNull();
     expect(event(subscriptionEvent, signed(subscriptionEvent, NOW / 1000 - 3600), SECRET, NOW)).toBeNull();
+    // A signature with characters beyond ASCII (as long in characters, longer in bytes): refused, not a crash
+    expect(event(subscriptionEvent, `t=${NOW / 1000},v1=${"é".repeat(64)}`, SECRET, NOW)).toBeNull();
+    // No secret set: nothing is taken, even signed with an empty key
+    expect(event(subscriptionEvent, signed(subscriptionEvent, NOW / 1000, ""), "", NOW)).toBeNull();
+  });
+
+  /** A Stripe answering GETs from a table of objects, and recording what is asked */
+  const stripe = (objects: Record<string, unknown>) => {
+    const calls: { method: string; url: string }[] = [];
+    const fetch = (async (url: string, init?: RequestInit) => {
+      const method = init?.method ?? "GET";
+      calls.push({ method, url });
+      const path = new URL(url).pathname + new URL(url).search;
+      if (method === "GET")
+        return path in objects ? Response.json(objects[path]) : Response.json({ error: { message: "No such object" } }, { status: 404 });
+      if (method === "DELETE" && path in objects) return Response.json({ ...(objects[path] as object), status: "canceled" });
+      if (method === "DELETE") return Response.json({ error: { message: "No such subscription: 'sub_x'" } }, { status: 404 });
+      return Response.json({ id: "ok" });
+    }) as unknown as typeof globalThis.fetch;
+    return { calls, access: { secretKey: "sk_test", fetch } };
+  };
+  const sub = (id: string, status: string, extra: object = {}) => ({
+    id,
+    object: "subscription",
+    customer: "cus_1",
+    status,
+    metadata: { workspaceId: "ws_1" },
+    current_period_end: 1_800_000_000,
+    items: { data: [{ quantity: 3, price: { id: "price_year", recurring: { interval: "year" } } }] },
+    ...extra,
+  });
+
+  it("reads a subscription as Stripe has it now, its end when it is set to end", async () => {
+    const { access } = stripe({
+      "/v1/subscriptions/sub_1": sub("sub_1", "active"),
+      "/v1/subscriptions/sub_2": sub("sub_2", "active", { cancel_at: 1_850_000_000 }),
+    });
+    expect(await subscription(access, "sub_1")).toEqual({
+      id: "sub_1",
+      customerId: "cus_1",
+      workspaceId: "ws_1",
+      status: "active",
+      seats: 3,
+      priceId: "price_year",
+      interval: "year",
+      currentPeriodEnd: 1_800_000_000,
+      cancelAtPeriodEnd: false,
+    });
+    expect(await subscription(access, "sub_2")).toMatchObject({ currentPeriodEnd: 1_850_000_000, cancelAtPeriodEnd: true });
+    expect(await subscription(access, "sub_none")).toBeNull();
+  });
+
+  it("lists a customer's subscriptions that are not over, and ends one", async () => {
+    const { access, calls } = stripe({
+      "/v1/subscriptions?customer=cus_1&status=all&limit=20": {
+        data: [sub("sub_1", "canceled"), sub("sub_2", "past_due"), sub("sub_3", "incomplete_expired")],
+      },
+      "/v1/subscriptions/sub_2": sub("sub_2", "past_due"),
+    });
+    expect((await liveSubscriptions(access, "cus_1")).map((x) => x.id)).toEqual(["sub_2"]);
+    await cancel(access, "sub_2");
+    expect(calls.at(-1)).toMatchObject({ method: "DELETE", url: "https://api.stripe.com/v1/subscriptions/sub_2" });
+    // Already gone: fine
+    await expect(cancel(access, "sub_x")).resolves.toBeUndefined();
+  });
+
+  it("closes a checkout left open, and says when it was paid already", async () => {
+    const { access, calls } = stripe({
+      "/v1/checkout/sessions/cs_open": { id: "cs_open", status: "open" },
+      "/v1/checkout/sessions/cs_paid": { id: "cs_paid", status: "complete" },
+    });
+    expect(await closeCheckout(access, "cs_open")).toBe("closed");
+    expect(calls.at(-1)).toMatchObject({ method: "POST", url: "https://api.stripe.com/v1/checkout/sessions/cs_open/expire" });
+    expect(await closeCheckout(access, "cs_paid")).toBe("complete");
+    expect(await closeCheckout(access, "cs_gone")).toBe("closed");
   });
 
   it("opens Checkout for the workspace, its seats and its people", async () => {

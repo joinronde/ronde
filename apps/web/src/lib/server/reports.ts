@@ -62,7 +62,7 @@ export async function sendReport(w: Workspace, period: { from: string; to: strin
 export async function checkReports(now = new Date()): Promise<number> {
   await loadLicense();
   const workspaces = await prisma.workspace.findMany({
-    where: { deletedAt: null },
+    where: { deletedAt: null, suspendedAt: null },
     select: { id: true, slug: true, name: true, locale: true, timezone: true, plan: true, settings: true },
   });
   let sent = 0;
@@ -77,7 +77,19 @@ export async function checkReports(now = new Date()): Promise<number> {
       UPDATE "Workspace" SET "settings" = jsonb_set("settings", '{reports,lastSentFor}', to_jsonb(${due.key}::text))
       WHERE "id" = ${w.id} AND ("settings" #>> '{reports,lastSentFor}') IS DISTINCT FROM ${due.key}`;
     if (!taken) continue;
-    sent += await sendReport(w, due, await recipients(w, report));
+    try {
+      const to = await recipients(w, report);
+      const n = await sendReport(w, due, to);
+      // Nobody reached (the mail server down): handed back below, tried again next hour
+      if (to.length && !n) throw new Error("no recipient reached");
+      sent += n;
+    } catch (e) {
+      // Not sent: handed back, the next run tries again; the other workspaces go on
+      console.error(`[reports] workspace ${w.id}`, e);
+      await prisma.$executeRaw`
+        UPDATE "Workspace" SET "settings" = jsonb_set("settings", '{reports,lastSentFor}', to_jsonb(${report.lastSentFor ?? ""}::text))
+        WHERE "id" = ${w.id}`.catch(() => undefined);
+    }
   }
   return sent;
 }

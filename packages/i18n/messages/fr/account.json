@@ -79,5 +79,15 @@
   "passkeySynced": "synchronisée sur vos appareils",
   "passkeyDevice": "sur un seul appareil",
   "passkeySince": "ajoutée le {date}",
-  "passkeyUnsupported": "Ce navigateur ne sait pas créer de clé d'accès. Essayez une version récente de Chrome, Edge, Firefox ou Safari."
+  "passkeyUnsupported": "Ce navigateur ne sait pas créer de clé d'accès. Essayez une version récente de Chrome, Edge, Firefox ou Safari.",
+  "data": {
+    "title": "Vos données",
+    "export": "Télécharger mes données",
+    "exportHint": "Votre compte, vos moyens de connexion et appareils, et dans chaque espace votre profil, vos check-ins, actions, réponses et absences, dans un fichier JSON.",
+    "delete": "Supprimer mon compte",
+    "deleteHint": "Votre compte, vos connexions et vos appareils sont supprimés aussitôt. Dans chaque espace, votre profil est effacé ; ce que vous avez dit en réunion reste à l'équipe, signé par un ancien membre. C'est définitif.",
+    "deleteConfirm": "Saisissez <strong>{email}</strong> pour confirmer",
+    "deleteForGood": "Supprimer définitivement",
+    "cancel": "Annuler"
+  }
 }

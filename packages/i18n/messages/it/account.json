@@ -79,5 +79,15 @@
   "passkeySynced": "sincronizzata sui tuoi dispositivi",
   "passkeyDevice": "su un solo dispositivo",
   "passkeySince": "aggiunta il {date}",
-  "passkeyUnsupported": "Questo browser non può creare passkey. Prova una versione recente di Chrome, Edge, Firefox o Safari."
+  "passkeyUnsupported": "Questo browser non può creare passkey. Prova una versione recente di Chrome, Edge, Firefox o Safari.",
+  "data": {
+    "title": "I tuoi dati",
+    "export": "Scarica i miei dati",
+    "exportHint": "Il tuo account, i metodi di accesso e i dispositivi, e in ogni spazio il tuo profilo, i check-in, le azioni, le risposte e le assenze, in un file JSON.",
+    "delete": "Elimina il mio account",
+    "deleteHint": "Il tuo account, gli accessi e i dispositivi vengono eliminati subito. In ogni spazio il tuo profilo viene cancellato; ciò che hai detto nelle riunioni resta al team, firmato da un ex membro. Non si può annullare.",
+    "deleteConfirm": "Scrivi <strong>{email}</strong> per confermare",
+    "deleteForGood": "Elimina definitivamente",
+    "cancel": "Annulla"
+  }
 }

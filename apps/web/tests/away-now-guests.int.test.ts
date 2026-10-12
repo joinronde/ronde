@@ -53,11 +53,28 @@ describe("absences", () => {
 
   it("let the person they name run the meetings they host, during the absence only", async () => {
     const delegate = await other();
+    // Only a member of the workspace stands in: someone of the directory without an account could not
+    await expect(
+      addAbsence(f.ctx.ws, { personId: f.hostPersonId, from: today, to: addDays(today, 3), delegateId: delegate }),
+    ).rejects.toThrow("unknownMember");
+    const user = await prisma.user.create({ data: { id: crypto.randomUUID(), email: `stand-in-${n}@away.test`, name: "Sam" } });
+    await prisma.person.update({ where: { id: delegate }, data: { userId: user.id } });
+    await prisma.workspaceMember.create({ data: { workspaceId: f.workspaceId, userId: user.id, personId: delegate, role: "member" } });
     await addAbsence(f.ctx.ws, { personId: f.hostPersonId, from: today, to: addDays(today, 3), delegateId: delegate });
     expect(await standsInAsHost(f.ctx.ws.db, f.meetingId, delegate, today)).toBe(true);
     expect(await standsInAsHost(f.ctx.ws.db, f.meetingId, delegate, addDays(today, 10))).toBe(false);
     // The delegate is told
     expect(await prisma.inboxItem.count({ where: { personId: delegate, kind: "absence.delegated" } })).toBe(1);
+  });
+
+  it("never let someone name themselves to stand in for another person", async () => {
+    const colleague = await other();
+    const own = { ...f.ctx.ws, member: { ...f.ctx.ws.member, personId: colleague } };
+    await expect(
+      addAbsence(own, { personId: f.hostPersonId, from: today, to: addDays(today, 3), delegateId: colleague }),
+    ).rejects.toMatchObject({
+      status: 403,
+    });
   });
 
   it("refuse a period backwards", async () => {
@@ -136,5 +153,42 @@ describe("meetings too close to each other", () => {
     const margin = await scheduleDTO(f.ctx.ws.db, f.ctx.meeting, { ...ws, settings: { bufferMin: 15 } }, "en");
     const first = margin.upcoming.find((o) => !o.cancelled)!;
     expect(margin.conflicts[first.key]?.[0]?.meeting).toBe("Planning");
+  });
+});
+
+describe("the session being prepared", () => {
+  it("keeps the absences marked when its occurrence only moves, and follows a time zone change", async () => {
+    const personId = await other();
+    const s = await current();
+    await prisma.session.update({ where: { id: s.id }, data: { absent: [personId] } });
+    // The same occurrence, later in the day
+    await runOp(f.ctx, { op: "schedule.save", timeZone: "", rules: [weekly(nextMonday, "11:00")] });
+    const moved = await current();
+    expect([moved.time, moved.absent]).toEqual(["11:00", [personId]]);
+    // Another time zone: same date and time on the clock, another instant
+    await runOp(f.ctx, { op: "schedule.save", timeZone: "America/New_York", rules: [weekly(nextMonday, "11:00")] });
+    const there = await current();
+    expect(there.startsAt?.getTime()).not.toBe(moved.startsAt?.getTime());
+    expect(there.absent).toEqual([personId]);
+  });
+});
+
+describe("a leave removed", () => {
+  it("counts the person in the sessions of those days again", async () => {
+    const personId = await other();
+    const s = await current();
+    const id = await addAbsence(f.ctx.ws, { personId, from: s.date, to: s.date });
+    expect((await current()).absent).toContain(personId);
+    const { removeAbsence } = await import("@/lib/server/absences");
+    await removeAbsence(f.ctx.ws, id);
+    expect((await current()).absent).not.toContain(personId);
+  });
+});
+
+describe("a schedule", () => {
+  it("is refused when two of its rules meet on the same day", async () => {
+    await expect(
+      runOp(f.ctx, { op: "schedule.save", timeZone: "", rules: [weekly(nextMonday, "09:00"), weekly(nextMonday, "17:00")] }),
+    ).rejects.toMatchObject({ key: "scheduleSameDay" });
   });
 });

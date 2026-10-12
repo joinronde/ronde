@@ -1,11 +1,20 @@
 import { createHmac } from "node:crypto";
 import { prisma } from "@ronde/db";
 import { createEmailVerificationToken } from "better-auth/api";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { auth } from "@/lib/server/auth";
 
 // Signing in without a company provider: an email link, a forgotten password, and the second factor that an
 // account turns on (asked after the password, and not to be got around with an email link)
+
+// The emails sent, read as the person would: the links' tokens are only in them (kept hashed in the database)
+const sent = vi.hoisted(() => [] as { to: string; text: string }[]);
+vi.mock("@/lib/server/mailer", async (original) => ({
+  ...(await original<typeof import("@/lib/server/mailer")>()),
+  sendEmail: async (mail: { to: string; text: string }) => {
+    sent.push(mail);
+  },
+}));
 
 // Anyone may create an account here: the accounts of these tests are not invited
 process.env.SIGNUP_POLICY = "open";
@@ -41,13 +50,12 @@ function totp(base32: string, at = Date.now()) {
   return String((h.readUInt32BE(o) & 0x7fffffff) % 1_000_000).padStart(6, "0");
 }
 
-/** The link of the last email of that kind sent to the address, as the person would click it */
-async function lastToken(kind: "magic-link" | "reset-password", email: string, userId?: string) {
-  const row = await prisma.verification.findFirstOrThrow({
-    where: { identifier: { startsWith: `${kind}:` }, value: { contains: kind === "magic-link" ? email : (userId ?? "") } },
-    orderBy: { createdAt: "desc" },
-  });
-  return row.identifier.slice(kind.length + 1);
+/** The token of the last email of that kind sent to the address, as the person would click its link */
+async function lastToken(kind: "magic-link" | "reset-password", email: string, _userId?: string) {
+  const pattern = kind === "magic-link" ? /magic-link\/verify\?token=([\w-]+)/ : /reset-password\/([\w-]+)/;
+  const mail = sent.findLast((m) => m.to === email && pattern.test(m.text));
+  if (!mail) throw new Error(`no ${kind} email to ${email}`);
+  return pattern.exec(mail.text)![1]!;
 }
 
 const get = (path: string) => auth.handler(new Request(`http://localhost:3000/api/auth${path}`));

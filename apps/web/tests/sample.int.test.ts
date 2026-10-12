@@ -71,7 +71,8 @@ describe("sample meeting", () => {
     await prisma.session.updateMany({ where: { meetingId: id, status: "current" }, data: { startedAt: new Date() } });
     expect(await activeSeats(ws.workspace.id)).toBe(0);
     await prisma.session.updateMany({ where: { meetingId: f.meetingId, status: "current" }, data: { startedAt: new Date() } });
-    expect(await activeSeats(ws.workspace.id)).toBe(1);
+    // The real meeting's two people, the one without an account included
+    expect(await activeSeats(ws.workspace.id)).toBe(2);
     const emma = await prisma.person.findFirstOrThrow({ where: { workspaceId: ws.workspace.id, sample: true, firstName: "Emma" } });
     await expect(invite(ws, { email: emma.email, firstName: "Emma", role: "member" })).rejects.toThrow("samplePerson");
     expect(await prisma.invitation.count({ where: { personId: emma.id } })).toBe(0);

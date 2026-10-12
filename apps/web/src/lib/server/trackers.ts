@@ -175,7 +175,11 @@ export async function createTicket(ctx: WorkspaceContext, actionId: string, trac
 /** Every 15 minutes: open actions whose ticket was closed become done */
 export async function syncTickets(): Promise<number> {
   const actions = await prisma.action.findMany({
-    where: { status: { not: "done" }, externalRef: { not: Prisma.DbNull }, meeting: { archivedAt: null } },
+    where: {
+      status: { not: "done" },
+      externalRef: { not: Prisma.DbNull },
+      meeting: { archivedAt: null, workspace: { deletedAt: null, suspendedAt: null } },
+    },
     select: { id: true, workspaceId: true, externalRef: true, meeting: { select: { workspace: { select: { plan: true } } } } },
     take: 500,
   });

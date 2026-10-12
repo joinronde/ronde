@@ -28,9 +28,10 @@ async function handle(req: Request, { params }: Params): Promise<Response> {
   if (!bearer) return scimError(401, "A bearer token is required");
   const token = await prisma.scimToken.findUnique({
     where: { tokenHash: hashScimToken(bearer) },
-    include: { workspace: { select: { id: true, slug: true, settings: true, deletedAt: true } } },
+    include: { workspace: { select: { id: true, slug: true, settings: true, plan: true, deletedAt: true, suspendedAt: true } } },
   });
   if (!token || token.workspace.slug !== ws || token.workspace.deletedAt) return scimError(401, "Unknown token");
+  if (token.workspace.suspendedAt) return scimError(403, "This workspace is suspended");
   if (!(await identityHost.allowed("identity.scim", token.workspace.id)))
     return scimError(403, "SCIM provisioning is not part of this workspace's plan");
   // Used recently enough to show in the settings, without a write at every request
@@ -46,15 +47,27 @@ async function handle(req: Request, { params }: Params): Promise<Response> {
     }
   }
   const db = scoped(prisma, token.workspace.id);
-  const result = await enterprise.scim.handle(db, token.workspace.id, {
-    method: req.method,
-    path,
-    query: new URL(req.url).searchParams,
-    body,
-    baseUrl: await publicUrl(`/api/scim/v2/${ws}`),
-  });
+  let result: Awaited<ReturnType<typeof enterprise.scim.handle>>;
+  try {
+    result = await enterprise.scim.handle(db, token.workspace.id, {
+      method: req.method,
+      path,
+      query: new URL(req.url).searchParams,
+      body,
+      baseUrl: await publicUrl(`/api/scim/v2/${ws}`),
+    });
+  } catch (e) {
+    // Whatever went wrong, the directory gets an answer it reads, and tries again later (a 5xx, not a 4xx)
+    console.error(`[scim] ${req.method} ${path.join("/")}`, e);
+    return scimError(500, "The request could not be handled now");
+  }
   if (result.change) {
-    const workspace = { id: token.workspace.id, settings: (token.workspace.settings ?? {}) as WorkspaceSettings };
+    // With its plan: the audit log is on for the plans that have it
+    const workspace = {
+      id: token.workspace.id,
+      plan: token.workspace.plan,
+      settings: (token.workspace.settings ?? {}) as WorkspaceSettings,
+    };
     await audit({ workspace, user: { id: `scim:${token.id}`, name: `SCIM · ${token.name}`, email: "" } }, db, {
       action: result.change.action,
       targetType: "person",

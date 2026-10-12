@@ -1,11 +1,20 @@
 import { generateKeyPairSync, sign } from "node:crypto";
 import { prisma, scoped } from "@ronde/db";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { enterprise } from "@/ee-bridge";
 import { auth } from "@/lib/server/auth";
 import { captured, captureNewUser, endDomainSessions, ssoRequired } from "@/lib/server/domains";
 import { saveLicense } from "@/lib/server/license";
 import { workspace } from "./fixtures";
+
+// The emails sent: a sign-in link's token is only in it (kept hashed in the database)
+const sent = vi.hoisted(() => [] as { to: string; text: string }[]);
+vi.mock("@/lib/server/mailer", async (original) => ({
+  ...(await original<typeof import("@/lib/server/mailer")>()),
+  sendEmail: async (mail: { to: string; text: string }) => {
+    sent.push(mail);
+  },
+}));
 
 // Email domains: DNS verification, capture of new accounts, single sign-on required at sign-in
 
@@ -77,10 +86,10 @@ describe("email domains", () => {
     // A link asked for while single sign-on was not required yet
     await enterprise.domains.update(db(), domainId, { enforceSso: false });
     await auth.api.signInMagicLink({ body: { email, callbackURL: "/" }, headers: new Headers() });
-    const link = await prisma.verification.findFirstOrThrow({ where: { value: { contains: email } }, orderBy: { createdAt: "desc" } });
+    const mail = sent.findLast((m) => m.to === email && m.text.includes("magic-link/verify"))!;
     await enterprise.domains.update(db(), domainId, { enforceSso: true });
     // Following the link in a browser opens nothing: back to the sign-in page, which explains why
-    const token = link.identifier.replace(/^magic-link:/, "");
+    const token = /token=([\w-]+)/.exec(mail.text)![1];
     const res = await auth.handler(new Request(`http://localhost:3000/api/auth/magic-link/verify?token=${token}&callbackURL=/`));
     expect(res.status).toBe(302);
     expect(res.headers.get("location")).toMatch(/\/sign-in\?error=SSO_REQUIRED$/);

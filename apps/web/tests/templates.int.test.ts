@@ -109,7 +109,7 @@ describe("templates", () => {
     expect(copy.settings).toMatchObject({ targetMin: 15, speakSec: 90 });
   });
 
-  it("opens a meeting with the round its host picked, and keeps each handover's own time", async () => {
+  it("opens a meeting with the round its host picked, and takes the handover's time picked", async () => {
     const team = await createMeeting(f.ctx.ws, { name: "Teams", template: "builtin:teamProjects", ...schedule });
     const projects = await createMeeting(f.ctx.ws, { name: "Projects", template: "builtin:teamProjects", ...schedule, first: "projects" });
     const blocks = async (id: string) =>
@@ -126,10 +126,8 @@ describe("templates", () => {
       durationMin: 20,
     });
     const rules = await prisma.scheduleRule.findMany({ where: { meetingId: shifts.id }, orderBy: { position: "asc" } });
-    expect(rules.map((r) => [r.time, r.durationMin])).toEqual([
-      ["06:45", 20],
-      ["19:00", 20],
-    ]);
+    // One handover a day: a meeting holds one session a day
+    expect(rules.map((r) => [r.time, r.durationMin])).toEqual([["06:45", 20]]);
   });
 
   it("never reaches another workspace's template", async () => {

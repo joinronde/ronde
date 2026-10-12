@@ -1,8 +1,8 @@
 import "server-only";
 import { prisma, scoped } from "@ronde/db";
-import { publish } from "./bus";
+import { publishWorkspace } from "./bus";
 import { OpError } from "./errors";
-import { AVATAR_MAX_BYTES, sniffImage } from "./images";
+import { AVATAR_MAX_BYTES, redrawImage } from "./images";
 
 // A person's photo set from their account: it goes on their card in every workspace they belong to
 
@@ -37,8 +37,7 @@ export async function setAccountPhoto(userId: string, data: Uint8Array<ArrayBuff
   let type: string | null = null;
   if (data) {
     if (!data.length || data.length > AVATAR_MAX_BYTES) throw new OpError("avatarTooLarge", { max: AVATAR_MAX_BYTES / 1000 });
-    type = sniffImage(data);
-    if (!type) throw new OpError("avatarFormat");
+    ({ data, type } = await redrawImage(data, { side: 512, format: "avatarFormat" }));
   }
   const list = await cards(userId);
   for (const c of list) {
@@ -52,6 +51,6 @@ export async function setAccountPhoto(userId: string, data: Uint8Array<ArrayBuff
     else await db.personAvatar.deleteMany({ where: { personId: c.personId } });
   }
   // Shown in every meeting of the person
-  if (list.length) await publish("*", { kind: "state" });
+  for (const c of list) await publishWorkspace(c.workspaceId, [c.personId]);
   return list.length;
 }

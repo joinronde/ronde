@@ -81,7 +81,7 @@ export function icsCalendar(name: string, meetings: IcsMeeting[], now = Date.now
     ];
     for (const rule of m.rules) {
       // DTSTART is the first real occurrence: calendar apps always count it as one
-      const first = ruleDates(rule, "2100-12-31")[0];
+      const first = ruleDates(rule, "2100-12-31", { max: 1 })[0];
       if (!first) continue;
       const uid = `${rule.id}@ronde`;
       const own = m.exceptions.filter((e) => e.ruleId === rule.id);

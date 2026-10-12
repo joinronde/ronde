@@ -8,6 +8,8 @@ import type { AuditInput, AuditQuery, AuditRow, EnterpriseEdition } from "@ronde
 type Db = ScopedClient | ScopedTx;
 
 const SECRET_KEY = /token|secret|password|passwd|apikey|api_key|signing|private|credential/i;
+/** Personal details nobody needs in a log: kept out whatever the caller passes */
+const PERSONAL_KEY = /^(phone|birthday|birthdate|mobile)$/i;
 const MAX_STRING = 500;
 
 /** Details as they are kept: secrets replaced, long texts cut, depth limited */
@@ -20,7 +22,7 @@ export function sanitize(value: unknown, depth = 0): unknown {
   if (typeof value === "object") {
     const out: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(value as Record<string, unknown>).slice(0, 50))
-      out[k] = SECRET_KEY.test(k) ? (v ? "[hidden]" : v) : sanitize(v, depth + 1);
+      out[k] = SECRET_KEY.test(k) || PERSONAL_KEY.test(k) ? (v ? "[hidden]" : v) : sanitize(v, depth + 1);
     return out;
   }
   return String(value);

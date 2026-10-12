@@ -43,11 +43,13 @@ export const meetingContext = cache(async (slug: string, meetingId: string): Pro
     where: { meetingId, personId: ws.member.personId },
     select: { role: true },
   });
-  // Someone named by an absent host runs their meetings meanwhile
+  // Someone named by an absent host runs their meetings meanwhile, as a co-host: running the sessions, not
+  // configuring, deleting or changing the meeting's people (whoever named them)
   const standsIn =
     participant?.role !== "host" &&
+    participant?.role !== "cohost" &&
     (await standsInAsHost(ws.db, meetingId, ws.member.personId, localDate(Date.now(), meeting.timezone ?? ws.workspace.timezone)));
-  const role = standsIn ? "host" : (participant?.role ?? null);
+  const role = standsIn ? "cohost" : (participant?.role ?? null);
   const principal = { ...ws.principal, meetingRole: role };
   const allowed = (permission: Permission) => can(principal, permission, ws.workspace.settings);
   if (!allowed("meeting.read")) return null;

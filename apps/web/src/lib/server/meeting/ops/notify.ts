@@ -10,6 +10,10 @@ import { dbEvent, notifyEvent, sendThrough, sessionPayload } from "../../notify/
 import { DEFAULT_OPTIONS, EVENT_OPTIONS, RULE_TARGETS, ruleInput } from "../../notify/rules";
 import { defineOp } from "./define";
 
+/** Tests sent lately, per meeting (in this process) */
+const tests = new Map<string, number[]>();
+const TESTS_PER_MINUTE = 5;
+
 // Notification rules of a meeting, their test, and the host's nudge for check-ins
 
 const workflowsOn = (ws: PlanScope) => featureOn("modules.workflows", ws);
@@ -60,6 +64,11 @@ export const notifyOps = [
     input: z.object({ connectorId: z.string().max(50), target: z.record(z.string(), z.string().max(300)).default({}) }),
     run: async ({ db, meetingId, quiet, m }, o) => {
       quiet();
+      // A few tests a minute per meeting: a test is not a way to send mail
+      const now = Date.now();
+      const recent = (tests.get(meetingId) ?? []).filter((at) => now - at < 60_000);
+      if (recent.length >= TESTS_PER_MINUTE) throw new OpError("testTooOften");
+      tests.set(meetingId, [...recent, now]);
       const connector = await db.connector.findFirst({ where: { id: o.connectorId } });
       if (!connector) throw new OpError("notFound");
       // SMS and WhatsApp come with Team: a connector kept from before sends no test either
@@ -68,13 +77,30 @@ export const notifyOps = [
       if (!target.success) throw new OpError("connectorTargetMissing");
       const n = await notifiedMeeting(meetingId);
       if (!n) throw new OpError("notFound");
-      await sendThrough(connector, target.data, meetingId, {
-        id: `test-${Date.now()}`,
-        event: "test",
-        message: notifyMessage({ event: "test", settings: n.settings, locale: n.locale, meetingUrl: n.appUrl }),
-        data: {},
-        meeting: { id: meetingId, name: n.meeting.name, url: n.appUrl },
-      });
+      // An email or a text message goes to the person testing only, never to the rule's whole audience
+      let only: string[] | undefined;
+      if (connector.kind === "email") only = [m.viewer.email];
+      else if (isPhoneKind(connector.kind)) {
+        const me = m.ws.member.personId
+          ? await db.person.findFirst({ where: { id: m.ws.member.personId }, select: { phone: true } })
+          : null;
+        if (!me?.phone) throw new OpError("testNoPhone");
+        only = [me.phone];
+      }
+      await sendThrough(
+        connector,
+        target.data,
+        meetingId,
+        {
+          id: `test-${Date.now()}`,
+          event: "test",
+          message: notifyMessage({ event: "test", settings: n.settings, locale: n.locale, meetingUrl: n.appUrl }),
+          data: {},
+          meeting: { id: meetingId, name: n.meeting.name, url: n.appUrl },
+        },
+        undefined,
+        only,
+      );
     },
   }),
   defineOp({

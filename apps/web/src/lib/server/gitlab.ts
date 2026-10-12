@@ -7,6 +7,7 @@ import { readConfig } from "@ronde/module-sdk";
 import { gitlab } from "@ronde/modules";
 import { env } from "./env";
 import { AccessError, IntegrationError } from "./errors";
+import { isCloud } from "./license";
 import { outboundFetch } from "./outbound";
 import { decryptSecret } from "./secrets";
 
@@ -31,12 +32,15 @@ interface GlProject {
 
 type GitlabConfig = { url: string; token: string };
 
+/** The instance's token serves every meeting of a self-hosted server; in the cloud each meeting brings its own */
+const instanceToken = (token: string) => (isCloud() ? "" : token);
+
 /** GitLab module of a meeting: its access (own token, otherwise the instance one) and followed projects */
 export async function meetingGitlab(db: ScopedClient, meetingId: string) {
   const row = await db.moduleInstallation.findFirst({ where: { meetingId, moduleId: "gitlab" } });
   if (row && !row.enabled) throw new AccessError(403, "moduleDisabled");
   const config = readConfig(gitlab, row?.config);
-  const cfg: GitlabConfig = { url: env.gitlabUrl(), token: decryptSecret(row?.secret ?? "") || env.gitlabToken() };
+  const cfg: GitlabConfig = { url: env.gitlabUrl(), token: decryptSecret(row?.secret ?? "") || instanceToken(env.gitlabToken()) };
   return { cfg, projects: config.projects, groups: config.groups };
 }
 

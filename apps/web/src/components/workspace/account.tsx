@@ -4,12 +4,19 @@ import { THEMES, type Theme } from "@ronde/core/appearance";
 import type { WorkspaceRole } from "@ronde/core/permissions";
 import { initials } from "@ronde/core/util";
 import { formatters, type Locale } from "@ronde/i18n";
+import { Modal } from "@ronde/ui/modal";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { renderSVG } from "uqr";
-import { setThemeAction, setUpgradeHintsAction, setWeeklySummaryAction, updateProfileAction } from "@/app/account/actions";
+import {
+  deleteAccountAction,
+  setThemeAction,
+  setUpgradeHintsAction,
+  setWeeklySummaryAction,
+  updateProfileAction,
+} from "@/app/account/actions";
 import { Field, FormAlert, PasswordInput } from "@/components/auth/fields";
 import { PasskeyIcon } from "@/components/auth/sign-in-form";
 import { Icon } from "@/components/shell/icons";
@@ -74,7 +81,80 @@ export function AccountProfileView({
       <Profile user={user} photo={photo} />
       <ThemePicker initial={theme} />
       {upgradeHints !== null && <UpgradeHintsSwitch initial={upgradeHints} />}
+      <YourData email={user.email} />
     </>
+  );
+}
+
+/** The person's data: all of it as a file, and the account deleted for good */
+function YourData({ email }: { email: string }) {
+  const t = useTranslations("account");
+  const [deleting, setDeleting] = useState(false);
+  return (
+    <section className="panel danger-zone" aria-labelledby="data-title">
+      <h2 id="data-title">{t("data.title")}</h2>
+      <div className="danger-row">
+        <div>
+          <strong>{t("data.export")}</strong>
+          <p className="hint">{t("data.exportHint")}</p>
+        </div>
+        <a className="btn" href={withBasePath("/api/account/export")} download>
+          {t("data.export")}
+        </a>
+      </div>
+      <div className="danger-row">
+        <div>
+          <strong>{t("data.delete")}</strong>
+          <p className="hint">{t("data.deleteHint")}</p>
+        </div>
+        <button type="button" className="btn danger" onClick={() => setDeleting(true)}>
+          {t("data.delete")}
+        </button>
+      </div>
+      {deleting && <DeleteAccount email={email} onClose={() => setDeleting(false)} />}
+    </section>
+  );
+}
+
+function DeleteAccount({ email, onClose }: { email: string; onClose: () => void }) {
+  const t = useTranslations("account");
+  const router = useRouter();
+  const titleId = useId();
+  const [text, setText] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBusy(true);
+    const res = await deleteAccountAction(text);
+    if (!res.ok) {
+      setBusy(false);
+      return setError(res.error);
+    }
+    await authClient.signOut().catch(() => undefined);
+    router.replace("/sign-in");
+    router.refresh();
+  };
+  const same = text.trim().toLowerCase() === email.toLowerCase();
+  return (
+    <Modal onClose={onClose} labelledBy={titleId}>
+      <form className="form dialog-form narrow" onSubmit={submit}>
+        <h2 id={titleId}>{t("data.delete")}</h2>
+        <p>{t("data.deleteHint")}</p>
+        <FormAlert>{error}</FormAlert>
+        <Field label={t.rich("data.deleteConfirm", { email, strong: (c) => <strong className="confirm-name">{c}</strong> })}>
+          {(p) => <input {...p} type="email" autoComplete="off" value={text} onChange={(e) => setText(e.target.value)} />}
+        </Field>
+        <div className="dialog-actions">
+          <button type="button" className="btn" onClick={onClose}>
+            {t("data.cancel")}
+          </button>
+          <button type="submit" className="btn danger-solid" disabled={busy || !same} aria-busy={busy}>
+            {t("data.deleteForGood")}
+          </button>
+        </div>
+      </form>
+    </Modal>
   );
 }
 

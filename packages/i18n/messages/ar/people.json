@@ -55,12 +55,13 @@
   "inviteAgain": "إرسال دعوة",
   "revoke": "إلغاء الدعوة",
   "remove": "إزالة",
-  "removeConfirm": "إزالة {name} من {workspace}؟ سيُحذف ملفه الشخصي ووصوله.",
+  "removeConfirm": "إزالة {name} من {workspace}؟ سيُحذف ملفه الشخصي ووصوله؛ ويبقى ما قاله في الاجتماعات باسم عضو سابق.",
   "removed": "تمت إزالة {name}.",
   "changeRole": "دور {name}",
   "saved": "تم الحفظ",
   "customRoleOf": "الدور الإضافي لـ {name}",
   "noCustomRole": "لا دور إضافي",
   "phone": "رقم الجوال",
-  "phoneHint": "لتذكيرات SMS وWhatsApp، بالصيغة الدولية (+966…). اختياري."
+  "phoneHint": "لتذكيرات SMS وWhatsApp، بالصيغة الدولية (+966…). اختياري.",
+  "formerMember": "عضو سابق"
 }

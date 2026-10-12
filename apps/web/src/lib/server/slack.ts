@@ -76,7 +76,9 @@ export function readInstallState(state: string, now = Date.now()): { workspaceId
   const [workspaceId, userId, until, mac, ...rest] = state.split(".");
   if (!workspaceId || !userId || !until || !mac || rest.length) return null;
   const expected = stateMac(`${workspaceId}.${userId}.${until}`);
-  if (mac.length !== expected.length || !timingSafeEqual(Buffer.from(mac), Buffer.from(expected))) return null;
+  // Compared as bytes: a character beyond ASCII must not make two lengths differ there and throw
+  const [a, b] = [Buffer.from(mac), Buffer.from(expected)];
+  if (a.length !== b.length || !timingSafeEqual(a, b)) return null;
   return Number(until) > now ? { workspaceId, userId } : null;
 }
 
@@ -357,7 +359,7 @@ export async function remindInSlack(
     await enterprise.slack.call(w.token, "chat.postMessage", { channel: user, ...reminderMessage(w, r) });
     return true;
   } catch (e) {
-    console.error(`[slack] reminder to ${person.email}`, e);
+    console.error(`[slack] reminder to person ${person.id}`, e);
     return false;
   }
 }

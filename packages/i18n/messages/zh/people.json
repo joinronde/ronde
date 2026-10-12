@@ -55,12 +55,13 @@
   "inviteAgain": "发送邀请",
   "revoke": "撤销邀请",
   "remove": "移除",
-  "removeConfirm": "将 {name} 从 {workspace} 移除？其个人资料和访问权限将被删除。",
+  "removeConfirm": "将 {name} 从 {workspace} 移除？其个人资料和访问权限将被删除；其在会议中的发言会保留，署名为前成员。",
   "removed": "已移除 {name}。",
   "changeRole": "{name} 的角色",
   "saved": "已保存",
   "customRoleOf": "{name} 的附加角色",
   "noCustomRole": "无附加角色",
   "phone": "手机号码",
-  "phoneHint": "用于短信和 WhatsApp 提醒，使用国际格式（+86…）。可选。"
+  "phoneHint": "用于短信和 WhatsApp 提醒，使用国际格式（+86…）。可选。",
+  "formerMember": "前成员"
 }

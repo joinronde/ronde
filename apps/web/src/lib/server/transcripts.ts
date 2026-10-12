@@ -27,7 +27,10 @@ const MAX_ATTEMPTS = 3;
 export function transcriptionConfig(settings: WorkspaceSettings, ws: PlanScope): TranscriptionAccess | null {
   const t = settings.transcription;
   if (!transcriptionOn(ws) || !t?.enabled) return null;
-  let apiKey = env.transcriptionKey();
+  const baseUrl = t.baseUrl || env.transcriptionUrl() || DEFAULT_TRANSCRIPTION_URL;
+  // The instance's key only goes to the instance's own service: a workspace naming another server brings its key
+  const instanceService = !t.baseUrl || t.baseUrl === (env.transcriptionUrl() || DEFAULT_TRANSCRIPTION_URL);
+  let apiKey = instanceService ? env.transcriptionKey() : "";
   if (t.key) {
     try {
       apiKey = decryptSecret(t.key);
@@ -35,7 +38,6 @@ export function transcriptionConfig(settings: WorkspaceSettings, ws: PlanScope):
       return null;
     }
   }
-  const baseUrl = t.baseUrl || env.transcriptionUrl() || DEFAULT_TRANSCRIPTION_URL;
   // OpenAI needs a key; a self-hosted server may not
   if (!apiKey && baseUrl.startsWith(DEFAULT_TRANSCRIPTION_URL)) return null;
   return {

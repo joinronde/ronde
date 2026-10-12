@@ -71,7 +71,12 @@ async function update(db: Db, id: string, patch: { capture?: boolean; enforceSso
   const row = await db.workspaceDomain.findFirst({ where: { id }, select: { verifiedAt: true } });
   if (!row) throw new OpError("notFound");
   if (!row.verifiedAt) throw new OpError("domainNotVerified");
-  await db.workspaceDomain.update({ where: { id }, data: patch });
+  // Only these two switches: the domain itself never changes once proven (a new one is added and proven)
+  const data = {
+    ...(typeof patch.capture === "boolean" ? { capture: patch.capture } : {}),
+    ...(typeof patch.enforceSso === "boolean" ? { enforceSso: patch.enforceSso } : {}),
+  };
+  if (Object.keys(data).length) await db.workspaceDomain.update({ where: { id }, data });
 }
 
 async function remove(db: Db, id: string) {

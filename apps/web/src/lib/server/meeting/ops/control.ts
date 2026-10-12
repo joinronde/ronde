@@ -1,7 +1,7 @@
 import "server-only";
 import { elapsedOf } from "@ronde/core/meeting";
 import { MINUTES_PARTS } from "@ronde/core/record";
-import { localDate, localTime, zonedInstant } from "@ronde/core/schedule";
+import { isRealDate, localDate, localTime, zonedInstant } from "@ronde/core/schedule";
 import type { MeetingDTO } from "@ronde/core/types";
 import { Prisma } from "@ronde/db";
 import { z } from "zod";
@@ -21,7 +21,7 @@ import { defineOp, type OpContext } from "./define";
 // Control room: running the session. Host and co-hosts only.
 
 const str = (max = 500) => z.string().trim().max(max);
-const isoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date");
+const isoDate = z.string().refine(isRealDate, "Invalid date");
 const qaKeyOf = (k: string) => `qa:${k}`;
 
 /** A session starts: the team is told through the notification rules and the bell */
@@ -97,9 +97,12 @@ export const controlOps = [
     name: "meeting.step",
     permission: "session.run",
     session: "lock",
-    input: z.object({ delta: z.union([z.literal(1), z.literal(-1)]) }),
+    // `from`: the step the person saw when pressing; a press made from a step already left (a double click, the
+    // host and a co-host at once) moves nothing, instead of skipping someone
+    input: z.object({ delta: z.union([z.literal(1), z.literal(-1)]), from: z.string().max(200).optional() }),
     run: async ({ db, requireSession, m, after }, o) => {
       const s = requireSession();
+      if (o.from !== undefined && o.from !== s.stepKey) return;
       const agenda = await agendaFor(db, s);
       let i = agenda.findIndex((x) => x.key === s.stepKey);
       if (i < 0 && s.stepKey.startsWith("qa:")) i = agenda.findIndex((x) => x.key === s.stepKey.slice(3));

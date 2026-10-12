@@ -178,3 +178,22 @@ describe("describeSchedule", () => {
     expect(describeSchedule(rules, "UTC", "en", "UTC")).toBe("Every other Monday, alternating 10:00 and 15:00");
   });
 });
+
+describe("the cost of a schedule", () => {
+  it("walks the dates asked for, not the rule's whole past, and still finds a session moved in from far", () => {
+    const old = rule({ id: "old", startDate: "2015-01-05", interval: 2 });
+    // A December session of that rule, moved to March
+    const december = ruleDates(old, "2025-12-31", { from: "2025-12-01" })[0]!;
+    const moved = { ruleId: "old", originalDate: december, kind: "move" as const, date: "2026-03-11", time: null, durationMin: null };
+    const started = performance.now();
+    const list = occurrences([old], [moved], "Europe/Paris", { from: "2026-03-09", to: "2026-03-22" });
+    expect(performance.now() - started).toBeLessThan(200);
+    expect(list.find((o) => o.moved)).toMatchObject({ key: `old:${december}`, date: "2026-03-11" });
+    // Every two weeks from 2015: the alignment kept though the walk starts in 2026
+    expect(list.filter((o) => !o.moved).map((o) => o.date)).toEqual(
+      occurrences([old], [], "Europe/Paris", { from: "2015-01-01", to: "2026-03-22" })
+        .filter((o) => o.date >= "2026-03-09")
+        .map((o) => o.date),
+    );
+  });
+});

@@ -40,7 +40,8 @@
       "new": "Reunión creada",
       "projects": "Proyectos seguidos cambiados",
       "sample": "Reunión de ejemplo abierta",
-      "sampleDeleted": "Reunión de ejemplo eliminada"
+      "sampleDeleted": "Reunión de ejemplo eliminada",
+      "icon": "Icono de la reunión cambiado"
     },
     "settings": {
       "save": "Ajustes de la reunión modificados"
@@ -63,10 +64,12 @@
       "save": "Calendario modificado",
       "skip": "Sesión omitida",
       "move": "Sesión movida",
-      "restore": "Sesión restaurada"
+      "restore": "Sesión restaurada",
+      "holidays": "Festivos de la reunión cambiados"
     },
     "notifications": {
-      "save": "Notificaciones modificadas"
+      "save": "Notificaciones modificadas",
+      "test": "Prueba de notificación enviada"
     },
     "history": {
       "summary": "Resumen de las actas editado"
@@ -94,7 +97,8 @@
       "categoryDelete": "Categoría de puesto eliminada",
       "auditStream": "Envío de auditoría modificado",
       "logo": "Logotipo cambiado",
-      "logoRemoved": "Logotipo quitado"
+      "logoRemoved": "Logotipo quitado",
+      "delete": "Espacio eliminado"
     },
     "connectors": {
       "save": "Conector guardado",
@@ -151,7 +155,8 @@
       "add": "Cuenta de vídeo añadida",
       "update": "Cuenta de vídeo modificada",
       "delete": "Cuenta de vídeo quitada",
-      "room": "Sala de vídeo creada para una reunión"
+      "room": "Sala de vídeo creada para una reunión",
+      "configure": "Videollamada configurada"
     },
     "calendar": {
       "add": "Cuenta de calendario añadida",
@@ -194,6 +199,24 @@
     "teams": {
       "connect": "Microsoft Teams vinculado",
       "disconnect": "Microsoft Teams desvinculado"
+    },
+    "github": {
+      "configure": "Módulo GitHub configurado"
+    },
+    "gitlab": {
+      "configure": "Módulo GitLab configurado"
+    },
+    "icebreaker": {
+      "configure": "Rompehielos configurado"
+    },
+    "poker": {
+      "configure": "Póker de estimación configurado"
+    },
+    "retro": {
+      "configure": "Retrospectiva configurada"
+    },
+    "rotation": {
+      "configure": "Roles rotativos configurados"
     }
   },
   "fields": {

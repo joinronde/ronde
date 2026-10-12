@@ -64,7 +64,8 @@ export function startJobs(options: {
     return {
       send: (name, data, opts) => boss.send(name, data ?? null, opts),
       stop: async () => {
-        await boss.stop({ graceful: true });
+        // The jobs running finish (a few seconds at most: the container is given ten to stop), none starts
+        await boss.stop({ graceful: true, timeout: 8000 });
         g.__rondeJobs = undefined;
       },
     } satisfies JobRunner;

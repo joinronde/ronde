@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 import { audit } from "@/lib/server/audit";
 import { authorize } from "@/lib/server/authz";
 import { brandingOn } from "@/lib/server/branding";
-import { publish } from "@/lib/server/bus";
-import { AccessError, OpError } from "@/lib/server/errors";
+import { publishWorkspace } from "@/lib/server/bus";
+import { AccessError } from "@/lib/server/errors";
 import { errorResponse } from "@/lib/server/http";
-import { sniffImage } from "@/lib/server/images";
+import { receiveImage } from "@/lib/server/images";
 
 // Logo of the workspace: public (emails and the shared screen load it), uploaded and removed by its admins
 export const dynamic = "force-dynamic";
@@ -35,17 +35,14 @@ async function manage(slug: string) {
 export async function PUT(req: Request, { params }: Ctx) {
   try {
     const ctx = await manage((await params).ws);
-    const data = new Uint8Array(await req.arrayBuffer());
-    if (!data.length || data.length > MAX_BYTES) throw new OpError("logoTooLarge", { max: MAX_BYTES / 1000 });
-    const type = sniffImage(data);
-    if (!type) throw new OpError("logoFormat");
+    const { data, type } = await receiveImage(req, { maxBytes: MAX_BYTES, side: 512, tooLarge: "logoTooLarge", format: "logoFormat" });
     await ctx.db.workspaceLogo.upsert({
       where: { workspaceId: ctx.workspace.id },
       create: { workspaceId: ctx.workspace.id, data, type },
       update: { data, type },
     });
     await audit(ctx, ctx.db, { action: "workspace.logo", targetType: "workspace", targetId: ctx.workspace.id });
-    await publish("*", { kind: "state" });
+    await publishWorkspace(ctx.workspace.id);
     return NextResponse.json({ ok: true });
   } catch (e) {
     return errorResponse(e);
@@ -57,7 +54,7 @@ export async function DELETE(_req: Request, { params }: Ctx) {
     const ctx = await manage((await params).ws);
     await ctx.db.workspaceLogo.deleteMany({ where: { workspaceId: ctx.workspace.id } });
     await audit(ctx, ctx.db, { action: "workspace.logoRemoved", targetType: "workspace", targetId: ctx.workspace.id });
-    await publish("*", { kind: "state" });
+    await publishWorkspace(ctx.workspace.id);
     return NextResponse.json({ ok: true });
   } catch (e) {
     return errorResponse(e);

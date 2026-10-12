@@ -101,15 +101,19 @@ async function audience(meetingId: string, who: unknown, channel: "email" | "pho
     },
   });
   const first = rows[0]?.meeting;
+  const db = first ? scoped(prisma, first.workspaceId) : null;
+  // Absent from the session being prepared (said no, marked by the host): not reminded of it either
+  const session = db ? await db.session.findFirst({ where: { meetingId, status: "current" }, select: { absent: true, date: true } }) : null;
+  // Away on the session's day (the evening before, tomorrow's leave counts), today without one
   const away = first
     ? await awayPeople(
-        scoped(prisma, first.workspaceId),
-        localDate(Date.now(), first.timezone ?? first.workspace.timezone),
+        db!,
+        session?.date ?? localDate(Date.now(), first.timezone ?? first.workspace.timezone),
         rows.map((r) => r.personId),
       )
     : [];
   return rows
-    .filter((r) => r.person.active && !away.includes(r.personId))
+    .filter((r) => r.person.active && !away.includes(r.personId) && !session?.absent.includes(r.personId))
     .flatMap((r) => (channel === "phone" ? (r.person.phone ? [r.person.phone] : []) : [r.person.email]));
 }
 
@@ -146,9 +150,14 @@ function customMessage(input: NotifyInput, custom: { title: string; body: string
 }
 
 /** Sends a delivery. Throws on failure (the job queue retries); the outcome is recorded either way. */
-export async function deliver(deliveryId: string, fetchImpl: typeof fetch = fetch): Promise<void> {
+export async function deliver(deliveryId: string, fetchImpl: typeof fetch = outboundFetch): Promise<void> {
   const d = await prisma.delivery.findUnique({ where: { id: deliveryId }, include: { connector: true, rule: true } });
   if (!d || d.status === "sent" || !d.meetingId) return;
+  // Its rule deleted meanwhile: nothing goes (its audience and conditions went with it)
+  if (!d.ruleId) {
+    await prisma.delivery.update({ where: { id: d.id }, data: { status: "skipped", error: "rule deleted" } });
+    return;
+  }
   const n = await notifiedMeeting(d.meetingId);
   if (!n) return;
   const payload = d.payload as NotifyPayload;
@@ -185,6 +194,9 @@ export async function deliver(deliveryId: string, fetchImpl: typeof fetch = fetc
     return;
   }
   const message = custom ? customMessage(input, custom) : notifyMessage(input);
+  // A retry after a partial failure: the people already reached are not sent it again
+  const already = ((d.payload as { sentTo?: string[] }).sentTo ?? []).slice(0, 2000);
+  const reached: string[] = [];
   try {
     await sendThrough(
       d.connector,
@@ -198,6 +210,8 @@ export async function deliver(deliveryId: string, fetchImpl: typeof fetch = fetc
         meeting: { id: n.meeting.id, name: n.meeting.name, url: n.appUrl },
       },
       fetchImpl,
+      undefined,
+      { skip: already, sent: (r) => reached.push(r) },
     );
     await prisma.delivery.update({
       where: { id: d.id },
@@ -207,7 +221,12 @@ export async function deliver(deliveryId: string, fetchImpl: typeof fetch = fetc
     const error = e instanceof AppError ? `${e.key} ${JSON.stringify(e.values)}` : String(e);
     await prisma.delivery.update({
       where: { id: d.id },
-      data: { status: "failed", attempts: { increment: 1 }, error: error.slice(0, 500) },
+      data: {
+        status: "failed",
+        attempts: { increment: 1 },
+        error: error.slice(0, 500),
+        payload: { ...(d.payload as object), sentTo: [...already, ...reached] },
+      },
     });
     throw e;
   }
@@ -220,15 +239,27 @@ export async function sendThrough(
   meetingId: string | null,
   out: Outgoing,
   fetchImpl: typeof fetch = outboundFetch,
+  /** Addresses or numbers to send to instead of the rule's audience (a test goes to the person testing) */
+  only?: string[],
+  /** Recipients reached before (left out), and each one reached now */
+  track?: { skip: string[]; sent: (recipient: string) => void },
 ) {
   const driver = DRIVERS[connector.kind];
   // Email rules name an audience, resolved to addresses when sending
   const resolved =
-    connector.kind === "email" && meetingId
-      ? { to: await audience(meetingId, target.audience) }
-      : isPhoneKind(connector.kind) && meetingId
-        ? { to: await audience(meetingId, target.audience, "phone") }
-        : target;
+    only && (connector.kind === "email" || isPhoneKind(connector.kind))
+      ? { to: only }
+      : connector.kind === "email" && meetingId
+        ? { to: await audience(meetingId, target.audience) }
+        : isPhoneKind(connector.kind) && meetingId
+          ? { to: await audience(meetingId, target.audience, "phone") }
+          : target;
+  // Those already reached by an earlier try are left out
+  if (track?.skip.length && Array.isArray((resolved as { to?: unknown }).to)) {
+    const to = ((resolved as { to: string[] }).to ?? []).filter((r) => !track.skip.includes(r));
+    if (!to.length) return;
+    (resolved as { to: string[] }).to = to;
+  }
   await driver.send(
     out,
     {
@@ -238,7 +269,13 @@ export async function sendThrough(
     },
     {
       fetch: fetchImpl,
-      sendMail: ({ to, ...mail }) => Promise.all(to.map((address) => sendEmail({ to: address, ...mail }))).then(() => undefined),
+      // Every address is tried; the first failure is reported once the others went
+      sendMail: async ({ to, ...mail }) => {
+        const results = await Promise.allSettled(to.map((address) => sendEmail({ to: address, ...mail }).then(() => track?.sent(address))));
+        const failed = results.find((r) => r.status === "rejected");
+        if (failed) throw failed.reason;
+      },
+      sent: track?.sent,
       // Loaded when needed: the Teams app reads the meetings, which send their notifications through here
       teamsBot: async (ref, activity) => (await import("../teams")).postToTeams(ref, activity),
     },

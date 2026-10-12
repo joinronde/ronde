@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { Onboarding } from "@/components/workspace/onboarding";
 import { pageUser } from "@/lib/server/authz";
 import { billingOn } from "@/lib/server/billing";
-import { pendingInvitationsFor, userWorkspaces } from "@/lib/server/workspaces";
+import { addressProven, pendingInvitationsFor, userWorkspaces } from "@/lib/server/workspaces";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +16,11 @@ export async function generateMetadata() {
 export default async function OnboardingPage({ searchParams }: { searchParams: Promise<{ plan?: string; template?: string }> }) {
   const user = await pageUser("/onboarding");
   const asked = await searchParams;
-  const [invitations, workspaces] = await Promise.all([pendingInvitationsFor(user.email), userWorkspaces(user.id)]);
+  // Offered here only to a proven address: otherwise the invitation's link is the way in
+  const [invitations, workspaces] = await Promise.all([
+    addressProven(user.id).then((ok) => (ok ? pendingInvitationsFor(user.email) : [])),
+    userWorkspaces(user.id),
+  ]);
   return (
     <Onboarding
       firstName={splitName(user.name)[0] || user.email}

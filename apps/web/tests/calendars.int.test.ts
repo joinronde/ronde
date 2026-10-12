@@ -202,14 +202,30 @@ describe("calendar sync", () => {
   });
 
   it("marks someone absent from the session being prepared when they decline it in the calendar, and back", async () => {
-    // The session waiting for the next occurrence
+    // The session waiting for the next occurrence; today's, when its time has passed, is skipped (no event)
+    const prepare = async () =>
+      resyncSession(
+        scoped(prisma, f.workspaceId),
+        { id: f.meetingId, workspaceId: f.workspaceId, timezone: null },
+        { timezone: await zone() },
+      );
     await prisma.session.update({ where: { id: f.sessionId }, data: { startedAt: null } });
-    await resyncSession(
-      scoped(prisma, f.workspaceId),
-      { id: f.meetingId, workspaceId: f.workspaceId, timezone: null },
-      { timezone: await zone() },
-    );
-    const session = await prisma.session.findUniqueOrThrow({ where: { id: f.sessionId } });
+    await prepare();
+    let session = await prisma.session.findUniqueOrThrow({ where: { id: f.sessionId } });
+    if (!(await prisma.calendarEvent.findFirst({ where: { meetingId: f.meetingId, occurrenceKey: session.occurrenceKey! } }))) {
+      const at = session.occurrenceKey!.lastIndexOf(":");
+      await prisma.scheduleException.create({
+        data: {
+          workspaceId: f.workspaceId,
+          meetingId: f.meetingId,
+          ruleId: session.occurrenceKey!.slice(0, at),
+          originalDate: session.occurrenceKey!.slice(at + 1),
+          kind: "cancel",
+        },
+      });
+      await prepare();
+      session = await prisma.session.findUniqueOrThrow({ where: { id: f.sessionId } });
+    }
     const e = await prisma.calendarEvent.findFirstOrThrow({ where: { meetingId: f.meetingId, occurrenceKey: session.occurrenceKey! } });
     const host = await prisma.person.findUniqueOrThrow({ where: { id: f.hostPersonId } });
     const answer = (responseStatus: string) => {

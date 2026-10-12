@@ -81,7 +81,7 @@ export type ReplyResult = "added" | "already" | "nothing" | "refused";
  */
 export async function applyReply(p: { personId: string; meetingId: string; from: string; text: string }): Promise<ReplyResult> {
   const person = await prisma.person.findFirst({
-    where: { id: p.personId, active: true, sample: false, workspace: { deletedAt: null, suspendedAt: null } },
+    where: { id: p.personId, active: true, deprovisionedAt: null, sample: false, workspace: { deletedAt: null, suspendedAt: null } },
     select: { id: true, workspaceId: true, email: true, firstName: true, lastName: true, locale: true, userId: true },
   });
   if (!person) return "refused";

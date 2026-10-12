@@ -87,8 +87,20 @@ export function CommandPalette({ onClose, onPane }: { onClose: () => void; onPan
       });
       if (started) {
         out.push(
-          { id: "next", group: g.meeting, keys: "→", label: t("next"), run: () => void rpc({ op: "meeting.step", delta: 1 }) },
-          { id: "prev", group: g.meeting, keys: "←", label: t("previous"), run: () => void rpc({ op: "meeting.step", delta: -1 }) },
+          {
+            id: "next",
+            group: g.meeting,
+            keys: "→",
+            label: t("next"),
+            run: () => void rpc({ op: "meeting.step", delta: 1, from: m.stepKey }),
+          },
+          {
+            id: "prev",
+            group: g.meeting,
+            keys: "←",
+            label: t("previous"),
+            run: () => void rpc({ op: "meeting.step", delta: -1, from: m.stepKey }),
+          },
           { id: "bonus", group: g.meeting, label: t("bonus"), run: () => void rpc({ op: "meeting.bonus" }) },
           { id: "reset", group: g.meeting, label: t("resetTimer"), run: () => void rpc({ op: "meeting.resetTimer" }) },
         );

@@ -5,6 +5,7 @@ import { prisma } from "@ronde/db";
 import { isLocale, LOCALE_COOKIE } from "@ronde/i18n";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { deleteAccount } from "@/lib/server/account-data";
 import { run } from "@/lib/server/action";
 import { requireUser } from "@/lib/server/authz";
 import { OpError } from "@/lib/server/errors";
@@ -117,5 +118,15 @@ export async function testPushAction() {
   return run(async () => {
     const user = await requireUser();
     return testPush(user.id, isLocale(user.locale) ? user.locale : "en");
+  });
+}
+
+/** Deletes the account for good, confirmed by its address (see deleteAccount) */
+export async function deleteAccountAction(confirmation: string) {
+  return run(async () => {
+    const user = await requireUser();
+    // Its sessions went with it: the browser signs out next (the client clears its cookies)
+    await deleteAccount(user, confirmation);
+    return null;
   });
 }

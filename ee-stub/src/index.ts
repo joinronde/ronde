@@ -31,7 +31,16 @@ export const ee: EnterpriseEdition = {
     ldapTest: async () => ({ ok: false, error: "Company directories are not part of the Community edition" }),
   },
   billing: {
+    customer: async () => {
+      throw new Error("Billing is part of the Ronde cloud only");
+    },
     checkout: async () => {
+      throw new Error("Billing is part of the Ronde cloud only");
+    },
+    closeCheckout: async () => "closed",
+    subscription: async () => null,
+    liveSubscriptions: async () => [],
+    cancel: async () => {
       throw new Error("Billing is part of the Ronde cloud only");
     },
     portal: async () => {

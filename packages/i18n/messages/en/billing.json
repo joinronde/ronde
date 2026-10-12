@@ -3,7 +3,8 @@
   "current": "Current plan",
   "plans": {
     "community": "Community",
-    "team": "Team"
+    "team": "Team",
+    "enterprise": "Enterprise"
   },
   "communityIntro": "Free: unlimited meetings and people, every facilitation module. Team adds the AI assistant, transcripts, workflows, tickets, calendars, video links, your logo and insights by email.",
   "teamIntro": "Every Team feature for the whole workspace. You pay for the people who took part in a meeting in the last 30 days; the seats follow them every day.",
@@ -28,5 +29,10 @@
   "cancelled": "The payment was not completed: nothing was charged.",
   "eduTitle": "Free for education",
   "eduText": "Schools, universities and teachers get Ronde's paid plans for free. Tell us about your institution and we set it up.",
-  "eduCta": "Ask for the education plan"
+  "eduCta": "Ask for the education plan",
+  "granted": "Given to this workspace by the Ronde team: nothing to pay.",
+  "grantedEducation": "Free for education: every paid feature, nothing to pay.",
+  "grantEnds": "Until {date}: subscribe before then to keep it.",
+  "paymentFailed": "The last payment failed: Stripe tries again for a few days, then the workspace goes back to Community.",
+  "paymentFix": "Update the payment method"
 }

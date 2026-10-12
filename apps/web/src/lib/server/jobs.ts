@@ -15,6 +15,7 @@ import { syncProjects } from "./project-import";
 import { pushInbox } from "./push";
 import { checkDaily, checkReminders } from "./reminders";
 import { checkReports } from "./reports";
+import { purgeExpired } from "./retention";
 import { syncTickets } from "./trackers";
 import { processPendingChunks } from "./transcripts";
 import { sendWeeklySummaries } from "./weekly";
@@ -24,7 +25,12 @@ import { sendWeeklySummaries } from "./weekly";
 /** Every meeting with a date ahead gets its next session prepared (after the last one was archived late…) */
 export async function prepareSessions(): Promise<void> {
   const meetings = await prisma.meeting.findMany({
-    where: { archivedAt: null, workspace: { deletedAt: null }, rules: { some: {} }, sessions: { none: { status: "current" } } },
+    where: {
+      archivedAt: null,
+      workspace: { deletedAt: null, suspendedAt: null },
+      rules: { some: {} },
+      sessions: { none: { status: "current" } },
+    },
     include: { workspace: { select: { timezone: true } } },
   });
   for (const m of meetings) {
@@ -84,6 +90,8 @@ export const JOBS = [
   defineJob({ name: "sessions.prepare", cron: "7 * * * *", policy: "singleton", retryLimit: 0, handler: () => prepareSessions() }),
   // Messages of "Send feedback" are kept a year
   defineJob({ name: "feedback.purge", cron: "41 4 * * *", policy: "singleton", retryLimit: 0, handler: () => purgeFeedback() }),
+  // What is past its time goes: deleted workspaces after 30 days, old audit entries, deliveries, bell items…
+  defineJob({ name: "retention.purge", cron: "53 4 * * *", policy: "singleton", retryLimit: 0, handler: () => purgeExpired() }),
 ];
 
 export function startBackgroundJobs() {

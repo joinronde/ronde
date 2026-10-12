@@ -14,7 +14,7 @@ import { cache } from "react";
 import { auth, signupAllowed } from "./auth";
 import { env } from "./env";
 import { AccessError } from "./errors";
-import { featureOn, loadLicense } from "./license";
+import { featureOn, isCloud, loadLicense } from "./license";
 
 export interface CurrentUser {
   id: string;
@@ -44,7 +44,9 @@ export const currentUser = cache(async (): Promise<CurrentUser | null> => {
   const h = await headers();
   const session = await auth.api.getSession({ headers: h });
   if (session) return enabled(await prisma.user.findUnique({ where: { id: session.user.id }, select: { ...select, disabledAt: true } }));
-  const header = env.trustedEmailHeader();
+  // A proxy in front of a self-hosted server vouching for the person (documented: only when nothing else reaches
+  // Ronde); never in the cloud, where anyone reaches it
+  const header = isCloud() ? "" : env.trustedEmailHeader();
   const email = header ? h.get(header)?.trim().toLowerCase() : "";
   if (!email) return null;
   const existing = await prisma.user.findUnique({ where: { email }, select: { ...select, disabledAt: true } });
