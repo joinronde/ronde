@@ -165,6 +165,7 @@ export async function slackUninstalled(teamId: string): Promise<void> {
 }
 
 export async function setSlackReminders(ctx: WorkspaceContext, on: boolean): Promise<void> {
+  if (!slackOn(ctx.workspace)) throw new AccessError(403, "featureNotInPlan");
   const s = ctx.workspace.settings.slack;
   if (!s) throw new OpError("notFound");
   await writeSlack(ctx.workspace.id, { ...s, reminders: on });

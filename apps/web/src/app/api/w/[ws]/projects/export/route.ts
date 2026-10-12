@@ -16,7 +16,7 @@ export const dynamic = "force-dynamic";
 export async function GET(req: Request, { params }: { params: Promise<{ ws: string }> }) {
   try {
     const ctx = await authorize((await params).ws, "projects.read");
-    if (!hasFeature(readEditionOf(ctx.workspace), "reporting.portfolio")) throw new AccessError(403, "accessDenied");
+    if (!hasFeature(readEditionOf(ctx.workspace), "reporting.portfolio")) throw new AccessError(403, "featureNotInPlan");
     const weeks = Math.min(52, Math.max(4, Number(new URL(req.url).searchParams.get("weeks")) || 12));
     const to = new Date();
     const from = new Date(to.getTime() - weeks * 7 * 86_400_000);
