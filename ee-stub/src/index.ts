@@ -50,6 +50,7 @@ export const ee: EnterpriseEdition = {
       throw new Error("Calendar sync is not part of the Community edition");
     },
     remove: async () => {},
+    read: async () => null,
     busy: async () => ({}),
     test: async () => ({ ok: false, error: "Calendar sync is not part of the Community edition" }),
   },
