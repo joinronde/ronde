@@ -57,9 +57,9 @@ async function handle(req: Request, { params }: Params): Promise<Response> {
       baseUrl: await publicUrl(`/api/scim/v2/${ws}`),
     });
   } catch (e) {
-    // Whatever went wrong, the directory gets an answer it reads
+    // Whatever went wrong, the directory gets an answer it reads, and tries again later (a 5xx, not a 4xx)
     console.error(`[scim] ${req.method} ${path.join("/")}`, e);
-    return scimError(400, "The request could not be handled");
+    return scimError(500, "The request could not be handled now");
   }
   if (result.change) {
     // With its plan: the audit log is on for the plans that have it

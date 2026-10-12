@@ -102,15 +102,16 @@ async function audience(meetingId: string, who: unknown, channel: "email" | "pho
   });
   const first = rows[0]?.meeting;
   const db = first ? scoped(prisma, first.workspaceId) : null;
+  // Absent from the session being prepared (said no, marked by the host): not reminded of it either
+  const session = db ? await db.session.findFirst({ where: { meetingId, status: "current" }, select: { absent: true, date: true } }) : null;
+  // Away on the session's day (the evening before, tomorrow's leave counts), today without one
   const away = first
     ? await awayPeople(
         db!,
-        localDate(Date.now(), first.timezone ?? first.workspace.timezone),
+        session?.date ?? localDate(Date.now(), first.timezone ?? first.workspace.timezone),
         rows.map((r) => r.personId),
       )
     : [];
-  // Absent from the session being prepared (said no, marked by the host): not reminded of it either
-  const session = db ? await db.session.findFirst({ where: { meetingId, status: "current" }, select: { absent: true } }) : null;
   return rows
     .filter((r) => r.person.active && !away.includes(r.personId) && !session?.absent.includes(r.personId))
     .flatMap((r) => (channel === "phone" ? (r.person.phone ? [r.person.phone] : []) : [r.person.email]));

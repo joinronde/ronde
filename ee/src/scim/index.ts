@@ -185,7 +185,8 @@ async function users(db: Db, workspaceId: string, req: ScimRequest): Promise<Sci
   const current = await db.person.findFirst({ where: { id, ...visible }, select });
   if (!current) return error(404, "User not found");
   if (req.method === "GET") return { status: 200, body: toScimUser(current, req.baseUrl) };
-  // The workspace's owners are managed in Ronde: a directory cannot remove, suspend or rename them
+  // The workspace's owners are managed in Ronde: a directory cannot remove or suspend them (nor change the
+  // address they sign in with, below; their name it may keep in step)
   const owner = current.member?.role === "owner";
   if (req.method === "DELETE") {
     if (owner) return error(403, "The workspace's owners are managed in Ronde", "mutability");

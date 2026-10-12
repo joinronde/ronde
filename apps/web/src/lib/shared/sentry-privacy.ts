@@ -21,7 +21,11 @@ const SECRET_SEGMENT = /\/(g|invite|unsubscribe|reset-password|verify|magic-link
 const EMAIL = /[^\s@<>"'(),;:]+@[^\s@<>"'(),;:]+\.[a-z]{2,}/gi;
 
 /** An address or a message as an error report may carry it: secret segments and email addresses taken out */
-export const scrubText = (text: string) => text.replace(SECRET_SEGMENT, "/$1/…").replace(EMAIL, "…@…");
+/** Query values that carry a credential (a sign-in link's token, an OAuth code or state, a signature) */
+const SECRET_QUERY = /([?&](?:token|code|state|t|sig|signature|key|callbackURL)=)[^&#\s]*/gi;
+
+export const scrubText = (text: string) =>
+  text.replace(SECRET_SEGMENT, "/$1/…").replace(SECRET_QUERY, "$1…").replace(EMAIL, "…@…");
 
 type Scrubbable = {
   request?: { url?: string };

@@ -78,7 +78,11 @@ export async function checkReports(now = new Date()): Promise<number> {
       WHERE "id" = ${w.id} AND ("settings" #>> '{reports,lastSentFor}') IS DISTINCT FROM ${due.key}`;
     if (!taken) continue;
     try {
-      sent += await sendReport(w, due, await recipients(w, report));
+      const to = await recipients(w, report);
+      const n = await sendReport(w, due, to);
+      // Nobody reached (the mail server down): handed back below, tried again next hour
+      if (to.length && !n) throw new Error("no recipient reached");
+      sent += n;
     } catch (e) {
       // Not sent: handed back, the next run tries again; the other workspaces go on
       console.error(`[reports] workspace ${w.id}`, e);

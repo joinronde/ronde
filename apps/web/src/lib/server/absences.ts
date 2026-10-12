@@ -155,7 +155,9 @@ export async function removeAbsence(ctx: WorkspaceContext, id: string) {
           select: { status: true },
         })
       : null;
-    if (!no) await ctx.db.session.update({ where: { id: s.id }, data: { absent: s.absent.filter((x) => x !== row.personId) } });
+    // Taken out of the list as it is now, not as it was read (a decision made meanwhile is kept)
+    if (!no)
+      await ctx.db.$executeRaw`UPDATE "Session" SET "absent" = array_remove("absent", ${row.personId}) WHERE "id" = ${s.id} AND "workspaceId" = ${ctx.workspace.id}`;
   }
 }
 

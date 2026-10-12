@@ -153,7 +153,13 @@ async function removeEvents(workspaceId: string, meetingId: string, which: (e: {
   const events = await db.calendarEvent.findMany({ where: { meetingId }, include: { account: true } });
   for (const e of events.filter(which)) {
     if (e.startsAt.getTime() > Date.now())
-      await enterprise.calendar.remove(access(e.account), e.eventId).catch((err) => console.error(`[calendar] removing ${e.eventId}`, err));
+      try {
+        await enterprise.calendar.remove(access(e.account), e.eventId);
+      } catch (err) {
+        // Kept, to be removed by a later sync (cleanCalendars): an event left in someone's calendar is not forgotten
+        console.error(`[calendar] removing ${e.eventId}`, err);
+        continue;
+      }
     await db.calendarEvent.delete({ where: { id: e.id } });
   }
 }
@@ -419,7 +425,22 @@ async function syncNow(meetingId: string): Promise<number> {
 }
 
 /** Every 15 minutes: the calendars of every meeting that has one, a few at once, within the run's budget */
+/** Coming events of meetings archived or moved to another account, whose removal failed before: tried again */
+async function cleanCalendars(): Promise<void> {
+  const stale = await prisma.calendarEvent.findMany({
+    where: {
+      startsAt: { gt: new Date() },
+      OR: [{ meeting: { archivedAt: { not: null } } }, { meeting: { calendarAccountId: null } }, { meeting: { workspace: { deletedAt: { not: null } } } }],
+    },
+    distinct: ["meetingId"],
+    select: { workspaceId: true, meetingId: true },
+    take: 50,
+  });
+  for (const e of stale) await removeMeetingEvents(e.workspaceId, e.meetingId).catch(() => undefined);
+}
+
 export async function syncCalendars(): Promise<number> {
+  await cleanCalendars();
   const meetings = await prisma.meeting.findMany({
     where: { archivedAt: null, calendarAccountId: { not: null }, workspace: { deletedAt: null, suspendedAt: null } },
     select: { id: true },
