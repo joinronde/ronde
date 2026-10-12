@@ -15,6 +15,7 @@
     "other": "What would you like to tell us?"
   },
   "count": "{count} / {max} characters",
+  "left": "Characters left: {count}",
   "screenshot": "Screenshot (optional)",
   "capture": "Capture this page",
   "addImage": "Add an image",
@@ -25,7 +26,7 @@
   "removeScreenshot": "Remove",
   "contact": "You may answer me by email",
   "contactAt": "You may answer me at {email}",
-  "sentWith": "Sent along: the address of this page, your browser, the window size, your language and the version of Ronde.",
+  "sentWith": "Sent along: the address of this page and its workspace, your browser, the window size, your language and the version of Ronde.",
   "cancel": "Cancel",
   "send": "Send",
   "sending": "Sending…",

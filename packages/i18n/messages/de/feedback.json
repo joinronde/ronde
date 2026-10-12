@@ -15,6 +15,7 @@
     "other": "Was möchtest du uns sagen?"
   },
   "count": "{count} / {max} Zeichen",
+  "left": "Verbleibende Zeichen: {count}",
   "screenshot": "Screenshot (optional)",
   "capture": "Diese Seite aufnehmen",
   "addImage": "Bild hinzufügen",
@@ -25,7 +26,7 @@
   "removeScreenshot": "Entfernen",
   "contact": "Antwort per E-Mail erwünscht",
   "contactAt": "Antwort an {email} erwünscht",
-  "sentWith": "Mitgesendet: die Adresse dieser Seite, dein Browser, die Fenstergröße, deine Sprache und die Ronde-Version.",
+  "sentWith": "Mitgesendet: die Adresse dieser Seite und ihr Arbeitsbereich, dein Browser, die Fenstergröße, deine Sprache und die Ronde-Version.",
   "cancel": "Abbrechen",
   "send": "Senden",
   "sending": "Wird gesendet…",

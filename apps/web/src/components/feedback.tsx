@@ -33,14 +33,23 @@ interface Draft {
   shot: Blob | null;
 }
 
-/** What was written and not sent: a dialog closed by mistake gives it back */
-let kept: Draft | null = null;
+/**
+ * What was written and not sent: a dialog closed by mistake gives it back, to the same account only (another
+ * person signing in on a shared computer never sees it)
+ */
+let kept: { owner: string; draft: Draft } | null = null;
 
-/** The instance's choice, given by the root layout (null: no button) */
+/** Signing out forgets the unsent message */
+export const forgetFeedbackDraft = () => {
+  kept = null;
+};
+
+/** The instance's choice, given by the root layout; null without it, or for someone not signed in */
 export function feedbackSetting(): FeedbackTo | null {
   if (typeof document === "undefined") return null;
-  const v = document.querySelector<HTMLMetaElement>('meta[name="ronde-feedback"]')?.content;
-  return v === "team" || v === "admins" ? v : null;
+  const meta = document.querySelector<HTMLMetaElement>('meta[name="ronde-feedback"]');
+  const v = meta?.content;
+  return meta?.dataset.signedIn === "1" && (v === "team" || v === "admins") ? v : null;
 }
 
 /** An image drawn at most 1920 px wide or high, in WebP (JPEG where the browser cannot), on a white background */
@@ -120,8 +129,12 @@ export function FeedbackDialog({
   const t = useTranslations("feedback");
   const titleId = useId();
   const hintId = useId();
+  const owner = email ?? "";
+  // Answering is asked for, never assumed: the box starts unticked
   const [draft, setDraft] = useState<Draft>(() =>
-    kept ? { ...kept, kind: firstKind ?? kept.kind } : { kind: firstKind ?? "bug", message: "", contact: true, shot: null },
+    kept?.owner === owner
+      ? { ...kept.draft, kind: firstKind ?? kept.draft.kind }
+      : { kind: firstKind ?? "bug", message: "", contact: false, shot: null },
   );
   const [preview, setPreview] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -149,8 +162,8 @@ export function FeedbackDialog({
   }, [draft.shot]);
   // What is not sent stays for the next opening
   useEffect(() => {
-    kept = sent ? null : draft;
-  }, [draft, sent]);
+    kept = sent ? null : { owner, draft };
+  }, [draft, sent, owner]);
   useEffect(() => {
     if (sent) doneRef.current?.focus();
   }, [sent]);
@@ -241,6 +254,8 @@ export function FeedbackDialog({
     );
 
   const near = draft.message.length > MAX_LENGTH - 500;
+  const remaining = MAX_LENGTH - draft.message.length;
+  const left = remaining <= 0 ? 0 : remaining <= 100 ? 100 : remaining <= 500 ? 500 : null;
   return (
     <Modal onClose={onClose} labelledBy={titleId}>
       <form
@@ -263,11 +278,13 @@ export function FeedbackDialog({
           if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setDragging(false);
         }}
         onDrop={(e) => {
-          const file = [...e.dataTransfer.files].find((f) => f.type.startsWith("image/"));
           setDragging(false);
-          if (!file) return;
+          if (!e.dataTransfer.types.includes("Files")) return;
+          // Never let the browser open a dropped file in place of the page (the draft would be lost)
           e.preventDefault();
-          void attach(file);
+          const file = [...e.dataTransfer.files].find((f) => f.type.startsWith("image/"));
+          if (file) void attach(file);
+          else setError(t("imageUnreadable"));
         }}
       >
         <div className="feedback-head">
@@ -309,11 +326,11 @@ export function FeedbackDialog({
               if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) void submit();
             }}
           />
-          {near && (
-            <span className="hint feedback-count" aria-live="polite">
-              {t("count", { count: draft.message.length, max: MAX_LENGTH })}
-            </span>
-          )}
+          {near && <span className="hint feedback-count">{t("count", { count: draft.message.length, max: MAX_LENGTH })}</span>}
+          {/* Said at 500, 100 and no characters left, not at every key */}
+          <span className="sr-only" aria-live="polite">
+            {left === null ? "" : t("left", { count: left })}
+          </span>
         </div>
         <div className="feedback-shot" ref={shotRef}>
           <span className="lbl-s">{t("screenshot")}</span>

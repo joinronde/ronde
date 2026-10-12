@@ -15,6 +15,7 @@
     "other": "O que você quer nos contar?"
   },
   "count": "{count} / {max} caracteres",
+  "left": "Caracteres restantes: {count}",
   "screenshot": "Captura de tela (opcional)",
   "capture": "Capturar esta página",
   "addImage": "Adicionar uma imagem",
@@ -25,7 +26,7 @@
   "removeScreenshot": "Remover",
   "contact": "Podem me responder por e-mail",
   "contactAt": "Podem me responder em {email}",
-  "sentWith": "Enviados junto: o endereço desta página, seu navegador, o tamanho da janela, seu idioma e a versão do Ronde.",
+  "sentWith": "Enviados junto: o endereço desta página e o espaço de trabalho dela, seu navegador, o tamanho da janela, seu idioma e a versão do Ronde.",
   "cancel": "Cancelar",
   "send": "Enviar",
   "sending": "Enviando…",

@@ -15,6 +15,7 @@
     "other": "你想告诉我们什么？"
   },
   "count": "{count} / {max} 个字符",
+  "left": "剩余字符：{count}",
   "screenshot": "截图（可选）",
   "capture": "截取此页面",
   "addImage": "添加图片",
@@ -25,7 +26,7 @@
   "removeScreenshot": "移除",
   "contact": "可以通过邮件回复我",
   "contactAt": "可以回复到 {email}",
-  "sentWith": "同时发送：此页面的地址、你的浏览器、窗口大小、你的语言和 Ronde 版本。",
+  "sentWith": "同时发送：此页面的地址及其工作空间、你的浏览器、窗口大小、你的语言和 Ronde 版本。",
   "cancel": "取消",
   "send": "发送",
   "sending": "正在发送…",

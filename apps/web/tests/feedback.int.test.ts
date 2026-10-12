@@ -94,6 +94,15 @@ describe("feedback", () => {
     await expect(sendFeedback(asUser(user), input(), null, meta)).rejects.toMatchObject({ key: "feedbackTooMany", status: 429 });
   });
 
+  it("keeps to the limit when messages are sent all at once", async () => {
+    const { user } = await workspace(`fb-race-${Date.now().toString(36)}`);
+    const results = await Promise.allSettled(
+      Array.from({ length: 10 }, (_, i) => sendFeedback(asUser(user), input({ message: `At once ${i}` }), null, meta)),
+    );
+    expect(results.filter((r) => r.status === "fulfilled").length).toBeLessThanOrEqual(5);
+    expect(await prisma.feedback.count({ where: { userId: user.id } })).toBeLessThanOrEqual(5);
+  });
+
   it("is turned off with RONDE_FEEDBACK=off", async () => {
     const { user } = await workspace(`fb-off-${Date.now().toString(36)}`);
     process.env.RONDE_FEEDBACK = "off";

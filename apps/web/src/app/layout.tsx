@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ServiceWorker } from "@/components/service-worker";
+import { currentUser } from "@/lib/server/authz";
 import { env } from "@/lib/server/env";
 import { withBasePath } from "@/lib/shared/base-path";
 // Headlines in the condensed cut of the text's family; Russian, which it lacks, falls back to IBM Plex Sans
@@ -60,6 +61,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const sentry = env.sentryDsn();
   const umami = env.umami();
   const feedback = env.feedbackTo();
+  // The error page offers feedback to people signed in only: the message needs an account
+  const signedIn = feedback ? !!(await currentUser().catch(() => null)) : false;
   return (
     <html lang={locale} dir={dirOf(resolveLocale(locale))} data-theme={theme === "light" || theme === "dark" ? theme : undefined}>
       <head>
@@ -73,7 +76,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           />
         )}
         {/* Who reads the "Send feedback" messages (the error page offers it too); absent: no button */}
-        {feedback && <meta name="ronde-feedback" content={feedback} />}
+        {feedback && <meta name="ronde-feedback" content={feedback} data-signed-in={signedIn ? "1" : "0"} />}
         {umami.src && umami.websiteId && (
           <>
             <script dangerouslySetInnerHTML={{ __html: UMAMI_BEFORE_SEND }} />

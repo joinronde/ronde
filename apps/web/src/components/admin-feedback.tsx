@@ -30,7 +30,10 @@ function issueUrl(f: FeedbackRow) {
     path && `Page: \`${path}\``,
     f.context.errorRef && `Error reference: \`${f.context.errorRef}\``,
   ].filter(Boolean);
-  const body = `${f.message}\n\n---\n${about.join("\n")}`;
+  // Addresses past a few kilobytes are refused: a long message (Chinese, Hindi take up to 9 characters each once
+  // encoded) is shortened, the admin can paste the rest
+  const message = f.message.length > 1200 ? `${f.message.slice(0, 1200)}…` : f.message;
+  const body = `${message}\n\n---\n${about.join("\n")}`;
   const q = new URLSearchParams({ title: firstLine, body, labels: f.kind === "bug" ? "bug" : "enhancement" });
   return `${REPO}/issues/new?${q}`;
 }

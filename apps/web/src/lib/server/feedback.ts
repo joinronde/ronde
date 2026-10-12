@@ -101,6 +101,33 @@ export function browserName(ua: string): string {
   return [browser, system].filter(Boolean).join(" · ") || ua.slice(0, 80);
 }
 
+/** The person has sent too many messages lately: in ten minutes, or in a day */
+async function overLimit(db: Pick<typeof prisma, "feedback">, userId: string): Promise<boolean> {
+  const now = Date.now();
+  const [burst, daily] = await Promise.all([
+    db.feedback.count({ where: { userId, createdAt: { gte: new Date(now - BURST.minutes * 60_000) } } }),
+    db.feedback.count({ where: { userId, createdAt: { gte: new Date(now - 86_400_000) } } }),
+  ]);
+  return burst >= BURST.count || daily >= DAILY;
+}
+
+/** People sending right now: one message at a time each (in this process; the database lock covers the others) */
+const sending = new Set<string>();
+/** Screenshots re-encoded at once: the others wait their turn, so a burst does not take the server's memory */
+const ENCODING_AT_ONCE = 2;
+let encoding = 0;
+const queue: (() => void)[] = [];
+async function oneAtATime<T>(work: () => Promise<T>): Promise<T> {
+  if (encoding >= ENCODING_AT_ONCE) await new Promise<void>((resolve) => queue.push(resolve));
+  encoding++;
+  try {
+    return await work();
+  } finally {
+    encoding--;
+    queue.shift()?.();
+  }
+}
+
 /** Keeps a message, then passes it to Sentry when the instance has a project there */
 export async function sendFeedback(
   user: CurrentUser,
@@ -109,44 +136,48 @@ export async function sendFeedback(
   meta: { browser: string; locale: string },
 ): Promise<{ id: string }> {
   if (!env.feedbackTo()) throw new AppError("notFound", {}, 404);
-  const now = Date.now();
-  const [burst, daily] = await Promise.all([
-    prisma.feedback.count({ where: { userId: user.id, createdAt: { gte: new Date(now - BURST.minutes * 60_000) } } }),
-    prisma.feedback.count({ where: { userId: user.id, createdAt: { gte: new Date(now - 86_400_000) } } }),
-  ]);
-  if (burst >= BURST.count || daily >= DAILY) throw new AppError("feedbackTooMany", {}, 429);
-
-  const image = shot?.length ? await cleanScreenshot(shot) : null;
-  const workspace = input.workspace
-    ? await prisma.workspace.findFirst({
-        where: { slug: input.workspace, deletedAt: null, members: { some: { userId: user.id, status: "active" } } },
-        select: { id: true, slug: true, plan: true },
-      })
-    : null;
-  const context = {
-    path: cleanPath(input.path),
-    version: process.env.RONDE_VERSION || "dev",
-    browser: browserName(meta.browser),
-    userAgent: meta.browser.slice(0, 300),
-    viewport: input.viewport ?? "",
-    locale: meta.locale,
-    ...(input.theme ? { theme: input.theme } : {}),
-    ...(input.errorRef ? { errorRef: input.errorRef } : {}),
-  };
-  const row = await prisma.feedback.create({
-    data: {
-      kind: input.kind,
-      message: input.message,
-      contact: input.contact,
-      context,
-      userId: user.id,
-      fromWorkspaceId: workspace?.id ?? null,
-      ...(image ? { screenshot: { create: { data: image.data, type: "image/webp", width: image.width, height: image.height } } } : {}),
-    },
-    select: { id: true },
-  });
-  void toSentry(row.id, user, input, context, workspace?.plan ?? null, image?.data ?? null);
-  return row;
+  if (sending.has(user.id) || (await overLimit(prisma, user.id))) throw new AppError("feedbackTooMany", {}, 429);
+  sending.add(user.id);
+  try {
+    const image = shot?.length ? await oneAtATime(() => cleanScreenshot(shot)) : null;
+    const workspace = input.workspace
+      ? await prisma.workspace.findFirst({
+          where: { slug: input.workspace, deletedAt: null, members: { some: { userId: user.id, status: "active" } } },
+          select: { id: true, slug: true, plan: true },
+        })
+      : null;
+    const context = {
+      path: cleanPath(input.path),
+      version: process.env.RONDE_VERSION || "dev",
+      browser: browserName(meta.browser),
+      userAgent: meta.browser.slice(0, 300),
+      viewport: input.viewport ?? "",
+      locale: meta.locale,
+      ...(input.theme ? { theme: input.theme } : {}),
+      ...(input.errorRef ? { errorRef: input.errorRef } : {}),
+    };
+    // Counted again under a lock of the person: requests sent together, to several servers, are not all let in
+    const row = await prisma.$transaction(async (tx) => {
+      await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${`feedback:${user.id}`}))`;
+      if (await overLimit(tx, user.id)) throw new AppError("feedbackTooMany", {}, 429);
+      return tx.feedback.create({
+        data: {
+          kind: input.kind,
+          message: input.message,
+          contact: input.contact,
+          context,
+          userId: user.id,
+          fromWorkspaceId: workspace?.id ?? null,
+          ...(image ? { screenshot: { create: { data: image.data, type: "image/webp", width: image.width, height: image.height } } } : {}),
+        },
+        select: { id: true },
+      });
+    });
+    void toSentry(row.id, user, input, context, workspace?.plan ?? null, image?.data ?? null);
+    return row;
+  } finally {
+    sending.delete(user.id);
+  }
 }
 
 /** The same message in the instance's Sentry project (User Feedback): the address only when an answer is welcome */

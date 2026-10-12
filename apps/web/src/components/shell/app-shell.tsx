@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { FeedbackDialog, type FeedbackTo } from "@/components/feedback";
+import { FeedbackDialog, type FeedbackTo, forgetFeedbackDraft } from "@/components/feedback";
 import { PersonFace } from "@/components/person-face";
 import { authClient } from "@/lib/auth-client";
 import { withBasePath } from "@/lib/shared/base-path";
@@ -301,6 +301,7 @@ function UserMenu({ user }: { user: ShellData["user"] }) {
   const { slug, openFeedback } = useContext(ShellContext);
   const router = useRouter();
   const signOut = async () => {
+    forgetFeedbackDraft();
     await authClient.signOut();
     router.replace("/sign-in");
     router.refresh();
@@ -334,7 +335,9 @@ function UserMenu({ user }: { user: ShellData["user"] }) {
             <button
               type="button"
               className="menu-item"
-              onClick={() => {
+              onClick={(e) => {
+                // Back on the account menu's button once the dialog closes, not at the top of the page
+                e.currentTarget.closest(".menu")?.querySelector<HTMLElement>(".menu-btn")?.focus();
                 close();
                 openFeedback();
               }}
