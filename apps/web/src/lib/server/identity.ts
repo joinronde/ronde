@@ -1,7 +1,7 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
 import { prisma, scoped } from "@ronde/db";
-import { hasFeature } from "@ronde/editions";
+import { EDITIONS, hasFeature } from "@ronde/editions";
 import type { IdentityHost } from "@ronde/editions/ee";
 import { audit } from "./audit";
 import { env } from "./env";
@@ -110,16 +110,14 @@ export async function companyIdentity(email: string): Promise<boolean> {
 /** Some workspace of the instance signs its people in through its company directory */
 export async function companyLdapAvailable(): Promise<boolean> {
   if (!(await allowed("identity.ldap", null))) return false;
-  const rows = await prisma.ldapDirectory.findMany({ where: { enabled: true }, select: { workspaceId: true }, take: 50 });
-  return (
-    (
-      await allowedAmong(
-        "identity.ldap",
-        rows.map((r) => r.workspaceId),
-      )
-    ).length > 0
-  );
+  return (await prisma.ldapDirectory.count({ where: { enabled: true, workspace: inPlan("identity.ldap") } })) > 0;
 }
+
+/** Workspaces still there whose plan has the feature (in the cloud; a server's license was checked already) */
+const inPlan = (feature: IdentityFeature) => ({
+  deletedAt: null,
+  ...(isCloud() ? { plan: { in: EDITIONS.filter((e) => hasFeature(e, feature)) } } : {}),
+});
 
 /** Origins of identity providers being registered, trusted for their discovery document */
 const pending = new Set<string>();
@@ -140,8 +138,15 @@ export const refreshTrustedOrigins = () => {
   providerOrigins = { at: 0, list: [] };
 };
 
-/** Origins Better Auth trusts: the app's, and those of the workspaces' identity providers (read every 30 s) */
-export async function trustedOrigins(): Promise<string[]> {
+/**
+ * Origins Better Auth trusts: the app's, and for single sign-on only those of the workspaces' identity providers
+ * (read every 30 s). Anywhere else (a password reset's redirect, a callback address) a provider a workspace
+ * registered is not trusted: its administrator could otherwise send another person's reset link to it.
+ */
+export async function trustedOrigins(request?: Request): Promise<string[]> {
+  const own = [...(env.appUrl() ? [new URL(env.appUrl()).origin] : []), ...pending];
+  // Single sign-on only: signing in, the provider's way back, and the server's own calls registering one
+  if (request && !/\/sign-in\/sso$|\/sso\//.test(new URL(request.url).pathname)) return [...new Set(own)];
   if (Date.now() - providerOrigins.at > 30_000) {
     const rows = await prisma.ssoProvider.findMany({ where: { oidcConfig: { not: null } }, select: { issuer: true } }).catch(() => []);
     const list: string[] = [];
@@ -152,12 +157,11 @@ export async function trustedOrigins(): Promise<string[]> {
     }
     providerOrigins = { at: Date.now(), list };
   }
-  return [...new Set([...(env.appUrl() ? [new URL(env.appUrl()).origin] : []), ...pending, ...providerOrigins.list])];
+  return [...new Set([...own, ...providerOrigins.list])];
 }
 
 /** Some workspace of the instance signs its people in with its own provider (Enterprise license in force) */
 export async function companySsoAvailable(): Promise<boolean> {
   if (!(await allowed("identity.saml", null))) return false;
-  const rows = await prisma.ssoProvider.findMany({ where: { workspaceId: { not: null } }, select: { workspaceId: true }, take: 50 });
-  return (await allowedAmong("identity.saml", [...new Set(rows.map((r) => r.workspaceId!))])).length > 0;
+  return (await prisma.ssoProvider.count({ where: { workspaceId: { not: null }, workspace: inPlan("identity.saml") } })) > 0;
 }

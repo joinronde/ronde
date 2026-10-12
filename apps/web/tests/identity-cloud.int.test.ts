@@ -2,7 +2,7 @@ import { prisma } from "@ronde/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { GET } from "@/app/api/scim/v2/[ws]/[[...path]]/route";
 import { enterprise } from "@/ee-bridge";
-import { companyIdentity, identityHost } from "@/lib/server/identity";
+import { companyIdentity, companySsoAvailable, identityHost, refreshTrustedOrigins, trustedOrigins } from "@/lib/server/identity";
 import { newScimToken } from "@/lib/server/scim";
 import { workspace } from "./fixtures";
 
@@ -84,5 +84,25 @@ describe("company sign-in in the cloud", () => {
     });
     expect(await scim(tokens.ent.token, ent.ws.slug)).toBe(200);
     expect(await scim(tokens.team.token, team.ws.slug)).toBe(403);
+  });
+
+  it("trusts a workspace's provider for single sign-on only, never for a reset link's redirect", async () => {
+    await prisma.ssoProvider.update({
+      where: { providerId: `sp-${ent.ws.slug}` },
+      data: { issuer: "https://evil.example", oidcConfig: JSON.stringify({ clientId: "x" }) },
+    });
+    refreshTrustedOrigins();
+    const at = (path: string) => trustedOrigins(new Request(`http://localhost:3000/api/auth${path}`));
+    expect(await at("/request-password-reset")).not.toContain("https://evil.example");
+    expect(await at("/callback/google")).not.toContain("https://evil.example");
+    expect(await at(`/sso/callback/sp-${ent.ws.slug}`)).toContain("https://evil.example");
+    expect(await at("/sign-in/sso")).toContain("https://evil.example");
+  });
+
+  it("offers company sign-in on the sign-in page while a workspace's plan has it", async () => {
+    expect(await companySsoAvailable()).toBe(true);
+    await prisma.workspace.update({ where: { id: ent.ws.id }, data: { plan: "team" } });
+    expect(await companySsoAvailable()).toBe(false);
+    await prisma.workspace.update({ where: { id: ent.ws.id }, data: { plan: "enterprise" } });
   });
 });

@@ -148,16 +148,14 @@ export const auth = betterAuth({
           throw new APIError("FORBIDDEN", { code: "SSO_REQUIRED", message: "SSO_REQUIRED" });
         return;
       }
-      // An account protected by a second factor does not sign in with an email link alone: password and code
-      if (ctx.path === "/sign-in/magic-link") {
-        const address = (ctx.body as { email?: unknown } | undefined)?.email;
-        if (typeof address === "string" && (await twoFactorOn(address)))
-          throw new APIError("FORBIDDEN", { code: "TWO_FACTOR_REQUIRED", message: "TWO_FACTOR_REQUIRED" });
-      }
       if (!SSO_GUARDED.has(ctx.path)) return;
       const email = (ctx.body as { email?: unknown } | undefined)?.email;
       if (typeof email === "string" && (await ssoRequired(email)))
         throw new APIError("FORBIDDEN", { code: "SSO_REQUIRED", message: "SSO_REQUIRED" });
+      // An account protected by a second factor does not sign in with an email link alone: password and code
+      // (after the single sign-on check: its message is the one that helps)
+      if (ctx.path === "/sign-in/magic-link" && typeof email === "string" && (await twoFactorOn(email)))
+        throw new APIError("FORBIDDEN", { code: "TWO_FACTOR_REQUIRED", message: "TWO_FACTOR_REQUIRED" });
     }),
     after: createAuthMiddleware(async (ctx) => {
       // The company requires its own sign-in: a browser following an email link or coming back from Google, GitHub
@@ -190,10 +188,15 @@ export const auth = betterAuth({
           // A domain requiring single sign-on: Google, GitHub, Microsoft, a passkey, an email link or a password
           // do not open a session, whichever endpoint creates it (sessions made inside the server have no path)
           const path = ctx?.path;
-          if (user && path && !companySignIn(path, (ctx?.params as { id?: unknown } | undefined)?.id) && (await ssoRequired(user.email)))
+          // A session the person renews while signed in (changing their password, turning two-factor on or off) is
+          // no new way in
+          const renewal =
+            (ctx?.context as { session?: { user?: { id?: string } } | null } | undefined)?.session?.user?.id === session.userId;
+          const provider = (ctx?.params as { id?: unknown } | undefined)?.id;
+          if (user && path && !renewal && !companySignIn(path, provider) && (await ssoRequired(user.email)))
             throw new APIError("FORBIDDEN", { code: "SSO_REQUIRED", message: "SSO_REQUIRED" });
-          // A link asked for before the second factor was turned on does not get around it
-          if (user?.twoFactorEnabled && path === "/magic-link/verify")
+          // An email link (signing in, or confirming the address) does not get around a second factor
+          if (user?.twoFactorEnabled && (path === "/magic-link/verify" || path === "/verify-email"))
             throw new APIError("FORBIDDEN", { code: "TWO_FACTOR_REQUIRED", message: "TWO_FACTOR_REQUIRED" });
         },
       },
@@ -222,7 +225,7 @@ export const auth = betterAuth({
     ...(env.trustedProxies().length ? { ipAddress: { trustedProxies: env.trustedProxies() } } : {}),
   },
   // The app, and the identity providers of the workspaces (their OIDC discovery documents)
-  trustedOrigins: () => trustedOrigins(),
+  trustedOrigins: (request) => trustedOrigins(request),
 });
 
 export type AuthSession = typeof auth.$Infer.Session;

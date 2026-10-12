@@ -97,6 +97,31 @@ describe("email domains", () => {
     expect(await prisma.authSession.findMany({ where: { userId: user.id }, select: { id: true } })).toEqual([{ id: kept.id }]);
   });
 
+  it("let someone already signed in change their password (a renewed session is no new way in)", async () => {
+    await enterprise.domains.update(db(), domainId, { enforceSso: false });
+    const email = `pat@${DOMAIN}`;
+    process.env.SIGNUP_POLICY = "open";
+    const res = await auth.api.signUpEmail({ body: { email, password: "first-password-123", name: "Pat" }, returnHeaders: true });
+    delete process.env.SIGNUP_POLICY;
+    const cookie = new Headers({
+      cookie: res.headers
+        .getSetCookie()
+        .map((c) => c.split(";")[0])
+        .join("; "),
+    });
+    await enterprise.domains.update(db(), domainId, { enforceSso: true });
+    await expect(
+      auth.api.changePassword({
+        body: { currentPassword: "first-password-123", newPassword: "second-password-456", revokeOtherSessions: true },
+        headers: cookie,
+      }),
+    ).resolves.toMatchObject({ token: expect.any(String) });
+    // Signing in with that password is still refused
+    await expect(auth.api.signInEmail({ body: { email, password: "second-password-456" } })).rejects.toMatchObject({
+      body: { code: "SSO_REQUIRED" },
+    });
+  });
+
   it("stop applying without the license", async () => {
     await saveLicense("");
     expect(await ssoRequired(`zoe@${DOMAIN}`)).toBe(false);

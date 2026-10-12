@@ -1,5 +1,6 @@
 import { createHmac } from "node:crypto";
 import { prisma } from "@ronde/db";
+import { createEmailVerificationToken } from "better-auth/api";
 import { describe, expect, it } from "vitest";
 import { auth } from "@/lib/server/auth";
 
@@ -108,6 +109,16 @@ describe("signing in", () => {
     });
     const res = await get(`/magic-link/verify?token=${token}&callbackURL=/`);
     expect(res.status).toBe(302);
+    expect(res.headers.get("location")).toMatch(/\/sign-in\?error=TWO_FACTOR_REQUIRED$/);
+    expect(await prisma.authSession.count({ where: { userId: user.id } })).toBe(0);
+  });
+
+  it("does not let an email confirmation link get around the second factor either", async () => {
+    const { email } = await account();
+    const user = await prisma.user.update({ where: { email }, data: { twoFactorEnabled: true, emailVerified: false } });
+    await prisma.authSession.deleteMany({ where: { userId: user.id } });
+    const token = await createEmailVerificationToken(auth.options.secret ?? "", email);
+    const res = await get(`/verify-email?token=${token}&callbackURL=/`);
     expect(res.headers.get("location")).toMatch(/\/sign-in\?error=TWO_FACTOR_REQUIRED$/);
     expect(await prisma.authSession.count({ where: { userId: user.id } })).toBe(0);
   });
