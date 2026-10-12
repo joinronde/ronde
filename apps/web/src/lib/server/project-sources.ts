@@ -698,11 +698,16 @@ export async function listSource(t: SourceAccess): Promise<{ items: SourceItem[]
         : /^[0-9a-f]{8}-[0-9a-f]{4}-/i.test(team)
           ? ((await linear(t, `query($id: String!) { team(id: $id) { ${projects} } }`, { id: team })) as { team?: { projects?: unknown } })
               .team?.projects
-          : (
-              (await linear(t, `query($key: String!) { teams(filter: { key: { eqIgnoreCase: $key } }) { nodes { ${projects} } } }`, {
-                key: team,
-              })) as { teams?: { nodes?: { projects?: unknown }[] } }
-            ).teams?.nodes?.[0]?.projects;
+          : await (async () => {
+              const found = (
+                (await linear(t, `query($key: String!) { teams(filter: { key: { eqIgnoreCase: $key } }) { nodes { ${projects} } } }`, {
+                  key: team,
+                })) as { teams?: { nodes?: { projects?: unknown }[] } }
+              ).teams?.nodes?.[0];
+              // A key the account does not see: said, not an empty list
+              if (!found) throw new SourceError("notFound");
+              return found.projects;
+            })();
       raw = listOf((data as { nodes?: unknown } | undefined)?.nodes ?? []);
       items = raw.map(fromLinear);
       break;

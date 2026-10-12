@@ -44,11 +44,12 @@ describe("Slack's requests", () => {
     expect((await events(fromSlack(check, { at: Math.floor(Date.now() / 1000) - 600 }))).status).toBe(401);
   });
 
-  it("forget a Slack workspace that removed the app", async () => {
+  it("forget a Slack workspace that removed the app, whatever the plan of the Ronde workspace", async () => {
+    vi.stubEnv("RONDE_CLOUD", "1");
     const w = await workspace(`slack-routes-${Date.now().toString(36)}`);
     await prisma.workspace.update({
       where: { id: w.ws.id },
-      data: { plan: "team", settings: { slack: { teamId: "T-GONE", teamName: "Acme", botToken: "x", reminders: true } } },
+      data: { plan: "community", settings: { slack: { teamId: "T-GONE", teamName: "Acme", botToken: "x", reminders: true } } },
     });
     const res = await events(fromSlack(JSON.stringify({ type: "event_callback", team_id: "T-GONE", event: { type: "app_uninstalled" } })));
     expect(res.status).toBe(200);

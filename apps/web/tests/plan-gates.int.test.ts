@@ -135,6 +135,13 @@ describe("plans", () => {
         },
       );
     await expect(save("community")).rejects.toMatchObject({ key: "featureNotInPlan" });
+    // Testing a leftover SMS connector from a meeting sends nothing without Team
+    const sms = await prisma.connector.create({
+      data: { workspaceId: f.workspaceId, kind: "sms", name: "SMS", config: { accountSid: `AC${"a".repeat(32)}`, from: "+33600000000" } },
+    });
+    await expect(runOp(f.ctx, { op: "notifications.test", connectorId: sms.id, target: {} })).rejects.toMatchObject({
+      key: "featureNotInPlan",
+    });
     await expect(save("team")).resolves.not.toThrow();
     await expect(syncProject({ ...f.ctx.ws, workspace: { ...f.ctx.ws.workspace, plan: "community" } }, f.projectId)).rejects.toMatchObject({
       key: "featureNotInPlan",

@@ -106,7 +106,7 @@ export async function finishInstall(ctx: WorkspaceContext, code: string): Promis
   const install = await enterprise.slack.exchange(app, code, await redirectUri());
   const previous = ctx.workspace.settings.slack;
   // Moved to another Slack workspace: the app leaves the previous one
-  if (previous && previous.teamId !== install.teamId) await uninstall(app, previous);
+  if (previous && previous.teamId !== install.teamId) await uninstall(app, previous, ctx.workspace.id);
   let connectorId = previous?.connectorId ?? null;
   if (install.webhookUrl) {
     const data = { name: install.channel ? `Slack ${install.channel}` : "Slack", secret: encryptSecret(install.webhookUrl) };
@@ -140,12 +140,20 @@ export async function disconnectSlack(ctx: WorkspaceContext): Promise<void> {
   const s = ctx.workspace.settings.slack;
   if (!s) return;
   const app = slackApp();
-  if (app) await uninstall(app, s);
+  if (app) await uninstall(app, s, ctx.workspace.id);
   await forget(ctx.workspace.id, s);
   await audit(ctx, ctx.db, { action: "slack.disconnect", targetType: "workspace", targetId: ctx.workspace.id, data: { team: s.teamName } });
 }
 
-async function uninstall(app: { clientId: string; clientSecret: string }, s: SlackSettings) {
+/**
+ * Removes the app from a Slack workspace; it stays when another Ronde workspace still uses that Slack one (removing
+ * it there would disconnect them too)
+ */
+async function uninstall(app: { clientId: string; clientSecret: string }, s: SlackSettings, leaving: string) {
+  const others = await prisma.workspace.count({
+    where: { id: { not: leaving }, deletedAt: null, settings: { path: ["slack", "teamId"], equals: s.teamId } },
+  });
+  if (others) return;
   try {
     await enterprise.slack.call(decryptSecret(s.botToken), "apps.uninstall", { client_id: app.clientId, client_secret: app.clientSecret });
   } catch (e) {

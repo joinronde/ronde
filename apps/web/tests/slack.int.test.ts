@@ -240,4 +240,22 @@ describe("Slack app", () => {
     await slackUninstalled("T2");
     expect((await fresh()).workspace.settings.slack).toBeUndefined();
   });
+
+  it("leaves the app in a Slack workspace another Ronde workspace still uses", async () => {
+    const other = await workspace(`slack-shared-${Date.now().toString(36)}`);
+    await prisma.workspace.update({
+      where: { id: other.ws.id },
+      data: { settings: { slack: { teamId: "T-SHARED", teamName: "Shared", botToken: "x", reminders: false } } },
+    });
+    await prisma.workspace.update({
+      where: { id: f.workspaceId },
+      data: { settings: { slack: { teamId: "T-SHARED", teamName: "Shared", botToken: "x", reminders: false } } },
+    });
+    slack({ "apps.uninstall": { ok: true } });
+    await disconnectSlack(await fresh());
+    expect(calls.map((c) => c.method)).toEqual([]);
+    expect((await fresh()).workspace.settings.slack).toBeUndefined();
+    const left = (await prisma.workspace.findUniqueOrThrow({ where: { id: other.ws.id } })).settings as { slack?: { teamId: string } };
+    expect(left.slack?.teamId).toBe("T-SHARED");
+  });
 });

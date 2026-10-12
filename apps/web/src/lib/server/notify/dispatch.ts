@@ -63,9 +63,14 @@ export async function notifyEvent(
           payload: payload as Prisma.InputJsonObject,
         },
       });
-      queued++;
-      if (inline) await deliver(d.id);
-      else await dispatch(d.id);
+      if (inline) {
+        await deliver(d.id);
+        // Sent right away: one skipped (its conditions, or a plan without it) does not count as sent
+        if ((await prisma.delivery.findUnique({ where: { id: d.id }, select: { status: true } }))?.status !== "skipped") queued++;
+      } else {
+        queued++;
+        await dispatch(d.id);
+      }
     } catch (e) {
       // Already raised for this rule and scope: nothing more to send
       if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002") continue;

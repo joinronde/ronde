@@ -182,11 +182,16 @@ const twilio = (kind: "sms" | "whatsapp"): Driver => ({
     const prefix = kind === "whatsapp" ? "whatsapp:" : "";
     const template = kind === "whatsapp" && config.contentSid ? String(config.contentSid) : "";
     // A template's variables hold one line each (WhatsApp refuses line breaks and long runs of spaces there)
-    const oneLine = (s: string) => s.replace(/\s+/g, " ").trim().slice(0, 1000);
+    // The message without its links (the link is the second variable), short: a template body stays under 1024
+    const oneLine = (s: string) => {
+      const line = s.replace(/\s+/g, " ").trim();
+      return line.length > 600 ? `${line.slice(0, 599).trimEnd()}…` : line;
+    };
+    const words = toText({ ...out.message, blocks: out.message.blocks.filter((b) => b.kind !== "link") });
     const content: Record<string, string> = template
       ? {
           ContentSid: template,
-          ContentVariables: JSON.stringify({ 1: oneLine(toText(out.message)) || out.message.summary, 2: out.meeting.url || " " }),
+          ContentVariables: JSON.stringify({ 1: oneLine(words) || out.message.summary, 2: out.meeting.url || " " }),
         }
       : { Body: toPhoneText(out.message, out.meeting.url) };
     for (const number of to)

@@ -246,7 +246,7 @@ export async function leaveWorkspace(ctx: WorkspaceContext): Promise<void> {
  * Returns the link, so it can also be shared by hand (no mail server on the instance).
  */
 /** Invitations a person may send in a day: RONDE_INVITES_PER_DAY, otherwise 100 in the cloud, no limit elsewhere */
-const invitationsPerDay = () => Number(process.env.RONDE_INVITES_PER_DAY) || (isCloud() ? 100 : 0);
+export const invitationsPerDay = () => Number(process.env.RONDE_INVITES_PER_DAY) || (isCloud() ? 100 : 0);
 
 export async function invite(
   ctx: WorkspaceContext,

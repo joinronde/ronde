@@ -78,5 +78,7 @@ describe("workflows", () => {
     expect(posts).toHaveLength(before);
     const d = await prisma.delivery.findFirstOrThrow({ where: { ruleId }, orderBy: { createdAt: "desc" } });
     expect(d).toMatchObject({ status: "skipped", error: expect.stringMatching(/^featureNotInPlan /) });
+    // Sent right away (the host's nudge): what was skipped is not counted as sent
+    expect(await notifyEvent(meetingId, "minutes.published", "s4", minutes(2), { inline: true })).toBe(0);
   });
 });

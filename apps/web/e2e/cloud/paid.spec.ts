@@ -96,7 +96,7 @@ test("an Enterprise workspace uses its paid features, and a Community one is tol
   // Back on Community: the paid pages say which plan brings them, and nothing paid can be done
   await setPlan(slug, "community");
   await page.goto(`${base}/insights`);
-  await expect(page.getByText(/Team/).first()).toBeVisible();
+  await expect(page.locator(".plan-notice .plan-pill")).toContainText("Team");
   expect((await page.request.get(`/api/w/${slug}/projects/export`)).status()).toBe(403);
   expect((await page.request.get(`/api/w/${slug}/audit`)).status()).toBe(403);
 });

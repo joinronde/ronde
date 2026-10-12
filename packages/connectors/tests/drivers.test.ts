@@ -166,6 +166,9 @@ describe("SMS and WhatsApp (Twilio)", () => {
     const variables = JSON.parse(form.get("ContentVariables")!) as Record<string, string>;
     expect(variables["2"]).toBe(out.meeting.url);
     expect(variables["1"]).not.toMatch(/\n/);
+    // The link is the second variable only, and the first stays short enough for a template body
+    expect(variables["1"]).not.toContain(out.meeting.url);
+    expect(variables["1"]!.length).toBeLessThanOrEqual(600);
     expect(DRIVERS.whatsapp.config.safeParse({ ...config, contentSid: "nope" }).success).toBe(false);
     expect(DRIVERS.whatsapp.config.safeParse({ ...config, contentSid: "" }).success).toBe(true);
   });

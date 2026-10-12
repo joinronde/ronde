@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { invite } from "@/lib/server/workspaces";
+import { invitationsPerDay, invite } from "@/lib/server/workspaces";
 import { meeting, workspace } from "./fixtures";
 
 // Invitations are emails sent on someone's behalf: a person sends a limited number a day (RONDE_INVITES_PER_DAY,
@@ -18,13 +18,12 @@ describe("invitations", () => {
     });
   });
 
-  it("have no limit on a self-hosted server unless it sets one, and 100 a day in the cloud", async () => {
-    const f = await meeting(await workspace(`invites-free-${Date.now().toString(36)}`), "Weekly");
-    for (let i = 1; i <= 4; i++) await invite(f.ctx.ws, { firstName: `Guest ${i}`, email: `free${i}@invites.test`, role: "member" });
+  it("have no limit on a self-hosted server unless it sets one, and 100 a day in the cloud", () => {
+    vi.stubEnv("RONDE_INVITES_PER_DAY", "");
+    expect(invitationsPerDay()).toBe(0);
     vi.stubEnv("RONDE_CLOUD", "1");
-    // The fifth of the day is still far from the cloud's limit
-    await expect(invite(f.ctx.ws, { firstName: "Guest 5", email: "free5@invites.test", role: "member" })).resolves.toMatchObject({
-      url: expect.stringContaining("/invite/"),
-    });
+    expect(invitationsPerDay()).toBe(100);
+    vi.stubEnv("RONDE_INVITES_PER_DAY", "500");
+    expect(invitationsPerDay()).toBe(500);
   });
 });

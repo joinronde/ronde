@@ -1,4 +1,5 @@
 import "server-only";
+import { isPhoneKind } from "@ronde/connectors/kinds";
 import { notifyMessage } from "@ronde/core/notify";
 import { Prisma } from "@ronde/db";
 import { z } from "zod";
@@ -57,10 +58,12 @@ export const notifyOps = [
     name: "notifications.test",
     permission: "meeting.configure",
     input: z.object({ connectorId: z.string().max(50), target: z.record(z.string(), z.string().max(300)).default({}) }),
-    run: async ({ db, meetingId, quiet }, o) => {
+    run: async ({ db, meetingId, quiet, m }, o) => {
       quiet();
       const connector = await db.connector.findFirst({ where: { id: o.connectorId } });
       if (!connector) throw new OpError("notFound");
+      // SMS and WhatsApp come with Team: a connector kept from before sends no test either
+      if (isPhoneKind(connector.kind) && !featureOn("integrations.sms", m.ws.workspace)) throw new AccessError(403, "featureNotInPlan");
       const target = RULE_TARGETS[connector.kind].safeParse(o.target);
       if (!target.success) throw new OpError("connectorTargetMissing");
       const n = await notifiedMeeting(meetingId);

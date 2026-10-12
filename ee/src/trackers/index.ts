@@ -3,7 +3,16 @@ import type { EnterpriseEdition, TicketRef, TrackerAccess, TrackerIssue } from "
 
 // Follow-up actions become tickets in Jira, Linear, GitLab or GitHub; closing the ticket closes the action
 
-export class TrackerError extends Error {}
+export class TrackerError extends Error {
+  constructor(
+    message: string,
+    /** HTTP status and body of the tracker's refusal, when it answered */
+    public status = 0,
+    public body = "",
+  ) {
+    super(message);
+  }
+}
 
 const trim = (url: string) => url.trim().replace(/\/+$/, "");
 
@@ -17,7 +26,7 @@ async function call(t: TrackerAccess, url: string, init: RequestInit & { json?: 
   });
   if (res.status === 401 || res.status === 403) throw new TrackerError(`the tracker refused the token (${res.status})`);
   if (res.status === 404) throw new TrackerError("project or repository not found");
-  if (!res.ok) throw new TrackerError(`the tracker answered ${res.status}`);
+  if (!res.ok) throw new TrackerError(`the tracker answered ${res.status}`, res.status, (await res.text().catch(() => "")).slice(0, 2000));
   return res.status === 204 ? null : res.json();
 }
 
@@ -52,7 +61,8 @@ async function remember(key: string, find: () => Promise<string | null>): Promis
   const hit = known.get(key);
   if (hit && Date.now() - hit.at < 3_600_000) return hit.value;
   const value = await find();
-  known.set(key, { at: Date.now(), value });
+  // Only what was found is kept: a team or a type missing now may be there after the next change in the tool
+  if (value !== null) known.set(key, { at: Date.now(), value });
   return value;
 }
 
@@ -86,11 +96,16 @@ async function assigneeOf(t: TrackerAccess, email: string | undefined): Promise<
   if (!email) return null;
   try {
     if (t.kind === "jira") {
-      const users = (await call(t, `${trim(t.config.site ?? "")}/rest/api/3/user/search?query=${encodeURIComponent(email)}`)) as {
-        accountId: string;
-        accountType?: string;
-      }[];
-      return users.find((u) => (u.accountType ?? "atlassian") === "atlassian")?.accountId ?? null;
+      const users = (
+        (await call(t, `${trim(t.config.site ?? "")}/rest/api/3/user/search?query=${encodeURIComponent(email)}`)) as {
+          accountId: string;
+          accountType?: string;
+          emailAddress?: string;
+        }[]
+      ).filter((u) => (u.accountType ?? "atlassian") === "atlassian");
+      // The search matches beginnings of names and addresses: the exact address, or a single answer, never a guess
+      const exact = users.find((u) => u.emailAddress?.toLowerCase() === email.toLowerCase());
+      return exact?.accountId ?? (users.length === 1 ? users[0]!.accountId : null);
     }
     if (t.kind === "linear") {
       const data = await linear(t, "query($email: String!) { users(filter: { email: { eq: $email } }) { nodes { id } } }", { email });
@@ -161,8 +176,11 @@ export async function create(t: TrackerAccess, issue: TrackerIssue): Promise<Tic
           method: "POST",
           json: { fields: { ...fields, ...(assignee ? { assignee: { accountId: assignee } } : {}) } },
         });
-      // A person Jira knows but who cannot be assigned in this project: the ticket is created unassigned
-      const r = (await post(accountId).catch((e) => (accountId ? post(null) : Promise.reject(e)))) as { key: string };
+      // A person Jira knows but who cannot be assigned in this project: the ticket is created unassigned. Only
+      // that refusal is retried: after a timeout or a server error the first ticket may exist already
+      const r = (await post(accountId).catch((e) =>
+        accountId && e instanceof TrackerError && e.status === 400 && /assignee/i.test(e.body) ? post(null) : Promise.reject(e),
+      )) as { key: string };
       return { key: r.key, url: `${site}/browse/${r.key}` };
     }
   }
