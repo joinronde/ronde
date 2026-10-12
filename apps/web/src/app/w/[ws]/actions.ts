@@ -25,7 +25,7 @@ import {
   syncMeetingCalendar,
   testCalendarAccount,
 } from "@/lib/server/calendars";
-import { domainsOn, domainTakenElsewhere, ssoEnforcementOn } from "@/lib/server/domains";
+import { domainsOn, domainTakenElsewhere, endDomainSessions, ssoEnforcementOn } from "@/lib/server/domains";
 import { AccessError, OpError } from "@/lib/server/errors";
 import { createGuestLink, listGuestLinks, revokeGuestLink } from "@/lib/server/guest-links";
 import { INTERNAL_HEADER, INTERNAL_TOKEN, identityHost, refreshTrustedOrigins, withPendingOrigin } from "@/lib/server/identity";
@@ -377,7 +377,15 @@ export async function updateDomainAction(slug: string, id: string, patch: { capt
       if (!own && !signInProviders().some((p) => SSO_PROVIDERS.has(p.id))) throw new OpError("ssoNotConfigured");
     }
     await enterprise.domains.update(ctx.db, id, patch);
-    await log(ctx, "domains.update", "domain", id, patch);
+    // Sessions opened before, another way, end now: the domain's people sign in again through their company
+    // (the administrator turning it on keeps theirs, to check the result)
+    let signedOut = 0;
+    if (patch.enforceSso) {
+      const row = await ctx.db.workspaceDomain.findFirst({ where: { id }, select: { domain: true } });
+      const current = (await auth.api.getSession({ headers: await headers() }))?.session.id;
+      if (row) signedOut = await endDomainSessions(row.domain, current);
+    }
+    await log(ctx, "domains.update", "domain", id, { ...patch, ...(patch.enforceSso ? { signedOut } : {}) });
     refresh(slug);
     return null;
   });
@@ -397,7 +405,7 @@ export async function removeDomainAction(slug: string, id: string) {
 
 async function ssoContext(slug: string) {
   const ctx = await authorize(slug, "workspace.manage");
-  if (!(await identityHost.allowed("identity.saml"))) throw new AccessError(403, "featureNotInPlan");
+  if (!(await identityHost.allowed("identity.saml", ctx.workspace.id))) throw new AccessError(403, "featureNotInPlan");
   return ctx;
 }
 
@@ -462,7 +470,7 @@ export interface LdapInput {
 
 async function ldapContext(slug: string) {
   const ctx = await authorize(slug, "workspace.manage");
-  if (!(await identityHost.allowed("identity.ldap"))) throw new AccessError(403, "featureNotInPlan");
+  if (!(await identityHost.allowed("identity.ldap", ctx.workspace.id))) throw new AccessError(403, "featureNotInPlan");
   return ctx;
 }
 
@@ -523,7 +531,7 @@ export async function removeLdapAction(slug: string) {
 
 async function scimContext(slug: string) {
   const ctx = await authorize(slug, "workspace.manage");
-  if (!(await identityHost.allowed("identity.scim"))) throw new AccessError(403, "featureNotInPlan");
+  if (!(await identityHost.allowed("identity.scim", ctx.workspace.id))) throw new AccessError(403, "featureNotInPlan");
   return ctx;
 }
 

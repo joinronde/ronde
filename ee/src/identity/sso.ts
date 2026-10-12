@@ -26,8 +26,9 @@ export async function resolveSsoUser(
   providerId: string,
   rawEmail: string | undefined,
 ): Promise<{ action: "continue" } | { action: "link"; userId: string; profile: "preserve" } | { action: "reject"; code: string }> {
-  if (!(await host.allowed("identity.saml"))) return { action: "reject", code: "SSO_NOT_IN_PLAN" };
   const scope = await providerScope(providerId);
+  // The provider's workspace may use single sign-on (its plan in the cloud, the license of a server)
+  if (!(await host.allowed("identity.saml", scope?.workspaceId ?? null))) return { action: "reject", code: "SSO_NOT_IN_PLAN" };
   const email = rawEmail?.trim().toLowerCase() ?? "";
   if (!scope || !scope.domains.includes(domainOf(email))) return { action: "reject", code: "SSO_DOMAIN_MISMATCH" };
   // The domain is still verified by this workspace (removing it stops its provider)

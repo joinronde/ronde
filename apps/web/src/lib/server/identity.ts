@@ -5,7 +5,7 @@ import { hasFeature } from "@ronde/editions";
 import type { IdentityHost } from "@ronde/editions/ee";
 import { audit } from "./audit";
 import { env } from "./env";
-import { edition, loadLicense } from "./license";
+import { edition, featureOn, isCloud, loadLicense } from "./license";
 import { decryptSecret } from "./secrets";
 
 // Identity of the paid editions, as the core sees it: what the Enterprise sign-in code may ask, and the
@@ -59,16 +59,33 @@ async function verifiedWorkspaces(email: string): Promise<string[]> {
   return rows.map((r) => r.workspaceId);
 }
 
-const allowed = async (feature: "identity.saml" | "identity.ldap" | "identity.scim") => {
-  await loadLicense();
-  return hasFeature(edition(), feature);
+type IdentityFeature = "identity.saml" | "identity.ldap" | "identity.scim";
+
+/**
+ * A workspace may use a sign-in feature: the license of a self-hosted instance, the workspace's own plan in the
+ * cloud. Without a workspace, whether any may: in the cloud that is decided workspace by workspace afterwards.
+ */
+const allowed = async (feature: IdentityFeature, workspaceId: string | null): Promise<boolean> => {
+  if (!isCloud()) {
+    await loadLicense();
+    return hasFeature(edition(), feature);
+  }
+  if (workspaceId === null) return true;
+  const ws = await prisma.workspace.findUnique({ where: { id: workspaceId }, select: { plan: true, deletedAt: true } });
+  return !!ws && !ws.deletedAt && featureOn(feature, ws);
 };
+
+/** The workspaces among these that may use the feature */
+async function allowedAmong(feature: IdentityFeature, workspaceIds: string[]): Promise<string[]> {
+  const ok = await Promise.all(workspaceIds.map((id) => allowed(feature, id)));
+  return workspaceIds.filter((_, i) => ok[i]);
+}
 
 export const identityHost: IdentityHost = {
   allowed,
   joinWorkspace: (user, workspaceId) => joinWorkspace(user, workspaceId, "members.sso"),
   ldapDirectoryFor: async (email) => {
-    const workspaces = await verifiedWorkspaces(email);
+    const workspaces = await allowedAmong("identity.ldap", await verifiedWorkspaces(email));
     if (!workspaces.length) return null;
     const d = await prisma.ldapDirectory.findFirst({ where: { workspaceId: { in: workspaces }, enabled: true } });
     return d ? { ...d, bindPassword: decryptSecret(d.bindPassword) } : null;
@@ -82,16 +99,26 @@ export const identityHost: IdentityHost = {
 export async function companyIdentity(email: string): Promise<boolean> {
   const workspaces = await verifiedWorkspaces(email);
   if (!workspaces.length) return false;
-  if ((await allowed("identity.ldap")) && (await prisma.ldapDirectory.count({ where: { workspaceId: { in: workspaces }, enabled: true } })))
-    return true;
-  if (!(await allowed("identity.saml"))) return false;
-  const providers = await prisma.ssoProvider.findMany({ where: { workspaceId: { in: workspaces } }, select: { domain: true } });
+  const withLdap = await allowedAmong("identity.ldap", workspaces);
+  if (withLdap.length && (await prisma.ldapDirectory.count({ where: { workspaceId: { in: withLdap }, enabled: true } }))) return true;
+  const withSso = await allowedAmong("identity.saml", workspaces);
+  if (!withSso.length) return false;
+  const providers = await prisma.ssoProvider.findMany({ where: { workspaceId: { in: withSso } }, select: { domain: true } });
   return providers.some((p) => p.domain.split(",").includes(domainOf(email)));
 }
 
 /** Some workspace of the instance signs its people in through its company directory */
 export async function companyLdapAvailable(): Promise<boolean> {
-  return (await allowed("identity.ldap")) && (await prisma.ldapDirectory.count({ where: { enabled: true } })) > 0;
+  if (!(await allowed("identity.ldap", null))) return false;
+  const rows = await prisma.ldapDirectory.findMany({ where: { enabled: true }, select: { workspaceId: true }, take: 50 });
+  return (
+    (
+      await allowedAmong(
+        "identity.ldap",
+        rows.map((r) => r.workspaceId),
+      )
+    ).length > 0
+  );
 }
 
 /** Origins of identity providers being registered, trusted for their discovery document */
@@ -130,6 +157,7 @@ export async function trustedOrigins(): Promise<string[]> {
 
 /** Some workspace of the instance signs its people in with its own provider (Enterprise license in force) */
 export async function companySsoAvailable(): Promise<boolean> {
-  if (!(await identityHost.allowed("identity.saml"))) return false;
-  return (await prisma.ssoProvider.count({ where: { workspaceId: { not: null } } })) > 0;
+  if (!(await allowed("identity.saml", null))) return false;
+  const rows = await prisma.ssoProvider.findMany({ where: { workspaceId: { not: null } }, select: { workspaceId: true }, take: 50 });
+  return (await allowedAmong("identity.saml", [...new Set(rows.map((r) => r.workspaceId!))])).length > 0;
 }

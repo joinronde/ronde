@@ -3,7 +3,7 @@ import { prisma, scoped } from "@ronde/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { enterprise } from "@/ee-bridge";
 import { auth } from "@/lib/server/auth";
-import { captured, captureNewUser, ssoRequired } from "@/lib/server/domains";
+import { captured, captureNewUser, endDomainSessions, ssoRequired } from "@/lib/server/domains";
 import { saveLicense } from "@/lib/server/license";
 import { workspace } from "./fixtures";
 
@@ -69,6 +69,32 @@ describe("email domains", () => {
       body: { code: "SSO_REQUIRED" },
     });
     expect(await ssoRequired("zoe@elsewhere.test")).toBe(false);
+  });
+
+  it("open no session another way: a sign-in link sent before is refused, and older sessions end", async () => {
+    const email = `zoe@${DOMAIN}`;
+    const user = await prisma.user.findUniqueOrThrow({ where: { email } });
+    // A link asked for while single sign-on was not required yet
+    await enterprise.domains.update(db(), domainId, { enforceSso: false });
+    await auth.api.signInMagicLink({ body: { email, callbackURL: "/" }, headers: new Headers() });
+    const link = await prisma.verification.findFirstOrThrow({ where: { value: { contains: email } }, orderBy: { createdAt: "desc" } });
+    await enterprise.domains.update(db(), domainId, { enforceSso: true });
+    // Following the link in a browser opens nothing: back to the sign-in page, which explains why
+    const token = link.identifier.replace(/^magic-link:/, "");
+    const res = await auth.handler(new Request(`http://localhost:3000/api/auth/magic-link/verify?token=${token}&callbackURL=/`));
+    expect(res.status).toBe(302);
+    expect(res.headers.get("location")).toMatch(/\/sign-in\?error=SSO_REQUIRED$/);
+    expect(await prisma.authSession.count({ where: { userId: user.id } })).toBe(0);
+    // Sessions opened before the requirement
+    await prisma.authSession.create({
+      data: { id: crypto.randomUUID(), token: crypto.randomUUID(), userId: user.id, expiresAt: new Date(Date.now() + 86_400_000) },
+    });
+    const kept = await prisma.authSession.create({
+      data: { id: crypto.randomUUID(), token: crypto.randomUUID(), userId: user.id, expiresAt: new Date(Date.now() + 86_400_000) },
+    });
+    // Turning the requirement on ends the sessions opened before, but the administrator's
+    expect(await endDomainSessions(DOMAIN.toUpperCase(), kept.id)).toBe(1);
+    expect(await prisma.authSession.findMany({ where: { userId: user.id }, select: { id: true } })).toEqual([{ id: kept.id }]);
   });
 
   it("stop applying without the license", async () => {

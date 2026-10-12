@@ -5,7 +5,7 @@ import { prisma } from "@ronde/db";
 import { resolveLocale } from "@ronde/i18n";
 import { type BetterAuthPlugin, betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { APIError, createAuthMiddleware, getSessionFromCtx } from "better-auth/api";
+import { APIError, createAuthMiddleware, getSessionFromCtx, isAPIError } from "better-auth/api";
 import { nextCookies } from "better-auth/next-js";
 import { genericOAuth, magicLink, twoFactor } from "better-auth/plugins";
 import { enterprise } from "@/ee-bridge";
@@ -41,7 +41,19 @@ export async function signupAllowed(email: string): Promise<boolean> {
 
 const oidc = env.oidc();
 
-/** Sign-in and sign-up paths that bypass single sign-on */
+/**
+ * The company's own ways in, the only ones that open a session for an address of a domain requiring single
+ * sign-on: its identity provider (workspace SSO, the instance's OIDC provider) and its directory
+ */
+const COMPANY_SIGN_IN = ["/sso/callback/", "/sso/saml2/sp/acs/", "/sso/saml2/callback/", "/oauth2/callback/", "/sign-in/ldap"];
+
+/** The account behind an address protects its sign-in with a second factor */
+async function twoFactorOn(email: string): Promise<boolean> {
+  const user = await prisma.user.findUnique({ where: { email: email.trim().toLowerCase() }, select: { twoFactorEnabled: true } });
+  return !!user?.twoFactorEnabled;
+}
+
+/** Sign-in and sign-up paths that bypass single sign-on: refused early, before the password is checked */
 const SSO_GUARDED = new Set(["/sign-in/email", "/sign-up/email", "/sign-in/magic-link", "/request-password-reset", "/forget-password"]);
 const social = env.social();
 
@@ -132,13 +144,27 @@ export const auth = betterAuth({
           throw new APIError("FORBIDDEN", { code: "SSO_REQUIRED", message: "SSO_REQUIRED" });
         return;
       }
+      // An account protected by a second factor does not sign in with an email link alone: password and code
+      if (ctx.path === "/sign-in/magic-link") {
+        const address = (ctx.body as { email?: unknown } | undefined)?.email;
+        if (typeof address === "string" && (await twoFactorOn(address)))
+          throw new APIError("FORBIDDEN", { code: "TWO_FACTOR_REQUIRED", message: "TWO_FACTOR_REQUIRED" });
+      }
       if (!SSO_GUARDED.has(ctx.path)) return;
       const email = (ctx.body as { email?: unknown } | undefined)?.email;
       if (typeof email === "string" && (await ssoRequired(email)))
         throw new APIError("FORBIDDEN", { code: "SSO_REQUIRED", message: "SSO_REQUIRED" });
     }),
-    // A passkey added before single sign-on became required does not open a session either
     after: createAuthMiddleware(async (ctx) => {
+      // The company requires its own sign-in: a browser following an email link or coming back from Google, GitHub
+      // or Microsoft lands on the sign-in page with the explanation, not on an error written in JSON
+      // The same for an email link refused to an account with a second factor
+      const returned = ctx.context.returned;
+      const code = isAPIError(returned) ? returned.body?.code : undefined;
+      // (a Response as it is: thrown, the redirect would keep the refusal's 403 status)
+      if (ctx.request?.method === "GET" && (code === "SSO_REQUIRED" || code === "TWO_FACTOR_REQUIRED"))
+        return new Response(null, { status: 302, headers: { Location: `${env.appUrl()}/sign-in?error=${code}` } });
+      // A passkey added before single sign-on became required does not open a session either
       if (ctx.path !== "/passkey/verify-authentication") return;
       const created = ctx.context.newSession;
       if (created && (await ssoRequired(created.user.email))) {
@@ -148,12 +174,23 @@ export const auth = betterAuth({
     }),
   },
   databaseHooks: {
-    // An account disabled by the Ronde team cannot open a session, whatever the way of signing in
     session: {
       create: {
-        before: async (session) => {
-          const user = await prisma.user.findUnique({ where: { id: session.userId }, select: { disabledAt: true } });
+        before: async (session, ctx) => {
+          const user = await prisma.user.findUnique({
+            where: { id: session.userId },
+            select: { disabledAt: true, email: true, twoFactorEnabled: true },
+          });
+          // An account disabled by the Ronde team cannot open a session, whatever the way of signing in
           if (user?.disabledAt) throw new APIError("FORBIDDEN", { code: "ACCOUNT_DISABLED", message: "ACCOUNT_DISABLED" });
+          // A domain requiring single sign-on: Google, GitHub, Microsoft, a passkey, an email link or a password
+          // do not open a session, whichever endpoint creates it (sessions made inside the server have no path)
+          const path = ctx?.path;
+          if (user && path && !COMPANY_SIGN_IN.some((p) => path.startsWith(p)) && (await ssoRequired(user.email)))
+            throw new APIError("FORBIDDEN", { code: "SSO_REQUIRED", message: "SSO_REQUIRED" });
+          // A link asked for before the second factor was turned on does not get around it
+          if (user?.twoFactorEnabled && path === "/magic-link/verify")
+            throw new APIError("FORBIDDEN", { code: "TWO_FACTOR_REQUIRED", message: "TWO_FACTOR_REQUIRED" });
         },
       },
     },

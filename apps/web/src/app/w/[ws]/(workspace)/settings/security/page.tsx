@@ -18,15 +18,15 @@ export default async function SecurityPage({ params }: { params: Promise<{ ws: s
   const ctx = await pageWorkspace((await params).ws, "workspace.manage");
   if (!domainsOn(ctx.workspace)) return <PlanNotice feature="identity.domainCapture" plansUrl={await plansUrl(ctx)} />;
   const instanceSso = signInProviders().filter((p) => SSO_PROVIDERS.has(p.id));
-  const providers = (await identityHost.allowed("identity.saml")) ? await enterprise.identity.listSso(ctx.db) : null;
+  const providers = (await identityHost.allowed("identity.saml", ctx.workspace.id)) ? await enterprise.identity.listSso(ctx.db) : null;
   const auth = `${await publicUrl("")}/api/auth`;
-  const scimTokens = (await identityHost.allowed("identity.scim"))
+  const scimTokens = (await identityHost.allowed("identity.scim", ctx.workspace.id))
     ? await ctx.db.scimToken.findMany({
         orderBy: { createdAt: "asc" },
         select: { id: true, name: true, prefix: true, lastUsedAt: true, createdAt: true },
       })
     : null;
-  const directory = (await identityHost.allowed("identity.ldap")) ? await ctx.db.ldapDirectory.findFirst({}) : undefined;
+  const directory = (await identityHost.allowed("identity.ldap", ctx.workspace.id)) ? await ctx.db.ldapDirectory.findFirst({}) : undefined;
   return (
     <SecurityView
       slug={ctx.workspace.slug}

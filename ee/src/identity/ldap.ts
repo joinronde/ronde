@@ -82,7 +82,8 @@ export function ldapPlugin(host: IdentityHost) {
         async (ctx) => {
           const { email, password, rememberMe } = ctx.body;
           // No directory for this address (or not in the license): the client falls back to the Ronde password
-          const directory = (await host.allowed("identity.ldap")) ? await host.ldapDirectoryFor(email) : null;
+          // Only directories of workspaces that may use them (the host checks the plan or the license)
+          const directory = await host.ldapDirectoryFor(email);
           if (!directory) throw new APIError("NOT_FOUND", { code: "NO_DIRECTORY", message: "NO_DIRECTORY" });
           const person = await ldapAuthenticate(directory, email, password).catch(() => null);
           if (!person) throw new APIError("UNAUTHORIZED", { code: "INVALID_EMAIL_OR_PASSWORD", message: "Invalid email or password" });

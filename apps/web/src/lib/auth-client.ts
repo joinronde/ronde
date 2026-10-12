@@ -33,6 +33,7 @@ export function failureKey(error: { code?: string; status?: number; message?: st
   if (code === "INVALID_CODE" || code === "INVALID_BACKUP_CODE" || code === "INVALID_TWO_FACTOR_COOKIE") return "invalidCode" as const;
   if (code === "INVALID_TOKEN" || code === "TOKEN_EXPIRED") return "linkExpired" as const;
   if (code === "SSO_REQUIRED" || error?.message?.includes("SSO_REQUIRED")) return "ssoRequired" as const;
+  if (code === "TWO_FACTOR_REQUIRED") return "twoFactorRequired" as const;
   if (error?.message?.includes("SIGNUP_NOT_ALLOWED") || code === "SIGNUP_NOT_ALLOWED") return "signupNotAllowed" as const;
   if (code === "SSO_NO_PROVIDER") return "ssoNoProvider" as const;
   if (code === "ACCOUNT_DISABLED" || error?.message?.includes("ACCOUNT_DISABLED")) return "accountDisabled" as const;

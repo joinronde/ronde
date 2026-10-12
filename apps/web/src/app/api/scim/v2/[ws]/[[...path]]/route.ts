@@ -31,7 +31,8 @@ async function handle(req: Request, { params }: Params): Promise<Response> {
     include: { workspace: { select: { id: true, slug: true, settings: true, deletedAt: true } } },
   });
   if (!token || token.workspace.slug !== ws || token.workspace.deletedAt) return scimError(401, "Unknown token");
-  if (!(await identityHost.allowed("identity.scim"))) return scimError(403, "SCIM provisioning is not part of this instance's plan");
+  if (!(await identityHost.allowed("identity.scim", token.workspace.id)))
+    return scimError(403, "SCIM provisioning is not part of this workspace's plan");
   // Used recently enough to show in the settings, without a write at every request
   if (!token.lastUsedAt || Date.now() - token.lastUsedAt.getTime() > 60_000)
     await prisma.scimToken.update({ where: { id: token.id }, data: { lastUsedAt: new Date() } });

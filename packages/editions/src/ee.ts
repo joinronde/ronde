@@ -71,8 +71,11 @@ export type TxtResolver = (name: string) => Promise<string[][]>;
 
 /** What the identity code of the paid editions needs from the core */
 export interface IdentityHost {
-  /** The license includes the feature (checked at each use) */
-  allowed: (feature: "identity.saml" | "identity.ldap" | "identity.scim") => Promise<boolean>;
+  /**
+   * The feature may be used by this workspace (checked at each use): the instance's license when self-hosted,
+   * the workspace's plan in the cloud. Without a workspace (null): whether any workspace of the instance may.
+   */
+  allowed: (feature: "identity.saml" | "identity.ldap" | "identity.scim", workspaceId: string | null) => Promise<boolean>;
   /** Someone signed in through a workspace's own provider: they become a member of it if they are not */
   joinWorkspace: (user: { id: string; email: string; name: string }, workspaceId: string) => Promise<void>;
   /** Company directory for an address (its domain verified by a workspace with a directory), secrets decrypted */

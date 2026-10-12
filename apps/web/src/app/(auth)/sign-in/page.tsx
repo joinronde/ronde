@@ -13,14 +13,19 @@ export async function generateMetadata() {
 }
 
 // Better Auth sends back an error code in the URL when a link or a provider fails
-const URL_ERRORS: Record<string, "linkExpired" | "signupNotAllowed" | "accountDisabled" | "generic"> = {
-  INVALID_TOKEN: "linkExpired",
-  EXPIRED_TOKEN: "linkExpired",
-  TOKEN_EXPIRED: "linkExpired",
-  SIGNUP_NOT_ALLOWED: "signupNotAllowed",
-  signup_disabled: "signupNotAllowed",
-  ACCOUNT_DISABLED: "accountDisabled",
-};
+const URL_ERRORS: Record<string, "linkExpired" | "signupNotAllowed" | "accountDisabled" | "ssoRequired" | "twoFactorRequired" | "generic"> =
+  {
+    INVALID_TOKEN: "linkExpired",
+    EXPIRED_TOKEN: "linkExpired",
+    TOKEN_EXPIRED: "linkExpired",
+    SIGNUP_NOT_ALLOWED: "signupNotAllowed",
+    signup_disabled: "signupNotAllowed",
+    ACCOUNT_DISABLED: "accountDisabled",
+    // Google, GitHub or Microsoft for an address whose company requires its own sign-in
+    SSO_REQUIRED: "ssoRequired",
+    // An email link for an account with a second factor
+    TWO_FACTOR_REQUIRED: "twoFactorRequired",
+  };
 
 export default async function SignInPage({ searchParams }: { searchParams: Promise<{ next?: string; error?: string }> }) {
   const { next, error } = await searchParams;
