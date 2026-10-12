@@ -99,7 +99,8 @@ export async function compute(
         healthByWeek: x.health,
         doneByWeek: x.done,
         lastNews: x.last,
-        quiet: p.status === "active" && (!x.last || x.last < quietSince),
+        // Quiet: active, and nothing said for three weeks (a project created since has not had the time)
+        quiet: p.status === "active" && (x.last ? x.last < quietSince : p.createdAt.toISOString().slice(0, 10) < quietSince),
         overdue: !!p.targetDate && p.targetDate < period.to && !["done", "cancelled"].includes(p.status),
       };
     }),

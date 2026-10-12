@@ -79,11 +79,14 @@ beforeAll(async () => {
   };
   const workspaceId = w.ws.id;
   const past = iso(Date.now() - 3 * DAY);
-  const [mobile, help, billing] = await Promise.all([
+  const [mobile, help, , billing] = await Promise.all([
     prisma.project.create({
       data: { workspaceId, slug: "mobile-app", name: "Mobile app", status: "active", targetDate: past, leadId: w.host.id },
     }),
-    prisma.project.create({ data: { workspaceId, slug: "help-center", name: "Help center", status: "active" } }),
+    prisma.project.create({
+      data: { workspaceId, slug: "help-center", name: "Help center", status: "active", createdAt: new Date(Date.now() - 60 * DAY) },
+    }),
+    prisma.project.create({ data: { workspaceId, slug: "new-api", name: "New API", status: "active" } }),
     prisma.project.create({ data: { workspaceId, slug: "billing", name: "Billing", status: "done", targetDate: past } }),
   ]);
   ids = { mobile: mobile.id, help: help.id, billing: billing.id };
@@ -134,7 +137,8 @@ describe("portfolio dashboard", () => {
     expect(mobile.healthByWeek[week(lastWeek)]).toBe("atRisk");
     expect(mobile.doneByWeek[week(lastWeek)]).toBe(2);
     expect(mobile).toMatchObject({ lastNews: lastWeek, overdue: true, quiet: false, lead: "Host" });
-    // Nothing said about it: quiet; finished: neither overdue nor quiet
+    // Nothing said about it for two months: quiet; created this week, not yet; finished: neither overdue nor quiet
+    expect(d.projects.find((p) => p.name === "New API")).toMatchObject({ quiet: false });
     expect(d.projects.find((p) => p.id === ids.help)).toMatchObject({ quiet: true, overdue: false, lastNews: null });
     expect(d.projects.find((p) => p.id === ids.billing)).toMatchObject({ quiet: false, overdue: false });
   });
@@ -146,7 +150,7 @@ describe("portfolio dashboard", () => {
     expect(res.status).toBe(200);
     expect(res.headers.get("content-type")).toMatch(/^text\/csv/);
     const lines = (await res.text()).replace(/^﻿/, "").trim().split(/\r?\n/);
-    expect(lines).toHaveLength(4);
+    expect(lines).toHaveLength(5);
     expect(lines.find((l) => l.includes("Mobile app"))).toBeTruthy();
     expect(lines.find((l) => l.includes("Help center"))).toBeTruthy();
   });

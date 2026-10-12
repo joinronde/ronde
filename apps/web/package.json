@@ -13,6 +13,7 @@
     "test": "vitest run",
     "db:seed": "tsx scripts/seed.ts",
     "e2e": "playwright test",
+    "e2e:cloud": "playwright test --config playwright.cloud.config.ts",
     "test:integration": "vitest run --config vitest.integration.config.ts",
     "media": "tsx media/run.ts",
     "push-keys": "node -e \"const k=require('web-push').generateVAPIDKeys();console.log('WEB_PUSH_PUBLIC_KEY='+k.publicKey+'\\nWEB_PUSH_PRIVATE_KEY='+k.privateKey)\""

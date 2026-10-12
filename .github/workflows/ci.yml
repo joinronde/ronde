@@ -92,6 +92,10 @@ jobs:
       - run: pnpm --filter @ronde/web e2e --workers=1
         env:
           E2E_BUILD: "1"
+      # The paid features, on a server in cloud mode where each workspace has its own plan
+      - run: pnpm --filter @ronde/web e2e:cloud --workers=1
+        env:
+          E2E_BUILD: "1"
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
