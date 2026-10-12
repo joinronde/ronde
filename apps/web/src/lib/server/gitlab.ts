@@ -1,4 +1,5 @@
 import "server-only";
+import { createHash } from "node:crypto";
 import type { ForgeItem, GitlabProject } from "@ronde/core/types";
 import { matchesProjects } from "@ronde/core/util";
 import type { ScopedClient } from "@ronde/db";
@@ -41,6 +42,13 @@ export async function meetingGitlab(db: ScopedClient, meetingId: string) {
 
 const cache = new Map<string, { at: number; items: ForgeItem[] }>();
 
+/**
+ * What a cached answer depends on: the server, the token (two workspaces' tokens do not see the same projects)
+ * and the request. The token is kept as a hash.
+ */
+const cacheKey = (cfg: GitlabConfig, ...parts: string[]) =>
+  [cfg.url, createHash("sha256").update(cfg.token).digest("hex").slice(0, 16), ...parts].join("|");
+
 async function glFetch(cfg: GitlabConfig, path: string): Promise<Response> {
   const res = await outboundFetch(`${cfg.url}/api/v4${path}`, {
     headers: { "PRIVATE-TOKEN": cfg.token },
@@ -62,7 +70,8 @@ async function glGet<T>(cfg: GitlabConfig, path: string): Promise<T> {
 const projectOf = (ref: string | undefined) => (ref ?? "").split(/[#!]/)[0] ?? "";
 
 export async function gitlabItemsFor(cfg: GitlabConfig, username: string, projectsFilter: string): Promise<ForgeItem[]> {
-  const hit = cache.get(username);
+  const key = cacheKey(cfg, username, projectsFilter);
+  const hit = cache.get(key);
   if (hit && Date.now() - hit.at < 60_000) return hit.items;
   const since = new Date(Date.now() - 14 * 86_400_000).toISOString();
   const u = encodeURIComponent(username);
@@ -85,7 +94,7 @@ export async function gitlabItemsFor(cfg: GitlabConfig, username: string, projec
   const items = [...issues.filter(keep).map((x) => map(x, "issue")), ...mrs.filter(keep).map((x) => map(x, "mr"))].sort(
     (a, b) => b.updatedAt - a.updatedAt,
   );
-  cache.set(username, { at: Date.now(), items });
+  cache.set(key, { at: Date.now(), items });
   return items;
 }
 
@@ -93,7 +102,7 @@ const projectsCache = new Map<string, { at: number; list: GitlabProject[] }>();
 
 /** Non-archived projects of the groups (subgroups included), to pick the followed projects */
 export async function gitlabGroupProjects(cfg: GitlabConfig, groups: string[]): Promise<GitlabProject[]> {
-  const key = groups.join(",");
+  const key = cacheKey(cfg, groups.join(","));
   const hit = projectsCache.get(key);
   if (hit && Date.now() - hit.at < 10 * 60_000) return hit.list;
   const lists = await Promise.all(

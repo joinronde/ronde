@@ -1,4 +1,5 @@
 import "server-only";
+import { createHash } from "node:crypto";
 import type { ForgeItem } from "@ronde/core/types";
 import type { ScopedClient } from "@ronde/db";
 import { readConfig } from "@ronde/module-sdk";
@@ -66,7 +67,11 @@ async function search(cfg: GithubConfig, q: string): Promise<GhIssue[]> {
 }
 
 export async function githubItemsFor(cfg: GithubConfig, username: string, repos: string): Promise<ForgeItem[]> {
-  const key = `${cfg.url}|${username}|${repos}`;
+  // The token too, as a hash: two workspaces' tokens do not see the same private repositories
+  const key = `${cfg.url}|${createHash("sha256")
+    .update(cfg.token ?? "")
+    .digest("hex")
+    .slice(0, 16)}|${username}|${repos}`;
   const hit = cache.get(key);
   if (hit && Date.now() - hit.at < 60_000) return hit.items;
   const since = new Date(Date.now() - 14 * 86_400_000).toISOString().slice(0, 10);
