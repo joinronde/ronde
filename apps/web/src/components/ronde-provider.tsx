@@ -154,7 +154,7 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
       localStorage.setItem(FOCUS_KEY, on ? "1" : "0");
     } catch {}
   }, []);
-  const myTurn = !!s.meeting?.startedAt && !!s.viewer.memberId && s.meeting.stepKey === s.viewer.memberId;
+  const myTurn = !!s.meeting?.startedAt && !!s.viewer.memberId && baseKeyOf(s.meeting.stepKey) === s.viewer.memberId;
   const focusNow = focus || myTurn;
   const focusRef = useRef(focusNow);
   focusRef.current = focusNow;

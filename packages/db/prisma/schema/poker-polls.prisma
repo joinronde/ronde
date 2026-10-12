@@ -52,6 +52,8 @@ model Poll {
   options     String[]     @default([])
   /// Who answered what is never shown, only the totals
   anonymous   Boolean      @default(true)
+  /// A quick yes or no: its two options are yes then no, in the language of the host who asked
+  yesNo       Boolean      @default(false)
   open        Boolean      @default(true)
   createdAt   DateTime     @default(now())
   answers     PollAnswer[]

@@ -933,7 +933,7 @@ function NotesBox({ stepKey, label, autoFocus }: { stepKey: string; label: strin
     if (!(await rpc({ op: "action.add", text: txt, ownerId: action.owner, originText: null }, t("actionCreated")))) return;
     setAction(null);
     // Trace in the notes: the action also shows up in the follow-up actions table of the minutes
-    insertRef.current?.(`**${t("notes.actionPrefix")}:** ${txt} (${first(members[action.owner]?.name)})`);
+    insertRef.current?.(`**${t("notes.actionPrefix")}:** ${txt} (${first(active.find((x) => x.id === action.owner)?.name)})`);
   };
 
   // Typing over (focus leaves the area, its action form included): the area joins the current step

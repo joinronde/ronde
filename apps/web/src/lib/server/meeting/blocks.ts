@@ -185,6 +185,7 @@ export async function pollsView(
     kind: p.kind,
     options: p.options,
     anonymous: p.anonymous,
+    yesNo: p.yesNo,
     open: p.open,
     shown: session.shownPollId === p.id,
     answers: p.answers.length,

@@ -28,9 +28,8 @@ export function PollResults({ poll }: { poll: PollDTO }) {
       <p className="hint">{t("noAnswer")}</p>
     );
   // A yes or no: the answers read at a glance, green and red
-  const yesNo = poll.kind === "single" && poll.options.length === 2 && poll.options[0] === t("yes") && poll.options[1] === t("no");
   return (
-    <ul className={"poll-bars" + (yesNo ? " yesno" : "")}>
+    <ul className={"poll-bars" + (poll.yesNo ? " yesno" : "")}>
       {poll.results.map((r) => (
         <li key={r.value}>
           <span className="poll-label">{r.value}</span>
@@ -168,7 +167,15 @@ export function PollsHost() {
             const q = question.trim() || t("yesNoQuestion");
             if (
               await rpc(
-                { op: "polls.create", question: q, kind: "single", options: [t("yes"), t("no")], anonymous: false, show: true },
+                {
+                  op: "polls.create",
+                  question: q,
+                  kind: "single",
+                  options: [t("yes"), t("no")],
+                  anonymous: false,
+                  show: true,
+                  yesNo: true,
+                },
                 t("created"),
               )
             )

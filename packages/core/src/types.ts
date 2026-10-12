@@ -609,6 +609,8 @@ export interface PollDTO {
   kind: "single" | "multiple" | "scale" | "words";
   options: string[];
   anonymous: boolean;
+  /** A quick yes or no: results in green and red */
+  yesNo: boolean;
   open: boolean;
   /** Shown on the shared screen */
   shown: boolean;

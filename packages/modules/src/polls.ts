@@ -41,6 +41,8 @@ export const polls = defineModule({
         anonymous: z.boolean().default(true),
         /** Shown on the shared screen at once (a quick yes or no) */
         show: z.boolean().default(false),
+        /** A quick yes or no: its two options are yes then no */
+        yesNo: z.boolean().default(false),
       }),
       run: async ({ db, requireSession, workspaceId }, o) => {
         const s = requireSession();
@@ -54,6 +56,7 @@ export const polls = defineModule({
             kind: o.kind,
             options: o.kind === "single" || o.kind === "multiple" ? options : [],
             anonymous: o.anonymous,
+            yesNo: o.yesNo && o.kind === "single" && options.length === 2,
           },
         });
         if (o.show) await db.session.update({ where: { id: s.id }, data: { shownPollId: poll.id } });
