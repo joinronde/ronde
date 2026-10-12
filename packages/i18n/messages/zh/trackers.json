@@ -23,13 +23,13 @@
     "site": "站点地址",
     "project": "项目键",
     "email": "账户邮箱",
-    "team": "团队 ID",
+    "team": "团队标识或 ID",
     "url": "GitLab 地址",
     "repo": "仓库（owner/name）"
   },
   "hints": {
     "jira": "在 id.atlassian.com 为上方邮箱对应的账户创建的 API 令牌。",
-    "linear": "来自 Linear 设置 → API 的个人 API 密钥。团队 ID 在团队设置中。",
+    "linear": "来自 Linear 设置 → API 的个人 API 密钥。团队标识（ENG-12 中的 ENG）位于每个议题编号之前。",
     "gitlab": "具有 api 范围的项目或个人访问令牌。项目：其路径（group/project）或编号。",
     "github": "对该仓库具有“Issues：读写”权限的细粒度令牌。"
   },

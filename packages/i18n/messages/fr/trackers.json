@@ -23,13 +23,13 @@
     "site": "Adresse du site",
     "project": "Clé du projet",
     "email": "E-mail du compte",
-    "team": "Identifiant de l'équipe",
+    "team": "Clé ou identifiant de l'équipe",
     "url": "Adresse de GitLab",
     "repo": "Dépôt (propriétaire/nom)"
   },
   "hints": {
     "jira": "Un jeton d'API créé sur id.atlassian.com, pour le compte dont l'e-mail est ci-dessus.",
-    "linear": "Une clé d'API personnelle depuis Réglages → API de Linear. L'identifiant de l'équipe est dans ses réglages.",
+    "linear": "Une clé d'API personnelle, dans les réglages de Linear → API. La clé de l'équipe (ENG dans ENG-12) précède chaque numéro de ticket.",
     "gitlab": "Un jeton de projet ou personnel avec la portée api. Projet : son chemin (groupe/projet) ou son numéro.",
     "github": "Un jeton à portée fine avec « Issues : lecture et écriture » sur le dépôt."
   },

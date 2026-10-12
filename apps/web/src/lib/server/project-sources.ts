@@ -690,13 +690,19 @@ export async function listSource(t: SourceAccess): Promise<{ items: SourceItem[]
       break;
     }
     case "linear": {
-      const data = t.config.team
-        ? (
-            (await linear(t, `query($id: String!) { team(id: $id) { projects(first: ${SOURCE_LIMIT}) { nodes { ${LINEAR_LIGHT} } } } }`, {
-              id: t.config.team,
-            })) as { team?: { projects?: unknown } }
-          ).team?.projects
-        : (await linear(t, `query { projects(first: ${SOURCE_LIMIT}) { nodes { ${LINEAR_LIGHT} } } }`)).projects;
+      // The team of a saved tracker, by its id or its key (ENG)
+      const team = (t.config.team ?? "").trim();
+      const projects = `projects(first: ${SOURCE_LIMIT}) { nodes { ${LINEAR_LIGHT} } }`;
+      const data = !team
+        ? (await linear(t, `query { ${projects} }`)).projects
+        : /^[0-9a-f]{8}-[0-9a-f]{4}-/i.test(team)
+          ? ((await linear(t, `query($id: String!) { team(id: $id) { ${projects} } }`, { id: team })) as { team?: { projects?: unknown } })
+              .team?.projects
+          : (
+              (await linear(t, `query($key: String!) { teams(filter: { key: { eqIgnoreCase: $key } }) { nodes { ${projects} } } }`, {
+                key: team,
+              })) as { teams?: { nodes?: { projects?: unknown }[] } }
+            ).teams?.nodes?.[0]?.projects;
       raw = listOf((data as { nodes?: unknown } | undefined)?.nodes ?? []);
       items = raw.map(fromLinear);
       break;

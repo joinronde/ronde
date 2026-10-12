@@ -428,8 +428,8 @@ export interface TrackerIssue {
   title: string;
   /** Markdown: where the action comes from */
   body: string;
-  /** Usernames of the owner in the tracker, when the directory knows them */
-  assignee?: { gitlab?: string; github?: string };
+  /** Usernames of the owner in the tracker, when the directory knows them; their address for Jira and Linear */
+  assignee?: { gitlab?: string; github?: string; email?: string };
 }
 
 export interface TicketRef {

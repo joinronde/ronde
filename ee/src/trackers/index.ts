@@ -46,6 +46,60 @@ async function linear(t: TrackerAccess, query: string, variables: Record<string,
   return body.data ?? {};
 }
 
+/** Answers that do not change often, kept an hour: a Jira project's ticket type, a Linear team's id */
+const known = new Map<string, { at: number; value: string | null }>();
+async function remember(key: string, find: () => Promise<string | null>): Promise<string | null> {
+  const hit = known.get(key);
+  if (hit && Date.now() - hit.at < 3_600_000) return hit.value;
+  const value = await find();
+  known.set(key, { at: Date.now(), value });
+  return value;
+}
+
+/** The type of ticket to create in a Jira project: Task when it has one, otherwise its first standard type */
+async function jiraIssueType(t: TrackerAccess, site: string): Promise<string> {
+  const project = t.config.project ?? "";
+  const name = await remember(`jira|${site}|${project}`, async () => {
+    const p = (await call(t, `${site}/rest/api/3/project/${encodeURIComponent(project)}`)) as {
+      issueTypes?: { name: string; subtask?: boolean; hierarchyLevel?: number }[];
+    };
+    const types = (p.issueTypes ?? []).filter((x) => !x.subtask);
+    return (types.find((x) => x.name === "Task") ?? types.find((x) => (x.hierarchyLevel ?? 0) === 0) ?? types[0])?.name ?? null;
+  });
+  return name ?? "Task";
+}
+
+/** A Linear team given by its key (ENG) or its id: the id the API wants */
+async function linearTeam(t: TrackerAccess): Promise<string> {
+  const team = (t.config.team ?? "").trim();
+  if (/^[0-9a-f]{8}-[0-9a-f]{4}-/i.test(team)) return team;
+  const id = await remember(`linear|${t.token.slice(-6)}|${team}`, async () => {
+    const data = await linear(t, "query($key: String!) { teams(filter: { key: { eqIgnoreCase: $key } }) { nodes { id } } }", { key: team });
+    return (data.teams as { nodes?: { id: string }[] } | undefined)?.nodes?.[0]?.id ?? null;
+  });
+  if (!id) throw new TrackerError("team not found");
+  return id;
+}
+
+/** Who the ticket goes to, found by the action owner's address; nobody when the tracker does not know them */
+async function assigneeOf(t: TrackerAccess, email: string | undefined): Promise<string | null> {
+  if (!email) return null;
+  try {
+    if (t.kind === "jira") {
+      const users = (await call(t, `${trim(t.config.site ?? "")}/rest/api/3/user/search?query=${encodeURIComponent(email)}`)) as {
+        accountId: string;
+        accountType?: string;
+      }[];
+      return users.find((u) => (u.accountType ?? "atlassian") === "atlassian")?.accountId ?? null;
+    }
+    if (t.kind === "linear") {
+      const data = await linear(t, "query($email: String!) { users(filter: { email: { eq: $email } }) { nodes { id } } }", { email });
+      return (data.users as { nodes?: { id: string }[] } | undefined)?.nodes?.[0]?.id ?? null;
+    }
+  } catch {}
+  return null;
+}
+
 /** Jira descriptions are documents (ADF): one paragraph per line */
 const adf = (text: string) => ({
   type: "doc",
@@ -83,10 +137,11 @@ export async function create(t: TrackerAccess, issue: TrackerIssue): Promise<Tic
       return { key: `#${r.iid}`, url: r.web_url };
     }
     case "linear": {
+      const assigneeId = await assigneeOf(t, issue.assignee?.email);
       const data = await linear(
         t,
         "mutation($input: IssueCreateInput!) { issueCreate(input: $input) { success issue { id identifier url } } }",
-        { input: { teamId: t.config.team, title: issue.title, description: issue.body } },
+        { input: { teamId: await linearTeam(t), title: issue.title, description: issue.body, ...(assigneeId ? { assigneeId } : {}) } },
       );
       const created = (data.issueCreate as { issue?: { id: string; identifier: string; url: string } } | undefined)?.issue;
       if (!created) throw new TrackerError("the ticket was not created");
@@ -94,12 +149,20 @@ export async function create(t: TrackerAccess, issue: TrackerIssue): Promise<Tic
     }
     case "jira": {
       const site = trim(t.config.site ?? "");
-      const r = (await call(t, `${site}/rest/api/3/issue`, {
-        method: "POST",
-        json: {
-          fields: { project: { key: t.config.project }, summary: issue.title, issuetype: { name: "Task" }, description: adf(issue.body) },
-        },
-      })) as { key: string };
+      const fields = {
+        project: { key: t.config.project },
+        summary: issue.title,
+        issuetype: { name: await jiraIssueType(t, site) },
+        description: adf(issue.body),
+      };
+      const accountId = await assigneeOf(t, issue.assignee?.email);
+      const post = (assignee: string | null) =>
+        call(t, `${site}/rest/api/3/issue`, {
+          method: "POST",
+          json: { fields: { ...fields, ...(assignee ? { assignee: { accountId: assignee } } : {}) } },
+        });
+      // A person Jira knows but who cannot be assigned in this project: the ticket is created unassigned
+      const r = (await post(accountId).catch((e) => (accountId ? post(null) : Promise.reject(e)))) as { key: string };
       return { key: r.key, url: `${site}/browse/${r.key}` };
     }
   }
@@ -136,7 +199,7 @@ export async function test(t: TrackerAccess): Promise<{ ok: true } | { ok: false
         await call(t, gitlabProject(t));
         break;
       case "linear": {
-        const data = await linear(t, "query($id: String!) { team(id: $id) { id } }", { id: t.config.team });
+        const data = await linear(t, "query($id: String!) { team(id: $id) { id } }", { id: await linearTeam(t) });
         if (!data.team) throw new TrackerError("team not found");
         break;
       }

@@ -41,29 +41,94 @@ describe("issue trackers", () => {
     expect(body(f.calls[1]!)).toMatchObject({ assignee_ids: [7] });
   });
 
-  it("creates Linear issues through GraphQL, and Jira tasks with a document description", async () => {
-    const lin = fake([
-      { data: { issueCreate: { success: true, issue: { id: "u1", identifier: "ENG-5", url: "https://linear.app/x/ENG-5" } } } },
-    ]);
-    const ref = await create({ kind: "linear", config: { team: "team-1" }, token: "lin_api", fetch: lin.fetch }, issue);
+  it("creates Linear issues in the team given by its key, assigned to the owner found by address", async () => {
+    const calls: Call[] = [];
+    const fetch = (async (url: string, init: RequestInit) => {
+      calls.push({ url, init });
+      const q = String((JSON.parse(String(init.body)) as { query: string }).query);
+      const data = q.includes("teams(")
+        ? { teams: { nodes: [{ id: "3f2a9c1e-0000-4000-8000-000000000001" }] } }
+        : q.includes("users(")
+          ? { users: { nodes: [{ id: "user-emma" }] } }
+          : { issueCreate: { success: true, issue: { id: "u1", identifier: "ENG-5", url: "https://linear.app/x/ENG-5" } } };
+      return new Response(JSON.stringify({ data }));
+    }) as unknown as typeof globalThis.fetch;
+    const ref = await create(
+      { kind: "linear", config: { team: "ENG" }, token: "lin_api", fetch },
+      { ...issue, assignee: { email: "emma@acme.com" } },
+    );
     expect(ref).toEqual({ key: "ENG-5", url: "https://linear.app/x/ENG-5", id: "u1" });
-    expect(body(lin.calls[0]!)).toMatchObject({ variables: { input: { teamId: "team-1", title: "Get staging access" } } });
-
-    const jira = fake([{ key: "OPS-9" }, { fields: { status: { statusCategory: { key: "done" } } } }]);
-    const t: TrackerAccess = {
-      kind: "jira",
-      config: { site: "https://acme.atlassian.net", project: "OPS", email: "a@acme.com" },
-      token: "tok",
-      fetch: jira.fetch,
-    };
-    expect(await create(t, issue)).toEqual({ key: "OPS-9", url: "https://acme.atlassian.net/browse/OPS-9" });
-    expect(body(jira.calls[0]!)).toMatchObject({
-      fields: { project: { key: "OPS" }, summary: "Get staging access", description: { type: "doc" } },
+    const asked = calls.map(body);
+    expect(asked.find((b) => String(b.query).includes("teams("))).toMatchObject({ variables: { key: "ENG" } });
+    expect(asked.find((b) => String(b.query).includes("users("))).toMatchObject({ variables: { email: "emma@acme.com" } });
+    expect(body(calls.at(-1)!)).toMatchObject({
+      variables: { input: { teamId: "3f2a9c1e-0000-4000-8000-000000000001", title: "Get staging access", assigneeId: "user-emma" } },
     });
-    expect((jira.calls[0]!.init.headers as Record<string, string>).authorization).toBe(
+    // A team id is used as it is
+    const direct = fake([{ data: { issueCreate: { success: true, issue: { id: "u2", identifier: "ENG-6", url: "u" } } } }]);
+    await create(
+      { kind: "linear", config: { team: "3f2a9c1e-0000-4000-8000-000000000002" }, token: "lin_api", fetch: direct.fetch },
+      issue,
+    );
+    expect(direct.calls).toHaveLength(1);
+  });
+
+  it("creates Jira tickets of a type the project has, assigned when Jira lets it, with a document description", async () => {
+    const jira = (types: string[], assignable = true) => {
+      const calls: Call[] = [];
+      const fetch = (async (url: string, init: RequestInit) => {
+        calls.push({ url, init });
+        if (url.includes("/user/search")) return new Response(JSON.stringify([{ accountId: "acc-emma", accountType: "atlassian" }]));
+        if (url.endsWith("/issue") && init.method === "POST") {
+          const fields = (JSON.parse(String(init.body)) as { fields: { assignee?: unknown } }).fields;
+          return fields.assignee && !assignable ? new Response("{}", { status: 400 }) : new Response(JSON.stringify({ key: "OPS-9" }));
+        }
+        if (url.includes("/issue/OPS-9")) return new Response(JSON.stringify({ fields: { status: { statusCategory: { key: "done" } } } }));
+        return new Response(
+          JSON.stringify({
+            issueTypes: types.map((name) => ({ name, subtask: name === "Sub-task", hierarchyLevel: name === "Epic" ? 1 : 0 })),
+          }),
+        );
+      }) as unknown as typeof globalThis.fetch;
+      return { calls, fetch };
+    };
+    const access = (fetch: typeof globalThis.fetch, project: string): TrackerAccess => ({
+      kind: "jira",
+      config: { site: "https://acme.atlassian.net", project, email: "a@acme.com" },
+      token: "tok",
+      fetch,
+    });
+    const posted = (calls: Call[]) => calls.filter((c) => c.url.endsWith("/issue") && c.init.method === "POST").map(body);
+
+    const a = jira(["Epic", "Sub-task", "Story", "Task"]);
+    const t = access(a.fetch, "OPS");
+    expect(await create(t, { ...issue, assignee: { email: "emma@acme.com" } })).toEqual({
+      key: "OPS-9",
+      url: "https://acme.atlassian.net/browse/OPS-9",
+    });
+    expect(posted(a.calls)).toEqual([
+      expect.objectContaining({
+        fields: expect.objectContaining({
+          project: { key: "OPS" },
+          summary: "Get staging access",
+          issuetype: { name: "Task" },
+          assignee: { accountId: "acc-emma" },
+          description: expect.objectContaining({ type: "doc" }),
+        }),
+      }),
+    ]);
+    expect((a.calls[0]!.init.headers as Record<string, string>).authorization).toBe(
       `Basic ${Buffer.from("a@acme.com:tok").toString("base64")}`,
     );
     expect(await closed(t, { key: "OPS-9", url: "" })).toBe(true);
+
+    // No Task in this project: its first standard type; the owner cannot be assigned there: created unassigned
+    const b = jira(["Epic", "Bug", "Story"], false);
+    await create(access(b.fetch, "SUP"), { ...issue, assignee: { email: "emma@acme.com" } });
+    expect(posted(b.calls).map((x) => x.fields as { issuetype: unknown; assignee?: unknown })).toEqual([
+      { ...(posted(b.calls)[0]!.fields as object), issuetype: { name: "Bug" }, assignee: { accountId: "acc-emma" } },
+      expect.not.objectContaining({ assignee: expect.anything() }),
+    ]);
   });
 
   it("says when the token is refused", async () => {

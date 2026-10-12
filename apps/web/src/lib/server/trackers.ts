@@ -152,7 +152,11 @@ export async function createTicket(ctx: WorkspaceContext, actionId: string, trac
   ].join("\n\n");
   let ref: TicketRef;
   try {
-    ref = await enterprise.trackers.create(access(tracker), { title: action.text, body, assignee: handles });
+    ref = await enterprise.trackers.create(access(tracker), {
+      title: action.text,
+      body,
+      assignee: { ...handles, ...(action.owner.email ? { email: action.owner.email } : {}) },
+    });
   } catch (e) {
     throw new OpError("ticketFailed", { detail: e instanceof Error ? e.message : "" });
   }

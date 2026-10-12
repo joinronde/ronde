@@ -292,7 +292,7 @@ export function NotificationsPanel() {
                 {eventLabel(d.event)} · {byId.get(d.connectorId)?.name ?? "?"} ·{" "}
                 {format.dateTime(d.at, { dateStyle: "short", timeStyle: "short" })}
                 {d.status === "failed" && d.error ? <span className="hint"> · {errorText(d.error)}</span> : null}
-                {d.status === "skipped" && <span className="hint"> · {t("workflow.skipped")}</span>}
+                {d.status === "skipped" && <span className="hint"> · {d.error ? errorText(d.error) : t("workflow.skipped")}</span>}
               </li>
             ))}
           </ul>

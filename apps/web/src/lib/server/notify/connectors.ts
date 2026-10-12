@@ -109,6 +109,8 @@ export async function deleteConnector(ctx: WorkspaceContext, id: string): Promis
 export async function testConnector(ctx: WorkspaceContext, id: string, room?: string): Promise<void> {
   const connector = await ctx.db.connector.findFirst({ where: { id } });
   if (!connector) throw new OpError("notFound");
+  // SMS and WhatsApp come with Team: a connector kept from before cannot send a test either
+  if (isPhoneKind(connector.kind) && !featureOn("integrations.sms", ctx.workspace)) throw new OpError("featureNotInPlan");
   const locale = resolveLocale(ctx.user.locale, ctx.workspace.locale);
   const appUrl = env.appUrl();
   const message = notifyMessage({

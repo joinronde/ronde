@@ -22,7 +22,7 @@ const FIELDS: Record<Kind, { key: "site" | "project" | "email" | "team" | "url" 
     { key: "project", placeholder: "OPS" },
     { key: "email", placeholder: "bot@acme.com" },
   ],
-  linear: [{ key: "team", placeholder: "9cfb482a-81e3-4154-b5b9-2c805e70a02d" }],
+  linear: [{ key: "team", placeholder: "ENG" }],
   gitlab: [
     { key: "url", placeholder: "https://gitlab.com" },
     { key: "project", placeholder: "acme/app" },

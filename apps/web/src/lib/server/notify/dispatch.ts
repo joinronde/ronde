@@ -11,6 +11,7 @@ import { currentJobs } from "@ronde/jobs";
 import { enterprise } from "@/ee-bridge";
 import { awayPeople } from "../absences";
 import { AppError } from "../errors";
+import { featureOn, loadLicense } from "../license";
 import { sendEmail } from "../mailer";
 import { loadCheckIns } from "../meeting/checkins";
 import { personName } from "../meeting/dto";
@@ -156,11 +157,28 @@ export async function deliver(deliveryId: string, fetchImpl: typeof fetch = fetc
   };
   // Workflows (Team): the rule's conditions on what the event carries, then its own words
   const conditions = (d.rule?.conditions ?? []) as { field: string; op: string; value: number }[];
+  const custom = (d.rule?.message ?? null) as { title: string; body: string } | null;
+  // What the plan no longer includes stops here, without retries: SMS and WhatsApp, a workflow's conditions and
+  // words (a downgraded workspace's rules keep their settings, unsent until the plan comes back)
+  await loadLicense();
+  const plan = await prisma.workspace.findUnique({ where: { id: n.meeting.workspaceId }, select: { plan: true } });
+  const missing =
+    isPhoneKind(d.connector.kind) && !featureOn("integrations.sms", plan)
+      ? "integrations.sms"
+      : (conditions.length || custom) && !featureOn("modules.workflows", plan)
+        ? "modules.workflows"
+        : null;
+  if (missing) {
+    await prisma.delivery.update({
+      where: { id: d.id },
+      data: { status: "skipped", attempts: { increment: 1 }, error: `featureNotInPlan {"feature":"${missing}"}` },
+    });
+    return;
+  }
   if (conditions.length && !enterprise.workflows.matches(conditions, workflowFacts(input))) {
     await prisma.delivery.update({ where: { id: d.id }, data: { status: "skipped", attempts: { increment: 1 } } });
     return;
   }
-  const custom = (d.rule?.message ?? null) as { title: string; body: string } | null;
   const message = custom ? customMessage(input, custom) : notifyMessage(input);
   try {
     await sendThrough(

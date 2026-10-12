@@ -8,6 +8,7 @@ import { encryptSecret } from "@/lib/server/secrets";
 const posts: string[] = [];
 let meetingId = "";
 let ruleId = "";
+let workspaceId = "";
 const minutes = (actions: number) => ({
   session: { date: "2026-10-05", time: "10:00" },
   minutes: {
@@ -27,7 +28,10 @@ beforeAll(async () => {
       return new Response("ok", { status: 200 });
     }),
   );
-  const ws = await prisma.workspace.create({ data: { slug: `wf-${Date.now().toString(36)}`, name: "Workflows" } });
+  // Workflows come with Team: a cloud workspace on that plan
+  vi.stubEnv("RONDE_CLOUD", "1");
+  const ws = await prisma.workspace.create({ data: { slug: `wf-${Date.now().toString(36)}`, name: "Workflows", plan: "team" } });
+  workspaceId = ws.id;
   const meeting = await prisma.meeting.create({ data: { workspaceId: ws.id, name: "Weekly" } });
   meetingId = meeting.id;
   const slack = await prisma.connector.create({
@@ -65,5 +69,14 @@ describe("workflows", () => {
     expect(posts).toHaveLength(1);
     expect(posts[0]).toContain("Weekly: follow-up needed");
     expect(posts[0]).toContain("Action 2 (Ali)");
+  });
+
+  it("keeps a downgraded workspace's workflows unsent, saying the plan lacks them", async () => {
+    await prisma.workspace.update({ where: { id: workspaceId }, data: { plan: "community" } });
+    const before = posts.length;
+    await notifyEvent(meetingId, "minutes.published", "s3", minutes(2));
+    expect(posts).toHaveLength(before);
+    const d = await prisma.delivery.findFirstOrThrow({ where: { ruleId }, orderBy: { createdAt: "desc" } });
+    expect(d).toMatchObject({ status: "skipped", error: expect.stringMatching(/^featureNotInPlan /) });
   });
 });

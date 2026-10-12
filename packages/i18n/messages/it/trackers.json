@@ -23,13 +23,13 @@
     "site": "Indirizzo del sito",
     "project": "Chiave del progetto",
     "email": "Email dell'account",
-    "team": "ID del team",
+    "team": "Chiave o ID del team",
     "url": "Indirizzo GitLab",
     "repo": "Repository (owner/nome)"
   },
   "hints": {
     "jira": "Un token API creato su id.atlassian.com, per l'account la cui email è qui sopra.",
-    "linear": "Una chiave API personale dalle impostazioni di Linear → API. L'ID del team è nelle impostazioni del team.",
+    "linear": "Una chiave API personale dalle impostazioni di Linear → API. La chiave del team (ENG in ENG-12) precede ogni numero di issue.",
     "gitlab": "Un token di accesso di progetto o personale con lo scope api. Progetto: il suo percorso (gruppo/progetto) o il suo numero.",
     "github": "Un token fine-grained con «Issues: lettura e scrittura» sul repository."
   },

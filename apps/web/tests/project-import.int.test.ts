@@ -98,8 +98,14 @@ const tools = () =>
       if (url === "https://api.linear.app/graphql") {
         const { query, variables } = JSON.parse(sent) as { query: string; variables?: { ids?: string[] } };
         const nodes = variables?.ids ? linearProjects.filter((p) => variables.ids!.includes(p.id as string)) : linearProjects;
-        // A saved tracker names its team: the projects of that team
-        return Response.json({ data: query.includes("team(") ? { team: { projects: { nodes } } } : { projects: { nodes } } });
+        // A saved tracker names its team (by its key here): the projects of that team
+        return Response.json({
+          data: query.includes("teams(")
+            ? { teams: { nodes: [{ projects: { nodes } }] } }
+            : query.includes("team(")
+              ? { team: { projects: { nodes } } }
+              : { projects: { nodes } },
+        });
       }
       return new Response("{}", { status: 404 });
     }),
