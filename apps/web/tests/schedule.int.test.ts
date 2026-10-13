@@ -53,7 +53,7 @@ describe("sessions follow the schedule", () => {
   it("opens the following occurrence once a session is archived", async () => {
     const s = await current();
     await prisma.session.update({ where: { id: s.id }, data: { startedAt: new Date(), stepKey: "end" } });
-    await runOp(f.ctx, { op: "meeting.archive", minutes: null });
+    await runOp(f.ctx, { op: "meeting.archive", summary: null, omit: [] });
     expect((await current()).date).toBe(addDays(monday, 7));
   });
 
@@ -98,7 +98,7 @@ describe("sessions follow the schedule", () => {
     const following = `${s.occurrenceKey!.split(":")[0]}:${addDays(monday, 7)}`;
     await runOp(f.ctx, { op: "attendance.set", key: following, status: "no", personId: f.memberId });
     await prisma.session.update({ where: { id: s.id }, data: { startedAt: new Date(), stepKey: "end" } });
-    await runOp(f.ctx, { op: "meeting.archive", minutes: null });
+    await runOp(f.ctx, { op: "meeting.archive", summary: null, omit: [] });
     expect((await current()).absent).toEqual([f.memberId]);
   });
 
@@ -123,14 +123,14 @@ describe("sessions follow the schedule", () => {
     // The session prepared before the module was on has no roles: archive it, the next one gets them
     const first = await current();
     await prisma.session.update({ where: { id: first.id }, data: { startedAt: new Date(), stepKey: "end" } });
-    await runOp(f.ctx, { op: "meeting.archive", minutes: null });
+    await runOp(f.ctx, { op: "meeting.archive", summary: null, omit: [] });
     const a = (await current()).assignments as Record<string, string>;
     expect(a.facilitator).toBeTruthy();
     expect(a.noteTaker).toBeTruthy();
     expect(a.facilitator).not.toBe(a.noteTaker);
     const second = await current();
     await prisma.session.update({ where: { id: second.id }, data: { startedAt: new Date(), stepKey: "end" } });
-    await runOp(f.ctx, { op: "meeting.archive", minutes: null });
+    await runOp(f.ctx, { op: "meeting.archive", summary: null, omit: [] });
     const b = (await current()).assignments as Record<string, string>;
     expect(b.facilitator).not.toBe(a.facilitator);
   });

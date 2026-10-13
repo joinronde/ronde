@@ -14,5 +14,6 @@
   "expired": "انتهت صلاحية الدعوة إلى {workspace}. اطلب دعوة جديدة ممن دعاك.",
   "memberTitle": "أنت منضم بالفعل",
   "member": "أنت عضو في {workspace} بالفعل.",
+  "memberOther": "هذه الدعوة موجّهة إلى <strong>{email}</strong>: أرسل إليه الرابط ليتمكن من الانضمام.",
   "open": "فتح {workspace}"
 }

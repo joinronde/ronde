@@ -34,6 +34,6 @@
   "yes": "Ja",
   "no": "Nein",
   "yesNo": "Ja oder nein, sofort",
-  "yesNoHint": "Die unten eingegebene Frage oder „Bist du einverstanden?“, sofort auf dem Bildschirm, mit wer was geantwortet hat.",
+  "yesNoHint": "Die unten eingegebene Frage oder „Bist du einverstanden?“, sofort auf dem Bildschirm, mit der Angabe, wer was geantwortet hat.",
   "yesNoQuestion": "Bist du einverstanden?"
 }

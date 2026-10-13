@@ -91,7 +91,7 @@ describe("a session started on the spot", () => {
     expect(s.occurrenceKey).toBeNull();
     // Once archived, next Monday's occurrence is prepared as planned
     await prisma.session.update({ where: { id: s.id }, data: { stepKey: "end" } });
-    await runOp(f.ctx, { op: "meeting.archive", minutes: null });
+    await runOp(f.ctx, { op: "meeting.archive", summary: null, omit: [] });
     expect((await current()).date).toBe(nextMonday);
   });
 
@@ -99,7 +99,7 @@ describe("a session started on the spot", () => {
     await runOp(f.ctx, { op: "session.now" });
     const s = await current();
     await prisma.session.update({ where: { id: s.id }, data: { stepKey: "end" } });
-    await runOp(f.ctx, { op: "meeting.archive", minutes: null });
+    await runOp(f.ctx, { op: "meeting.archive", summary: null, omit: [] });
     await expect(runOp(f.ctx, { op: "session.now" })).rejects.toThrow();
   });
 });

@@ -1,20 +1,13 @@
 "use client";
 
 import type { Step } from "@ronde/core/meeting";
-import type { RetroDTO } from "@ronde/core/types";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { byVotes, titleOf } from "@/lib/shared/modules";
 import { useRonde } from "./ronde-provider";
 import { Timer } from "./stage";
 
 // Retrospective: anonymous notes in columns, grouped by the host, voted on by the team, then discussed
-
-type Card = RetroDTO["cards"][number];
-type Group = RetroDTO["groups"][number];
-
-/** A group is named after its first note until the host gives it a title */
-const titleOf = (g: Group, cards: Card[]) => g.title || cards.find((c) => c.groupId === g.id)?.text || "";
-const byVotes = (a: Group, b: Group) => b.votes - a.votes || a.position - b.position;
 
 /** Shared screen and stage preview: what the team sees at each phase */
 export function RetroStage({ step, live }: { step: Step; live: boolean }) {

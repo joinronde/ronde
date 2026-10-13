@@ -2,20 +2,10 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { useMemo } from "react";
+import { holidayName } from "@/lib/shared/helpers";
 import { Select } from "./select";
 
-/** The name of a holiday calendar in the reader's language: "France", "Germany · Bayern" */
-export function holidayName(code: string | null, locale: string, regions: Record<string, string> = {}): string {
-  if (!code) return "";
-  const [country = "", region] = code.split("-");
-  let name = country;
-  try {
-    name = new Intl.DisplayNames([locale], { type: "region" }).of(country) ?? country;
-  } catch {
-    // An old browser without region names: the code
-  }
-  return region ? `${name} · ${regions[region] ?? region}` : name;
-}
+export { holidayName };
 
 /**
  * Which public holidays skip the sessions: a country, then one of its regions when their holidays differ.

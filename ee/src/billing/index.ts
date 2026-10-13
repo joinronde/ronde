@@ -24,7 +24,7 @@ async function call(
   fields: Record<string, string | number | boolean | undefined>,
   method: "POST" | "DELETE" = "POST",
 ) {
-  const res = await (a.fetch ?? fetch)(`${API}${path}`, {
+  const res = await (a.fetch ?? fetch)(`${a.apiBase || API}${path}`, {
     method,
     headers: { authorization: `Bearer ${a.secretKey}`, "content-type": "application/x-www-form-urlencoded" },
     body: form(fields),
@@ -37,7 +37,7 @@ async function call(
 
 /** A GET; null when Stripe does not know the object */
 async function get(a: BillingAccess, path: string): Promise<(Record<string, unknown> & { data?: unknown[] }) | null> {
-  const res = await (a.fetch ?? fetch)(`${API}${path}`, {
+  const res = await (a.fetch ?? fetch)(`${a.apiBase || API}${path}`, {
     headers: { authorization: `Bearer ${a.secretKey}` },
     signal: AbortSignal.timeout(20_000),
   });

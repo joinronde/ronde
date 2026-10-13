@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { removePushDeviceAction, savePushDeviceAction, setPushKindAction, testPushAction } from "@/app/account/actions";
 import { FormAlert } from "@/components/auth/fields";
 import { INSTALLABLE_EVENT } from "@/components/service-worker";
+import { deviceLabelOf, keyBytes } from "@/lib/shared/helpers";
 
 export interface PushSettingsProps {
   /** The instance has its push keys */
@@ -18,41 +19,8 @@ export interface PushSettingsProps {
 
 const KINDS = ["turn", "reminder", "inbox"] as const;
 
-/** The VAPID public key, as the browser wants it */
-function keyBytes(base64url: string): Uint8Array<ArrayBuffer> {
-  const raw = atob((base64url + "=".repeat((4 - (base64url.length % 4)) % 4)).replace(/-/g, "+").replace(/_/g, "/"));
-  const out = new Uint8Array(new ArrayBuffer(raw.length));
-  for (let i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
-  return out;
-}
-
 /** "Chrome · Android": enough to tell one's devices apart in the list */
-export function deviceLabel(): string {
-  const ua = navigator.userAgent;
-  const browser = /Edg\//.test(ua)
-    ? "Edge"
-    : /SamsungBrowser/.test(ua)
-      ? "Samsung Internet"
-      : /Firefox\//.test(ua)
-        ? "Firefox"
-        : /Chrome\//.test(ua)
-          ? "Chrome"
-          : /Safari\//.test(ua)
-            ? "Safari"
-            : "";
-  const os = /Android/.test(ua)
-    ? "Android"
-    : /iPhone|iPad|iPod/.test(ua)
-      ? "iOS"
-      : /Windows/.test(ua)
-        ? "Windows"
-        : /Mac OS X/.test(ua)
-          ? "macOS"
-          : /Linux/.test(ua)
-            ? "Linux"
-            : "";
-  return [browser, os].filter(Boolean).join(" · ");
-}
+export const deviceLabel = (): string => deviceLabelOf(navigator.userAgent);
 
 type Support = "checking" | "ok" | "ios" | "unsupported";
 

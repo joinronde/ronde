@@ -10,6 +10,7 @@ import { PersonFace } from "@/components/person-face";
 import { authClient } from "@/lib/auth-client";
 import { withBasePath } from "@/lib/shared/base-path";
 import { LAST_WORKSPACE_COOKIE } from "@/lib/shared/cookies";
+import { initials } from "@/lib/shared/initials";
 import { MeetingMark } from "../meeting-mark";
 import { Menu } from "../workspace/menu";
 import { PEOPLE_PAGES } from "../workspace/people-tabs";
@@ -52,14 +53,8 @@ const ShellContext = createContext<{
   slug: null,
 });
 
-export function initials(name: string) {
-  // Words starting with a letter or a digit: "Product team (demo)" gives "PT", not "P("
-  const parts = name
-    .trim()
-    .split(/\s+/)
-    .filter((w) => /^[\p{L}\p{N}]/u.test(w));
-  return ((parts[0]?.[0] ?? "") + (parts.length > 1 ? (parts[parts.length - 1]?.[0] ?? "") : "")).toUpperCase() || "?";
-}
+// The pages that show faces still import it from here
+export { initials };
 
 export function AppShell({ data, children }: { data: ShellData; children: React.ReactNode }) {
   const t = useTranslations("shell");

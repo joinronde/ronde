@@ -32,6 +32,9 @@ export default async function InvitationPage({ params }: { params: Promise<{ tok
       <div className="auth-body">
         <h1>{t("memberTitle")}</h1>
         <p>{t("member", { workspace: state.workspace })}</p>
+        {state.forOther && (
+          <p className="form-alert info">{t.rich("memberOther", { email: state.forOther, strong: (c) => <strong>{c}</strong> })}</p>
+        )}
         <Link href={`/w/${state.slug}`} className="btn primary big">
           {t("open", { workspace: state.workspace })}
         </Link>

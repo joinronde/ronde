@@ -9,6 +9,7 @@ import { FormAlert } from "@/components/auth/fields";
 import { Icon, type IconName } from "@/components/shell/icons";
 import type { FeedbackRow } from "@/lib/server/feedback";
 import { withBasePath } from "@/lib/shared/base-path";
+import { issueUrl } from "@/lib/shared/links";
 
 // What people sent with "Send feedback", for the administrators of a self-hosted instance: answer them, mark
 // what was dealt with, and pass a problem on to the Ronde project when it is Ronde's own
@@ -19,24 +20,6 @@ const NEXT_STATUS: Record<string, ("new" | "handled" | "archived")[]> = {
   handled: ["new", "archived"],
   archived: ["new"],
 };
-const REPO = "https://github.com/joinronde/ronde";
-
-/** A new issue of the Ronde project, filled with the message and what helps reproduce it, without names */
-function issueUrl(f: FeedbackRow) {
-  const path = (f.context.path ?? "").replace(/\/w\/[^/]+/, "/w/…").replace(/\/(m|people|projects|g)\/[^/]+/g, "/$1/…");
-  const firstLine = f.message.split("\n")[0]!.slice(0, 90);
-  const about = [
-    `Ronde ${f.context.version ?? "?"} · ${[f.context.browser, f.context.viewport].filter(Boolean).join(" · ")}`,
-    path && `Page: \`${path}\``,
-    f.context.errorRef && `Error reference: \`${f.context.errorRef}\``,
-  ].filter(Boolean);
-  // Addresses past a few kilobytes are refused: a long message (Chinese, Hindi take up to 9 characters each once
-  // encoded) is shortened, the admin can paste the rest
-  const message = f.message.length > 1200 ? `${f.message.slice(0, 1200)}…` : f.message;
-  const body = `${message}\n\n---\n${about.join("\n")}`;
-  const q = new URLSearchParams({ title: firstLine, body, labels: f.kind === "bug" ? "bug" : "enhancement" });
-  return `${REPO}/issues/new?${q}`;
-}
 
 export function AdminFeedback({ items, archived, unread }: { items: FeedbackRow[]; archived: boolean; unread: number }) {
   const t = useTranslations("admin.feedback");

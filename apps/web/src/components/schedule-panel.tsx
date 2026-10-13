@@ -7,6 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
 import { DurationField } from "@/components/duration-field";
 import { Select } from "@/components/select";
+import { isoDow, newRule, sameDays, withFreq } from "@/lib/shared/schedule";
 import { HolidayPicker } from "./holiday-picker";
 import { useRonde } from "./ronde-provider";
 import { Icon } from "./shell/icons";
@@ -15,32 +16,8 @@ import { TimeZoneSelect } from "./workspace/inputs";
 type Draft = ScheduleRule;
 type MonthBy = "date" | "weekday" | "last";
 
-const isoDow = (iso: string) => ((new Date(`${iso}T12:00:00Z`).getUTCDay() + 6) % 7) + 1;
 const WEEK = [1, 2, 3, 4, 5, 6, 7];
 const WORKDAYS = [1, 2, 3, 4, 5];
-const sameDays = (a: number[], b: number[]) => a.length === b.length && b.every((d) => a.includes(d));
-
-/** A rule moved to another frequency, keeping what still applies (time, duration, start, end, interval) */
-function withFreq(r: Draft, freq: Draft["freq"]): Partial<Draft> {
-  const day = isoDow(r.startDate);
-  if (freq === "daily") return { freq, byDay: [], setPos: null, monthDay: null };
-  if (freq === "weekly") return { freq, byDay: r.freq === "weekly" && r.byDay.length ? r.byDay : [day], setPos: null, monthDay: null };
-  return { freq, byDay: [], setPos: null, monthDay: Number(r.startDate.slice(8)) };
-}
-
-const newRule = (from: string, time = "10:00"): Draft => ({
-  id: "",
-  freq: "weekly",
-  interval: 1,
-  byDay: [isoDow(from)],
-  setPos: null,
-  monthDay: null,
-  startDate: from,
-  until: null,
-  count: null,
-  time,
-  durationMin: 30,
-});
 
 /** Recurrence of the meeting: rules, then the next dates with what can be done to each one */
 export function SchedulePanel() {

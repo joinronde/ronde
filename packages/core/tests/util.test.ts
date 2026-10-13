@@ -76,6 +76,12 @@ describe("util", () => {
     expect(similarity("Icon licence", "Saturated runners")).toBe(0);
   });
 
+  it("compares Chinese by pairs of characters, dates and numbers aside", () => {
+    expect(similarity("跟进法务审批合同", "等待法务审批合同")).toBeGreaterThanOrEqual(0.5);
+    // The same deadline is not the same task
+    expect(similarity("3月15日前完成登录", "3月15日前提交报告")).toBeLessThan(0.5);
+  });
+
   it("cleans lists and initials", () => {
     expect(lines(" a \n\n b ")).toEqual(["a", "b"]);
     expect(initials("Sarah N'Diaye")).toBe("SN");

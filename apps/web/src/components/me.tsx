@@ -1,7 +1,7 @@
 "use client";
 
 import { hasTurns } from "@ronde/core/agenda";
-import { baseKeyOf, limitOf, spentOf } from "@ronde/core/meeting";
+import { baseKeyOf } from "@ronde/core/meeting";
 import type { ActionStatus, ForgeItem, PastCheckIn, ProjectDTO, ProjectHealth, Section } from "@ronde/core/types";
 import {
   ACTION_STATUSES,
@@ -18,17 +18,29 @@ import {
   mmssPlain,
   plainItem,
   RATING_MIN_VOTES,
-  rebaseList,
-  rebaseText,
   SIGNALS,
-  taskItem,
-  taskOf,
   VOTES_PER_PERSON,
 } from "@ronde/core/util";
 import { formatters } from "@ronde/i18n";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Select } from "@/components/select";
+import {
+  appendLine,
+  carryPlans,
+  type Draft,
+  draftOf,
+  fieldsOf as fieldsOfTab,
+  normDraft,
+  pendingPlans,
+  planKey,
+  planStatus,
+  rebaseDraft,
+  sameDraft,
+  sheetHolder,
+  type TabItems,
+} from "@/lib/shared/check-in-draft";
+import { type LiveStatus, liveStatus } from "@/lib/shared/live-status";
 import { linesAbout, writersOf } from "@/lib/shared/sheets";
 import { track } from "@/lib/shared/track";
 import { AvatarPicker } from "./avatar-picker";
@@ -168,50 +180,14 @@ function AsyncNote({ plannedAt }: { plannedAt: number | null }) {
 }
 
 /** Where the meeting stands, as seen by the viewer: current step, timer, and when their turn comes */
-function useLiveStatus() {
+function useLiveStatus(): LiveStatus {
   const t = useTranslations("me");
   const { s, agenda, cur, now, hydrated } = useRonde();
-  const m = s.meeting;
-  const started = !!m?.startedAt;
-  const step = m ? agenda[cur] : undefined;
-  const speaking = started && step?.type === "speaker";
+  const started = !!s.meeting?.startedAt;
+  const speaking = started && agenda[cur]?.type === "speaker";
   useTick(speaking ? 1000 : started ? 15_000 : 30_000);
-  if (!m || !step) return { state: "none" as const, title: "" };
-  if (step.type === "end") return { state: "ended" as const, title: "" };
-  // Before the start, the bar only shows close to the planned time (a quarter of an hour before)
-  if (!started) {
-    const [h, min] = m.time.split(":").map(Number);
-    const at = m.plannedAt ?? new Date(m.date + "T00:00:00").setHours(h ?? 14, min ?? 0, 0, 0);
-    if (!hydrated || at - now() > 15 * 60_000) return { state: "none" as const, title: "" };
-  }
-  const sp = agenda.filter((x) => x.type === "speaker");
-  const me = s.viewer.memberId;
-  const myPos = me ? agenda.findIndex((x) => x.key === me) : -1;
-  // People still speaking before me (the current speaker included)
-  const before = myPos > cur ? agenda.slice(speaking ? cur : cur + 1, myPos).filter((x) => x.type === "speaker").length : 0;
-  // "next": nobody left before me once the current step is over (the speaker, or the intro, the questions…)
-  const ahead = speaking ? before - 1 : before;
-  const turn: "mine" | "next" | "soon" | null =
-    !started || myPos < 0 ? null : myPos === cur ? "mine" : myPos > cur ? (ahead === 0 ? "next" : ahead <= 2 ? "soon" : null) : null;
-  const rem = speaking ? limitOf(m, step.key, s.settings.speakSec, step) - spentOf(m, step.key, now()) : null;
-  const label = step.type === "speaker" ? `${first(step.label)} · ${sp.findIndex((x) => x.key === step.key) + 1}/${sp.length}` : step.label;
-  const title =
-    !started || !hydrated
-      ? ""
-      : turn === "mine"
-        ? `👉 ${t("yourTurnTitle")} — Ronde`
-        : `🔴 ${label}${turn === "next" ? ` · ${t("youreNext")}` : ""} — Ronde`;
-  return {
-    state: started ? ("live" as const) : ("waiting" as const),
-    label,
-    rem,
-    turn,
-    before,
-    title,
-    current: speaking ? first(step.label) : null,
-  };
+  return liveStatus({ m: s.meeting, agenda, cur, now: now(), hydrated, me: s.viewer.memberId, speakSec: s.settings.speakSec, t });
 }
-type LiveStatus = ReturnType<typeof useLiveStatus>;
 
 /** "Live" bar on the other tabs: where the meeting stands, when your turn comes, and raising a hand without switching tabs */
 function LiveBar({ live, onFollow }: { live: LiveStatus; onFollow: () => void }) {
@@ -725,67 +701,20 @@ function IcebreakerAnswer() {
   );
 }
 
-const asTask = (x: string) => (taskOf(x).done === null ? taskItem(x, false) : x);
-
-/** Items of each section of a tab ("done", "next"… or "x:<key>") */
-type TabItems = Record<string, string[]>;
-/** Check-in draft: the person's own tab, and one tab per project; the tab being edited ("" for their own) */
-type Draft = { items: TabItems; byProject: Record<string, TabItems>; tab: string };
-
 export function useCheckInDraft(memberId: string) {
   const { s, rpc, sections } = useRonde();
   const f = s.checkIns[memberId];
-  const tabOf = (fields: Parameters<typeof itemsOf>[0]): TabItems =>
-    Object.fromEntries(
-      sections.map((sec) => {
-        const list = itemsOf(fields, sec);
-        // Free text: a single block (an older list is merged, one line per item)
-        // Checklist: an item entered before the type change gets an empty checkbox
-        return [sec.k, sec.type === "text" ? [list.join("\n")] : sec.type === "checklist" ? list.map(asTask) : list];
-      }),
-    );
-  const toDraft = (tab = ""): Draft => ({
-    items: tabOf(f),
-    byProject: Object.fromEntries(s.projects.map((p) => [p.id, tabOf(f?.byProject[p.id])])),
-    tab,
-  });
-  /**
-   * The section that brings back last time's plans (an option of the meeting): they come back in it as boxes to
-   * tick, in the tab they were written in, until the person saves their check-in after that meeting. Their own
-   * check-in only: the host fixing it adds nothing.
-   */
-  const carry = (x: Draft): Draft | null => {
-    const sec = sections.find((y) => y.carryPlans && y.type === "checklist");
-    const lw = s.lastWeek[memberId];
-    if (!sec || !lw?.next.length || s.viewer.memberId !== memberId) return null;
-    if ((f?.updatedAt ?? 0) >= (s.lastArchivedAt ?? 0)) return null;
-    const own = [...lw.next];
-    const tabs: [string, string[]][] = [];
-    for (const [id, list] of Object.entries(lw.byProject ?? {})) {
-      // A project no longer followed: its items come back in the person's own tab
-      if (!s.projects.some((p) => p.id === id)) continue;
-      for (const item of list) {
-        const at = own.indexOf(item);
-        if (at >= 0) own.splice(at, 1);
-      }
-      tabs.push([id, list]);
-    }
-    let added = 0;
-    const fill = (items: TabItems, list: string[]): TabItems => {
-      const cur = items[sec.k] ?? [];
-      const fresh = list.filter((n) => !cur.some((i) => plainItem(i).trim().toLowerCase() === n.trim().toLowerCase()));
-      added += fresh.length;
-      return fresh.length
-        ? { ...items, [sec.k]: [...cur.filter((i) => plainItem(i).trim()), ...fresh.map((n) => taskItem(n, false))] }
-        : items;
-    };
-    const out: Draft = {
-      ...x,
-      items: fill(x.items, own),
-      byProject: { ...x.byProject, ...Object.fromEntries(tabs.map(([id, list]) => [id, fill(x.byProject[id] ?? {}, list)])) },
-    };
-    return added ? out : null;
-  };
+  const toDraft = (tab = ""): Draft => draftOf(f, s.projects, sections, tab);
+  /** Last time's plans brought back in their section (see `carryPlans`), or null */
+  const carry = (x: Draft): Draft | null =>
+    carryPlans(x, {
+      sections,
+      lastWeek: s.lastWeek[memberId],
+      own: s.viewer.memberId === memberId,
+      updatedAt: f?.updatedAt,
+      lastArchivedAt: s.lastArchivedAt,
+      projects: s.projects,
+    });
   const [start] = useState(() => {
     const saved = toDraft();
     return { saved, carried: carry(saved) };
@@ -808,34 +737,8 @@ export function useCheckInDraft(memberId: string) {
   const sent = useRef<string | null>(null);
   /** Changes made here, counted: typing while a save is on its way keeps the draft unsaved */
   const rev = useRef(0);
-  /** A draft as the server stores it: items trimmed, blank ones out, checklists with their box */
-  const norm = (x: Draft): Draft => {
-    const tab = (t: TabItems): TabItems =>
-      Object.fromEntries(
-        sections.map((sec) => {
-          const list = t[sec.k] ?? [];
-          if (sec.type === "text")
-            return [
-              sec.k,
-              [
-                (list[0] ?? "")
-                  .split("\n")
-                  .map((l) => l.trim())
-                  .filter(Boolean)
-                  .join("\n"),
-              ],
-            ];
-          const kept = list.map((i) => i.trim()).filter((i) => plainItem(i).trim());
-          return [sec.k, sec.type === "checklist" ? kept.map(asTask) : kept];
-        }),
-      );
-    return {
-      tab: "",
-      items: tab(x.items),
-      byProject: Object.fromEntries(Object.entries(x.byProject).map(([id, t]) => [id, tab(t)])),
-    };
-  };
-  const same = (a: Draft, b: Draft) => JSON.stringify(norm(a)) === JSON.stringify(norm(b));
+  const norm = (x: Draft) => normDraft(x, sections);
+  const same = (a: Draft, b: Draft) => sameDraft(a, b, sections);
   useEffect(() => {
     const theirs = toDraft(d.tab);
     const at = f?.updatedAt ?? null;
@@ -882,30 +785,13 @@ export function useCheckInDraft(memberId: string) {
     const sec = sections.find((x) => x.k === k);
     if (!sec) return;
     setD((x) => {
-      const cur = current(x)[k] ?? [];
-      if (cur.some((i) => plainItem(i).trim().toLowerCase() === line.trim().toLowerCase())) return x;
-      const next =
-        sec.type === "text"
-          ? [(cur[0] ?? "").trim() ? cur[0]!.trimEnd() + "\n" + line : line]
-          : [...cur, sec.type === "checklist" ? taskItem(line, k === "done") : line];
-      return withTab(x, { ...current(x), [k]: next });
+      const next = appendLine(current(x)[k] ?? [], sec, line);
+      return next ? withTab(x, { ...current(x), [k]: next }) : x;
     });
     setDirty(true);
     rev.current++;
   };
-  const fieldsOf = (tab: TabItems) => {
-    const clean = (k: string) => {
-      const list = (tab[k] ?? []).map((x) => x.trim()).filter((x) => plainItem(x).trim());
-      return sections.find((x) => x.k === k)?.type === "checklist" ? list.map(asTask) : list;
-    };
-    return {
-      done: clean("done"),
-      next: clean("next"),
-      blockers: clean("blockers"),
-      other: clean("other"),
-      extra: Object.fromEntries(sections.filter((x) => x.kind === "extra").map((x) => [x.k.slice(2), clean(x.k)])),
-    };
-  };
+  const fieldsOf = (tab: TabItems) => fieldsOfTab(tab, sections);
   const save = async (okMessage: string) => {
     const at = rev.current;
     sent.current = JSON.stringify(norm(d));
@@ -935,30 +821,6 @@ export function useCheckInDraft(memberId: string) {
     return ok;
   };
   return { d, dirty, merged, carried, items: current(d), setTab, setItems, append, save };
-}
-
-/**
- * A draft rebased onto a version saved elsewhere meanwhile, tab by tab and section by section: lists merge item
- * by item, a free text (`texts`: keys of the text sections) goes to the side that changed it
- */
-function rebaseDraft(base: Draft, mine: Draft, theirs: Draft, texts: Set<string>): Draft {
-  const tab = (b: TabItems = {}, m: TabItems = {}, t: TabItems = {}): TabItems =>
-    Object.fromEntries(
-      [...new Set([...Object.keys(m), ...Object.keys(t)])].map((k) => [
-        k,
-        texts.has(k) ? [rebaseText(b[k]?.[0] ?? "", m[k]?.[0] ?? "", t[k]?.[0] ?? "")] : rebaseList(b[k] ?? [], m[k] ?? [], t[k] ?? []),
-      ]),
-    );
-  return {
-    tab: mine.tab,
-    items: tab(base.items, mine.items, theirs.items),
-    byProject: Object.fromEntries(
-      [...new Set([...Object.keys(mine.byProject), ...Object.keys(theirs.byProject)])].map((id) => [
-        id,
-        tab(base.byProject[id], mine.byProject[id], theirs.byProject[id]),
-      ]),
-    ),
-  };
 }
 
 /** Check-in form; `byHost`: the host fixes someone else's check-in */
@@ -993,6 +855,8 @@ export function CheckInForm({
         if (Date.now() - lastSubmit.current < 800) return;
         lastSubmit.current = Date.now();
         if (await draft.save(byHost ? t("checkInOfSaved", { name: who }) : t("checkInSaved"))) onSaved?.();
+        // Not saved (merged with a version saved elsewhere, an error): the next click saves at once
+        else lastSubmit.current = 0;
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -1123,10 +987,6 @@ function CheckInTabs({ memberId, draft }: { memberId: string; draft: ReturnType<
     </div>
   );
 }
-
-/** Who holds the sheet right now (their reservation not lapsed), or null */
-const sheetHolder = (p: ProjectDTO, now: number) =>
-  p.sheet?.editingById && (p.sheet.editingUntil ?? 0) > now ? p.sheet.editingById : null;
 
 /** While the person writes the sheet, it is reserved: renewed every half a minute, as long as they type */
 const HOLD_RENEW_MS = 30_000;
@@ -1700,21 +1560,11 @@ function useLastWeekTriage(memberId: string, draft: ReturnType<typeof useCheckIn
       /* storage unavailable: the item will show up again */
     }
   };
-  const norm = (x: string) => plainItem(x).trim().toLowerCase();
-  // Looked for in every tab: an item planned in a project's tab is sorted there
-  const find = (k: string, n: string) =>
-    [draft.d.items, ...Object.values(draft.d.byProject)].flatMap((tab) => tab[k] ?? []).find((i) => norm(i) === norm(n));
-  /** "here": brought back as a box not ticked yet in the achievement section */
-  const statusOf = (n: string): "done" | "here" | "next" | "skip" | null => {
-    const done = find("done", n);
-    if (done !== undefined) return taskOf(done).done === false ? "here" : "done";
-    return find("next", n) !== undefined ? "next" : skipped.includes(norm(n)) ? "skip" : null;
-  };
   return {
-    pending: (lw?.next ?? []).filter((n) => !statusOf(n)),
-    statusOf,
-    skip: (n: string) => save([...skipped, norm(n)]),
-    unskip: (n: string) => save(skipped.filter((x) => x !== norm(n))),
+    pending: pendingPlans(lw?.next ?? [], draft.d, skipped),
+    statusOf: (n: string) => planStatus(draft.d, skipped, n),
+    skip: (n: string) => save([...skipped, planKey(n)]),
+    unskip: (n: string) => save(skipped.filter((x) => x !== planKey(n))),
   };
 }
 

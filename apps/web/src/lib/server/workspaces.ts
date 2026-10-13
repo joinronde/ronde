@@ -329,7 +329,7 @@ export async function revokeInvitation(ctx: WorkspaceContext, invitationId: stri
 export type InvitationState =
   | { status: "invalid" }
   | { status: "expired"; workspace: string }
-  | { status: "member"; workspace: string; slug: string }
+  | { status: "member"; workspace: string; slug: string; forOther: string | null }
   | { status: "pending"; id: string; workspace: string; slug: string; email: string; inviter: string; role: WorkspaceRole };
 
 /** What an invitation link leads to, for the given (possibly signed-out) user */
@@ -353,7 +353,10 @@ export async function invitationState(token: string, user: CurrentUser | null): 
     user &&
     (await prisma.workspaceMember.findUnique({ where: { workspaceId_userId: { workspaceId: workspace.id, userId: user.id } } }))
   ) {
-    return { status: "member", workspace: workspace.name, slug: workspace.slug };
+    // Someone else's invitation, still valid: say so, so it reaches the person it is for
+    const waiting = !invitation.acceptedAt && invitation.expiresAt > new Date();
+    const forOther = waiting && invitation.email !== user.email.toLowerCase() ? invitation.email : null;
+    return { status: "member", workspace: workspace.name, slug: workspace.slug, forOther };
   }
   if (invitation.acceptedAt) return { status: "invalid" };
   if (invitation.expiresAt < new Date()) return { status: "expired", workspace: workspace.name };

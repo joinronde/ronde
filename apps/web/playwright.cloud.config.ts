@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import { STRIPE_PORT, STRIPE_WEBHOOK_SECRET } from "./e2e/cloud/stripe-fake";
 import base from "./playwright.config";
 
 // The paid features in a browser: the cloud, where each workspace has its own plan (no license key needed).
@@ -17,6 +18,16 @@ export default defineConfig({
     ...server,
     command: String(server.command).replaceAll(String(process.env.E2E_PORT ?? 3200), String(PORT)),
     url: `${baseURL}/api/health`,
-    env: { ...server.env, APP_URL: baseURL, RONDE_CLOUD: "1" },
+    // Billing against the fake Stripe that e2e/cloud/billing.spec.ts starts (stripe-fake.ts)
+    env: {
+      ...server.env,
+      APP_URL: baseURL,
+      RONDE_CLOUD: "1",
+      STRIPE_API_BASE: `http://127.0.0.1:${STRIPE_PORT}/v1`,
+      STRIPE_SECRET_KEY: "sk_test_fake",
+      STRIPE_WEBHOOK_SECRET: STRIPE_WEBHOOK_SECRET,
+      STRIPE_PRICE_TEAM: "price_team_monthly",
+      STRIPE_PRICE_TEAM_YEARLY: "price_team_yearly",
+    },
   },
 });

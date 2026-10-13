@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Select } from "@/components/select";
+import { splitDuration as split } from "@/lib/shared/helpers";
 
 // A duration picked from usual values, or typed exactly ("Other duration…"): minutes and seconds for a speaking
 // time, hours and minutes for a meeting. A value outside the list (from a template, or typed before) shows as is.
@@ -19,9 +20,6 @@ export interface DurationFieldProps {
   labels: { custom: string; big: string; small: string; bigUnit: string; smallUnit: string; range: string };
   describedBy?: string;
 }
-
-/** Seconds as minutes and seconds, minutes as hours and minutes */
-const split = (v: number) => [Math.floor(v / 60), v % 60] as const;
 
 export function DurationField({ id, value, unit, presets, min, max, format, onChange, labels, describedBy }: DurationFieldProps) {
   const [custom, setCustom] = useState(false);

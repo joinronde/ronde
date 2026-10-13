@@ -7,8 +7,9 @@ const baseURL = `http://localhost:${PORT}`;
 
 export default defineConfig({
   testDir: "e2e",
-  // The paid features run in the cloud mode, on their own server (playwright.cloud.config.ts)
-  testIgnore: "cloud/**",
+  // The paid features run in the cloud mode, on their own server (playwright.cloud.config.ts); the flows that
+  // need an email, on a server with a mail server (playwright.mail.config.ts)
+  testIgnore: ["cloud/**", "mail/**"],
   fullyParallel: false,
   retries: process.env.CI ? 1 : 0,
   // Pages are compiled on first visit by the dev server

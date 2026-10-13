@@ -20,9 +20,9 @@ export const reactions = defineModule({
       run: async ({ db, m, session, emit, workspaceId }, o) => {
         if (!session) return;
         const by = actorId(m.viewer);
-        // Burst from the same person: the screen would stay readable, but it is no longer recorded
+        // Burst from the same person: the screen would stay readable, but it is no longer recorded. Reactions with
+        // no author (someone who is not of the meeting) share one allowance, so they cannot flood it either
         if (
-          by &&
           (await db.reaction.count({ where: { sessionId: session.id, byId: by, createdAt: { gte: new Date(Date.now() - 10_000) } } })) >= 6
         )
           return;

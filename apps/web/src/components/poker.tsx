@@ -1,24 +1,13 @@
 "use client";
 
-import type { PokerDTO } from "@ronde/core/types";
 import { first } from "@ronde/core/util";
 import { formatters } from "@ronde/i18n";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
+import { average, currentItem } from "@/lib/shared/modules";
 import { useRonde } from "./ronde-provider";
 
 // Planning poker: the team estimates items with cards kept hidden until the host reveals them
-
-type Item = PokerDTO["items"][number];
-
-/** The item being estimated: the first one without an estimate */
-export const currentItem = (p: PokerDTO): Item | undefined => p.items.find((i) => i.final === null) ?? p.items[p.items.length - 1];
-
-/** Average of the numeric cards, null without any */
-function average(votes: { value: string }[]): number | null {
-  const n = votes.map((v) => Number(v.value)).filter((x) => Number.isFinite(x));
-  return n.length ? n.reduce((a, b) => a + b, 0) / n.length : null;
-}
 
 /** Shared screen: the item, then everyone's card once revealed */
 export function PokerStage() {

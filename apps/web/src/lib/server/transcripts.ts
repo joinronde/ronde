@@ -58,7 +58,12 @@ export async function processChunk(chunkId: string): Promise<number> {
     include: { session: { select: { id: true, meetingId: true, transcriptOptOut: true } } },
   });
   if (!chunk) return 0;
-  const workspace = await prisma.workspace.findUnique({ where: { id: chunk.workspaceId }, select: { settings: true, plan: true } });
+  const workspace = await prisma.workspace.findUnique({
+    where: { id: chunk.workspaceId },
+    select: { settings: true, plan: true, deletedAt: true, suspendedAt: true },
+  });
+  // Checked right before the sound leaves: a workspace suspended or deleted since keeps it (or loses it with itself)
+  if (!workspace || workspace.deletedAt || workspace.suspendedAt) return 0;
   const config = transcriptionConfig((workspace?.settings ?? {}) as WorkspaceSettings, workspace);
   if (!config) {
     await prisma.audioChunk.delete({ where: { id: chunk.id } });
@@ -109,7 +114,11 @@ export async function processChunk(chunkId: string): Promise<number> {
 /** Every minute: pieces still waiting (a restart, a failure to try again) */
 export async function processPendingChunks(): Promise<number> {
   const chunks = await prisma.audioChunk.findMany({
-    where: { createdAt: { lt: new Date(Date.now() - 60_000) } },
+    // Not for a suspended or deleted workspace: its sound waits (or goes with the workspace), never sent anywhere
+    where: {
+      createdAt: { lt: new Date(Date.now() - 60_000) },
+      session: { meeting: { workspace: { deletedAt: null, suspendedAt: null } } },
+    },
     select: { id: true },
     orderBy: { createdAt: "asc" },
     take: 20,

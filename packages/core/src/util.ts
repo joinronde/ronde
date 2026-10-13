@@ -344,22 +344,41 @@ export const lines = (t: string | null | undefined) =>
 
 export const first = (n: string | null | undefined) => String(n ?? "").split(" ")[0];
 
+const graphemes = typeof Intl !== "undefined" && "Segmenter" in Intl ? new Intl.Segmenter(undefined, { granularity: "grapheme" }) : null;
+
+/** The first character of a text as the eye sees it: a flag, a family emoji or an accented letter stays whole */
+export function firstGrapheme(text: string): string {
+  if (!text) return "";
+  if (graphemes) for (const g of graphemes.segment(text)) return g.segment;
+  return [...text][0]!;
+}
+
 export const initials = (n: string | null | undefined) =>
-  String(n || "?")
+  String(n ?? "")
     .split(/[\s'-]+/)
     .filter(Boolean)
     .slice(0, 2)
-    .map((w) => w[0]!.toUpperCase())
-    .join("");
+    .map((w) => firstGrapheme(w).toUpperCase())
+    .join("") || "?";
 
+const HAN = /\p{Script=Han}/u;
+const HAN_RUNS = /\p{Script=Han}+|[^\p{Script=Han}]+/gu;
+// Words of every script (Arabic, Cyrillic, Devanagari… with their vowel signs); Chinese has no spaces, so its
+// characters count by pairs
 const normWords = (t: string) =>
   new Set(
     String(t)
       .toLowerCase()
       .normalize("NFD")
-      .replace(/[̀-ͯ]/g, "")
-      .split(/[^a-z0-9]+/)
-      .filter((w) => w.length > 3),
+      .replace(/[\u0300-\u036f]/g, "")
+      .split(/[^\p{L}\p{N}\p{M}]+/u)
+      // Within a word, Chinese runs and the rest (digits, Latin letters) apart: "3月15日" is no pair of characters
+      .flatMap((w) => w.match(HAN_RUNS) ?? [])
+      .flatMap((w) => {
+        if (!HAN.test(w)) return w.length > 3 ? [w] : [];
+        const cs = [...w];
+        return cs.slice(1).map((c, i) => cs[i] + c);
+      }),
   );
 
 /** Similarity of two texts (0 to 1): share of meaningful words in common */

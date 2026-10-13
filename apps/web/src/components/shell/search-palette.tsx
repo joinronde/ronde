@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useId, useRef, useState } from "react";
 import type { SearchHit, SearchKind } from "@/lib/server/search";
 import { withBasePath } from "@/lib/shared/base-path";
+import { matchesWords } from "@/lib/shared/search";
 import { MeetingMark, type MeetingMarkData } from "../meeting-mark";
 import type { ShellData } from "./app-shell";
 import { Icon, type IconName } from "./icons";
@@ -26,7 +27,6 @@ interface Item {
   mark?: MeetingMarkData;
 }
 
-const fold = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const ICONS: Record<SearchKind, IconName> = { meeting: "video", person: "user", action: "todo", topic: "chat", decision: "check" };
 
 /** Opens the palette with ⌘K (Ctrl+K), except where a page has its own (the control room) */
@@ -99,8 +99,7 @@ export function SearchPalette({ data, onClose }: { data: ShellData; onClose: () 
     color: i,
     mark: m,
   }));
-  const words = fold(q).split(/\s+/).filter(Boolean);
-  const local = [...pages, ...meetings].filter((i) => words.every((w) => fold(i.title).includes(w)));
+  const local = [...pages, ...meetings].filter((i) => matchesWords(i.title, q));
   const remote: Item[] = hits
     .filter((h) => !(h.kind === "meeting" && local.some((l) => l.key === `m:${h.id}`)))
     .map((h) => ({

@@ -18,6 +18,15 @@ import { Select } from "@/components/select";
 import { ToolMark } from "@/components/tool-mark";
 import type { Portfolio, PortfolioProject, ProjectLink } from "@/lib/server/projects";
 import { isRepository, type SourceKind, type SourceWhat } from "@/lib/shared/project-sources";
+import {
+  depthIn,
+  type HealthFilter,
+  hasHealth,
+  MAX_DEPTH,
+  projectGroups,
+  projectMatches,
+  type StatusFilter,
+} from "@/lib/shared/workspace-lists";
 import { HealthBadge, HealthPicker } from "../project-bits";
 import { Icon } from "../shell/icons";
 import { useConfirm } from "./confirm";
@@ -27,7 +36,6 @@ import { ImportDialog, type ImportTracker } from "./project-import";
 // its due date and the last message presented; a dashboard over time with the Team plan.
 
 const tint = (color: number) => ({ "--c": `var(--c${color % 6})` }) as React.CSSProperties;
-const OPEN: ProjectStatus[] = ["proposed", "active", "paused"];
 /** First line of a Markdown text, without its marks */
 const plain = (md: string) =>
   md
@@ -134,8 +142,8 @@ export function PortfolioView({
   const path = usePathname();
   const [q, setQ] = useState("");
   const [mine, setMine] = useState(false);
-  const [status, setStatus] = useState<"open" | ProjectStatus | "all">("open");
-  const [health, setHealth] = useState<ProjectHealth | "none" | "">("");
+  const [status, setStatus] = useState<StatusFilter>("open");
+  const [health, setHealth] = useState<HealthFilter>("");
   const hasProgrammes = portfolio.projects.some((p) => p.parentId);
   const [group, setGroup] = useState<"theme" | "status" | "programme">("theme");
   const [dialog, setDialog] = useState<"new" | "themes" | "import" | null>(openNew && portfolio.canCreate ? "new" : null);
@@ -149,61 +157,14 @@ export function PortfolioView({
   }, [imported]);
   const needle = q.trim().toLowerCase();
   const byId = new Map(portfolio.projects.map((p) => [p.id, p]));
-  /** The top programme a project belongs to */
-  const rootOf = (id: string): string => {
-    let at = byId.get(id);
-    for (let i = 0; at?.parentId && byId.has(at.parentId) && i < 5; i++) at = byId.get(at.parentId);
-    return at?.id ?? id;
-  };
-  const matches = (p: PortfolioProject) =>
-    (status === "all" ? true : status === "open" ? OPEN.includes(p.status) && !p.archived : p.status === status && !p.archived) &&
-    (!mine || p.mine) &&
-    (!needle || p.name.toLowerCase().includes(needle) || p.summary.toLowerCase().includes(needle));
+  const matches = (p: PortfolioProject) => projectMatches(p, { status, mine, needle });
   /** The projects of the other filters: what the health chips count */
   const counted = portfolio.projects.filter(matches);
-  const shown = counted.filter((p) => !health || (health === "none" ? !p.health : p.health === health));
+  const shown = counted.filter((p) => hasHealth(p, health));
   /** Imported projects the current filters hide */
   // (only those the portfolio already holds: the list is reloaded just after the import)
   const hiddenImports = imported ? imported.ids.filter((id) => byId.has(id) && !shown.some((p) => p.id === id)).length : 0;
-  const groups =
-    group === "theme"
-      ? [
-          ...portfolio.themes.map((th) => ({
-            key: th.id,
-            title: th.name,
-            sub: th.description,
-            color: th.color,
-            items: shown.filter((p) => p.themeId === th.id),
-          })),
-          { key: "none", title: t("noTheme"), sub: "", color: null, items: shown.filter((p) => !p.themeId) },
-        ]
-      : group === "programme"
-        ? [
-            // Each programme with the projects it holds, at any level, then the projects in none
-            ...portfolio.projects
-              .filter((p) => !p.parentId && portfolio.projects.some((c) => c.parentId === p.id))
-              .map((root) => ({
-                key: root.id,
-                title: root.name,
-                sub: root.summary,
-                color: root.color,
-                items: shown.filter((p) => p.id === root.id || rootOf(p.id) === root.id),
-              })),
-            {
-              key: "none",
-              title: t("noProgramme"),
-              sub: "",
-              color: null,
-              items: shown.filter((p) => !p.parentId && !portfolio.projects.some((c) => c.parentId === p.id)),
-            },
-          ]
-        : PROJECT_STATUSES.map((s) => ({
-            key: s,
-            title: t(`status.${s}`),
-            sub: "",
-            color: null,
-            items: shown.filter((p) => p.status === s),
-          }));
+  const groups = projectGroups(group, portfolio, shown, t);
   const setView = (v: "board" | "dashboard", w = weeks) =>
     router.replace(v === "board" ? path : `${path}?view=dashboard&weeks=${w}`, { scroll: false });
   return (
@@ -325,7 +286,7 @@ export function PortfolioView({
                 {t("healthAll")} <span className="cnt">{counted.length}</span>
               </button>
               {(["offTrack", "atRisk", "onTrack", "none"] as const).map((h) => {
-                const n = counted.filter((p) => (h === "none" ? !p.health : p.health === h)).length;
+                const n = counted.filter((p) => hasHealth(p, h)).length;
                 if (!n && health !== h) return null;
                 return (
                   <button
@@ -449,14 +410,6 @@ export interface Governance {
   permissions: boolean;
   programmeChoices: { id: string; name: string }[];
 }
-
-/** Programmes go this deep at most: a programme, its projects, their sub-projects */
-export const MAX_DEPTH = 3;
-const depthIn = (byId: Map<string, { parentId: string | null }>, id: string) => {
-  let depth = 1;
-  for (let at = byId.get(id)?.parentId; at && depth <= MAX_DEPTH; at = byId.get(at)?.parentId) depth++;
-  return depth;
-};
 
 export function ProjectDialog({
   slug,

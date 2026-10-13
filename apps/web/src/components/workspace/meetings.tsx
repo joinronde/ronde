@@ -7,6 +7,7 @@ import { useState } from "react";
 import type { DashboardPerson } from "@/lib/server/dashboard";
 import type { MeetingOverview } from "@/lib/server/overview";
 import { withBasePath } from "@/lib/shared/base-path";
+import { fold } from "@/lib/shared/search";
 import { MeetingMark } from "../meeting-mark";
 import { initials } from "../shell/app-shell";
 import { Icon } from "../shell/icons";
@@ -14,7 +15,6 @@ import { Icon } from "../shell/icons";
 type Filter = "all" | "mine" | "run";
 
 const tint = (color: number) => ({ "--c": `var(--c${color % 6})` }) as React.CSSProperties;
-const fold = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 
 /** Every meeting of the workspace the person can see, as cards: when it meets next, who is in, what is pending */
 export function MeetingsView({ slug, meetings, canCreate }: { slug: string; meetings: MeetingOverview[]; canCreate: boolean }) {

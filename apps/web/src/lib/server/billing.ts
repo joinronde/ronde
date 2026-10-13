@@ -16,7 +16,7 @@ import { umamiEvent } from "./umami";
 // Without the webhook's secret Ronde would never learn about payments: billing stays off
 export const billingOn = () => isCloud() && !!env.stripeSecretKey() && !!env.stripePriceTeam() && !!env.stripeWebhookSecret();
 
-const access = () => ({ secretKey: env.stripeSecretKey() });
+const access = () => ({ secretKey: env.stripeSecretKey(), apiBase: env.stripeApiBase() });
 
 /** Statuses that keep the Team plan: paying, trying it, or a payment being retried */
 const PAYING = PAYING_STATUSES;

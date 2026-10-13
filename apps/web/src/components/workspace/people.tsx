@@ -19,6 +19,7 @@ import { Field, FormAlert } from "@/components/auth/fields";
 import { Select } from "@/components/select";
 import { withBasePath } from "@/lib/shared/base-path";
 import { track } from "@/lib/shared/track";
+import { fullName, peopleMatching } from "@/lib/shared/workspace-lists";
 import { initials } from "../shell/app-shell";
 import { useConfirm } from "./confirm";
 import { Menu } from "./menu";
@@ -69,8 +70,6 @@ type Dialog =
   | { kind: "edit"; person: PersonRow }
   | { kind: "link"; email: string; url: string; emailed: boolean };
 
-const fullName = (p: { firstName: string; lastName: string }) => `${p.firstName} ${p.lastName}`.trim();
-
 export function PeopleDirectory(props: Props) {
   const { slug, workspaceName, people, categories, canInvite, canManage, canChangeRoles, assignable, customRoles, customRolesEditable } =
     props;
@@ -91,11 +90,7 @@ export function PeopleDirectory(props: Props) {
   const category = useMemo(() => new Map(categories.map((c) => [c.id, c.name])), [categories]);
   const [confirmDialog, confirm] = useConfirm();
 
-  const shown = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return people;
-    return people.filter((p) => `${fullName(p)} ${p.email} ${category.get(p.jobCategoryId ?? "") ?? ""}`.toLowerCase().includes(q));
-  }, [people, query, category]);
+  const shown = useMemo(() => peopleMatching(people, query, category), [people, query, category]);
 
   const flash = (message: string) => {
     setToast(message);

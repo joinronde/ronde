@@ -14,5 +14,15 @@ export default defineConfig({
     setupFiles: ["tests/setup.ts", "tests/db-schema.ts"],
     testTimeout: 30_000,
     hookTimeout: 90_000,
+    // How much of the server code the tests run: measured in CI, which fails when it goes down (raise the
+    // thresholds as tests are added; pnpm test:integration --coverage measures it locally)
+    coverage: {
+      enabled: !!process.env.CI,
+      provider: "v8",
+      include: ["src/lib/server/**", "src/app/**/route.ts", "src/app/**/actions.ts", "src/app/**/*-actions.ts"],
+      reporter: ["text-summary", "json-summary"],
+      reportsDirectory: "coverage/integration",
+      thresholds: { statements: 79, branches: 68, functions: 78, lines: 82 },
+    },
   },
 });

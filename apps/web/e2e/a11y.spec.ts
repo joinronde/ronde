@@ -1,23 +1,10 @@
-import AxeBuilder from "@axe-core/playwright";
-import { expect, type Page, test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import { audit } from "./axe";
 
 // Accessibility audit (WCAG 2.1 AA rules of axe) of the main pages, in light and dark themes
 
 const run = Date.now().toString(36);
 const who = { name: "Alma Axe", email: `alma-${run}@example.com`, password: "audit-password-123" };
-
-async function audit(page: Page, label: string) {
-  // axe reads colours as they are drawn: animations and transitions are skipped to their end first
-  await page.addStyleTag({ content: "*,*::before,*::after{animation:none!important;transition:none!important}" });
-  await page.waitForTimeout(300);
-  // The email preview is an iframe of an email, not of the app: left out
-  const { violations } = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).exclude("iframe").analyze();
-  const report = violations.map(
-    (v) =>
-      `${v.id} (${v.impact}): ${v.nodes.map((n) => `${n.target.join(" ")} [${(n.failureSummary ?? "").replace(/\s+/g, " ")}]`).join(" | ")}`,
-  );
-  expect.soft(report, `${label}\n${report.join("\n")}`).toEqual([]);
-}
 
 test("the main pages pass the accessibility audit", async ({ page }) => {
   // Every page is compiled on its first visit by the dev server: the audit takes a while
