@@ -30,5 +30,10 @@
   "reopen": "Wieder öffnen",
   "show": "Auf dem geteilten Bildschirm zeigen",
   "hide": "Vom Bildschirm ausblenden",
-  "delete": "Umfrage „{question}“ löschen"
+  "delete": "Umfrage „{question}“ löschen",
+  "yes": "Ja",
+  "no": "Nein",
+  "yesNo": "Ja oder nein, sofort",
+  "yesNoHint": "Die unten eingegebene Frage oder „Bist du einverstanden?“, sofort auf dem Bildschirm, mit wer was geantwortet hat.",
+  "yesNoQuestion": "Bist du einverstanden?"
 }

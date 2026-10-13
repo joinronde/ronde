@@ -217,4 +217,23 @@ describe("minutes of the project round", () => {
     expect(md).toContain("Pagination");
     expect(md).toContain("Alice Martin, Chloe Roy");
   });
+
+  it("name the people who joined a line of someone's own round, and nobody on the other lines", () => {
+    const key = record.sections[0]!.key;
+    const r = {
+      ...record,
+      checkIns: {
+        a: {
+          items: [
+            { id: "i1", section: key, text: "Release notes", sourceItemId: null, projectId: null, with: ["c"] },
+            { id: "i2", section: key, text: "Design review", sourceItemId: null, projectId: null, with: [] },
+          ],
+        },
+      },
+    };
+    const md = minutesMarkdown(r, "en");
+    expect(md).toContain("- Alice Martin, Chloe Roy: Release notes");
+    expect(md).toContain("- Design review");
+    expect(md).not.toContain("Alice Martin: Design review");
+  });
 });

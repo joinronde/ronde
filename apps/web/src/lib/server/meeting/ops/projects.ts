@@ -82,14 +82,15 @@ export const projectOps = [
     name: "item.with",
     permission: "checkin.write.own",
     /**
-     * Joins a line someone else wrote about a project (`on`), or leaves it: the person took part in it, their
-     * face shows on it too. Its author, or the host, may also take someone off it (`personId`).
+     * Joins a line someone else wrote (`on`), about a project or their own, or leaves it: the person took part in
+     * it, their face shows on it too. Its author, or the host, may also take someone off it (`personId`).
      */
     input: z.object({
       ownerId: str(50),
       section: str(60),
       itemText: str(2000).min(1),
-      projectId: str(50),
+      /** null: a line of the person's own round, not about a project */
+      projectId: str(50).nullable(),
       on: z.boolean(),
       personId: str(50).optional(),
     }),

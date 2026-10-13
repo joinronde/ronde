@@ -108,6 +108,25 @@ describe("polls", () => {
     expect(seen.polls.find((p) => p.id === ready!.id)?.results.find((r) => r.value === "Yes")?.people).toHaveLength(1);
   });
 
+  it("keeps a quick yes or no told apart, whatever the language of those who see it", async () => {
+    await runOp(f.ctx, {
+      op: "polls.create",
+      question: "On y va ?",
+      kind: "single",
+      options: ["Oui", "Non"],
+      anonymous: false,
+      show: true,
+      yesNo: true,
+    });
+    await runOp(f.ctx, { op: "polls.create", question: "Tea or coffee?", kind: "multiple", options: ["Tea", "Coffee"], yesNo: true });
+    const polls = (await loadSnapshot(ana)).polls;
+    expect(polls.find((p) => p.question === "On y va ?")).toMatchObject({ yesNo: true, shown: true });
+    // Only a single choice between two options can be a yes or no
+    expect(polls.find((p) => p.question === "Tea or coffee?")?.yesNo).toBe(false);
+    for (const p of polls.filter((x) => x.question === "On y va ?" || x.question === "Tea or coffee?"))
+      await runOp(f.ctx, { op: "polls.delete", pollId: p.id });
+  });
+
   it("archives estimates and poll totals, never who answered", async () => {
     await runOp(f.ctx, { op: "meeting.goto", key: "end" });
     await runOp(f.ctx, { op: "meeting.archive", summary: null, omit: [] });

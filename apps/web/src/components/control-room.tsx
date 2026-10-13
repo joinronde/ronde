@@ -17,6 +17,7 @@ import {
   mmssPlain,
   plainItem,
   similarity,
+  VOTES_PER_PERSON,
 } from "@ronde/core/util";
 import { formatters } from "@ronde/i18n";
 import { MdEditor } from "@ronde/ui/md-editor";
@@ -26,6 +27,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { renderSVG } from "uqr";
 import { Select } from "@/components/select";
 import { withBasePath } from "@/lib/shared/base-path";
+import { actionOwners, sheetRows, sheetsToComplete, writersOf } from "@/lib/shared/sheets";
 import { track } from "@/lib/shared/track";
 import { Board } from "./board";
 import { CommandPalette, ShortcutsHelp, useControlShortcuts } from "./command-palette";
@@ -46,7 +48,7 @@ import { Icon } from "./shell/icons";
 import { ModKey } from "./shell/mod-key";
 import { NewTab } from "./shell/new-tab";
 import { controlMonitorOn, SoundPlayer } from "./sound-player";
-import { Avatar, BLOCK_ICON, projectEntries, projectsWithTurn, Stage, sectionsHave, Timer, UpCount, writersOf } from "./stage";
+import { Avatar, BLOCK_ICON, projectEntries, projectsWithTurn, Stage, sectionsHave, Timer, UpCount } from "./stage";
 import { SwipeRow } from "./swipe-row";
 import { soundLength } from "./synth";
 import { Assignments } from "./upcoming-sessions";
@@ -129,7 +131,7 @@ const localToday = () => {
 export function ControlRoomView() {
   const t = useTranslations("control");
   const tStage = useTranslations("stage");
-  const { s, agenda, cur, rpc, liveSeen, mod } = useRonde();
+  const { s, agenda, cur, rpc, liveSeen, mod, sections } = useRonde();
   const tour_ = useControlTour(s.modules);
   const [pane, setPane] = useState<Pane>("run");
   const [beep, setBeep] = useState(false);
@@ -354,6 +356,23 @@ export function ControlRoomView() {
                     )}
                   </div>
                   {step.type === "project" && <ProjectHost step={step} />}
+                  {!m.endedAt && (
+                    <SheetsSummary
+                      onOpen={() => {
+                        setPane("sheets");
+                        // On a narrow screen the side panel sits far below: brought into view
+                        requestAnimationFrame(() =>
+                          document
+                            .querySelector('[data-tour="pane"]')
+                            ?.closest(".panel")
+                            ?.scrollIntoView({
+                              behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+                              block: "start",
+                            }),
+                        );
+                      }}
+                    />
+                  )}
                   {!m.endedAt && <ProjectOrder />}
                   {step.type === "block" && step.block === "retro" && <RetroHost />}
                   {step.type === "block" && step.block === "poker" && <PokerHost />}
@@ -428,6 +447,7 @@ export function ControlRoomView() {
                         ["live", pend],
                         ["actions", 0],
                         ["topics", tops],
+                        ...(s.projects.length ? [["sheets", sheetsToComplete(s, sections)]] : []),
                         ...(s.modules.polls ? [["polls", s.polls.filter((p) => p.open).length]] : []),
                         ...(s.modules.random ? [["random", 0]] : []),
                         ["minutes", 0],
@@ -453,6 +473,7 @@ export function ControlRoomView() {
                     {pane === "live" && <PaneLive />}
                     {pane === "actions" && <PaneActions />}
                     {pane === "topics" && <PaneTopics />}
+                    {pane === "sheets" && <PaneSheets />}
                     {pane === "polls" && <PollsHost />}
                     {pane === "random" && <RandomHost />}
                     {pane === "minutes" && <PaneMinutes draft={minutesDraft} setDraft={setMinutesDraft} />}
@@ -901,7 +922,8 @@ function NotesBox({ stepKey, label, autoFocus }: { stepKey: string; label: strin
     requestAnimationFrame(() => ta.current?.focus());
   };
 
-  const active = s.members.filter((x) => x.active);
+  // Anyone of the meeting can own an action: the host who does not speak in the round, an observer following it
+  const active = actionOwners(s);
   const openAction = () => {
     const who = memberOfStep(key);
     setAction({ text: "", owner: members[who] ? who : "" });
@@ -913,7 +935,7 @@ function NotesBox({ stepKey, label, autoFocus }: { stepKey: string; label: strin
     if (!(await rpc({ op: "action.add", text: txt, ownerId: action.owner, originText: null }, t("actionCreated")))) return;
     setAction(null);
     // Trace in the notes: the action also shows up in the follow-up actions table of the minutes
-    insertRef.current?.(`**${t("notes.actionPrefix")}:** ${txt} (${first(members[action.owner]?.name)})`);
+    insertRef.current?.(`**${t("notes.actionPrefix")}:** ${txt} (${first(active.find((x) => x.id === action.owner)?.name)})`);
   };
 
   // Typing over (focus leaves the area, its action form included): the area joins the current step
@@ -1369,9 +1391,10 @@ function PaneActions() {
   const t = useTranslations("control");
   const tStatus = useTranslations("actionStatus");
   const fmt = formatters(useLocale());
-  const { s, agenda, rpc, members, sections } = useRonde();
+  const { s, agenda, rpc, sections } = useRonde();
   const [text, setText] = useState("");
-  const [owner, setOwner] = useState(s.members[0]?.id ?? "");
+  const owners = actionOwners(s);
+  const [owner, setOwner] = useState(owners[0]?.id ?? "");
   const [confirmDel, setConfirmDel] = useState<string | null>(null);
   const sp = agenda.filter((x) => x.type === "speaker");
   const withTurn = projectsWithTurn(agenda);
@@ -1442,7 +1465,7 @@ function PaneActions() {
                   value={a.ownerId}
                   onChange={(e) => rpc({ op: "action.update", id: a.id, ownerId: e.target.value })}
                 >
-                  {s.members.map((x) => (
+                  {owners.map((x) => (
                     <option key={x.id} value={x.id}>
                       {x.name}
                     </option>
@@ -1501,9 +1524,9 @@ function PaneActions() {
           style={{ flex: 1, minWidth: 140 }}
         />
         <Select aria-label={t("owner")} value={owner} onChange={(e) => setOwner(e.target.value)} style={{ width: "auto" }}>
-          {s.members.map((x) => (
+          {owners.map((x) => (
             <option key={x.id} value={x.id}>
-              {first(members[x.id]?.name)}
+              {first(x.name)}
             </option>
           ))}
         </Select>
@@ -1517,11 +1540,16 @@ function PaneActions() {
 
 function PaneTopics() {
   const t = useTranslations("control");
+  const tMe = useTranslations("me");
+  const tRetro = useTranslations("retro");
   const { s, rpc, nameOf, host } = useRonde();
   const [text, setText] = useState("");
+  const votesLeft = VOTES_PER_PERSON - s.topics.filter((x) => x.mine).length;
   const topics = [...s.topics].sort((a, b) => Number(a.done) - Number(b.done) || b.votes - a.votes || a.createdAt - b.createdAt);
   return (
     <>
+      {/* The host votes too, with the same number of votes as everyone */}
+      {topics.some((x) => !x.done) && <p className="hint">{tRetro("me.votesLeft", { count: votesLeft, total: VOTES_PER_PERSON })}</p>}
       {topics.length ? (
         topics.map((x) => (
           <div className="item" key={x.id}>
@@ -1533,11 +1561,18 @@ function PaneTopics() {
             />
             <div className="body">
               {x.text}
-              <div className="meta">
-                {nameOf(x.byId) || host}
-                {x.votes > 0 && ` · ${t("topics.votes", { count: x.votes })}`}
-              </div>
+              <div className="meta">{nameOf(x.byId) || host}</div>
             </div>
+            <button
+              type="button"
+              className="vote-btn"
+              aria-pressed={x.mine}
+              aria-label={x.mine ? tMe("unvote") : tMe("vote")}
+              title={x.mine ? tMe("unvote") : tMe("vote")}
+              onClick={() => rpc({ op: "topic.vote", id: x.id })}
+            >
+              ▲ {x.votes}
+            </button>
             <button
               className="icon-btn"
               title={t("topics.showBig")}
@@ -2037,5 +2072,76 @@ function ProjectOrder() {
         </details>
       )}
     </>
+  );
+}
+
+/** One line in the main column: how many sheets need someone, opening the "Sheets" tab */
+function SheetsSummary({ onOpen }: { onOpen: () => void }) {
+  const t = useTranslations("control");
+  const { s, sections } = useRonde();
+  if (!s.projects.length) return null;
+  const todo = sheetsToComplete(s, sections);
+  return (
+    <button type="button" className="sheets-summary" onClick={onOpen}>
+      <span>{t("sheets.title")}</span>
+      <span className={"pill " + (todo ? "warn" : "ok")}>{todo ? t("sheets.todo", { count: todo }) : t("sheets.allDone")}</span>
+      <span className="go" aria-hidden="true">
+        →
+      </span>
+    </button>
+  );
+}
+
+/**
+ * The project sheets, one line each however many there are: what each still needs (health, message of the
+ * day, who has not written); the ones to complete by default, all of them on demand, a search past a dozen
+ */
+function PaneSheets() {
+  const t = useTranslations("control");
+  const { s, sections, nameOf } = useRonde();
+  const [all, setAll] = useState(false);
+  const [q, setQ] = useState("");
+  const rows = sheetRows(s, sections, nameOf, t);
+  const todo = rows.filter((r) => !r.complete).length;
+  const needle = q.trim().toLowerCase();
+  const shown = rows
+    .filter((r) => (all || !r.complete) && (!needle || r.p.name.toLowerCase().includes(needle)))
+    .sort((a, b) => Number(a.complete) - Number(b.complete) || b.missing.length - a.missing.length || a.p.position - b.p.position);
+  return (
+    <div className="pane-sheets">
+      <div className="controls">
+        <span className={"pill " + (todo ? "warn" : "ok")}>{todo ? t("sheets.todo", { count: todo }) : t("sheets.allDone")}</span>
+        <label className="check">
+          <input type="checkbox" checked={all} onChange={(e) => setAll(e.target.checked)} /> {t("sheets.showAll", { count: rows.length })}
+        </label>
+      </div>
+      {rows.length > 12 && (
+        <input
+          type="search"
+          className="sheets-search"
+          aria-label={t("sheets.search")}
+          placeholder={t("sheets.search")}
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+        />
+      )}
+      {shown.length ? (
+        <ul className="sheets-list">
+          {shown.map(({ p, missing, lines, complete }) => (
+            <li key={p.id} className={complete ? "complete" : "incomplete"}>
+              <span className="mark" aria-hidden="true">
+                {complete ? "✓" : "○"}
+              </span>
+              <span className="name">{p.name}</span>
+              <span className="what" title={lines.map((x) => `${nameOf(x.id)} · ${t("sheets.lines", { count: x.n })}`).join("\n")}>
+                {complete ? t("sheets.complete") : t("sheets.missing", { what: missing.join(", ") })}
+              </span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="muted">{todo ? t("sheets.noMatch") : t("sheets.allDoneHint")}</p>
+      )}
+    </div>
   );
 }

@@ -30,5 +30,10 @@
   "reopen": "重新开启",
   "show": "在共享屏幕上显示",
   "hide": "从屏幕上隐藏",
-  "delete": "删除投票“{question}”"
+  "delete": "删除投票“{question}”",
+  "yes": "是",
+  "no": "否",
+  "yesNo": "立即是/否",
+  "yesNoHint": "下方输入的问题，或“你同意吗？”，立即显示在屏幕上，并显示每人的回答。",
+  "yesNoQuestion": "你同意吗？"
 }

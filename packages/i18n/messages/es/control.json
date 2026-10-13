@@ -48,7 +48,8 @@
     "topics": "Temas",
     "minutes": "Actas",
     "polls": "Encuestas",
-    "random": "Azar"
+    "random": "Azar",
+    "sheets": "Fichas"
   },
   "icebreaker": {
     "answers": "{count}/{total} respuestas",
@@ -262,5 +263,19 @@
   "presentAnyway": "Presentar de todos modos",
   "projectAdded": "{name} entra en la ronda por proyecto de esta sesión.",
   "projectAddedTag": "añadido",
-  "projectUnadd": "Quitar {name} de la ronda de esta sesión"
+  "projectUnadd": "Quitar {name} de la ronda de esta sesión",
+  "sheets": {
+    "title": "Fichas de proyecto",
+    "todo": "{count, plural, one {# por completar} other {# por completar}}",
+    "allDone": "Todas completas",
+    "health": "salud",
+    "headline": "mensaje del día",
+    "lines": "{count, plural, one {# línea} other {# líneas}}",
+    "showAll": "Mostrar también las completas ({count} en total)",
+    "search": "Buscar un proyecto",
+    "complete": "Completa",
+    "missing": "Falta: {what}",
+    "noMatch": "Ningún proyecto con ese nombre por completar.",
+    "allDoneHint": "Todas las fichas están completas: salud, mensaje del día y una línea de cada una de sus personas."
+  }
 }

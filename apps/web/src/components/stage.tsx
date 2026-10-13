@@ -26,6 +26,7 @@ import { formatters } from "@ronde/i18n";
 import { confetti, motionAllowed } from "@ronde/ui/effects";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { writersOf } from "@/lib/shared/sheets";
 import { AmbienceLayer, useAmbience } from "./ambience";
 import { ItemText } from "./check-in-fields";
 import { PokerStage } from "./poker";
@@ -40,8 +41,8 @@ import { Icon, type IconName } from "./shell/icons";
 import { SwipeRow } from "./swipe-row";
 
 export function Avatar({ id, sm }: { id: string | null | undefined; sm?: boolean }) {
-  const { members, avatarUrl } = useRonde();
-  const m = id ? members[id] : undefined;
+  const { people, avatarUrl } = useRonde();
+  const m = id ? people[id] : undefined;
   const label = m ? initials(m.name) : "★";
   return (
     <span
@@ -161,7 +162,7 @@ interface Entry {
   tag?: React.ReactNode;
 }
 
-function ListCard({ sec, entries, spot }: { sec: Section; entries: Entry[]; spot?: string | null }) {
+function ListCard({ sec, entries, spot, joinable }: { sec: Section; entries: Entry[]; spot?: string | null; joinable?: boolean }) {
   const t = useTranslations("stage");
   const { s } = useRonde();
   const items = entries.map((e) => e.text);
@@ -203,11 +204,15 @@ function ListCard({ sec, entries, spot }: { sec: Section; entries: Entry[]; spot
               <li key={n} className={hit(e.text) ? "spot-hit" : undefined} style={{ "--i": n } as React.CSSProperties}>
                 {e.tag}
                 <ItemText item={e.text} />
-                {(likes > 0 || notes.length > 0) && (
-                  <span className="item-rx">
-                    {likes > 0 && <span>👍 {likes}</span>}
-                    {notes.length > 0 && <span title={notes.map((c) => c.text).join("\n")}>💬 {notes.length}</span>}
-                  </span>
+                {joinable ? (
+                  <LineActions entry={e} section={sec.k} likes={cs.filter((c) => !c.text).map((c) => c.byId)} notes={notes.length} />
+                ) : (
+                  (likes > 0 || notes.length > 0) && (
+                    <span className="item-rx">
+                      {likes > 0 && <span>👍 {likes}</span>}
+                      {notes.length > 0 && <span title={notes.map((c) => c.text).join("\n")}>💬 {notes.length}</span>}
+                    </span>
+                  )
                 )}
               </li>
             );
@@ -251,7 +256,7 @@ function FitName({ name }: { name: string }) {
 }
 
 /** `spot`: check-in item highlighted from the control room, marked in place (the rest of the check-in fades) */
-function SpeakerBody({ step, live, spot }: { step: Step; live: boolean; spot?: string | null }) {
+function SpeakerBody({ step, live, spot, joinable }: { step: Step; live: boolean; spot?: string | null; joinable?: boolean }) {
   const t = useTranslations("stage");
   const { s, members, sections, agenda, projectLogo } = useRonde();
   const id = step.id!;
@@ -267,7 +272,12 @@ function SpeakerBody({ step, live, spot }: { step: Step; live: boolean; spot?: s
   const theirs = s.projects.filter((p) => isCheckInFilled(f?.byProject[p.id]));
   const elsewhere = theirs.filter((p) => withTurn.has(p.id));
   const entriesOf = (sec: Section): Entry[] => [
-    ...itemsOf(f, sec).map((text) => ({ ownerId: id, text, projectId: null })),
+    ...itemsOf(f, sec).map((text) => ({
+      ownerId: id,
+      text,
+      projectId: null,
+      tag: <Faces ids={joinedOf(s, { ownerId: id, projectId: null, section: sec.k, text })} />,
+    })),
     ...theirs
       .filter((p) => !withTurn.has(p.id))
       .flatMap((p) =>
@@ -319,7 +329,7 @@ function SpeakerBody({ step, live, spot }: { step: Step; live: boolean; spot?: s
       </div>
       <div className={spot ? "board spotting" : "board"}>
         {sections.map((sec) => (
-          <ListCard key={sec.k} sec={sec} entries={entriesOf(sec)} spot={spot} />
+          <ListCard key={sec.k} sec={sec} entries={entriesOf(sec)} spot={spot} joinable={joinable} />
         ))}
         {acts.length > 0 && (
           <div className="card acts wide">
@@ -342,11 +352,56 @@ function SpeakerBody({ step, live, spot }: { step: Step; live: boolean; spot?: s
   );
 }
 
+/**
+ * On a participant's own screen, after a line of the turn: 👍 (who liked it in its tooltip), and "me too" to put
+ * one's face on a line of someone's round
+ */
+function LineActions({ entry, section, likes, notes }: { entry: Entry; section: string; likes: (string | null)[]; notes: number }) {
+  const t = useTranslations("me");
+  const { s, rpc, nameOf, host } = useRonde();
+  const me = s.viewer.memberId;
+  const plain = plainItem(entry.text);
+  const liked = !!me && likes.includes(me);
+  const joined = !!me && joinedOf(s, { ...entry, section }).includes(me);
+  const target = { ownerId: entry.ownerId, section, itemText: entry.text, projectId: entry.projectId };
+  return (
+    <span className="line-actions">
+      {me && (
+        <button
+          type="button"
+          className="vote-btn"
+          aria-pressed={liked}
+          title={likes.length ? likes.map((id) => first(nameOf(id)) || host).join(", ") : t("like")}
+          onClick={() => rpc({ op: "comment.like", ...target })}
+        >
+          👍 {likes.length || ""}
+        </button>
+      )}
+      {!me && likes.length > 0 && (
+        <span className="item-rx" title={likes.map((id) => first(nameOf(id)) || host).join(", ")}>
+          👍 {likes.length}
+        </span>
+      )}
+      {notes > 0 && <span className="item-rx">💬 {notes}</span>}
+      {me && me !== entry.ownerId && entry.projectId === null && (
+        <button
+          type="button"
+          className={"join-btn" + (joined ? " on" : "")}
+          aria-pressed={joined}
+          aria-label={joined ? t("leaveLine", { text: plain }) : t("joinLine", { text: plain })}
+          title={joined ? t("leaveLineHint") : t("joinLineHint")}
+          onClick={() => rpc({ op: "item.with", ...target, on: !joined })}
+        >
+          {joined ? "✓" : "+"} {t("joined")}
+        </button>
+      )}
+    </span>
+  );
+}
+
 /** The agenda has a project round: items about projects are presented there */
 /** Projects that have their own step in the agenda: their items are presented there, not in each turn */
 export const projectsWithTurn = (agenda: Step[]) => new Set(agenda.filter((x) => x.type === "project").map((x) => x.projectId!));
-
-type Writing = Pick<Snapshot, "checkIns" | "contributors">;
 
 /** People who joined an item someone else wrote, in the order they did */
 export const joinedOf = (
@@ -357,33 +412,25 @@ export const joinedOf = (
     .filter((c) => c.ownerId === item.ownerId && c.projectId === item.projectId && c.section === item.section && c.itemText === item.text)
     .map((c) => c.personId);
 
-/** Lines a person wrote about a project (blank ones aside), and lines of others they joined */
-export function linesAbout(s: Writing, personId: string, projectId: string, sections: Section[]): number {
-  const tab = s.checkIns[personId]?.byProject[projectId];
-  const own = sections.reduce((n, sec) => n + itemsOf(tab, sec).filter((x) => plainItem(x).trim()).length, 0);
-  return own + s.contributors.filter((c) => c.personId === personId && c.projectId === projectId).length;
-}
-
-/** People who wrote about a project or joined a line of it (every screen agrees on who did) */
-export function writersOf(s: Writing, projectId: string, sections: Section[]): string[] {
-  const out = new Set<string>();
-  for (const [id, f] of Object.entries(s.checkIns))
-    if (sections.some((sec) => itemsOf(f.byProject[projectId], sec).some((x) => plainItem(x).trim()))) out.add(id);
-  for (const c of s.contributors) if (c.projectId === projectId) out.add(c.personId);
-  return [...out];
-}
-
 /** Faces of a few people, overlapping, their names for screen readers and on hover */
 export function Faces({ ids }: { ids: string[] }) {
   const { members } = useRonde();
   const shown = ids.filter((id) => members[id]);
   if (!shown.length) return null;
   const names = shown.map((id) => members[id]!.name).join(", ");
+  // Three faces at most, a little apart, and their first names beside them: readable from across the room
+  // however many joined (the others counted)
+  const faces = shown.slice(0, 3);
+  const more = shown.length - faces.length;
   return (
     <span className="faces" title={names}>
-      {shown.map((id) => (
+      {faces.map((id) => (
         <Avatar key={id} id={id} sm />
       ))}
+      <span className="faces-names" aria-hidden="true">
+        {faces.map((id) => first(members[id]!.name)).join(", ")}
+        {more > 0 && ` +${more}`}
+      </span>
       <span className="sr-only">{names}</span>
     </span>
   );
@@ -926,7 +973,7 @@ function EndBody({ celebrate }: { celebrate?: boolean }) {
   const t = useTranslations("stage");
   const locale = useLocale();
   const fmt = formatters(locale);
-  const { s, agenda, now, nameOf } = useRonde();
+  const { s, agenda, now, nameOf, focusNow } = useRonde();
   // Next session planned after this one, by the schedule
   const nextDate = s.settings.schedule.upcoming.find((o) => !o.cancelled && o.date > (s.meeting?.date ?? ""))?.date;
   const m = s.meeting!;
@@ -944,12 +991,12 @@ function EndBody({ celebrate }: { celebrate?: boolean }) {
     return () => cancelAnimationFrame(r);
   }, []);
   useEffect(() => {
-    if (celebrate && goal && !fired.current) {
+    if (celebrate && goal && !fired.current && !focusNow) {
       fired.current = true;
       const tm = setTimeout(() => confetti(90), 700);
       return () => clearTimeout(tm);
     }
-  }, [celebrate, goal]);
+  }, [celebrate, goal, focusNow]);
   const open = s.actions.filter((a) => a.status !== "done");
   const created = s.actions.filter((a) => a.originDate === m.date).length;
   return (
@@ -1045,16 +1092,19 @@ export function Stage({
   replay = 0,
   celebrate,
   logo,
+  joinable,
 }: {
   stepKey: string;
   mini?: boolean;
+  /** Seen by a participant on their own screen: they can join the lines of others ("me too") */
+  joinable?: boolean;
   replay?: number;
   celebrate?: boolean /** The workspace logo, on the shared screen */;
   logo?: string | null;
 }) {
   const t = useTranslations("stage");
   const fmt = formatters(useLocale());
-  const { s, agenda, cur, sections } = useRonde();
+  const { s, agenda, cur, sections, nameOf, host } = useRonde();
   const m = s.meeting!;
   const step = agenda.find((x) => x.key === stepKey) ?? agenda[cur]!;
   const live = step.key === m.stepKey;
@@ -1070,7 +1120,13 @@ export function Stage({
           : t(`stepTitles.${step.type}`);
   const rxKey = step.type === "qa" ? step.of! : step.key;
   const rx: Record<string, number> = {};
-  s.reactions.filter((r) => r.stepKey === rxKey).forEach((r) => (rx[r.emoji] = (rx[r.emoji] ?? 0) + 1));
+  // Who reacted, for the count's tooltip (the host when nobody of the round)
+  const rxBy: Record<string, string[]> = {};
+  for (const r of s.reactions.filter((x) => x.stepKey === rxKey)) {
+    rx[r.emoji] = (rx[r.emoji] ?? 0) + 1;
+    const who = nameOf(r.byId) || host;
+    if (!(rxBy[r.emoji] ??= []).includes(who)) rxBy[r.emoji]!.push(who);
+  }
   const pend = step.type !== "qa" ? s.interactions.filter((i) => i.stepKey === step.key && !i.resolved).length : 0;
   // Spotlight: an item of the shown check-in is highlighted in place; anything else (message, question…) shows as a banner
   const spot = live ? m.spotlight : null;
@@ -1097,7 +1153,7 @@ export function Stage({
         {Object.keys(rx).length > 0 && (
           <span className="rx">
             {Object.entries(rx).map(([e, n]) => (
-              <span key={e}>
+              <span key={e} title={rxBy[e]?.join(", ")}>
                 {e} {n}
               </span>
             ))}
@@ -1110,7 +1166,9 @@ export function Stage({
           <span className="pos">{fmt.dateShort(m.date)}</span>
         )}
       </div>
-      {step.type === "speaker" && <SpeakerBody key={step.key} step={step} live={live} spot={inCheckIn ? spot!.text : null} />}
+      {step.type === "speaker" && (
+        <SpeakerBody key={step.key} step={step} live={live} spot={inCheckIn ? spot!.text : null} joinable={joinable} />
+      )}
       {step.type === "project" && <ProjectBody key={step.key} step={step} live={live} spot={inCheckIn ? spot!.text : null} />}
       {step.type === "intro" && <IntroBody key={replay} mini={mini} />}
       {step.type === "qa" && <QaBody step={step} />}

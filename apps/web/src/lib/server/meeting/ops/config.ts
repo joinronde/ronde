@@ -1,4 +1,6 @@
-import { locales } from "@ronde/i18n";
+import { locales, resolveLocale } from "@ronde/i18n";
+import { readConfig } from "@ronde/module-sdk";
+import { icebreaker, pickIcebreaker } from "@ronde/modules";
 import { removeMeetingEvents } from "../../calendars";
 import "server-only";
 import { randomBytes } from "node:crypto";
@@ -12,7 +14,7 @@ import { deliver } from "../../inbox";
 import { saveTemplate } from "../../templates";
 import { saveCheckIn } from "../checkins";
 import { toSection } from "../dto";
-import { ALL_MODULES, moduleAllowed, moduleStates } from "../modules";
+import { ALL_MODULES, defaultInstallations, moduleAllowed, moduleStates } from "../modules";
 import { agendaFor, goToKey } from "../session";
 import { sectionsOf } from "../state";
 import { defineOp } from "./define";
@@ -231,14 +233,33 @@ export const configOps = [
     name: "modules.set",
     permission: "meeting.configure",
     input: z.object({ moduleId: str(40), enabled: z.boolean() }),
-    run: async ({ db, meetingId, workspaceId }, o) => {
+    run: async ({ db, meetingId, workspaceId, m }, o) => {
       const mod = ALL_MODULES.find((x) => x.id === o.moduleId);
       if (!mod) throw new OpError("notFound");
       if (!moduleAllowed(mod)) throw new AccessError(403, "moduleNotInEdition");
-      await db.moduleInstallation.upsert({
+      // The icebreaker starts with the questions of a new meeting, in its language, when it has none yet
+      const defaults =
+        mod.id === "icebreaker"
+          ? defaultInstallations(workspaceId, meetingId, resolveLocale(m.meeting.locale, m.ws.workspace.locale)).find(
+              (x) => x.moduleId === "icebreaker",
+            )!.config
+          : (mod.config.defaults as object);
+      const row = await db.moduleInstallation.upsert({
         where: { meetingId_moduleId: { meetingId, moduleId: mod.id } },
-        create: { workspaceId, meetingId, moduleId: mod.id, enabled: o.enabled, config: mod.config.defaults as object },
+        create: { workspaceId, meetingId, moduleId: mod.id, enabled: o.enabled, config: defaults },
         update: { enabled: o.enabled },
+      });
+      if (mod.id !== "icebreaker" || !o.enabled) return;
+      let bank = readConfig(icebreaker, row.config).bank.filter((q) => q.trim());
+      if (!bank.length) {
+        await db.moduleInstallation.update({ where: { meetingId_moduleId: { meetingId, moduleId: mod.id } }, data: { config: defaults } });
+        bank = readConfig(icebreaker, defaults).bank;
+      }
+      // Turned on during a session: it gets its question now, not at the next one (in one statement, so a
+      // question picked meanwhile is kept)
+      await db.session.updateMany({
+        where: { meetingId, status: "current", icebreaker: null, stepKey: { not: "end" } },
+        data: { icebreaker: pickIcebreaker(bank) },
       });
     },
   }),

@@ -48,7 +48,8 @@
     "topics": "المواضيع",
     "minutes": "المحضر",
     "polls": "الاستطلاعات",
-    "random": "القرعة"
+    "random": "القرعة",
+    "sheets": "البطاقات"
   },
   "icebreaker": {
     "answers": "{count}/{total} إجابات",
@@ -262,5 +263,19 @@
   "presentAnyway": "اعرضه رغم ذلك",
   "projectAdded": "أُضيف {name} إلى جولة المشاريع في هذه الجلسة.",
   "projectAddedTag": "مُضاف",
-  "projectUnadd": "إزالة {name} من جولة هذه الجلسة"
+  "projectUnadd": "إزالة {name} من جولة هذه الجلسة",
+  "sheets": {
+    "title": "بطاقات المشاريع",
+    "todo": "{count, plural, zero {لا شيء للإكمال} one {واحدة للإكمال} two {اثنتان للإكمال} few {# للإكمال} many {# للإكمال} other {# للإكمال}}",
+    "allDone": "كلها مكتملة",
+    "health": "الحالة",
+    "headline": "رسالة اليوم",
+    "lines": "{count, plural, zero {لا سطر} one {سطر واحد} two {سطران} few {# أسطر} many {# سطرًا} other {# سطر}}",
+    "showAll": "إظهار المكتملة أيضًا ({count} في المجموع)",
+    "search": "البحث عن مشروع",
+    "complete": "مكتملة",
+    "missing": "ينقص: {what}",
+    "noMatch": "لا مشروع بهذا الاسم للإكمال.",
+    "allDoneHint": "كل البطاقات مكتملة: الحالة ورسالة اليوم وسطر من كل شخص فيها."
+  }
 }

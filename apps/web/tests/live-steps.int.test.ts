@@ -34,3 +34,14 @@ describe("live steps", () => {
     expect(after).not.toBe(f.hostPersonId);
   });
 });
+
+describe("the wrap-up", () => {
+  it("stops the meeting's clock: writing the minutes takes no meeting time", async () => {
+    await prisma.session.update({ where: { id: f.sessionId }, data: { startedAt: new Date(Date.now() - 30 * 60_000), endedAt: null } });
+    await runOp(f.ctx, { op: "meeting.goto", key: "end" });
+    const s = await prisma.session.findUniqueOrThrow({ where: { id: f.sessionId } });
+    expect(s.stepKey).toBe("end");
+    expect(s.endedAt).not.toBeNull();
+    expect(s.timerRunning).toBe(false);
+  });
+});

@@ -204,7 +204,8 @@ export function buildMinutes(r: RecordV1, locale: Locale, options: MinutesOption
 
   const presented = new Set(r.projects.filter((p) => p.presented).map((p) => p.id));
   const projectName = (id: string) => r.projects.find((p) => p.id === id)?.name ?? "";
-  /** Check-in items as labelled lists, section by section; `by` names the author (items of several people) */
+  /** Check-in items as labelled lists, section by section; `by` names the author (items of several people), or
+   * nobody when it gives "" */
   const sectionBlocks = (items: RecordItem[], by?: (x: RecordItem) => string): MinutesBlock[] => {
     const out: MinutesBlock[] = [];
     r.sections.forEach((def, i) => {
@@ -213,7 +214,7 @@ export function buildMinutes(r: RecordV1, locale: Locale, options: MinutesOption
       const s = sections[i]!;
       out.push({ type: "label", text: s.label, tone: s.kind === "extra" ? "custom" : def.role });
       // Free text: kept as is, one paragraph per line
-      if (s.type === "text" && !by) {
+      if (s.type === "text" && list.every((x) => !by?.(x))) {
         for (const x of list) for (const line of x.text.split("\n")) if (line.trim()) out.push({ type: "text", text: line });
         return;
       }
@@ -226,7 +227,7 @@ export function buildMinutes(r: RecordV1, locale: Locale, options: MinutesOption
           const text = s.type === "text" ? x.text.replace(/\n+/g, " ") : x.text;
           return {
             ...itemOf(text),
-            ...(by ? { by: by(x) } : {}),
+            ...(by?.(x) ? { by: by(x) } : {}),
             ...(likes ? { likes } : {}),
             ...(notes.length ? { children: notes } : {}),
           };
@@ -258,7 +259,15 @@ export function buildMinutes(r: RecordV1, locale: Locale, options: MinutesOption
     const blocks: MinutesBlock[] = [];
     if (on("checkIns")) {
       const items = c?.items ?? [];
-      blocks.push(...sectionBlocks(items.filter((x) => !x.projectId)));
+      // A line others joined ("me too") names them all, the author first
+      const joined = (x: RecordItem) =>
+        x.with.some((id) => r.names[id]) ? [nm(p.id), ...x.with.filter((id) => r.names[id]).map((id) => nm(id))].join(", ") : "";
+      blocks.push(
+        ...sectionBlocks(
+          items.filter((x) => !x.projectId),
+          joined,
+        ),
+      );
       // Items about a project that had no step of its own: presented by the person, under the project's name
       for (const pid of [...new Set(items.map((x) => x.projectId))])
         if (pid && !presented.has(pid)) {

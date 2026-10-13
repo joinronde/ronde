@@ -27,8 +27,9 @@ export function PollResults({ poll }: { poll: PollDTO }) {
     ) : (
       <p className="hint">{t("noAnswer")}</p>
     );
+  // A yes or no: the answers read at a glance, green and red
   return (
-    <ul className="poll-bars">
+    <ul className={"poll-bars" + (poll.yesNo ? " yesno" : "")}>
       {poll.results.map((r) => (
         <li key={r.value}>
           <span className="poll-label">{r.value}</span>
@@ -157,6 +158,36 @@ export function PollsHost() {
   };
   return (
     <div className="stack">
+      <div className="controls poll-quick">
+        <button
+          type="button"
+          className="btn primary"
+          aria-describedby="pollQuickHint"
+          onClick={async () => {
+            const q = question.trim() || t("yesNoQuestion");
+            if (
+              await rpc(
+                {
+                  op: "polls.create",
+                  question: q,
+                  kind: "single",
+                  options: [t("yes"), t("no")],
+                  anonymous: false,
+                  show: true,
+                  yesNo: true,
+                },
+                t("created"),
+              )
+            )
+              setQuestion("");
+          }}
+        >
+          👍👎 {t("yesNo")}
+        </button>
+        <span id="pollQuickHint" className="hint">
+          {t("yesNoHint")}
+        </span>
+      </div>
       <form className="form" onSubmit={create}>
         <div className="field">
           <label htmlFor="pollQuestion">{t("question")}</label>

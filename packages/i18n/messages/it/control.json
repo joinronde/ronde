@@ -48,7 +48,8 @@
     "topics": "Argomenti",
     "minutes": "Verbale",
     "polls": "Sondaggi",
-    "random": "Sorteggio"
+    "random": "Sorteggio",
+    "sheets": "Schede"
   },
   "icebreaker": {
     "answers": "{count}/{total} risposte",
@@ -262,5 +263,19 @@
   "presentAnyway": "Presenta comunque",
   "projectAdded": "{name} entra nel giro per progetto di questa sessione.",
   "projectAddedTag": "aggiunto",
-  "projectUnadd": "Togli {name} dal giro di questa sessione"
+  "projectUnadd": "Togli {name} dal giro di questa sessione",
+  "sheets": {
+    "title": "Schede progetto",
+    "todo": "{count, plural, one {# da completare} other {# da completare}}",
+    "allDone": "Tutte complete",
+    "health": "salute",
+    "headline": "messaggio del giorno",
+    "lines": "{count, plural, one {# riga} other {# righe}}",
+    "showAll": "Mostra anche quelle complete ({count} in tutto)",
+    "search": "Cerca un progetto",
+    "complete": "Completa",
+    "missing": "Manca: {what}",
+    "noMatch": "Nessun progetto con quel nome da completare.",
+    "allDoneHint": "Tutte le schede sono complete: salute, messaggio del giorno e una riga da ciascuna delle loro persone."
+  }
 }

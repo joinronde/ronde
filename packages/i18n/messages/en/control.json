@@ -48,7 +48,8 @@
     "topics": "Topics",
     "minutes": "Minutes",
     "polls": "Polls",
-    "random": "Random"
+    "random": "Random",
+    "sheets": "Sheets"
   },
   "icebreaker": {
     "answers": "{count}/{total} answers",
@@ -262,5 +263,19 @@
   "presentAnyway": "Present anyway",
   "projectAdded": "{name} joins this session's project round.",
   "projectAddedTag": "added",
-  "projectUnadd": "Take {name} out of this session's round"
+  "projectUnadd": "Take {name} out of this session's round",
+  "sheets": {
+    "title": "Project sheets",
+    "todo": "{count, plural, one {# to complete} other {# to complete}}",
+    "allDone": "All complete",
+    "health": "health",
+    "headline": "message of the day",
+    "lines": "{count, plural, one {# line} other {# lines}}",
+    "showAll": "Show the complete ones too ({count} in all)",
+    "search": "Find a project",
+    "complete": "Complete",
+    "missing": "Missing: {what}",
+    "noMatch": "No project of that name to complete.",
+    "allDoneHint": "Every sheet is complete: health, message of the day and a line from each of their people."
+  }
 }

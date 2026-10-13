@@ -30,5 +30,10 @@
   "reopen": "Reopen",
   "show": "Show on the shared screen",
   "hide": "Hide from the screen",
-  "delete": "Delete the poll “{question}”"
+  "delete": "Delete the poll “{question}”",
+  "yes": "Yes",
+  "no": "No",
+  "yesNo": "Yes or no, now",
+  "yesNoHint": "The question typed below, or \"Do you agree?\", on the screen at once, with who answered what.",
+  "yesNoQuestion": "Do you agree?"
 }

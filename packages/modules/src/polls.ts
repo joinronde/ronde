@@ -33,18 +33,23 @@ export const polls = defineModule({
     defineOp({
       name: "polls.create",
       permission: "session.run",
-      session: "read",
+      // Locked: a quick yes or no goes on the shared screen at once, like polls.show
+      session: "lock",
       input: z.object({
         question: str(200).min(1),
         kind: z.enum(["single", "multiple", "scale", "words"]),
         options: z.array(str(80).min(1)).max(10).default([]),
         anonymous: z.boolean().default(true),
+        /** Shown on the shared screen at once (a quick yes or no) */
+        show: z.boolean().default(false),
+        /** A quick yes or no: its two options are yes then no */
+        yesNo: z.boolean().default(false),
       }),
       run: async ({ db, requireSession, workspaceId }, o) => {
         const s = requireSession();
         const options = [...new Set(o.options)];
         if ((o.kind === "single" || o.kind === "multiple") && options.length < 2) throw new OpError("pollNeedsOptions");
-        await db.poll.create({
+        const poll = await db.poll.create({
           data: {
             workspaceId,
             sessionId: s.id,
@@ -52,8 +57,10 @@ export const polls = defineModule({
             kind: o.kind,
             options: o.kind === "single" || o.kind === "multiple" ? options : [],
             anonymous: o.anonymous,
+            yesNo: o.yesNo && o.kind === "single" && options.length === 2,
           },
         });
+        if (o.show) await db.session.update({ where: { id: s.id }, data: { shownPollId: poll.id } });
       },
     }),
     defineOp({

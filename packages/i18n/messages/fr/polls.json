@@ -30,5 +30,10 @@
   "reopen": "Rouvrir",
   "show": "Afficher sur l'écran partagé",
   "hide": "Retirer de l'écran",
-  "delete": "Supprimer le sondage « {question} »"
+  "delete": "Supprimer le sondage « {question} »",
+  "yes": "Oui",
+  "no": "Non",
+  "yesNo": "Oui ou non, tout de suite",
+  "yesNoHint": "La question saisie ci-dessous, ou « Êtes-vous d'accord ? », aussitôt à l'écran, avec qui a répondu quoi.",
+  "yesNoQuestion": "Êtes-vous d'accord ?"
 }

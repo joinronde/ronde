@@ -1335,6 +1335,7 @@ a.userbox:hover{color:var(--ink)}
 .order-option.on{border-color:var(--accent);background:var(--accent-soft)}
 .month-option input[type=number]{width:4.5em;text-align:end}
 .month-option input:disabled,.month-option [aria-disabled=true]{opacity:.5}
+.focus-btn[aria-disabled=true]{cursor:default}
 .month-option .select{width:auto;min-width:9.5em}
 .chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:4px 11px;font-weight:600;color:var(--ink-2);min-width:3.2em}
 .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
@@ -2784,9 +2785,11 @@ a[target="_blank"]:not(.btn) > svg.ico:last-of-type{display:inline;margin-inline
 .join-btn:active{transform:scale(.95)}
 .join-btn[aria-pressed="true"]{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}
 /* Faces of the people on a line: overlapping, the newcomer pops in */
-.faces{display:inline-flex;align-items:center;flex:none;vertical-align:middle}
+.faces{display:inline-flex;align-items:center;flex:0 1 auto;min-width:0;max-width:100%;vertical-align:middle}
+.faces .av{flex:none}
 .faces .av{box-shadow:0 0 0 2px var(--surface);animation:popIn .3s cubic-bezier(.3,1.4,.5,1) both}
-.faces .av+.av{margin-inline-start:-.55em}
+.faces .av+.av{margin-inline-start:-.3em}
+.faces-names{margin-inline-start:.4em;font-size:.82em;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .list-ed li .faces{align-self:center;font-size:.8em}
 .card .faces,.item .faces{margin-inline-end:.35em}
 .item-author .faces .av{font-size:1em}
@@ -3059,3 +3062,37 @@ details.snd-fold[open] > summary::after{transform:rotate(-135deg)}
   .print-sheet th{background:#f6efe4}
   .print-sheet .print-logo{display:block;max-height:34pt;max-width:160pt;margin-bottom:12pt}
 }
+.focus-btn.on{background:var(--accent-soft);border-color:var(--accent)}
+@media (max-width:640px){.focus-btn .focus-label{display:none}}
+/* The participant's agenda strip stays under the top bar, and shows a thin scrollbar to drag with a mouse */
+.follow-strip{position:sticky;top:var(--topbar-h,52px);z-index:15;margin:0 -4px;padding:6px 4px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px)}
+.follow-strip .strip.swipe-row{scrollbar-width:thin;padding-bottom:6px}
+.follow-strip .strip.swipe-row::-webkit-scrollbar{display:block;height:6px}
+.follow-strip .strip.swipe-row::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+/* A yes or no poll: green and red bars, read from across the room */
+.poll-bars.yesno li:first-child .poll-bar i{background:var(--ok)}
+.poll-bars.yesno li:nth-child(2) .poll-bar i{background:var(--live)}
+.poll-bars.yesno .poll-label,.poll-bars.yesno .poll-n{font-weight:700;font-size:1.15em}
+/* Project sheets: a line in the main column, the list in its side tab (one line each, however many) */
+.sheets-summary{display:flex;align-items:center;gap:8px;width:100%;margin-top:10px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font:inherit;font-weight:600;color:var(--ink);cursor:pointer;text-align:start}
+.sheets-summary:hover{border-color:var(--ink-3)}
+.sheets-summary .go{margin-inline-start:auto;color:var(--ink-3)}
+[dir="rtl"] .sheets-summary .go{transform:scaleX(-1)}
+.pane-sheets .controls{justify-content:space-between}
+.sheets-search{width:100%;margin:6px 0}
+.sheets-list{list-style:none;margin:6px 0 0;padding:0;max-height:min(60vh,520px);overflow-y:auto}
+.sheets-list li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1px 8px;align-items:baseline;padding:7px 4px;border-bottom:1px solid var(--line);font-size:14px}
+.sheets-list li:last-child{border-bottom:0}
+.sheets-list .mark{font-weight:700}
+.sheets-list .incomplete .mark,.sheets-list .incomplete .what{color:var(--warn)}
+.sheets-list .complete .mark,.sheets-list .complete .what{color:var(--ok)}
+.sheets-list .name{font-weight:600;overflow-wrap:anywhere}
+.sheets-list .what{grid-column:2;font-size:13px}
+.pill.warn{background:var(--warn-soft);color:var(--ink)}
+.pill.ok{background:var(--ok-soft);color:var(--ink)}
+.poll-quick{align-items:center}.poll-quick .hint{flex:1;min-width:12em}
+/* After a line of the turn, on a participant's screen: like and "me too", quiet until the line is pointed at */
+.line-actions{display:inline-flex;align-items:center;gap:6px;margin-inline-start:.5em;vertical-align:middle}
+.line-actions .vote-btn,.line-actions .join-btn{font-size:12.5px;padding:1px 8px}
+@media (hover:hover){li:not(:hover):not(:focus-within) > .line-actions .vote-btn:not([aria-pressed="true"]),li:not(:hover):not(:focus-within) > .line-actions .join-btn:not(.on){opacity:.35}}
+.panel:has([data-tour="pane"]){scroll-margin-top:72px}

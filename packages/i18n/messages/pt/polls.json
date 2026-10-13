@@ -30,5 +30,10 @@
   "reopen": "Reabrir",
   "show": "Mostrar na tela compartilhada",
   "hide": "Ocultar da tela",
-  "delete": "Excluir a enquete “{question}”"
+  "delete": "Excluir a enquete “{question}”",
+  "yes": "Sim",
+  "no": "Não",
+  "yesNo": "Sim ou não, já",
+  "yesNoHint": "A pergunta digitada abaixo, ou «Você concorda?», na tela na hora, com quem respondeu o quê.",
+  "yesNoQuestion": "Você concorda?"
 }

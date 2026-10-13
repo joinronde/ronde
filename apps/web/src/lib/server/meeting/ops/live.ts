@@ -51,7 +51,8 @@ export const liveOps = [
     permission: "session.participate",
     input: z.object({ id: str(50) }),
     run: async ({ db, m, meetingId, workspaceId }, o) => {
-      const personId = m.viewer.memberId;
+      // The person running the meeting votes too, round or not
+      const personId = m.viewer.memberId ?? (m.can("session.run") ? m.ws.member.personId || null : null);
       if (!personId) throw new OpError("membersOnlyVote");
       const topic = await db.topic.findFirst({ where: { id: o.id, meetingId }, select: { id: true } });
       if (!topic) throw new OpError("notFound");
