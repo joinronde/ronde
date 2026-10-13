@@ -27,8 +27,9 @@ import {
 } from "@ronde/core/util";
 import { formatters } from "@ronde/i18n";
 import { useLocale, useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Select } from "@/components/select";
+import { linesAbout, writersOf } from "@/lib/shared/sheets";
 import { track } from "@/lib/shared/track";
 import { AvatarPicker } from "./avatar-picker";
 import { Board } from "./board";
@@ -45,7 +46,7 @@ import { useRonde, useTick } from "./ronde-provider";
 import { Icon } from "./shell/icons";
 import { NewTab } from "./shell/new-tab";
 import { SoundPlayer } from "./sound-player";
-import { Avatar, Faces, joinedOf, linesAbout, Stage, Star, Strip, WaitPill, writersOf } from "./stage";
+import { Avatar, Faces, joinedOf, Stage, Star, Strip, WaitPill } from "./stage";
 import { SwipeRow } from "./swipe-row";
 import { Assignments, UpcomingSessions } from "./upcoming-sessions";
 
@@ -292,6 +293,17 @@ function MyCheckIn({ tab, memberId, onBack }: { tab: MeTab; memberId: string; on
 }
 
 function Follow() {
+  // Sticks right under the top bar, whose height grows when it wraps (a phone, a long name, Arabic…)
+  // (a ref callback: the strip only shows once there is a meeting)
+  const stripRef = useCallback((strip: HTMLDivElement | null) => {
+    const bar = document.querySelector<HTMLElement>(".topbar");
+    if (!bar || !strip) return;
+    const fit = () => strip.style.setProperty("--topbar-h", `${bar.offsetHeight}px`);
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(bar);
+    return () => ro.disconnect();
+  }, []);
   const t = useTranslations("me");
   const tStage = useTranslations("stage");
   const { s, agenda, cur, host } = useRonde();
@@ -340,7 +352,7 @@ function Follow() {
       <PokerPanel />
       <PollsPanel />
       {/* Kept in view while scrolling down the stage: where the meeting is, and the people and projects to come */}
-      <div className="follow-strip">
+      <div className="follow-strip" ref={stripRef}>
         <Strip viewKey={viewKey} onPick={(k) => setBrowse(k === m.stepKey ? null : k)} />
       </div>
       <Stage stepKey={viewKey} joinable />
@@ -353,7 +365,12 @@ function Follow() {
 function Dock() {
   const t = useTranslations("me");
   const tSignals = useTranslations("signals");
-  const { s, rpc, members, mod, focus, focusNow, setFocus } = useRonde();
+  const { s, rpc, members, mod, focus, focusNow, focusAuto, setFocus, setFocusHere } = useRonde();
+  // Focus only applies here, where one follows the meeting: not on the shared screen nor in the control room
+  useEffect(() => {
+    setFocusHere(true);
+    return () => setFocusHere(false);
+  }, [setFocusHere]);
   const [text, setText] = useState("");
   const [kudoMode, setKudoMode] = useState(false);
   const [kudoTo, setKudoTo] = useState("");
@@ -398,9 +415,11 @@ function Dock() {
           <button
             type="button"
             className={"btn focus-btn" + (focusNow ? " on" : "")}
-            aria-pressed={focus}
-            title={focus ? t("focusOff") : focusNow ? t("focusTurn") : t("focusOn")}
-            onClick={() => setFocus(!focus)}
+            aria-pressed={focusNow}
+            // During one's own turn it is on by itself: a click would change nothing that shows
+            aria-disabled={focusAuto || undefined}
+            title={focusAuto ? t("focusTurn") : focus ? t("focusOff") : t("focusOn")}
+            onClick={() => !focusAuto && setFocus(!focus)}
           >
             <span aria-hidden="true">🎯</span> <span className="focus-label">{t("focus")}</span>
           </button>
@@ -2047,7 +2066,10 @@ function TeamCheckIns() {
                                 <ProjectChip name={project.name} color={project.color} logo={projectLogo(project)} />
                                 <Faces ids={joinedOf(s, { ownerId: m.id, projectId: project.id, section: sec.k, text: item })} />
                               </>
-                            ) : null
+                            ) : (
+                              // Their own line: the faces of whoever joined it
+                              <Faces ids={joinedOf(s, { ownerId: m.id, projectId: null, section: sec.k, text: item })} />
+                            )
                           }
                           me={me}
                           pre={sec.type === "text"}

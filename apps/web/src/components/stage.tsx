@@ -26,6 +26,7 @@ import { formatters } from "@ronde/i18n";
 import { confetti, motionAllowed } from "@ronde/ui/effects";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { writersOf } from "@/lib/shared/sheets";
 import { AmbienceLayer, useAmbience } from "./ambience";
 import { ItemText } from "./check-in-fields";
 import { PokerStage } from "./poker";
@@ -40,8 +41,8 @@ import { Icon, type IconName } from "./shell/icons";
 import { SwipeRow } from "./swipe-row";
 
 export function Avatar({ id, sm }: { id: string | null | undefined; sm?: boolean }) {
-  const { members, avatarUrl } = useRonde();
-  const m = id ? members[id] : undefined;
+  const { people, avatarUrl } = useRonde();
+  const m = id ? people[id] : undefined;
   const label = m ? initials(m.name) : "★";
   return (
     <span
@@ -376,6 +377,11 @@ function LineActions({ entry, section, likes, notes }: { entry: Entry; section: 
           👍 {likes.length || ""}
         </button>
       )}
+      {!me && likes.length > 0 && (
+        <span className="item-rx" title={likes.map((id) => first(nameOf(id)) || host).join(", ")}>
+          👍 {likes.length}
+        </span>
+      )}
       {notes > 0 && <span className="item-rx">💬 {notes}</span>}
       {me && me !== entry.ownerId && entry.projectId === null && (
         <button
@@ -397,8 +403,6 @@ function LineActions({ entry, section, likes, notes }: { entry: Entry; section: 
 /** Projects that have their own step in the agenda: their items are presented there, not in each turn */
 export const projectsWithTurn = (agenda: Step[]) => new Set(agenda.filter((x) => x.type === "project").map((x) => x.projectId!));
 
-type Writing = Pick<Snapshot, "checkIns" | "contributors">;
-
 /** People who joined an item someone else wrote, in the order they did */
 export const joinedOf = (
   s: Pick<Snapshot, "contributors">,
@@ -407,22 +411,6 @@ export const joinedOf = (
   s.contributors
     .filter((c) => c.ownerId === item.ownerId && c.projectId === item.projectId && c.section === item.section && c.itemText === item.text)
     .map((c) => c.personId);
-
-/** Lines a person wrote about a project (blank ones aside), and lines of others they joined */
-export function linesAbout(s: Writing, personId: string, projectId: string, sections: Section[]): number {
-  const tab = s.checkIns[personId]?.byProject[projectId];
-  const own = sections.reduce((n, sec) => n + itemsOf(tab, sec).filter((x) => plainItem(x).trim()).length, 0);
-  return own + s.contributors.filter((c) => c.personId === personId && c.projectId === projectId).length;
-}
-
-/** People who wrote about a project or joined a line of it (every screen agrees on who did) */
-export function writersOf(s: Writing, projectId: string, sections: Section[]): string[] {
-  const out = new Set<string>();
-  for (const [id, f] of Object.entries(s.checkIns))
-    if (sections.some((sec) => itemsOf(f.byProject[projectId], sec).some((x) => plainItem(x).trim()))) out.add(id);
-  for (const c of s.contributors) if (c.projectId === projectId) out.add(c.personId);
-  return [...out];
-}
 
 /** Faces of a few people, overlapping, their names for screen readers and on hover */
 export function Faces({ ids }: { ids: string[] }) {
@@ -985,7 +973,7 @@ function EndBody({ celebrate }: { celebrate?: boolean }) {
   const t = useTranslations("stage");
   const locale = useLocale();
   const fmt = formatters(locale);
-  const { s, agenda, now, nameOf } = useRonde();
+  const { s, agenda, now, nameOf, focusNow } = useRonde();
   // Next session planned after this one, by the schedule
   const nextDate = s.settings.schedule.upcoming.find((o) => !o.cancelled && o.date > (s.meeting?.date ?? ""))?.date;
   const m = s.meeting!;
@@ -1003,12 +991,12 @@ function EndBody({ celebrate }: { celebrate?: boolean }) {
     return () => cancelAnimationFrame(r);
   }, []);
   useEffect(() => {
-    if (celebrate && goal && !fired.current) {
+    if (celebrate && goal && !fired.current && !focusNow) {
       fired.current = true;
       const tm = setTimeout(() => confetti(90), 700);
       return () => clearTimeout(tm);
     }
-  }, [celebrate, goal]);
+  }, [celebrate, goal, focusNow]);
   const open = s.actions.filter((a) => a.status !== "done");
   const created = s.actions.filter((a) => a.originDate === m.date).length;
   return (

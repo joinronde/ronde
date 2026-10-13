@@ -1335,6 +1335,7 @@ a.userbox:hover{color:var(--ink)}
 .order-option.on{border-color:var(--accent);background:var(--accent-soft)}
 .month-option input[type=number]{width:4.5em;text-align:end}
 .month-option input:disabled,.month-option [aria-disabled=true]{opacity:.5}
+.focus-btn[aria-disabled=true]{cursor:default}
 .month-option .select{width:auto;min-width:9.5em}
 .chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:4px 11px;font-weight:600;color:var(--ink-2);min-width:3.2em}
 .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
@@ -2784,10 +2785,11 @@ a[target="_blank"]:not(.btn) > svg.ico:last-of-type{display:inline;margin-inline
 .join-btn:active{transform:scale(.95)}
 .join-btn[aria-pressed="true"]{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}
 /* Faces of the people on a line: overlapping, the newcomer pops in */
-.faces{display:inline-flex;align-items:center;flex:none;vertical-align:middle}
+.faces{display:inline-flex;align-items:center;flex:0 1 auto;min-width:0;max-width:100%;vertical-align:middle}
+.faces .av{flex:none}
 .faces .av{box-shadow:0 0 0 2px var(--surface);animation:popIn .3s cubic-bezier(.3,1.4,.5,1) both}
 .faces .av+.av{margin-inline-start:-.3em}
-.faces-names{margin-inline-start:.4em;font-size:.82em;color:var(--ink-2);white-space:nowrap}
+.faces-names{margin-inline-start:.4em;font-size:.82em;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .list-ed li .faces{align-self:center;font-size:.8em}
 .card .faces,.item .faces{margin-inline-end:.35em}
 .item-author .faces .av{font-size:1em}

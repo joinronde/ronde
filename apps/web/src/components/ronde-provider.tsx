@@ -24,6 +24,8 @@ import { withBasePath } from "@/lib/shared/base-path";
 interface RondeCtx {
   s: Snapshot;
   members: Record<string, MemberDTO>;
+  /** The members and the observers: for a name or a face (an action an observer owns…) */
+  people: Record<string, MemberDTO>;
   agenda: Step[];
   cur: number;
   /** Server time (corrects the device clock offset) */
@@ -38,10 +40,15 @@ interface RondeCtx {
   /** Last ping from the projection tab open in this browser */
   liveSeen: number;
   nameOf: (id: string | null | undefined) => string;
-  /** Focus mode chosen in this browser, and whether it is on now (by choice, or during one's own turn) */
+  /** Focus mode chosen in this browser, and whether it is on now (by choice, or during one's own turn); it only
+   * applies where the person follows the meeting (their screen), never on the shared screen or the control room */
   focus: boolean;
   focusNow: boolean;
+  /** On by itself, for one's own turn, without having been chosen */
+  focusAuto: boolean;
   setFocus: (on: boolean) => void;
+  /** Called by the view where focus applies, while it is shown */
+  setFocusHere: (on: boolean) => void;
   /** Name shown for the person running the meeting, from the settings */
   host: string;
   /** Check-in sections, from the settings */
@@ -155,7 +162,9 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
     } catch {}
   }, []);
   const myTurn = !!s.meeting?.startedAt && !!s.viewer.memberId && baseKeyOf(s.meeting.stepKey) === s.viewer.memberId;
-  const focusNow = focus || myTurn;
+  const [focusHere, setFocusHere] = useState(false);
+  const focusAuto = focusHere && myTurn && !focus;
+  const focusNow = focusHere && (focus || myTurn);
   const focusRef = useRef(focusNow);
   focusRef.current = focusNow;
 
@@ -416,6 +425,7 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
   }, []);
 
   const members = useMemo(() => Object.fromEntries(s.members.map((m) => [m.id, m])), [s.members]);
+  const people = useMemo(() => ({ ...Object.fromEntries(s.observers.map((m) => [m.id, m])), ...members }), [s.observers, members]);
   // Blocks of modules turned off are left out, as on the server
   const blocks = useMemo(
     () => s.settings.agenda.filter((b) => !BLOCK_MODULE[b.type] || s.modules[BLOCK_MODULE[b.type]!]),
@@ -432,8 +442,8 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
   const now = useCallback(() => (hydrated ? Date.now() + offset : initial.serverNow), [hydrated, offset, initial.serverNow]);
   const host = useMemo(() => hostName(s.settings, locale), [s.settings, locale]);
   const nameOf = useCallback(
-    (id: string | null | undefined) => (id ? (members[id]?.name ?? (id === HOST_ID ? host : "")) : ""),
-    [members, host],
+    (id: string | null | undefined) => (id ? (people[id]?.name ?? (id === HOST_ID ? host : "")) : ""),
+    [people, host],
   );
 
   const sections = useMemo(() => resolveSections(s.settings, locale), [s.settings, locale]);
@@ -441,8 +451,11 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
     s,
     focus,
     focusNow,
+    focusAuto,
     setFocus,
+    setFocusHere,
     members,
+    people,
     agenda,
     cur,
     now,

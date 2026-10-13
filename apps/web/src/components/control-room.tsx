@@ -6,7 +6,7 @@ import { baseKeyOf, type Step, spentOf } from "@ronde/core/meeting";
 import { buildMinutes, decisionsOf, MINUTES_PARTS, type MinutesPart } from "@ronde/core/minutes";
 import type { RecordV1 } from "@ronde/core/record";
 import { BOARD_SOUNDS, CUES, MUSIC_GROUPS, MUSIC_STYLES, type MusicStyle, type SoundKey, type SoundOutput } from "@ronde/core/sound";
-import type { ActionStatus, InteractionDTO, Section, Snapshot } from "@ronde/core/types";
+import type { ActionStatus, InteractionDTO } from "@ronde/core/types";
 import {
   ACTION_STATUSES,
   first,
@@ -17,6 +17,7 @@ import {
   mmssPlain,
   plainItem,
   similarity,
+  VOTES_PER_PERSON,
 } from "@ronde/core/util";
 import { formatters } from "@ronde/i18n";
 import { MdEditor } from "@ronde/ui/md-editor";
@@ -26,6 +27,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { renderSVG } from "uqr";
 import { Select } from "@/components/select";
 import { withBasePath } from "@/lib/shared/base-path";
+import { actionOwners, sheetRows, sheetsToComplete, writersOf } from "@/lib/shared/sheets";
 import { track } from "@/lib/shared/track";
 import { Board } from "./board";
 import { CommandPalette, ShortcutsHelp, useControlShortcuts } from "./command-palette";
@@ -46,7 +48,7 @@ import { Icon } from "./shell/icons";
 import { ModKey } from "./shell/mod-key";
 import { NewTab } from "./shell/new-tab";
 import { controlMonitorOn, SoundPlayer } from "./sound-player";
-import { Avatar, BLOCK_ICON, linesAbout, projectEntries, projectsWithTurn, Stage, sectionsHave, Timer, UpCount, writersOf } from "./stage";
+import { Avatar, BLOCK_ICON, projectEntries, projectsWithTurn, Stage, sectionsHave, Timer, UpCount } from "./stage";
 import { SwipeRow } from "./swipe-row";
 import { soundLength } from "./synth";
 import { Assignments } from "./upcoming-sessions";
@@ -1391,8 +1393,8 @@ function PaneActions() {
   const fmt = formatters(useLocale());
   const { s, agenda, rpc, sections } = useRonde();
   const [text, setText] = useState("");
-  const [owner, setOwner] = useState(s.members[0]?.id ?? "");
   const owners = actionOwners(s);
+  const [owner, setOwner] = useState(owners[0]?.id ?? "");
   const [confirmDel, setConfirmDel] = useState<string | null>(null);
   const sp = agenda.filter((x) => x.type === "speaker");
   const withTurn = projectsWithTurn(agenda);
@@ -1539,11 +1541,15 @@ function PaneActions() {
 function PaneTopics() {
   const t = useTranslations("control");
   const tMe = useTranslations("me");
+  const tRetro = useTranslations("retro");
   const { s, rpc, nameOf, host } = useRonde();
   const [text, setText] = useState("");
+  const votesLeft = VOTES_PER_PERSON - s.topics.filter((x) => x.mine).length;
   const topics = [...s.topics].sort((a, b) => Number(a.done) - Number(b.done) || b.votes - a.votes || a.createdAt - b.createdAt);
   return (
     <>
+      {/* The host votes too, with the same number of votes as everyone */}
+      {topics.some((x) => !x.done) && <p className="hint">{tRetro("me.votesLeft", { count: votesLeft, total: VOTES_PER_PERSON })}</p>}
       {topics.length ? (
         topics.map((x) => (
           <div className="item" key={x.id}>
@@ -1561,6 +1567,7 @@ function PaneTopics() {
               type="button"
               className="vote-btn"
               aria-pressed={x.mine}
+              aria-label={x.mine ? tMe("unvote") : tMe("vote")}
               title={x.mine ? tMe("unvote") : tMe("vote")}
               onClick={() => rpc({ op: "topic.vote", id: x.id })}
             >
@@ -2067,41 +2074,6 @@ function ProjectOrder() {
     </>
   );
 }
-
-/** The people an action can go to: the meeting's members, whether they speak in the round or not, then its observers */
-function actionOwners(s: Snapshot): { id: string; name: string }[] {
-  const seen = new Set<string>();
-  return [...s.members, ...s.observers].filter((x) => !seen.has(x.id) && seen.add(x.id));
-}
-
-type SheetRow = { p: Snapshot["projects"][number]; missing: string[]; lines: { id: string; n: number }[]; complete: boolean };
-
-/** What each project sheet still needs: its health, its message of the day, a line from each of its people here */
-function sheetRows(
-  s: Snapshot,
-  sections: Section[],
-  nameOf: (id: string) => string,
-  t: (k: "sheets.health" | "sheets.headline") => string,
-): SheetRow[] {
-  const inMeeting = new Set(s.members.map((x) => x.id));
-  return s.projects.map((p) => {
-    const lines = p.memberIds.filter((id) => inMeeting.has(id)).map((id) => ({ id, n: linesAbout(s, id, p.id, sections) }));
-    const missing = [
-      ...(p.sheet?.health ? [] : [t("sheets.health")]),
-      ...(p.sheet?.headline.trim() ? [] : [t("sheets.headline")]),
-      ...lines.filter((x) => !x.n).map((x) => first(nameOf(x.id))),
-    ];
-    return { p, missing, lines, complete: !missing.length };
-  });
-}
-
-const sheetsToComplete = (s: Snapshot, sections: Section[]) =>
-  sheetRows(
-    s,
-    sections,
-    () => "",
-    () => "",
-  ).filter((r) => !r.complete).length;
 
 /** One line in the main column: how many sheets need someone, opening the "Sheets" tab */
 function SheetsSummary({ onOpen }: { onOpen: () => void }) {

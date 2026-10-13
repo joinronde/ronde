@@ -233,7 +233,7 @@ export const configOps = [
     name: "modules.set",
     permission: "meeting.configure",
     input: z.object({ moduleId: str(40), enabled: z.boolean() }),
-    run: async ({ db, meetingId, workspaceId, session, m }, o) => {
+    run: async ({ db, meetingId, workspaceId, m }, o) => {
       const mod = ALL_MODULES.find((x) => x.id === o.moduleId);
       if (!mod) throw new OpError("notFound");
       if (!moduleAllowed(mod)) throw new AccessError(403, "moduleNotInEdition");
@@ -255,10 +255,12 @@ export const configOps = [
         await db.moduleInstallation.update({ where: { meetingId_moduleId: { meetingId, moduleId: mod.id } }, data: { config: defaults } });
         bank = readConfig(icebreaker, defaults).bank;
       }
-      // Turned on before a session: it gets its question now, not at the next one
-      const current = session ?? (await db.session.findFirst({ where: { meetingId, status: "current" } }));
-      if (current && !current.icebreaker && current.stepKey !== "end")
-        await db.session.update({ where: { id: current.id }, data: { icebreaker: pickIcebreaker(bank) } });
+      // Turned on during a session: it gets its question now, not at the next one (in one statement, so a
+      // question picked meanwhile is kept)
+      await db.session.updateMany({
+        where: { meetingId, status: "current", icebreaker: null, stepKey: { not: "end" } },
+        data: { icebreaker: pickIcebreaker(bank) },
+      });
     },
   }),
   defineOp({

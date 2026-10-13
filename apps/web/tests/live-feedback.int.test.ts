@@ -1,3 +1,4 @@
+import { parseRecord } from "@ronde/core/record";
 import { prisma } from "@ronde/db";
 import { beforeEach, describe, expect, it } from "vitest";
 import { runOp } from "@/lib/server/meeting/ops";
@@ -20,6 +21,13 @@ describe("the icebreaker", () => {
     const row = await prisma.moduleInstallation.findFirstOrThrow({ where: { meetingId: f.meetingId, moduleId: "icebreaker" } });
     expect((row.config as { bank: string[] }).bank.length).toBeGreaterThan(0);
     expect((await prisma.session.findUniqueOrThrow({ where: { id: f.sessionId } })).icebreaker).toBeTruthy();
+  });
+
+  it("keeps the question a session already has when it is turned on again", async () => {
+    await prisma.session.update({ where: { id: f.sessionId }, data: { icebreaker: "Your best coffee?" } });
+    await runOp(f.ctx, { op: "modules.set", moduleId: "icebreaker", enabled: false });
+    await runOp(f.ctx, { op: "modules.set", moduleId: "icebreaker", enabled: true });
+    expect((await prisma.session.findUniqueOrThrow({ where: { id: f.sessionId } })).icebreaker).toBe("Your best coffee?");
   });
 });
 
@@ -54,5 +62,25 @@ describe("joining a line", () => {
       on: true,
     });
     expect(await prisma.checkInItemContributor.count({ where: { itemId: item.id, personId: f.hostPersonId } })).toBe(1);
+  });
+});
+
+describe("actions", () => {
+  it("given to an observer name the observer in the minutes, not the host", async () => {
+    const observer = await prisma.person.create({
+      data: { workspaceId: f.workspaceId, email: `observer-${n}@live-fb.test`, firstName: "Olivia", lastName: "Watcher" },
+    });
+    await prisma.meetingParticipant.create({
+      data: { workspaceId: f.workspaceId, meetingId: f.meetingId, personId: observer.id, role: "observer", position: 99 },
+    });
+    await runOp(f.ctx, { op: "action.add", text: "Send the figures", ownerId: observer.id, originText: null });
+    await prisma.session.update({
+      where: { id: f.sessionId },
+      data: { stepKey: "end", startedAt: new Date(Date.now() - 20 * 60_000), endedAt: new Date() },
+    });
+    await runOp(f.ctx, { op: "meeting.archive", summary: null, omit: [] });
+    const record = parseRecord((await prisma.session.findUniqueOrThrow({ where: { id: f.sessionId } })).record)!;
+    expect(record.actions.find((a) => a.text === "Send the figures")?.ownerId).toBe(observer.id);
+    expect(record.names[observer.id]).toBe("Olivia Watcher");
   });
 });

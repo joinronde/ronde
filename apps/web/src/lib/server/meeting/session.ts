@@ -192,9 +192,11 @@ export async function buildRecord(db: ScopedTx, ctx: RecordCtx, s: Session, omit
     .filter((i) => byId[i.personId])
     .sort((a, b) => sectionOrder.get(a.sectionKey)! - sectionOrder.get(b.sectionKey)! || a.position - b.position);
   const saidIds = new Set(said.map((i) => i.id));
-  // …and the people who joined lines, even someone no longer in the meeting
-  const joiners = [...new Set(said.flatMap((i) => i.contributors.map((c) => c.personId)))].filter((id) => !names[id]);
-  if (joiners.length) for (const p of await db.person.findMany({ where: { id: { in: joiners } } })) names[p.id] = personName(p);
+  // …and the people who joined lines or own an action (an observer…), even someone no longer in the meeting
+  const others = [...new Set([...said.flatMap((i) => i.contributors.map((c) => c.personId)), ...actions.map((a) => a.ownerId)])].filter(
+    (id) => !names[id],
+  );
+  if (others.length) for (const p of await db.person.findMany({ where: { id: { in: others } } })) names[p.id] = personName(p);
   const writers = [...new Set([...speakers.filter((id) => said.some((i) => i.personId === id)), ...said.map((i) => i.personId)])];
   const recordProject = (p: (typeof projects)[number], speakersOf: string[], inRound: boolean): RecordV1["projects"][number] => ({
     id: p.id,

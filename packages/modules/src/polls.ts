@@ -33,7 +33,8 @@ export const polls = defineModule({
     defineOp({
       name: "polls.create",
       permission: "session.run",
-      session: "read",
+      // Locked: a quick yes or no goes on the shared screen at once, like polls.show
+      session: "lock",
       input: z.object({
         question: str(200).min(1),
         kind: z.enum(["single", "multiple", "scale", "words"]),
