@@ -353,8 +353,9 @@ export async function invitationState(token: string, user: CurrentUser | null): 
     user &&
     (await prisma.workspaceMember.findUnique({ where: { workspaceId_userId: { workspaceId: workspace.id, userId: user.id } } }))
   ) {
-    // Someone else's invitation, still waiting: say so, so it reaches the person it is for
-    const forOther = !invitation.acceptedAt && invitation.email !== user.email.toLowerCase() ? invitation.email : null;
+    // Someone else's invitation, still valid: say so, so it reaches the person it is for
+    const waiting = !invitation.acceptedAt && invitation.expiresAt > new Date();
+    const forOther = waiting && invitation.email !== user.email.toLowerCase() ? invitation.email : null;
     return { status: "member", workspace: workspace.name, slug: workspace.slug, forOther };
   }
   if (invitation.acceptedAt) return { status: "invalid" };

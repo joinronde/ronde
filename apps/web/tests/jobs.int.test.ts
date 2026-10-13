@@ -531,6 +531,15 @@ describe("transcript.process", () => {
     expect(requests).toEqual([]);
     expect(await prisma.audioChunk.count({ where: { workspaceId: f.workspaceId } })).toBe(1);
   });
+
+  it("checks again right before the sound leaves, for a workspace suspended once the run began", async () => {
+    const { processChunk } = await import("@/lib/server/transcripts");
+    const c = await piece(5 * 60_000);
+    await prisma.workspace.update({ where: { id: f.workspaceId }, data: { suspendedAt: new Date() } });
+    expect(await processChunk(c.id)).toBe(0);
+    expect(requests).toEqual([]);
+    expect(await prisma.audioChunk.findUnique({ where: { id: c.id } })).not.toBeNull();
+  });
 });
 
 describe("inbound.check", () => {

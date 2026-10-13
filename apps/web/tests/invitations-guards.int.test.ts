@@ -184,5 +184,8 @@ describe("an invitation opened by someone already in the workspace", () => {
     // Their own invitation: nothing more to say
     const own = await invitation(owner.email);
     expect(await invitationState(own.token, owner)).toMatchObject({ status: "member", forOther: null });
+    // Expired: nothing to forward
+    const late = await invitation(`late-${run}-${n}@example.com`, { expiresAt: new Date(Date.now() - 1000) });
+    expect(await invitationState(late.token, owner)).toMatchObject({ status: "member", forOther: null });
   });
 });

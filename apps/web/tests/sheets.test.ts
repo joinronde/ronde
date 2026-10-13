@@ -23,6 +23,14 @@ function state(patch: Partial<Snapshot> = {}): Snapshot {
   } as unknown as Snapshot;
 }
 const label = (k: string) => k;
+/** Someone joining Alice's line of a project ("Invoices" in "done" by default) */
+const joined = (personId: string, projectId: string, section = "done", itemText = "Invoices") => ({
+  ownerId: "alice",
+  section,
+  itemText,
+  projectId,
+  personId,
+});
 
 describe("project sheets", () => {
   it("wait for a line from each person expected today", () => {
@@ -40,9 +48,16 @@ describe("project sheets", () => {
   });
 
   it("count a line someone joined as theirs", () => {
-    const s = state({ contributors: [{ personId: "bruno", projectId: "billing" }] as unknown as Snapshot["contributors"] });
+    const s = state({ contributors: [joined("bruno", "billing")] as unknown as Snapshot["contributors"] });
     expect(linesAbout(s, "bruno", "billing", sections)).toBe(1);
     expect(sheetsToComplete(s, sections)).toBe(0);
+  });
+
+  it("do not count a joined line that is no longer there: its section removed, or the line itself", () => {
+    const gone = [joined("bruno", "billing", "x:removed"), joined("bruno", "billing", "done", "Deleted line")];
+    const s = state({ contributors: gone as unknown as Snapshot["contributors"] });
+    expect(linesAbout(s, "bruno", "billing", sections)).toBe(0);
+    expect(sheetsToComplete(s, sections)).toBe(1);
   });
 
   it("ask for the health and the message of the day", () => {
@@ -97,10 +112,12 @@ describe("the writers of a project", () => {
 
   it("add those who joined a line, each once", () => {
     const s = withCheckIns({ alice: { byProject: { billing: tab(["Invoices"]) } } }, [
-      { personId: "alice", projectId: "billing" },
-      { personId: "bruno", projectId: "billing" },
-      { personId: "bruno", projectId: "billing" },
-      { personId: "chloe", projectId: "search" },
+      joined("alice", "billing"),
+      joined("bruno", "billing"),
+      joined("bruno", "billing"),
+      joined("chloe", "search"),
+      // A line that is no longer there does not count
+      joined("david", "billing", "done", "Deleted line"),
     ]);
     expect(writersOf(s, "billing", sections)).toEqual(["alice", "bruno"]);
   });
