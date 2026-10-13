@@ -30,12 +30,14 @@ test("a participant's session, from two tabs of check-in to last time's plans", 
   // Two tabs of the same check-in: the second one saved is told, and keeps both
   await pia.goto(`${meeting}/me`);
   await fillCheckIn(pia, ["Shipped the invoices", "Start the exports"]);
+  // The second tab is being written in when the first one saves: a clean tab would simply take the new
+  // version live, with nothing to merge
   const other = await pia.context().newPage();
   await other.goto(`${meeting}/me`);
+  await other.getByRole("textbox", { name: "Other" }).fill("From the second tab");
   await pia.getByRole("textbox", { name: "Other" }).fill("From the first tab");
   await pia.getByRole("button", { name: "Save my check-in" }).click();
   await expect(pia.getByText("Unsaved changes")).toHaveCount(0);
-  await other.getByRole("textbox", { name: "Other" }).fill("From the second tab");
   await other.getByRole("button", { name: "Save my check-in" }).click();
   await expect(other.getByText(/Your check-in was changed elsewhere while you were writing/)).toBeVisible();
   await expect(other.getByRole("group", { name: "Other" })).toContainText("From the first tab");
