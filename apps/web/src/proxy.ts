@@ -14,7 +14,7 @@ import { type NextRequest, NextResponse } from "next/server";
 const PRIVATE = ["/w", "/account", "/onboarding"];
 const SAFE_METHODS = new Set(["GET", "HEAD", "OPTIONS"]);
 /** Called by other servers, or by an identity provider's page posting its answer back */
-const FROM_ELSEWHERE = ["/api/auth/", "/api/billing/webhook", "/api/scim/", "/api/slack/", "/api/teams/messages", "/api/unsubscribe/"];
+const FROM_ELSEWHERE = ["/api/auth", "/api/billing/webhook", "/api/scim", "/api/slack", "/api/teams/messages", "/api/unsubscribe"];
 
 function secured(res: NextResponse): NextResponse {
   const ancestors = process.env.RONDE_FRAME_ANCESTORS?.trim() || "'self'";
@@ -81,7 +81,8 @@ export function proxy(request: NextRequest) {
     if (
       !SAFE_METHODS.has(request.method) &&
       (site === "cross-site" || site === "same-site") &&
-      !FROM_ELSEWHERE.some((p) => pathname.startsWith(p))
+      // A whole path segment: "/api/teams/messagesX" is not the Teams endpoint
+      !FROM_ELSEWHERE.some((p) => pathname === p || pathname.startsWith(`${p}/`))
     )
       return secured(NextResponse.json({ error: "crossSiteRequest" }, { status: 403 }));
     return secured(NextResponse.next());

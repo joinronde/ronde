@@ -455,7 +455,9 @@ export async function syncCalendars(): Promise<number> {
   const worker = async () => {
     while (next < meetings.length && Date.now() < deadline) {
       const m = meetings[next++]!;
-      changed += await syncMeetingCalendar(m.id).catch(() => 0);
+      // Awaited apart: `changed += await …` reads the total before the wait and loses the other workers' counts
+      const n = await syncMeetingCalendar(m.id).catch(() => 0);
+      changed += n;
     }
   };
   await Promise.all(Array.from({ length: SYNC_AT_ONCE }, worker));

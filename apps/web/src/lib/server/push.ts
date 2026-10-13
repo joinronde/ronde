@@ -188,7 +188,7 @@ export async function pushInbox(now = new Date()): Promise<number> {
     }),
     prisma.workspace.findMany({
       where: { id: { in: [...new Set(items.map((i) => i.workspaceId))] } },
-      select: { id: true, slug: true, name: true, locale: true },
+      select: { id: true, slug: true, name: true, locale: true, deletedAt: true, suspendedAt: true },
     }),
   ]);
   const users = await prisma.user.findMany({
@@ -203,8 +203,18 @@ export async function pushInbox(now = new Date()): Promise<number> {
   for (const item of items) {
     const person = people.find((p) => p.id === item.personId);
     const ws = workspaces.find((w) => w.id === item.workspaceId);
-    // Only to a member still there: not someone who left, was suspended or removed by the directory
-    if (!person?.userId || !ws || !person.active || person.deprovisionedAt || person.member?.status !== "active") continue;
+    // Only to a member still there: not someone who left, was suspended or removed by the directory; nor from a
+    // workspace deleted or suspended, whose link would lead nowhere
+    if (
+      !person?.userId ||
+      !ws ||
+      ws.deletedAt ||
+      ws.suspendedAt ||
+      !person.active ||
+      person.deprovisionedAt ||
+      person.member?.status !== "active"
+    )
+      continue;
     const locale = resolveLocale(users.find((u) => u.id === person.userId)?.locale, person.locale, ws.locale);
     const t = translator(locale, "inbox");
     const meeting = meetings.find((m) => m.id === item.meetingId)?.name ?? "";

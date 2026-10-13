@@ -14,5 +14,6 @@
   "expired": "加入 {workspace} 的邀请已过期。请向邀请你的人索取新的邀请。",
   "memberTitle": "你已经加入了",
   "member": "你已经是 {workspace} 的成员。",
+  "memberOther": "此邀请发给 <strong>{email}</strong>：请把链接转发给对方，以便其加入。",
   "open": "打开 {workspace}"
 }

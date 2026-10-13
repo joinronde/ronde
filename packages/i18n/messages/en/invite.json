@@ -14,5 +14,6 @@
   "expired": "This invitation to {workspace} has expired. Ask the person who invited you for a new one.",
   "memberTitle": "You're already in",
   "member": "You're already a member of {workspace}.",
+  "memberOther": "This invitation is for <strong>{email}</strong>: send them the link so they can join.",
   "open": "Open {workspace}"
 }
