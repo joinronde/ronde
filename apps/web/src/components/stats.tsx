@@ -1,11 +1,11 @@
 "use client";
 
-import { type CsvCell, round2 } from "@ronde/core/csv";
 import type { StatsDTO } from "@ronde/core/stats";
 import { first, fmtMinutes, mmssPlain, moodEmoji } from "@ronde/core/util";
 import { formatters } from "@ronde/i18n";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import { CSV_COLUMNS, niceStep, presence, sessionsCsv, statsKpis } from "@/lib/shared/stats";
 import { LoadError } from "./common";
 import { ExportCsv } from "./export-csv";
 import { useRonde } from "./ronde-provider";
@@ -15,11 +15,6 @@ interface Bar {
   label: string;
   value: number;
   tip: string;
-}
-
-function niceStep(v: number) {
-  for (const s of [1, 2, 5, 10, 20, 25, 50, 100, 200, 500]) if (s * 4 >= v) return s;
-  return Math.ceil(v / 4);
 }
 
 /** Single-series vertical bar chart, with an optional reference line */
@@ -137,39 +132,6 @@ function useTooltip() {
   return tip;
 }
 
-const CSV_COLUMNS = [
-  "durationMin",
-  "present",
-  "absent",
-  "planned",
-  "done",
-  "blockers",
-  "questions",
-  "hands",
-  "kudos",
-  "mood",
-  "rating",
-] as const;
-
-/** Sessions for a spreadsheet: one line per archived session */
-const sessionsCsv = (st: StatsDTO, head: string[]): CsvCell[][] => [
-  head,
-  ...st.sessions.map((x) => [
-    x.date,
-    Math.round(x.durationMs / 6000) / 10,
-    x.present,
-    x.absent,
-    x.planned,
-    x.done,
-    x.blockers,
-    x.questions,
-    x.hands,
-    x.kudos,
-    round2(x.mood),
-    round2(x.rating),
-  ]),
-];
-
 export function StatsView() {
   const t = useTranslations("stats");
   const tStatus = useTranslations("actionStatus");
@@ -201,26 +163,19 @@ export function StatsView() {
 
   const target = s.settings.targetMin;
   const lim = s.settings.speakSec * 1000;
-  const avgDur = H.reduce((a, h) => a + h.durationMs, 0) / H.length;
-  const turns = st.speaking.reduce((a, p) => a + p.turns, 0);
-  const avgS = turns ? st.speaking.reduce((a, p) => a + p.avgMs * p.turns, 0) / turns : 0;
+  const { avgDur, avgS, pdKnown, pdTotal, pdRate, avgPres, ratingVotes, ratingAvg } = statsKpis(st);
 
   // Planned → done, attendance, timekeeping, exchanges
-  const pdKnown = H.slice(1).filter((x) => x.planned > 0);
-  const pdTotal = pdKnown.reduce((a, x) => a + x.planned, 0);
-  const pdRate = pdTotal ? pdKnown.reduce((a, x) => a + x.done, 0) / pdTotal : null;
   const pdData: Bar[] = pdKnown.map((x) => ({
     label: fmtDay(x.date),
     value: Math.round((x.done / x.planned) * 100),
     tip: `${fmtShort(x.date)}\n${t("plannedDoneTip", { done: x.done, planned: x.planned })}`,
   }));
-  const presence = (h: (typeof H)[number]) => (h.present + h.absent ? h.present / (h.present + h.absent) : 1);
   const presData: Bar[] = H.map((h) => ({
     label: fmtDay(h.date),
     value: Math.round(presence(h) * 100),
     tip: `${fmtShort(h.date)}\n${t("presentTip", { count: h.present })}${h.absent ? ` · ${t("absentTip", { names: h.absentNames.join(", ") })}` : ""}`,
   }));
-  const avgPres = H.reduce((a, h) => a + presence(h), 0) / H.length;
   const ot = st.onTime;
   const exData: Bar[] = H.map((h) => ({
     label: fmtDay(h.date),
@@ -248,9 +203,6 @@ export function StatsView() {
     value: h.rating!,
     tip: `${fmtShort(h.date)}\n${t("ratingTip", { avg: fmt.decimal(h.rating!), count: h.ratingVotes })}`,
   }));
-  // Usefulness over every rating given, not the mean of the meetings' means
-  const ratingVotes = H.reduce((a, h) => a + (h.rating != null ? h.ratingVotes : 0), 0);
-  const ratingAvg = ratingVotes ? H.reduce((a, h) => a + (h.rating != null ? h.rating * h.ratingVotes : 0), 0) / ratingVotes : null;
   const people = st.speaking;
   const pmax = Math.max(lim * 1.4, ...people.map((p) => p.avgMs));
   const ah = st.actions;

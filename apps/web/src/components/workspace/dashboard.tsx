@@ -9,6 +9,7 @@ import { openSampleAction, setActionStatusAction } from "@/app/w/[ws]/actions";
 import type { DashboardData, DashboardPerson, NextSession } from "@/lib/server/dashboard";
 import { withBasePath } from "@/lib/shared/base-path";
 import { track } from "@/lib/shared/track";
+import { daysBetween, heroSeats } from "@/lib/shared/workspace-lists";
 import { MeetingMark } from "../meeting-mark";
 import { initials } from "../shell/app-shell";
 import { Icon } from "../shell/icons";
@@ -58,8 +59,6 @@ interface Props {
 
 const tint = (color: number) => ({ "--c": `var(--c${color % 6})` }) as React.CSSProperties;
 const order = (i: number) => ({ "--i": i }) as React.CSSProperties;
-const daysBetween = (from: string, to: string) =>
-  Math.round((Date.parse(`${to}T12:00:00Z`) - Date.parse(`${from}T12:00:00Z`)) / 86_400_000);
 
 /** The workspace home: the next session in front, then the week, what is left to do, the team. Before the
  * first meeting, only the way to create it; and a card with nothing to show stays out of the way. */
@@ -307,13 +306,10 @@ function Hero({ slug, next, today }: { slug: string; next: NextSession; today: s
   const when = next.live ? t("liveNow") : days === 0 ? t("today") : days === 1 ? t("tomorrow") : t("inDays", { count: days });
   // The ready people first, from the top: the arc then runs exactly over their seats
   const ready = new Set(next.turns ? next.ready : []);
-  const seats = [...next.people].sort((a, b) => Number(ready.has(b.id)) - Number(ready.has(a.id))).slice(0, 8);
-  const more = next.people.length - seats.length;
+  // Over the ready seats shown, ending halfway to the next one; the whole ring once everyone is ready
+  const { seats, more, share } = heroSeats(next.people, ready, 8);
   // Seats, ring and arc on one circle, 42% from the centre
   const R = 42;
-  // Over the ready seats shown, ending halfway to the next one; the whole ring once everyone is ready
-  const shownReady = seats.filter((p) => ready.has(p.id)).length;
-  const share = shownReady === seats.length ? 1 : shownReady ? (shownReady - 0.5) / seats.length : 0;
   return (
     <div className={`hero${next.live ? " live" : ""}`} style={tint(next.color)}>
       <div className="hero-text">

@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { withBasePath } from "@/lib/shared/base-path";
+import { joinLink } from "@/lib/shared/links";
 import { useRonde } from "./ronde-provider";
 import { TopBar } from "./shell/app-shell";
 import { Icon } from "./shell/icons";
@@ -23,14 +24,6 @@ const TABS = [
   { href: "/decisions", key: "decisions" },
   { href: "/settings", key: "settings" },
 ] as const;
-
-/** Link of the video call: Ronde's own entry (BigBlueButton) under the base path; Jitsi gets the person's name */
-function joinLink(settings: { videoUrl: string; video: { provider: string } }, name: string): string {
-  const url = settings.videoUrl;
-  if (url.startsWith("/")) return withBasePath(url);
-  if (settings.video.provider === "jitsi" && name) return `${url}#userInfo.displayName=${encodeURIComponent(JSON.stringify(name))}`;
-  return url;
-}
 
 const PAGE_ACTIONS = "page-actions";
 

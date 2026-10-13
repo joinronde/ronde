@@ -3,7 +3,7 @@
 import { BLOCK_MODULE, hasTurns } from "@ronde/core/agenda";
 import { birthdaysAround } from "@ronde/core/ambience";
 import { baseKeyOf, type Step, spentOf } from "@ronde/core/meeting";
-import { buildMinutes, decisionsOf, MINUTES_PARTS, type MinutesPart } from "@ronde/core/minutes";
+import { buildMinutes, MINUTES_PARTS, type MinutesPart } from "@ronde/core/minutes";
 import type { RecordV1 } from "@ronde/core/record";
 import { BOARD_SOUNDS, CUES, MUSIC_GROUPS, MUSIC_STYLES, type MusicStyle, type SoundKey, type SoundOutput } from "@ronde/core/sound";
 import type { ActionStatus, InteractionDTO } from "@ronde/core/types";
@@ -16,7 +16,6 @@ import {
   itemsOf,
   mmssPlain,
   plainItem,
-  similarity,
   VOTES_PER_PERSON,
 } from "@ronde/core/util";
 import { formatters } from "@ronde/i18n";
@@ -27,6 +26,23 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { renderSVG } from "uqr";
 import { Select } from "@/components/select";
 import { withBasePath } from "@/lib/shared/base-path";
+import {
+  blockersOf,
+  canMove,
+  filledCount,
+  isTracked,
+  memberOfStep,
+  minutesCheck,
+  moveProject,
+  nextLabel as nextLabelOf,
+  parseOmit,
+  projectOrderOf,
+  serializeOmit,
+  shuffleProjects,
+  sortActions,
+  startOp,
+  stepTitle,
+} from "@/lib/shared/control-room";
 import { actionOwners, sheetRows, sheetsToComplete, writersOf } from "@/lib/shared/sheets";
 import { track } from "@/lib/shared/track";
 import { Board } from "./board";
@@ -122,12 +138,6 @@ const markTourSeen = () => {
   }
 };
 
-/** Today on this device, YYYY-MM-DD */
-const localToday = () => {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-};
-
 export function ControlRoomView() {
   const t = useTranslations("control");
   const tStage = useTranslations("stage");
@@ -205,21 +215,10 @@ export function ControlRoomView() {
   const running = m.timer.running;
   const seen = Date.now() - liveSeen < 6000;
   const sp = agenda.filter((x) => x.type === "speaker");
-  const filledN = sp.filter((x) => isCheckInReady(s.checkIns[x.id!], s.lastArchivedAt)).length;
+  const filledN = filledCount(agenda, s);
   const pr = agenda.filter((x) => x.type === "project");
-  const title =
-    step.type === "speaker" || step.type === "block" || step.type === "project"
-      ? step.label
-      : step.type === "qa"
-        ? tStage("qaTitle")
-        : tStage(`stepTitles.${step.type}`);
-  const nextLabel = next
-    ? next.type === "qa"
-      ? t("nextQuestions", { count: next.pending || next.total || 0 })
-      : next.type === "speaker"
-        ? first(next.label)
-        : next.label
-    : "";
+  const title = stepTitle(step, tStage);
+  const nextLabel = nextLabelOf(next, (count) => t("nextQuestions", { count }));
   const pend = s.interactions.filter((i) => !i.resolved).length;
   const tops = s.topics.filter((x) => !x.done).length;
 
@@ -317,12 +316,11 @@ export function ControlRoomView() {
                       <button
                         className="btn big primary"
                         // A session prepared for another day happens today: it is dated today, the schedule keeps its occurrence
-                        title={m.date !== localToday() ? t("startToday") : undefined}
+                        title={startOp(m.date) === "session.now" ? t("startToday") : undefined}
                         onClick={() =>
-                          void rpc(
-                            { op: m.date !== localToday() ? "session.now" : "meeting.togglePlay" },
-                            t("started") + (s.notify.started ? ` ${t("startedAnnounced")}` : ""),
-                          ).then((ok) => ok && track("session_started"))
+                          void rpc({ op: startOp(m.date) }, t("started") + (s.notify.started ? ` ${t("startedAnnounced")}` : "")).then(
+                            (ok) => ok && track("session_started"),
+                          )
                         }
                       >
                         ▶ {t("start")}
@@ -814,9 +812,6 @@ function useBeep(enabled: boolean) {
     }
   }
 }
-
-/** Member a step is about: the person speaking, or the one whose questions are handled */
-const memberOfStep = (key: string) => (key.startsWith("qa:") ? key.slice(3) : key);
 
 /**
  * Host notes for the minutes, one area per step.
@@ -1396,37 +1391,10 @@ function PaneActions() {
   const owners = actionOwners(s);
   const [owner, setOwner] = useState(owners[0]?.id ?? "");
   const [confirmDel, setConfirmDel] = useState<string | null>(null);
-  const sp = agenda.filter((x) => x.type === "speaker");
-  const withTurn = projectsWithTurn(agenda);
-  const blockSec = sections.find((x) => x.kind === "blockers");
   // Blockers of each turn (with the projects that have no step of their own), then of each project's step
-  const blockers: { id: string; b: string; projectId: string | null }[] = [
-    ...sp.flatMap((x) => {
-      const f = s.checkIns[x.id!];
-      return [
-        ...(f?.blockers ?? []).map((b) => ({ id: x.id!, b: plainItem(b), projectId: null })),
-        ...Object.entries(f?.byProject ?? {})
-          .filter(([projectId]) => !withTurn.has(projectId))
-          .flatMap(([projectId, tab]) => tab.blockers.map((b) => ({ id: x.id!, b: plainItem(b), projectId }))),
-      ];
-    }),
-    ...(blockSec
-      ? agenda
-          .filter((x) => x.type === "project")
-          .flatMap((x) =>
-            projectEntries(s.checkIns, x.speakers ?? [], x.projectId!, blockSec).map((e) => ({
-              id: e.ownerId,
-              b: plainItem(e.text),
-              projectId: x.projectId!,
-            })),
-          )
-      : []),
-  ];
-  const tracked = (id: string, b: string) =>
-    s.actions.some(
-      (a) => a.status !== "done" && (a.originText === b || (a.ownerId === id && similarity(a.originText ?? a.text, b) >= 0.5)),
-    );
-  const sorted = [...s.actions].sort((a, b) => Number(a.status === "done") - Number(b.status === "done") || a.createdAt - b.createdAt);
+  const blockers = blockersOf(s, agenda, sections, projectsWithTurn(agenda), projectEntries);
+  const tracked = (id: string, b: string) => isTracked(s.actions, id, b);
+  const sorted = sortActions(s.actions);
   return (
     <>
       <h3>{t("actions.blockers")}</h3>
@@ -1542,7 +1510,7 @@ function PaneTopics() {
   const t = useTranslations("control");
   const tMe = useTranslations("me");
   const tRetro = useTranslations("retro");
-  const { s, rpc, nameOf, host } = useRonde();
+  const { s, rpc, nameOf, host, mod } = useRonde();
   const [text, setText] = useState("");
   const votesLeft = VOTES_PER_PERSON - s.topics.filter((x) => x.mine).length;
   const topics = [...s.topics].sort((a, b) => Number(a.done) - Number(b.done) || b.votes - a.votes || a.createdAt - b.createdAt);
@@ -1573,14 +1541,17 @@ function PaneTopics() {
             >
               ▲ {x.votes}
             </button>
-            <button
-              className="icon-btn"
-              title={t("topics.showBig")}
-              aria-label={t("topics.showBig")}
-              onClick={() => rpc({ op: "spotlight.set", label: t("spotlight.topic"), text: x.text })}
-            >
-              ✨
-            </button>
+            {/* Shown big by the spotlight: without its module, the screen would show nothing */}
+            {mod("spotlight") && (
+              <button
+                className="icon-btn"
+                title={t("topics.showBig")}
+                aria-label={t("topics.showBig")}
+                onClick={() => rpc({ op: "spotlight.set", label: t("spotlight.topic"), text: x.text })}
+              >
+                ✨
+              </button>
+            )}
             <button className="icon-btn" onClick={() => rpc({ op: "topic.delete", id: x.id })}>
               {t("remove")}
             </button>
@@ -1713,15 +1684,14 @@ const MINUTES_OMIT_KEY = "ronde.minutes.omit";
 /** Team inputs left out of the minutes: host preference, kept in this browser */
 const readOmit = (): MinutesPart[] => {
   try {
-    const v = JSON.parse(localStorage.getItem(MINUTES_OMIT_KEY) ?? "[]") as unknown;
-    return Array.isArray(v) ? MINUTES_PARTS.filter((k) => v.includes(k)) : [];
+    return parseOmit(localStorage.getItem(MINUTES_OMIT_KEY));
   } catch {
     return [];
   }
 };
 const writeOmit = (omit: MinutesPart[]) => {
   try {
-    localStorage.setItem(MINUTES_OMIT_KEY, JSON.stringify(omit));
+    localStorage.setItem(MINUTES_OMIT_KEY, serializeOmit(omit));
   } catch {
     /* storage unavailable: the choice applies this time only */
   }
@@ -1734,9 +1704,7 @@ function MinutesCheck() {
   const { s, agenda, members, host } = useRonde();
   const [open, setOpen] = useState<string | null>(null);
   const m = s.meeting!;
-  const decisions = Object.values(s.notes).reduce((n, v) => n + decisionsOf(v).length, 0);
-  const created = s.actions.filter((a) => m.startedAt && a.createdAt >= m.startedAt).length;
-  const silent = agenda.filter((x) => x.type === "speaker" && !s.notes[x.key]?.trim() && !s.notes["qa:" + x.key]?.trim());
+  const { decisions, created, silent } = minutesCheck(s, m.startedAt, agenda);
   return (
     <div className="minutes-check" role="status">
       <strong>{t("check.title")}</strong>
@@ -1971,29 +1939,11 @@ function ProjectHost({ step }: { step: Step }) {
 function ProjectOrder() {
   const t = useTranslations("control");
   const { s, agenda, rpc } = useRonde();
-  const steps = agenda.filter((x) => x.type === "project");
-  const ids = steps.map((x) => x.projectId!);
+  // Projects nobody wrote about have no step (skipped): the host may present one anyway this session
+  const { steps, ids, done, skipped, added, filled, showOrder } = projectOrderOf(s, agenda);
   const save = (order: string[]) => rpc({ op: "project.order", order });
-  const move = (i: number, d: -1 | 1) => {
-    const next = [...ids];
-    [next[i], next[i + d]] = [next[i + d]!, next[i]!];
-    void save(next);
-  };
-  const shuffle = () => {
-    const next = [...ids];
-    for (let i = next.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [next[i], next[j]] = [next[j]!, next[i]!];
-    }
-    void save(next);
-  };
-  const done = new Set(agenda.slice(0, agenda.findIndex((x) => x.key === s.meeting?.stepKey) + 1).map((x) => x.key));
-  // Projects nobody wrote about have no step: say which, so nobody wonders where they went; the host may
-  // present one anyway this session
-  const skipped = (s.blockData.projects?.list ?? []).filter((p) => !p.filled && !ids.includes(p.id));
-  const added = new Set(s.meeting?.projectsAdded ?? []);
-  const filled = new Set((s.blockData.projects?.list ?? []).filter((p) => p.filled).map((p) => p.id));
-  const showOrder = steps.length > 1 || steps.some((x) => added.has(x.projectId!));
+  const move = (i: number, d: -1 | 1) => void save(moveProject(ids, i, d));
+  const shuffle = () => void save(shuffleProjects(ids));
   if (!showOrder && !skipped.length) return null;
   return (
     <>
@@ -2041,7 +1991,7 @@ function ProjectOrder() {
                   type="button"
                   className="icon-btn"
                   // A project never moves above the step running or already done: it would be skipped
-                  disabled={i === 0 || done.has(x.key) || done.has(steps[i - 1]!.key)}
+                  disabled={!canMove(steps, done, i, -1)}
                   aria-label={t("projectUp", { name: x.label })}
                   onClick={() => move(i, -1)}
                 >
@@ -2050,7 +2000,7 @@ function ProjectOrder() {
                 <button
                   type="button"
                   className="icon-btn"
-                  disabled={i === steps.length - 1 || done.has(x.key)}
+                  disabled={!canMove(steps, done, i, 1)}
                   aria-label={t("projectDown", { name: x.label })}
                   onClick={() => move(i, 1)}
                 >

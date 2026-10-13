@@ -6,6 +6,7 @@ import { coinTargetRotation, createSeededRandom, planWheelSpin } from "@ronde/ra
 import { motionAllowed } from "@ronde/ui/effects";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
+import { sector } from "@/lib/shared/modules";
 import { useRonde } from "./ronde-provider";
 import { Icon } from "./shell/icons";
 
@@ -30,15 +31,6 @@ function usePlaying(draw: DrawDTO, ms: number): boolean {
     return () => clearTimeout(id);
   }, [playing, left]);
   return playing;
-}
-
-/** Sector path of a wheel of radius 100 centred on 0,0, around `angle` (degrees, clockwise from the top) */
-function sector(angle: number, size: number): string {
-  const pt = (a: number) => {
-    const r = ((a - 90) * Math.PI) / 180;
-    return `${(100 * Math.cos(r)).toFixed(2)} ${(100 * Math.sin(r)).toFixed(2)}`;
-  };
-  return `M0 0 L${pt(angle - size / 2)} A100 100 0 ${size > 180 ? 1 : 0} 1 ${pt(angle + size / 2)} Z`;
 }
 
 function Wheel({ draw }: { draw: DrawDTO }) {

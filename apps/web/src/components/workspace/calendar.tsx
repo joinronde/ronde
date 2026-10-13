@@ -4,6 +4,7 @@ import { formatters, type Locale } from "@ronde/i18n";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import type { CalendarEvent } from "@/lib/server/calendar-view";
+import { addDays } from "@/lib/shared/schedule";
 import { CalendarLink } from "../upcoming-sessions";
 
 interface Props {
@@ -19,8 +20,6 @@ interface Props {
   prev: string;
   next: string;
 }
-
-const addDays = (iso: string, days: number) => new Date(Date.parse(`${iso}T12:00:00Z`) + days * 86_400_000).toISOString().slice(0, 10);
 
 function EventChip({ e, slug }: { e: CalendarEvent; slug: string }) {
   const t = useTranslations("calendar");

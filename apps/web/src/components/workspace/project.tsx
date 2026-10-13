@@ -21,6 +21,7 @@ import { squareImage } from "@/components/square-image";
 import { ToolMark } from "@/components/tool-mark";
 import type { ProjectPage } from "@/lib/server/projects";
 import { withBasePath } from "@/lib/shared/base-path";
+import { ago, firstLine } from "@/lib/shared/helpers";
 import { HealthBadge } from "../project-bits";
 import { Icon } from "../shell/icons";
 import { NewTab } from "../shell/new-tab";
@@ -344,16 +345,6 @@ export function ProjectView({ slug, page }: { slug: string; page: ProjectPage })
   );
 }
 
-/** "12 minutes ago", "yesterday"; under a minute, "just now" */
-function ago(iso: string, locale: string, justNow: string): string {
-  const minutes = Math.round((Date.parse(iso) - Date.now()) / 60_000);
-  if (minutes === 0) return justNow;
-  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
-  if (Math.abs(minutes) < 60) return rtf.format(minutes, "minute");
-  if (Math.abs(minutes) < 24 * 60) return rtf.format(Math.round(minutes / 60), "hour");
-  return rtf.format(Math.round(minutes / (24 * 60)), "day");
-}
-
 /** Where an imported project comes from: its page there, how far along it is, and whether it follows the tool */
 function SourcePanel({
   slug,
@@ -478,9 +469,6 @@ function SourcePanel({
     </section>
   );
 }
-
-/** The first line of a description, without its Markdown marks */
-const firstLine = (md: string) => (md.split("\n").find((l) => l.trim()) ?? "").replace(/^#+\s*|[*_`]/g, "").trim();
 
 /** The project's logo; those who edit the project click it to pick another one, or remove it */
 function LogoPicker({

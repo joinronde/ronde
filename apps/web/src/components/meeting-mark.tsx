@@ -1,4 +1,5 @@
 import { withBasePath } from "@/lib/shared/base-path";
+import { meetingInitials } from "@/lib/shared/initials";
 
 export interface MeetingMarkData {
   id: string;
@@ -11,13 +12,6 @@ export interface MeetingMarkData {
 
 /** Address of a meeting's image, versioned so it can stay cached */
 export const meetingImageUrl = (slug: string, id: string, version: number) => withBasePath(`/api/w/${slug}/m/${id}/image?v=${version}`);
-
-const initialsOf = (name: string) =>
-  name
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((w) => [...w][0]!.toUpperCase())
-    .join("");
 
 /** A meeting's mark in lists and menus: its image, otherwise its emoji, otherwise its initials */
 export function MeetingMark({
@@ -38,7 +32,7 @@ export function MeetingMark({
       {meeting.image ? (
         <img src={meetingImageUrl(slug, meeting.id, meeting.image)} alt="" loading="lazy" draggable={false} />
       ) : (
-        meeting.icon || initialsOf(meeting.name).slice(0, letters)
+        meeting.icon || meetingInitials(meeting.name, letters)
       )}
     </span>
   );

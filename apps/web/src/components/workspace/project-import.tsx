@@ -12,7 +12,8 @@ import { NewTab } from "@/components/shell/new-tab";
 import { ToolMark } from "@/components/tool-mark";
 import type { ImportCandidate } from "@/lib/server/project-import";
 import type { Portfolio } from "@/lib/server/projects";
-import { isRepository, SOURCE_KINDS, SOURCE_WHATS, type SourceKind, type SourceWhat } from "@/lib/shared/project-sources";
+import { trackerTarget, whatsOf } from "@/lib/shared/links";
+import { isRepository, SOURCE_KINDS, type SourceKind, type SourceWhat } from "@/lib/shared/project-sources";
 
 // Importing projects: from a saved issue tracker (Team, kept in sync) or from a tool and a token typed here
 // (used for this import only); for GitHub and GitLab, what becomes a project (each repository, or each
@@ -48,17 +49,6 @@ type Found = {
   sync: boolean;
   partial: "tracker" | "public" | null;
 };
-
-/** What a saved tracker leads to, for each choice: its repository's organization, or the repository itself */
-function trackerTarget(tr: ImportTracker, what: SourceWhat): string | null {
-  if (tr.kind === "github" && what === "repos") return tr.where.split("/")[0] || null;
-  if (tr.kind === "gitlab" && what === "projects") return tr.where.split("/").slice(0, -1).join("/") || null;
-  return tr.where;
-}
-
-/** What a tool, or a saved tracker, can turn into projects (a GitLab tracker naming its project by number has no group to list) */
-const whatsOf = (kind: SourceKind, tracker?: ImportTracker) =>
-  SOURCE_WHATS[kind].filter((w) => !tracker || (kind !== "github" && kind !== "gitlab") || trackerTarget(tracker, w));
 
 export function ImportDialog({
   slug,

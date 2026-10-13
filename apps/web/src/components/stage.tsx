@@ -3,7 +3,7 @@
 import { hasTurns } from "@ronde/core/agenda";
 import { markdownToHtml } from "@ronde/core/markdown";
 import { elapsedOf, limitOf, type Step, spentOf } from "@ronde/core/meeting";
-import type { ActionStatus, CheckInFields, JobCategory, ProjectDTO, Section, Snapshot } from "@ronde/core/types";
+import type { ActionStatus, JobCategory, ProjectDTO, Section } from "@ronde/core/types";
 import {
   allTabs,
   first,
@@ -27,6 +27,7 @@ import { confetti, motionAllowed } from "@ronde/ui/effects";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { writersOf } from "@/lib/shared/sheets";
+import { joinedOf, plannedStart, projectEntries, projectsWithTurn, sectionsHave, waitLabel, waitTone } from "@/lib/shared/stage";
 import { AmbienceLayer, useAmbience } from "./ambience";
 import { ItemText } from "./check-in-fields";
 import { PokerStage } from "./poker";
@@ -399,19 +400,6 @@ function LineActions({ entry, section, likes, notes }: { entry: Entry; section: 
   );
 }
 
-/** The agenda has a project round: items about projects are presented there */
-/** Projects that have their own step in the agenda: their items are presented there, not in each turn */
-export const projectsWithTurn = (agenda: Step[]) => new Set(agenda.filter((x) => x.type === "project").map((x) => x.projectId!));
-
-/** People who joined an item someone else wrote, in the order they did */
-export const joinedOf = (
-  s: Pick<Snapshot, "contributors">,
-  item: { ownerId: string; projectId: string | null; section: string; text: string },
-) =>
-  s.contributors
-    .filter((c) => c.ownerId === item.ownerId && c.projectId === item.projectId && c.section === item.section && c.itemText === item.text)
-    .map((c) => c.personId);
-
 /** Faces of a few people, overlapping, their names for screen readers and on hover */
 export function Faces({ ids }: { ids: string[] }) {
   const { members } = useRonde();
@@ -434,17 +422,6 @@ export function Faces({ ids }: { ids: string[] }) {
       <span className="sr-only">{names}</span>
     </span>
   );
-}
-
-/** Items written about a project, by everyone, for one section */
-export function projectEntries(
-  checkIns: Record<string, { byProject: Record<string, CheckInFields> }>,
-  order: string[],
-  projectId: string,
-  sec: Section,
-): { ownerId: string; text: string }[] {
-  const people = [...new Set([...order, ...Object.keys(checkIns)])];
-  return people.flatMap((ownerId) => itemsOf(checkIns[ownerId]?.byProject[projectId], sec).map((text) => ({ ownerId, text })));
 }
 
 /** A project of the project round: its sheet, then what its people wrote, each item with its author */
@@ -560,16 +537,8 @@ function ProjectBody({ step, live, spot }: { step: Step; live: boolean; spot?: s
 /** A project of the meeting, by id */
 export const projectOf = (projects: ProjectDTO[], id: string | undefined) => projects.find((p) => p.id === id);
 
-/** Planned start date and time of the meeting */
-/** Planned start: the instant set by the schedule (meeting time zone), otherwise the date and time locally */
-const plannedStart = (m: { date: string; time: string; plannedAt: number | null }) => m.plannedAt ?? startTarget(m.date, m.time);
-
-function startTarget(date: string, time: string) {
-  const [h, m] = time.split(":").map(Number);
-  const d = new Date(date + "T00:00:00");
-  d.setHours(h ?? 14, m ?? 0, 0, 0);
-  return d.getTime();
-}
+// Still offered here: the control room and the personal page take them from the stage
+export { joinedOf, projectEntries, projectsWithTurn, sectionsHave };
 
 /**
  * Pre-meeting pill: the start time, then the time left, with a slowly breathing dot
@@ -582,22 +551,10 @@ export function WaitPill() {
   useTick(1000);
   // Nothing before load: the server and the browser agree on the first render
   if (!hydrated || !s.meeting) return <span className="pill wait">{t("beforeMeeting")}</span>;
-  const time = s.meeting.time;
   const ms = plannedStart(s.meeting) - now();
-  let label: string;
-  // Time long gone (meeting not started, or date to update): nothing imminent is announced any more
-  if (ms <= -30 * 60_000) label = t("waitingForStart");
-  else if (ms <= 0) label = t("startingNow");
-  else if (ms <= 60_000) label = t("startsInSeconds", { s: Math.ceil(ms / 1000) });
-  else if (ms <= 3_600_000) label = t("startsInMinutes", { m: Math.ceil(ms / 60_000) });
-  else if (ms <= 12 * 3_600_000) label = t("startsAt", { time });
-  else {
-    const day = new Date(s.meeting.date + "T12:00:00").toLocaleDateString(locale, { weekday: "long" });
-    label = `${day.charAt(0).toUpperCase() + day.slice(1)} · ${time}`;
-  }
   return (
-    <span className={"pill wait" + (ms <= -30 * 60_000 ? "" : ms <= 0 ? " late" : ms <= 300_000 ? " soon" : "")} title={t("notStartedYet")}>
-      {label}
+    <span className={"pill wait" + waitTone(ms)} title={t("notStartedYet")}>
+      {waitLabel(ms, s.meeting, locale, t)}
     </span>
   );
 }
@@ -679,7 +636,11 @@ export function RatingSummary({ room }: { room?: boolean }) {
     <div className="rating-sum">
       <div className="eyebrow">{t("ratingTitle", { count: s.rating.total })}</div>
       <div className="rating-row">
-        <span className="rating-stars-avg" role="img" aria-label={avg !== null ? t("ratingAverage", { avg: fmt.decimal(avg) }) : ""}>
+        {/* An image named by its average; empty stars before enough votes say nothing (the title above does) */}
+        <span
+          className="rating-stars-avg"
+          {...(avg !== null ? { role: "img", "aria-label": t("ratingAverage", { avg: fmt.decimal(avg) }) } : { "aria-hidden": true })}
+        >
           <span className="rating-off">
             {[1, 2, 3, 4, 5].map((v) => (
               <Star key={v} />
@@ -1080,10 +1041,6 @@ function EndBody({ celebrate }: { celebrate?: boolean }) {
     </div>
   );
 }
-
-/** Is the highlighted text an item of this check-in? */
-export const sectionsHave = (f: Parameters<typeof itemsOf>[0], sections: Section[], text: string) =>
-  sections.some((sec) => itemsOf(f, sec).some((i) => plainItem(i) === text));
 
 /** The stage shown on the shared screen (or browsed by a participant) */
 export function Stage({

@@ -97,11 +97,12 @@ export function noteLines(text: string | undefined): string[] {
 const DECISION_PREFIXES = [...new Set(locales.map((l) => translator(l, "minutes")("decisionPrefix")))];
 const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const DECISION_RE = new RegExp(
-  `^\\s*(?:[-*+]|\\d+[.)])?\\s*(?:\\*\\*)?(?:${DECISION_PREFIXES.map(escapeRe).join("|")})\\s*:\\s*(?:\\*\\*)?\\s*(.+)$`,
+  `^\\s*(?:[-*+]|\\d+[.)])?\\s*(?:\\*\\*)?(?:${DECISION_PREFIXES.map(escapeRe).join("|")})\\s*[:：]\\s*(?:\\*\\*)?\\s*(.+)$`,
   "i",
 );
 
-/** Decisions of a note: "Decision: …" lines (bold or not, bulleted or not) */
+/** Decisions of a note: "Decision: …" lines (bold or not, bulleted or not; the colon may be the full-width one
+ * Chinese keyboards type) */
 export function decisionsOf(text: string | undefined): string[] {
   return String(text ?? "")
     .split("\n")

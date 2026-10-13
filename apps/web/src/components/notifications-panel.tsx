@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Select } from "@/components/select";
+import { defaultOptions, defaultTarget } from "@/lib/shared/helpers";
 import { useRonde } from "./ronde-provider";
 import { Icon } from "./shell/icons";
 import { NewTab } from "./shell/new-tab";
@@ -24,11 +25,6 @@ const EMAIL_PRESET: { event: NotifyEvent; audience: string }[] = [
   { event: "minutes.published", audience: "participants" },
   { event: "action.overdue", audience: "hosts" },
 ];
-
-const defaultTarget = (kind: NotifyConnectorDTO["kind"]): Record<string, string> =>
-  kind === "email" || kind === "sms" || kind === "whatsapp" ? { audience: "participants" } : kind === "matrix" ? { room: "" } : {};
-const defaultOptions = (event: NotifyEvent): Record<string, number> =>
-  event === "session.soon" ? { minutesBefore: 10 } : event === "action.overdue" ? { days: 7 } : {};
 
 /**
  * Notifications of a meeting: "when this happens, send through this connector, there". Connectors are set

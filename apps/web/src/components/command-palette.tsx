@@ -4,6 +4,7 @@ import { Modal } from "@ronde/ui/modal";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { matchesWords } from "@/lib/shared/search";
 import type { ControlPane } from "./control-room-tour";
 import { useRonde } from "./ronde-provider";
 
@@ -18,15 +19,8 @@ interface Command {
   run: () => void;
 }
 
-const fold = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 /** Every word typed appears in the label or the group */
-const matches = (c: Command, q: string) => {
-  const text = fold(`${c.label} ${c.group}`);
-  return fold(q)
-    .split(/\s+/)
-    .filter(Boolean)
-    .every((w) => text.includes(w));
-};
+const matches = (c: Command, q: string) => matchesWords(`${c.label} ${c.group}`, q);
 const isTyping = (e: KeyboardEvent) => !!(e.target as HTMLElement | null)?.closest?.("input,textarea,select,[contenteditable]");
 
 export function useControlShortcuts() {

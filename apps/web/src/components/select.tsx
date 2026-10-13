@@ -1,31 +1,11 @@
 "use client";
 
-import {
-  Children,
-  Fragment,
-  isValidElement,
-  type ReactElement,
-  type ReactNode,
-  useEffect,
-  useId,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { type ReactNode, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { choicesOf } from "@/lib/shared/helpers";
 
 // A drawn select: the same props and <option>/<optgroup> children as a native <select>, a list of our own.
 // Focus stays on the button (aria-activedescendant); the list floats above the page so no container clips it.
-
-interface Choice {
-  value: string;
-  label: ReactNode;
-  /** Text used for type-ahead */
-  text: string;
-  disabled: boolean;
-  group: string | null;
-  lang?: string;
-}
 
 /** What onChange receives, shaped like the native event for the usual `e.target.value` */
 export interface SelectChange {
@@ -49,35 +29,6 @@ export type SelectProps = {
   "aria-describedby"?: string;
   "aria-invalid"?: boolean | "true" | "false";
 };
-
-const textOf = (node: ReactNode): string =>
-  typeof node === "string" || typeof node === "number"
-    ? String(node)
-    : Array.isArray(node)
-      ? node.map(textOf).join("")
-      : isValidElement(node)
-        ? textOf((node.props as { children?: ReactNode }).children)
-        : "";
-
-function choicesOf(children: ReactNode, group: string | null = null): Choice[] {
-  const out: Choice[] = [];
-  Children.forEach(children, (child) => {
-    if (!isValidElement(child)) return;
-    const el = child as ReactElement<{ value?: string | number; children?: ReactNode; disabled?: boolean; label?: string; lang?: string }>;
-    if (el.type === "optgroup") out.push(...choicesOf(el.props.children, el.props.label ?? null));
-    else if (el.type === "option")
-      out.push({
-        value: String(el.props.value ?? textOf(el.props.children)),
-        label: el.props.children,
-        text: textOf(el.props.children),
-        disabled: !!el.props.disabled,
-        group,
-        lang: el.props.lang,
-      });
-    else if (el.type === Fragment) out.push(...choicesOf((el.props as { children?: ReactNode }).children, group));
-  });
-  return out;
-}
 
 export function Select({ value: raw, onChange, children, id, name, className, style, disabled, required, title, ...aria }: SelectProps) {
   const value = raw === undefined ? "" : String(raw);
