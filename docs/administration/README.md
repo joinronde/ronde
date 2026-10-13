@@ -39,9 +39,11 @@ offline: nothing is sent anywhere. The page shows the plan, the customer, the ex
 seats are used.
 
 - **A seat** is a person who took part in a meeting in the last 30 days, as on Ronde's cloud. Someone invited
-  who never came, or away for the month, uses none, and a person in several workspaces counts once.
-- **The highest count** of the license is kept from the day its key is saved (counted every night and on each
-  visit of the page). It is what the renewal counts.
+  who never came, or away for the month, uses none, and a person in several workspaces (with the same account,
+  or the same address) counts once.
+- **The highest count** of each license is kept while it works (active, or in its grace period), counted every
+  night and on each visit of the page. It is what the renewal counts. A new key starts its own count, and the
+  page still shows the previous license's highest count, to settle it.
 - **More people than seats**: nothing is blocked. The page says so, and the difference is settled at the renewal.
 - **Expired**: a grace period of 14 days keeps everything working. After it, the paid features become
   read-only: what they hold stays readable, nothing new can be added. Community features are never

@@ -58,6 +58,7 @@
     "seatsUnlimited": "{used} personas, sin límite de plazas",
     "seatsRule": "personas que participaron en una reunión en los últimos 30 días",
     "peak": "Máximo de esta licencia: {count} (el {date}), el que cuenta la renovación.",
+    "previousPeak": "Licencia anterior ({id}): máximo de {count} (el {date}), a regularizar en su renovación.",
     "overSeats": "Participan más personas que las {seats} plazas de la licencia: no se bloquea nada. El máximo alcanzado se regulariza al renovar la licencia.",
     "overPeak": "El máximo de esta licencia, {count}, superó sus {seats} plazas: no se bloquea nada, se regulariza al renovar la licencia.",
     "fromEnv": "La clave viene de la variable RONDE_LICENSE: cámbiala ahí.",

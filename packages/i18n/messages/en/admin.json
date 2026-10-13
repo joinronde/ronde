@@ -58,6 +58,7 @@
     "seatsUnlimited": "{used} people, no seat limit",
     "seatsRule": "people who took part in a meeting in the last 30 days",
     "peak": "Highest count of this license: {count} ({date}), the one the renewal counts.",
+    "previousPeak": "Previous license ({id}): highest count {count} ({date}), to settle at its renewal.",
     "overSeats": "More people take part than the license's {seats} seats: nothing is blocked. The highest count is settled when the license is renewed.",
     "overPeak": "This license's highest count, {count}, went above its {seats} seats: nothing is blocked, it is settled when the license is renewed.",
     "fromEnv": "The key comes from the RONDE_LICENSE variable: change it there.",

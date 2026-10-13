@@ -1,7 +1,7 @@
 import { generateKeyPairSync, sign } from "node:crypto";
 import { prisma } from "@ronde/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { loadLicense, recordSeatPeak, saveLicense, seatPeak, usedSeats } from "@/lib/server/license";
+import { loadLicense, recordSeatPeak, saveLicense, seatPeak, seatPeaks, usedSeats } from "@/lib/server/license";
 import { type Fixture, meeting, workspace } from "./fixtures";
 
 // The seats of a self-hosted license: counted as the cloud counts them (the people who took part in a meeting in
@@ -11,7 +11,7 @@ import { type Fixture, meeting, workspace } from "./fixtures";
 const pair = generateKeyPairSync("ed25519");
 process.env.RONDE_LICENSE_TEST_KEYS = JSON.stringify({ "test-seats": pair.publicKey.export({ format: "jwk" }).x });
 
-function key(id: string, seats: number) {
+function key(id: string, seats: number, expiresAt = "2099-12-31T23:59:59Z") {
   const body = Buffer.from(
     JSON.stringify({
       kid: "test-seats",
@@ -20,7 +20,7 @@ function key(id: string, seats: number) {
       edition: "team",
       seats,
       issuedAt: "2026-01-01T00:00:00Z",
-      expiresAt: "2099-12-31T23:59:59Z",
+      expiresAt,
     }),
   ).toString("base64url");
   return `ronde_lic_v1.${body}.${sign(null, Buffer.from(`ronde_lic_v1.${body}`), pair.privateKey).toString("base64url")}`;
@@ -34,7 +34,7 @@ beforeAll(async () => {
   // Two workspaces, each with a meeting held today by its host and a person of its directory
   a = await meeting(await workspace(`seats-a-${Date.now().toString(36)}`), "Weekly");
   b = await meeting(await workspace(`seats-b-${Date.now().toString(36)}`), "Weekly");
-  await prisma.instanceSetting.deleteMany({ where: { key: { in: ["license", "licenseSeatPeak"] } } });
+  await prisma.instanceSetting.deleteMany({ where: { OR: [{ key: "license" }, { key: { startsWith: "licenseSeatPeak:" } }] } });
   await loadLicense(true);
 });
 
@@ -54,6 +54,21 @@ describe("the seats of the instance", () => {
     const aHost = await prisma.person.findUniqueOrThrow({ where: { id: a.hostPersonId } });
     await prisma.person.update({ where: { id: b.hostPersonId }, data: { userId: aHost.userId } });
     expect(await usedSeats()).toBe(3);
+  });
+
+  it("count someone without an account once by their address, across workspaces", async () => {
+    const email = `guest-${Date.now()}@seats.test`;
+    for (const f of [a, b]) {
+      const p = await prisma.person.create({ data: { workspaceId: f.workspaceId, email, firstName: "Guest" } });
+      const s = await prisma.session.findUniqueOrThrow({ where: { id: f.sessionId } });
+      await prisma.session.update({ where: { id: f.sessionId }, data: { order: [...s.order, p.id] } });
+    }
+    expect(await usedSeats()).toBe(4);
+    // Back as they were
+    for (const f of [a, b]) {
+      const s = await prisma.session.findUniqueOrThrow({ where: { id: f.sessionId } });
+      await prisma.session.update({ where: { id: f.sessionId }, data: { order: s.order.slice(0, -1) } });
+    }
   });
 
   it("leave out the people invited who never came, and a deleted workspace", async () => {
@@ -89,10 +104,25 @@ describe("the highest count of a license", () => {
     expect(await recordSeatPeak()).toMatchObject({ peak: 4 });
   });
 
-  it("starts over with a new license", async () => {
+  it("starts over with a new license, the previous one's kept to settle it, and resumes when it comes back", async () => {
     await saveLicense(key("lic_two", 10));
     expect(await seatPeak()).toBeNull();
     expect(await recordSeatPeak()).toMatchObject({ licenseId: "lic_two", peak: 4 });
+    expect((await seatPeaks()).previous).toMatchObject({ licenseId: "lic_one", peak: 4 });
+    await saveLicense(key("lic_one", 2));
+    expect(await seatPeak()).toMatchObject({ licenseId: "lic_one", peak: 4 });
+  });
+
+  it("keeps the higher of two counts made at once", async () => {
+    await Promise.all([recordSeatPeak(new Date(), 9), recordSeatPeak(new Date(), 7), recordSeatPeak(new Date(), 8)]);
+    expect(await seatPeak()).toMatchObject({ peak: 9 });
+  });
+
+  it("stops once the license expired and its grace period is over: the instance is on Community", async () => {
+    await saveLicense(key("lic_old", 2, "2020-01-01T00:00:00Z"));
+    expect((await loadLicense(true)).status).toBe("expired");
+    expect(await recordSeatPeak()).toBeNull();
+    expect(await seatPeak()).toBeNull();
   });
 
   it("is never followed in the cloud, where each workspace pays for its own seats", async () => {

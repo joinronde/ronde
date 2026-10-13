@@ -82,7 +82,7 @@ export async function saveLicense(key: string): Promise<LicenseState> {
 /** People who count against the seats: those who took part in a meeting in the last 30 days, as in the cloud */
 export const usedSeats = (now = Date.now()) => instanceSeats(now);
 
-/** The highest seat count of the license in place, since it was saved: what its renewal settles */
+/** The highest seat count of a license, since it was first counted: what its renewal settles */
 export interface SeatPeak {
   licenseId: string;
   peak: number;
@@ -91,7 +91,8 @@ export interface SeatPeak {
   since: string;
 }
 
-const PEAK_KEY = "licenseSeatPeak";
+// One row per license: a renewal key starts its own count, and the previous license's stays readable to settle it
+const PEAK_PREFIX = "licenseSeatPeak:";
 
 function readPeak(value: unknown): SeatPeak | null {
   const v = value as Partial<SeatPeak> | null;
@@ -100,36 +101,39 @@ function readPeak(value: unknown): SeatPeak | null {
     : null;
 }
 
-/** The peak followed for the license in place; null without a license or before its first count */
-export async function seatPeak(): Promise<SeatPeak | null> {
+/** The peak of the license in place, and the one of the license before it (to settle at its renewal) */
+export async function seatPeaks(): Promise<{ current: SeatPeak | null; previous: SeatPeak | null }> {
   const state = await loadLicense();
-  if (!("license" in state)) return null;
-  const row = await prisma.instanceSetting.findUnique({ where: { key: PEAK_KEY } });
-  const peak = readPeak(row?.value);
-  return peak?.licenseId === state.license.id ? peak : null;
+  const id = "license" in state ? state.license.id : null;
+  const rows = await prisma.instanceSetting.findMany({ where: { key: { startsWith: PEAK_PREFIX } }, orderBy: { updatedAt: "desc" } });
+  const peaks = rows.map((r) => readPeak(r.value)).filter((p): p is SeatPeak => !!p);
+  return { current: peaks.find((p) => p.licenseId === id) ?? null, previous: peaks.find((p) => p.licenseId !== id) ?? null };
 }
 
+/** The peak followed for the license in place; null without a license or before its first count */
+export const seatPeak = async () => (await seatPeaks()).current;
+
 /**
- * Counts the seats now and keeps the highest count of the license in place (a new license starts over). Run
- * every day by a job, and when an administrator opens the instance page; never in the cloud.
+ * Counts the seats now (or takes `used`, already counted) and keeps the highest count of the license in place.
+ * Only while the license works (active, or in its grace period): after that, the instance is on Community and
+ * nothing it does is billed. Run every day by a job, and when an administrator opens the instance page; never in
+ * the cloud. Read and written under a lock, so two counts at once never lose the higher one.
  */
-export async function recordSeatPeak(now = new Date()): Promise<SeatPeak | null> {
+export async function recordSeatPeak(now = new Date(), used?: number): Promise<SeatPeak | null> {
   if (isCloud()) return null;
   const state = await loadLicense();
-  if (!("license" in state)) return null;
-  const used = await usedSeats(now.getTime());
-  const row = await prisma.instanceSetting.findUnique({ where: { key: PEAK_KEY } });
-  const old = readPeak(row?.value);
-  const at = now.toISOString();
-  const next: SeatPeak =
-    old?.licenseId !== state.license.id
-      ? { licenseId: state.license.id, peak: used, peakAt: at, since: at }
-      : used > old.peak
-        ? { ...old, peak: used, peakAt: at }
-        : old;
-  if (next !== old) {
+  if (state.status !== "active" && state.status !== "grace") return null;
+  const id = state.license.id;
+  const count = used ?? (await usedSeats(now.getTime()));
+  const key = `${PEAK_PREFIX}${id}`;
+  return prisma.$transaction(async (tx) => {
+    await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${key}))`;
+    const old = readPeak((await tx.instanceSetting.findUnique({ where: { key } }))?.value);
+    const at = now.toISOString();
+    if (old && count <= old.peak) return old;
+    const next: SeatPeak = old ? { ...old, peak: count, peakAt: at } : { licenseId: id, peak: count, peakAt: at, since: at };
     const value = next as unknown as Prisma.InputJsonValue;
-    await prisma.instanceSetting.upsert({ where: { key: PEAK_KEY }, create: { key: PEAK_KEY, value }, update: { value } });
-  }
-  return next;
+    await tx.instanceSetting.upsert({ where: { key }, create: { key, value }, update: { value } });
+    return next;
+  });
 }

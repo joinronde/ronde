@@ -89,6 +89,8 @@ export function formatters(locale: Locale) {
     dateShort: (iso: string) => fmt(iso, { weekday: "long", day: "numeric", month: "long" }),
     /** "Oct 5" */
     dayMonth: (iso: string) => fmt(iso, { day: "numeric", month: "short" }),
+    /** "Oct 5, 2026" */
+    dayMonthYear: (iso: string) => fmt(iso, { day: "numeric", month: "short", year: "numeric" }),
     /** Name of a weekday, 0 = Sunday */
     weekday: (index: number) => new Date(Date.UTC(2023, 0, 1 + index, 12)).toLocaleDateString(locale, { weekday: "long", timeZone: "UTC" }),
     /** Name of a month, 1 = January */

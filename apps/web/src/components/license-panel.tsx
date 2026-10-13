@@ -20,6 +20,8 @@ export interface LicenseInfo {
   usedSeats: number;
   /** The highest count since the license was saved, settled at its renewal */
   peak?: { count: number; at: string };
+  /** The license before this one: its highest count, to settle at its renewal */
+  previousPeak?: { licenseId: string; count: number; at: string };
   /** Set by RONDE_LICENSE: shown, not editable here */
   fromEnv: boolean;
   /** "stub": a pure Community build, without the paid editions' code */
@@ -77,11 +79,21 @@ export function LicensePanel({ info }: { info: LicenseInfo }) {
               </span>
             )}
             {info.edition && info.peak && (
-              <span className="hint">{t("peak", { count: info.peak.count, date: fmt.dayMonth(day(info.peak.at)) })}</span>
+              <span className="hint">{t("peak", { count: info.peak.count, date: fmt.dayMonthYear(day(info.peak.at)) })}</span>
+            )}
+            {info.previousPeak && (
+              <span className="hint">
+                {t("previousPeak", {
+                  id: info.previousPeak.licenseId,
+                  count: info.previousPeak.count,
+                  date: fmt.dayMonthYear(day(info.previousPeak.at)),
+                })}
+              </span>
             )}
           </div>
           {/* Nothing is ever blocked: today's count above the license, or a peak above it that the renewal settles */}
-          {!!info.seats && info.usedSeats > info.seats ? (
+          {/* An expired license bills nothing more: no warning about seats then */}
+          {info.status === "expired" ? null : !!info.seats && info.usedSeats > info.seats ? (
             <p className="note-box">{t("overSeats", { seats: info.seats })}</p>
           ) : (
             !!info.seats &&

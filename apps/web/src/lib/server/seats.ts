@@ -73,11 +73,12 @@ export async function activeSeats(workspaceId: string, now = Date.now()): Promis
 
 /**
  * Seats of a self-hosted instance, against its license: the same people, across its workspaces (deleted ones
- * aside), each counted once even when they take part in several workspaces with the same account
+ * aside), each counted once even when they take part in several workspaces (same account, or same address)
  */
 export async function instanceSeats(now = Date.now()): Promise<number> {
   const people = await tookPartSince({}, now, { workspace: { deletedAt: null } });
   if (!people.size) return 0;
-  const rows = await prisma.person.findMany({ where: { id: { in: [...people] } }, select: { id: true, userId: true } });
-  return new Set(rows.map((p) => p.userId ?? p.id)).size;
+  const rows = await prisma.person.findMany({ where: { id: { in: [...people] } }, select: { userId: true, email: true } });
+  // Someone without an account (a check-in by email or Slack) is known by their address in each workspace
+  return new Set(rows.map((p) => p.userId ?? `email:${p.email.trim().toLowerCase()}`)).size;
 }

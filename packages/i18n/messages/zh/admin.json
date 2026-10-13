@@ -58,6 +58,7 @@
     "seatsUnlimited": "{used} 人，席位不限",
     "seatsRule": "过去 30 天内参加过会议的人",
     "peak": "此许可证的最高人数：{count}（{date}），续订时按此人数计算。",
+    "previousPeak": "上一个许可证（{id}）：最高人数 {count}（{date}），在其续订时结算。",
     "overSeats": "参与人数超过了许可证的 {seats} 个席位：不会阻止任何操作。达到的最高人数将在续订许可证时结算。",
     "overPeak": "此许可证的最高人数 {count} 超过了其 {seats} 个席位：不会阻止任何操作，将在续订许可证时结算。",
     "fromEnv": "密钥来自 RONDE_LICENSE 变量：请在那里修改。",
