@@ -7,7 +7,7 @@ import { syncCalendars } from "./calendars";
 import { env } from "./env";
 import { purgeFeedback } from "./feedback";
 import { checkInbound } from "./inbound";
-import { isCloud } from "./license";
+import { isCloud, recordSeatPeak } from "./license";
 import { closeAsyncSessions } from "./meeting/async";
 import { resyncSession } from "./meeting/schedule";
 import { deliver } from "./notify/dispatch";
@@ -92,6 +92,14 @@ export const JOBS = [
   defineJob({ name: "feedback.purge", cron: "41 4 * * *", policy: "singleton", retryLimit: 0, handler: () => purgeFeedback() }),
   // What is past its time goes: deleted workspaces after 30 days, old audit entries, deliveries, bell items…
   defineJob({ name: "retention.purge", cron: "53 4 * * *", policy: "singleton", retryLimit: 0, handler: () => purgeExpired() }),
+  // A self-hosted license: the highest seat count since it was saved, settled at its renewal
+  defineJob({
+    name: "license.seats",
+    cron: "37 3 * * *",
+    policy: "singleton",
+    retryLimit: 0,
+    handler: async () => (await recordSeatPeak())?.peak ?? 0,
+  }),
 ];
 
 export function startBackgroundJobs() {

@@ -1,8 +1,9 @@
 import "server-only";
-import { prisma } from "@ronde/db";
+import { type Prisma, prisma } from "@ronde/db";
 import { EDITIONS, type Edition, type FeatureId, hasFeature } from "@ronde/editions";
 import { LICENSE_PUBLIC_KEYS } from "@ronde/editions/keys";
 import { checkLicense, type LicenseState, readableEdition, usableEdition } from "@ronde/editions/license";
+import { instanceSeats } from "./seats";
 
 // License of a self-hosted instance: RONDE_LICENSE, otherwise the key saved on the administration page.
 // Checked offline; read again every minute, so a key saved on one replica reaches the others.
@@ -78,5 +79,57 @@ export async function saveLicense(key: string): Promise<LicenseState> {
   return loadLicense(true);
 }
 
-/** People who count against the seats: users with a workspace */
-export const usedSeats = () => prisma.user.count({ where: { memberships: { some: {} } } });
+/** People who count against the seats: those who took part in a meeting in the last 30 days, as in the cloud */
+export const usedSeats = (now = Date.now()) => instanceSeats(now);
+
+/** The highest seat count of the license in place, since it was saved: what its renewal settles */
+export interface SeatPeak {
+  licenseId: string;
+  peak: number;
+  /** When the peak was reached, and since when it is followed (ISO dates) */
+  peakAt: string;
+  since: string;
+}
+
+const PEAK_KEY = "licenseSeatPeak";
+
+function readPeak(value: unknown): SeatPeak | null {
+  const v = value as Partial<SeatPeak> | null;
+  return v && typeof v.licenseId === "string" && typeof v.peak === "number" && typeof v.peakAt === "string" && typeof v.since === "string"
+    ? (v as SeatPeak)
+    : null;
+}
+
+/** The peak followed for the license in place; null without a license or before its first count */
+export async function seatPeak(): Promise<SeatPeak | null> {
+  const state = await loadLicense();
+  if (!("license" in state)) return null;
+  const row = await prisma.instanceSetting.findUnique({ where: { key: PEAK_KEY } });
+  const peak = readPeak(row?.value);
+  return peak?.licenseId === state.license.id ? peak : null;
+}
+
+/**
+ * Counts the seats now and keeps the highest count of the license in place (a new license starts over). Run
+ * every day by a job, and when an administrator opens the instance page; never in the cloud.
+ */
+export async function recordSeatPeak(now = new Date()): Promise<SeatPeak | null> {
+  if (isCloud()) return null;
+  const state = await loadLicense();
+  if (!("license" in state)) return null;
+  const used = await usedSeats(now.getTime());
+  const row = await prisma.instanceSetting.findUnique({ where: { key: PEAK_KEY } });
+  const old = readPeak(row?.value);
+  const at = now.toISOString();
+  const next: SeatPeak =
+    old?.licenseId !== state.license.id
+      ? { licenseId: state.license.id, peak: used, peakAt: at, since: at }
+      : used > old.peak
+        ? { ...old, peak: used, peakAt: at }
+        : old;
+  if (next !== old) {
+    const value = next as unknown as Prisma.InputJsonValue;
+    await prisma.instanceSetting.upsert({ where: { key: PEAK_KEY }, create: { key: PEAK_KEY, value }, update: { value } });
+  }
+  return next;
+}

@@ -9,7 +9,7 @@ import { pageUser } from "@/lib/server/authz";
 import { env } from "@/lib/server/env";
 import { listFeedback } from "@/lib/server/feedback";
 import { instanceSettings } from "@/lib/server/instance";
-import { isCloud, licenseFromEnv, loadLicense, usedSeats } from "@/lib/server/license";
+import { isCloud, licenseFromEnv, loadLicense, recordSeatPeak, usedSeats } from "@/lib/server/license";
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +33,8 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
     listFeedback({ status: archived ? "archived" : undefined }),
     prisma.feedback.count({ where: { status: "new" } }),
   ]);
+  // Counted again on each visit: the peak the renewal settles is never behind what the page shows
+  const peak = await recordSeatPeak();
   const info: LicenseInfo = {
     status: license.status,
     reason: license.status === "invalid" ? license.reason : undefined,
@@ -46,6 +48,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       : {}),
     graceEndsAt: license.status === "grace" ? license.graceEndsAt : undefined,
     usedSeats: seats,
+    peak: peak ? { count: peak.peak, at: peak.peakAt } : undefined,
     fromEnv: licenseFromEnv(),
     build: enterprise.kind,
   };
