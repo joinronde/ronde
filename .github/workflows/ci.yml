@@ -96,6 +96,10 @@ jobs:
       - run: pnpm --filter @ronde/web e2e:cloud --workers=1
         env:
           E2E_BUILD: "1"
+      # The flows that need an email, on a server sending to a fake mail server the specs start
+      - run: pnpm --filter @ronde/web e2e:mail
+        env:
+          E2E_BUILD: "1"
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
