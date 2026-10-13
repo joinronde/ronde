@@ -594,6 +594,8 @@ export interface SlackInstall {
 export interface BillingAccess {
   secretKey: string;
   fetch?: typeof fetch;
+  /** Another address for the Stripe API (a fake one for the browser tests); Stripe's own by default */
+  apiBase?: string;
 }
 
 export interface CheckoutInput {

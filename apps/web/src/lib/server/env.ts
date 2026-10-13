@@ -109,6 +109,8 @@ export const env = {
   },
   /** Billing of the Ronde cloud (RONDE_CLOUD=1): Stripe keys and the price of a Team seat */
   stripeSecretKey: () => process.env.STRIPE_SECRET_KEY ?? "",
+  /** Another address for the Stripe API, for the browser tests' fake Stripe; never set in production */
+  stripeApiBase: () => process.env.STRIPE_API_BASE?.trim() || undefined,
   stripeWebhookSecret: () => process.env.STRIPE_WEBHOOK_SECRET ?? "",
   stripePriceTeam: () => process.env.STRIPE_PRICE_TEAM ?? "",
   /** The yearly price of a Team seat (optional: without it, only the monthly one is offered) */
