@@ -7,6 +7,7 @@ import { env } from "./env";
 import { AccessError, OpError } from "./errors";
 import { isCloud } from "./license";
 import { publicUrl } from "./public-url";
+import { activeSeats } from "./seats";
 import { umamiEvent } from "./umami";
 
 // Billing of the Ronde cloud (Stripe): a workspace subscribes to Team, monthly or yearly, for the people who
@@ -29,66 +30,7 @@ function planOfPrice(priceId: string | null): string | null {
   return priceId && [env.stripePriceTeam(), env.stripePriceTeamYearly()].includes(priceId) ? "team" : null;
 }
 
-/** How far back taking part in a meeting counts */
-const ACTIVE_DAYS = 30;
-
-type SessionSeen = {
-  startedAt: Date | null;
-  order: string[];
-  absent: string[];
-  spent: unknown;
-  record: unknown;
-};
-
-/**
- * Who took part in a session: in a live one, the people of its round who were there (not absent; when turns
- * were timed, the ones who had a turn or wrote something); in an async one, the people who wrote their check-in.
- * Observers are never in the round.
- */
-export function tookPart(s: SessionSeen): string[] {
-  const r = (s.record ?? null) as {
-    participants?: { id: string }[];
-    absent?: { id: string }[];
-    spent?: Record<string, number>;
-    checkIns?: Record<string, { items?: unknown[] }>;
-  } | null;
-  const wrote = new Set(
-    Object.entries(r?.checkIns ?? {})
-      .filter(([, c]) => (c.items?.length ?? 0) > 0)
-      .map(([id]) => id),
-  );
-  if (!s.startedAt) return [...wrote];
-  const round = r?.participants ? r.participants.map((p) => p.id) : s.order;
-  const away = new Set(r?.absent ? r.absent.map((p) => p.id) : s.absent);
-  const spent = (r?.spent ?? s.spent ?? {}) as Record<string, number>;
-  const present = round.filter((id) => !away.has(id));
-  const timed = present.some((id) => (spent[id] ?? 0) > 0);
-  return timed ? present.filter((id) => (spent[id] ?? 0) > 0 || wrote.has(id)) : present;
-}
-
-/**
- * People who count as seats: the people of the workspace who took part in one of its sessions in the last 30
- * days (see tookPart), counted once. Someone invited who never came, or away for the month, costs nothing.
- */
-export async function activeSeats(workspaceId: string, now = Date.now()): Promise<number> {
-  const since = new Date(now - ACTIVE_DAYS * 86_400_000);
-  const sessions = await prisma.session.findMany({
-    where: {
-      workspaceId,
-      // A session of the sample meeting costs nothing
-      meeting: { sample: false },
-      // Live sessions by when they started, async ones by when they were published
-      OR: [
-        { startedAt: { gte: since, lte: new Date(now) } },
-        { startedAt: null, status: "archived", archivedAt: { gte: since, lte: new Date(now) } },
-      ],
-    },
-    select: { startedAt: true, order: true, absent: true, spent: true, record: true },
-  });
-  const people = new Set(sessions.flatMap(tookPart));
-  if (!people.size) return 0;
-  return prisma.person.count({ where: { workspaceId, id: { in: [...people] } } });
-}
+export { activeSeats };
 
 /** How often a workspace pays: every month, or every year for a lower price */
 export type BillingInterval = "month" | "year";

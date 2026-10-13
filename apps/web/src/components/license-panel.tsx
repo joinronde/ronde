@@ -16,7 +16,12 @@ export interface LicenseInfo {
   seats?: number;
   expiresAt?: string;
   graceEndsAt?: string;
+  /** People who took part in a meeting in the last 30 days */
   usedSeats: number;
+  /** The highest count since the license was saved, settled at its renewal */
+  peak?: { count: number; at: string };
+  /** The license before this one: its highest count, to settle at its renewal */
+  previousPeak?: { licenseId: string; count: number; at: string };
   /** Set by RONDE_LICENSE: shown, not editable here */
   fromEnv: boolean;
   /** "stub": a pure Community build, without the paid editions' code */
@@ -69,10 +74,32 @@ export function LicensePanel({ info }: { info: LicenseInfo }) {
             {info.edition && (
               <span className="hint">
                 {info.seats ? t("seats", { used: info.usedSeats, seats: info.seats }) : t("seatsUnlimited", { used: info.usedSeats })}
+                {" · "}
+                {t("seatsRule")}
+              </span>
+            )}
+            {info.edition && info.peak && (
+              <span className="hint">{t("peak", { count: info.peak.count, date: fmt.dayMonthYear(day(info.peak.at)) })}</span>
+            )}
+            {info.previousPeak && (
+              <span className="hint">
+                {t("previousPeak", {
+                  id: info.previousPeak.licenseId,
+                  count: info.previousPeak.count,
+                  date: fmt.dayMonthYear(day(info.previousPeak.at)),
+                })}
               </span>
             )}
           </div>
-          {info.seats !== undefined && info.seats > 0 && info.usedSeats > info.seats && <p className="note-box">{t("overSeats")}</p>}
+          {/* Nothing is ever blocked: today's count above the license, or a peak above it that the renewal settles */}
+          {/* An expired license bills nothing more: no warning about seats then */}
+          {info.status === "expired" ? null : !!info.seats && info.usedSeats > info.seats ? (
+            <p className="note-box">{t("overSeats", { seats: info.seats })}</p>
+          ) : (
+            !!info.seats &&
+            !!info.peak &&
+            info.peak.count > info.seats && <p className="note-box">{t("overPeak", { count: info.peak.count, seats: info.seats })}</p>
+          )}
           {info.fromEnv ? (
             <p className="hint">{t("fromEnv")}</p>
           ) : (
