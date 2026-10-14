@@ -29,7 +29,11 @@ describe("availableSlug", () => {
     expect(availableSlug("team", new Set(["team", "team-2"]))).toBe("team-3");
   });
   it("never returns a reserved slug", () => {
-    expect(availableSlug("admin", new Set())).toBe("admin-team");
+    expect(availableSlug("admin", new Set())).toBe("admin-2");
+    expect(availableSlug("admin", new Set(["admin-2"]))).toBe("admin-3");
+  });
+  it("keeps a reserved slug for whoever may use it", () => {
+    expect(availableSlug("ronde", new Set(), true)).toBe("ronde");
   });
 });
 

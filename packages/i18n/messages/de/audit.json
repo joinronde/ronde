@@ -92,9 +92,10 @@
     },
     "workspace": {
       "update": "Einstellungen des Arbeitsbereichs geändert",
-      "categoryAdd": "Berufskategorie hinzugefügt",
-      "categoryRename": "Berufskategorie umbenannt",
-      "categoryDelete": "Berufskategorie gelöscht",
+      "categoryAdd": "Team hinzugefügt",
+      "categoryRename": "Team umbenannt",
+      "categoryDelete": "Team gelöscht",
+      "categoryMove": "Team verschoben",
       "auditStream": "Audit-Versand geändert",
       "logo": "Logo geändert",
       "logoRemoved": "Logo entfernt",

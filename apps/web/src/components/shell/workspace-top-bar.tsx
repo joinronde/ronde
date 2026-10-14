@@ -17,6 +17,7 @@ export function WorkspaceTopBar({ workspace }: { workspace: { slug: string; name
     ["/templates", t("templates")],
     ["/kudos", t("kudos")],
     ["/people", t("people")],
+    ["/teams", t("people")],
     ["/insights", t("insights")],
     ["/calendar", t("calendar")],
     ["/actions", t("actions")],

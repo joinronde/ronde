@@ -43,6 +43,7 @@ import ar_holidays from "../messages/ar/holidays.json";
 import ar_inbox from "../messages/ar/inbox.json";
 import ar_insights from "../messages/ar/insights.json";
 import ar_invite from "../messages/ar/invite.json";
+import ar_issues from "../messages/ar/issues.json";
 import ar_kudosWall from "../messages/ar/kudosWall.json";
 import ar_me from "../messages/ar/me.json";
 import ar_meetings from "../messages/ar/meetings.json";
@@ -54,16 +55,20 @@ import ar_notifications from "../messages/ar/notifications.json";
 import ar_notify from "../messages/ar/notify.json";
 import ar_notifyRules from "../messages/ar/notifyRules.json";
 import ar_onboarding from "../messages/ar/onboarding.json";
+import ar_orgTeams from "../messages/ar/orgTeams.json";
 import ar_pages from "../messages/ar/pages.json";
 import ar_palette from "../messages/ar/palette.json";
 import ar_people from "../messages/ar/people.json";
+import ar_peoplePicker from "../messages/ar/peoplePicker.json";
 import ar_permissions from "../messages/ar/permissions.json";
+import ar_pickers from "../messages/ar/pickers.json";
 import ar_planNotice from "../messages/ar/planNotice.json";
 import ar_plansPage from "../messages/ar/plansPage.json";
 import ar_poker from "../messages/ar/poker.json";
 import ar_polls from "../messages/ar/polls.json";
 import ar_profile from "../messages/ar/profile.json";
 import ar_projectImport from "../messages/ar/projectImport.json";
+import ar_projectPicker from "../messages/ar/projectPicker.json";
 import ar_projects from "../messages/ar/projects.json";
 import ar_push from "../messages/ar/push.json";
 import ar_random from "../messages/ar/random.json";
@@ -142,6 +147,7 @@ import de_holidays from "../messages/de/holidays.json";
 import de_inbox from "../messages/de/inbox.json";
 import de_insights from "../messages/de/insights.json";
 import de_invite from "../messages/de/invite.json";
+import de_issues from "../messages/de/issues.json";
 import de_kudosWall from "../messages/de/kudosWall.json";
 import de_me from "../messages/de/me.json";
 import de_meetings from "../messages/de/meetings.json";
@@ -153,16 +159,20 @@ import de_notifications from "../messages/de/notifications.json";
 import de_notify from "../messages/de/notify.json";
 import de_notifyRules from "../messages/de/notifyRules.json";
 import de_onboarding from "../messages/de/onboarding.json";
+import de_orgTeams from "../messages/de/orgTeams.json";
 import de_pages from "../messages/de/pages.json";
 import de_palette from "../messages/de/palette.json";
 import de_people from "../messages/de/people.json";
+import de_peoplePicker from "../messages/de/peoplePicker.json";
 import de_permissions from "../messages/de/permissions.json";
+import de_pickers from "../messages/de/pickers.json";
 import de_planNotice from "../messages/de/planNotice.json";
 import de_plansPage from "../messages/de/plansPage.json";
 import de_poker from "../messages/de/poker.json";
 import de_polls from "../messages/de/polls.json";
 import de_profile from "../messages/de/profile.json";
 import de_projectImport from "../messages/de/projectImport.json";
+import de_projectPicker from "../messages/de/projectPicker.json";
 import de_projects from "../messages/de/projects.json";
 import de_push from "../messages/de/push.json";
 import de_random from "../messages/de/random.json";
@@ -241,6 +251,7 @@ import en_holidays from "../messages/en/holidays.json";
 import en_inbox from "../messages/en/inbox.json";
 import en_insights from "../messages/en/insights.json";
 import en_invite from "../messages/en/invite.json";
+import en_issues from "../messages/en/issues.json";
 import en_kudosWall from "../messages/en/kudosWall.json";
 import en_me from "../messages/en/me.json";
 import en_meetings from "../messages/en/meetings.json";
@@ -252,16 +263,20 @@ import en_notifications from "../messages/en/notifications.json";
 import en_notify from "../messages/en/notify.json";
 import en_notifyRules from "../messages/en/notifyRules.json";
 import en_onboarding from "../messages/en/onboarding.json";
+import en_orgTeams from "../messages/en/orgTeams.json";
 import en_pages from "../messages/en/pages.json";
 import en_palette from "../messages/en/palette.json";
 import en_people from "../messages/en/people.json";
+import en_peoplePicker from "../messages/en/peoplePicker.json";
 import en_permissions from "../messages/en/permissions.json";
+import en_pickers from "../messages/en/pickers.json";
 import en_planNotice from "../messages/en/planNotice.json";
 import en_plansPage from "../messages/en/plansPage.json";
 import en_poker from "../messages/en/poker.json";
 import en_polls from "../messages/en/polls.json";
 import en_profile from "../messages/en/profile.json";
 import en_projectImport from "../messages/en/projectImport.json";
+import en_projectPicker from "../messages/en/projectPicker.json";
 import en_projects from "../messages/en/projects.json";
 import en_push from "../messages/en/push.json";
 import en_random from "../messages/en/random.json";
@@ -340,6 +355,7 @@ import es_holidays from "../messages/es/holidays.json";
 import es_inbox from "../messages/es/inbox.json";
 import es_insights from "../messages/es/insights.json";
 import es_invite from "../messages/es/invite.json";
+import es_issues from "../messages/es/issues.json";
 import es_kudosWall from "../messages/es/kudosWall.json";
 import es_me from "../messages/es/me.json";
 import es_meetings from "../messages/es/meetings.json";
@@ -351,16 +367,20 @@ import es_notifications from "../messages/es/notifications.json";
 import es_notify from "../messages/es/notify.json";
 import es_notifyRules from "../messages/es/notifyRules.json";
 import es_onboarding from "../messages/es/onboarding.json";
+import es_orgTeams from "../messages/es/orgTeams.json";
 import es_pages from "../messages/es/pages.json";
 import es_palette from "../messages/es/palette.json";
 import es_people from "../messages/es/people.json";
+import es_peoplePicker from "../messages/es/peoplePicker.json";
 import es_permissions from "../messages/es/permissions.json";
+import es_pickers from "../messages/es/pickers.json";
 import es_planNotice from "../messages/es/planNotice.json";
 import es_plansPage from "../messages/es/plansPage.json";
 import es_poker from "../messages/es/poker.json";
 import es_polls from "../messages/es/polls.json";
 import es_profile from "../messages/es/profile.json";
 import es_projectImport from "../messages/es/projectImport.json";
+import es_projectPicker from "../messages/es/projectPicker.json";
 import es_projects from "../messages/es/projects.json";
 import es_push from "../messages/es/push.json";
 import es_random from "../messages/es/random.json";
@@ -439,6 +459,7 @@ import fr_holidays from "../messages/fr/holidays.json";
 import fr_inbox from "../messages/fr/inbox.json";
 import fr_insights from "../messages/fr/insights.json";
 import fr_invite from "../messages/fr/invite.json";
+import fr_issues from "../messages/fr/issues.json";
 import fr_kudosWall from "../messages/fr/kudosWall.json";
 import fr_me from "../messages/fr/me.json";
 import fr_meetings from "../messages/fr/meetings.json";
@@ -450,16 +471,20 @@ import fr_notifications from "../messages/fr/notifications.json";
 import fr_notify from "../messages/fr/notify.json";
 import fr_notifyRules from "../messages/fr/notifyRules.json";
 import fr_onboarding from "../messages/fr/onboarding.json";
+import fr_orgTeams from "../messages/fr/orgTeams.json";
 import fr_pages from "../messages/fr/pages.json";
 import fr_palette from "../messages/fr/palette.json";
 import fr_people from "../messages/fr/people.json";
+import fr_peoplePicker from "../messages/fr/peoplePicker.json";
 import fr_permissions from "../messages/fr/permissions.json";
+import fr_pickers from "../messages/fr/pickers.json";
 import fr_planNotice from "../messages/fr/planNotice.json";
 import fr_plansPage from "../messages/fr/plansPage.json";
 import fr_poker from "../messages/fr/poker.json";
 import fr_polls from "../messages/fr/polls.json";
 import fr_profile from "../messages/fr/profile.json";
 import fr_projectImport from "../messages/fr/projectImport.json";
+import fr_projectPicker from "../messages/fr/projectPicker.json";
 import fr_projects from "../messages/fr/projects.json";
 import fr_push from "../messages/fr/push.json";
 import fr_random from "../messages/fr/random.json";
@@ -538,6 +563,7 @@ import hi_holidays from "../messages/hi/holidays.json";
 import hi_inbox from "../messages/hi/inbox.json";
 import hi_insights from "../messages/hi/insights.json";
 import hi_invite from "../messages/hi/invite.json";
+import hi_issues from "../messages/hi/issues.json";
 import hi_kudosWall from "../messages/hi/kudosWall.json";
 import hi_me from "../messages/hi/me.json";
 import hi_meetings from "../messages/hi/meetings.json";
@@ -549,16 +575,20 @@ import hi_notifications from "../messages/hi/notifications.json";
 import hi_notify from "../messages/hi/notify.json";
 import hi_notifyRules from "../messages/hi/notifyRules.json";
 import hi_onboarding from "../messages/hi/onboarding.json";
+import hi_orgTeams from "../messages/hi/orgTeams.json";
 import hi_pages from "../messages/hi/pages.json";
 import hi_palette from "../messages/hi/palette.json";
 import hi_people from "../messages/hi/people.json";
+import hi_peoplePicker from "../messages/hi/peoplePicker.json";
 import hi_permissions from "../messages/hi/permissions.json";
+import hi_pickers from "../messages/hi/pickers.json";
 import hi_planNotice from "../messages/hi/planNotice.json";
 import hi_plansPage from "../messages/hi/plansPage.json";
 import hi_poker from "../messages/hi/poker.json";
 import hi_polls from "../messages/hi/polls.json";
 import hi_profile from "../messages/hi/profile.json";
 import hi_projectImport from "../messages/hi/projectImport.json";
+import hi_projectPicker from "../messages/hi/projectPicker.json";
 import hi_projects from "../messages/hi/projects.json";
 import hi_push from "../messages/hi/push.json";
 import hi_random from "../messages/hi/random.json";
@@ -637,6 +667,7 @@ import it_holidays from "../messages/it/holidays.json";
 import it_inbox from "../messages/it/inbox.json";
 import it_insights from "../messages/it/insights.json";
 import it_invite from "../messages/it/invite.json";
+import it_issues from "../messages/it/issues.json";
 import it_kudosWall from "../messages/it/kudosWall.json";
 import it_me from "../messages/it/me.json";
 import it_meetings from "../messages/it/meetings.json";
@@ -648,16 +679,20 @@ import it_notifications from "../messages/it/notifications.json";
 import it_notify from "../messages/it/notify.json";
 import it_notifyRules from "../messages/it/notifyRules.json";
 import it_onboarding from "../messages/it/onboarding.json";
+import it_orgTeams from "../messages/it/orgTeams.json";
 import it_pages from "../messages/it/pages.json";
 import it_palette from "../messages/it/palette.json";
 import it_people from "../messages/it/people.json";
+import it_peoplePicker from "../messages/it/peoplePicker.json";
 import it_permissions from "../messages/it/permissions.json";
+import it_pickers from "../messages/it/pickers.json";
 import it_planNotice from "../messages/it/planNotice.json";
 import it_plansPage from "../messages/it/plansPage.json";
 import it_poker from "../messages/it/poker.json";
 import it_polls from "../messages/it/polls.json";
 import it_profile from "../messages/it/profile.json";
 import it_projectImport from "../messages/it/projectImport.json";
+import it_projectPicker from "../messages/it/projectPicker.json";
 import it_projects from "../messages/it/projects.json";
 import it_push from "../messages/it/push.json";
 import it_random from "../messages/it/random.json";
@@ -736,6 +771,7 @@ import pt_holidays from "../messages/pt/holidays.json";
 import pt_inbox from "../messages/pt/inbox.json";
 import pt_insights from "../messages/pt/insights.json";
 import pt_invite from "../messages/pt/invite.json";
+import pt_issues from "../messages/pt/issues.json";
 import pt_kudosWall from "../messages/pt/kudosWall.json";
 import pt_me from "../messages/pt/me.json";
 import pt_meetings from "../messages/pt/meetings.json";
@@ -747,16 +783,20 @@ import pt_notifications from "../messages/pt/notifications.json";
 import pt_notify from "../messages/pt/notify.json";
 import pt_notifyRules from "../messages/pt/notifyRules.json";
 import pt_onboarding from "../messages/pt/onboarding.json";
+import pt_orgTeams from "../messages/pt/orgTeams.json";
 import pt_pages from "../messages/pt/pages.json";
 import pt_palette from "../messages/pt/palette.json";
 import pt_people from "../messages/pt/people.json";
+import pt_peoplePicker from "../messages/pt/peoplePicker.json";
 import pt_permissions from "../messages/pt/permissions.json";
+import pt_pickers from "../messages/pt/pickers.json";
 import pt_planNotice from "../messages/pt/planNotice.json";
 import pt_plansPage from "../messages/pt/plansPage.json";
 import pt_poker from "../messages/pt/poker.json";
 import pt_polls from "../messages/pt/polls.json";
 import pt_profile from "../messages/pt/profile.json";
 import pt_projectImport from "../messages/pt/projectImport.json";
+import pt_projectPicker from "../messages/pt/projectPicker.json";
 import pt_projects from "../messages/pt/projects.json";
 import pt_push from "../messages/pt/push.json";
 import pt_random from "../messages/pt/random.json";
@@ -835,6 +875,7 @@ import ru_holidays from "../messages/ru/holidays.json";
 import ru_inbox from "../messages/ru/inbox.json";
 import ru_insights from "../messages/ru/insights.json";
 import ru_invite from "../messages/ru/invite.json";
+import ru_issues from "../messages/ru/issues.json";
 import ru_kudosWall from "../messages/ru/kudosWall.json";
 import ru_me from "../messages/ru/me.json";
 import ru_meetings from "../messages/ru/meetings.json";
@@ -846,16 +887,20 @@ import ru_notifications from "../messages/ru/notifications.json";
 import ru_notify from "../messages/ru/notify.json";
 import ru_notifyRules from "../messages/ru/notifyRules.json";
 import ru_onboarding from "../messages/ru/onboarding.json";
+import ru_orgTeams from "../messages/ru/orgTeams.json";
 import ru_pages from "../messages/ru/pages.json";
 import ru_palette from "../messages/ru/palette.json";
 import ru_people from "../messages/ru/people.json";
+import ru_peoplePicker from "../messages/ru/peoplePicker.json";
 import ru_permissions from "../messages/ru/permissions.json";
+import ru_pickers from "../messages/ru/pickers.json";
 import ru_planNotice from "../messages/ru/planNotice.json";
 import ru_plansPage from "../messages/ru/plansPage.json";
 import ru_poker from "../messages/ru/poker.json";
 import ru_polls from "../messages/ru/polls.json";
 import ru_profile from "../messages/ru/profile.json";
 import ru_projectImport from "../messages/ru/projectImport.json";
+import ru_projectPicker from "../messages/ru/projectPicker.json";
 import ru_projects from "../messages/ru/projects.json";
 import ru_push from "../messages/ru/push.json";
 import ru_random from "../messages/ru/random.json";
@@ -934,6 +979,7 @@ import zh_holidays from "../messages/zh/holidays.json";
 import zh_inbox from "../messages/zh/inbox.json";
 import zh_insights from "../messages/zh/insights.json";
 import zh_invite from "../messages/zh/invite.json";
+import zh_issues from "../messages/zh/issues.json";
 import zh_kudosWall from "../messages/zh/kudosWall.json";
 import zh_me from "../messages/zh/me.json";
 import zh_meetings from "../messages/zh/meetings.json";
@@ -945,16 +991,20 @@ import zh_notifications from "../messages/zh/notifications.json";
 import zh_notify from "../messages/zh/notify.json";
 import zh_notifyRules from "../messages/zh/notifyRules.json";
 import zh_onboarding from "../messages/zh/onboarding.json";
+import zh_orgTeams from "../messages/zh/orgTeams.json";
 import zh_pages from "../messages/zh/pages.json";
 import zh_palette from "../messages/zh/palette.json";
 import zh_people from "../messages/zh/people.json";
+import zh_peoplePicker from "../messages/zh/peoplePicker.json";
 import zh_permissions from "../messages/zh/permissions.json";
+import zh_pickers from "../messages/zh/pickers.json";
 import zh_planNotice from "../messages/zh/planNotice.json";
 import zh_plansPage from "../messages/zh/plansPage.json";
 import zh_poker from "../messages/zh/poker.json";
 import zh_polls from "../messages/zh/polls.json";
 import zh_profile from "../messages/zh/profile.json";
 import zh_projectImport from "../messages/zh/projectImport.json";
+import zh_projectPicker from "../messages/zh/projectPicker.json";
 import zh_projects from "../messages/zh/projects.json";
 import zh_push from "../messages/zh/push.json";
 import zh_random from "../messages/zh/random.json";
@@ -1035,6 +1085,7 @@ const ar = {
   inbox: ar_inbox,
   insights: ar_insights,
   invite: ar_invite,
+  issues: ar_issues,
   kudosWall: ar_kudosWall,
   me: ar_me,
   meetings: ar_meetings,
@@ -1046,16 +1097,20 @@ const ar = {
   notify: ar_notify,
   notifyRules: ar_notifyRules,
   onboarding: ar_onboarding,
+  orgTeams: ar_orgTeams,
   pages: ar_pages,
   palette: ar_palette,
   people: ar_people,
+  peoplePicker: ar_peoplePicker,
   permissions: ar_permissions,
+  pickers: ar_pickers,
   planNotice: ar_planNotice,
   plansPage: ar_plansPage,
   poker: ar_poker,
   polls: ar_polls,
   profile: ar_profile,
   projectImport: ar_projectImport,
+  projectPicker: ar_projectPicker,
   projects: ar_projects,
   push: ar_push,
   random: ar_random,
@@ -1136,6 +1191,7 @@ const de = {
   inbox: de_inbox,
   insights: de_insights,
   invite: de_invite,
+  issues: de_issues,
   kudosWall: de_kudosWall,
   me: de_me,
   meetings: de_meetings,
@@ -1147,16 +1203,20 @@ const de = {
   notify: de_notify,
   notifyRules: de_notifyRules,
   onboarding: de_onboarding,
+  orgTeams: de_orgTeams,
   pages: de_pages,
   palette: de_palette,
   people: de_people,
+  peoplePicker: de_peoplePicker,
   permissions: de_permissions,
+  pickers: de_pickers,
   planNotice: de_planNotice,
   plansPage: de_plansPage,
   poker: de_poker,
   polls: de_polls,
   profile: de_profile,
   projectImport: de_projectImport,
+  projectPicker: de_projectPicker,
   projects: de_projects,
   push: de_push,
   random: de_random,
@@ -1237,6 +1297,7 @@ const en = {
   inbox: en_inbox,
   insights: en_insights,
   invite: en_invite,
+  issues: en_issues,
   kudosWall: en_kudosWall,
   me: en_me,
   meetings: en_meetings,
@@ -1248,16 +1309,20 @@ const en = {
   notify: en_notify,
   notifyRules: en_notifyRules,
   onboarding: en_onboarding,
+  orgTeams: en_orgTeams,
   pages: en_pages,
   palette: en_palette,
   people: en_people,
+  peoplePicker: en_peoplePicker,
   permissions: en_permissions,
+  pickers: en_pickers,
   planNotice: en_planNotice,
   plansPage: en_plansPage,
   poker: en_poker,
   polls: en_polls,
   profile: en_profile,
   projectImport: en_projectImport,
+  projectPicker: en_projectPicker,
   projects: en_projects,
   push: en_push,
   random: en_random,
@@ -1338,6 +1403,7 @@ const es = {
   inbox: es_inbox,
   insights: es_insights,
   invite: es_invite,
+  issues: es_issues,
   kudosWall: es_kudosWall,
   me: es_me,
   meetings: es_meetings,
@@ -1349,16 +1415,20 @@ const es = {
   notify: es_notify,
   notifyRules: es_notifyRules,
   onboarding: es_onboarding,
+  orgTeams: es_orgTeams,
   pages: es_pages,
   palette: es_palette,
   people: es_people,
+  peoplePicker: es_peoplePicker,
   permissions: es_permissions,
+  pickers: es_pickers,
   planNotice: es_planNotice,
   plansPage: es_plansPage,
   poker: es_poker,
   polls: es_polls,
   profile: es_profile,
   projectImport: es_projectImport,
+  projectPicker: es_projectPicker,
   projects: es_projects,
   push: es_push,
   random: es_random,
@@ -1439,6 +1509,7 @@ const fr = {
   inbox: fr_inbox,
   insights: fr_insights,
   invite: fr_invite,
+  issues: fr_issues,
   kudosWall: fr_kudosWall,
   me: fr_me,
   meetings: fr_meetings,
@@ -1450,16 +1521,20 @@ const fr = {
   notify: fr_notify,
   notifyRules: fr_notifyRules,
   onboarding: fr_onboarding,
+  orgTeams: fr_orgTeams,
   pages: fr_pages,
   palette: fr_palette,
   people: fr_people,
+  peoplePicker: fr_peoplePicker,
   permissions: fr_permissions,
+  pickers: fr_pickers,
   planNotice: fr_planNotice,
   plansPage: fr_plansPage,
   poker: fr_poker,
   polls: fr_polls,
   profile: fr_profile,
   projectImport: fr_projectImport,
+  projectPicker: fr_projectPicker,
   projects: fr_projects,
   push: fr_push,
   random: fr_random,
@@ -1540,6 +1615,7 @@ const hi = {
   inbox: hi_inbox,
   insights: hi_insights,
   invite: hi_invite,
+  issues: hi_issues,
   kudosWall: hi_kudosWall,
   me: hi_me,
   meetings: hi_meetings,
@@ -1551,16 +1627,20 @@ const hi = {
   notify: hi_notify,
   notifyRules: hi_notifyRules,
   onboarding: hi_onboarding,
+  orgTeams: hi_orgTeams,
   pages: hi_pages,
   palette: hi_palette,
   people: hi_people,
+  peoplePicker: hi_peoplePicker,
   permissions: hi_permissions,
+  pickers: hi_pickers,
   planNotice: hi_planNotice,
   plansPage: hi_plansPage,
   poker: hi_poker,
   polls: hi_polls,
   profile: hi_profile,
   projectImport: hi_projectImport,
+  projectPicker: hi_projectPicker,
   projects: hi_projects,
   push: hi_push,
   random: hi_random,
@@ -1641,6 +1721,7 @@ const it = {
   inbox: it_inbox,
   insights: it_insights,
   invite: it_invite,
+  issues: it_issues,
   kudosWall: it_kudosWall,
   me: it_me,
   meetings: it_meetings,
@@ -1652,16 +1733,20 @@ const it = {
   notify: it_notify,
   notifyRules: it_notifyRules,
   onboarding: it_onboarding,
+  orgTeams: it_orgTeams,
   pages: it_pages,
   palette: it_palette,
   people: it_people,
+  peoplePicker: it_peoplePicker,
   permissions: it_permissions,
+  pickers: it_pickers,
   planNotice: it_planNotice,
   plansPage: it_plansPage,
   poker: it_poker,
   polls: it_polls,
   profile: it_profile,
   projectImport: it_projectImport,
+  projectPicker: it_projectPicker,
   projects: it_projects,
   push: it_push,
   random: it_random,
@@ -1742,6 +1827,7 @@ const pt = {
   inbox: pt_inbox,
   insights: pt_insights,
   invite: pt_invite,
+  issues: pt_issues,
   kudosWall: pt_kudosWall,
   me: pt_me,
   meetings: pt_meetings,
@@ -1753,16 +1839,20 @@ const pt = {
   notify: pt_notify,
   notifyRules: pt_notifyRules,
   onboarding: pt_onboarding,
+  orgTeams: pt_orgTeams,
   pages: pt_pages,
   palette: pt_palette,
   people: pt_people,
+  peoplePicker: pt_peoplePicker,
   permissions: pt_permissions,
+  pickers: pt_pickers,
   planNotice: pt_planNotice,
   plansPage: pt_plansPage,
   poker: pt_poker,
   polls: pt_polls,
   profile: pt_profile,
   projectImport: pt_projectImport,
+  projectPicker: pt_projectPicker,
   projects: pt_projects,
   push: pt_push,
   random: pt_random,
@@ -1843,6 +1933,7 @@ const ru = {
   inbox: ru_inbox,
   insights: ru_insights,
   invite: ru_invite,
+  issues: ru_issues,
   kudosWall: ru_kudosWall,
   me: ru_me,
   meetings: ru_meetings,
@@ -1854,16 +1945,20 @@ const ru = {
   notify: ru_notify,
   notifyRules: ru_notifyRules,
   onboarding: ru_onboarding,
+  orgTeams: ru_orgTeams,
   pages: ru_pages,
   palette: ru_palette,
   people: ru_people,
+  peoplePicker: ru_peoplePicker,
   permissions: ru_permissions,
+  pickers: ru_pickers,
   planNotice: ru_planNotice,
   plansPage: ru_plansPage,
   poker: ru_poker,
   polls: ru_polls,
   profile: ru_profile,
   projectImport: ru_projectImport,
+  projectPicker: ru_projectPicker,
   projects: ru_projects,
   push: ru_push,
   random: ru_random,
@@ -1944,6 +2039,7 @@ const zh = {
   inbox: zh_inbox,
   insights: zh_insights,
   invite: zh_invite,
+  issues: zh_issues,
   kudosWall: zh_kudosWall,
   me: zh_me,
   meetings: zh_meetings,
@@ -1955,16 +2051,20 @@ const zh = {
   notify: zh_notify,
   notifyRules: zh_notifyRules,
   onboarding: zh_onboarding,
+  orgTeams: zh_orgTeams,
   pages: zh_pages,
   palette: zh_palette,
   people: zh_people,
+  peoplePicker: zh_peoplePicker,
   permissions: zh_permissions,
+  pickers: zh_pickers,
   planNotice: zh_planNotice,
   plansPage: zh_plansPage,
   poker: zh_poker,
   polls: zh_polls,
   profile: zh_profile,
   projectImport: zh_projectImport,
+  projectPicker: zh_projectPicker,
   projects: zh_projects,
   push: zh_push,
   random: zh_random,
@@ -2061,6 +2161,7 @@ export const namespaces = [
   "inbox",
   "insights",
   "invite",
+  "issues",
   "kudosWall",
   "me",
   "meetings",
@@ -2072,16 +2173,20 @@ export const namespaces = [
   "notify",
   "notifyRules",
   "onboarding",
+  "orgTeams",
   "pages",
   "palette",
   "people",
+  "peoplePicker",
   "permissions",
+  "pickers",
   "planNotice",
   "plansPage",
   "poker",
   "polls",
   "profile",
   "projectImport",
+  "projectPicker",
   "projects",
   "push",
   "random",

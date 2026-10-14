@@ -31,6 +31,8 @@ export default defineConfig({
       SMTP_URL: "",
       AUTH_TRUSTED_EMAIL_HEADER: "",
       RONDE_JOBS: "off",
+      // The "Send feedback" button, off by default on a self-hosted instance, is tested too
+      RONDE_FEEDBACK: "on",
       // Every test signs up from the same address: the sign-in rate limit would refuse them
       AUTH_RATE_LIMIT: "off",
       ...(process.env.E2E_BUILD

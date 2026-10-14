@@ -336,6 +336,40 @@ describe("the project round", () => {
   });
 });
 
+describe("who adds projects", () => {
+  it("keeps it to the hosts until they let every participant bring one, removing staying theirs", async () => {
+    const w = await workspace(`projects-by-${Date.now().toString(36)}`);
+    const t = await meeting(w, "Weekly");
+    const other = await prisma.project.create({ data: { workspaceId: t.workspaceId, slug: "other", name: "Other" } });
+    const participant = asParticipant(t, t.memberId);
+    await expect(runOp(participant, { op: "project.follow", projectId: other.id })).rejects.toMatchObject({ key: "projectsByHosts" });
+    // Nothing to pick from either
+    expect((await loadSnapshot(participant)).projectChoices).toBeNull();
+    await expect(runOp(participant, { op: "meeting.projectsBy", by: "participants" })).rejects.toMatchObject({ key: "accessDenied" });
+    await runOp(t.ctx, { op: "meeting.projectsBy", by: "participants" });
+    expect((await loadSnapshot(t.ctx)).settings.projectsBy).toBe("participants");
+    expect((await loadSnapshot(participant)).projectChoices?.map((p) => p.name)).toContain("Other");
+    await runOp(participant, { op: "project.follow", projectId: other.id });
+    // Last of the round; a second time changes nothing
+    await runOp(participant, { op: "project.follow", projectId: other.id });
+    const followed = await prisma.meetingProject.findMany({ where: { meetingId: t.meetingId }, orderBy: { position: "asc" } });
+    expect(followed.map((r) => r.projectId)).toEqual([t.projectId, other.id]);
+    await expect(runOp(participant, { op: "meeting.projects", projectIds: [t.projectId] })).rejects.toMatchObject({ key: "accessDenied" });
+  });
+
+  it("offers only projects the person sees", async () => {
+    const w = await workspace(`projects-by-private-${Date.now().toString(36)}`);
+    const t = await meeting(w, "Weekly");
+    const hidden = await prisma.project.create({
+      data: { workspaceId: t.workspaceId, slug: "secret", name: "Secret", visibility: "members" },
+    });
+    await runOp(t.ctx, { op: "meeting.projectsBy", by: "participants" });
+    const participant = asParticipant(t, t.memberId);
+    expect((await loadSnapshot(participant)).projectChoices?.map((p) => p.name)).not.toContain("Secret");
+    await expect(runOp(participant, { op: "project.follow", projectId: hidden.id })).rejects.toMatchObject({ key: "notFound" });
+  });
+});
+
 describe("the portfolio", () => {
   it("creates projects with their lead as a member, and keeps items when a project is deleted", async () => {
     const w = await workspace(`portfolio-${Date.now().toString(36)}`);

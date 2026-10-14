@@ -6,16 +6,20 @@
   "mine": "Mías",
   "hosted": "Reuniones que dirijo",
   "filter": "Reunión",
-  "all": "Todas",
-  "count": {
-    "open": "{count, plural, =0 {nada pendiente} one {# pendiente} other {# pendientes}}",
-    "doing": "{count, plural, =0 {ninguna en curso} one {# en curso} other {# en curso}}",
-    "done": "{count, plural, =0 {ninguna hecha últimamente} one {# hecha últimamente} other {# hechas últimamente}}"
-  },
+  "allMeetings": "Todas las reuniones",
+  "search": "Buscar una acción, una reunión, una persona…",
+  "noMatch": "Ninguna acción coincide.",
+  "layout": "Vista",
+  "layoutList": "Lista",
+  "layoutBoard": "Kanban",
+  "stuck": "Esperan demasiado",
+  "dropHere": "Suelte una acción aquí",
+  "moveTo": "Mover «{text}» a {column}",
   "group": {
     "open": "Pendientes",
     "doing": "En curso",
-    "done": "Hechas en las últimas dos semanas"
+    "done": "Hechas",
+    "doneLately": "Hechas en las dos últimas semanas"
   },
   "markDone": "Marcar «{text}» como hecha",
   "reopen": "Reabrir «{text}»",

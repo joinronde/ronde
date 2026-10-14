@@ -135,6 +135,22 @@ describe("comments on check-ins", () => {
     expect(await likes()).toBe(0);
   });
 
+  it("react to a line with several emojis, one of each per person, the old 👍 counting as one", async () => {
+    const mine = () =>
+      prisma.checkInComment.findMany({ where: { sessionId: f.sessionId, byId: brunoId, text: "" }, select: { emoji: true } });
+    await runOp(bruno, { op: "comment.react", ...line(), emoji: "🎉" });
+    await runOp(bruno, { op: "comment.react", ...line(), emoji: "💡" });
+    expect((await mine()).map((c) => c.emoji).sort()).toEqual(["💡", "🎉"].sort());
+    await runOp(bruno, { op: "comment.react", ...line(), emoji: "🎉" });
+    expect((await mine()).map((c) => c.emoji)).toEqual(["💡"]);
+    // A 👍 given before there were several reactions is taken back by 👍
+    await runOp(bruno, { op: "comment.like", ...line() });
+    await runOp(bruno, { op: "comment.react", ...line(), emoji: "👍" });
+    expect((await mine()).map((c) => c.emoji)).toEqual(["💡"]);
+    await expect(runOp(bruno, { op: "comment.react", ...line(), emoji: "🍕" as "👍" })).rejects.toMatchObject({ key: "invalidRequest" });
+    await runOp(bruno, { op: "comment.react", ...line(), emoji: "💡" });
+  });
+
   it("are written on a line of one of the meeting's people, by one of them", async () => {
     await runOp(bruno, { op: "comment.add", ...line(), text: "Well done" });
     expect(await prisma.checkInComment.count({ where: { byId: brunoId, text: "Well done" } })).toBe(1);

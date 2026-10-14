@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { CSV_COLUMNS, niceStep, presence, sessionsCsv, statsKpis } from "@/lib/shared/stats";
 import { LoadError } from "./common";
 import { ExportCsv } from "./export-csv";
+import { EmptyHero } from "./illustration";
 import { useRonde } from "./ronde-provider";
 import { Avatar } from "./stage";
 
@@ -68,7 +69,7 @@ function Columns({
           r = Math.min(4, h);
         return (
           <g className="ch-g" key={i}>
-            <rect className="ch-hit" x={L + band * i} y={T} width={band} height={ih} data-tip={d.tip} />
+            <rect className="ch-hit" x={L + band * i} y={T} width={band} height={ih} data-chart-tip={d.tip} />
             {h > 0 && (
               <path
                 className="ch-bar"
@@ -118,13 +119,13 @@ function Spark({ vals }: { vals: number[] }) {
   );
 }
 
-/** Shared tooltip for elements carrying data-tip */
+/** Shared tooltip for elements carrying data-chart-tip (its own: the app-wide one leaves them alone) */
 function useTooltip() {
   const [tip, setTip] = useState<{ text: string; x: number; y: number } | null>(null);
   useEffect(() => {
     const over = (e: PointerEvent) => {
-      const t = (e.target as Element).closest?.("[data-tip]") as HTMLElement | SVGElement | null;
-      setTip(t ? { text: t.getAttribute("data-tip") ?? "", x: e.clientX, y: e.clientY } : null);
+      const t = (e.target as Element).closest?.("[data-chart-tip]") as HTMLElement | SVGElement | null;
+      setTip(t ? { text: t.getAttribute("data-chart-tip") ?? "", x: e.clientX, y: e.clientY } : null);
     };
     window.addEventListener("pointermove", over);
     return () => window.removeEventListener("pointermove", over);
@@ -159,7 +160,7 @@ export function StatsView() {
   if (error) return <LoadError onRetry={() => setRetry((n) => n + 1)} />;
   if (!st) return <p className="loading">{t("loading")}</p>;
   const H = st.sessions;
-  if (!H.length) return <div className="emptybox">{t("empty")}</div>;
+  if (!H.length) return <EmptyHero art="stats" title={t("empty")} />;
 
   const target = s.settings.targetMin;
   const lim = s.settings.speakSec * 1000;
@@ -239,7 +240,7 @@ export function StatsView() {
             {ah.medianDays !== null ? ` · ${t("kpi.median", { days: Math.round(ah.medianDays) })}` : ""}
           </div>
         </div>
-        <div className="kpi" data-tip={t("kpi.plannedDoneHint")}>
+        <div className="kpi" data-chart-tip={t("kpi.plannedDoneHint")}>
           <div className="l">{t("kpi.plannedDone")}</div>
           <div className="v">{pct(pdRate)}</div>
           <div className="d">{pdTotal ? t("kpi.ofPlanned", { count: pdTotal }) : t("kpi.afterTwo")}</div>
@@ -368,7 +369,7 @@ export function StatsView() {
           <h3>{t("charts.speaking")}</h3>
           <ul className="bars" style={{ fontSize: 13.5 }}>
             {people.map((p) => (
-              <li key={p.id} data-tip={`${p.name}\n${t("charts.speakingTip", { avg: mmssPlain(p.avgMs), count: p.turns })}`}>
+              <li key={p.id} data-chart-tip={`${p.name}\n${t("charts.speakingTip", { avg: mmssPlain(p.avgMs), count: p.turns })}`}>
                 <span>{first(p.name)}</span>
                 <span className="bar">
                   <i style={{ width: ((p.avgMs / pmax) * 100).toFixed(1) + "%" }} />
@@ -439,7 +440,7 @@ export function StatsView() {
                 <tr key={r.name}>
                   <td>{r.name}</td>
                   <td className="num">{r.total}</td>
-                  <td data-tip={r.perSession.map((v, i) => `${fmtDay(H[i]!.date)}: ${v}`).join("\n")}>
+                  <td data-chart-tip={r.perSession.map((v, i) => `${fmtDay(H[i]!.date)}: ${v}`).join("\n")}>
                     <Spark vals={r.perSession} />
                   </td>
                   <td>{fmtShort(r.last)}</td>

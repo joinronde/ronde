@@ -1,0 +1,33 @@
+/** Drawings a team may take, by what it does (components/team-icon.tsx draws them); empty: a group of people */
+export const TEAM_ICONS = [
+  "users",
+  "code",
+  "server",
+  "smartphone",
+  "database",
+  "shield",
+  "palette",
+  "pen",
+  "camera",
+  "megaphone",
+  "chart",
+  "briefcase",
+  "calculator",
+  "scale",
+  "cart",
+  "truck",
+  "headphones",
+  "handshake",
+  "graduation",
+  "flask",
+  "stethoscope",
+  "hardhat",
+  "wrench",
+  "leaf",
+  "building",
+  "globe",
+  "rocket",
+  "heart",
+] as const;
+export type TeamIconName = (typeof TEAM_ICONS)[number];
+export const isTeamIcon = (v: unknown): v is TeamIconName => typeof v === "string" && (TEAM_ICONS as readonly string[]).includes(v);

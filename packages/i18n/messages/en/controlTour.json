@@ -24,7 +24,7 @@
     },
     "minutes": {
       "title": "The minutes",
-      "body": "<p>They write themselves from the check-ins, your notes, the decisions and the actions.</p><p>At the end, <strong>Archive the meeting</strong>: the minutes go to the history and the next session is ready.</p>"
+      "body": "<p>They write themselves from the check-ins, your notes, the decisions and the actions.</p><p>At the end, <strong>Publish the minutes</strong>: they go to the history and the next session is ready.</p>"
     },
     "finish": {
       "title": "Your turn!",

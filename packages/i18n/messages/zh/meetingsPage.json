@@ -4,12 +4,21 @@
   "new": "新建会议",
   "filter": "哪些会议",
   "search": "按名称筛选",
+  "sortBy": "排序方式",
+  "sorts": {
+    "next": "下次会话",
+    "name": "名称",
+    "recent": "最近一次",
+    "actions": "未完成的行动"
+  },
   "filters": {
     "all": "全部",
+    "live": "进行中",
     "mine": "我参加的",
     "run": "我主持的"
   },
   "liveNow": "正在进行",
+  "sessionOf": "{time} 的会话",
   "next": "下一场",
   "noNext": "暂无计划的场次",
   "held": "{count, plural, other {场已举行}}",

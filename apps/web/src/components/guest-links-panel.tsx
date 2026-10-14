@@ -46,13 +46,13 @@ export function GuestLinksPanel() {
   const revoke = async (linkId: string) => {
     const res = await revokeGuestLinkAction(slug, meetingId, linkId);
     if (!res.ok) return setError(res.error);
-    toast(t("revoked"));
+    toast(t("revoked"), "off");
     void load();
   };
   const copy = async (url: string) => {
     try {
       await navigator.clipboard.writeText(url);
-      toast(t("copied"));
+      toast(t("copied"), "ok");
     } catch {}
   };
 

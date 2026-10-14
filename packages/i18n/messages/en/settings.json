@@ -63,9 +63,8 @@
     "carryPlansSwitch": "This section becomes a checklist.",
     "carryPlansHint": "Everyone finds what they planned as boxes to tick as they go. A box left unticked doesn't count as done.",
     "carryPlans": "Bring back what was in “{plan}” last time",
-    "moveUp": "Move “{label}” up",
-    "moveDown": "Move “{label}” down",
     "removeOf": "Remove “{label}”",
+    "reorder": "Move “{label}”",
     "customPlaceholder": "E.g. Research, Demo to show, Need help",
     "add": "Add a section",
     "hint": "Each role (done, planned, blocker, other) goes to one section at most. A section keeps what was entered when its name, role or input changes."
@@ -90,6 +89,13 @@
   },
   "sources": {
     "title": "Task sources",
+    "connect": "Connect with GitLab",
+    "connectHint": "Your GitLab account, read-only, renewed by itself: no token to copy or to replace when it expires.",
+    "connected": "Connected to GitLab",
+    "connectedAs": "Connected to GitLab as @{user}",
+    "disconnect": "Disconnect",
+    "disconnected": "GitLab disconnected",
+    "usePersonalToken": "Use a personal token instead",
     "gitlabToken": "GitLab token",
     "noSecretKey": "Token encryption is not configured on the server: ask the operators to set the SECRET_KEY key.",
     "tokenHint": "Tokens are encrypted before being saved and are never shown again. GitLab: a token with the <code>read_api</code> scope.",
@@ -106,10 +112,36 @@
     "githubReposHint": "“owner/repository” or a whole “owner”, one per line; empty: every repository. Also enter each person's GitHub username in the People block.",
     "githubSave": "Save the GitHub access"
   },
+  "hub": {
+    "intro": "The tools this meeting works with, and where each stands. Open a card to set it up.",
+    "configure": "Set up",
+    "close": "Close",
+    "off": "Off",
+    "turnOn": "Turn on in Modules",
+    "connected": "Connected",
+    "toConnect": "To connect",
+    "configured": "Set up",
+    "toSetUp": "To set up",
+    "ready": "Link ready",
+    "synced": "Synced",
+    "noneInWorkspace": "None in the workspace",
+    "rulesOn": "{count, plural, one {# rule on} other {# rules on}}",
+    "gitlab": "Issues and merge requests of each person in their check-in",
+    "github": "Issues and pull requests of the followed repositories",
+    "wikiName": "Wiki",
+    "wiki": "Minutes published to the team's wiki",
+    "videoName": "Video call",
+    "video": "The link everyone joins from",
+    "calendarName": "Calendar",
+    "calendar": "Sessions in people's calendars, kept in sync",
+    "notificationsName": "Notifications",
+    "notifications": "Chat, email and text messages around the meeting",
+    "goGeneral": "In General",
+    "goSchedule": "In Schedule",
+    "goNotifications": "In Notifications"
+  },
   "preview": {
-    "title": "Reminder preview",
     "to": "To: {email} · {date} at {time}",
-    "disabled": "reminders turned off",
     "frameTitle": "Preview of the reminder email for {name}"
   },
   "token": {
@@ -132,7 +164,10 @@
   },
   "people": {
     "title": "People ({count})",
+    "colPerson": "Person",
+    "colRole": "Role",
     "intro": "Profiles come from the workspace directory. The role sets what each person can do in this meeting.",
+    "rolesGuide": "Who can do what?",
     "roles": {
       "host": "Host",
       "cohost": "Co-host",
@@ -140,15 +175,17 @@
       "observer": "Observer"
     },
     "roleHints": {
-      "host": "Runs the sessions and sets up the meeting",
-      "cohost": "Runs the sessions",
-      "participant": "Fills in a check-in and takes part",
-      "observer": "Follows the sessions, no check-in"
+      "host": "Runs the sessions from the control room, sets up the meeting and publishes its minutes",
+      "cohost": "Runs the sessions from the control room, without changing the settings",
+      "participant": "Fills in a check-in before each session and takes a turn in the round table",
+      "observer": "Follows the sessions live and reads the minutes, with no check-in and no turn"
     },
     "roleOf": "Role of {name}",
     "speaks": "Takes a turn",
+    "speaksOf": "{name} takes a turn",
     "speaksHint": "Included in the round table",
     "remind": "Reminder",
+    "remindOf": "Remind {name}",
     "gitlab": "GitLab username",
     "remove": "Remove",
     "confirmRemove": "Remove from the meeting",
@@ -161,12 +198,28 @@
     "add": "Add",
     "nobodyLeft": "Everyone in the directory already takes part.",
     "directory": "Manage the directory",
-    "categoriesHint": "Job categories, birthdays and names are edited in the workspace directory.",
+    "categoriesHint": "Teams, birthdays and names are edited in the workspace directory.",
     "github": "GitHub username"
   },
   "template": {
     "title": "Reuse this format",
-    "intro": "Save the sections, the format, the modules and the schedule as a template of the workspace, to create other meetings from it. People, history and tokens stay here.",
+    "intro": "Start other meetings from this one: the template is offered when creating a meeting in the workspace.",
+    "carries": "Goes into the template",
+    "stays": "Stays in this meeting",
+    "items": {
+      "sections": "Check-in sections",
+      "agenda": "Agenda",
+      "modules": "Modules",
+      "schedule": "Schedule",
+      "people": "{count, plural, one {# person and their roles} other {# people and their roles}}",
+      "history": "History and minutes",
+      "tokens": "Access tokens and integrations"
+    },
+    "counts": {
+      "sections": "{count, plural, one {# section} other {# sections}}",
+      "agenda": "{count, plural, one {# block} other {# blocks}}",
+      "modules": "{count, plural, one {# module on} other {# modules on}}"
+    },
     "open": "Save as a template",
     "name": "Template name",
     "description": "Description (optional)",
@@ -188,6 +241,20 @@
     "danger": "Danger zone",
     "agenda": "Agenda",
     "projects": "Projects"
+  },
+  "navHints": {
+    "general": "Name, mark, format and timer of the meeting.",
+    "schedule": "When the sessions take place, and their exceptions.",
+    "people": "Who takes part, and what each one may do.",
+    "sections": "What everyone fills in before the meeting.",
+    "agenda": "The order of the meeting, block by block.",
+    "projects": "The projects followed, each with its round.",
+    "modules": "Facilitation, formats and tools, turned on as needed.",
+    "appearance": "Colour of the meeting on every screen.",
+    "notifications": "Reminders and messages sent around the meeting.",
+    "integrations": "Video call, issue trackers and wiki.",
+    "template": "Save this meeting as a template of the workspace.",
+    "danger": "What cannot be undone: leave, end or delete."
   },
   "status": {
     "auto": "Changes are saved automatically.",

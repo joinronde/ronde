@@ -1,0 +1,13 @@
+{
+  "search": "Найти человека или команду…",
+  "selected": "Выбрано {count} из {total}",
+  "all": "Все",
+  "none": "Никого",
+  "teams": "Команды",
+  "pickTeam": "{name}: {count, plural, one {# человек} few {# человека} many {# человек} other {# человека}}, с подкомандами",
+  "noMatch": "Никого не найдено.",
+  "noTeam": "Без команды",
+  "withSubTeams": "с подкомандами",
+  "fold": "Свернуть {name}",
+  "unfold": "Развернуть {name}"
+}

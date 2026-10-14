@@ -6,16 +6,20 @@
   "mine": "Meine",
   "hosted": "Meetings, die ich leite",
   "filter": "Meeting",
-  "all": "Alle",
-  "count": {
-    "open": "{count, plural, =0 {nichts offen} one {# offen} other {# offen}}",
-    "doing": "{count, plural, =0 {keine in Arbeit} one {# in Arbeit} other {# in Arbeit}}",
-    "done": "{count, plural, =0 {zuletzt keine erledigt} one {# zuletzt erledigt} other {# zuletzt erledigt}}"
-  },
+  "allMeetings": "Alle Besprechungen",
+  "search": "Aufgabe, Besprechung oder Person suchen…",
+  "noMatch": "Keine passende Aufgabe.",
+  "layout": "Ansicht",
+  "layoutList": "Liste",
+  "layoutBoard": "Kanban",
+  "stuck": "Warten zu lange",
+  "dropHere": "Aufgabe hier ablegen",
+  "moveTo": "„{text}“ nach {column} verschieben",
   "group": {
     "open": "Offen",
     "doing": "In Arbeit",
-    "done": "In den letzten zwei Wochen erledigt"
+    "done": "Erledigt",
+    "doneLately": "In den letzten zwei Wochen erledigt"
   },
   "markDone": "„{text}“ als erledigt markieren",
   "reopen": "„{text}“ wieder öffnen",

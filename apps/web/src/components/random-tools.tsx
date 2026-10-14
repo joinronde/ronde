@@ -4,6 +4,7 @@ import type { DrawDTO, DrawKind } from "@ronde/core/types";
 import { first } from "@ronde/core/util";
 import { coinTargetRotation, createSeededRandom, planWheelSpin } from "@ronde/random-core";
 import { motionAllowed } from "@ronde/ui/effects";
+import { Minus, Plus, Smile, Star } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { sector } from "@/lib/shared/modules";
@@ -14,6 +15,8 @@ import { Icon } from "./shell/icons";
 
 const KINDS: DrawKind[] = ["wheel", "order", "teams", "coin"];
 const SPIN_MS = 4200;
+/** Coordinates to the hundredth: the server and the browser then write them the same way (no hydration gap) */
+const round2 = (x: number) => Math.round(x * 100) / 100;
 /** A draw older than this shows its outcome straight away (screen opened or reloaded afterwards) */
 const REPLAY_MS = 6000;
 
@@ -55,15 +58,30 @@ function Wheel({ draw }: { draw: DrawDTO }) {
     );
     return () => anim.cancel();
   }, [draw.id]);
+  // Little lights round the rim, one at each border between two names and one between
+  const lights = Array.from({ length: Math.max(12, n * 2) }, (_, i) => (i * 360) / Math.max(12, n * 2));
   return (
-    <div className="draw-wheel">
-      <svg viewBox="-104 -112 208 216" role="img" aria-label={t("kinds.wheel")}>
+    <div className={`draw-wheel${playing ? " spinning" : " stopped"}`}>
+      <svg viewBox="-112 -120 224 232" role="img" aria-label={t("kinds.wheel")}>
+        <defs>
+          <radialGradient id={`hub-${draw.id}`} cx="35%" cy="30%" r="80%">
+            <stop offset="0%" stopColor="#fff7e6" />
+            <stop offset="60%" stopColor="#f2c14e" />
+            <stop offset="100%" stopColor="#b07a08" />
+          </radialGradient>
+        </defs>
+        <circle r="108" className="rim" />
         <g ref={disc} className="draw-disc">
           {draw.entries.map((id, i) => (
-            <g key={id} style={{ "--c": `var(--c${(members[id]?.color ?? i) % 6})` } as React.CSSProperties}>
+            <g
+              key={id}
+              className={!playing && id === draw.pick ? "won" : undefined}
+              style={{ "--c": `var(--c${(members[id]?.color ?? i) % 6})` } as React.CSSProperties}
+            >
               <path d={sector(i * size, size)} className={i % 2 ? "alt" : undefined} />
               <text
-                transform={`rotate(${i * size}) translate(0 -62) rotate(${i * size > 90 && i * size < 270 ? 180 : 0})`}
+                // Upright when its sector stops under the pointer: the name drawn is read the right way up
+                transform={`rotate(${i * size}) translate(0 -64)`}
                 textAnchor="middle"
                 dominantBaseline="middle"
               >
@@ -71,9 +89,20 @@ function Wheel({ draw }: { draw: DrawDTO }) {
               </text>
             </g>
           ))}
-          <circle r="14" className="hub" />
+          <circle r="100" className="ring" />
         </g>
-        <path d="M-9 -110 L9 -110 L0 -92 Z" className="pointer" />
+        {lights.map((a, i) => (
+          <circle
+            key={a}
+            className={`light${i % 2 ? " odd" : ""}`}
+            r="2.6"
+            cx={round2(Math.sin((a * Math.PI) / 180) * 104)}
+            cy={round2(-Math.cos((a * Math.PI) / 180) * 104)}
+          />
+        ))}
+        <circle r="17" className="hub" fill={`url(#hub-${draw.id})`} />
+        <circle r="6" className="hub-dot" />
+        <path d="M0 -92 L-11 -116 Q0 -124 11 -116 Z" className="pointer" />
       </svg>
       <p className="draw-result" aria-live="polite">
         {!playing && draw.pick && t("picked", { name: nameOf(draw.pick) })}
@@ -85,6 +114,7 @@ function Wheel({ draw }: { draw: DrawDTO }) {
 function Coin({ draw }: { draw: DrawDTO }) {
   const t = useTranslations("random");
   const face = useRef<HTMLDivElement>(null);
+  const toss = useRef<HTMLDivElement>(null);
   const playing = usePlaying(draw, 2200);
   // Only a new draw replays the flip
   useEffect(() => {
@@ -93,18 +123,44 @@ function Coin({ draw }: { draw: DrawDTO }) {
     const end = coinTargetRotation(0, !!draw.tails, reducedMotion() ? 1 : 6);
     el.style.transform = `rotateY(${end}deg)`;
     if (!playing) return;
+    const duration = reducedMotion() ? 400 : 2200;
     const anim = el.animate([{ transform: "rotateY(0deg)" }, { transform: `rotateY(${end}deg)` }], {
-      duration: reducedMotion() ? 400 : 2200,
+      duration,
       easing: "cubic-bezier(.2,.7,.2,1)",
     });
-    return () => anim.cancel();
+    // Tossed up, then caught: the coin rises and falls while it turns, its shadow shrinks and grows on the table
+    const air = reducedMotion()
+      ? null
+      : toss.current?.animate(
+          [
+            { transform: "translateY(0)" },
+            { transform: "translateY(-70px)", offset: 0.45 },
+            { transform: "translateY(0)", offset: 0.85 },
+            { transform: "translateY(-6px)", offset: 0.93 },
+            { transform: "translateY(0)" },
+          ],
+          { duration, easing: "ease-in-out" },
+        );
+    return () => {
+      anim.cancel();
+      air?.cancel();
+    };
   }, [draw.id]);
   return (
-    <div className="draw-coin">
-      <div className="coin" ref={face} aria-hidden="true">
-        <span className="heads">{t("heads")}</span>
-        <span className="tails">{t("tails")}</span>
+    <div className={`draw-coin${playing ? " tossing" : ""}`}>
+      <div className="coin-toss" ref={toss}>
+        <div className="coin" ref={face} aria-hidden="true">
+          <span className="heads">
+            <Smile size={44} strokeWidth={1.8} />
+            <b>{t("heads")}</b>
+          </span>
+          <span className="tails">
+            <Star size={40} strokeWidth={1.8} />
+            <b>{t("tails")}</b>
+          </span>
+        </div>
       </div>
+      <span className="coin-shadow" aria-hidden="true" />
       <p className="draw-result" aria-live="polite">
         {!playing && (draw.tails ? t("tails") : t("heads"))}
       </p>
@@ -213,17 +269,31 @@ export function RandomHost() {
       <p className="hint">{t(`hints.${kind}`)}</p>
       <div className="controls">
         {kind === "teams" && (
-          <label className="check">
-            {t("teamSize")}{" "}
-            <input
-              type="number"
-              min={2}
-              max={10}
-              value={teamSize}
-              onChange={(e) => setTeamSize(Number(e.target.value) || 2)}
-              style={{ width: "4.5em" }}
-            />
-          </label>
+          // Between 2 and 10 per team, stepped: nothing outside can be typed
+          <span className="stepper" role="group" aria-label={t("teamSize")}>
+            <span className="stepper-label">{t("teamSize")}</span>
+            <button
+              type="button"
+              className="stepper-btn"
+              aria-label={`${t("teamSize")} −1`}
+              disabled={teamSize <= 2}
+              onClick={() => setTeamSize((n) => Math.max(2, n - 1))}
+            >
+              <Minus size={14} strokeWidth={2.4} aria-hidden="true" />
+            </button>
+            <output className="stepper-value" aria-live="polite">
+              {teamSize}
+            </output>
+            <button
+              type="button"
+              className="stepper-btn"
+              aria-label={`${t("teamSize")} +1`}
+              disabled={teamSize >= 10}
+              onClick={() => setTeamSize((n) => Math.min(10, n + 1))}
+            >
+              <Plus size={14} strokeWidth={2.4} aria-hidden="true" />
+            </button>
+          </span>
         )}
         <button type="button" className="btn primary" onClick={() => rpc({ op: "random.draw", kind, teamSize })}>
           {draw?.kind === kind ? t("drawAgain") : t("draw")}

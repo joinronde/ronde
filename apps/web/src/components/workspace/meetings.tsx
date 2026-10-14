@@ -1,32 +1,50 @@
 "use client";
 
 import { formatters, type Locale } from "@ronde/i18n";
+import { ArrowRight, Search } from "lucide-react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
+import { EmptyHero } from "@/components/illustration";
+import { Select } from "@/components/select";
 import type { DashboardPerson } from "@/lib/server/dashboard";
 import type { MeetingOverview } from "@/lib/server/overview";
 import { withBasePath } from "@/lib/shared/base-path";
+import { MEETING_SORTS, type MeetingSort, sortMeetings } from "@/lib/shared/meetings-list";
 import { fold } from "@/lib/shared/search";
 import { MeetingMark } from "../meeting-mark";
 import { initials } from "../shell/app-shell";
 import { Icon } from "../shell/icons";
 
-type Filter = "all" | "mine" | "run";
+type Filter = "all" | "live" | "mine" | "run";
 
 const tint = (color: number) => ({ "--c": `var(--c${color % 6})` }) as React.CSSProperties;
 
 /** Every meeting of the workspace the person can see, as cards: when it meets next, who is in, what is pending */
 export function MeetingsView({ slug, meetings, canCreate }: { slug: string; meetings: MeetingOverview[]; canCreate: boolean }) {
   const t = useTranslations("meetingsPage");
+  const locale = useLocale();
   const [filter, setFilter] = useState<Filter>("all");
+  const [sort, setSort] = useState<MeetingSort>("next");
   const [q, setQ] = useState("");
   const base = `/w/${slug}`;
   const runs = (m: MeetingOverview) => m.role === "host" || m.role === "cohost";
-  const counts = { all: meetings.length, mine: meetings.filter((m) => m.role).length, run: meetings.filter(runs).length };
-  const shown = meetings
-    .filter((m) => (filter === "mine" ? !!m.role : filter === "run" ? runs(m) : true))
-    .filter((m) => !q.trim() || fold(m.name).includes(fold(q.trim())));
+  const live = (m: MeetingOverview) => !!m.next?.live;
+  const counts = {
+    all: meetings.length,
+    live: meetings.filter(live).length,
+    mine: meetings.filter((m) => m.role).length,
+    run: meetings.filter(runs).length,
+  };
+  // "Live" is offered while a meeting is on (or still picked)
+  const filters = (["all", "live", "mine", "run"] as const).filter((f) => f !== "live" || counts.live > 0 || filter === "live");
+  const shown = sortMeetings(
+    meetings
+      .filter((m) => (filter === "live" ? live(m) : filter === "mine" ? !!m.role : filter === "run" ? runs(m) : true))
+      .filter((m) => !q.trim() || fold(m.name).includes(fold(q.trim()))),
+    sort,
+    locale,
+  );
   return (
     <div className="page meetings-page">
       <header className="page-head row">
@@ -48,20 +66,37 @@ export function MeetingsView({ slug, meetings, canCreate }: { slug: string; meet
       {meetings.length > 0 && (
         <div className="mt-bar">
           <div className="chips" role="group" aria-label={t("filter")}>
-            {(["all", "mine", "run"] as const).map((f) => (
-              <button key={f} type="button" className="chip" aria-pressed={filter === f} onClick={() => setFilter(f)}>
+            {filters.map((f) => (
+              <button
+                key={f}
+                type="button"
+                className={`chip${f === "live" ? " chip-live" : ""}`}
+                aria-pressed={filter === f}
+                onClick={() => setFilter(f)}
+              >
+                {f === "live" && <span className="chip-live-dot" aria-hidden="true" />}
                 {t(`filters.${f}`)} <span className="chip-count">{counts[f]}</span>
               </button>
             ))}
           </div>
-          <input
-            type="search"
-            className="mt-search"
-            placeholder={t("search")}
-            aria-label={t("search")}
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-          />
+          <div className="mt-tools">
+            <label className="search-input mt-search">
+              <Search size={16} strokeWidth={2} aria-hidden="true" />
+              <input type="search" placeholder={t("search")} aria-label={t("search")} value={q} onChange={(e) => setQ(e.target.value)} />
+            </label>
+            <Select
+              aria-label={t("sortBy")}
+              style={{ width: "auto" }}
+              value={sort}
+              onChange={(e) => setSort(e.target.value as MeetingSort)}
+            >
+              {MEETING_SORTS.map((x) => (
+                <option key={x} value={x}>
+                  {t(`sorts.${x}`)}
+                </option>
+              ))}
+            </Select>
+          </div>
         </div>
       )}
       {shown.length ? (
@@ -71,14 +106,13 @@ export function MeetingsView({ slug, meetings, canCreate }: { slug: string; meet
           ))}
         </ul>
       ) : (
-        <div className="empty-state">
-          <p>{meetings.length ? t("noMatch") : t("empty")}</p>
+        <EmptyHero art={meetings.length ? "search" : "meetings"} title={meetings.length ? t("noMatch") : t("empty")}>
           {!meetings.length && canCreate && (
             <Link href={`${base}/meetings/new`} className="btn primary">
               {t("new")}
             </Link>
           )}
-        </div>
+        </EmptyHero>
       )}
     </div>
   );
@@ -105,6 +139,16 @@ function MeetingCard({ slug, m, index }: { slug: string; m: MeetingOverview; ind
   const runs = m.role === "host" || m.role === "cohost";
   return (
     <li className={`mt-card${m.next?.live ? " live" : ""}`} style={{ ...tint(m.color), "--i": index } as React.CSSProperties}>
+      {m.next?.live && (
+        <div className="mt-live-band">
+          <span className="mt-live-dot" aria-hidden="true" />
+          {t("liveNow")}
+          <Link href={runs ? `${base}/control` : `${base}/me`} className="btn sm mt-live-join">
+            {runs ? t("control") : t("join")}
+            <ArrowRight size={14} strokeWidth={2.4} aria-hidden="true" className="flip-rtl" />
+          </Link>
+        </div>
+      )}
       <div className="mt-top">
         <MeetingMark slug={slug} meeting={m} className="mt-mark" letters={2} />
         <div className="mt-title">
@@ -119,7 +163,7 @@ function MeetingCard({ slug, m, index }: { slug: string; m: MeetingOverview; ind
       </div>
       <p className="mt-next">
         {m.next?.live ? (
-          <span className="pill live">{t("liveNow")}</span>
+          <span className="hint">{t("sessionOf", { time: m.next.time })}</span>
         ) : m.next ? (
           <>
             <span className="mt-next-label">{t("next")}</span>
@@ -147,7 +191,8 @@ function MeetingCard({ slug, m, index }: { slug: string; m: MeetingOverview; ind
       </ul>
       {/* One thing to do, by the person's part in the meeting, and its minutes */}
       <div className="mt-actions">
-        {runs ? (
+        {/* Live: the way in is on the band above */}
+        {m.next?.live ? null : runs ? (
           <Link href={`${base}/control`} className="btn sm primary">
             <Icon name="screen" size={14} /> {t("control")}
           </Link>

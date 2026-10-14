@@ -3,7 +3,7 @@
   "sidebar": "Barra lateral",
   "workspaceNav": "Espaço de trabalho",
   "breadcrumb": "Localização",
-  "home": "Início",
+  "home": "Painel",
   "people": "Diretório",
   "settings": "Configurações",
   "meetings": "Reuniões",
@@ -29,5 +29,6 @@
   "kudos": "Agradecimentos",
   "persons": "Pessoas",
   "projects": "Projetos",
-  "feedback": "Enviar feedback"
+  "feedback": "Enviar feedback",
+  "teams": "Equipas"
 }

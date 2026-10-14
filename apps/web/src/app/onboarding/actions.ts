@@ -11,8 +11,7 @@ export async function createWorkspaceAction(input: { name: string; slug: string;
 
 export async function suggestSlugAction(name: string) {
   return run(async () => {
-    await requireUser();
-    return suggestSlug(name);
+    return suggestSlug(name, await requireUser());
   });
 }
 

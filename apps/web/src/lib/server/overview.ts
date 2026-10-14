@@ -132,7 +132,8 @@ export async function kudosWall(ctx: WorkspaceContext): Promise<KudosWall> {
   const rows = await ctx.db.kudo.findMany({
     where: { session: { meetingId: { in: meetings.map((m) => m.id) } } },
     orderBy: { createdAt: "desc" },
-    take: 120,
+    // The page shows them 30 at a time
+    take: 600,
     select: { id: true, text: true, fromId: true, toId: true, createdAt: true, session: { select: { date: true, meetingId: true } } },
   });
   const month = new Date().toISOString().slice(5, 7);

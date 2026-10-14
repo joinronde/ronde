@@ -1,5 +1,6 @@
 "use client";
 
+import * as Popover from "@radix-ui/react-popover";
 import { hasTurns } from "@ronde/core/agenda";
 import { baseKeyOf } from "@ronde/core/meeting";
 import type { ActionStatus, ForgeItem, PastCheckIn, ProjectDTO, ProjectHealth, Section } from "@ronde/core/types";
@@ -18,10 +19,13 @@ import {
   mmssPlain,
   plainItem,
   RATING_MIN_VOTES,
+  REACTION_BURST,
+  REACTION_WINDOW_MS,
   SIGNALS,
   VOTES_PER_PERSON,
 } from "@ronde/core/util";
 import { formatters } from "@ronde/i18n";
+import { CircleCheck, Heart, LoaderCircle, MessageCircleQuestion, Plus, Send, TriangleAlert, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Select } from "@/components/select";
@@ -41,6 +45,7 @@ import {
   type TabItems,
 } from "@/lib/shared/check-in-draft";
 import { type LiveStatus, liveStatus } from "@/lib/shared/live-status";
+import { reactionAllowance } from "@/lib/shared/pickers";
 import { linesAbout, writersOf } from "@/lib/shared/sheets";
 import { track } from "@/lib/shared/track";
 import { AvatarPicker } from "./avatar-picker";
@@ -48,10 +53,13 @@ import { Board } from "./board";
 import { FreeText, ItemText, ListEditor } from "./check-in-fields";
 import { NoMeeting } from "./common";
 import { DecisionLog } from "./decision-log";
+import { EmptyHero } from "./illustration";
+import { LineReactions } from "./line-reactions";
 import { MotionToggle } from "./motion-toggle";
 import { PokerPanel } from "./poker";
 import { PollsPanel } from "./polls";
 import { HealthBadge, HealthPicker, ProjectChip } from "./project-bits";
+import { ProjectPicker } from "./project-picker";
 import { RecordingBanner } from "./recorder";
 import { RetroPanel } from "./retro";
 import { useRonde, useTick } from "./ronde-provider";
@@ -139,29 +147,24 @@ export function MeView() {
   );
 }
 
-/** The settings of this screen behind a ⚙ button; a click elsewhere or Escape folds them */
+/**
+ * The settings of this screen behind a ⚙ button, in a popover above the page (the row of tabs it sits in scrolls,
+ * and would cut a menu drawn inside it); a click elsewhere or Escape folds them
+ */
 function ScreenPrefs({ label, children }: { label: string; children: React.ReactNode }) {
-  const ref = useRef<HTMLDetailsElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const close = () => el.removeAttribute("open");
-    const onDown = (e: PointerEvent) => !el.contains(e.target as Node) && close();
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && el.open && (close(), el.querySelector("summary")?.focus());
-    document.addEventListener("pointerdown", onDown);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("pointerdown", onDown);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, []);
   return (
-    <details className="my-prefs" ref={ref}>
-      <summary aria-label={label} title={label}>
-        <Icon name="settings" size={17} />
-      </summary>
-      <div className="my-prefs-pop">{children}</div>
-    </details>
+    <Popover.Root>
+      <Popover.Trigger asChild>
+        <button type="button" className="my-prefs-btn" aria-label={label} title={label}>
+          <Icon name="settings" size={17} />
+        </button>
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content className="my-prefs-pop" align="end" sideOffset={8} collisionPadding={12}>
+          {children}
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   );
 }
 
@@ -349,6 +352,20 @@ function Dock() {
   }, [setFocusHere]);
   const [text, setText] = useState("");
   const [kudoMode, setKudoMode] = useState(false);
+  // The reactions one may send in a row (the server keeps no more): past them, a countdown says when they are back
+  const sent = useRef<number[]>([]);
+  const [waitUntil, setWaitUntil] = useState(0);
+  useTick(waitUntil ? 250 : 60_000);
+  const now = Date.now();
+  const waiting = waitUntil > now;
+  const react = (emoji: string) => {
+    const at = Date.now();
+    const before = reactionAllowance(sent.current, at, REACTION_BURST, REACTION_WINDOW_MS);
+    if (before.waitUntil) return setWaitUntil(before.waitUntil);
+    sent.current = [...before.recent, at];
+    setWaitUntil(reactionAllowance(sent.current, at, REACTION_BURST, REACTION_WINDOW_MS).waitUntil);
+    void rpc({ op: "reactions.add", emoji });
+  };
   const [kudoTo, setKudoTo] = useState("");
   const [kudoText, setKudoText] = useState("");
   // On a phone, the reactions fold behind one button: a tray that stays open for several in a row
@@ -419,12 +436,22 @@ function Dock() {
                     key={e}
                     title={t(`emojis.${EMOJI_NAMES[e] ?? "like"}`)}
                     aria-label={t(`emojis.${EMOJI_NAMES[e] ?? "like"}`)}
-                    onClick={() => rpc({ op: "reactions.add", emoji: e })}
+                    disabled={waiting}
+                    onClick={() => react(e)}
                   >
                     {e}
                   </button>
                 ))}
               </span>
+              {waiting && (
+                <span
+                  className="react-wait"
+                  role="status"
+                  style={{ "--left": (waitUntil - now) / REACTION_WINDOW_MS } as React.CSSProperties}
+                >
+                  {t("reactWait", { seconds: Math.ceil((waitUntil - now) / 1000) })}
+                </span>
+              )}
               <span className="dock-sep" aria-hidden="true" />
               <span className="reacts signals" role="group" aria-label={t("signals")}>
                 {SIGNALS.map((x) => (
@@ -432,7 +459,8 @@ function Dock() {
                     key={x.e}
                     title={tSignals(`${x.key}.label`)}
                     aria-label={t("signal", { label: tSignals(`${x.key}.label`) })}
-                    onClick={() => rpc({ op: "reactions.add", emoji: x.e })}
+                    disabled={waiting}
+                    onClick={() => react(x.e)}
                   >
                     {x.e}
                   </button>
@@ -441,15 +469,20 @@ function Dock() {
             </span>
           </>
         )}
-        {kudos && (
+        {hands && kudos && (
           <>
             <span className="dock-sep" aria-hidden="true" />
-            <button className={"btn" + (kudoMode ? " on" : "")} onClick={() => setKudoMode(!kudoMode)} aria-pressed={kudoMode}>
-              💜 {t("thanks")}
-            </button>
+            <span className="seg dock-mode" role="group" aria-label={t("writeKind")}>
+              <button type="button" aria-pressed={!kudoMode} onClick={() => setKudoMode(false)}>
+                <MessageCircleQuestion size={16} strokeWidth={2} aria-hidden="true" /> {t("question")}
+              </button>
+              <button type="button" aria-pressed={kudoMode} onClick={() => setKudoMode(true)}>
+                <Heart size={16} strokeWidth={2} aria-hidden="true" /> {t("thanks")}
+              </button>
+            </span>
           </>
         )}
-        {kudos && kudoMode ? (
+        {kudos && (kudoMode || !hands) ? (
           <form
             className="kudo-form qform"
             onSubmit={async (e) => {
@@ -487,7 +520,7 @@ function Dock() {
               placeholder={t("kudoPlaceholder")}
             />
             <button className="btn primary" type="submit">
-              {t("send")}
+              <Send size={15} strokeWidth={2.2} aria-hidden="true" className="flip-rtl" /> {t("send")}
             </button>
           </form>
         ) : hands ? (
@@ -535,7 +568,7 @@ function Dock() {
               title={t("questionPlaceholder")}
             />
             <button className="btn primary" type="submit">
-              {t("send")}
+              <Send size={15} strokeWidth={2.2} aria-hidden="true" className="flip-rtl" /> {t("send")}
             </button>
           </form>
         ) : null}
@@ -745,7 +778,10 @@ export function useCheckInDraft(memberId: string) {
     if (!dirty) {
       const withPlans = carry(theirs);
       setD(withPlans ?? theirs);
-      setMerged(false);
+      // The echo of what was just saved from here keeps the notice of a merge; a change from elsewhere ends it
+      const echo = sent.current !== null && JSON.stringify(norm(theirs)) === sent.current;
+      if (echo) sent.current = null;
+      else setMerged(false);
       if (withPlans) {
         setDirty(true);
         setCarried(true);
@@ -792,9 +828,13 @@ export function useCheckInDraft(memberId: string) {
     rev.current++;
   };
   const fieldsOf = (tab: TabItems) => fieldsOfTab(tab, sections);
-  const save = async (okMessage: string) => {
+  /** Where the last save stands, for the check-in that saves itself */
+  const [status, setStatus] = useState<"idle" | "saving" | "saved" | "failed">("idle");
+  /** `okMessage` absent: a save of its own, said by the status rather than a toast */
+  const save = async (okMessage?: string) => {
     const at = rev.current;
     sent.current = JSON.stringify(norm(d));
+    setStatus("saving");
     const ok = await rpc(
       {
         op: "checkIn.save",
@@ -809,18 +849,23 @@ export function useCheckInDraft(memberId: string) {
         ),
       },
       okMessage,
+      okMessage ? undefined : { silent: true },
     );
+    setStatus(ok ? "saved" : "failed");
     if (ok) {
       track("checkin_saved");
       // Typed meanwhile: still to save
       if (rev.current === at) setDirty(false);
-      setMerged(false);
+      // Saved by itself just after a merge: the notice stays, or it would be gone before it is read
+      if (okMessage) setMerged(false);
       setCarried(false);
       carriedAt.current = null;
     } else sent.current = null;
     return ok;
   };
-  return { d, dirty, merged, carried, items: current(d), setTab, setItems, append, save };
+  // Typed here, beyond last time's plans brought back by themselves: what saves itself
+  const typed = dirty && carriedAt.current !== rev.current;
+  return { d, dirty, typed, status, merged, carried, items: current(d), setTab, setItems, append, save };
 }
 
 /** Check-in form; `byHost`: the host fixes someone else's check-in */
@@ -847,6 +892,16 @@ export function CheckInForm({
   const project = d.tab ? s.projects.find((p) => p.id === d.tab) : undefined;
   // A list field may submit the form itself just before the click lands: one save is enough
   const lastSubmit = useRef(0);
+  // One's own check-in saves itself a moment after the last keystroke: no button to forget. Merged with a version
+  // saved elsewhere meanwhile, it saves again once merged
+  const auto = !byHost;
+  const sig = JSON.stringify([d.items, d.byProject]);
+  useEffect(() => {
+    if (!auto || !draft.typed) return;
+    const timer = setTimeout(() => void draft.save(), AUTOSAVE_MS);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auto, draft.typed, sig]);
   return (
     <form
       className="panel form"
@@ -854,7 +909,7 @@ export function CheckInForm({
         e.preventDefault();
         if (Date.now() - lastSubmit.current < 800) return;
         lastSubmit.current = Date.now();
-        if (await draft.save(byHost ? t("checkInOfSaved", { name: who }) : t("checkInSaved"))) onSaved?.();
+        if (await draft.save(byHost ? t("checkInOfSaved", { name: who }) : undefined)) onSaved?.();
         // Not saved (merged with a version saved elsewhere, an error): the next click saves at once
         else lastSubmit.current = 0;
       }}
@@ -928,12 +983,38 @@ export function CheckInForm({
           );
         })}
       </div>
-      <div className="controls">
-        <button className="btn primary" type="submit">
-          {byHost ? t("saveCheckInOf", { name: who }) : t("saveMyCheckIn")}
-        </button>
-        {dirty && <span className="hint">{t("unsaved")}</span>}
-      </div>
+      {byHost ? (
+        <div className="controls">
+          <button className="btn primary" type="submit">
+            {t("saveCheckInOf", { name: who })}
+          </button>
+          {dirty && <span className="hint">{t("unsaved")}</span>}
+        </div>
+      ) : (
+        <p
+          className={`checkin-status s-${draft.status === "failed" ? "failed" : draft.typed || draft.status === "saving" ? "saving" : "saved"}`}
+          role="status"
+        >
+          {draft.status === "failed" ? (
+            <>
+              <TriangleAlert size={15} strokeWidth={2.2} aria-hidden="true" /> {t("unsaved")}{" "}
+              <button type="submit" className="linkbtn">
+                {t("retry")}
+              </button>
+            </>
+          ) : draft.typed || draft.status === "saving" ? (
+            <>
+              <LoaderCircle size={15} strokeWidth={2.2} aria-hidden="true" className="spin" /> {t("autosaving")}
+            </>
+          ) : f?.updatedAt ? (
+            <>
+              <CircleCheck size={15} strokeWidth={2.2} aria-hidden="true" /> {t("autosaved")}
+            </>
+          ) : (
+            <span className="hint">{t("autosaveHint")}</span>
+          )}
+        </p>
+      )}
     </form>
   );
 }
@@ -941,9 +1022,17 @@ export function CheckInForm({
 /** Tabs of a check-in: the person's own news, then each project they work on (or chose to write about) */
 function CheckInTabs({ memberId, draft }: { memberId: string; draft: ReturnType<typeof useCheckInDraft> }) {
   const t = useTranslations("me");
-  const { s, projectLogo } = useRonde();
+  const { s, rpc, projectLogo } = useRonde();
   const { d, setTab } = draft;
   const [opened, setOpened] = useState<string[]>([]);
+  // The rest of the portfolio, when the hosts let everyone add projects (otherwise not sent)
+  const addable = (s.projectChoices ?? []).filter(
+    (p) => !s.projects.some((x) => x.id === p.id) && !["done", "cancelled"].includes(p.status),
+  );
+  const openTab = (id: string) => {
+    setOpened((x) => [...x, id]);
+    setTab(id);
+  };
   const count = (tab: Record<string, string[]> | undefined) =>
     Object.values(tab ?? {}).reduce((n, list) => n + list.filter((x) => plainItem(x).trim()).length, 0);
   const open = s.projects.filter((p) => !["done", "cancelled"].includes(p.status));
@@ -951,7 +1040,7 @@ function CheckInTabs({ memberId, draft }: { memberId: string; draft: ReturnType<
     (p) => p.memberIds.includes(memberId) || count(d.byProject[p.id]) > 0 || opened.includes(p.id) || d.tab === p.id,
   );
   const others = open.filter((p) => !shown.includes(p));
-  if (!open.length) return null;
+  if (!open.length && !addable.length) return null;
   const tab = (id: string, label: React.ReactNode, n: number) => (
     <button key={id || "own"} type="button" role="tab" aria-selected={d.tab === id} onClick={() => setTab(id)}>
       {label}
@@ -964,25 +1053,28 @@ function CheckInTabs({ memberId, draft }: { memberId: string; draft: ReturnType<
         {tab("", t("ownTab"), count(d.items))}
         {shown.map((p) => tab(p.id, <ProjectChip name={p.name} color={p.color} logo={projectLogo(p)} />, count(d.byProject[p.id])))}
       </div>
-      {others.length > 0 && (
-        <Select
-          aria-label={t("writeAboutProject")}
-          value=""
-          onChange={(e) => {
-            const id = e.target.value;
-            if (!id) return;
-            setOpened((x) => [...x, id]);
-            setTab(id);
+      {(others.length > 0 || addable.length > 0) && (
+        <ProjectPicker
+          trigger={
+            <>
+              <Plus size={15} strokeWidth={2.2} aria-hidden="true" /> {t("writeAboutProject")}
+            </>
+          }
+          triggerClass="btn sm ci-tabs-add"
+          label={t("writeAboutProject")}
+          sections={[
+            {
+              title: addable.length ? t("projectsFollowed") : undefined,
+              items: others.map((p) => ({ id: p.id, name: p.name, color: p.color, theme: p.theme?.name, logo: projectLogo(p) })),
+            },
+            { title: t("projectsToAdd"), items: addable.map((p) => ({ id: p.id, name: p.name, color: p.color, theme: p.theme })) },
+          ]}
+          onPick={async (p) => {
+            if (others.some((x) => x.id === p.id)) return openTab(p.id);
+            if (await rpc({ op: "project.follow", projectId: p.id }, t("projectAdded", { name: p.name }))) openTab(p.id);
           }}
-          style={{ width: "auto" }}
-        >
-          <option value="">{t("writeAboutProject")}</option>
-          {others.map((p) => (
-            <option key={p.id} value={p.id}>
-              {p.name}
-            </option>
-          ))}
-        </Select>
+          empty={t("noOtherProject")}
+        />
       )}
     </div>
   );
@@ -1316,7 +1408,7 @@ function CheckInBoard({ memberId, draft }: { memberId: string; draft: ReturnType
                   </button>
                 )}
                 {x.byId === memberId && (
-                  <button type="button" className="icon-btn" onClick={() => rpc({ op: "topic.delete", id: x.id })}>
+                  <button type="button" className="icon-btn danger" onClick={() => rpc({ op: "topic.delete", id: x.id })}>
                     {t("remove")}
                   </button>
                 )}
@@ -1463,7 +1555,7 @@ function CheckInBoard({ memberId, draft }: { memberId: string; draft: ReturnType
                                   title={t("dismissHint")}
                                   onClick={() => triage.skip(n)}
                                 >
-                                  ✕
+                                  <X size={14} strokeWidth={2.2} aria-hidden="true" />
                                 </button>
                               </span>
                             )}
@@ -1593,7 +1685,7 @@ function PastCheckIns({ onPick, dirty, onBack }: { onPick: (k: string, line: str
   }, [unavailable]);
   if (error) return <p className="err">{error}</p>;
   if (!list) return <p className="loading">{t("loadingPast")}</p>;
-  if (!list.length) return <div className="emptybox">{t("noPast")}</div>;
+  if (!list.length) return <EmptyHero art="history" title={t("noPast")} compact />;
   const needle = q.trim().toLowerCase();
   const hits = (p: PastCheckIn) =>
     !needle ||
@@ -1689,7 +1781,7 @@ function PastCheckIns({ onPick, dirty, onBack }: { onPick: (k: string, line: str
                                   title={t("reuseIn", { section: to.label })}
                                   onClick={() => {
                                     onPick(to.k, plainItem(x));
-                                    toast(t("reused", { section: to.label }));
+                                    toast(t("reused", { section: to.label }), "ok");
                                   }}
                                 >
                                   {t("reuse")}
@@ -1844,10 +1936,10 @@ function ImportPanel({
           className="btn"
           onClick={() => {
             const chosen = list.filter((g) => picked.has(g.id));
-            if (!chosen.length) return toast(t("gitlabPickOne"));
+            if (!chosen.length) return toast(t("gitlabPickOne"), "error");
             chosen.forEach((g) => onAdd(g.state === "opened" ? "next" : "done", `${g.title} (${g.project}${g.ref})`));
             setPicked(new Set());
-            toast(t("gitlabAdded", { count: chosen.length }));
+            toast(t("gitlabAdded", { count: chosen.length }), "ok");
           }}
         >
           {t("addToCheckIn")}
@@ -1961,9 +2053,7 @@ function CommentableItem({
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const cs = s.comments.filter((c) => c.ownerId === ownerId && c.section === section && c.itemText === item && c.projectId === projectId);
-  const likes = cs.filter((c) => !c.text);
   const notes = cs.filter((c) => c.text);
-  const liked = likes.some((c) => c.byId === me);
   return (
     <div className="citem">
       <div className="citem-row">
@@ -1971,17 +2061,7 @@ function CommentableItem({
           {tag}
           <ItemText item={item} />
         </span>
-        {me && (
-          <button
-            type="button"
-            className="vote-btn"
-            aria-pressed={liked}
-            title={likes.length ? likes.map((c) => first(nameOf(c.byId))).join(", ") : t("like")}
-            onClick={() => rpc({ op: "comment.like", ownerId, section, itemText: item, projectId })}
-          >
-            👍 {likes.length || ""}
-          </button>
-        )}
+        <LineReactions target={{ ownerId, section, itemText: item, projectId }} />
         <button type="button" className="vote-btn" aria-expanded={open} onClick={() => setOpen(!open)} title={t("comments")}>
           💬 {notes.length || ""}
         </button>
@@ -1992,7 +2072,7 @@ function CommentableItem({
             <div key={c.id} className="citem-note">
               <strong>{first(nameOf(c.byId))}</strong> {c.text}
               {(c.byId === me || s.viewer.isHost) && (
-                <button type="button" className="icon-btn" onClick={() => rpc({ op: "comment.delete", id: c.id })}>
+                <button type="button" className="icon-btn danger" onClick={() => rpc({ op: "comment.delete", id: c.id })}>
                   {t("remove")}
                 </button>
               )}

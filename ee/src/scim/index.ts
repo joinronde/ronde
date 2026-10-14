@@ -3,6 +3,7 @@
 // workspace's directory, keeps their names and address up to date, and removes them. Removing never erases
 // their history: they leave the workspace and are marked as deprovisioned.
 
+import { birthdayOf, phoneOf } from "@ronde/core/directory";
 import type { ScopedClient, ScopedTx } from "@ronde/db";
 import type { EnterpriseEdition, ScimRequest, ScimResult } from "@ronde/editions/ee";
 
@@ -12,6 +13,8 @@ const USER = "urn:ietf:params:scim:schemas:core:2.0:User";
 const LIST = "urn:ietf:params:scim:api:messages:2.0:ListResponse";
 const ERROR = "urn:ietf:params:scim:api:messages:2.0:Error";
 const PATCH = "urn:ietf:params:scim:api:messages:2.0:PatchOp";
+/** The enterprise extension: the department, kept as the person's team */
+const ENTERPRISE = "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User";
 
 const error = (status: number, detail: string, scimType?: string): ScimResult => ({
   status,
@@ -28,18 +31,22 @@ type PersonRow = {
   createdAt: Date;
   updatedAt: Date;
   member: { status: string } | null;
+  phone: string | null;
+  jobCategory: { name: string } | null;
 };
 
 export function toScimUser(p: PersonRow, baseUrl: string) {
   const formatted = `${p.firstName} ${p.lastName}`.trim();
   return {
-    schemas: [USER],
+    schemas: p.jobCategory ? [USER, ENTERPRISE] : [USER],
     id: p.id,
     ...(p.externalId ? { externalId: p.externalId } : {}),
     userName: p.email,
     name: { givenName: p.firstName, familyName: p.lastName, formatted },
     displayName: formatted || p.email,
     emails: [{ value: p.email, type: "work", primary: true }],
+    ...(p.phone ? { phoneNumbers: [{ value: p.phone, type: "work", primary: true }] } : {}),
+    ...(p.jobCategory ? { [ENTERPRISE]: { department: p.jobCategory.name } } : {}),
     active: p.active && p.member?.status !== "suspended",
     meta: {
       resourceType: "User",
@@ -68,7 +75,18 @@ interface Changes {
   lastName?: string;
   externalId?: string | null;
   active?: boolean;
+  /** null: cleared by the directory */
+  phone?: string | null;
+  team?: string | null;
+  birthday?: string | null;
 }
+
+/** The first phone number, the work or primary one when there are several */
+const phoneIn = (v: unknown) => {
+  const list = Array.isArray(v) ? (v as Record<string, unknown>[]) : [];
+  const pick = list.find((x) => x.primary === true) ?? list.find((x) => x.type === "work") ?? list[0];
+  return phoneOf(pick?.value);
+};
 
 const str = (v: unknown) => (typeof v === "string" ? v.trim() : undefined);
 const bool = (v: unknown) => (typeof v === "boolean" ? v : v === "true" ? true : v === "false" ? false : undefined);
@@ -85,6 +103,10 @@ export function fromScimUser(body: unknown): Changes {
     lastName: str(name.familyName),
     externalId: u.externalId === undefined ? undefined : (str(u.externalId) ?? null),
     active: bool(u.active),
+    phone: phoneIn(u.phoneNumbers),
+    team: str(((u[ENTERPRISE] ?? {}) as Record<string, unknown>).department),
+    // Not a standard attribute: the directories that send one name it so
+    birthday: birthdayOf(u.birthday ?? u.birthdate),
   };
 }
 
@@ -101,6 +123,12 @@ export function fromPatch(body: unknown): Changes | null {
     else if (p === "name.familyname") out.lastName = str(value);
     else if (p === "externalid") out.externalId = str(value) ?? null;
     else if (p === "displayname" && out.firstName === undefined) out.firstName = str(value)?.split(/\s+/)[0];
+    else if (p.startsWith("phonenumbers"))
+      out.phone = value === null ? null : ((Array.isArray(value) ? phoneIn(value) : phoneOf(value)) ?? out.phone);
+    else if (p === `${ENTERPRISE.toLowerCase()}:department`) out.team = value === null ? null : (str(value) ?? null);
+    else if (p === ENTERPRISE.toLowerCase() && value && typeof value === "object")
+      out.team = str((value as Record<string, unknown>).department) ?? out.team;
+    else if (p === "birthday" || p === "birthdate") out.birthday = value === null ? null : (birthdayOf(value) ?? out.birthday);
   };
   for (const raw of b.Operations as Record<string, unknown>[]) {
     const op = String(raw.op ?? "").toLowerCase();
@@ -123,7 +151,31 @@ const select = {
   updatedAt: true,
   userId: true,
   member: { select: { status: true, role: true } },
+  phone: true,
+  jobCategory: { select: { name: true } },
 } as const;
+
+/** The phone, team and birthday the directory sent, as the person's card keeps them (its team made if missing) */
+async function profileData(db: Db, workspaceId: string, c: Changes) {
+  const team =
+    c.team === undefined
+      ? undefined
+      : c.team === null
+        ? null
+        : (
+            await db.jobCategory.upsert({
+              where: { workspaceId_name: { workspaceId, name: c.team.slice(0, 60) } },
+              create: { workspaceId, name: c.team.slice(0, 60) },
+              update: {},
+              select: { id: true },
+            })
+          ).id;
+  return {
+    ...(c.phone !== undefined ? { phone: c.phone } : {}),
+    ...(c.birthday !== undefined ? { birthday: c.birthday } : {}),
+    ...(team !== undefined ? { jobCategoryId: team } : {}),
+  };
+}
 
 async function setActive(db: Db, personId: string, active: boolean) {
   await db.person.updateMany({ where: { id: personId }, data: { active } });
@@ -173,6 +225,7 @@ async function users(db: Db, workspaceId: string, req: ScimRequest): Promise<Sci
       externalId: c.externalId ?? null,
       active: c.active ?? true,
       deprovisionedAt: null,
+      ...(await profileData(db, workspaceId, c)),
     };
     // Someone removed earlier comes back: the same card, history included
     const row = existing
@@ -213,6 +266,7 @@ async function users(db: Db, workspaceId: string, req: ScimRequest): Promise<Sci
       ...(c.firstName ? { firstName: c.firstName } : {}),
       ...(c.lastName !== undefined ? { lastName: c.lastName } : {}),
       ...(c.externalId !== undefined ? { externalId: c.externalId } : {}),
+      ...(await profileData(db, workspaceId, c)),
     },
     select,
   });

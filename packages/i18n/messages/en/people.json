@@ -7,7 +7,7 @@
   "count": "{count, plural, one {# person} other {# people}}",
   "columns": {
     "name": "Name",
-    "category": "Job category",
+    "category": "Team",
     "role": "Role",
     "status": "Status",
     "actions": "Actions"
@@ -32,8 +32,8 @@
   "lastName": "Last name",
   "email": "Email",
   "emailLocked": "Tied to their account: they change it themselves.",
-  "category": "Job category",
-  "noCategory": "None",
+  "category": "Team",
+  "noCategory": "No team",
   "birthday": "Birthday",
   "birthdayHint": "Day and month only, never the year.",
   "month": "Month",
@@ -63,5 +63,7 @@
   "noCustomRole": "No extra role",
   "phone": "Mobile number",
   "phoneHint": "For SMS and WhatsApp reminders, in international form (+33…). Optional.",
-  "formerMember": "Former member"
+  "formerMember": "Former member",
+  "teamFilter": "Team",
+  "allTeams": "All teams"
 }

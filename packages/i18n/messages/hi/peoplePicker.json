@@ -1,0 +1,13 @@
+{
+  "search": "व्यक्ति या टीम खोजें…",
+  "selected": "{total} में से {count} चुने गए",
+  "all": "सभी",
+  "none": "कोई नहीं",
+  "teams": "टीमें",
+  "pickTeam": "{name}: {count, plural, one {# व्यक्ति} other {# लोग}}, उप-टीमों सहित",
+  "noMatch": "कोई नहीं मिला।",
+  "noTeam": "बिना टीम",
+  "withSubTeams": "उप-टीमों सहित",
+  "fold": "{name} समेटें",
+  "unfold": "{name} खोलें"
+}

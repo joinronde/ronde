@@ -21,5 +21,9 @@
   },
   "cancel": "Отмена",
   "delete": "Удалить",
-  "exportCsv": "Экспорт в CSV"
+  "exportCsv": "Экспорт в CSV",
+  "dragToReorder": "Перетащите, чтобы изменить порядок (или клавиши ↑ ↓)",
+  "searchPlaceholder": "Поиск…",
+  "noResults": "Ничего не найдено",
+  "showMore": "Показать ещё {count} (осталось {total})"
 }

@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { matchesWords } from "@/lib/shared/search";
 import type { ControlPane } from "./control-room-tour";
+import { Highlighted } from "./highlighted";
 import { useRonde } from "./ronde-provider";
 
 // Control room: ⌘K (Ctrl+K) opens a command palette, "?" the list of keyboard shortcuts
@@ -192,7 +193,9 @@ export function CommandPalette({ onClose, onPane }: { onClose: () => void; onPan
               onClick={() => choose(c)}
             >
               <span className="palette-group">{c.group}</span>
-              <span className="palette-label">{c.label}</span>
+              <span className="palette-label">
+                <Highlighted text={c.label} query={q} anywhere />
+              </span>
               {c.keys && <kbd>{c.keys}</kbd>}
             </li>
           ))}

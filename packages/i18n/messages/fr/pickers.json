@@ -1,0 +1,20 @@
+{
+  "date": {
+    "placeholder": "Choisir une date",
+    "clear": "Effacer",
+    "today": "Aujourd'hui",
+    "previous": "Mois précédent",
+    "next": "Mois suivant"
+  },
+  "time": {
+    "placeholder": "Choisir une heure",
+    "list": "Horaires",
+    "invalid": "Saisissez une heure comme 9:30 ou 9h30"
+  },
+  "duration": {
+    "less": "Plus court",
+    "more": "Plus long",
+    "suggestions": "Durées courantes",
+    "typeHint": "Saisissez n'importe quelle durée : 25, 1h15, 1:30…"
+  }
+}

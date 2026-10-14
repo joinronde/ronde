@@ -3,7 +3,7 @@
   "sidebar": "साइडबार",
   "workspaceNav": "वर्कस्पेस",
   "breadcrumb": "स्थान",
-  "home": "होम",
+  "home": "डैशबोर्ड",
   "people": "डायरेक्टरी",
   "settings": "सेटिंग",
   "meetings": "मीटिंग",
@@ -29,5 +29,6 @@
   "kudos": "धन्यवाद",
   "persons": "लोग",
   "projects": "प्रोजेक्ट",
-  "feedback": "प्रतिक्रिया भेजें"
+  "feedback": "प्रतिक्रिया भेजें",
+  "teams": "टीमें"
 }

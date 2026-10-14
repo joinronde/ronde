@@ -1,6 +1,7 @@
 "use client";
 
 import { CONNECTOR_KINDS, type ConnectorKind } from "@ronde/connectors/kinds";
+import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useFormatter, useNow, useTranslations } from "next-intl";
 import { useState } from "react";
@@ -174,8 +175,8 @@ export function ConnectorsSection({
                 <button type="button" className="btn" onClick={() => edit(c)}>
                   {t("edit")}
                 </button>
-                <button type="button" className="icon-btn" aria-label={t("delete", { name: c.name })} onClick={() => void remove(c)}>
-                  ✕
+                <button type="button" className="icon-btn danger" aria-label={t("delete", { name: c.name })} onClick={() => void remove(c)}>
+                  <Trash2 size={14} strokeWidth={2.2} aria-hidden="true" />
                 </button>
               </div>
             </li>

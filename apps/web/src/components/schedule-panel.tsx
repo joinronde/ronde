@@ -3,15 +3,20 @@
 import { describeSchedule, localDate, type Occurrence, occurrences, type ScheduleRule } from "@ronde/core/schedule";
 import { fmtMinutes } from "@ronde/core/util";
 import { formatters } from "@ronde/i18n";
+import { Trash2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { DurationField } from "@/components/duration-field";
 import { Select } from "@/components/select";
 import { isoDow, newRule, sameDays, withFreq } from "@/lib/shared/schedule";
+import { DateInput } from "./date-input";
 import { HolidayPicker } from "./holiday-picker";
 import { useRonde } from "./ronde-provider";
 import { Icon } from "./shell/icons";
 import { TimeZoneSelect } from "./workspace/inputs";
+
+/** How long after the last change the schedule saves itself */
+export const SCHEDULE_AUTOSAVE_MS = 1200;
 
 type Draft = ScheduleRule;
 type MonthBy = "date" | "weekday" | "last";
@@ -69,13 +74,25 @@ export function SchedulePanel() {
 
   const save = async () => {
     setBusy(true);
-    const ok = await rpc(
-      { op: "schedule.save", timeZone, rules: rules.map(({ id, ...r }) => ({ ...(id ? { id } : {}), ...r })) },
-      t("saved"),
-    );
+    const ok = await rpc({ op: "schedule.save", timeZone, rules: rules.map(({ id, ...r }) => ({ ...(id ? { id } : {}), ...r })) });
     setBusy(false);
-    if (ok) setSyncing(true);
+    if (ok) {
+      setSyncing(true);
+      setSavedAt(Date.now());
+    }
   };
+  // Saved by itself, like the other settings: a moment after the last change, once every field reads well
+  const panel = useRef<HTMLDivElement>(null);
+  const [savedAt, setSavedAt] = useState(0);
+  const draftKey = JSON.stringify([rules, timeZone]);
+  // Runs again on each change of the draft, so the save sends the draft as it stands when the delay ends
+  useEffect(() => {
+    if (!dirty || busy) return;
+    const timer = setTimeout(() => {
+      if (!panel.current?.querySelector(":invalid")) void save();
+    }, SCHEDULE_AUTOSAVE_MS);
+    return () => clearTimeout(timer);
+  }, [draftKey, dirty, busy]);
 
   // One weekly rule: offer to alternate two times, one week apart
   const one = rules.length === 1 && rules[0]!.freq === "weekly" ? rules[0]! : null;
@@ -91,8 +108,7 @@ export function SchedulePanel() {
   };
 
   return (
-    <div className="panel form" id="schedule">
-      <h3 style={{ margin: 0 }}>{t("title")}</h3>
+    <div className="panel form" id="schedule" ref={panel}>
       <p className="schedule-summary" aria-live="polite">
         {summary}
       </p>
@@ -131,12 +147,9 @@ export function SchedulePanel() {
           onChange={setTimeZone}
         />
       </div>
-      <div className="form-foot">
-        <button type="button" className="btn primary" disabled={!dirty || busy} aria-busy={busy} onClick={save}>
-          {t("save")}
-        </button>
-        {dirty && <span className="hint">{t("unsaved")}</span>}
-      </div>
+      <p className={`schedule-status${dirty || busy ? " is-saving" : ""}`} role="status" aria-live="polite">
+        {dirty || busy ? t("saving") : savedAt ? t("saved") : ""}
+      </p>
       <Holidays />
       <Upcoming rules={rules} timeZone={effectiveZone} editable={!dirty} />
     </div>
@@ -207,8 +220,8 @@ function RuleEditor({
         <span className="eyebrow">{t("pattern", { n: index + 1 })}</span>
         <span className="rule-says">{describeSchedule([r], "UTC", locale, "UTC")}</span>
         {onRemove && (
-          <button type="button" className="icon-btn" onClick={onRemove} aria-label={t("removePattern", { n: index + 1 })}>
-            ✕
+          <button type="button" className="icon-btn danger" onClick={onRemove} aria-label={t("removePattern", { n: index + 1 })}>
+            <Trash2 size={14} strokeWidth={2.2} aria-hidden="true" />
           </button>
         )}
       </div>
@@ -360,13 +373,7 @@ function RuleEditor({
       <div className="rule-grid">
         <div className="field">
           <label htmlFor={`${id}-start`}>{t("startsOn")}</label>
-          <input
-            id={`${id}-start`}
-            type="date"
-            required
-            value={r.startDate}
-            onChange={(e) => e.target.value && onChange({ startDate: e.target.value })}
-          />
+          <DateInput id={`${id}-start`} required compact value={r.startDate} onChange={(v) => v && onChange({ startDate: v })} />
         </div>
         <div className="field">
           <label htmlFor={`${id}-end`}>{t("ends")}</label>
@@ -391,12 +398,12 @@ function RuleEditor({
         {end === "until" && (
           <div className="field">
             <label htmlFor={`${id}-until`}>{t("lastDate")}</label>
-            <input
+            <DateInput
               id={`${id}-until`}
-              type="date"
+              compact
               min={r.startDate}
               value={r.until ?? ""}
-              onChange={(e) => onChange({ until: e.target.value || null })}
+              onChange={(v) => onChange({ until: v || null })}
             />
           </div>
         )}
@@ -449,7 +456,10 @@ function Upcoming({ rules, timeZone, editable }: { rules: Draft[]; timeZone: str
           {list.map((o) => (
             <li key={o.key} className={o.cancelled ? "cancelled" : o.moved ? "moved" : undefined}>
               <span className="occ-when">
-                <strong>{fmt.dateShort(o.date)}</strong> · {o.time}
+                {/* The day and its time together: the row's gap is for what follows them */}
+                <span>
+                  <strong>{fmt.dateShort(o.date)}</strong> · {o.time}
+                </span>
                 {o.moved && <span className="st-pill st-doing">{t("moved")}</span>}
                 {o.cancelled && o.holiday ? (
                   <span className="st-pill holiday-pill">{tHolidays("skipped", { name: o.holiday })}</span>
@@ -543,7 +553,7 @@ function MoveForm({ occurrence: o, onDone }: { occurrence: Occurrence; onDone: (
       <label className="sr-only" htmlFor={`mv-d-${o.key}`}>
         {t("newDate")}
       </label>
-      <input id={`mv-d-${o.key}`} type="date" required value={date} onChange={(e) => setDate(e.target.value)} />
+      <DateInput id={`mv-d-${o.key}`} required compact className="auto" value={date} onChange={setDate} />
       <label className="sr-only" htmlFor={`mv-t-${o.key}`}>
         {t("newTime")}
       </label>

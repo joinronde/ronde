@@ -63,9 +63,8 @@
     "carryPlansSwitch": "Die Rubrik wird zur Checkliste.",
     "carryPlansHint": "Alle finden ihre Pläne als Kästchen wieder und haken sie nach und nach ab. Ein leeres Kästchen zählt nicht als erledigt.",
     "carryPlans": "Übernehmen, was beim letzten Mal in „{plan}“ stand",
-    "moveUp": "„{label}“ nach oben",
-    "moveDown": "„{label}“ nach unten",
     "removeOf": "„{label}“ entfernen",
+    "reorder": "„{label}“ verschieben",
     "customPlaceholder": "Z. B. Recherche, Demo zum Zeigen, Brauche Hilfe",
     "add": "Abschnitt hinzufügen",
     "hint": "Jede Rolle (erledigt, geplant, Blocker, Sonstiges) gehört zu höchstens einem Abschnitt. Ein Abschnitt behält seine Einträge, wenn sich Name, Rolle oder Eingabe ändern."
@@ -90,6 +89,13 @@
   },
   "sources": {
     "title": "Aufgabenquellen",
+    "connect": "Mit GitLab verbinden",
+    "connectHint": "Ihr GitLab-Konto, nur lesend, erneuert sich selbst: kein Token zum Kopieren oder Ersetzen, wenn es abläuft.",
+    "connected": "Mit GitLab verbunden",
+    "connectedAs": "Mit GitLab verbunden als @{user}",
+    "disconnect": "Trennen",
+    "disconnected": "GitLab getrennt",
+    "usePersonalToken": "Stattdessen ein persönliches Token verwenden",
     "gitlabToken": "GitLab-Token",
     "noSecretKey": "Die Token-Verschlüsselung ist auf dem Server nicht eingerichtet: Bitte den Betrieb, SECRET_KEY zu setzen.",
     "tokenHint": "Tokens werden vor dem Speichern verschlüsselt und nie wieder angezeigt. GitLab: ein Token mit dem Scope <code>read_api</code>.",
@@ -106,10 +112,36 @@
     "githubReposHint": "„owner/repository“ oder ein ganzer „owner“, eins pro Zeile; leer: alle Repositorys. Trag außerdem den GitHub-Benutzernamen jeder Person im Block Personen ein.",
     "githubSave": "GitHub-Zugang speichern"
   },
+  "hub": {
+    "intro": "Die Werkzeuge dieser Besprechung und ihr Stand. Öffnen Sie eine Karte, um sie einzurichten.",
+    "configure": "Einrichten",
+    "close": "Schließen",
+    "off": "Aus",
+    "turnOn": "In Module aktivieren",
+    "connected": "Verbunden",
+    "toConnect": "Zu verbinden",
+    "configured": "Eingerichtet",
+    "toSetUp": "Einzurichten",
+    "ready": "Link bereit",
+    "synced": "Synchronisiert",
+    "noneInWorkspace": "Keines im Arbeitsbereich",
+    "rulesOn": "{count, plural, one {# Regel aktiv} other {# Regeln aktiv}}",
+    "gitlab": "Issues und Merge Requests jeder Person in ihrem Check-in",
+    "github": "Issues und Pull Requests der verfolgten Repositorys",
+    "wikiName": "Wiki",
+    "wiki": "Protokolle im Wiki des Teams veröffentlicht",
+    "videoName": "Videoanruf",
+    "video": "Der Link, über den alle beitreten",
+    "calendarName": "Kalender",
+    "calendar": "Die Sitzungen in den Kalendern aller, synchronisiert",
+    "notificationsName": "Benachrichtigungen",
+    "notifications": "Chat, E-Mail und SMS rund um die Besprechung",
+    "goGeneral": "Unter Allgemein",
+    "goSchedule": "Unter Planung",
+    "goNotifications": "Unter Benachrichtigungen"
+  },
   "preview": {
-    "title": "Vorschau der Erinnerung",
     "to": "An: {email} · {date} um {time}",
-    "disabled": "Erinnerungen ausgeschaltet",
     "frameTitle": "Vorschau der Erinnerungs-E-Mail für {name}"
   },
   "token": {
@@ -132,7 +164,10 @@
   },
   "people": {
     "title": "Personen ({count})",
+    "colPerson": "Person",
+    "colRole": "Rolle",
     "intro": "Die Profile kommen aus dem Verzeichnis des Arbeitsbereichs. Die Rolle legt fest, was jede Person in diesem Meeting tun kann.",
+    "rolesGuide": "Wer darf was?",
     "roles": {
       "host": "Moderation",
       "cohost": "Co-Moderation",
@@ -147,8 +182,10 @@
     },
     "roleOf": "Rolle von {name}",
     "speaks": "Ist dran",
+    "speaksOf": "{name} ist in der Runde dran",
     "speaksHint": "Teil der Runde",
     "remind": "Erinnerung",
+    "remindOf": "{name} erinnern",
     "gitlab": "GitLab-Benutzername",
     "remove": "Entfernen",
     "confirmRemove": "Aus dem Meeting entfernen",
@@ -161,12 +198,28 @@
     "add": "Hinzufügen",
     "nobodyLeft": "Alle aus dem Verzeichnis nehmen bereits teil.",
     "directory": "Verzeichnis verwalten",
-    "categoriesHint": "Berufsgruppen, Geburtstage und Namen werden im Verzeichnis des Arbeitsbereichs bearbeitet.",
+    "categoriesHint": "Teams, Geburtstage und Namen werden im Verzeichnis des Arbeitsbereichs bearbeitet.",
     "github": "GitHub-Benutzername"
   },
   "template": {
     "title": "Dieses Format wiederverwenden",
-    "intro": "Speichere Abschnitte, Format, Module und Termine als Vorlage des Arbeitsbereichs, um daraus weitere Meetings anzulegen. Personen, Verlauf und Tokens bleiben hier.",
+    "intro": "Weitere Meetings aus diesem erstellen: Die Vorlage wird beim Anlegen eines Meetings im Arbeitsbereich angeboten.",
+    "carries": "Geht in die Vorlage",
+    "stays": "Bleibt in diesem Meeting",
+    "items": {
+      "sections": "Abschnitte des Check-ins",
+      "agenda": "Tagesordnung",
+      "modules": "Module",
+      "schedule": "Zeitplan",
+      "people": "{count, plural, one {# Person und ihre Rolle} other {# Personen und ihre Rollen}}",
+      "history": "Verlauf und Protokolle",
+      "tokens": "Zugriffstoken und Integrationen"
+    },
+    "counts": {
+      "sections": "{count, plural, one {# Abschnitt} other {# Abschnitte}}",
+      "agenda": "{count, plural, one {# Block} other {# Blöcke}}",
+      "modules": "{count, plural, one {# Modul aktiv} other {# Module aktiv}}"
+    },
     "open": "Als Vorlage speichern",
     "name": "Name der Vorlage",
     "description": "Beschreibung (optional)",
@@ -188,6 +241,20 @@
     "danger": "Gefahrenzone",
     "agenda": "Agenda",
     "projects": "Projekte"
+  },
+  "navHints": {
+    "general": "Name, Symbol, Format und Timer der Besprechung.",
+    "schedule": "Wann die Sitzungen stattfinden, und ihre Ausnahmen.",
+    "people": "Wer teilnimmt und was jede Person darf.",
+    "sections": "Was alle vor der Besprechung ausfüllen.",
+    "agenda": "Der Ablauf der Besprechung, Block für Block.",
+    "projects": "Die verfolgten Projekte, jedes mit seiner Runde.",
+    "modules": "Moderation, Formate und Werkzeuge, nach Bedarf aktiviert.",
+    "appearance": "Die Farbe der Besprechung auf allen Bildschirmen.",
+    "notifications": "Erinnerungen und Nachrichten rund um die Besprechung.",
+    "integrations": "Videokonferenz, Ticket-Tools und Wiki.",
+    "template": "Diese Besprechung als Vorlage des Arbeitsbereichs speichern.",
+    "danger": "Was sich nicht rückgängig machen lässt: verlassen, beenden oder löschen."
   },
   "status": {
     "auto": "Änderungen werden automatisch gespeichert.",

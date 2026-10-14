@@ -1,5 +1,6 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
+import type { DirectoryProfile } from "@ronde/core/directory";
 import { prisma, scoped } from "@ronde/db";
 import { EDITIONS, hasFeature } from "@ronde/editions";
 import type { IdentityHost } from "@ronde/editions/ee";
@@ -50,6 +51,34 @@ export async function joinWorkspace(user: { id: string; email: string; name: str
   });
 }
 
+/**
+ * What the company directory says of someone, copied to their card in the workspace: the phone and the team
+ * follow the directory (its team made if missing), a birthday the person entered stays theirs
+ */
+export async function applyProfile(email: string, workspaceId: string, profile: DirectoryProfile): Promise<void> {
+  const person = await prisma.person.findFirst({
+    where: { workspaceId, email: { equals: email.trim(), mode: "insensitive" }, deprovisionedAt: null },
+    select: { id: true, birthday: true },
+  });
+  if (!person) return;
+  const team = profile.team
+    ? (
+        await prisma.jobCategory.upsert({
+          where: { workspaceId_name: { workspaceId, name: profile.team } },
+          create: { workspaceId, name: profile.team },
+          update: {},
+          select: { id: true },
+        })
+      ).id
+    : undefined;
+  const data = {
+    ...(profile.phone ? { phone: profile.phone } : {}),
+    ...(team ? { jobCategoryId: team } : {}),
+    ...(profile.birthday && !person.birthday ? { birthday: profile.birthday } : {}),
+  };
+  if (Object.keys(data).length) await prisma.person.update({ where: { id: person.id }, data });
+}
+
 /** Workspaces that verified the address's domain */
 async function verifiedWorkspaces(email: string): Promise<string[]> {
   const rows = await prisma.workspaceDomain.findMany({
@@ -83,7 +112,10 @@ async function allowedAmong(feature: IdentityFeature, workspaceIds: string[]): P
 
 export const identityHost: IdentityHost = {
   allowed,
-  joinWorkspace: (user, workspaceId) => joinWorkspace(user, workspaceId, "members.sso"),
+  joinWorkspace: async (user, workspaceId, profile) => {
+    await joinWorkspace(user, workspaceId, "members.sso");
+    if (profile) await applyProfile(user.email, workspaceId, profile);
+  },
   ldapDirectoryFor: async (email) => {
     const workspaces = await allowedAmong("identity.ldap", await verifiedWorkspaces(email));
     if (!workspaces.length) return null;

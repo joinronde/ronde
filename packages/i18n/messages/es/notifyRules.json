@@ -34,6 +34,16 @@
   "saved": "Notificaciones guardadas.",
   "manageConnectors": "Gestionar los conectores",
   "recent": "Mensajes recientes",
+  "preview": {
+    "title": "Vista previa de las notificaciones",
+    "channels": "Canales",
+    "reminder": "Correo de recordatorio",
+    "none": "Todavía no sale nada de esta reunión: active el correo de recordatorio (Planificación) o una regla arriba, y vea aquí lo que recibirá cada uno.",
+    "onLabel": "Cuándo:",
+    "app": "App",
+    "sampleDecision": "Pasamos al nuevo pipeline de despliegue",
+    "sampleAction": "Actualizar la lista de bienvenida"
+  },
   "failed": "fallido",
   "workflow": {
     "toggle": "Condiciones y mensaje",

@@ -52,6 +52,7 @@ function attacks(t: Fixture): Record<string, Record<string, unknown>> {
     "mood.set": { value: 1 },
     "rating.set": { value: 4 },
     "comment.like": { ownerId: t.memberId, section: "done", itemText: "shipped" },
+    "comment.react": { ownerId: t.memberId, section: "done", itemText: "shipped", emoji: "🎉" },
     "comment.add": { ownerId: t.memberId, section: "done", itemText: "shipped", text: "x" },
     "comment.delete": { id: t.commentId },
     "action.add": { text: "x", ownerId: t.memberId },
@@ -71,6 +72,8 @@ function attacks(t: Fixture): Record<string, Record<string, unknown>> {
     "item.with": { ownerId: t.memberId, section: "done", itemText: "x", projectId: t.projectId, on: true },
     "project.order": { order: [t.projectId] },
     "meeting.projects": { projectIds: [t.projectId] },
+    "meeting.projectsBy": { by: "participants" },
+    "project.follow": { projectId: t.projectId },
     "birthdays.set": { memberId: t.memberId, birthday: "01-01" },
     "pref.set": { key: "x", value: 1 },
     "settings.save": {

@@ -1,0 +1,20 @@
+{
+  "date": {
+    "placeholder": "选择日期",
+    "clear": "清除",
+    "today": "今天",
+    "previous": "上个月",
+    "next": "下个月"
+  },
+  "time": {
+    "placeholder": "选择时间",
+    "list": "时间",
+    "invalid": "请输入时间，例如 9:30"
+  },
+  "duration": {
+    "less": "缩短",
+    "more": "延长",
+    "suggestions": "常用时长",
+    "typeHint": "可输入任意时长：25、1h15、1:30…"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "search": "搜索人员或团队…",
+  "selected": "已选 {count} / {total}",
+  "all": "全部",
+  "none": "清空",
+  "teams": "团队",
+  "pickTeam": "{name}：{count} 人，含子团队",
+  "noMatch": "没有匹配的人员。",
+  "noTeam": "无团队",
+  "withSubTeams": "含子团队",
+  "fold": "收起 {name}",
+  "unfold": "展开 {name}"
+}

@@ -11,6 +11,8 @@ import { authClient } from "@/lib/auth-client";
 import { withBasePath } from "@/lib/shared/base-path";
 import { LAST_WORKSPACE_COOKIE } from "@/lib/shared/cookies";
 import { initials } from "@/lib/shared/initials";
+import { MEETING_MARK_EVENT, type MeetingMarkChange } from "@/lib/shared/meeting-mark";
+import { liveFirst } from "@/lib/shared/meetings-list";
 import { MeetingMark } from "../meeting-mark";
 import { Menu } from "../workspace/menu";
 import { PEOPLE_PAGES } from "../workspace/people-tabs";
@@ -56,8 +58,23 @@ const ShellContext = createContext<{
 // The pages that show faces still import it from here
 export { initials };
 
-export function AppShell({ data, children }: { data: ShellData; children: React.ReactNode }) {
+export function AppShell({ data: fromServer, children }: { data: ShellData; children: React.ReactNode }) {
   const t = useTranslations("shell");
+  // The open meeting's name, mark and live state, as soon as they change on its pages (the server's list comes
+  // back with the next navigation)
+  const [marks, setMarks] = useState<Record<string, MeetingMarkChange>>({});
+  useEffect(() => setMarks({}), [fromServer]);
+  useEffect(() => {
+    const on = (e: Event) => {
+      const m = (e as CustomEvent<MeetingMarkChange>).detail;
+      setMarks((all) => ({ ...all, [m.id]: m }));
+    };
+    window.addEventListener(MEETING_MARK_EVENT, on);
+    return () => window.removeEventListener(MEETING_MARK_EVENT, on);
+  }, []);
+  const data = Object.keys(marks).length
+    ? { ...fromServer, meetings: fromServer.meetings.map((m) => (marks[m.id] ? { ...m, ...marks[m.id] } : m)) }
+    : fromServer;
   const path = usePathname();
   const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -190,6 +207,8 @@ function SideNav({ data }: { data: ShellData }) {
           label={t("people")}
           active={PEOPLE_PAGES.some((p) => path.startsWith(`${base}${p}`))}
         />
+        {/* The thanks people gave each other in the meetings: a page of their own, not part of the directory */}
+        <NavItem href={`${base}/kudos`} icon="heart" label={t("kudos")} active={path.startsWith(`${base}/kudos`)} />
         {/* Without the plan, administrators still see the page, marked with it: it presents what the plan brings */}
         {data.can.insights && (
           <NavItem
@@ -219,19 +238,20 @@ function SideNav({ data }: { data: ShellData }) {
         </div>
         {data.meetings.length ? (
           <ul className="side-list">
-            {data.meetings.map((m) => (
+            {liveFirst(data.meetings, (m) => m.live).map((m) => (
               <li key={m.id}>
                 <Link
                   href={`${base}/m/${m.id}`}
-                  className="side-link meeting"
+                  className={`side-link meeting${m.live ? " is-live" : ""}`}
                   aria-current={path.startsWith(`${base}/m/${m.id}`) ? "page" : undefined}
                   title={m.name}
                 >
                   <MeetingMark slug={data.workspace!.slug} meeting={m} className="side-mark" />
                   <span className="side-label">{m.name}</span>
                   {m.live && (
-                    <span className="side-live" title={t("live")}>
-                      <span className="sr-only">{t("live")}</span>
+                    <span className="side-live">
+                      <span className="side-live-dot" aria-hidden="true" />
+                      {t("live")}
                     </span>
                   )}
                 </Link>

@@ -34,6 +34,16 @@
   "saved": "Notifications saved.",
   "manageConnectors": "Manage connectors",
   "recent": "Recent messages",
+  "preview": {
+    "title": "Preview of the notifications",
+    "channels": "Channels",
+    "reminder": "Reminder email",
+    "none": "Nothing goes out from this meeting yet: turn on the reminder email (Schedule) or a rule above, and see here what everyone will get.",
+    "onLabel": "When:",
+    "app": "App",
+    "sampleDecision": "We move to the new deployment pipeline",
+    "sampleAction": "Update the onboarding checklist"
+  },
   "failed": "failed",
   "workflow": {
     "toggle": "Conditions and message",

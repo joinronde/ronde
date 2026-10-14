@@ -1,8 +1,11 @@
 "use client";
 
 import { type Layout, layoutKey, MAX_COLUMNS, mergeLayout, moveBlock, sameLayout, setColumnCount } from "@ronde/core/layout";
+import { motionAllowed } from "@ronde/ui/effects";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Check, GripVertical, LayoutDashboard, RotateCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { useRonde } from "./ronde-provider";
 
 export interface BoardBlock {
@@ -44,8 +47,15 @@ export function Board({
   const custom = !sameLayout(shown, defaults);
   const n = shown.length;
 
+  // Blocks glide to their new place (and the customising frame comes in softly), where the browser can show it
+  const smoothly = (change: () => void) => {
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+    if (!doc.startViewTransition || !motionAllowed()) return change();
+    doc.startViewTransition(() => flushSync(change));
+  };
+  const edit = (on: boolean) => smoothly(() => setEditing(on));
   const apply = (next: Layout) => {
-    setLayout(next);
+    smoothly(() => setLayout(next));
     void rpc({ op: "pref.set", key: layoutKey(page), value: sameLayout(next, defaults) ? null : next });
   };
   const place = (id: string, col: number, index: number) => apply(moveBlock(shown, id, col, index));
@@ -81,7 +91,11 @@ export function Board({
       <div className={"lay-bar" + (editing ? " on" : "")}>
         {editing ? (
           <>
-            <span className="grow">{t.rich("editingHint", { handle: () => <b aria-hidden="true">⠿</b> })}</span>
+            <span className="grow">
+              {t.rich("editingHint", {
+                handle: () => <GripVertical className="lay-grip-ico" size={15} strokeWidth={2.2} aria-hidden="true" />,
+              })}
+            </span>
             <span className="seg" role="group" aria-label={t("columnCount")}>
               {Array.from({ length: MAX_COLUMNS }, (_, i) => i + 1).map((k) => (
                 <button key={k} type="button" aria-pressed={n === k} onClick={() => apply(setColumnCount(shown, k))}>
@@ -91,16 +105,16 @@ export function Board({
             </span>
             {custom && (
               <button type="button" className="btn" onClick={() => apply(defaults)}>
-                {t("defaultLayout")}
+                <RotateCcw size={15} strokeWidth={2} aria-hidden="true" /> {t("defaultLayout")}
               </button>
             )}
-            <button type="button" className="btn primary" onClick={() => setEditing(false)}>
-              {t("done")}
+            <button type="button" className="btn primary" onClick={() => edit(false)}>
+              <Check size={15} strokeWidth={2.4} aria-hidden="true" /> {t("done")}
             </button>
           </>
         ) : (
-          <button type="button" className="btn lay-toggle" onClick={() => setEditing(true)} title={t("customiseHint")}>
-            <span aria-hidden="true">⠿</span> {custom ? t("customiseCustom") : t("customise")}
+          <button type="button" className="btn lay-toggle" onClick={() => edit(true)} title={t("customiseHint")}>
+            <LayoutDashboard size={15} strokeWidth={2} aria-hidden="true" /> {custom ? t("customiseCustom") : t("customise")}
           </button>
         )}
       </div>
@@ -126,6 +140,7 @@ export function Board({
                 return (
                   <div
                     key={id}
+                    style={{ viewTransitionName: `lay-${page}-${id}`.replace(/[^a-zA-Z0-9-]/g, "-") }}
                     className={
                       "lay-item" +
                       (editing ? " editing" : "") +
@@ -150,11 +165,11 @@ export function Board({
                       draggable
                       title={t("dragHint", { title: b.title })}
                       aria-label={t("move", { title: b.title })}
-                      onClick={() => setEditing(true)}
+                      onClick={() => edit(true)}
                       onKeyDown={(e) => {
                         if (e.key !== "Enter" && e.key !== " ") return;
                         e.preventDefault();
-                        setEditing(true);
+                        edit(true);
                       }}
                       onDragStart={(e) => {
                         dragged.current = id;
@@ -167,7 +182,8 @@ export function Board({
                       }}
                       onDragEnd={endDrag}
                     >
-                      ⠿<span>{b.title}</span>
+                      <GripVertical size={14} strokeWidth={2.2} aria-hidden="true" />
+                      <span>{b.title}</span>
                     </span>
                     {editing && (
                       <div className="lay-head">
@@ -180,7 +196,7 @@ export function Board({
                             aria-label={t("up")}
                             onClick={() => place(id, c, shown[c]!.indexOf(ids[i - 1]!))}
                           >
-                            ↑
+                            <ArrowUp size={14} strokeWidth={2.2} aria-hidden="true" />
                           </button>
                           <button
                             type="button"
@@ -189,7 +205,7 @@ export function Board({
                             aria-label={t("down")}
                             onClick={() => place(id, c, shown[c]!.filter((x) => x !== id).indexOf(ids[i + 1]!) + 1)}
                           >
-                            ↓
+                            <ArrowDown size={14} strokeWidth={2.2} aria-hidden="true" />
                           </button>
                           {n > 1 && (
                             <>
@@ -200,7 +216,7 @@ export function Board({
                                 aria-label={t("left")}
                                 onClick={() => place(id, c - 1, i)}
                               >
-                                ←
+                                <ArrowLeft size={14} strokeWidth={2.2} aria-hidden="true" className="flip-rtl" />
                               </button>
                               <button
                                 type="button"
@@ -209,7 +225,7 @@ export function Board({
                                 aria-label={t("right")}
                                 onClick={() => place(id, c + 1, i)}
                               >
-                                →
+                                <ArrowRight size={14} strokeWidth={2.2} aria-hidden="true" className="flip-rtl" />
                               </button>
                             </>
                           )}

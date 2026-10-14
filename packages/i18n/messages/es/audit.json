@@ -92,9 +92,10 @@
     },
     "workspace": {
       "update": "Ajustes del espacio modificados",
-      "categoryAdd": "Categoría de puesto añadida",
-      "categoryRename": "Categoría de puesto renombrada",
-      "categoryDelete": "Categoría de puesto eliminada",
+      "categoryAdd": "Equipo añadido",
+      "categoryRename": "Equipo renombrado",
+      "categoryDelete": "Equipo eliminado",
+      "categoryMove": "Equipo movido",
       "auditStream": "Envío de auditoría modificado",
       "logo": "Logotipo cambiado",
       "logoRemoved": "Logotipo quitado",

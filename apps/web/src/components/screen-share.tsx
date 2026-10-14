@@ -148,7 +148,7 @@ export function ShareScreenButton() {
       // The open screens answer "hello", each gets its own connection
       await signal("*", "share", { by: s.viewer.name });
     } catch {
-      toast(t("denied"));
+      toast(t("denied"), "error");
     }
   };
 

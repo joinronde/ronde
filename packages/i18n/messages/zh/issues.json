@@ -1,0 +1,11 @@
+{
+  "tooSmall": "至少 {min}",
+  "tooBig": "最多 {max}",
+  "tooShort": "至少 {min} 个字符",
+  "tooLong": "最多 {max} 个字符",
+  "tooFew": "至少 {min} 项",
+  "tooMany": "最多 {max} 项",
+  "format": "某个值的格式不正确",
+  "missing": "缺少某个值",
+  "invalid": "某个值不被接受"
+}

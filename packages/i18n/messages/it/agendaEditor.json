@@ -1,6 +1,8 @@
 {
   "title": "Ordine del giorno",
   "intro": "Le fasi di ogni sessione, in ordine. La chiusura termina sempre la riunione.",
+  "end": "Chiusura e verbale",
+  "endHint": "sempre per ultima",
   "blocks": {
     "intro": "Apertura",
     "round": "Giro di tavolo",
@@ -10,13 +12,21 @@
     "poker": "Planning poker",
     "projects": "Giro per progetto"
   },
+  "blockHints": {
+    "intro": "Benvenuto, annunci e rompighiaccio prima del primo turno",
+    "round": "Ognuno a turno, cronometrato, con la propria scheda sullo schermo",
+    "projects": "Progetto per progetto, i suoi membri parlano insieme",
+    "topics": "Gli argomenti proposti e votati dal team",
+    "timebox": "Un argomento a parte, con una durata propria",
+    "retro": "Note anonime in colonne, raggruppate, votate e poi discusse",
+    "poker": "Il team stima gli elementi con carte coperte"
+  },
   "timeboxTitle": "Argomento",
   "minutes": "Minuti",
-  "up": "Sposta su «{label}»",
-  "down": "Sposta giù «{label}»",
   "remove": "Rimuovi «{label}»",
+  "reorder": "Sposta «{label}»",
   "add": "Aggiungi un blocco",
-  "pick": "Scegli un blocco…",
+  "alreadyThere": "Già nell'ordine del giorno",
   "newTimebox": "Nuovo argomento",
   "saved": "Ordine del giorno salvato",
   "turnOn": "Attiva il modulo in «Moduli» per aggiungere questo blocco.",

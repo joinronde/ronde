@@ -28,9 +28,9 @@ export function AvatarPicker({ memberId, sm }: { memberId: string; sm?: boolean 
         headers: body ? { "Content-Type": body.type } : undefined,
       });
       if (!r.ok) throw new Error(((await r.json().catch(() => null)) as { error?: string } | null)?.error ?? t("notSaved"));
-      toast(method === "PUT" ? t("saved") : t("removed"));
+      toast(method === "PUT" ? t("saved") : t("removed"), "ok");
     } catch (e) {
-      toast((e as Error).message);
+      toast((e as Error).message, "error");
     } finally {
       setBusy(false);
     }
@@ -68,7 +68,7 @@ export function AvatarPicker({ memberId, sm }: { memberId: string; sm?: boolean 
             await send("PUT", await squareImage(file));
           } catch (err) {
             const message = (err as Error).message;
-            toast(!message || message === "unreadable" ? t("unreadable") : message);
+            toast(!message || message === "unreadable" ? t("unreadable") : message, "error");
           }
         }}
       />

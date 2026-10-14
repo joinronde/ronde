@@ -34,6 +34,16 @@
   "saved": "Notifiche salvate.",
   "manageConnectors": "Gestisci i connettori",
   "recent": "Messaggi recenti",
+  "preview": {
+    "title": "Anteprima delle notifiche",
+    "channels": "Canali",
+    "reminder": "Email di promemoria",
+    "none": "Da questa riunione non parte ancora nulla: attiva l'email di promemoria (Pianificazione) o una regola qui sopra, e vedi qui cosa riceverà ognuno.",
+    "onLabel": "Quando:",
+    "app": "App",
+    "sampleDecision": "Passiamo alla nuova pipeline di rilascio",
+    "sampleAction": "Aggiornare la checklist di accoglienza"
+  },
   "failed": "non riuscito",
   "workflow": {
     "toggle": "Condizioni e messaggio",

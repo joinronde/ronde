@@ -41,9 +41,24 @@ import type {
 import { isLocale, resolveLocale } from "@ronde/i18n";
 import { readConfig } from "@ronde/module-sdk";
 import { github, gitlab, icebreaker, readDraw, video, videoLink } from "@ronde/modules";
+import { parseGitlabSecret } from "@/lib/shared/gitlab-grant";
 import { env } from "../env";
+import { decryptSecret } from "../secrets";
 
 // Database rows → data sent to the browser
+
+/**
+ * The GitLab account a meeting is connected with, if any. A secret that cannot be read (the encryption key
+ * changed) says nothing here: the meeting still opens, and its GitLab settings say what to do
+ */
+export function connectedGitlabUser(secret: string | null | undefined): string | null {
+  if (!secret) return null;
+  try {
+    return parseGitlabSecret(decryptSecret(secret)).grant?.user ?? null;
+  } catch {
+    return null;
+  }
+}
 
 export const ms = (d: Date | null | undefined) => (d ? d.getTime() : null);
 const obj = (v: unknown): Record<string, unknown> =>
@@ -83,6 +98,7 @@ export function toSettings(
     video: { provider: vc.provider, link: m.videoUrl, jitsiUrl: vc.jitsiUrl, bbbUrl: vc.bbbUrl },
     speakSec: m.speakSec,
     autoStart: m.autoStart,
+    projectsBy: m.projectsBy === "participants" ? "participants" : "hosts",
     targetMin: m.targetMin,
     announcements: m.announcements,
     reminderEnabled: m.reminderEnabled,
@@ -92,6 +108,7 @@ export function toSettings(
     gitlabGroups: gl.groups,
     githubRepos: readConfig(github, mods.github?.config).repos,
     tokensSet: { gitlab: !!mods.gitlab?.secret, github: !!mods.github?.secret, bbb: !!mods.video?.secret },
+    gitlabUser: connectedGitlabUser(mods.gitlab?.secret),
     jobCategories,
     schedule,
     icebreakers: readConfig(icebreaker, mods.icebreaker?.config).bank,
@@ -204,6 +221,8 @@ export const toComment = (c: CheckInComment & { item: CheckInItem }, sections: S
   projectId: c.item.projectId,
   byId: c.byId,
   text: c.text,
+  // A reaction from before there were several is a 👍
+  emoji: c.text ? "" : c.emoji || "👍",
   createdAt: c.createdAt.getTime(),
 });
 

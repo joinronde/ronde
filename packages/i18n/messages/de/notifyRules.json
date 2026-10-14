@@ -34,6 +34,16 @@
   "saved": "Benachrichtigungen gespeichert.",
   "manageConnectors": "Connectors verwalten",
   "recent": "Letzte Nachrichten",
+  "preview": {
+    "title": "Vorschau der Benachrichtigungen",
+    "channels": "Kanäle",
+    "reminder": "Erinnerungs-E-Mail",
+    "none": "Von dieser Besprechung wird noch nichts verschickt: Aktivieren Sie die Erinnerungs-E-Mail (Planung) oder eine Regel oben und sehen Sie hier, was alle erhalten.",
+    "onLabel": "Wann:",
+    "app": "App",
+    "sampleDecision": "Wir wechseln zur neuen Deployment-Pipeline",
+    "sampleAction": "Onboarding-Checkliste aktualisieren"
+  },
   "failed": "fehlgeschlagen",
   "workflow": {
     "toggle": "Bedingungen und Nachricht",

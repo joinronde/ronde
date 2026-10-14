@@ -25,21 +25,21 @@ export function CalendarSyncPanel() {
     setBusy("save");
     const res = await setMeetingCalendarAction(slug, meetingId, accountId || null);
     setBusy(null);
-    if (!res.ok) return toast(res.error);
+    if (!res.ok) return toast(res.error, "error");
     setAvailability(null);
-    toast(accountId ? t("written", { count: res.data }) : t("removed"));
+    toast(accountId ? t("written", { count: res.data }) : t("removed"), accountId ? "ok" : "off");
   };
   const sync = async () => {
     setBusy("sync");
     const res = await syncMeetingCalendarAction(slug, meetingId);
     setBusy(null);
-    toast(res.ok ? t("synced", { count: res.data }) : res.error);
+    toast(res.ok ? t("synced", { count: res.data }) : res.error, res.ok ? "ok" : "error");
   };
   const check = async () => {
     setBusy("check");
     const res = await meetingAvailabilityAction(slug, meetingId);
     setBusy(null);
-    if (!res.ok) return toast(res.error);
+    if (!res.ok) return toast(res.error, "error");
     setAvailability(res.data);
   };
 

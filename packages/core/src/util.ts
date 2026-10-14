@@ -252,6 +252,9 @@ export const animOf = (emoji: string): string | undefined => signalOf(emoji)?.an
 
 /** Every reaction accepted by the server */
 export const REACTION_EMOJIS: string[] = [...EMOJIS, ...SIGNALS.map((x) => x.e)];
+/** Reactions one person may send in a row: beyond it, they wait until the oldest is out of the window */
+export const REACTION_BURST = 6;
+export const REACTION_WINDOW_MS = 10_000;
 
 /** Window during which identical signals add up into a combo */
 export const COMBO_WINDOW_MS = 20_000;

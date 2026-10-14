@@ -1,0 +1,13 @@
+{
+  "search": "ابحث عن شخص أو فريق…",
+  "selected": "تم اختيار {count} من {total}",
+  "all": "الجميع",
+  "none": "لا أحد",
+  "teams": "الفرق",
+  "pickTeam": "{name}: {count, plural, one {شخص واحد} two {شخصان} few {# أشخاص} many {# شخصًا} other {# شخص}}، مع الفرق الفرعية",
+  "noMatch": "لا أحد يطابق.",
+  "noTeam": "بلا فريق",
+  "withSubTeams": "مع الفرق الفرعية",
+  "fold": "طيّ {name}",
+  "unfold": "توسيع {name}"
+}

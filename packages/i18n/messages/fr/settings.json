@@ -63,9 +63,8 @@
     "carryPlansSwitch": "La rubrique passe en liste à cocher.",
     "carryPlansHint": "Chacun retrouve ce qu'il avait prévu en cases à cocher, à cocher au fil de l'avancement. Une case non cochée ne compte pas comme fait.",
     "carryPlans": "Reprendre ce qui était dans « {plan} » la dernière fois",
-    "moveUp": "Monter « {label} »",
-    "moveDown": "Descendre « {label} »",
     "removeOf": "Retirer « {label} »",
+    "reorder": "Déplacer « {label} »",
     "customPlaceholder": "Ex. Veille, Démo à montrer, Besoin d'aide",
     "add": "Ajouter une rubrique",
     "hint": "Chaque rôle (réalisé, prévu, difficulté, autre) va à une rubrique au plus. Une rubrique garde ce qui a été saisi quand son nom, son rôle ou sa saisie change."
@@ -90,6 +89,13 @@
   },
   "sources": {
     "title": "Sources de tâches",
+    "connect": "Se connecter avec GitLab",
+    "connectHint": "Votre compte GitLab, en lecture seule, renouvelé tout seul : aucun jeton à copier ni à remplacer quand il expire.",
+    "connected": "Connecté à GitLab",
+    "connectedAs": "Connecté à GitLab en tant que @{user}",
+    "disconnect": "Déconnecter",
+    "disconnected": "GitLab déconnecté",
+    "usePersonalToken": "Utiliser plutôt un jeton personnel",
     "gitlabToken": "Jeton GitLab",
     "noSecretKey": "Le chiffrement des jetons n'est pas configuré sur le serveur : demandez à l'exploitation de renseigner la clé SECRET_KEY.",
     "tokenHint": "Les jetons sont chiffrés avant d'être enregistrés et ne sont jamais réaffichés. GitLab : jeton avec la portée <code>read_api</code>.",
@@ -106,10 +112,36 @@
     "githubReposHint": "« propriétaire/dépôt » ou tout un « propriétaire », un par ligne ; vide : tous les dépôts. Renseignez aussi l'identifiant GitHub de chaque personne dans le bloc Personnes.",
     "githubSave": "Enregistrer l'accès GitHub"
   },
+  "hub": {
+    "intro": "Les outils avec lesquels cette réunion travaille, et où chacun en est. Ouvrez une carte pour la configurer.",
+    "configure": "Configurer",
+    "close": "Fermer",
+    "off": "Désactivée",
+    "turnOn": "Activer dans Modules",
+    "connected": "Connectée",
+    "toConnect": "À connecter",
+    "configured": "Configurée",
+    "toSetUp": "À configurer",
+    "ready": "Lien prêt",
+    "synced": "Synchronisé",
+    "noneInWorkspace": "Aucun dans l'espace",
+    "rulesOn": "{count, plural, one {# règle active} other {# règles actives}}",
+    "gitlab": "Tickets et merge requests de chacun dans sa fiche",
+    "github": "Issues et pull requests des dépôts suivis",
+    "wikiName": "Wiki",
+    "wiki": "Comptes rendus publiés dans le wiki de l'équipe",
+    "videoName": "Visio",
+    "video": "Le lien par lequel chacun rejoint",
+    "calendarName": "Agenda",
+    "calendar": "Les séances dans les agendas de chacun, synchronisées",
+    "notificationsName": "Notifications",
+    "notifications": "Messagerie, e-mail et SMS autour de la réunion",
+    "goGeneral": "Dans Général",
+    "goSchedule": "Dans Planification",
+    "goNotifications": "Dans Notifications"
+  },
   "preview": {
-    "title": "Aperçu du rappel",
     "to": "À : {email} · {date} à {time}",
-    "disabled": "rappels désactivés",
     "frameTitle": "Aperçu du mail de rappel pour {name}"
   },
   "token": {
@@ -132,7 +164,10 @@
   },
   "people": {
     "title": "Personnes ({count})",
+    "colPerson": "Personne",
+    "colRole": "Rôle",
     "intro": "Les profils viennent de l'annuaire de l'espace. Le rôle fixe ce que chacun peut faire dans cette réunion.",
+    "rolesGuide": "Qui peut faire quoi ?",
     "roles": {
       "host": "Régisseur",
       "cohost": "Co-régisseur",
@@ -140,15 +175,17 @@
       "observer": "Observateur"
     },
     "roleHints": {
-      "host": "Anime les séances et configure la réunion",
-      "cohost": "Anime les séances",
-      "participant": "Remplit une fiche et participe",
-      "observer": "Suit les séances, sans fiche"
+      "host": "Anime les séances depuis la régie, configure la réunion et publie son compte rendu",
+      "cohost": "Anime les séances depuis la régie, sans toucher aux réglages",
+      "participant": "Remplit sa fiche avant chaque séance et passe au tour de table",
+      "observer": "Suit les séances en direct et lit les comptes rendus, sans fiche ni tour de parole"
     },
     "roleOf": "Rôle de {name}",
     "speaks": "Passe au tour de table",
+    "speaksOf": "{name} passe au tour de table",
     "speaksHint": "Inclus dans le tour de table",
     "remind": "Rappel",
+    "remindOf": "Rappel à {name}",
     "gitlab": "Identifiant GitLab",
     "remove": "Retirer",
     "confirmRemove": "Retirer de la réunion",
@@ -161,12 +198,28 @@
     "add": "Ajouter",
     "nobodyLeft": "Tout l'annuaire participe déjà.",
     "directory": "Gérer l'annuaire",
-    "categoriesHint": "Les catégories de métier, anniversaires et noms se modifient dans l'annuaire de l'espace.",
+    "categoriesHint": "Les équipes, anniversaires et noms se modifient dans l'annuaire de l'espace.",
     "github": "Identifiant GitHub"
   },
   "template": {
     "title": "Réutiliser ce format",
-    "intro": "Enregistrez les rubriques, le format, les modules et l'horaire comme modèle de l'espace, pour créer d'autres réunions à partir de lui. Les personnes, l'historique et les jetons restent ici.",
+    "intro": "Créez d'autres réunions à partir de celle-ci : le modèle est proposé à la création d'une réunion dans l'espace.",
+    "carries": "Part dans le modèle",
+    "stays": "Reste dans cette réunion",
+    "items": {
+      "sections": "Rubriques de la fiche",
+      "agenda": "Ordre du jour",
+      "modules": "Modules",
+      "schedule": "Horaire",
+      "people": "{count, plural, one {# personne et son rôle} other {# personnes et leurs rôles}}",
+      "history": "Historique et comptes rendus",
+      "tokens": "Jetons d'accès et intégrations"
+    },
+    "counts": {
+      "sections": "{count, plural, one {# rubrique} other {# rubriques}}",
+      "agenda": "{count, plural, one {# bloc} other {# blocs}}",
+      "modules": "{count, plural, one {# module activé} other {# modules activés}}"
+    },
     "open": "Enregistrer comme modèle",
     "name": "Nom du modèle",
     "description": "Description (facultative)",
@@ -188,6 +241,20 @@
     "danger": "Zone de danger",
     "agenda": "Ordre du jour",
     "projects": "Projets"
+  },
+  "navHints": {
+    "general": "Nom, icône, format et chronomètre de la réunion.",
+    "schedule": "Quand ont lieu les séances, et leurs exceptions.",
+    "people": "Qui participe, et ce que chacun peut faire.",
+    "sections": "Ce que chacun remplit avant la réunion.",
+    "agenda": "Le déroulé de la réunion, bloc par bloc.",
+    "projects": "Les projets suivis, chacun avec son tour.",
+    "modules": "Animation, formats et outils, activés au besoin.",
+    "appearance": "La couleur de la réunion sur tous les écrans.",
+    "notifications": "Rappels et messages envoyés autour de la réunion.",
+    "integrations": "Visio, outils de tickets et wiki.",
+    "template": "Enregistrer cette réunion comme modèle de l'espace.",
+    "danger": "Ce qui ne s'annule pas : quitter, arrêter ou supprimer."
   },
   "status": {
     "auto": "Les modifications sont enregistrées automatiquement.",

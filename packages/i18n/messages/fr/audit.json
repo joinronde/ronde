@@ -34,7 +34,7 @@
     "meeting": {
       "create": "Séance préparée",
       "reset": "Séance réinitialisée",
-      "archive": "Séance archivée",
+      "archive": "Compte rendu publié",
       "publish": "Récapitulatif publié",
       "remove": "Réunion supprimée",
       "new": "Réunion créée",
@@ -92,9 +92,10 @@
     },
     "workspace": {
       "update": "Réglages de l'espace modifiés",
-      "categoryAdd": "Catégorie de poste ajoutée",
-      "categoryRename": "Catégorie de poste renommée",
-      "categoryDelete": "Catégorie de poste supprimée",
+      "categoryAdd": "Équipe ajoutée",
+      "categoryRename": "Équipe renommée",
+      "categoryDelete": "Équipe supprimée",
+      "categoryMove": "Équipe déplacée",
       "auditStream": "Flux d'audit modifié",
       "logo": "Logo changé",
       "logoRemoved": "Logo retiré",

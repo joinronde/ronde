@@ -19,7 +19,6 @@ export function ModulesPanel() {
   };
   return (
     <div className="panel form">
-      <h3 style={{ margin: 0 }}>{t("title")}</h3>
       <p className="hint">{t("intro")}</p>
       {MODULE_CATEGORIES.map((category) => {
         const list = CATALOG.filter((m) => m.category === category);

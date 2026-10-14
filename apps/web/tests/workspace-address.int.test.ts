@@ -18,7 +18,7 @@ describe("workspace addresses", () => {
   it("keeps the reserved addresses for the instance's administrators, and says so", async () => {
     await expect(createWorkspace(await account("user"), { name: "Ronde", slug: "ronde" })).rejects.toMatchObject({
       key: "slugReserved",
-      values: { slug: "ronde-team" },
+      values: { slug: "ronde-2" },
     });
     await expect(createWorkspace(await account("user"), { name: "Bad", slug: "-bad-" })).rejects.toMatchObject({ key: "slugInvalid" });
     expect(await createWorkspace(await account("admin"), { name: "Ronde", slug: "ronde" })).toEqual({ slug: "ronde" });

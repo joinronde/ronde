@@ -1,6 +1,8 @@
 {
   "title": "Ordre du jour",
   "intro": "Les étapes de chaque séance, dans l'ordre. La clôture termine toujours la réunion.",
+  "end": "Clôture et compte rendu",
+  "endHint": "toujours en dernier",
   "blocks": {
     "intro": "Intro",
     "round": "Tour de table",
@@ -10,13 +12,21 @@
     "poker": "Planning poker",
     "projects": "Tour par projet"
   },
+  "blockHints": {
+    "intro": "Accueil, annonces et brise-glace, avant le premier tour",
+    "round": "Chacun son tour, minuté, avec sa fiche à l'écran",
+    "projects": "Projet par projet, ses membres parlent ensemble",
+    "topics": "Les sujets apportés et votés par l'équipe",
+    "timebox": "Un sujet à part, avec sa propre durée",
+    "retro": "Des notes anonymes en colonnes, regroupées, votées puis discutées",
+    "poker": "L'équipe estime des éléments avec des cartes cachées"
+  },
   "timeboxTitle": "Sujet",
   "minutes": "Minutes",
-  "up": "Monter « {label} »",
-  "down": "Descendre « {label} »",
   "remove": "Retirer « {label} »",
+  "reorder": "Déplacer « {label} »",
   "add": "Ajouter un bloc",
-  "pick": "Choisir un bloc…",
+  "alreadyThere": "Déjà dans l'ordre du jour",
   "newTimebox": "Nouveau sujet",
   "saved": "Ordre du jour enregistré",
   "turnOn": "Activez le module dans « Modules » pour ajouter ce bloc.",

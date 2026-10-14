@@ -9,6 +9,7 @@ import { aiConfig } from "../ai";
 import { brandingOn, logoPath } from "../branding";
 import { calendarSyncOn, listCalendarAccounts } from "../calendars";
 import { env } from "../env";
+import { gitlabOAuthOn } from "../gitlab-oauth";
 import { inboundOn } from "../inbound";
 import { editionOf } from "../license";
 import { notificationsDTO } from "../notify/rules";
@@ -186,16 +187,18 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
     meeting: dto,
     checkIns: shown ? visibleCheckIns(checkIns, visible) : checkIns,
     projects: projects.map((p) => toProjectDTO(p, new Set([...participants, ...observers].map((x) => x.personId)))),
-    projectChoices: ctx.can("meeting.configure")
-      ? (
-          await db.project.findMany({
-            // A private project is offered only to the people who see it
-            where: { archivedAt: null, ...visibleWhere(ctx.ws) },
-            orderBy: [{ position: "asc" }, { name: "asc" }],
-            select: { id: true, name: true, status: true, theme: { select: { name: true } } },
-          })
-        ).map((p) => ({ id: p.id, name: p.name, status: p.status, theme: p.theme?.name ?? "" }))
-      : null,
+    // The portfolio to pick from: for the hosts, and for everyone taking part once the hosts let them add projects
+    projectChoices:
+      ctx.can("meeting.configure") || (ctx.meeting.projectsBy === "participants" && ctx.can("checkin.write.own"))
+        ? (
+            await db.project.findMany({
+              // A private project is offered only to the people who see it
+              where: { archivedAt: null, ...visibleWhere(ctx.ws) },
+              orderBy: [{ position: "asc" }, { name: "asc" }],
+              select: { id: true, name: true, status: true, color: true, theme: { select: { name: true } } },
+            })
+          ).map((p) => ({ id: p.id, name: p.name, status: p.status, color: p.color, theme: p.theme?.name ?? "" }))
+        : null,
     notes: Object.fromEntries(notes.map((n) => [n.key, n.text])),
     interactions: on("hands") ? interactions.map(toInteraction) : [],
     reactions: on("reactions") ? reactions.map(toReaction) : [],
@@ -254,6 +257,7 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
     brand: { logo: brand ? logoPath(ctx.ws.workspace.slug, brand.updatedAt.getTime()) : null, allowed: brandingOn(ctx.ws.workspace) },
     integrations: {
       gitlab: on("gitlab") && !!(mods.gitlab?.secret || env.gitlabToken()),
+      gitlabOAuth: gitlabOAuthOn(),
       // Public repositories answer without a token
       github: on("github"),
       smtp: !!env.smtpUrl(),

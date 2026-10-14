@@ -1,6 +1,7 @@
 import "server-only";
 import { withRoundsOrder } from "@ronde/core/agenda";
 import { describeSchedule } from "@ronde/core/schedule";
+import { parseSections } from "@ronde/core/templates";
 import { sectionBehavior } from "@ronde/core/util";
 import type { Prisma } from "@ronde/db";
 import { type Locale, resolveLocale } from "@ronde/i18n";
@@ -82,6 +83,8 @@ export interface NewMeeting {
   modules: Record<string, boolean>;
   /** With a round table and a project round: which one comes first (null or missing: the template's order) */
   first?: "team" | "projects" | null;
+  /** Sections of the check-in, when changed in the wizard (missing: the template's) */
+  sections?: unknown;
 }
 
 /** Creates a meeting from a template: its sections, format, modules and schedule, its people, its first session */
@@ -98,6 +101,12 @@ export async function createMeeting(ctx: WorkspaceContext, input: NewMeeting): P
     throw new OpError("invalidRequest", { details: "schedule" });
   const locale = resolveLocale(ctx.workspace.locale);
   const template = await resolveTemplate(ctx, input.template, locale);
+  // Sections picked in the wizard replace the template's
+  if (input.sections !== undefined) {
+    const sections = parseSections(input.sections);
+    if (!sections) throw new OpError("invalidRequest", { details: "sections" });
+    template.sections = sections;
+  }
   // The template's emoji marks the meeting in the menus (changed or replaced by an image in its settings)
   const icon = await templateIcon(ctx, input.template);
   const others = [...new Set(input.personIds)].filter((id) => id !== ctx.member.personId);

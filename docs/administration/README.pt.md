@@ -60,7 +60,7 @@ uma ideia, com uma captura de tela se quiserem. Junto com a mensagem vão o ende
 navegador, o tamanho da janela, o idioma e a versão do Ronde. Os administradores leem as mensagens em
 **Administração do servidor**, respondem por e-mail a quem pediu e podem abrir uma issue pré-preenchida no projeto
 Ronde para um problema do próprio Ronde. Com `SENTRY_DSN` definido, as mensagens também chegam a esse projeto do
-Sentry como feedback de usuários. As mensagens são apagadas após um ano; `RONDE_FEEDBACK=off` remove o botão.
+Sentry como feedback de usuários. As mensagens são apagadas após um ano; numa instância auto-alojada o botão está desativado por omissão: `RONDE_FEEDBACK=on` mostra-o.
 
 ## Espaços de trabalho
 

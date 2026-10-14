@@ -1,5 +1,5 @@
 import "server-only";
-import { PROJECT_HEALTHS, type ProjectHealth } from "@ronde/core/types";
+import { PROJECT_HEALTHS, PROJECTS_BY, type ProjectHealth } from "@ronde/core/types";
 import { str } from "@ronde/modules/shared";
 import { z } from "zod";
 import { AccessError, OpError } from "../../errors";
@@ -122,6 +122,33 @@ export const projectOps = [
         (await db.meetingProject.findMany({ where: { meetingId }, select: { projectId: true } })).map((p) => p.projectId),
       );
       await db.session.update({ where: { id: s.id }, data: { projectOrder: [...new Set(o.order)].filter((id) => followed.has(id)) } });
+    },
+  }),
+  defineOp({
+    name: "meeting.projectsBy",
+    permission: "meeting.configure",
+    /** Who adds projects for the meeting to follow: its hosts, or everyone taking part */
+    input: z.object({ by: z.enum(PROJECTS_BY) }),
+    run: async ({ db, m, meetingId }, o) => {
+      await db.meeting.update({ where: { id: meetingId }, data: { projectsBy: o.by } });
+      m.meeting.projectsBy = o.by;
+    },
+  }),
+  defineOp({
+    name: "project.follow",
+    permission: "checkin.write.own",
+    /** A project of the portfolio joins the ones the meeting follows, last: brought by a participant when the hosts let them */
+    input: z.object({ projectId: str(50) }),
+    run: async ({ db, m, meetingId, workspaceId }, o) => {
+      if (!m.can("meeting.configure") && m.meeting.projectsBy !== "participants") throw new AccessError(403, "projectsByHosts");
+      if (await db.meetingProject.findFirst({ where: { meetingId, projectId: o.projectId }, select: { projectId: true } })) return;
+      // A private project only for the people who see it
+      if (!(await db.project.findFirst({ where: { id: o.projectId, archivedAt: null, ...visibleWhere(m.ws) }, select: { id: true } })))
+        throw new OpError("notFound");
+      const last = await db.meetingProject.aggregate({ where: { meetingId }, _max: { position: true } });
+      await db.meetingProject.create({
+        data: { workspaceId, meetingId, projectId: o.projectId, position: (last._max.position ?? -1) + 1 },
+      });
     },
   }),
   defineOp({

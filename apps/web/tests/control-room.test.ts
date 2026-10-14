@@ -4,13 +4,13 @@ import type { ActionDTO, CheckInDTO, Section, Snapshot } from "@ronde/core/types
 import { afterEach, describe, expect, it } from "vitest";
 import {
   blockersOf,
-  canMove,
+  canPlace,
   filledCount,
   isTracked,
   localToday,
   memberOfStep,
   minutesCheck,
-  moveProject,
+  minutesPartsOf,
   nextLabel,
   parseOmit,
   projectOrderOf,
@@ -602,34 +602,37 @@ describe("the order of the project round", () => {
     const steps = ["a", "b", "c", "d"].map((id) => project(id));
 
     it("is never possible above the first or below the last", () => {
-      expect(canMove(steps, new Set(), 0, -1)).toBe(false);
-      expect(canMove(steps, new Set(), 3, 1)).toBe(false);
-      expect(canMove(steps, new Set(), 0, 1)).toBe(true);
-      expect(canMove(steps, new Set(), 3, -1)).toBe(true);
+      expect(canPlace(steps, new Set(), 0, -1)).toBe(false);
+      expect(canPlace(steps, new Set(), 3, 4)).toBe(false);
+      expect(canPlace(steps, new Set(), 0, 1)).toBe(true);
+      expect(canPlace(steps, new Set(), 3, 2)).toBe(true);
     });
 
     it("is never possible for a single project", () => {
-      expect(canMove([project("a")], new Set(), 0, -1)).toBe(false);
-      expect(canMove([project("a")], new Set(), 0, 1)).toBe(false);
+      expect(canPlace([project("a")], new Set(), 0, -1)).toBe(false);
+      expect(canPlace([project("a")], new Set(), 0, 1)).toBe(false);
     });
 
     it("never takes a project above the step running or done, nor moves those", () => {
       const done = new Set(["intro", "p:a", "p:b"]);
       // b runs: a and b stay; c cannot go above b; c and d may swap
-      expect([0, 1, 2, 3].map((i) => canMove(steps, done, i, -1))).toEqual([false, false, false, true]);
-      expect([0, 1, 2, 3].map((i) => canMove(steps, done, i, 1))).toEqual([false, false, true, false]);
+      expect([0, 1, 2, 3].map((i) => canPlace(steps, done, i, i - 1))).toEqual([false, false, false, true]);
+      expect([0, 1, 2, 3].map((i) => canPlace(steps, done, i, i + 1))).toEqual([false, false, true, false]);
     });
 
     it("never goes out of bounds when allowed", () => {
       for (const d of [-1, 1] as const)
-        for (let i = 0; i < steps.length; i++) if (canMove(steps, new Set(), i, d)) expect(steps[i + d]).toBeDefined();
+        for (let i = 0; i < steps.length; i++) if (canPlace(steps, new Set(), i, i + d)) expect(steps[i + d]).toBeDefined();
     });
 
-    it("swaps it with its neighbour, leaving the order given untouched", () => {
-      const ids = ["a", "b", "c"];
-      expect(moveProject(ids, 0, 1)).toEqual(["b", "a", "c"]);
-      expect(moveProject(ids, 2, -1)).toEqual(["a", "c", "b"]);
-      expect(ids).toEqual(["a", "b", "c"]);
+    it("is dragged over several places, never over a step that ran", () => {
+      const done = new Set(["intro", "p:a"]);
+      expect(canPlace(steps, done, 3, 1)).toBe(true);
+      expect(canPlace(steps, done, 3, 0)).toBe(false);
+      expect(canPlace(steps, done, 0, 2)).toBe(false);
+      expect(canPlace(steps, new Set(), 0, 3)).toBe(true);
+      expect(canPlace(steps, new Set(), 1, 1)).toBe(false);
+      expect(canPlace(steps, new Set(), 1, 4)).toBe(false);
     });
   });
 
@@ -650,5 +653,15 @@ describe("the order of the project round", () => {
       expect([...out].sort()).toEqual([...ids].sort());
       expect(ids[0]).toBe("p0");
     });
+  });
+});
+
+describe("minutesPartsOf", () => {
+  it("offers only what the meeting's modules can bring to the minutes", () => {
+    const on = new Set(["polls", "kudos"]);
+    const parts = minutesPartsOf((id) => on.has(id));
+    expect(parts).toEqual(["checkIns", "comments", "topics", "kudos", "polls"]);
+    expect(parts).not.toContain("mood");
+    expect(minutesPartsOf(() => true)).toEqual([...MINUTES_PARTS]);
   });
 });

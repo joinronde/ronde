@@ -7,7 +7,7 @@ import type { z } from "zod";
 import { audit } from "../../audit";
 import { type BusEvent, publish } from "../../bus";
 import { syncMeetingCalendar } from "../../calendars";
-import { AccessError, OpError } from "../../errors";
+import { AccessError, InputError, OpError } from "../../errors";
 import { deliver } from "../../inbox";
 import { canEncrypt, encryptSecret } from "../../secrets";
 import type { MeetingCtx } from "../context";
@@ -60,7 +60,8 @@ export async function runOp(m: MeetingCtx, raw: unknown): Promise<void> {
   const { def, moduleId } = entry;
   if (!m.can(def.permission)) throw new AccessError(403, def.permission === "session.run" ? "hostOnly" : "accessDenied");
   const parsed = def.input.safeParse(rest);
-  if (!parsed.success) throw new OpError("invalidRequest", { details: parsed.error.issues.map((i) => i.message).join(", ") });
+  // Said in the caller's language when the answer is written (lib/server/http.ts, lib/server/action.ts)
+  if (!parsed.success) throw new InputError(parsed.error.issues);
 
   const events: BusEvent[] = [];
   const afterCommit: (() => unknown)[] = [];

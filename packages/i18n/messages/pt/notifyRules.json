@@ -34,6 +34,16 @@
   "saved": "Notificações salvas.",
   "manageConnectors": "Gerenciar os conectores",
   "recent": "Mensagens recentes",
+  "preview": {
+    "title": "Pré-visualização das notificações",
+    "channels": "Canais",
+    "reminder": "Email de lembrete",
+    "none": "Ainda não sai nada desta reunião: ative o email de lembrete (Planeamento) ou uma regra acima, e veja aqui o que cada um vai receber.",
+    "onLabel": "Quando:",
+    "app": "App",
+    "sampleDecision": "Passamos para o novo pipeline de implementação",
+    "sampleAction": "Atualizar a checklist de acolhimento"
+  },
   "failed": "falhou",
   "workflow": {
     "toggle": "Condições e mensagem",

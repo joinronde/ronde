@@ -2,16 +2,20 @@ import "server-only";
 import { translator } from "@ronde/i18n";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { AppError } from "./errors";
+import { AppError, InputError } from "./errors";
+import { issuesText } from "./issues";
 import { requestLocale } from "./locale";
 
 /** JSON error response the interface can show, in the viewer's language */
 export async function errorResponse(e: unknown) {
-  const t = translator(await requestLocale(), "errors");
+  const locale = await requestLocale();
+  const t = translator(locale, "errors");
+  if (e instanceof InputError)
+    return NextResponse.json({ error: t("invalidRequest", { details: issuesText(e.issues, locale) }) }, { status: e.status });
   if (e instanceof AppError) return NextResponse.json({ error: t(e.key, e.values) }, { status: e.status });
   // A body that is not JSON, or not of the expected shape: the caller's mistake, not the server's
   if (e instanceof SyntaxError || e instanceof ZodError) {
-    const details = e instanceof ZodError ? e.issues.map((i) => i.path.join(".") || i.message).join(", ") : "JSON";
+    const details = e instanceof ZodError ? issuesText(e.issues, locale) : "JSON";
     return NextResponse.json({ error: t("invalidRequest", { details }) }, { status: 400 });
   }
   console.error(e);

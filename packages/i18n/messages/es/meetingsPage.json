@@ -4,12 +4,21 @@
   "new": "Nueva reunión",
   "filter": "Qué reuniones",
   "search": "Filtrar por nombre",
+  "sortBy": "Ordenar por",
+  "sorts": {
+    "next": "Próxima sesión",
+    "name": "Nombre",
+    "recent": "Última sesión",
+    "actions": "Acciones abiertas"
+  },
   "filters": {
     "all": "Todas",
+    "live": "En directo",
     "mine": "En las que participo",
     "run": "Las que dirijo"
   },
   "liveNow": "En directo ahora",
+  "sessionOf": "Sesión de las {time}",
   "next": "Próxima sesión",
   "noNext": "Ninguna sesión prevista",
   "held": "{count, plural, one {sesión celebrada} other {sesiones celebradas}}",

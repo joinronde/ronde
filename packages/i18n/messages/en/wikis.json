@@ -40,10 +40,10 @@
   "openInRonde": "Open in Ronde",
   "meeting": {
     "title": "Publish the minutes",
-    "intro": "At each archive, the minutes become a page of the wiki, named by the session's date. When the summary is edited, the page follows.",
+    "intro": "Each time minutes are published, they become a page of the wiki, named by the session's date. When the summary is edited, the page follows.",
     "wiki": "Wiki",
     "none": "Nowhere",
-    "hint": "Sessions already archived are published from the history.",
+    "hint": "Past sessions are published from the history.",
     "noWiki": "No wiki in this workspace yet.",
     "addWiki": "Add one in the workspace settings",
     "on": "The minutes will be published to {name}.",

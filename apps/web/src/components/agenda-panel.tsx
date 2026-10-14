@@ -1,12 +1,16 @@
 "use client";
 
 import { type AgendaBlock, BLOCK_MODULE, type BlockType, PROJECT_ROUND_ORDERS, SINGLE_BLOCKS } from "@ronde/core/agenda";
+import { Plus, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { Select } from "@/components/select";
+import { moved } from "@/lib/shared/sortable";
 import { useRonde } from "./ronde-provider";
 import { Icon } from "./shell/icons";
+import { SortGrip, useSortable } from "./sortable";
 import { BLOCK_ICON } from "./stage";
+import { Menu } from "./workspace/menu";
 
 const newId = () => Array.from(crypto.getRandomValues(new Uint8Array(4)), (b) => b.toString(16).padStart(2, "0")).join("");
 const ADDABLE: BlockType[] = ["intro", "round", "projects", "topics", "timebox", "retro", "poker"];
@@ -39,12 +43,12 @@ export function AgendaPanel() {
   const labelOf = (b: AgendaBlock) => (b.type === "timebox" ? b.title : t(`blocks.${b.type}`));
   const moduleOn = (type: BlockType) => !BLOCK_MODULE[type] || !!s.modules[BLOCK_MODULE[type]!];
   const canAdd = (type: BlockType) => moduleOn(type) && !(SINGLE_BLOCKS.includes(type) && blocks.some((b) => b.type === type));
-  const move = (i: number, d: -1 | 1) =>
-    setBlocks((list) => {
-      const next = [...list];
-      [next[i], next[i + d]] = [next[i + d]!, next[i]!];
-      return next;
-    });
+  const sort = useSortable({
+    items: blocks,
+    keyOf: (b) => b.id,
+    onMove: (from, to) => setBlocks((list) => moved(list, from, to)),
+    disabled: running,
+  });
   const patch = (i: number, p: Partial<Extract<AgendaBlock, { type: "timebox" }>>) =>
     setBlocks((list) => list.map((b, j) => (j === i && b.type === "timebox" ? { ...b, ...p } : b)));
   const patchProjects = (i: number, p: Partial<Extract<AgendaBlock, { type: "projects" }>>) =>
@@ -67,130 +71,146 @@ export function AgendaPanel() {
         save();
       }}
     >
-      <h3 style={{ margin: 0 }}>{t("title")}</h3>
       <p className="hint" style={{ margin: 0 }}>
         {t("intro")}
       </p>
       {running && <div className="note-box">{t("locked")}</div>}
-      <ol className="agenda-blocks">
-        {blocks.map((b, i) => (
-          <li key={b.id} className={moduleOn(b.type) ? "" : "off"}>
-            <span className="agenda-icon" aria-hidden="true">
-              {BLOCK_ICON[b.type] && <Icon name={BLOCK_ICON[b.type]} size={16} />}
-            </span>
-            {b.type === "timebox" ? (
-              <span className="agenda-timebox">
-                <input
-                  aria-label={t("timeboxTitle")}
-                  value={b.title}
-                  maxLength={80}
-                  required
-                  onChange={(e) => patch(i, { title: e.target.value })}
-                />
-                <input
-                  type="number"
-                  aria-label={t("minutes")}
-                  min={1}
-                  max={120}
-                  value={b.minutes}
-                  onChange={(e) => patch(i, { minutes: Math.max(1, Math.min(120, Number(e.target.value) || 1)) })}
-                />
-                <span className="hint">{t("minutes")}</span>
+      {/* While a session runs, nothing here can change: every field and button says so by being off */}
+      <fieldset className="plain agenda-set" disabled={running}>
+        <ol className="agenda-blocks">
+          {sort.list.map((b, i) => (
+            <li key={b.id} {...sort.row(i)} className={`${sort.row(i).className}${moduleOn(b.type) ? "" : " off"}`}>
+              <SortGrip {...sort.grip(i, t("reorder", { label: labelOf(b) }))} />
+              <span className="agenda-icon" aria-hidden="true">
+                {BLOCK_ICON[b.type] && <Icon name={BLOCK_ICON[b.type]} size={16} />}
               </span>
-            ) : b.type === "projects" ? (
-              <span className="agenda-timebox agenda-projects">
+              {b.type === "timebox" ? (
+                <span className="agenda-timebox">
+                  <input
+                    aria-label={t("timeboxTitle")}
+                    value={b.title}
+                    maxLength={80}
+                    required
+                    onChange={(e) => patch(i, { title: e.target.value })}
+                  />
+                  <input
+                    type="number"
+                    aria-label={t("minutes")}
+                    min={1}
+                    max={120}
+                    value={b.minutes}
+                    onChange={(e) => patch(i, { minutes: Math.max(1, Math.min(120, Number(e.target.value) || 1)) })}
+                  />
+                  <span className="hint">{t("minutes")}</span>
+                </span>
+              ) : b.type === "projects" ? (
+                <span className="agenda-timebox agenda-projects">
+                  <span className="agenda-label">
+                    {labelOf(b)}
+                    {!s.projects.length && <span className="hint"> · {t("noProjects")}</span>}
+                  </span>
+                  <Select
+                    aria-label={t("projectOrder")}
+                    value={b.order}
+                    onChange={(e) => patchProjects(i, { order: e.target.value as (typeof PROJECT_ROUND_ORDERS)[number] })}
+                    style={{ width: "auto" }}
+                  >
+                    {PROJECT_ROUND_ORDERS.map((o) => (
+                      <option key={o} value={o}>
+                        {t(`projectOrders.${o}`)}
+                      </option>
+                    ))}
+                  </Select>
+                  <input
+                    type="number"
+                    aria-label={t("perProject")}
+                    placeholder={t("perProjectAuto")}
+                    min={1}
+                    max={60}
+                    value={b.perProjectSec ? Math.round(b.perProjectSec / 60) : ""}
+                    onChange={(e) =>
+                      patchProjects(i, {
+                        perProjectSec: e.target.value ? Math.max(1, Math.min(60, Number(e.target.value) || 1)) * 60 : undefined,
+                      })
+                    }
+                  />
+                  <span className="hint">{t("perProject")}</span>
+                </span>
+              ) : (
                 <span className="agenda-label">
                   {labelOf(b)}
-                  {!s.projects.length && <span className="hint"> · {t("noProjects")}</span>}
+                  {!moduleOn(b.type) && <span className="hint"> · {t("turnOn")}</span>}
                 </span>
-                <Select
-                  aria-label={t("projectOrder")}
-                  value={b.order}
-                  onChange={(e) => patchProjects(i, { order: e.target.value as (typeof PROJECT_ROUND_ORDERS)[number] })}
-                  style={{ width: "auto" }}
+              )}
+              <span className="controls">
+                <button
+                  type="button"
+                  className="icon-btn danger"
+                  disabled={blocks.length === 1}
+                  aria-label={t("remove", { label: labelOf(b) })}
+                  onClick={() => setBlocks((list) => list.filter((_, j) => j !== i))}
                 >
-                  {PROJECT_ROUND_ORDERS.map((o) => (
-                    <option key={o} value={o}>
-                      {t(`projectOrders.${o}`)}
-                    </option>
-                  ))}
-                </Select>
-                <input
-                  type="number"
-                  aria-label={t("perProject")}
-                  placeholder={t("perProjectAuto")}
-                  min={1}
-                  max={60}
-                  value={b.perProjectSec ? Math.round(b.perProjectSec / 60) : ""}
-                  onChange={(e) =>
-                    patchProjects(i, {
-                      perProjectSec: e.target.value ? Math.max(1, Math.min(60, Number(e.target.value) || 1)) * 60 : undefined,
-                    })
-                  }
-                />
-                <span className="hint">{t("perProject")}</span>
+                  <Trash2 size={15} strokeWidth={2} aria-hidden="true" />
+                </button>
               </span>
-            ) : (
-              <span className="agenda-label">
-                {labelOf(b)}
-                {!moduleOn(b.type) && <span className="hint"> · {t("turnOn")}</span>}
-              </span>
-            )}
-            <span className="controls">
-              <button
-                type="button"
-                className="icon-btn"
-                disabled={i === 0}
-                aria-label={t("up", { label: labelOf(b) })}
-                onClick={() => move(i, -1)}
-              >
-                ↑
-              </button>
-              <button
-                type="button"
-                className="icon-btn"
-                disabled={i === blocks.length - 1}
-                aria-label={t("down", { label: labelOf(b) })}
-                onClick={() => move(i, 1)}
-              >
-                ↓
-              </button>
-              <button
-                type="button"
-                className="icon-btn"
-                disabled={blocks.length === 1}
-                aria-label={t("remove", { label: labelOf(b) })}
-                onClick={() => setBlocks((list) => list.filter((_, j) => j !== i))}
-              >
-                ✕
-              </button>
+            </li>
+          ))}
+          {/* The wrap-up always ends the meeting: shown in its place, neither moved nor removed */}
+          <li className="agenda-fixed">
+            <span className="sort-grip-space" aria-hidden="true" />
+            <span className="agenda-icon" aria-hidden="true">
+              <Icon name="flag" size={16} />
+            </span>
+            <span className="agenda-label">
+              {t("end")}
+              <span className="hint"> · {t("endHint")}</span>
             </span>
           </li>
-        ))}
-      </ol>
-      <div className="controls">
-        <label className="sr-only" htmlFor="agendaAdd">
-          {t("add")}
-        </label>
-        <Select
-          id="agendaAdd"
-          value=""
-          onChange={(e) => {
-            if (e.target.value) add(e.target.value as BlockType);
-          }}
-          style={{ width: "auto" }}
-        >
-          <option value="">+ {t("add")}</option>
-          {ADDABLE.filter(canAdd).map((type) => (
-            <option key={type} value={type}>
-              {t(`blocks.${type}`)}
-            </option>
-          ))}
-        </Select>
-        <span className="hint save-status" role="status">
-          {!dirty && sent.current === saved ? `✓ ${t("saved")}` : ""}
-        </span>
-      </div>
+        </ol>
+        <div className="controls">
+          {/* Each block says what it brings; those that cannot be added say why */}
+          <Menu
+            label={t("add")}
+            className="agenda-add"
+            align="start"
+            up
+            button={
+              <>
+                <Plus size={16} strokeWidth={2.2} aria-hidden="true" /> {t("add")}
+              </>
+            }
+          >
+            {(close) =>
+              ADDABLE.map((type) => {
+                const why = !moduleOn(type) ? t("turnOn") : !canAdd(type) ? t("alreadyThere") : null;
+                return (
+                  <button
+                    key={type}
+                    type="button"
+                    className="menu-item agenda-add-item"
+                    disabled={!!why}
+                    onClick={() => {
+                      close();
+                      add(type);
+                    }}
+                  >
+                    <span className="agenda-icon" aria-hidden="true">
+                      {BLOCK_ICON[type] && <Icon name={BLOCK_ICON[type]} size={16} />}
+                    </span>
+                    <span className="menu-item-text">
+                      <strong>{t(`blocks.${type}`)}</strong>
+                      <span className="hint">{why ?? t(`blockHints.${type}`)}</span>
+                    </span>
+                  </button>
+                );
+              })
+            }
+          </Menu>
+          <span className="hint save-status" role="status">
+            {!dirty && sent.current === saved ? `✓ ${t("saved")}` : ""}
+          </span>
+        </div>
+      </fieldset>
     </form>
   );
 }

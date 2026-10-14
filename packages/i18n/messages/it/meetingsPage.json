@@ -4,12 +4,21 @@
   "new": "Nuova riunione",
   "filter": "Quali riunioni",
   "search": "Filtra per nome",
+  "sortBy": "Ordina per",
+  "sorts": {
+    "next": "Prossima sessione",
+    "name": "Nome",
+    "recent": "Ultima sessione",
+    "actions": "Azioni aperte"
+  },
   "filters": {
     "all": "Tutte",
+    "live": "In diretta",
     "mine": "A cui partecipo",
     "run": "Che conduco"
   },
   "liveNow": "In diretta ora",
+  "sessionOf": "Sessione delle {time}",
   "next": "Prossima sessione",
   "noNext": "Nessuna sessione prevista",
   "held": "{count, plural, one {sessione tenuta} other {sessioni tenute}}",

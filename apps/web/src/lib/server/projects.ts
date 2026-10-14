@@ -205,7 +205,8 @@ function sourceView(
 export interface Portfolio {
   themes: { id: string; name: string; description: string; color: number; position: number }[];
   projects: PortfolioProject[];
-  people: { id: string; name: string; color: number; avatar: number | null }[];
+  /** The directory's active people; `isMe` marks the viewer (offered once, as themselves, when picking a lead) */
+  people: { id: string; name: string; color: number; avatar: number | null; isMe?: boolean }[];
   canCreate: boolean;
   canManage: boolean;
   /** The plan has programmes and per-project rights (Enterprise) */
@@ -226,7 +227,13 @@ const peopleOf = async (ctx: WorkspaceContext): Promise<Portfolio["people"]> =>
       orderBy: [{ firstName: "asc" }, { lastName: "asc" }],
       select: { id: true, firstName: true, lastName: true, color: true, avatar: { select: { updatedAt: true } } },
     })
-  ).map((p) => ({ id: p.id, name: personName(p), color: p.color, avatar: p.avatar?.updatedAt.getTime() ?? null }));
+  ).map((p) => ({
+    id: p.id,
+    name: personName(p),
+    color: p.color,
+    avatar: p.avatar?.updatedAt.getTime() ?? null,
+    ...(p.id === ctx.member.personId ? { isMe: true } : {}),
+  }));
 
 export async function loadPortfolio(ctx: WorkspaceContext): Promise<Portfolio> {
   if (!ctx.can("projects.read")) throw new AccessError(403, "accessDenied");
@@ -398,7 +405,8 @@ export async function loadProject(ctx: WorkspaceContext, slug: string): Promise<
   const sessions = await ctx.db.session.findMany({
     where: { id: { in: ids } },
     orderBy: { date: "desc" },
-    take: 40,
+    // Years of a project's life; the page shows them a month at a time, more on demand
+    take: 500,
     select: { id: true, date: true, record: true, meeting: { select: { id: true, name: true } } },
   });
   const timeline = sessions.map((s): ProjectPage["timeline"][number] => {
@@ -665,7 +673,7 @@ export async function addTheme(ctx: WorkspaceContext, name: string, description 
   if (!ctx.can("projects.manage")) throw new AccessError(403, "accessDenied");
   const label = name.trim().slice(0, 60);
   if (!label) throw new OpError("nameRequired");
-  if (await ctx.db.projectTheme.findFirst({ where: { name: label }, select: { id: true } })) throw new OpError("categoryExists");
+  if (await ctx.db.projectTheme.findFirst({ where: { name: label }, select: { id: true } })) throw new OpError("themeExists");
   const position = await ctx.db.projectTheme.count();
   return ctx.db.projectTheme.create({
     data: {
@@ -682,8 +690,7 @@ export async function renameTheme(ctx: WorkspaceContext, id: string, name: strin
   if (!ctx.can("projects.manage")) throw new AccessError(403, "accessDenied");
   const label = name.trim().slice(0, 60);
   if (!label) throw new OpError("nameRequired");
-  if (await ctx.db.projectTheme.findFirst({ where: { name: label, NOT: { id } }, select: { id: true } }))
-    throw new OpError("categoryExists");
+  if (await ctx.db.projectTheme.findFirst({ where: { name: label, NOT: { id } }, select: { id: true } })) throw new OpError("themeExists");
   const { count } = await ctx.db.projectTheme.updateMany({ where: { id }, data: { name: label } });
   if (!count) throw new OpError("notFound");
 }

@@ -38,7 +38,8 @@ const png = (width: number, height: number) =>
 beforeEach(() => {
   captureFeedback.mockClear();
   delete process.env.SENTRY_DSN;
-  delete process.env.RONDE_FEEDBACK;
+  // A self-hosted instance that asked for its people's feedback
+  process.env.RONDE_FEEDBACK = "on";
 });
 afterEach(() => {
   delete process.env.SENTRY_DSN;
@@ -101,6 +102,12 @@ describe("feedback", () => {
     );
     expect(results.filter((r) => r.status === "fulfilled").length).toBeLessThanOrEqual(5);
     expect(await prisma.feedback.count({ where: { userId: user.id } })).toBeLessThanOrEqual(5);
+  });
+
+  it("is off by default on a self-hosted instance", async () => {
+    const { user } = await workspace(`fb-default-${Date.now().toString(36)}`);
+    delete process.env.RONDE_FEEDBACK;
+    await expect(sendFeedback(asUser(user), input(), null, meta)).rejects.toMatchObject({ key: "notFound", status: 404 });
   });
 
   it("is turned off with RONDE_FEEDBACK=off", async () => {

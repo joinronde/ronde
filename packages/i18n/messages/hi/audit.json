@@ -92,9 +92,10 @@
     },
     "workspace": {
       "update": "वर्कस्पेस सेटिंग्स बदली गईं",
-      "categoryAdd": "नौकरी श्रेणी जोड़ी गई",
-      "categoryRename": "नौकरी श्रेणी का नाम बदला गया",
-      "categoryDelete": "नौकरी श्रेणी हटाई गई",
+      "categoryAdd": "टीम जोड़ी गई",
+      "categoryRename": "टीम का नाम बदला गया",
+      "categoryDelete": "टीम हटाई गई",
+      "categoryMove": "टीम स्थानांतरित की गई",
       "auditStream": "ऑडिट भेजना बदला गया",
       "logo": "लोगो बदला गया",
       "logoRemoved": "लोगो हटाया गया",

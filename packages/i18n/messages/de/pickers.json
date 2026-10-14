@@ -1,0 +1,20 @@
+{
+  "date": {
+    "placeholder": "Datum wählen",
+    "clear": "Leeren",
+    "today": "Heute",
+    "previous": "Vorheriger Monat",
+    "next": "Nächster Monat"
+  },
+  "time": {
+    "placeholder": "Uhrzeit wählen",
+    "list": "Uhrzeiten",
+    "invalid": "Geben Sie eine Uhrzeit wie 9:30 ein"
+  },
+  "duration": {
+    "less": "Kürzer",
+    "more": "Länger",
+    "suggestions": "Übliche Dauern",
+    "typeHint": "Beliebige Dauer eingeben: 25, 1h15, 1:30…"
+  }
+}

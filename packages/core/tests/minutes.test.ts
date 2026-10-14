@@ -237,3 +237,16 @@ describe("minutes of the project round", () => {
     expect(md).not.toContain("Alice Martin: Design review");
   });
 });
+
+describe("noteLineKind", () => {
+  it("knows a decision or an action as soon as its prefix is typed, in any language", async () => {
+    const { noteLineKind } = await import("../src/minutes");
+    expect(noteLineKind("Décision : on livre jeudi")).toBe("decision");
+    expect(noteLineKind("**Decision:** ")).toBe("decision");
+    expect(noteLineKind("- Entscheidung: ja")).toBe("decision");
+    expect(noteLineKind("决定：发布")).toBe("decision");
+    expect(noteLineKind("**Action:** call Paul (Ana)")).toBe("action");
+    expect(noteLineKind("A decision was taken")).toBeNull();
+    expect(noteLineKind("")).toBeNull();
+  });
+});

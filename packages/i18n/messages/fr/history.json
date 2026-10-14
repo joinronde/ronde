@@ -1,6 +1,6 @@
 {
   "loading": "Chargement de l'historique…",
-  "empty": "Aucune réunion archivée. Utilisez « Archiver la réunion » dans la Régie, à la clôture de la réunion.",
+  "empty": "Aucun compte rendu pour l'instant. Utilisez « Publier le compte rendu » dans la Régie, à la clôture de la réunion.",
   "searchPlaceholder": "Rechercher dans les comptes rendus (projet, personne, difficulté…)",
   "searchLabel": "Rechercher dans les comptes rendus",
   "meetings": "{count, plural, one {# réunion} other {# réunions}}",

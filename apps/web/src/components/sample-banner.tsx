@@ -22,7 +22,7 @@ export function SampleBanner() {
     const res = await deleteSampleAction(s.context.workspace.slug, s.context.meetingId);
     if (!res.ok) {
       setBusy(false);
-      toast(res.error);
+      toast(res.error, "error");
       return;
     }
     track("sample_deleted");

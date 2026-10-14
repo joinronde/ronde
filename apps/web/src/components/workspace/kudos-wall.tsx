@@ -3,11 +3,12 @@
 import { formatters, type Locale } from "@ronde/i18n";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
+import { EmptyHero } from "@/components/illustration";
+import { ShowMore, useShowMore } from "@/components/show-more";
 import type { DashboardPerson } from "@/lib/server/dashboard";
 import type { KudosWall } from "@/lib/server/overview";
 import { withBasePath } from "@/lib/shared/base-path";
 import { initials } from "../shell/app-shell";
-import { PeopleTabs } from "./people-tabs";
 
 const tint = (color: number) => ({ "--c": `var(--c${color % 6})` }) as React.CSSProperties;
 /** A slight tilt per card, the same on every render, like notes pinned on a board */
@@ -26,9 +27,10 @@ export function KudosWallView({ slug, wall, today }: { slug: string; wall: Kudos
   const t = useTranslations("kudosWall");
   const fmt = formatters(useLocale() as Locale);
   const year = today.slice(0, 4);
+  // A wall of thanks grows for years: the latest first, more on demand
+  const page = useShowMore(30);
   return (
     <div className="page kudos-page">
-      <PeopleTabs slug={slug} />
       <header className="kw-head">
         <div className="kw-hearts" aria-hidden="true">
           {[0, 1, 2, 3, 4, 5, 6].map((i) => (
@@ -70,7 +72,7 @@ export function KudosWallView({ slug, wall, today }: { slug: string; wall: Kudos
 
       {wall.kudos.length ? (
         <ul className="kw-wall" aria-label={t("wall")}>
-          {wall.kudos.map((k, i) => (
+          {wall.kudos.slice(0, page.limit).map((k, i) => (
             <li
               key={k.id}
               className="kw-card"
@@ -97,12 +99,9 @@ export function KudosWallView({ slug, wall, today }: { slug: string; wall: Kudos
             </li>
           ))}
         </ul>
-      ) : (
-        <div className="empty-state">
-          <p>{t("empty")}</p>
-          <p className="hint">{t("emptyHint")}</p>
-        </div>
-      )}
+      ) : null}
+      {wall.kudos.length > 0 && <ShowMore hidden={wall.kudos.length - page.limit} step={page.step} onMore={page.more} />}
+      {wall.kudos.length ? null : <EmptyHero art="kudos" title={t("empty")} hint={t("emptyHint")} />}
     </div>
   );
 }

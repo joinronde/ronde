@@ -103,6 +103,10 @@ model LdapDirectory {
   userFilter     String    @default("(&(objectClass=person)(mail={{email}}))")
   emailAttribute String    @default("mail")
   nameAttribute  String    @default("cn")
+  /// Attributes copied to the person's card at each sign-in (empty: not read)
+  phoneAttribute    String @default("telephoneNumber")
+  teamAttribute     String @default("department")
+  birthdayAttribute String @default("")
   enabled        Boolean   @default(true)
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt

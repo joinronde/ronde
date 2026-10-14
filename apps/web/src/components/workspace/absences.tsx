@@ -1,11 +1,13 @@
 "use client";
 
 import { formatters, type Locale } from "@ronde/i18n";
+import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import { addAbsenceAction, removeAbsenceAction } from "@/app/w/[ws]/actions";
 import { FormAlert } from "@/components/auth/fields";
+import { DateInput } from "@/components/date-input";
 import { Select } from "@/components/select";
 import type { AbsenceDTO } from "@/lib/server/absences";
 import { Icon } from "../shell/icons";
@@ -87,11 +89,11 @@ export function AbsencesCard({
               {canEdit && (
                 <button
                   type="button"
-                  className="icon-btn"
+                  className="icon-btn danger"
                   aria-label={t("remove", { period: period(a) })}
                   onClick={() => void remove(a.id)}
                 >
-                  ✕
+                  <Trash2 size={14} strokeWidth={2.2} aria-hidden="true" />
                 </button>
               )}
             </li>
@@ -106,11 +108,11 @@ export function AbsencesCard({
           <div className="grid2">
             <label className="field">
               <span>{t("from")}</span>
-              <input type="date" required value={from} onChange={(e) => setFrom(e.target.value)} />
+              <DateInput required value={from} onChange={setFrom} />
             </label>
             <label className="field">
               <span>{t("to")}</span>
-              <input type="date" required min={from} value={to} onChange={(e) => setTo(e.target.value)} />
+              <DateInput required min={from} value={to} onChange={setTo} />
             </label>
           </div>
           <label className="field">

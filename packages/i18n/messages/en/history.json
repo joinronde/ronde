@@ -1,6 +1,6 @@
 {
   "loading": "Loading the history…",
-  "empty": "No archived meeting yet. Use “Archive the meeting” in the control room, at the wrap-up.",
+  "empty": "No minutes yet. Use “Publish the minutes” in the control room, at the wrap-up.",
   "searchPlaceholder": "Search the minutes (project, person, blocker…)",
   "searchLabel": "Search the minutes",
   "meetings": "{count, plural, one {# meeting} other {# meetings}}",

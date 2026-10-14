@@ -1,5 +1,6 @@
 import { projectOfKey } from "@ronde/core/meeting";
 import "server-only";
+import { LINE_REACTIONS } from "@ronde/core/types";
 import { sectionKeyOf, VOTES_PER_PERSON } from "@ronde/core/util";
 import type { ScopedTx } from "@ronde/db";
 import { actorId, requireActor, requireParticipant, str } from "@ronde/modules/shared";
@@ -95,9 +96,35 @@ export const liveOps = [
       await requireParticipant({ db, meetingId }, o.ownerId);
       const item = await commentedItem(db, meetingId, o);
       const where = { sessionId: requireSession().id, ownerId: o.ownerId, itemId: item.id, byId: by };
-      const existing = await db.checkInComment.findFirst({ where: { ...where, text: "" } });
+      // The 👍 only: the person's other reactions stay
+      const existing = await db.checkInComment.findFirst({ where: { ...where, text: "", emoji: { in: ["", "👍"] } } });
       if (existing) await db.checkInComment.delete({ where: { id: existing.id } });
-      else await db.checkInComment.create({ data: { ...where, workspaceId, text: "" } });
+      else await db.checkInComment.create({ data: { ...where, workspaceId, text: "", emoji: "👍" } });
+    },
+  }),
+  defineOp({
+    name: "comment.react",
+    permission: "session.participate",
+    session: "read",
+    /** A reaction on a line, put or taken back: one of each emoji per person */
+    input: z.object({
+      ownerId: str(50),
+      section: str(60),
+      itemText: str(2000).min(1),
+      projectId: str(50).nullable().optional(),
+      emoji: z.enum(LINE_REACTIONS),
+    }),
+    run: async ({ db, m, requireSession, meetingId, workspaceId }, o) => {
+      const by = requireActor(m.viewer);
+      await requireParticipant({ db, meetingId }, o.ownerId);
+      const item = await commentedItem(db, meetingId, o);
+      const where = { sessionId: requireSession().id, ownerId: o.ownerId, itemId: item.id, byId: by, text: "" };
+      // A 👍 from before there were several reactions has no emoji
+      const mine = await db.checkInComment.findFirst({
+        where: { ...where, emoji: o.emoji === "👍" ? { in: ["", "👍"] } : o.emoji },
+      });
+      if (mine) await db.checkInComment.delete({ where: { id: mine.id } });
+      else await db.checkInComment.create({ data: { ...where, workspaceId, emoji: o.emoji } });
     },
   }),
   defineOp({

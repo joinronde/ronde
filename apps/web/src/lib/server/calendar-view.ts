@@ -10,6 +10,8 @@ export interface CalendarEvent {
   meeting: string;
   /** Index of the meeting, for its colour */
   color: number;
+  /** The meeting's emoji (empty: its initials) */
+  icon: string;
   date: string;
   time: string;
   durationMin: number;
@@ -30,6 +32,7 @@ export async function calendarEvents(ctx: WorkspaceContext, from: string, to: st
     select: {
       id: true,
       name: true,
+      icon: true,
       timezone: true,
       participants: { where: { personId: ctx.member.personId }, select: { role: true } },
       sessions: {
@@ -44,7 +47,7 @@ export async function calendarEvents(ctx: WorkspaceContext, from: string, to: st
   });
   const events: CalendarEvent[] = [];
   for (const [color, m] of meetings.entries()) {
-    const base = { meetingId: m.id, meeting: m.name, color, role: m.participants[0]?.role ?? null };
+    const base = { meetingId: m.id, meeting: m.name, color, icon: m.icon, role: m.participants[0]?.role ?? null };
     // Held or running sessions, as they happened
     const byDate = new Map(m.sessions.map((s) => [s.date, s]));
     for (const s of m.sessions)

@@ -83,16 +83,32 @@ export const env = {
       .map((s) => s.trim())
       .filter(Boolean),
   gitlabUrl: () => (process.env.GITLAB_URL || "https://gitlab.com").replace(/\/$/, ""),
+  /** OAuth application of the GitLab server: "Connect with GitLab" instead of a personal token */
+  gitlabOAuthClientId: () => process.env.GITLAB_OAUTH_CLIENT_ID ?? "",
+  gitlabOAuthClientSecret: () => process.env.GITLAB_OAUTH_CLIENT_SECRET ?? "",
   /** Public site of Ronde (plans, docs); never written in the code */
   siteUrl: () => (process.env.RONDE_SITE_URL || "https://joinronde.com").replace(/\/$/, ""),
   /**
-   * Where the messages of the "Send feedback" button go: the Ronde team in the cloud, the instance's
-   * administrators elsewhere (/admin); RONDE_FEEDBACK=off takes the button away
+   * Where the messages of the "Send feedback" button go: the Ronde team in the cloud; on a self-hosted
+   * instance the button shows only with RONDE_FEEDBACK=on (messages to its administrators, /admin);
+   * RONDE_FEEDBACK=off takes it away everywhere
    */
   feedbackTo: (): "team" | "admins" | null =>
-    process.env.RONDE_FEEDBACK === "off" ? null : process.env.RONDE_CLOUD === "1" ? "team" : "admins",
+    process.env.RONDE_FEEDBACK === "off"
+      ? null
+      : process.env.RONDE_CLOUD === "1"
+        ? "team"
+        : // A self-hosted instance: off unless its administrators ask for their people's feedback
+          process.env.RONDE_FEEDBACK === "on"
+          ? "admins"
+          : null,
   /** Self-hosted instances can turn off every mention of the paid plans */
   hideUpgradeHints: () => process.env.RONDE_HIDE_UPGRADE_HINTS === "1",
+  /** Hours a live session may stay open before it closes by itself (0: never) */
+  autoCloseHours: () => {
+    const raw = Number(process.env.RONDE_AUTO_CLOSE_HOURS ?? 12);
+    return Number.isFinite(raw) && raw >= 0 ? raw : 12;
+  },
   /** Fallback when no token is entered in the settings */
   gitlabToken: () => process.env.GITLAB_TOKEN ?? "",
   /** Key of the AI assistant for every workspace of the instance (cloud); a workspace may bring its own */

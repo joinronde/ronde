@@ -1,6 +1,8 @@
 {
   "title": "Tagesordnung",
   "intro": "Die Schritte jeder Sitzung, in ihrer Reihenfolge. Der Abschluss beendet immer das Meeting.",
+  "end": "Abschluss und Protokoll",
+  "endHint": "immer zuletzt",
   "blocks": {
     "intro": "Einstieg",
     "round": "Runde",
@@ -10,13 +12,21 @@
     "poker": "Planning Poker",
     "projects": "Projektrunde"
   },
+  "blockHints": {
+    "intro": "Begrüßung, Ankündigungen und Eisbrecher vor der ersten Runde",
+    "round": "Alle der Reihe nach, mit Zeitlimit und ihrem Check-in auf dem Bildschirm",
+    "projects": "Projekt für Projekt, seine Mitglieder sprechen gemeinsam",
+    "topics": "Die Themen, die das Team eingebracht und gewählt hat",
+    "timebox": "Ein eigenes Thema mit eigener Dauer",
+    "retro": "Anonyme Notizen in Spalten, gruppiert, gewählt, dann besprochen",
+    "poker": "Das Team schätzt Aufgaben mit verdeckten Karten"
+  },
   "timeboxTitle": "Thema",
   "minutes": "Minuten",
-  "up": "„{label}“ nach oben",
-  "down": "„{label}“ nach unten",
   "remove": "„{label}“ entfernen",
+  "reorder": "„{label}“ verschieben",
   "add": "Block hinzufügen",
-  "pick": "Block wählen…",
+  "alreadyThere": "Bereits in der Tagesordnung",
   "newTimebox": "Neues Thema",
   "saved": "Tagesordnung gespeichert",
   "turnOn": "Schalte das Modul unter „Module“ ein, um diesen Block hinzuzufügen.",

@@ -7,7 +7,7 @@
   "count": "{count, plural, one {# Person} other {# Personen}}",
   "columns": {
     "name": "Name",
-    "category": "Berufsgruppe",
+    "category": "Team",
     "role": "Rolle",
     "status": "Status",
     "actions": "Aktionen"
@@ -32,8 +32,8 @@
   "lastName": "Nachname",
   "email": "E-Mail",
   "emailLocked": "An das Konto gebunden: Die Person ändert sie selbst.",
-  "category": "Berufsgruppe",
-  "noCategory": "Keine",
+  "category": "Team",
+  "noCategory": "Ohne Team",
   "birthday": "Geburtstag",
   "birthdayHint": "Nur Tag und Monat, nie das Jahr.",
   "month": "Monat",
@@ -63,5 +63,7 @@
   "noCustomRole": "Keine zusätzliche Rolle",
   "phone": "Handynummer",
   "phoneHint": "Für SMS- und WhatsApp-Erinnerungen, im internationalen Format (+49…). Optional.",
-  "formerMember": "Ehemaliges Mitglied"
+  "formerMember": "Ehemaliges Mitglied",
+  "teamFilter": "Team",
+  "allTeams": "Alle Teams"
 }

@@ -14,7 +14,7 @@ import { deliver } from "../../inbox";
 import { saveTemplate } from "../../templates";
 import { saveCheckIn } from "../checkins";
 import { toSection } from "../dto";
-import { ALL_MODULES, defaultInstallations, moduleAllowed, moduleStates } from "../modules";
+import { ALL_MODULES, defaultIcebreakerBank, defaultInstallations, moduleAllowed, moduleStates } from "../modules";
 import { agendaFor, goToKey } from "../session";
 import { sectionsOf } from "../state";
 import { defineOp } from "./define";
@@ -142,7 +142,7 @@ export const configOps = [
       sections: z.array(SectionInput).min(1).max(12),
       accent: z.enum(ACCENTS).optional(),
     }),
-    run: async ({ db, meetingId, workspaceId }, o) => {
+    run: async ({ db, meetingId, workspaceId, m }, o) => {
       const roles = o.sections.filter((s) => s.role !== "custom").map((s) => s.role);
       if (new Set(roles).size !== roles.length) throw new OpError("sectionRoleTaken");
       if (o.sections.some((s) => s.role === "custom" && !s.label)) throw new OpError("sectionLabelRequired");
@@ -171,6 +171,18 @@ export const configOps = [
         });
       }
       await db.section.deleteMany({ where: { meetingId, key: { notIn: [...keep] } } });
+      // Another language: the icebreaker's questions follow it, unless the host wrote their own
+      const before = resolveLocale(m.meeting.locale, m.ws.workspace.locale);
+      const after = resolveLocale(locale || null, m.ws.workspace.locale);
+      if (before !== after) {
+        const row = await db.moduleInstallation.findUnique({ where: { meetingId_moduleId: { meetingId, moduleId: "icebreaker" } } });
+        const bank = row ? readConfig(icebreaker, row.config).bank : [];
+        if (row && JSON.stringify(bank) === JSON.stringify(defaultIcebreakerBank(before)))
+          await db.moduleInstallation.update({
+            where: { meetingId_moduleId: { meetingId, moduleId: "icebreaker" } },
+            data: { config: { ...(row.config as object), bank: defaultIcebreakerBank(after) } },
+          });
+      }
     },
   }),
   defineOp({

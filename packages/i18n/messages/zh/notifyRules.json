@@ -34,6 +34,16 @@
   "saved": "通知已保存。",
   "manageConnectors": "管理连接器",
   "recent": "最近的消息",
+  "preview": {
+    "title": "通知预览",
+    "channels": "渠道",
+    "reminder": "提醒邮件",
+    "none": "此会议尚未发送任何内容：开启提醒邮件（日程）或上方的规则，即可在此查看每个人将收到的内容。",
+    "onLabel": "何时：",
+    "app": "应用",
+    "sampleDecision": "我们改用新的部署流水线",
+    "sampleAction": "更新入职检查清单"
+  },
   "failed": "失败",
   "workflow": {
     "toggle": "条件和消息",

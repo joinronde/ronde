@@ -21,5 +21,9 @@
   },
   "cancel": "إلغاء",
   "delete": "حذف",
-  "exportCsv": "تصدير بصيغة CSV"
+  "exportCsv": "تصدير بصيغة CSV",
+  "dragToReorder": "اسحب لإعادة الترتيب (أو المفتاحان ↑ ↓)",
+  "searchPlaceholder": "بحث…",
+  "noResults": "لا نتائج",
+  "showMore": "عرض {count} إضافية (المتبقي {total})"
 }

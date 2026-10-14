@@ -62,13 +62,16 @@ import {
   deleteWorkspace,
   invite,
   leaveWorkspace,
+  moveJobCategory,
   type PersonInput,
   removePerson,
   renameJobCategory,
   revokeInvitation,
+  styleJobCategory,
   updatePerson,
   updateWorkspace,
 } from "@/lib/server/workspaces";
+import { firstStepsHidden } from "@/lib/shared/prefs";
 
 // Every action re-checks the permission against the workspace in the URL: the client is never trusted
 const refresh = (slug: string) => revalidatePath(`/w/${slug}`, "layout");
@@ -190,11 +193,30 @@ export async function updateWorkspaceAction(
   });
 }
 
-export async function addJobCategoryAction(slug: string, name: string) {
+export async function addJobCategoryAction(slug: string, name: string, parentId: string | null = null) {
   return run(async () => {
     const ctx = await authorize(slug, "workspace.manage");
-    await addJobCategory(ctx, name);
-    await log(ctx, "workspace.categoryAdd", "category", null, { name });
+    await addJobCategory(ctx, name, parentId);
+    await log(ctx, "workspace.categoryAdd", "category", null, { name, parentId });
+    refresh(slug);
+    return null;
+  });
+}
+
+export async function moveJobCategoryAction(slug: string, id: string, parentId: string | null) {
+  return run(async () => {
+    const ctx = await authorize(slug, "workspace.manage");
+    await moveJobCategory(ctx, id, parentId);
+    await log(ctx, "workspace.categoryMove", "category", id, { parentId });
+    refresh(slug);
+    return null;
+  });
+}
+
+export async function styleJobCategoryAction(slug: string, id: string, style: { color?: number; icon?: string }) {
+  return run(async () => {
+    const ctx = await authorize(slug, "workspace.manage");
+    await styleJobCategory(ctx, id, style);
     refresh(slug);
     return null;
   });
@@ -502,6 +524,9 @@ export interface LdapInput {
   userFilter: string;
   emailAttribute: string;
   nameAttribute: string;
+  phoneAttribute: string;
+  teamAttribute: string;
+  birthdayAttribute: string;
   enabled: boolean;
 }
 
@@ -530,6 +555,10 @@ function cleanLdap(input: LdapInput) {
     userFilter: input.userFilter.trim().slice(0, 500),
     emailAttribute: input.emailAttribute.trim().slice(0, 60) || "mail",
     nameAttribute: input.nameAttribute.trim().slice(0, 60) || "cn",
+    // Empty: that attribute is not read
+    phoneAttribute: input.phoneAttribute.trim().slice(0, 60),
+    teamAttribute: input.teamAttribute.trim().slice(0, 60),
+    birthdayAttribute: input.birthdayAttribute.trim().slice(0, 60),
     enabled: input.enabled,
   };
 }
@@ -1047,6 +1076,23 @@ export async function revokeGuestLinkAction(slug: string, meetingId: string, id:
     const ctx = await guestMeeting(slug, meetingId);
     await revokeGuestLink(ctx, id);
     await log(ctx.ws, "guests.revoke", "meeting", meetingId, { id });
+    return null;
+  });
+}
+
+/** The first steps of the home page skipped by the person (`hidden`), or shown again */
+export async function setFirstStepsHiddenAction(slug: string, hidden: boolean) {
+  return run(async () => {
+    const ctx = await authorize(slug);
+    const key = firstStepsHidden(ctx.workspace.id);
+    if (!hidden) await prisma.userPref.deleteMany({ where: { userId: ctx.user.id, key } });
+    else
+      await prisma.userPref.upsert({
+        where: { userId_key: { userId: ctx.user.id, key } },
+        create: { userId: ctx.user.id, key, value: true },
+        update: { value: true },
+      });
+    revalidatePath(`/w/${slug}`);
     return null;
   });
 }

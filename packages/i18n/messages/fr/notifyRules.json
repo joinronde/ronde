@@ -34,6 +34,16 @@
   "saved": "Notifications enregistrées.",
   "manageConnectors": "Gérer les connecteurs",
   "recent": "Derniers messages",
+  "preview": {
+    "title": "Aperçu des notifications",
+    "channels": "Canaux",
+    "reminder": "Rappel par e-mail",
+    "none": "Rien ne part encore de cette réunion : activez le rappel par e-mail (Planification) ou une règle ci-dessus, et voyez ici ce que chacun recevra.",
+    "onLabel": "Quand :",
+    "app": "Appli",
+    "sampleDecision": "On passe au nouveau pipeline de déploiement",
+    "sampleAction": "Mettre à jour la checklist d'accueil"
+  },
   "failed": "échec",
   "workflow": {
     "toggle": "Conditions et message",

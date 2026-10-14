@@ -10,6 +10,19 @@
   "kickerLive": "Идёт сейчас",
   "liveNow": "Сейчас в эфире",
   "liveShort": "в эфире",
+  "liveStep": {
+    "intro": "Вступление",
+    "turn": "Очередь: {name} · {n}/{total}",
+    "projects": "Круг проектов",
+    "topics": "Разное",
+    "end": "Завершение",
+    "block": "Идёт"
+  },
+  "liveSince": "Началась в {time}",
+  "liveSinceDay": "Началась {day} в {time}",
+  "turnsDone": "{done}/{total} очередей пройдено",
+  "yourTurnNow": "Ваша очередь!",
+  "yourTurnIn": "{count, plural, one {Ваша очередь через # человека} few {Ваша очередь через # человека} many {Ваша очередь через # человек} other {Ваша очередь через # человека}}",
   "today": "Сегодня",
   "tomorrow": "Завтра",
   "inDays": "{count, plural, one {Через # день} few {Через # дня} many {Через # дней} other {Через # дня}}",
@@ -45,9 +58,12 @@
   "nextOn": "Следующая: {date}",
   "people": "{count, plural, one {# человек} few {# человека} many {# человек} other {# человека}}",
   "gettingStarted": "С чего начать",
+  "skipSteps": "Пропустить",
   "progress": "Выполнено {done} из {total}",
   "stepsDone": "Выполненные шаги",
   "sheetReady": "Карточка проекта «{project}» готова",
   "sheetEmpty": "Нужно заполнить карточку проекта «{project}»",
-  "readyCount": "Заполнено карточек: {ready}/{total}"
+  "readyCount": "Заполнено карточек: {ready}/{total}",
+  "seatReady": "отчёт заполнен",
+  "seatToFill": "отчёт не заполнен"
 }

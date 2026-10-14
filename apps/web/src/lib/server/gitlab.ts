@@ -5,14 +5,17 @@ import { matchesProjects } from "@ronde/core/util";
 import type { ScopedClient } from "@ronde/db";
 import { readConfig } from "@ronde/module-sdk";
 import { gitlab } from "@ronde/modules";
+import { grantDue, parseGitlabSecret } from "@/lib/shared/gitlab-grant";
 import { env } from "./env";
 import { AccessError, IntegrationError } from "./errors";
+import { renewGrant, saveGrant } from "./gitlab-oauth";
 import { isCloud } from "./license";
 import { outboundFetch } from "./outbound";
 import { decryptSecret } from "./secrets";
 
 // Recent issues and merge requests of a person, through the GitLab API.
-// The token is the one entered in the settings, otherwise the GITLAB_TOKEN variable.
+// The access is the account connected with GitLab (OAuth, renewed in time), a token entered in the settings,
+// otherwise the GITLAB_TOKEN variable.
 
 interface GlIssue {
   id: number;
@@ -30,7 +33,8 @@ interface GlProject {
   archived?: boolean;
 }
 
-type GitlabConfig = { url: string; token: string };
+/** `bearer`: an OAuth access token (sent as Authorization), otherwise a personal token */
+type GitlabConfig = { url: string; token: string; bearer?: boolean };
 
 /** The instance's token serves every meeting of a self-hosted server; in the cloud each meeting brings its own */
 const instanceToken = (token: string) => (isCloud() ? "" : token);
@@ -40,7 +44,24 @@ export async function meetingGitlab(db: ScopedClient, meetingId: string) {
   const row = await db.moduleInstallation.findFirst({ where: { meetingId, moduleId: "gitlab" } });
   if (row && !row.enabled) throw new AccessError(403, "moduleDisabled");
   const config = readConfig(gitlab, row?.config);
-  const cfg: GitlabConfig = { url: env.gitlabUrl(), token: decryptSecret(row?.secret ?? "") || instanceToken(env.gitlabToken()) };
+  const { token, grant } = parseGitlabSecret(decryptSecret(row?.secret ?? ""));
+  if (grant && row) {
+    let current = grant;
+    if (grantDue(grant)) {
+      try {
+        current = await renewGrant(grant);
+        await saveGrant(db, row.workspaceId, meetingId, current);
+      } catch (e) {
+        // Renewed meanwhile by another request (GitLab then refuses the old refresh token): the new one serves
+        const again = await db.moduleInstallation.findFirst({ where: { meetingId, moduleId: "gitlab" } });
+        const fresh = parseGitlabSecret(decryptSecret(again?.secret ?? "")).grant;
+        if (!fresh || grantDue(fresh)) throw e;
+        current = fresh;
+      }
+    }
+    return { cfg: { url: env.gitlabUrl(), token: current.access, bearer: true }, projects: config.projects, groups: config.groups };
+  }
+  const cfg: GitlabConfig = { url: env.gitlabUrl(), token: token || instanceToken(env.gitlabToken()) };
   return { cfg, projects: config.projects, groups: config.groups };
 }
 
@@ -55,7 +76,7 @@ const cacheKey = (cfg: GitlabConfig, ...parts: string[]) =>
 
 async function glFetch(cfg: GitlabConfig, path: string): Promise<Response> {
   const res = await outboundFetch(`${cfg.url}/api/v4${path}`, {
-    headers: { "PRIVATE-TOKEN": cfg.token },
+    headers: cfg.bearer ? { Authorization: `Bearer ${cfg.token}` } : { "PRIVATE-TOKEN": cfg.token },
     cache: "no-store",
     signal: AbortSignal.timeout(15_000),
   }).catch(() => {

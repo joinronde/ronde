@@ -4,7 +4,10 @@ import type { DecisionDTO } from "@ronde/core/types";
 import { formatters } from "@ronde/i18n";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
+import { ShowMore, useShowMore } from "@/components/show-more";
+import { limitGroups } from "@/lib/shared/show-more";
 import { LoadError } from "./common";
+import { EmptyHero } from "./illustration";
 import { useRonde } from "./ronde-provider";
 
 /** Decision log: every decision noted in the archived sessions, newest first, searchable */
@@ -47,17 +50,17 @@ export function DecisionLog() {
     for (const d of items ?? []) groups.set(d.date, [...(groups.get(d.date) ?? []), d]);
     return [...groups];
   }, [items]);
+  // The sessions' decisions a few at a time, newest first; a new search starts from the top
+  const page = useShowMore();
+  const shownDays = limitGroups(
+    byDate.map(([key, items]) => ({ key, items })),
+    page.limit,
+  );
 
   if (!s.modules.decisions) return <div className="emptybox">{t("off")}</div>;
   if (error) return <LoadError onRetry={() => setRetry((n) => n + 1)} />;
   if (!items) return <p className="loading">{t("loading")}</p>;
-  if (!items.length && !query)
-    return (
-      <div className="emptybox">
-        <p>{t("empty")}</p>
-        <p className="hint">{t("howTo")}</p>
-      </div>
-    );
+  if (!items.length && !query) return <EmptyHero art="decisions" title={t("empty")} hint={t("howTo")} />;
   return (
     <div className="decision-log">
       <div className="hist-bar">
@@ -73,7 +76,7 @@ export function DecisionLog() {
         </span>
       </div>
       {!items.length && <div className="emptybox">{t("noMatch", { query })}</div>}
-      {byDate.map(([date, list]) => (
+      {shownDays.groups.map(({ key: date, items: list }) => (
         <section key={date} className="decision-day" aria-labelledby={`d-${date}`}>
           <h2 id={`d-${date}`}>{fmt.date(date)}</h2>
           <ul>
@@ -86,6 +89,7 @@ export function DecisionLog() {
           </ul>
         </section>
       ))}
+      <ShowMore hidden={shownDays.hidden} step={page.step} onMore={page.more} />
     </div>
   );
 }

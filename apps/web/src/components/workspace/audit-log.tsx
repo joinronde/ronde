@@ -7,6 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { setAuditStreamAction } from "@/app/w/[ws]/actions";
 import { FormAlert } from "@/components/auth/fields";
+import { DateInput } from "@/components/date-input";
 import { Select } from "@/components/select";
 import { withBasePath } from "@/lib/shared/base-path";
 
@@ -97,11 +98,11 @@ export function AuditLogView({ slug, rows, next, filters, days, stream }: Props)
         </label>
         <label>
           <span className="lbl-s">{t("filters.from")}</span>
-          <input type="date" name="from" defaultValue={filters.from} />
+          <DateInput name="from" compact defaultValue={filters.from} />
         </label>
         <label>
           <span className="lbl-s">{t("filters.to")}</span>
-          <input type="date" name="to" defaultValue={filters.to} />
+          <DateInput name="to" compact defaultValue={filters.to} />
         </label>
         <div className="controls">
           <button type="submit" className="btn">

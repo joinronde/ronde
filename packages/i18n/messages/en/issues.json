@@ -1,0 +1,11 @@
+{
+  "tooSmall": "at least {min}",
+  "tooBig": "{max} at most",
+  "tooShort": "at least {min, plural, one {# character} other {# characters}}",
+  "tooLong": "{max, plural, one {# character} other {# characters}} at most",
+  "tooFew": "at least {min, plural, one {# item} other {# items}}",
+  "tooMany": "{max, plural, one {# item} other {# items}} at most",
+  "format": "a value is not in the expected format",
+  "missing": "a value is missing",
+  "invalid": "a value is not accepted"
+}
