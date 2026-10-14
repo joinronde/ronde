@@ -167,4 +167,24 @@ test("GitLab and GitHub connections: the workspace's, and a meeting's own", asyn
   await expect(page.getByText("No GitLab connection")).toBeVisible();
   await page.getByRole("button", { name: "Add a connection for this meeting only" }).click();
   await expect(page.locator(".forge-own").getByLabel("Token", { exact: true })).toBeVisible();
+
+test("the usual durations open under their field", async ({ page }) => {
+  test.setTimeout(180_000);
+  const workspace = await hostWithWorkspace(
+    page,
+    { name: "Dora Duration", email: `dora-${run}@example.com`, password: "duration-password-123" },
+    `Durations ${run}`,
+  );
+  const meeting = await createMeeting(page, workspace, "Durations");
+  await page.goto(`${meeting}/settings#general`);
+  const field = page.locator(".duration-box").filter({ has: page.locator("#cSpeak") });
+  await field.getByRole("button", { name: "Usual durations" }).click();
+  const list = page.locator(".duration-pop");
+  await expect(list).toBeVisible();
+  // It once opened at the top left corner of the page, its anchor being a detached trigger
+  const box = (await field.boundingBox())!;
+  const pop = (await list.boundingBox())!;
+  expect(Math.abs(pop.y - (box.y + box.height)) < 20 || Math.abs(pop.y + pop.height - box.y) < 20).toBe(true);
+  expect(pop.x + pop.width).toBeGreaterThan(box.x);
+  expect(pop.x).toBeLessThan(box.x + box.width);
 });
