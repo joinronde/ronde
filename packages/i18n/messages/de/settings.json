@@ -116,7 +116,14 @@
     "notifications": "Chat, E-Mail und SMS rund um die Besprechung",
     "goGeneral": "Unter Allgemein",
     "goSchedule": "Unter Planung",
-    "goNotifications": "Unter Benachrichtigungen"
+    "goNotifications": "Unter Benachrichtigungen",
+    "origin": {
+      "inherited": "Vom Arbeitsbereich übernommen",
+      "workspace": "Vom Arbeitsbereich",
+      "workspaceNamed": "Vom Arbeitsbereich: {name}",
+      "meeting": "Eigenes dieses Meetings",
+      "instance": "Vom Server"
+    }
   },
   "preview": {
     "to": "An: {email} · {date} um {time}",

@@ -14,6 +14,8 @@ export interface IntegrationItem {
   description: string;
   state: "on" | "todo" | "off";
   stateText: string;
+  /** Where the access comes from: the workspace, the meeting's own, the server */
+  origin?: string;
   /** Set up here: the panel the card opens */
   panel?: React.ReactNode;
   /** Set up in another part of the settings (its category) */
@@ -54,6 +56,7 @@ export function IntegrationsHub({ items }: { items: IntegrationItem[] }) {
                   </span>
                 </span>
                 <span className="integ-desc">{it.description}</span>
+                {it.origin && <span className="integ-origin">{it.origin}</span>}
               </>
             );
             return it.panel ? (

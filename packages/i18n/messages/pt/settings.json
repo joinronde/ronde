@@ -116,7 +116,14 @@
     "notifications": "Chat, email e SMS à volta da reunião",
     "goGeneral": "Em Geral",
     "goSchedule": "Em Planeamento",
-    "goNotifications": "Em Notificações"
+    "goNotifications": "Em Notificações",
+    "origin": {
+      "inherited": "Herdado do espaço",
+      "workspace": "Do espaço",
+      "workspaceNamed": "Do espaço: {name}",
+      "meeting": "Próprio desta reunião",
+      "instance": "Do servidor"
+    }
   },
   "preview": {
     "to": "Para: {email} · {date} às {time}",

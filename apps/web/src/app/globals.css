@@ -4292,6 +4292,7 @@ span.select.compact{padding:0;background:none}
 .integ-name{font-size:15.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .integ-top .integ-state{margin-inline-start:auto;flex:none;max-width:50%}
 .integ-desc{font-size:13.5px;line-height:1.45;color:var(--ink-3);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.integ-origin{font-size:12px;font-weight:600;color:var(--ink-3);letter-spacing:.01em}
 .integ-card .integ-go{margin-top:auto}
 .integ-card.s-on{border-color:color-mix(in srgb,var(--ok) 35%,var(--line))}
 .integ-card.s-on .integ-mark{background:var(--ok-soft);color:var(--ok)}

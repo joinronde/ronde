@@ -190,4 +190,9 @@ test("a BigBlueButton server of the workspace, picked by a meeting (every editio
   await choose(page, page.getByLabel("Video tool"), "bbb");
   await expect(page.getByLabel("Server", { exact: true })).toContainText("Campus");
   await expect(page.getByText("People join with:")).toBeVisible();
+  // Its card says where the call comes from
+  await page.goto(`${meeting}/settings#integrations`);
+  const card = page.locator(".integ-card").filter({ hasText: "Video call" });
+  await expect(card).toContainText("Campus");
+  await expect(card.locator(".integ-origin")).toHaveText("From the workspace");
 });

@@ -116,7 +116,14 @@
     "notifications": "मीटिंग से जुड़ी चैट, ईमेल और SMS",
     "goGeneral": "सामान्य में",
     "goSchedule": "शेड्यूल में",
-    "goNotifications": "सूचनाओं में"
+    "goNotifications": "सूचनाओं में",
+    "origin": {
+      "inherited": "कार्यक्षेत्र से प्राप्त",
+      "workspace": "कार्यक्षेत्र से",
+      "workspaceNamed": "कार्यक्षेत्र से: {name}",
+      "meeting": "इस मीटिंग का अपना",
+      "instance": "सर्वर से"
+    }
   },
   "preview": {
     "to": "प्रति: {email} · {date} को {time} बजे",
