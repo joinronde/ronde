@@ -385,7 +385,11 @@ function VideoPanel() {
   const [link, setLink] = useState(v.link);
   const [jitsiUrl, setJitsiUrl] = useState(v.jitsiUrl);
   const [bbbUrl, setBbbUrl] = useState(v.bbbUrl);
+  const [bbbAccount, setBbbAccount] = useState(v.bbbAccount);
   const [secret, setSecret] = useState<string | null>(null);
+  // The workspace's BigBlueButton servers; the others create rooms
+  const bbbServers = s.videoAccounts.filter((a) => a.kind === "bbb");
+  const roomMakers = s.videoAccounts.filter((a) => a.kind !== "bbb");
   const [done, setDone] = useState(false);
   const form = useRef<HTMLFormElement>(null);
   /** The call as set here; the BigBlueButton secret only on demand, never half typed */
@@ -396,7 +400,8 @@ function VideoPanel() {
       provider,
       link: link.trim(),
       jitsiUrl: jitsiUrl.trim(),
-      bbbUrl: bbbUrl.trim(),
+      bbbAccount,
+      bbbUrl: bbbAccount ? "" : bbbUrl.trim(),
       ...(withSecret && secret !== null ? { secret: secret.trim() } : {}),
     });
     if (!ok) return;
@@ -404,14 +409,19 @@ function VideoPanel() {
     if (withSecret) setSecret(null);
   };
   // Saved by itself a moment after the last change, a room created from an account included
-  const changed = provider !== v.provider || link.trim() !== v.link || jitsiUrl.trim() !== v.jitsiUrl || bbbUrl.trim() !== v.bbbUrl;
+  const changed =
+    provider !== v.provider ||
+    link.trim() !== v.link ||
+    jitsiUrl.trim() !== v.jitsiUrl ||
+    bbbAccount !== v.bbbAccount ||
+    (!bbbAccount && bbbUrl.trim() !== v.bbbUrl);
   useEffect(() => {
     if (!changed) return;
     setDone(false);
     const timer = setTimeout(() => void persist(false), 700);
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [provider, link, jitsiUrl, bbbUrl, changed]);
+  }, [provider, link, jitsiUrl, bbbUrl, bbbAccount, changed]);
   const saved = provider === v.provider;
   return (
     <form
@@ -425,7 +435,16 @@ function VideoPanel() {
       <h3 style={{ margin: 0 }}>{t("video.title")}</h3>
       <div className="field">
         <label htmlFor="vProvider">{t("video.provider")}</label>
-        <Select id="vProvider" value={provider} onChange={(e) => setProvider(e.target.value as typeof provider)}>
+        <Select
+          id="vProvider"
+          value={provider}
+          onChange={(e) => {
+            const next = e.target.value as typeof provider;
+            setProvider(next);
+            // BigBlueButton on the workspace's first server, unless the meeting has one of its own
+            if (next === "bbb" && !bbbAccount && !v.bbbUrl && bbbServers[0]) setBbbAccount(bbbServers[0].id);
+          }}
+        >
           {(["link", "jitsi", "bbb"] as const).map((p) => (
             <option key={p} value={p}>
               {t(`video.providers.${p}`)}
@@ -433,10 +452,10 @@ function VideoPanel() {
           ))}
         </Select>
       </div>
-      {provider === "link" && s.videoAccounts.length > 0 && (
+      {provider === "link" && roomMakers.length > 0 && (
         <div className="video-rooms">
           <span className="hint">{t("video.createWith")}</span>
-          {s.videoAccounts.map((a) => (
+          {roomMakers.map((a) => (
             <button
               key={a.id}
               type="button"
@@ -477,7 +496,21 @@ function VideoPanel() {
           <span className="hint">{t("video.jitsiHint")}</span>
         </div>
       )}
-      {provider === "bbb" && (
+      {provider === "bbb" && (bbbServers.length > 0 || bbbAccount) && (
+        <div className="field">
+          <label htmlFor="vBbbServer">{t("video.server")}</label>
+          <Select id="vBbbServer" value={bbbAccount} onChange={(e) => setBbbAccount(e.target.value)}>
+            {bbbServers.map((a) => (
+              <option key={a.id} value={a.id}>
+                {a.name}
+              </option>
+            ))}
+            <option value="">{t("video.ownServer")}</option>
+          </Select>
+          <span className="hint">{t("video.serverHint")}</span>
+        </div>
+      )}
+      {provider === "bbb" && !bbbAccount && (
         <>
           <div className="field">
             <label htmlFor="vBbb">{t("video.bbbUrl")}</label>

@@ -37,3 +37,19 @@ export async function bbbJoin(
     redirect: "true",
   });
 }
+
+/** Checks a server and its shared secret with a call any BigBlueButton answers */
+export async function bbbCheck(
+  server: string,
+  secret: string,
+  fetcher: typeof fetch = outboundFetch,
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  try {
+    const res = await fetcher(bbbCall(server, secret, "getMeetings", {}), { cache: "no-store", signal: AbortSignal.timeout(10_000) });
+    const xml = await res.text();
+    if (res.ok && /<returncode>SUCCESS<\/returncode>/.test(xml)) return { ok: true };
+    return { ok: false, error: /<messageKey>(.*?)<\/messageKey>/.exec(xml)?.[1] ?? String(res.status) };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "unreachable" };
+  }
+}

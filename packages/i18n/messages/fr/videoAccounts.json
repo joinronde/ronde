@@ -1,6 +1,6 @@
 {
   "title": "Comptes visio",
-  "intro": "Laissez Ronde créer une salle Zoom, Google Meet ou Teams permanente pour chaque réunion, avec un compte de l'espace. Personne n'a besoin de se connecter.",
+  "intro": "Les comptes visio de l'espace : un serveur BigBlueButton sur lequel ses réunions ouvrent leur salle, ou un compte Zoom, Google Meet ou Teams qui crée une salle durable pour chaque réunion. Personne n'a à se connecter.",
   "empty": "Aucun compte visio pour l'instant.",
   "add": "Ajouter un compte visio",
   "kind": "Fournisseur",
@@ -16,7 +16,8 @@
   "kinds": {
     "zoom": "Zoom",
     "meet": "Google Meet",
-    "teams": "Microsoft Teams"
+    "teams": "Microsoft Teams",
+    "bbb": "BigBlueButton"
   },
   "fields": {
     "accountId": "Account ID",
@@ -24,17 +25,21 @@
     "clientEmail": "E-mail du compte de service",
     "subject": "Utilisateur propriétaire des salles",
     "tenant": "Tenant (identifiant ou domaine)",
-    "organizer": "Organisateur des réunions"
+    "organizer": "Organisateur des réunions",
+    "url": "Adresse du serveur"
   },
   "secret": {
     "zoom": "Client secret",
     "meet": "Clé privée du compte de service",
-    "teams": "Client secret"
+    "teams": "Client secret",
+    "bbb": "Secret partagé du serveur"
   },
   "hints": {
     "zoom": "Dans le Zoom App Marketplace, créez une application « Server-to-Server OAuth » avec la portée meeting:write:meeting:admin, puis copiez son account ID, son client ID et son secret.",
     "meet": "Dans Google Cloud, créez un compte de service, donnez-lui la délégation à l'échelle du domaine pour la portée meetings.space.created dans la console d'administration Google Workspace, puis collez le private_key de sa clé JSON.",
-    "teams": "Dans Microsoft Entra, enregistrez une application avec la permission d'application OnlineMeetings.ReadWrite.All (consentement administrateur) et une stratégie d'accès d'application pour l'organisateur."
+    "teams": "Dans Microsoft Entra, enregistrez une application avec la permission d'application OnlineMeetings.ReadWrite.All (consentement administrateur) et une stratégie d'accès d'application pour l'organisateur.",
+    "bbb": "L'adresse du serveur (https://…/bigbluebutton) et son secret partagé, donné par bbb-conf --secret sur le serveur."
   },
-  "useIt": "Ensuite, dans les réglages d'une réunion, Général → Visio : « Créer une salle permanente »."
+  "useIt": "Ensuite, dans les réglages d'une réunion, Général → Visio : « Créer une salle permanente ».",
+  "useItBbb": "Un serveur BigBlueButton est ensuite proposé dans les réglages de chaque réunion, Général → Visio."
 }

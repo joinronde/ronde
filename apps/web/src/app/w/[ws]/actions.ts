@@ -813,8 +813,8 @@ export async function disconnectSlackAction(slug: string) {
 
 export async function saveVideoAccountAction(slug: string, input: VideoAccountInput) {
   return run(async () => {
+    // Zoom, Meet and Teams come with the plan, BigBlueButton with every edition: saveVideoAccount checks
     const ctx = await authorize(slug, "connectors.manage");
-    if (!videoLinksOn(ctx.workspace)) throw new AccessError(403, "featureNotInPlan");
     const res = await saveVideoAccount(ctx, input);
     refresh(slug);
     return res;
@@ -833,7 +833,6 @@ export async function deleteVideoAccountAction(slug: string, id: string) {
 export async function testVideoAccountAction(slug: string, id: string) {
   return run(async () => {
     const ctx = await authorize(slug, "connectors.manage");
-    if (!videoLinksOn(ctx.workspace)) throw new AccessError(403, "featureNotInPlan");
     const res = await testVideoAccount(ctx, id);
     if (!res.ok) throw new OpError("videoRoomFailed", { detail: res.error });
     return null;

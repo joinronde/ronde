@@ -16,7 +16,7 @@ import { slackOn, slackView } from "@/lib/server/slack";
 import { teamsOn, teamsView } from "@/lib/server/teams";
 import { listTrackers, trackersOn } from "@/lib/server/trackers";
 import { transcriptionOn } from "@/lib/server/transcripts";
-import { listVideoAccounts, videoLinksOn } from "@/lib/server/video-accounts";
+import { listVideoAccounts, videoKindOn, videoLinksOn } from "@/lib/server/video-accounts";
 import { listWikis, wikisOn } from "@/lib/server/wikis";
 
 export async function generateMetadata() {
@@ -71,15 +71,15 @@ export default async function WorkspaceSettingsPage({ params }: { params: Promis
   const wikis =
     canConnect && wikisAvailable ? { slug: ctx.workspace.slug, wikis: await listWikis(ctx), available: true, plansUrl: plans } : null;
   const videoAvailable = videoLinksOn(ctx.workspace);
-  const videoAccounts =
-    canConnect && videoAvailable
-      ? {
-          slug: ctx.workspace.slug,
-          accounts: videoAvailable ? await listVideoAccounts(ctx.db) : [],
-          available: videoAvailable,
-          plansUrl: plans,
-        }
-      : null;
+  // BigBlueButton servers in every edition; Zoom, Meet and Teams accounts with the plan
+  const videoAccounts = canConnect
+    ? {
+        slug: ctx.workspace.slug,
+        accounts: (await listVideoAccounts(ctx.db)).filter((a) => videoKindOn(a.kind, ctx.workspace)),
+        available: videoAvailable,
+        plansUrl: plans,
+      }
+    : null;
   const calendarAvailable = calendarSyncOn(ctx.workspace);
   const calendarAccounts =
     canConnect && calendarAvailable

@@ -104,6 +104,7 @@
   "githubRateLimited": "GitHub limite les requêtes pour le moment : réessayez dans une minute, ou saisissez un jeton dans les réglages.",
   "githubStatus": "GitHub a répondu {status}.",
   "videoBbbUrl": "Saisissez l'adresse du serveur BigBlueButton.",
+  "videoServerAdminOnly": "Seul un administrateur de l'espace peut définir un serveur BigBlueButton propre à la réunion ({host}) : choisissez un serveur de l'espace.",
   "videoUnreachable": "Le serveur de visio ne répond pas. Réessayez dans un instant, ou demandez au régisseur de vérifier ses réglages.",
   "publishLive": "Cette séance a été lancée en direct : terminez-la depuis la régie pour publier son compte rendu.",
   "licenseFormat": "Ce n'est pas une clé de licence Ronde : collez la clé entière, qui commence par « ronde_lic_v1. ».",

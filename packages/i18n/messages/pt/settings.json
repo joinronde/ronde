@@ -296,6 +296,9 @@
     "jitsiUrl": "Servidor Jitsi",
     "jitsiHint": "Vazio: meet.jit.si. O nome da sala é sorteado uma vez, difícil de adivinhar, e é o mesmo em todas as sessões.",
     "bbbUrl": "Servidor BigBlueButton",
+    "server": "Servidor",
+    "ownServer": "Um servidor próprio desta reunião",
+    "serverHint": "Os servidores do espaço são adicionados pelos seus administradores, nas definições do espaço.",
     "bbbSecret": "Segredo compartilhado do servidor",
     "bbbHint": "O Ronde abre a sala quando alguém entra e faz cada pessoa entrar com seu nome; os anfitriões entram como moderadores. O segredo é criptografado e nunca mostrado de novo.",
     "current": "As pessoas entram com:",
@@ -306,7 +309,8 @@
     "kinds": {
       "zoom": "Zoom",
       "meet": "Google Meet",
-      "teams": "Teams"
+      "teams": "Teams",
+      "bbb": "BigBlueButton"
     }
   },
   "logoHint": "O logotipo do espaço de trabalho aparece na tela compartilhada, nos e-mails e nas atas.",

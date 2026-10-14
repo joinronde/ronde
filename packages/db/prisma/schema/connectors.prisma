@@ -139,18 +139,21 @@ enum VideoKind {
   zoom
   meet
   teams
+  /// A BigBlueButton server: every edition
+  bbb
 }
 
-/// A video account of the workspace that creates the rooms of its meetings (Team)
+/// A video account of the workspace: one that creates the rooms of its meetings (Team), or a BigBlueButton server
+/// its meetings open their rooms on
 model VideoAccount {
   id          String    @id @default(uuid(7))
   workspaceId String
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   kind        VideoKind
   name        String
-  /// { accountId, clientId } (Zoom), { clientEmail, subject } (Meet), { tenant, clientId, organizer } (Teams)
+  /// { accountId, clientId } (Zoom), { clientEmail, subject } (Meet), { tenant, clientId, organizer } (Teams), { url } (BigBlueButton)
   config      Json      @default("{}")
-  /// Client secret (Zoom, Teams) or private key (Meet), encrypted with SECRET_KEY
+  /// Client secret (Zoom, Teams), private key (Meet) or shared secret (BigBlueButton), encrypted with SECRET_KEY
   secret      String    @default("")
   createdAt   DateTime  @default(now())
 

@@ -1,6 +1,6 @@
 {
   "title": "Videokonten",
-  "intro": "Lass Ronde für jedes Meeting einen dauerhaften Zoom-, Google-Meet- oder Teams-Raum anlegen, mit einem Konto des Arbeitsbereichs. Niemand muss sich anmelden.",
+  "intro": "Videokonten des Arbeitsbereichs: ein BigBlueButton-Server, auf dem seine Meetings ihren Raum öffnen, oder ein Zoom-, Google-Meet- oder Teams-Konto, das für jedes Meeting einen dauerhaften Raum erstellt. Niemand muss sich anmelden.",
   "empty": "Noch kein Videokonto.",
   "add": "Videokonto hinzufügen",
   "kind": "Anbieter",
@@ -16,7 +16,8 @@
   "kinds": {
     "zoom": "Zoom",
     "meet": "Google Meet",
-    "teams": "Microsoft Teams"
+    "teams": "Microsoft Teams",
+    "bbb": "BigBlueButton"
   },
   "fields": {
     "accountId": "Konto-ID",
@@ -24,17 +25,21 @@
     "clientEmail": "E-Mail des Dienstkontos",
     "subject": "Benutzer, dem die Räume gehören",
     "tenant": "Mandant (ID oder Domain)",
-    "organizer": "Organisator der Meetings"
+    "organizer": "Organisator der Meetings",
+    "url": "Serveradresse"
   },
   "secret": {
     "zoom": "Client-Secret",
     "meet": "Privater Schlüssel des Dienstkontos",
-    "teams": "Client-Secret"
+    "teams": "Client-Secret",
+    "bbb": "Gemeinsames Geheimnis des Servers"
   },
   "hints": {
     "zoom": "Erstelle im Zoom App Marketplace eine „Server-to-Server OAuth“-App mit dem Scope meeting:write:meeting:admin und kopiere Konto-ID, Client-ID und Secret.",
     "meet": "Erstelle in Google Cloud ein Dienstkonto, gib ihm in der Admin-Konsole von Google Workspace domainweite Delegierung für den Scope meetings.space.created und füge den private_key seines JSON-Schlüssels ein.",
-    "teams": "Registriere in Microsoft Entra eine Anwendung mit der Anwendungsberechtigung OnlineMeetings.ReadWrite.All (Admin-Zustimmung) und einer Anwendungszugriffsrichtlinie für den Organisator."
+    "teams": "Registriere in Microsoft Entra eine Anwendung mit der Anwendungsberechtigung OnlineMeetings.ReadWrite.All (Admin-Zustimmung) und einer Anwendungszugriffsrichtlinie für den Organisator.",
+    "bbb": "Die Adresse des Servers (https://…/bigbluebutton) und sein gemeinsames Geheimnis, das bbb-conf --secret auf dem Server ausgibt."
   },
-  "useIt": "Danach in den Einstellungen eines Meetings, Allgemein → Videoanruf: „Dauerhaften Raum anlegen“."
+  "useIt": "Danach in den Einstellungen eines Meetings, Allgemein → Videoanruf: „Dauerhaften Raum anlegen“.",
+  "useItBbb": "Ein BigBlueButton-Server wird dann in den Einstellungen jedes Meetings angeboten, Allgemein → Videoanruf."
 }

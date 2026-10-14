@@ -104,6 +104,7 @@
   "githubRateLimited": "GitHub limits the requests for now: try again in a minute, or enter a token in the settings.",
   "githubStatus": "GitHub answered {status}.",
   "videoBbbUrl": "Enter the address of the BigBlueButton server.",
+  "videoServerAdminOnly": "Only an administrator of the workspace can set a BigBlueButton server of the meeting's own ({host}): pick a server of the workspace.",
   "videoUnreachable": "The video call server does not answer. Try again in a moment, or ask the host to check its settings.",
   "publishLive": "This session was started live: end it from the control room to publish its minutes.",
   "licenseFormat": "This is not a Ronde license key: paste the whole key, starting with “ronde_lic_v1.”.",

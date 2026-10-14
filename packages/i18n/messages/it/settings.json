@@ -296,6 +296,9 @@
     "jitsiUrl": "Server Jitsi",
     "jitsiHint": "Vuoto: meet.jit.si. Il nome della stanza viene estratto una volta, difficile da indovinare, e resta lo stesso per tutte le sessioni.",
     "bbbUrl": "Server BigBlueButton",
+    "server": "Server",
+    "ownServer": "Un server proprio di questa riunione",
+    "serverHint": "I server dello spazio sono aggiunti dai suoi amministratori, nelle impostazioni dello spazio.",
     "bbbSecret": "Segreto condiviso del server",
     "bbbHint": "Ronde apre la stanza quando qualcuno entra e fa entrare ogni persona con il suo nome; i conduttori entrano come moderatori. Il segreto è cifrato e non viene più mostrato.",
     "current": "Le persone entrano con:",
@@ -306,7 +309,8 @@
     "kinds": {
       "zoom": "Zoom",
       "meet": "Google Meet",
-      "teams": "Teams"
+      "teams": "Teams",
+      "bbb": "BigBlueButton"
     }
   },
   "logoHint": "Il logo dello spazio di lavoro appare sullo schermo condiviso, nelle email e nei verbali.",

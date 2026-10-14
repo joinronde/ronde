@@ -1,4 +1,4 @@
-import { createSign, generateKeyPairSync } from "node:crypto";
+import { createHash, createSign, generateKeyPairSync } from "node:crypto";
 import { can, type Permission, type WorkspaceRole } from "@ronde/core/permissions";
 import { prisma, scoped } from "@ronde/db";
 import { LATEST_MIGRATION } from "@ronde/db/migrations";
@@ -587,6 +587,43 @@ describe("the video room", () => {
     current = as(w, "member", guest);
     const asViewer = await enter();
     expect(new URL(asViewer.headers.get("location")!).searchParams.get("role")).toBe("VIEWER");
+  });
+
+  it("opens the room on the workspace's server the meeting picked, with that server's secret", async () => {
+    current = host();
+    const account = await prisma.videoAccount.create({
+      data: {
+        workspaceId: w.ws.id,
+        kind: "bbb",
+        name: "Campus",
+        config: { url: "https://bbb.example.org/campus" },
+        secret: encryptSecret("campus-secret"),
+      },
+    });
+    await prisma.moduleInstallation.update({
+      where: { meetingId_moduleId: { meetingId: room.meetingId, moduleId: "video" } },
+      data: { config: { provider: "bbb", bbbAccount: account.id, bbbUrl: "", room: "weekly" }, secret: "" },
+    });
+    try {
+      const res = await enter();
+      expect(res.status).toBe(307);
+      const url = new URL(res.headers.get("location")!);
+      expect(url.origin + url.pathname).toBe("https://bbb.example.org/campus/api/join");
+      expect(url.searchParams.get("meetingID")).toBe("ronde-weekly");
+      // Signed with the workspace server's secret
+      const params = new URLSearchParams(url.search);
+      const checksum = params.get("checksum");
+      params.delete("checksum");
+      expect(checksum).toBe(createHash("sha1").update(`join${params.toString()}campus-secret`).digest("hex"));
+    } finally {
+      await prisma.moduleInstallation.update({
+        where: { meetingId_moduleId: { meetingId: room.meetingId, moduleId: "video" } },
+        data: {
+          config: { provider: "bbb", bbbUrl: "https://bbb.example.org/bigbluebutton", room: "weekly" },
+          secret: encryptSecret("bbb-shared-secret"),
+        },
+      });
+    }
   });
 
   it("says the room cannot be reached when BigBlueButton fails", async () => {

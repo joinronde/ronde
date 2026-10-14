@@ -16,26 +16,30 @@ type ConfirmFn = ReturnType<typeof useConfirm>[1];
 type Kind = VideoAccountView["kind"];
 
 /** Fields each provider asks for, with an example */
-const FIELDS: Record<Kind, { key: "accountId" | "clientId" | "clientEmail" | "subject" | "tenant" | "organizer"; placeholder: string }[]> =
-  {
-    zoom: [
-      { key: "accountId", placeholder: "a1B2c3D4e5" },
-      { key: "clientId", placeholder: "xYz123AbC" },
-    ],
-    meet: [
-      { key: "clientEmail", placeholder: "ronde@acme.iam.gserviceaccount.com" },
-      { key: "subject", placeholder: "rooms@acme.com" },
-    ],
-    teams: [
-      { key: "tenant", placeholder: "acme.onmicrosoft.com" },
-      { key: "clientId", placeholder: "00000000-0000-0000-0000-000000000000" },
-      { key: "organizer", placeholder: "rooms@acme.com" },
-    ],
-  };
+const FIELDS: Record<
+  Kind,
+  { key: "accountId" | "clientId" | "clientEmail" | "subject" | "tenant" | "organizer" | "url"; placeholder: string }[]
+> = {
+  bbb: [{ key: "url", placeholder: "https://bbb.example.com/bigbluebutton" }],
+  zoom: [
+    { key: "accountId", placeholder: "a1B2c3D4e5" },
+    { key: "clientId", placeholder: "xYz123AbC" },
+  ],
+  meet: [
+    { key: "clientEmail", placeholder: "ronde@acme.iam.gserviceaccount.com" },
+    { key: "subject", placeholder: "rooms@acme.com" },
+  ],
+  teams: [
+    { key: "tenant", placeholder: "acme.onmicrosoft.com" },
+    { key: "clientId", placeholder: "00000000-0000-0000-0000-000000000000" },
+    { key: "organizer", placeholder: "rooms@acme.com" },
+  ],
+};
 
 export interface VideoAccountsSettingsProps {
   slug: string;
   accounts: VideoAccountView[];
+  /** Zoom, Meet and Teams are in the plan (BigBlueButton servers are in every edition) */
   available: boolean;
   plansUrl: string | null;
 }
@@ -56,10 +60,11 @@ export function VideoAccountsSettings({
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState<Record<string, string>>({});
 
-  if (!available)
-    return (
-      <section className="panel" aria-labelledby="video-title">
-        <h2 id="video-title">{t("title")}</h2>
+  return (
+    <section className="panel video-accounts" aria-labelledby="video-title">
+      <h2 id="video-title">{t("title")}</h2>
+      <p className="muted">{t("intro")}</p>
+      {!available && (
         <div className="logo-locked">
           <p className="muted">{tm("upgrade.comesWith", { feature: tf("integrations.videoLinks"), edition: tm("editions.team") })}</p>
           {plansUrl && (
@@ -76,13 +81,7 @@ export function VideoAccountsSettings({
             </a>
           )}
         </div>
-      </section>
-    );
-
-  return (
-    <section className="panel video-accounts" aria-labelledby="video-title">
-      <h2 id="video-title">{t("title")}</h2>
-      <p className="muted">{t("intro")}</p>
+      )}
       <FormAlert>{error}</FormAlert>
       {accounts.length ? (
         <ul className="tracker-list">
@@ -91,7 +90,7 @@ export function VideoAccountsSettings({
               <span className={`tracker-badge ${tr.kind}`}>{t(`kinds.${tr.kind}`)}</span>
               <span className="tracker-text">
                 <strong>{tr.name}</strong>
-                <span className="hint">{tr.config.subject ?? tr.config.organizer ?? tr.config.accountId}</span>
+                <span className="hint">{tr.config.url ?? tr.config.subject ?? tr.config.organizer ?? tr.config.accountId}</span>
               </span>
               <span className="hint" role="status">
                 {status[tr.id]}
@@ -133,6 +132,7 @@ export function VideoAccountsSettings({
         <AccountForm
           slug={slug}
           account={editing === "new" ? null : editing}
+          kinds={available ? KINDS : ["bbb"]}
           onDone={() => {
             setEditing(null);
             router.refresh();
@@ -146,24 +146,31 @@ export function VideoAccountsSettings({
           </button>
         </div>
       )}
-      <p className="hint">{t("useIt")}</p>
+      <p className="hint">
+        {t("useItBbb")}
+        {available && ` ${t("useIt")}`}
+      </p>
     </section>
   );
 }
 
+const KINDS = ["zoom", "meet", "teams", "bbb"] as const;
+
 function AccountForm({
   slug,
   account: tracker,
+  kinds,
   onDone,
   onError,
 }: {
   slug: string;
   account: VideoAccountView | null;
+  kinds: readonly Kind[];
   onDone: () => void;
   onError: (e: string | null) => void;
 }) {
   const t = useTranslations("videoAccounts");
-  const [kind, setKind] = useState<Kind>(tracker?.kind ?? "zoom");
+  const [kind, setKind] = useState<Kind>(tracker?.kind ?? kinds[0]!);
   const [name, setName] = useState(tracker?.name ?? "");
   const [config, setConfig] = useState<Record<string, string>>(tracker?.config ?? {});
   const [token, setToken] = useState("");
@@ -192,7 +199,7 @@ function AccountForm({
         <div className="field">
           <label htmlFor="trKind">{t("kind")}</label>
           <Select id="trKind" value={kind} disabled={!!tracker} onChange={(e) => setKind(e.target.value as Kind)}>
-            {(["zoom", "meet", "teams"] as const).map((k) => (
+            {kinds.map((k) => (
               <option key={k} value={k}>
                 {t(`kinds.${k}`)}
               </option>

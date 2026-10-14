@@ -283,7 +283,8 @@ export interface SettingsDTO {
   /** Link to join the video call (free link, Jitsi room or Ronde's BigBlueButton entry); empty: none */
   videoUrl: string;
   /** Video call settings, for the settings page */
-  video: { provider: "link" | "jitsi" | "bbb"; link: string; jitsiUrl: string; bbbUrl: string };
+  /** `bbbAccount`: a BigBlueButton server of the workspace; empty, the meeting's own (`bbbUrl`) */
+  video: { provider: "link" | "jitsi" | "bbb"; link: string; jitsiUrl: string; bbbAccount: string; bbbUrl: string };
   speakSec: number;
   autoStart: boolean;
   /** Who adds projects for the meeting to follow: its hosts, or every participant */
@@ -462,8 +463,11 @@ export interface Snapshot {
   ai: boolean;
   /** Edition the instance can use: paid modules it already has are not announced */
   edition: "community" | "team" | "enterprise";
-  /** Video accounts of the workspace that create rooms, for the people configuring the meeting (Team) */
-  videoAccounts: { id: string; name: string; kind: "zoom" | "meet" | "teams" }[];
+  /**
+   * Video accounts of the workspace, for the people configuring the meeting: those that create rooms (Team), and
+   * the BigBlueButton servers (every edition)
+   */
+  videoAccounts: { id: string; name: string; kind: "zoom" | "meet" | "teams" | "bbb" }[];
   /** Calendar sync of the meeting, for the people configuring it (Team): the accounts, the one in use */
   calendars: { accounts: { id: string; name: string; kind: "google" | "microsoft" | "caldav" }[]; current: string | null } | null;
   /**

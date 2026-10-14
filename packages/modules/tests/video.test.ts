@@ -3,7 +3,14 @@ import { newRoom, type VideoConfig, videoLink } from "../src/video";
 
 // Link to join the call, per video tool
 
-const config = (o: Partial<VideoConfig>): VideoConfig => ({ provider: "link", jitsiUrl: "", bbbUrl: "", room: "abc", ...o });
+const config = (o: Partial<VideoConfig>): VideoConfig => ({
+  provider: "link",
+  jitsiUrl: "",
+  bbbAccount: "",
+  bbbUrl: "",
+  room: "abc",
+  ...o,
+});
 
 describe("videoLink", () => {
   it("gives the free link, the Jitsi room or Ronde's BigBlueButton entry", () => {
@@ -13,6 +20,8 @@ describe("videoLink", () => {
       "https://jitsi.example.org/Rondeabc",
     );
     expect(videoLink(config({ provider: "bbb", bbbUrl: "https://bbb.example.org/bigbluebutton" }), "", "/join")).toBe("/join");
+    // On a server of the workspace
+    expect(videoLink(config({ provider: "bbb", bbbAccount: "server-1" }), "", "/join")).toBe("/join");
   });
 
   it("gives nothing for a BigBlueButton without its server", () => {

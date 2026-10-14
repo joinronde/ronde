@@ -104,6 +104,7 @@
   "githubRateLimited": "GitHub limita las solicitudes por ahora: inténtalo de nuevo en un minuto o escribe un token en los ajustes.",
   "githubStatus": "GitHub respondió {status}.",
   "videoBbbUrl": "Escribe la dirección del servidor BigBlueButton.",
+  "videoServerAdminOnly": "Solo un administrador del espacio puede definir un servidor BigBlueButton propio de la reunión ({host}): elija un servidor del espacio.",
   "videoUnreachable": "El servidor de videollamadas no responde. Inténtalo de nuevo en un momento o pide al anfitrión que revise sus ajustes.",
   "publishLive": "Esta sesión se empezó en directo: termínala desde la sala de control para archivarla.",
   "licenseFormat": "Esta no es una clave de licencia de Ronde: pega la clave completa, que empieza por «ronde_lic_v1.».",
