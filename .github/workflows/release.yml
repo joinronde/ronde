@@ -2,9 +2,9 @@ name: Release
 
 # Ronde is in beta: a beta is published by hand, from Actions › Release › Run workflow. It takes the next number
 # after the betas already published (v1.0.0-beta.1, beta.2…), tags the commit of main, writes a GitHub
-# pre-release listing the changes since the previous beta, then builds the images for amd64 and arm64 and pushes
-# them to GHCR with that version and the "beta" tag, never "latest". release.config.mjs (semantic-release) takes
-# over for the stable versions.
+# pre-release listing the changes since the previous beta, then builds the images for amd64 and arm64 (each on a
+# runner of its own kind) and pushes them to GHCR with that version and the "beta" tag, never "latest".
+# release.config.mjs (semantic-release) takes over for the stable versions.
 
 on:
   workflow_dispatch:
@@ -60,42 +60,91 @@ jobs:
     name: Images
     needs: release
     if: needs.release.outputs.version != ''
-    runs-on: ubuntu-latest
-    # Two platforms, arm64 under emulation: about 30 minutes; a hang fails here instead of after 6 hours
-    timeout-minutes: 90
+    # Each platform on a runner of its own kind: arm64 no longer built under QEMU emulation, where Node crashed
+    # (qemu: uncaught target signal 4, Illegal instruction) and hung the build until its time limit
+    runs-on: ${{ matrix.platform == 'linux/arm64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
+    # A hang fails here instead of after 6 hours
+    timeout-minutes: 45
     strategy:
+      fail-fast: false
       matrix:
+        image: [ronde, ronde-ce, ronde-migrate]
+        platform: [linux/amd64, linux/arm64]
         include:
-          - target: web
-            image: ghcr.io/joinronde/ronde
+          - image: ronde
+            target: web
             pure_ce: ""
-          - target: web
-            image: ghcr.io/joinronde/ronde-ce
+          - image: ronde-ce
+            target: web
             pure_ce: "1"
-          - target: migrate
-            image: ghcr.io/joinronde/ronde-migrate
+          - image: ronde-migrate
+            target: migrate
             pure_ce: ""
     steps:
       - uses: actions/checkout@v4
-      - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Platform
+        id: platform
+        run: echo "pair=$(echo '${{ matrix.platform }}' | tr / -)" >> "$GITHUB_OUTPUT"
+      # Pushed by its digest only: the merge job below names the two platforms' digests as one image
       - uses: docker/build-push-action@v6
+        id: build
         with:
           context: .
           file: docker/Dockerfile
           target: ${{ matrix.target }}
-          platforms: linux/amd64,linux/arm64
-          push: true
+          platforms: ${{ matrix.platform }}
           build-args: |
             VERSION=${{ needs.release.outputs.version }}
             RONDE_PURE_CE=${{ matrix.pure_ce }}
-          tags: |
-            ${{ matrix.image }}:${{ needs.release.outputs.version }}
-            ${{ matrix.image }}:beta
-          cache-from: type=gha,scope=${{ matrix.image }}
-          cache-to: type=gha,mode=max,scope=${{ matrix.image }}
+          outputs: type=image,name=ghcr.io/joinronde/${{ matrix.image }},push-by-digest=true,name-canonical=true,push=true
+          cache-from: type=gha,scope=${{ matrix.image }}-${{ steps.platform.outputs.pair }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.image }}-${{ steps.platform.outputs.pair }}
+      - name: Keep the digest
+        run: |
+          mkdir -p digests
+          touch "digests/${DIGEST#sha256:}"
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: digest-${{ matrix.image }}-${{ steps.platform.outputs.pair }}
+          path: digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+  manifests:
+    name: Manifests
+    needs: [release, images]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image: [ronde, ronde-ce, ronde-migrate]
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: digests
+          pattern: digest-${{ matrix.image }}-*
+          merge-multiple: true
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      # The two platforms under one name: the version, and "beta" (never "latest")
+      - name: Tag the image
+        working-directory: digests
+        env:
+          IMAGE: ghcr.io/joinronde/${{ matrix.image }}
+          VERSION: ${{ needs.release.outputs.version }}
+        run: |
+          # One argument per platform's digest: split on purpose
+          # shellcheck disable=SC2046
+          docker buildx imagetools create -t "$IMAGE:$VERSION" -t "$IMAGE:beta" $(printf "$IMAGE@sha256:%s " *)
+          docker buildx imagetools inspect "$IMAGE:$VERSION"
