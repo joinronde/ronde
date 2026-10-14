@@ -292,7 +292,8 @@ function auth(t: SourceAccess): Record<string, string> {
     case "github":
       return { authorization: `Bearer ${t.token}`, "x-github-api-version": "2022-11-28" };
     case "gitlab":
-      return { "private-token": t.token };
+      // A personal token as well as an OAuth access token
+      return { authorization: `Bearer ${t.token}` };
     case "linear":
       return { authorization: t.token };
     case "jira":

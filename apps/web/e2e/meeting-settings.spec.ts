@@ -139,3 +139,32 @@ test("people, sections, schedule, template and deletion of a meeting; leaving an
   await page.waitForURL((url) => !url.pathname.startsWith(`/w/${slug}`), { timeout: 60_000 });
   expect((await page.goto(workspace))?.status()).toBe(404);
 });
+
+test("GitLab and GitHub connections: the workspace's, and a meeting's own", async ({ page }) => {
+  test.setTimeout(180_000);
+  const workspace = await hostWithWorkspace(
+    page,
+    { name: "Fern Forges", email: `fern-${run}@example.com`, password: "forges-password-123" },
+    `Forges ${run}`,
+  );
+  const meeting = await createMeeting(page, workspace, "Forges");
+  // The workspace's: added once for every meeting; an address that is not one is refused before the forge is asked
+  await page.goto(`${workspace}/settings`);
+  const forges = page.locator("#forges");
+  await expect(forges.getByRole("heading", { name: "GitLab and GitHub" })).toBeVisible();
+  // The server's own GitHub access, which reads public repositories, is listed but cannot be changed here
+  await expect(forges.getByRole("listitem").filter({ hasText: "GitHub of the server" })).toBeVisible();
+  await expect(forges.getByRole("listitem").filter({ hasText: "GitHub of the server" }).getByRole("button")).toHaveCount(0);
+  await forges.getByRole("button", { name: "Add a connection" }).click();
+  await forges.getByLabel("Server", { exact: true }).fill("ftp://git.acme.test");
+  await forges.getByLabel("Token", { exact: true }).fill("glpat-demo");
+  await forges.getByRole("button", { name: "Save" }).click();
+  await expect(forges.getByText("The server address is not valid")).toBeVisible();
+  // The meeting's GitLab card: the connections it uses, and one of its own to add
+  await page.goto(`${meeting}/settings#integrations`);
+  await page.getByRole("button", { name: /^GitLab/ }).click();
+  await expect(page.getByRole("heading", { name: "GitLab connections" })).toBeVisible();
+  await expect(page.getByText("No GitLab connection")).toBeVisible();
+  await page.getByRole("button", { name: "Add a connection for this meeting only" }).click();
+  await expect(page.locator(".forge-own").getByLabel("Token", { exact: true })).toBeVisible();
+});

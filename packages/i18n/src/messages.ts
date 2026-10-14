@@ -35,6 +35,7 @@ import ar_emails from "../messages/ar/emails.json";
 import ar_errors from "../messages/ar/errors.json";
 import ar_features from "../messages/ar/features.json";
 import ar_feedback from "../messages/ar/feedback.json";
+import ar_forges from "../messages/ar/forges.json";
 import ar_gallery from "../messages/ar/gallery.json";
 import ar_guestLinks from "../messages/ar/guestLinks.json";
 import ar_header from "../messages/ar/header.json";
@@ -139,6 +140,7 @@ import de_emails from "../messages/de/emails.json";
 import de_errors from "../messages/de/errors.json";
 import de_features from "../messages/de/features.json";
 import de_feedback from "../messages/de/feedback.json";
+import de_forges from "../messages/de/forges.json";
 import de_gallery from "../messages/de/gallery.json";
 import de_guestLinks from "../messages/de/guestLinks.json";
 import de_header from "../messages/de/header.json";
@@ -243,6 +245,7 @@ import en_emails from "../messages/en/emails.json";
 import en_errors from "../messages/en/errors.json";
 import en_features from "../messages/en/features.json";
 import en_feedback from "../messages/en/feedback.json";
+import en_forges from "../messages/en/forges.json";
 import en_gallery from "../messages/en/gallery.json";
 import en_guestLinks from "../messages/en/guestLinks.json";
 import en_header from "../messages/en/header.json";
@@ -347,6 +350,7 @@ import es_emails from "../messages/es/emails.json";
 import es_errors from "../messages/es/errors.json";
 import es_features from "../messages/es/features.json";
 import es_feedback from "../messages/es/feedback.json";
+import es_forges from "../messages/es/forges.json";
 import es_gallery from "../messages/es/gallery.json";
 import es_guestLinks from "../messages/es/guestLinks.json";
 import es_header from "../messages/es/header.json";
@@ -451,6 +455,7 @@ import fr_emails from "../messages/fr/emails.json";
 import fr_errors from "../messages/fr/errors.json";
 import fr_features from "../messages/fr/features.json";
 import fr_feedback from "../messages/fr/feedback.json";
+import fr_forges from "../messages/fr/forges.json";
 import fr_gallery from "../messages/fr/gallery.json";
 import fr_guestLinks from "../messages/fr/guestLinks.json";
 import fr_header from "../messages/fr/header.json";
@@ -555,6 +560,7 @@ import hi_emails from "../messages/hi/emails.json";
 import hi_errors from "../messages/hi/errors.json";
 import hi_features from "../messages/hi/features.json";
 import hi_feedback from "../messages/hi/feedback.json";
+import hi_forges from "../messages/hi/forges.json";
 import hi_gallery from "../messages/hi/gallery.json";
 import hi_guestLinks from "../messages/hi/guestLinks.json";
 import hi_header from "../messages/hi/header.json";
@@ -659,6 +665,7 @@ import it_emails from "../messages/it/emails.json";
 import it_errors from "../messages/it/errors.json";
 import it_features from "../messages/it/features.json";
 import it_feedback from "../messages/it/feedback.json";
+import it_forges from "../messages/it/forges.json";
 import it_gallery from "../messages/it/gallery.json";
 import it_guestLinks from "../messages/it/guestLinks.json";
 import it_header from "../messages/it/header.json";
@@ -763,6 +770,7 @@ import pt_emails from "../messages/pt/emails.json";
 import pt_errors from "../messages/pt/errors.json";
 import pt_features from "../messages/pt/features.json";
 import pt_feedback from "../messages/pt/feedback.json";
+import pt_forges from "../messages/pt/forges.json";
 import pt_gallery from "../messages/pt/gallery.json";
 import pt_guestLinks from "../messages/pt/guestLinks.json";
 import pt_header from "../messages/pt/header.json";
@@ -867,6 +875,7 @@ import ru_emails from "../messages/ru/emails.json";
 import ru_errors from "../messages/ru/errors.json";
 import ru_features from "../messages/ru/features.json";
 import ru_feedback from "../messages/ru/feedback.json";
+import ru_forges from "../messages/ru/forges.json";
 import ru_gallery from "../messages/ru/gallery.json";
 import ru_guestLinks from "../messages/ru/guestLinks.json";
 import ru_header from "../messages/ru/header.json";
@@ -971,6 +980,7 @@ import zh_emails from "../messages/zh/emails.json";
 import zh_errors from "../messages/zh/errors.json";
 import zh_features from "../messages/zh/features.json";
 import zh_feedback from "../messages/zh/feedback.json";
+import zh_forges from "../messages/zh/forges.json";
 import zh_gallery from "../messages/zh/gallery.json";
 import zh_guestLinks from "../messages/zh/guestLinks.json";
 import zh_header from "../messages/zh/header.json";
@@ -1077,6 +1087,7 @@ const ar = {
   errors: ar_errors,
   features: ar_features,
   feedback: ar_feedback,
+  forges: ar_forges,
   gallery: ar_gallery,
   guestLinks: ar_guestLinks,
   header: ar_header,
@@ -1183,6 +1194,7 @@ const de = {
   errors: de_errors,
   features: de_features,
   feedback: de_feedback,
+  forges: de_forges,
   gallery: de_gallery,
   guestLinks: de_guestLinks,
   header: de_header,
@@ -1289,6 +1301,7 @@ const en = {
   errors: en_errors,
   features: en_features,
   feedback: en_feedback,
+  forges: en_forges,
   gallery: en_gallery,
   guestLinks: en_guestLinks,
   header: en_header,
@@ -1395,6 +1408,7 @@ const es = {
   errors: es_errors,
   features: es_features,
   feedback: es_feedback,
+  forges: es_forges,
   gallery: es_gallery,
   guestLinks: es_guestLinks,
   header: es_header,
@@ -1501,6 +1515,7 @@ const fr = {
   errors: fr_errors,
   features: fr_features,
   feedback: fr_feedback,
+  forges: fr_forges,
   gallery: fr_gallery,
   guestLinks: fr_guestLinks,
   header: fr_header,
@@ -1607,6 +1622,7 @@ const hi = {
   errors: hi_errors,
   features: hi_features,
   feedback: hi_feedback,
+  forges: hi_forges,
   gallery: hi_gallery,
   guestLinks: hi_guestLinks,
   header: hi_header,
@@ -1713,6 +1729,7 @@ const it = {
   errors: it_errors,
   features: it_features,
   feedback: it_feedback,
+  forges: it_forges,
   gallery: it_gallery,
   guestLinks: it_guestLinks,
   header: it_header,
@@ -1819,6 +1836,7 @@ const pt = {
   errors: pt_errors,
   features: pt_features,
   feedback: pt_feedback,
+  forges: pt_forges,
   gallery: pt_gallery,
   guestLinks: pt_guestLinks,
   header: pt_header,
@@ -1925,6 +1943,7 @@ const ru = {
   errors: ru_errors,
   features: ru_features,
   feedback: ru_feedback,
+  forges: ru_forges,
   gallery: ru_gallery,
   guestLinks: ru_guestLinks,
   header: ru_header,
@@ -2031,6 +2050,7 @@ const zh = {
   errors: zh_errors,
   features: zh_features,
   feedback: zh_feedback,
+  forges: zh_forges,
   gallery: zh_gallery,
   guestLinks: zh_guestLinks,
   header: zh_header,
@@ -2153,6 +2173,7 @@ export const namespaces = [
   "errors",
   "features",
   "feedback",
+  "forges",
   "gallery",
   "guestLinks",
   "header",

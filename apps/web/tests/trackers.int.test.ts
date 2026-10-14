@@ -2,7 +2,8 @@ import { generateKeyPairSync, sign } from "node:crypto";
 import { prisma } from "@ronde/db";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { saveLicense } from "@/lib/server/license";
-import { createTicket, readRef, saveTracker, syncTickets } from "@/lib/server/trackers";
+import { encryptSecret } from "@/lib/server/secrets";
+import { createTicket, readRef, saveTracker, syncTickets, trackerAccess } from "@/lib/server/trackers";
 import { type Fixture, meeting, workspace } from "./fixtures";
 
 // Follow-up actions become tickets; a closed ticket closes its action (Team)
@@ -44,17 +45,74 @@ afterAll(async () => {
 });
 
 describe("issue trackers", () => {
-  it("refuses an incomplete tracker, keeps the token encrypted", async () => {
-    await expect(saveTracker(f.ctx.ws, { kind: "github", name: "App", config: { repo: "not a repo" }, token: "ghp_x" })).rejects.toThrow();
-    const { id } = await saveTracker(f.ctx.ws, { kind: "github", name: "App", config: { repo: "acme/app" }, token: "ghp_secret" });
+  it("refuses an incomplete tracker, keeps a Jira token encrypted", async () => {
+    await expect(
+      saveTracker(f.ctx.ws, { kind: "jira", name: "Ops", config: { site: "nope", project: "OPS", email: "a@b.c" }, token: "x" }),
+    ).rejects.toThrow();
+    const { id } = await saveTracker(f.ctx.ws, {
+      kind: "jira",
+      name: "Ops",
+      config: { site: "https://acme.atlassian.net", project: "OPS", email: "bot@acme.test" },
+      token: "jira-secret",
+    });
     const row = await prisma.issueTracker.findUniqueOrThrow({ where: { id } });
-    expect(row.secret).not.toContain("ghp_secret");
+    expect(row.secret).not.toContain("jira-secret");
+    await prisma.issueTracker.delete({ where: { id } });
+  });
+
+  it("opens GitHub and GitLab tickets with a connection of the workspace, never a meeting's own", async () => {
+    const own = await prisma.forgeConnection.create({
+      data: {
+        workspaceId: f.workspaceId,
+        meetingId: f.meetingId,
+        kind: "github",
+        name: "Mine",
+        url: "https://api.github.com",
+        secret: encryptSecret("ghp_own"),
+      },
+    });
+    await expect(
+      saveTracker(f.ctx.ws, { kind: "github", name: "App", config: { repo: "acme/app" }, token: "ghp_x" }),
+    ).rejects.toMatchObject({
+      key: "forgeConnectionRequired",
+    });
+    await expect(
+      saveTracker(f.ctx.ws, { kind: "github", name: "App", config: { repo: "acme/app" }, connectionId: own.id }),
+    ).rejects.toMatchObject({ key: "forgeConnectionRequired" });
+    const shared = await prisma.forgeConnection.create({
+      data: {
+        workspaceId: f.workspaceId,
+        kind: "github",
+        name: "Acme",
+        url: "https://api.github.com",
+        secret: encryptSecret("ghp_shared"),
+      },
+    });
+    await expect(
+      saveTracker(f.ctx.ws, { kind: "github", name: "App", config: { repo: "not a repo" }, connectionId: shared.id }),
+    ).rejects.toThrow();
+    const { id } = await saveTracker(f.ctx.ws, { kind: "github", name: "App", config: { repo: "acme/app" }, connectionId: shared.id });
+    const row = await prisma.issueTracker.findUniqueOrThrow({ where: { id } });
+    expect(row).toMatchObject({ connectionId: shared.id, secret: "" });
+    expect(await trackerAccess(f.ctx.ws.db, row)).toMatchObject({
+      token: "ghp_shared",
+      config: { repo: "acme/app", url: "https://api.github.com" },
+    });
   });
 
   it("opens the ticket of an action, once, then closes the action with its ticket", async () => {
-    const tracker = await prisma.issueTracker.findFirstOrThrow({ where: { workspaceId: f.workspaceId } });
-    answer({ number: 42, html_url: "https://github.com/acme/app/issues/42" });
+    const tracker = await prisma.issueTracker.findFirstOrThrow({ where: { workspaceId: f.workspaceId, kind: "github" } });
+    const sent: string[] = [];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (_url: string, init?: RequestInit) => {
+        sent.push(new Headers(init?.headers).get("authorization") ?? "");
+        return new Response(JSON.stringify({ number: 42, html_url: "https://github.com/acme/app/issues/42" }), { status: 200 });
+      }),
+    );
     const ref = await createTicket(f.ctx.ws, f.actionId, tracker.id);
+    // With the connection's token
+    expect(sent).toEqual(["Bearer ghp_shared"]);
     expect(ref).toMatchObject({ key: "#42", url: "https://github.com/acme/app/issues/42", trackerId: tracker.id, closed: false });
     await expect(createTicket(f.ctx.ws, f.actionId, tracker.id)).rejects.toThrow();
 

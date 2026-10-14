@@ -11,6 +11,14 @@ import { type Fixture, meeting, workspace } from "./fixtures";
 const TOKEN = "glpat-very-secret-token";
 let f: Fixture;
 let other: Fixture;
+let shared: string;
+const gitlabConfig = () => ({
+  picked: true,
+  sources: [
+    { connection: f.forgeConnectionId, groups: "", projects: "" },
+    { connection: shared, groups: "", projects: "team/app" },
+  ],
+});
 
 // From next week: the first session is prepared right away
 const start = new Date(Date.now() + 7 * 86_400_000).toISOString().slice(0, 10);
@@ -19,6 +27,12 @@ const schedule = { startDate: start, time: "09:15", durationMin: 45, weekday: 3,
 beforeAll(async () => {
   f = await meeting(await workspace("tpl"), "Design review");
   other = await meeting(await workspace("tpl-other"), "Other");
+  // GitLab through the workspace's connection and the meeting's own, which a copy cannot see
+  shared = (
+    await prisma.forgeConnection.create({
+      data: { workspaceId: f.workspaceId, kind: "gitlab", name: "Acme", url: "https://gitlab.test", secret: encryptSecret(TOKEN) },
+    })
+  ).id;
   // Something private on the meeting: a GitLab token and a notification rule
   await prisma.meeting.update({
     where: { id: f.meetingId },
@@ -31,10 +45,10 @@ beforeAll(async () => {
       meetingId: f.meetingId,
       moduleId: "gitlab",
       enabled: true,
-      config: { projects: "team/app", groups: "" },
+      config: gitlabConfig(),
       secret: encryptSecret(TOKEN),
     },
-    update: { config: { projects: "team/app", groups: "" }, secret: encryptSecret(TOKEN) },
+    update: { config: gitlabConfig(), secret: encryptSecret(TOKEN) },
   });
   await prisma.moduleInstallation.upsert({
     where: { meetingId_moduleId: { meetingId: f.meetingId, moduleId: "kudos" } },
@@ -76,7 +90,7 @@ describe("templates", () => {
     expect(copy.sections).toEqual(source.sections);
     expect(copy.settings).toEqual(source.settings);
     expect(copy.modules.kudos?.enabled).toBe(false);
-    expect(copy.modules.gitlab?.config).toEqual({ projects: "team/app", groups: "" });
+    expect(copy.modules.gitlab?.config).toEqual({ picked: true, sources: [{ connection: shared, groups: "", projects: "team/app" }] });
     // The video tool is kept, the Jitsi room is the new meeting's own
     const room = (
       (await prisma.moduleInstallation.findFirstOrThrow({ where: { meetingId: id, moduleId: "video" } })).config as { room: string }

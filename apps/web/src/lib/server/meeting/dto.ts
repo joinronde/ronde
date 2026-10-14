@@ -7,6 +7,7 @@ import type {
   AnswerDTO,
   CommentDTO,
   ContributorDTO,
+  ForgeSettings,
   InteractionDTO,
   KudoDTO,
   MeetingDTO,
@@ -40,25 +41,18 @@ import type {
 } from "@ronde/db";
 import { isLocale, resolveLocale } from "@ronde/i18n";
 import { readConfig } from "@ronde/module-sdk";
-import { github, gitlab, icebreaker, readDraw, video, videoLink } from "@ronde/modules";
-import { parseGitlabSecret } from "@/lib/shared/gitlab-grant";
+import { icebreaker, readDraw, video, videoLink } from "@ronde/modules";
 import { env } from "../env";
-import { decryptSecret } from "../secrets";
 
 // Database rows → data sent to the browser
 
-/**
- * The GitLab account a meeting is connected with, if any. A secret that cannot be read (the encryption key
- * changed) says nothing here: the meeting still opens, and its GitLab settings say what to do
- */
-export function connectedGitlabUser(secret: string | null | undefined): string | null {
-  if (!secret) return null;
-  try {
-    return parseGitlabSecret(decryptSecret(secret)).grant?.user ?? null;
-  } catch {
-    return null;
-  }
-}
+/** No GitLab or GitHub connection: what people who do not configure the meeting get */
+export const NO_FORGES: ForgeSettings = {
+  connections: [],
+  servers: { gitlab: "", github: "" },
+  gitlab: { picked: false, sources: [] },
+  github: { picked: false, sources: [] },
+};
 
 export const ms = (d: Date | null | undefined) => (d ? d.getTime() : null);
 const obj = (v: unknown): Record<string, unknown> =>
@@ -83,7 +77,6 @@ export function toSettings(
   mods: Record<string, { enabled: boolean; config: unknown; secret: string }>,
   schedule: ScheduleDTO,
 ): SettingsDTO {
-  const gl = readConfig(gitlab, mods.gitlab?.config);
   const vc = readConfig(video, mods.video?.config);
   // BigBlueButton goes through Ronde, which opens the room and signs each person in
   const joinPath = `${env.appUrl()}/w/${workspace.slug}/m/${m.id}/video`;
@@ -104,12 +97,9 @@ export function toSettings(
     reminderEnabled: m.reminderEnabled,
     reminderWhen: m.reminderWhen === "sameDay" ? "sameDay" : "dayBefore",
     reminderTime: m.reminderTime,
-    gitlabProjects: gl.projects,
-    gitlabGroups: gl.groups,
-    githubRepos: readConfig(github, mods.github?.config).repos,
-    tokensSet: { gitlab: !!mods.gitlab?.secret, github: !!mods.github?.secret, bbb: !!mods.video?.secret },
-    // Read (decrypted) for the people configuring the meeting only: lib/server/meeting/state.ts
-    gitlabUser: null,
+    // Read for the people configuring the meeting only: lib/server/meeting/state.ts
+    forges: NO_FORGES,
+    tokensSet: { bbb: !!mods.video?.secret },
     jobCategories,
     schedule,
     icebreakers: readConfig(icebreaker, mods.icebreaker?.config).bank,

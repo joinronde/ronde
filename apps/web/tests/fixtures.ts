@@ -20,6 +20,8 @@ export interface Fixture {
   /** Occurrence of the schedule of the current session */
   occurrenceKey: string;
   connectorId: string;
+  /** A GitLab connection of the meeting's own */
+  forgeConnectionId: string;
   ruleId: string;
   retroCardId: string;
   retroGroupId: string;
@@ -151,6 +153,9 @@ export async function meeting(w: Awaited<ReturnType<typeof workspace>>, name: st
       text: "project work",
     },
   });
+  const forge = await prisma.forgeConnection.create({
+    data: { workspaceId, meetingId, kind: "gitlab", name: "Own", url: "https://gitlab.test", secret: "" },
+  });
   return {
     workspaceId,
     meetingId,
@@ -164,6 +169,7 @@ export async function meeting(w: Awaited<ReturnType<typeof workspace>>, name: st
     commentId: comment.id,
     occurrenceKey,
     connectorId: connector.id,
+    forgeConnectionId: forge.id,
     ruleId: notifyRule.id,
     retroCardId: retroCard.id,
     retroGroupId: retroGroup.id,

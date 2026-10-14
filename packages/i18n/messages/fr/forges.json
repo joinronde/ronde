@@ -1,0 +1,68 @@
+{
+  "title": "GitLab et GitHub",
+  "intro": "Les connexions à vos forges de code, faites une fois pour tout l'espace : chaque réunion peut y lire les tickets de chacun, et les trackers y ouvrent leurs tickets.",
+  "empty": "Aucune connexion pour l'instant.",
+  "kinds": {
+    "gitlab": "GitLab",
+    "github": "GitHub"
+  },
+  "scopes": {
+    "workspace": "Espace",
+    "meeting": "Cette réunion seulement",
+    "instance": "Serveur"
+  },
+  "instanceName": "{kind} du serveur",
+  "instanceHint": "Définie par les variables du serveur (GITLAB_TOKEN, GITHUB_TOKEN) ; sans jeton, GitHub lit les dépôts publics.",
+  "as": "en tant que @{account}",
+  "oauth": "connectée avec GitLab",
+  "add": "Ajouter une connexion",
+  "addOwn": "Ajouter une connexion propre à cette réunion",
+  "addOwnHint": "Vue par cette réunion seule, pour un serveur ou un compte que l'espace n'a pas.",
+  "connect": "Se connecter avec GitLab",
+  "connectHint": "Votre compte GitLab, en lecture seule, renouvelé tout seul : aucun jeton à copier ni à remplacer quand il expire.",
+  "reconnect": "Reconnecter",
+  "orToken": "ou avec un jeton personnel",
+  "kind": "Outil",
+  "name": "Nom",
+  "url": "Serveur",
+  "urlHint": "Vide : {url}",
+  "token": "Jeton",
+  "tokenKept": "Laissez le jeton vide pour garder celui enregistré.",
+  "tokenHints": {
+    "gitlab": "Un jeton personnel avec la portée <code>read_api</code> (<code>api</code> pour un tracker qui ouvre des tickets).",
+    "github": "Un jeton à granularité fine qui lit les issues et pull requests (et les écrit, pour un tracker qui ouvre des tickets)."
+  },
+  "encrypted": "Les jetons sont chiffrés avant d'être enregistrés et ne sont jamais réaffichés.",
+  "noSecretKey": "Le chiffrement des jetons n'est pas configuré sur le serveur : demandez aux opérateurs de définir la clé SECRET_KEY.",
+  "save": "Enregistrer",
+  "saved": "Enregistré.",
+  "cancel": "Annuler",
+  "edit": "Modifier",
+  "test": "Tester",
+  "works": "Fonctionne",
+  "remove": "Retirer",
+  "removeConfirm": "Retirer la connexion {name} ? Les réunions qui l'utilisent ne lisent plus par elle, et les trackers qui y ouvrent leurs tickets sont retirés.",
+  "removeOwnConfirm": "Retirer la connexion {name} de cette réunion ?",
+  "back": {
+    "connected": "GitLab connecté.",
+    "failed": "La connexion avec GitLab a échoué : réessayez, ou utilisez un jeton personnel.",
+    "denied": "Vous n'avez pas le droit de connecter GitLab ici.",
+    "cancelled": "La connexion avec GitLab a été annulée."
+  },
+  "meeting": {
+    "title": "Connexions {kind}",
+    "inherited": "Tant que vous n'en choisissez pas, cette réunion utilise les connexions de l'espace.",
+    "picked": "Cette réunion utilise les connexions cochées ci-dessous.",
+    "use": "Utiliser",
+    "none": "Aucune connexion {kind} : un administrateur peut en ajouter une à l'espace, ou ajoutez-en une propre à cette réunion ci-dessous.",
+    "save": "Enregistrer l'accès {kind}",
+    "repos": "Dépôts suivis",
+    "reposHint": "« propriétaire/dépôt » ou tout un « propriétaire », un par ligne ; vide : tous les dépôts. Renseignez aussi l'identifiant GitHub de chaque personne dans « Personnes et rôles ».",
+    "groups": "Groupes",
+    "projects": "Projets suivis",
+    "projectsHint": "Seuls les tickets de ces projets sont proposés à l'import. Renseignez aussi l'identifiant GitLab de chaque personne dans « Personnes et rôles »."
+  },
+  "hub": {
+    "count": "{count, plural, one {# connexion} other {# connexions}}"
+  }
+}

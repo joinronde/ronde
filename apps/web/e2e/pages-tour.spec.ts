@@ -196,8 +196,12 @@ test("tour of the main pages", async ({ page }) => {
   // An issue tracker, then the actions page offers tickets (nothing is sent here)
   const trackersCard = page.locator(".trackers");
   await trackersCard.getByRole("button", { name: "Add an issue tracker" }).click();
-  await trackersCard.getByLabel("Repository (owner/name)").fill("acme/app");
-  await trackersCard.getByLabel("API token").fill("github_pat_demo");
+  // Jira keeps its own token (GitLab and GitHub trackers go through a connection, checked with the forge)
+  await choose(page, trackersCard.getByLabel("Tool"), "jira");
+  await trackersCard.getByLabel("Site address").fill("https://acme.atlassian.net");
+  await trackersCard.getByLabel("Project key").fill("OPS");
+  await trackersCard.getByLabel("Email of the account").fill("bot@acme.com");
+  await trackersCard.getByLabel("API token").fill("jira-demo-token");
   await trackersCard.getByRole("button", { name: "Save" }).click();
   await trackersCard.locator(".tracker-list li").first().waitFor();
   await trackersCard.scrollIntoViewIfNeeded();

@@ -6,6 +6,9 @@
   "kind": "Outil",
   "name": "Nom",
   "token": "Jeton d'API",
+  "connection": "Connexion",
+  "noConnection": "Aucune connexion {kind} dans l'espace pour l'instant.",
+  "toConnections": "Ajoutez-en une dans « GitLab et GitHub ».",
   "tokenKept": "Un jeton est enregistré. Saisissez-en un nouveau pour le remplacer.",
   "save": "Enregistrer",
   "cancel": "Annuler",
@@ -24,14 +27,13 @@
     "project": "Clé du projet",
     "email": "E-mail du compte",
     "team": "Clé ou identifiant de l'équipe",
-    "url": "Adresse de GitLab",
     "repo": "Dépôt (propriétaire/nom)"
   },
   "hints": {
     "jira": "Un jeton d'API créé sur id.atlassian.com, pour le compte dont l'e-mail est ci-dessus.",
     "linear": "Une clé d'API personnelle, dans les réglages de Linear → API. La clé de l'équipe (ENG dans ENG-12) précède chaque numéro de ticket.",
-    "gitlab": "Un jeton de projet ou personnel avec la portée api. Projet : son chemin (groupe/projet) ou son numéro.",
-    "github": "Un jeton à portée fine avec « Issues : lecture et écriture » sur le dépôt."
+    "gitlab": "Projet : son chemin (groupe/projet) ou son numéro. Les tickets sont ouverts avec le jeton de la connexion, qui doit avoir la portée api.",
+    "github": "Dépôt : propriétaire/nom. Les tickets sont ouverts avec le jeton de la connexion, qui doit avoir « Issues : lecture et écriture » sur ce dépôt."
   },
   "assignee": "Les responsables sont assignés dans GitLab et GitHub quand leur identifiant figure sur leur fiche de l'annuaire.",
   "edit": "Modifier"

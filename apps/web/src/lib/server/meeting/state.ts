@@ -9,6 +9,7 @@ import { aiConfig } from "../ai";
 import { brandingOn, logoPath } from "../branding";
 import { calendarSyncOn, listCalendarAccounts } from "../calendars";
 import { env } from "../env";
+import { meetingForges } from "../forges";
 import { gitlabOAuthOn } from "../gitlab-oauth";
 import { inboundOn } from "../inbound";
 import { editionOf } from "../license";
@@ -23,8 +24,8 @@ import { activeBlocks, blockData, pokerView, pollsView, retroView } from "./bloc
 import { lastPlans, loadCheckIns } from "./checkins";
 import type { MeetingCtx } from "./context";
 import {
-  connectedGitlabUser,
   ms,
+  NO_FORGES,
   participantInclude,
   personName,
   toAction,
@@ -85,6 +86,7 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
     moduleStates(db, meeting.id),
   ]);
   const on = (id: string) => !!mods[id]?.enabled;
+  const forges = on("gitlab") || on("github") ? await meetingForges(db, meeting.id, mods) : NO_FORGES;
   const sections: SectionDef[] = sectionRows.map(toSection);
   const checkIns = await loadCheckIns(db, meeting.id, sections);
   const sid = session?.id ?? "-";
@@ -170,19 +172,15 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
     serverNow: Date.now(),
     context: { ...ctx.links, sample: ctx.meeting.sample },
     viewer,
-    // GitLab connection details only serve the people configuring the meeting
+    // GitLab and GitHub connections only serve the people configuring the meeting
     settings: viewer.isAdmin
-      ? // The GitLab account the meeting is connected with: its admins see whose it is, nobody else
-        { ...settings, gitlabUser: connectedGitlabUser(mods.gitlab?.secret) }
+      ? { ...settings, forges }
       : {
           ...settings,
-          gitlabProjects: "",
-          gitlabGroups: "",
-          githubRepos: "",
           // A guest link watches the shared screen: the team's call is not its to join
           ...(guestLink ? { videoUrl: "" } : {}),
           video: guestLink ? { ...settings.video, link: "", jitsiUrl: "", bbbUrl: "" } : { ...settings.video, bbbUrl: "" },
-          tokensSet: { gitlab: false, github: false, bbb: false },
+          tokensSet: { bbb: false },
         },
     members: people(participants),
     observers: people(observers),
@@ -258,7 +256,7 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
     ai: ctx.can("minutes.edit") && !!aiConfig(ctx.ws.workspace.settings, ctx.ws.workspace),
     brand: { logo: brand ? logoPath(ctx.ws.workspace.slug, brand.updatedAt.getTime()) : null, allowed: brandingOn(ctx.ws.workspace) },
     integrations: {
-      gitlab: on("gitlab") && !!(mods.gitlab?.secret || env.gitlabToken()),
+      gitlab: on("gitlab") && forges.gitlab.sources.length > 0,
       gitlabOAuth: gitlabOAuthOn(),
       // Public repositories answer without a token
       github: on("github"),
