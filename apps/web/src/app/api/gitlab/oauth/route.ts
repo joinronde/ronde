@@ -1,6 +1,6 @@
 import { prisma } from "@ronde/db";
 import { type NextRequest, NextResponse } from "next/server";
-import { exchangeCode, readConnectState, saveGrant } from "@/lib/server/gitlab-oauth";
+import { exchangeCode, gitlabOAuthOn, readConnectState, saveGrant } from "@/lib/server/gitlab-oauth";
 import { meetingContext } from "@/lib/server/meeting/context";
 import { publicUrl } from "@/lib/server/public-url";
 
@@ -18,7 +18,8 @@ export async function GET(req: NextRequest) {
   const back = async (result: string) =>
     NextResponse.redirect(await publicUrl(`/w/${meeting.workspace.slug}/m/${meeting.id}/settings?gitlab=${result}#integrations`));
   const ctx = await meetingContext(meeting.workspace.slug, meeting.id);
-  if (!ctx || ctx.ws.user.id !== state.userId || !ctx.can("meeting.configure")) return back("denied");
+  // The person who started it, still configuring the meeting, on an edition that has the GitLab module
+  if (!ctx || ctx.ws.user.id !== state.userId || !ctx.can("meeting.configure") || !gitlabOAuthOn()) return back("denied");
   const code = q.get("code");
   if (!code) return back("cancelled");
   try {

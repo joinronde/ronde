@@ -6,6 +6,7 @@ import "server-only";
 import { randomBytes } from "node:crypto";
 import { agendaSchema, BLOCK_MODULE } from "@ronde/core/agenda";
 import { ACCENTS } from "@ronde/core/appearance";
+import { sectionsProblem } from "@ronde/core/templates";
 import { sectionBehavior } from "@ronde/core/util";
 import { type Prisma, prisma } from "@ronde/db";
 import { z } from "zod";
@@ -143,9 +144,8 @@ export const configOps = [
       accent: z.enum(ACCENTS).optional(),
     }),
     run: async ({ db, meetingId, workspaceId, m }, o) => {
-      const roles = o.sections.filter((s) => s.role !== "custom").map((s) => s.role);
-      if (new Set(roles).size !== roles.length) throw new OpError("sectionRoleTaken");
-      if (o.sections.some((s) => s.role === "custom" && !s.label)) throw new OpError("sectionLabelRequired");
+      const problem = sectionsProblem(o.sections);
+      if (problem) throw new OpError(problem);
       const { sections, teamName, locale, accent, ...rest } = o;
       await db.meeting.update({
         where: { id: meetingId },

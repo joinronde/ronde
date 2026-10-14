@@ -4,7 +4,10 @@
     "clear": "Cancella",
     "today": "Oggi",
     "previous": "Mese precedente",
-    "next": "Mese successivo"
+    "next": "Mese successivo",
+    "required": "Scegli una data.",
+    "tooEarly": "Scegli il {date} o una data successiva.",
+    "tooLate": "Scegli il {date} o una data precedente."
   },
   "time": {
     "placeholder": "Scegli un orario",

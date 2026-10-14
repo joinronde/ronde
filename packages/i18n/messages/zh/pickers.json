@@ -4,7 +4,10 @@
     "clear": "清除",
     "today": "今天",
     "previous": "上个月",
-    "next": "下个月"
+    "next": "下个月",
+    "required": "请选择日期。",
+    "tooEarly": "请选择 {date} 或之后的日期。",
+    "tooLate": "请选择 {date} 或之前的日期。"
   },
   "time": {
     "placeholder": "选择时间",

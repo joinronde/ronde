@@ -23,6 +23,7 @@ import { activeBlocks, blockData, pokerView, pollsView, retroView } from "./bloc
 import { lastPlans, loadCheckIns } from "./checkins";
 import type { MeetingCtx } from "./context";
 import {
+  connectedGitlabUser,
   ms,
   participantInclude,
   personName,
@@ -171,7 +172,8 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
     viewer,
     // GitLab connection details only serve the people configuring the meeting
     settings: viewer.isAdmin
-      ? settings
+      ? // The GitLab account the meeting is connected with: its admins see whose it is, nobody else
+        { ...settings, gitlabUser: connectedGitlabUser(mods.gitlab?.secret) }
       : {
           ...settings,
           gitlabProjects: "",

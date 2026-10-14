@@ -63,4 +63,16 @@ describe("new meeting", () => {
         key: "invalidRequest",
       });
   });
+
+  it("holds to the settings' rules: a role once, a section of its own named", async () => {
+    // Created without them, the meeting then refused every save of its settings
+    const create = (sections: unknown) => createMeeting(f.ctx.ws, { ...base, name: "Rules", template: "blank", sections });
+    await expect(
+      create([
+        { key: "a", role: "achievement", input: "list", label: "" },
+        { key: "b", role: "achievement", input: "list", label: "" },
+      ]),
+    ).rejects.toMatchObject({ key: "sectionRoleTaken" });
+    await expect(create([{ key: "c", role: "custom", input: "list", label: " " }])).rejects.toMatchObject({ key: "sectionLabelRequired" });
+  });
 });

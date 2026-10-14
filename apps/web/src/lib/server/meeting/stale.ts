@@ -1,12 +1,10 @@
 import "server-only";
-import { prisma, scoped } from "@ronde/db";
-import type { WorkspaceSettings } from "../authz";
-import { publish } from "../bus";
+import { prisma } from "@ronde/db";
 import { env } from "../env";
 import { deliver, meetingPeople } from "../inbox";
 import { minutesPayload, notifyEvent } from "../notify/dispatch";
 import { publishSession } from "../wikis";
-import { archiveSession } from "./session";
+import { closeDueSessions } from "./close-due";
 
 // A live session nobody closed (a host who left the tab open, a meeting that ran over and was forgotten): after a
 // while it closes by itself, its minutes published as the host would have, so the next session can be prepared
@@ -23,40 +21,21 @@ export async function closeStaleSessions(now = new Date(), hours = env.autoClose
     },
     include: { meeting: { include: { workspace: true } } },
   });
-  let closed = 0;
-  for (const row of due) {
-    try {
-      const { meeting, ...session } = row;
-      const record = await scoped(prisma, row.workspaceId).$transaction(
-        async (db) => {
-          // Taken once: a host publishing at the same moment, or another replica, finds it already done
-          const { count } = await db.session.updateMany({
-            where: { id: session.id, status: "current", startedAt: { lte: before } },
-            data: { rev: { increment: 1 }, endedAt: session.endedAt ?? now },
-          });
-          if (!count) return null;
-          const fresh = await db.session.findFirstOrThrow({ where: { id: session.id } });
-          const workspace = { ...meeting.workspace, settings: (meeting.workspace.settings ?? {}) as WorkspaceSettings };
-          const record = await archiveSession(db, { meeting, ws: { workspace } }, fresh, { summary: null, omit: [] });
-          await deliver(db, row.workspaceId, {
-            to: await meetingPeople(db, meeting.id),
-            kind: "minutes.published",
-            meetingId: meeting.id,
-            href: `/m/${meeting.id}/history`,
-          });
-          return record;
-        },
-        { timeout: 30_000 },
-      );
-      if (!record) continue;
-      closed++;
-      await publish(meeting.id, { kind: "history" });
-      await publish(meeting.id, { kind: "state" });
-      await notifyEvent(meeting.id, "minutes.published", session.id, minutesPayload(record, session));
+  return closeDueSessions(due, {
+    still: { startedAt: { lte: before } },
+    data: (session) => ({ endedAt: session.endedAt ?? now }),
+    inside: async (db, meetingId) => {
+      await deliver(db, due.find((d) => d.meetingId === meetingId)!.workspaceId, {
+        to: await meetingPeople(db, meetingId),
+        kind: "minutes.published",
+        meetingId,
+        href: `/m/${meetingId}/history`,
+      });
+    },
+    after: async (meetingId, session, record) => {
+      await notifyEvent(meetingId, "minutes.published", session.id, minutesPayload(record, session));
       await publishSession(session.id);
-    } catch (e) {
-      console.error(`[jobs] closing the forgotten session ${row.id} failed`, e);
-    }
-  }
-  return closed;
+    },
+    what: "forgotten session",
+  });
 }

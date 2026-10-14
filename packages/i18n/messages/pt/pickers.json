@@ -4,7 +4,10 @@
     "clear": "Limpar",
     "today": "Hoje",
     "previous": "Mês anterior",
-    "next": "Próximo mês"
+    "next": "Próximo mês",
+    "required": "Escolha uma data.",
+    "tooEarly": "Escolha {date} ou depois.",
+    "tooLate": "Escolha {date} ou antes."
   },
   "time": {
     "placeholder": "Escolher um horário",

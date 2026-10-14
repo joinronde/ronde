@@ -7,5 +7,6 @@
   "tooMany": "最多 {max} 项",
   "format": "某个值的格式不正确",
   "missing": "缺少某个值",
-  "invalid": "某个值不被接受"
+  "invalid": "某个值不被接受",
+  "at": "{field}：{problem}"
 }

@@ -4,6 +4,7 @@ import * as Popover from "@radix-ui/react-popover";
 import { CalendarDays, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { dateProblem } from "@/lib/shared/date-check";
 
 // A date field drawn by Ronde: the date written out in the reader's language, a calendar of our own in a popover
 // (the browser's cannot be styled), the keyboard of a grid (arrows, Page Up/Down for months, Home/End for the
@@ -64,6 +65,8 @@ export function DateInput({
   const [open, setOpen] = useState(false);
   const [focus, setFocus] = useState<Date>(() => selected ?? new Date());
   const grid = useRef<HTMLDivElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const check = useRef<HTMLInputElement>(null);
   const titleId = useId();
 
   const outOfRange = (d: Date) => (!!min && iso(d) < min) || (!!max && iso(d) > max);
@@ -95,6 +98,12 @@ export function DateInput({
       compact ? { day: "numeric", month: "short", year: "numeric" } : { weekday: "long", day: "numeric", month: "long", year: "numeric" },
     );
   }, [value, locale, compact]);
+
+  // What the form checks before it is sent, as a native date field would: required, and within its bounds
+  const dayOf = (v: string) => parse(v)?.toLocaleDateString(locale, { day: "numeric", month: "short", year: "numeric" }) ?? v;
+  const wrong = dateProblem(value, { required, min, max });
+  const problem = !wrong ? "" : wrong.kind === "required" ? t("required") : t(wrong.kind, { date: dayOf(wrong.bound) });
+  useEffect(() => check.current?.setCustomValidity(problem), [problem]);
 
   // Six weeks from the Monday on or before the first of the month
   const first = new Date(focus.getFullYear(), focus.getMonth(), 1, 12);
@@ -128,9 +137,20 @@ export function DateInput({
 
   return (
     <Popover.Root open={open} onOpenChange={(o) => !disabled && setOpen(o)}>
-      {name && <input type="hidden" name={name} value={value} />}
+      {/* Sent with the form, and checked by it: a form never goes out without a required day, or with one out of bounds */}
+      <input
+        ref={check}
+        className="date-input-check"
+        tabIndex={-1}
+        aria-hidden="true"
+        name={name}
+        value={value}
+        onChange={() => {}}
+        onFocus={() => trigger.current?.focus()}
+      />
       <Popover.Trigger asChild>
         <button
+          ref={trigger}
           type="button"
           id={id}
           className={`date-input${className ? ` ${className}` : ""}${open ? " open" : ""}`}

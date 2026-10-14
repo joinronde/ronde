@@ -1,9 +1,11 @@
 import "server-only";
 import { createHmac, timingSafeEqual } from "node:crypto";
 import type { ScopedClient } from "@ronde/db";
+import { gitlab } from "@ronde/modules";
 import { type GitlabGrant, type GitlabTokenAnswer, grantOf } from "@/lib/shared/gitlab-grant";
 import { env } from "./env";
-import { IntegrationError, OpError } from "./errors";
+import { AccessError, IntegrationError, OpError } from "./errors";
+import { moduleAllowed } from "./meeting/modules";
 import { outboundFetch } from "./outbound";
 import { publicUrl } from "./public-url";
 import { canEncrypt, encryptSecret } from "./secrets";
@@ -12,8 +14,8 @@ import { canEncrypt, encryptSecret } from "./secrets";
 // meeting's host connect their account instead of pasting a personal token that expires. The grant is kept
 // encrypted in the meeting's GitLab module and renewed with its refresh token before it runs out.
 
-/** Whether this instance has a GitLab OAuth application */
-export const gitlabOAuthOn = () => !!env.gitlabOAuthClientId() && !!env.gitlabOAuthClientSecret();
+/** Whether this instance has a GitLab OAuth application, for an edition that has the GitLab module */
+export const gitlabOAuthOn = () => !!env.gitlabOAuthClientId() && !!env.gitlabOAuthClientSecret() && moduleAllowed(gitlab);
 
 const STATE_TTL_MS = 10 * 60_000;
 const stateMac = (payload: string) => createHmac("sha256", env.authSecret()).update(`gitlab-oauth:${payload}`).digest("base64url");
@@ -36,6 +38,8 @@ const redirectUri = () => publicUrl("/api/gitlab/oauth");
 
 /** GitLab's consent page; reading the API is all Ronde asks */
 export async function connectUrl(meetingId: string, userId: string): Promise<string> {
+  // The module's own edition first: connecting must not open what its operations refuse
+  if (!moduleAllowed(gitlab)) throw new AccessError(403, "moduleNotInEdition");
   if (!gitlabOAuthOn()) throw new OpError("gitlabOAuthOff");
   if (!canEncrypt()) throw new OpError("encryptionNotConfigured");
   const q = new URLSearchParams({

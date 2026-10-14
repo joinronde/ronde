@@ -108,7 +108,8 @@ export function toSettings(
     gitlabGroups: gl.groups,
     githubRepos: readConfig(github, mods.github?.config).repos,
     tokensSet: { gitlab: !!mods.gitlab?.secret, github: !!mods.github?.secret, bbb: !!mods.video?.secret },
-    gitlabUser: connectedGitlabUser(mods.gitlab?.secret),
+    // Read (decrypted) for the people configuring the meeting only: lib/server/meeting/state.ts
+    gitlabUser: null,
     jobCategories,
     schedule,
     icebreakers: readConfig(icebreaker, mods.icebreaker?.config).bank,

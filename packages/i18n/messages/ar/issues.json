@@ -7,5 +7,6 @@
   "tooMany": "{max, plural, one {عنصر واحد} two {عنصران} few {# عناصر} many {# عنصرًا} other {# عنصر}} على الأكثر",
   "format": "قيمة ليست بالصيغة المتوقعة",
   "missing": "قيمة مفقودة",
-  "invalid": "قيمة غير مقبولة"
+  "invalid": "قيمة غير مقبولة",
+  "at": "{field}: {problem}"
 }

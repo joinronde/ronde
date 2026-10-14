@@ -407,22 +407,36 @@ export async function loadProject(ctx: WorkspaceContext, slug: string): Promise<
     orderBy: { date: "desc" },
     // Years of a project's life; the page shows them a month at a time, more on demand
     take: 500,
-    select: { id: true, date: true, record: true, meeting: { select: { id: true, name: true } } },
+    select: { id: true, date: true, meeting: { select: { id: true, name: true } } },
   });
+  // Read light: the project's own notes from their table, not every session's whole record; a record is read only
+  // where its health is (a session from before the project sheets)
+  const shownIds = sessions.map((s) => s.id);
+  const noteKeys = [`p:${p.id}`, `qa:p:${p.id}`];
+  const [notes, oldRecords] = await Promise.all([
+    ctx.db.note.findMany({
+      where: { sessionId: { in: shownIds }, key: { in: noteKeys } },
+      select: { sessionId: true, key: true, text: true },
+    }),
+    ctx.db.session.findMany({
+      where: { id: { in: shownIds.filter((id) => !sheets.some((u) => u.sessionId === id)) } },
+      select: { id: true, record: true },
+    }),
+  ]);
+  const noteOf = (sessionId: string, key: string) => notes.find((n) => n.sessionId === sessionId && n.key === key)?.text;
+  const oldHealth = new Map(oldRecords.map((r) => [r.id, parseRecord(r.record)?.projects.find((x) => x.id === p.id)?.health ?? null]));
   const timeline = sessions.map((s): ProjectPage["timeline"][number] => {
-    const record = parseRecord(s.record);
-    const notes = record?.notes ?? {};
     const sheet = sheets.find((u) => u.sessionId === s.id);
     return {
       sessionId: s.id,
       date: s.date,
       meeting: s.meeting,
-      health: sheet?.health ?? record?.projects.find((x) => x.id === p.id)?.health ?? null,
+      health: sheet?.health ?? oldHealth.get(s.id) ?? null,
       headline: sheet?.headline ?? "",
       items: items
         .filter((i) => i.sessionId === s.id)
         .map((i) => ({ personId: i.personId, name: personName(i.person), role: i.role, text: i.text })),
-      decisions: [...decisionsOf(notes[`p:${p.id}`]), ...decisionsOf(notes[`qa:p:${p.id}`])],
+      decisions: noteKeys.flatMap((k) => decisionsOf(noteOf(s.id, k))),
     };
   });
   const hosted = new Set(own.map((o) => o.meetingId));

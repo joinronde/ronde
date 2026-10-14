@@ -4,7 +4,10 @@
     "clear": "مسح",
     "today": "اليوم",
     "previous": "الشهر السابق",
-    "next": "الشهر التالي"
+    "next": "الشهر التالي",
+    "required": "اختر تاريخًا.",
+    "tooEarly": "اختر {date} أو بعده.",
+    "tooLate": "اختر {date} أو قبله."
   },
   "time": {
     "placeholder": "اختر وقتًا",

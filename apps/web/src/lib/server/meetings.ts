@@ -1,7 +1,7 @@
 import "server-only";
 import { withRoundsOrder } from "@ronde/core/agenda";
 import { describeSchedule } from "@ronde/core/schedule";
-import { parseSections } from "@ronde/core/templates";
+import { parseSections, sectionsProblem } from "@ronde/core/templates";
 import { sectionBehavior } from "@ronde/core/util";
 import type { Prisma } from "@ronde/db";
 import { type Locale, resolveLocale } from "@ronde/i18n";
@@ -105,6 +105,9 @@ export async function createMeeting(ctx: WorkspaceContext, input: NewMeeting): P
   if (input.sections !== undefined) {
     const sections = parseSections(input.sections);
     if (!sections) throw new OpError("invalidRequest", { details: "sections" });
+    // The rules the meeting's settings hold to: a section without them would refuse every later save there
+    const problem = sectionsProblem(sections);
+    if (problem) throw new OpError(problem);
     template.sections = sections;
   }
   // The template's emoji marks the meeting in the menus (changed or replaced by an image in its settings)

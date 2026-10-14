@@ -1,6 +1,6 @@
 import { prisma } from "@ronde/db";
 import { describe, expect, it } from "vitest";
-import { applyProfile } from "@/lib/server/identity";
+import { applyProfile } from "@/lib/server/directory-profile";
 import { workspace } from "./fixtures";
 
 // Signing in through the company directory used to bring only the name and the address: the phone and the team
@@ -23,5 +23,20 @@ describe("the company directory's profile", () => {
     // Nothing said: nothing changed
     await applyProfile(w.user.email, w.ws.id, {});
     expect((await card()).jobCategory).toEqual({ name: "Data" });
+  });
+
+  it("makes the directory's teams like teams made by hand: each last, each in the next colour", async () => {
+    // All came at the top in the first colour, sharing it on the teams board
+    const w = await workspace(`dir-teams-${Date.now().toString(36)}`);
+    await applyProfile(w.user.email, w.ws.id, { team: "Sales" });
+    await applyProfile(w.user.email, w.ws.id, { team: "Ops" });
+    const teams = await prisma.jobCategory.findMany({ where: { workspaceId: w.ws.id }, orderBy: { position: "asc" } });
+    const made = teams.filter((x) => ["Sales", "Ops"].includes(x.name));
+    expect(made.map((x) => x.name)).toEqual(["Sales", "Ops"]);
+    expect(new Set(made.map((x) => x.position)).size).toBe(2);
+    expect(new Set(made.map((x) => x.color)).size).toBe(2);
+    // Found again by its name, not made twice
+    await applyProfile(w.user.email, w.ws.id, { team: "Sales" });
+    expect(await prisma.jobCategory.count({ where: { workspaceId: w.ws.id, name: "Sales" } })).toBe(1);
   });
 });

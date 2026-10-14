@@ -5,6 +5,7 @@
 
 import { birthdayOf, phoneOf } from "@ronde/core/directory";
 import type { ScopedClient, ScopedTx } from "@ronde/db";
+import { ensureTeam } from "@ronde/db/teams";
 import type { EnterpriseEdition, ScimRequest, ScimResult } from "@ronde/editions/ee";
 
 type Db = ScopedClient | ScopedTx;
@@ -157,19 +158,7 @@ const select = {
 
 /** The phone, team and birthday the directory sent, as the person's card keeps them (its team made if missing) */
 async function profileData(db: Db, workspaceId: string, c: Changes) {
-  const team =
-    c.team === undefined
-      ? undefined
-      : c.team === null
-        ? null
-        : (
-            await db.jobCategory.upsert({
-              where: { workspaceId_name: { workspaceId, name: c.team.slice(0, 60) } },
-              create: { workspaceId, name: c.team.slice(0, 60) },
-              update: {},
-              select: { id: true },
-            })
-          ).id;
+  const team = c.team === undefined ? undefined : c.team === null ? null : await ensureTeam(db, workspaceId, c.team);
   return {
     ...(c.phone !== undefined ? { phone: c.phone } : {}),
     ...(c.birthday !== undefined ? { birthday: c.birthday } : {}),

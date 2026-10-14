@@ -81,4 +81,25 @@ describe("modules", () => {
     expect(snap.settings.tokensSet.gitlab).toBe(true);
     expect(snap.settings.gitlabProjects).toBe("acme/api");
   });
+
+  it("names the GitLab account the meeting is connected with to its admins only", async () => {
+    // Sent to every participant, observer and guest screen before
+    const { saveGrant } = await import("@/lib/server/gitlab-oauth");
+    await saveGrant(f.ctx.ws.db, f.ctx.ws.workspace.id, f.meetingId, {
+      kind: "oauth",
+      access: "gl-access",
+      refresh: "gl-refresh",
+      expiresAt: Date.now() + 3_600_000,
+      user: "hana.host",
+    });
+    expect((await loadSnapshot(f.ctx)).settings.gitlabUser).toBe("hana.host");
+    const participant = {
+      ...f.ctx,
+      viewer: { ...f.ctx.viewer, isAdmin: false },
+      can: (p: string) => p !== "meeting.configure" && f.ctx.can(p as never),
+    };
+    const theirs = await loadSnapshot(participant);
+    expect(theirs.settings.gitlabUser).toBeNull();
+    expect(JSON.stringify(theirs)).not.toContain("hana.host");
+  });
 });

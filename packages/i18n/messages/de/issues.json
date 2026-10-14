@@ -7,5 +7,6 @@
   "tooMany": "höchstens {max, plural, one {# Element} other {# Elemente}}",
   "format": "ein Wert hat nicht das erwartete Format",
   "missing": "ein Wert fehlt",
-  "invalid": "ein Wert wird nicht akzeptiert"
+  "invalid": "ein Wert wird nicht akzeptiert",
+  "at": "{field}: {problem}"
 }

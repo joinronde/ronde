@@ -1,10 +1,10 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
-import type { DirectoryProfile } from "@ronde/core/directory";
 import { prisma, scoped } from "@ronde/db";
 import { EDITIONS, hasFeature } from "@ronde/editions";
 import type { IdentityHost } from "@ronde/editions/ee";
 import { audit } from "./audit";
+import { applyProfile } from "./directory-profile";
 import { env } from "./env";
 import { edition, featureOn, isCloud, loadLicense } from "./license";
 import { decryptSecret } from "./secrets";
@@ -49,34 +49,6 @@ export async function joinWorkspace(user: { id: string; email: string; name: str
     targetId: person.id,
     data: { domain: domainOf(email) },
   });
-}
-
-/**
- * What the company directory says of someone, copied to their card in the workspace: the phone and the team
- * follow the directory (its team made if missing), a birthday the person entered stays theirs
- */
-export async function applyProfile(email: string, workspaceId: string, profile: DirectoryProfile): Promise<void> {
-  const person = await prisma.person.findFirst({
-    where: { workspaceId, email: { equals: email.trim(), mode: "insensitive" }, deprovisionedAt: null },
-    select: { id: true, birthday: true },
-  });
-  if (!person) return;
-  const team = profile.team
-    ? (
-        await prisma.jobCategory.upsert({
-          where: { workspaceId_name: { workspaceId, name: profile.team } },
-          create: { workspaceId, name: profile.team },
-          update: {},
-          select: { id: true },
-        })
-      ).id
-    : undefined;
-  const data = {
-    ...(profile.phone ? { phone: profile.phone } : {}),
-    ...(team ? { jobCategoryId: team } : {}),
-    ...(profile.birthday && !person.birthday ? { birthday: profile.birthday } : {}),
-  };
-  if (Object.keys(data).length) await prisma.person.update({ where: { id: person.id }, data });
 }
 
 /** Workspaces that verified the address's domain */

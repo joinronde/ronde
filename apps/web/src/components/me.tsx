@@ -902,6 +902,22 @@ export function CheckInForm({
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auto, draft.typed, sig]);
+  // Left before the delay ran out (another page from the sidebar, a tab put aside): saved at once, not lost
+  const latest = useRef(draft);
+  latest.current = draft;
+  useEffect(() => {
+    if (!auto) return;
+    const flush = () => {
+      const now = latest.current;
+      if (now.typed && now.status !== "saving") void now.save();
+    };
+    const onHide = () => document.visibilityState === "hidden" && flush();
+    document.addEventListener("visibilitychange", onHide);
+    return () => {
+      document.removeEventListener("visibilitychange", onHide);
+      flush();
+    };
+  }, [auto]);
   return (
     <form
       className="panel form"

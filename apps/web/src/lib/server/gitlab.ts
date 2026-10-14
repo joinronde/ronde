@@ -5,7 +5,8 @@ import { matchesProjects } from "@ronde/core/util";
 import type { ScopedClient } from "@ronde/db";
 import { readConfig } from "@ronde/module-sdk";
 import { gitlab } from "@ronde/modules";
-import { grantDue, parseGitlabSecret } from "@/lib/shared/gitlab-grant";
+import { type GitlabGrant, grantDue, parseGitlabSecret } from "@/lib/shared/gitlab-grant";
+import { singleFlight } from "@/lib/shared/single-flight";
 import { env } from "./env";
 import { AccessError, IntegrationError } from "./errors";
 import { renewGrant, saveGrant } from "./gitlab-oauth";
@@ -36,6 +37,9 @@ interface GlProject {
 /** `bearer`: an OAuth access token (sent as Authorization), otherwise a personal token */
 type GitlabConfig = { url: string; token: string; bearer?: boolean };
 
+/** One renewal of a meeting's GitLab grant at a time on this server */
+const renewOnce = singleFlight<GitlabGrant>();
+
 /** The instance's token serves every meeting of a self-hosted server; in the cloud each meeting brings its own */
 const instanceToken = (token: string) => (isCloud() ? "" : token);
 
@@ -49,12 +53,21 @@ export async function meetingGitlab(db: ScopedClient, meetingId: string) {
     let current = grant;
     if (grantDue(grant)) {
       try {
-        current = await renewGrant(grant);
-        await saveGrant(db, row.workspaceId, meetingId, current);
+        // Requests of this server seeing it due share one renewal (GitLab takes each refresh token once)
+        current = await renewOnce(meetingId, async () => {
+          const renewed = await renewGrant(grant);
+          await saveGrant(db, row.workspaceId, meetingId, renewed);
+          return renewed;
+        });
       } catch (e) {
-        // Renewed meanwhile by another request (GitLab then refuses the old refresh token): the new one serves
-        const again = await db.moduleInstallation.findFirst({ where: { meetingId, moduleId: "gitlab" } });
-        const fresh = parseGitlabSecret(decryptSecret(again?.secret ?? "")).grant;
+        // Renewed meanwhile by another server, whose save may come a moment later: the new grant then serves
+        let fresh: GitlabGrant | null = null;
+        for (const wait of [0, 300, 900]) {
+          if (wait) await new Promise((r) => setTimeout(r, wait));
+          const again = await db.moduleInstallation.findFirst({ where: { meetingId, moduleId: "gitlab" } });
+          fresh = parseGitlabSecret(decryptSecret(again?.secret ?? "")).grant;
+          if (fresh && !grantDue(fresh)) break;
+        }
         if (!fresh || grantDue(fresh)) throw e;
         current = fresh;
       }

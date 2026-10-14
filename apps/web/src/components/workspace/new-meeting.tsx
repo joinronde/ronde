@@ -202,7 +202,8 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
       personIds: [...picked],
       creatorSpeaks,
       modules: mods,
-      sections: sections.map((s) => ({ ...s, label: s.label.trim() })),
+      // A section of its own left unnamed takes the name it showed (its placeholder): it needs one
+      sections: sections.map((s) => ({ ...s, label: s.label.trim() || (s.role === "custom" ? sectionLabel(s) : "") })),
       first: firstRound,
     });
     if (!res.ok) {

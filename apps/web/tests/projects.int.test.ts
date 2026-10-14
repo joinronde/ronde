@@ -392,11 +392,14 @@ describe("the portfolio", () => {
     const w = await workspace(`timeline-${Date.now().toString(36)}`);
     const t = await meeting(w, "Weekly");
     await withRound(t);
+    // A decision noted on the project's step: read from the notes, not from every session's whole record
+    await runOp(t.ctx, { op: "note.set", key: `p:${t.projectId}`, text: "Decision: ship the invoices first" });
     await runOp(t.ctx, { op: "meeting.goto", key: "end" });
     await runOp(t.ctx, { op: "meeting.archive", summary: null, omit: [] });
     const slug = (await prisma.project.findUniqueOrThrow({ where: { id: t.projectId } })).slug;
     const page = await loadProject(t.ctx.ws, slug);
     expect(page?.timeline).toEqual([expect.objectContaining({ sessionId: t.sessionId, headline: "sheet", health: "onTrack" })]);
+    expect(page?.timeline[0]?.decisions.join(" ")).toContain("ship the invoices first");
     expect(page?.timeline[0]?.items.map((i) => i.text)).toEqual(["project work"]);
 
     // A member of the workspace who is not in the meeting sees the project, not what the meeting said

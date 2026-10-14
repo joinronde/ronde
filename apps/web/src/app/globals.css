@@ -4437,4 +4437,6 @@ textarea.grow{field-sizing:content;min-height:calc(3lh + 22px);max-height:calc(1
 .tpl-col li > span{display:grid;min-width:0}
 .tpl-col.stays li{color:var(--ink-2)}
 @media (max-width:760px){.tpl-split{grid-template-columns:minmax(0,1fr)}}
+/* The date field's checked value: out of sight, where the field starts (the browser's notice points there) */
+.date-input-check{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0}
 

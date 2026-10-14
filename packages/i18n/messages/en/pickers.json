@@ -4,7 +4,10 @@
     "clear": "Clear",
     "today": "Today",
     "previous": "Previous month",
-    "next": "Next month"
+    "next": "Next month",
+    "required": "Pick a date.",
+    "tooEarly": "Pick {date} or later.",
+    "tooLate": "Pick {date} or earlier."
   },
   "time": {
     "placeholder": "Pick a time",

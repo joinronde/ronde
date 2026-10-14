@@ -618,6 +618,17 @@ export const parseSections = (raw: unknown): TemplateData["sections"] | null => 
   return new Set(parsed.data.map((s) => s.key)).size === parsed.data.length ? parsed.data : null;
 };
 
+/**
+ * What is wrong with a meeting's sections, the same wherever they are set (its settings, the creation wizard):
+ * a role held by two sections, or a section of its own without a name
+ */
+export function sectionsProblem(sections: readonly { role: string; label: string }[]): "sectionRoleTaken" | "sectionLabelRequired" | null {
+  const roles = sections.filter((s) => s.role !== "custom").map((s) => s.role);
+  if (new Set(roles).size !== roles.length) return "sectionRoleTaken";
+  if (sections.some((s) => s.role === "custom" && !s.label.trim())) return "sectionLabelRequired";
+  return null;
+}
+
 /** A built-in template, its section labels in a language */
 export function builtinTemplate(id: BuiltinTemplateId, locale: Locale): TemplateData {
   const t = translator(locale, "templates");

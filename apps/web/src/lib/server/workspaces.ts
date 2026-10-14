@@ -5,6 +5,7 @@ import { authEmail } from "@ronde/core/emails";
 import { assignableRoles, type WorkspaceRole } from "@ronde/core/permissions";
 import { availableSlug, isSlugFormat, RESERVED_SLUGS, slugify, splitName } from "@ronde/core/slug";
 import { prisma } from "@ronde/db";
+import { TEAM_PALETTE_SIZE } from "@ronde/db/teams";
 import { isLocale, type Locale, resolveLocale } from "@ronde/i18n";
 import { isTeamIcon } from "@/lib/shared/team-icons";
 import { erasePerson } from "./account-data";
@@ -23,7 +24,8 @@ import { publicUrl } from "./public-url";
 import { disconnectSlack } from "./slack";
 
 const INVITATION_DAYS = 14;
-const PALETTE_SIZE = 6;
+/** Colours a team may take: the same palette as the teams a directory makes */
+const PALETTE_SIZE = TEAM_PALETTE_SIZE;
 
 export const hashToken = (token: string) => createHash("sha256").update(token).digest("hex");
 const normalizeEmail = (email: string) => email.trim().toLowerCase();

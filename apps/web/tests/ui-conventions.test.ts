@@ -130,6 +130,12 @@ describe("interface conventions", () => {
     expect(css).toMatch(/\.tabs-actions \.hide-sm\{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset\(50%\)/);
   });
 
+  it("saves a check-in at once when it is left before its delay runs out", () => {
+    // Another page opened from the sidebar within the delay cleared the timer: what was typed was lost
+    const me = sources.find((s) => s.file === "me.tsx")!.text;
+    expect(me).toMatch(/document\.addEventListener\("visibilitychange", onHide\);[\s\S]{0,160}flush\(\);/);
+  });
+
   it("leaves data-tip to the app-wide tooltip: a page with its own tooltip uses another attribute", () => {
     // The stats page drew its own bubble for data-tip, and the app-wide one showed a second, elsewhere
     expect(sources.filter((s) => s.file !== "tooltips.tsx" && s.text.includes('"[data-tip]"')).map((s) => s.file)).toEqual([]);

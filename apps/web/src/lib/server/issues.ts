@@ -7,6 +7,8 @@ interface Issue {
   origin?: string;
   minimum?: number | bigint;
   maximum?: number | bigint;
+  /** Where in the input: "announcements.3" */
+  path?: readonly PropertyKey[];
 }
 
 /**
@@ -15,7 +17,7 @@ interface Issue {
  */
 export function issuesText(issues: readonly Issue[], locale: Locale): string {
   const t = translator(locale, "issues");
-  const said = issues.map((i) => {
+  const what = (i: Issue): string => {
     const min = Number(i.minimum ?? 0);
     const max = Number(i.maximum ?? 0);
     if (i.code === "too_small")
@@ -33,6 +35,9 @@ export function issuesText(issues: readonly Issue[], locale: Locale): string {
     if (i.code === "invalid_format") return t("format");
     if (i.code === "invalid_type") return t("missing");
     return t("invalid");
-  });
-  return [...new Set(said)].join(" ; ");
+  };
+  // The field it is about, when there is one: in a long form, the limit alone does not say where
+  const said = issues.map((i) => (i.path?.length ? t("at", { field: i.path.map(String).join("."), problem: what(i) }) : what(i)));
+  // Each said once, joined the way the reader's language joins a list
+  return new Intl.ListFormat(locale, { style: "long", type: "unit" }).format([...new Set(said)]);
 }
