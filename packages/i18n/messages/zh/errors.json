@@ -108,6 +108,8 @@
   "githubRateLimited": "GitHub 暂时限制了请求：请一分钟后再试，或在设置中输入令牌。",
   "githubStatus": "GitHub 返回了 {status}。",
   "videoBbbUrl": "请输入 BigBlueButton 服务器地址。",
+  "videoServerAdminOnly": "只有工作区管理员才能为会议设置自己的 BigBlueButton 服务器（{host}）：请选择工作区的服务器。",
+  "videoServerFailed": "BigBlueButton 服务器未通过检查：{detail}",
   "videoUnreachable": "视频通话服务器没有响应。请稍后重试，或请主持人检查设置。",
   "publishLive": "本场会议是以实时方式开始的：请在控制台结束后再归档。",
   "licenseFormat": "这不是 Ronde 许可证密钥：请粘贴以“ronde_lic_v1.”开头的完整密钥。",

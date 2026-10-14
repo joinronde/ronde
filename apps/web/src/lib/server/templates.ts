@@ -18,6 +18,7 @@ import {
 import { resolveSections } from "@ronde/core/util";
 import type { Prisma, ScopedClient, ScopedTx } from "@ronde/db";
 import { type Locale, translator } from "@ronde/i18n";
+import { readConfig } from "@ronde/module-sdk";
 import { newRoom } from "@ronde/modules";
 import { CATALOG } from "@ronde/modules/catalog";
 import type { WorkspaceContext } from "./authz";
@@ -245,8 +246,8 @@ export function installationsFrom(
   return base.map((row) => {
     const mod = ALL_MODULES.find((m) => m.id === row.moduleId);
     const fromTemplate = data.modules[row.moduleId];
-    const config =
-      fromTemplate?.config !== undefined && mod?.config.schema.safeParse(fromTemplate.config).success ? fromTemplate.config : row.config;
+    // Read over the module's defaults: a template saved before a setting existed still brings the others
+    const config = fromTemplate?.config !== undefined && mod ? (readConfig(mod, fromTemplate.config) as object) : row.config;
     const enabled = overrides[row.moduleId] ?? fromTemplate?.enabled ?? row.enabled;
     // Each meeting has its own video room
     const own = row.moduleId === "video" ? { ...(config as object), room: newRoom() } : config;

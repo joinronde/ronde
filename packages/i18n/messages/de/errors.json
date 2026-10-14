@@ -108,6 +108,8 @@
   "githubRateLimited": "GitHub begrenzt die Anfragen gerade: Versuch es in einer Minute erneut oder gib in den Einstellungen ein Token ein.",
   "githubStatus": "GitHub hat mit {status} geantwortet.",
   "videoBbbUrl": "Gib die Adresse des BigBlueButton-Servers ein.",
+  "videoServerAdminOnly": "Nur eine Administratorin oder ein Administrator des Arbeitsbereichs kann einen eigenen BigBlueButton-Server des Meetings festlegen ({host}): Wählen Sie einen Server des Arbeitsbereichs.",
+  "videoServerFailed": "Der BigBlueButton-Server hat die Prüfung nicht akzeptiert: {detail}",
   "videoUnreachable": "Der Videocall-Server antwortet nicht. Versuch es gleich noch einmal oder bitte die Moderation, die Einstellungen zu prüfen.",
   "publishLive": "Diese Sitzung wurde live gestartet: Beende sie in der Regie, um sie zu archivieren.",
   "licenseFormat": "Das ist kein Ronde-Lizenzschlüssel: Füge den ganzen Schlüssel ein, beginnend mit „ronde_lic_v1.“.",

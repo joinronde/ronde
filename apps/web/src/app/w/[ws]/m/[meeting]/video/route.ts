@@ -6,8 +6,8 @@ import { getTranslations } from "next-intl/server";
 import { pageUser } from "@/lib/server/authz";
 import { meetingContext } from "@/lib/server/meeting/context";
 import { moduleStates } from "@/lib/server/meeting/modules";
-import { decryptSecret } from "@/lib/server/secrets";
 import { bbbJoin } from "@/lib/server/video";
+import { meetingBbb } from "@/lib/server/video-accounts";
 
 export const dynamic = "force-dynamic";
 
@@ -19,12 +19,12 @@ export async function GET(_req: Request, { params }: { params: Promise<{ ws: str
   if (!ctx) notFound();
   const mod = (await moduleStates(ctx.ws.db, ctx.meeting.id)).video;
   const config = readConfig(video, mod?.config);
-  const secret = decryptSecret(mod?.secret ?? "");
-  if (!mod?.enabled || config.provider !== "bbb" || !config.bbbUrl || !config.room || !secret) redirect(ctx.links.path);
+  // The workspace's server the meeting picked, or its own
+  const server = mod?.enabled && config.provider === "bbb" ? await meetingBbb(ctx.ws.db, { config, secret: mod.secret }) : null;
+  if (!server || !config.room) redirect(ctx.links.path);
   try {
     const url = await bbbJoin({
-      server: config.bbbUrl,
-      secret,
+      ...server,
       room: config.room,
       name: ctx.meeting.name,
       person: ctx.viewer.name || ctx.viewer.email,

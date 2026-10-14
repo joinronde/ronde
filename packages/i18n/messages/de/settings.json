@@ -273,6 +273,9 @@
     "jitsiUrl": "Jitsi-Server",
     "jitsiHint": "Leer: meet.jit.si. Der Raumname wird einmal schwer erratbar gezogen und bleibt für alle Sitzungen gleich.",
     "bbbUrl": "BigBlueButton-Server",
+    "server": "Server",
+    "ownServer": "Ein eigener Server dieses Meetings",
+    "serverHint": "Die Server des Arbeitsbereichs fügen seine Administratoren in den Einstellungen des Arbeitsbereichs hinzu.",
     "bbbSecret": "Gemeinsames Secret des Servers",
     "bbbHint": "Ronde öffnet den Raum, wenn jemand beitritt, und lässt jede Person mit ihrem Namen herein; die Moderation tritt als Moderator bei. Das Secret wird verschlüsselt und nie wieder angezeigt.",
     "current": "Personen treten bei über:",
@@ -283,7 +286,8 @@
     "kinds": {
       "zoom": "Zoom",
       "meet": "Google Meet",
-      "teams": "Teams"
+      "teams": "Teams",
+      "bbb": "BigBlueButton"
     }
   },
   "logoHint": "Das Logo des Arbeitsbereichs erscheint auf dem geteilten Bildschirm, in E-Mails und Protokollen.",
