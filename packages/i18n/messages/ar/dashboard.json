@@ -10,6 +10,19 @@
   "kickerLive": "يجري الآن",
   "liveNow": "مباشر الآن",
   "liveShort": "مباشر",
+  "liveStep": {
+    "intro": "المقدمة",
+    "turn": "دور {name} · {n}/{total}",
+    "projects": "جولة المشاريع",
+    "topics": "مواضيع متفرقة",
+    "end": "الختام",
+    "block": "جارٍ"
+  },
+  "liveSince": "بدأ عند {time}",
+  "liveSinceDay": "بدأ في {day} عند {time}",
+  "turnsDone": "{done}/{total} أدوار انتهت",
+  "yourTurnNow": "إنه دورك!",
+  "yourTurnIn": "{count, plural, zero {دورك الآن} one {دورك بعد شخص واحد} two {دورك بعد شخصين} few {دورك بعد # أشخاص} many {دورك بعد # شخصًا} other {دورك بعد # شخص}}",
   "today": "اليوم",
   "tomorrow": "غدًا",
   "inDays": "{count, plural, one {بعد يوم واحد} two {بعد يومين} few {بعد # أيام} many {بعد # يومًا} other {بعد # يوم}}",
@@ -45,9 +58,12 @@
   "nextOn": "التالي: {date}",
   "people": "{count, plural, one {شخص واحد} two {شخصان} few {# أشخاص} many {# شخصًا} other {# شخص}}",
   "gettingStarted": "البداية",
+  "skipSteps": "تخطٍّ",
   "progress": "أُنجز {done} من {total}",
   "stepsDone": "الخطوات المنجزة",
   "sheetReady": "كُتبت بطاقة {project}",
   "sheetEmpty": "بطاقة {project} بانتظار الكتابة",
-  "readyCount": "{ready}/{total} بطاقات مملوءة"
+  "readyCount": "{ready}/{total} بطاقات مملوءة",
+  "seatReady": "البطاقة معبأة",
+  "seatToFill": "البطاقة بانتظار التعبئة"
 }

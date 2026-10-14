@@ -6,16 +6,20 @@
   "mine": "我的",
   "hosted": "我主持的会议",
   "filter": "会议",
-  "all": "全部",
-  "count": {
-    "open": "{count, plural, =0 {没有待办} other {# 项待办}}",
-    "doing": "{count, plural, =0 {没有进行中的} other {# 项进行中}}",
-    "done": "{count, plural, =0 {最近没有完成的} other {最近完成 # 项}}"
-  },
+  "allMeetings": "所有会议",
+  "search": "搜索行动、会议或人员…",
+  "noMatch": "没有匹配的行动。",
+  "layout": "显示方式",
+  "layoutList": "列表",
+  "layoutBoard": "看板",
+  "stuck": "等待太久",
+  "dropHere": "将行动拖到这里",
+  "moveTo": "将“{text}”移到{column}",
   "group": {
     "open": "待办",
     "doing": "进行中",
-    "done": "最近两周完成"
+    "done": "已完成",
+    "doneLately": "过去两周完成的"
   },
   "markDone": "将“{text}”标记为完成",
   "reopen": "重新打开“{text}”",

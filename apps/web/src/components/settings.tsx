@@ -2,9 +2,42 @@
 
 import { ACCENTS, type Accent } from "@ronde/core/appearance";
 import { reminderEmail } from "@ronde/core/notifications";
+import { describeSchedule } from "@ronde/core/schedule";
 import type { GitlabProject, MemberDTO, SectionDef, SectionRole, SectionType, SettingsDTO } from "@ronde/core/types";
 import { fmtMinutes, hostName, lines, mmssPlain, ROLE_KIND, reminderDate, SECTION_ROLES, SECTION_TYPES } from "@ronde/core/util";
 import { formatters, type Locale, localeNames, locales } from "@ronde/i18n";
+import {
+  Bell,
+  BookOpen,
+  CalendarClock,
+  CalendarDays,
+  Check,
+  ChevronDown,
+  CircleAlert,
+  CircleCheck,
+  Clapperboard,
+  CloudCheck,
+  Eye,
+  FolderKanban,
+  Handshake,
+  Info,
+  LayoutTemplate,
+  ListChecks,
+  ListOrdered,
+  LoaderCircle,
+  Lock,
+  type LucideIcon,
+  MessageCircle,
+  Palette,
+  Plug,
+  Puzzle,
+  SlidersHorizontal,
+  TriangleAlert,
+  Unplug,
+  Users,
+  Video,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -12,19 +45,24 @@ import { createVideoRoomAction } from "@/app/w/[ws]/actions";
 import { DurationField } from "@/components/duration-field";
 import { Select } from "@/components/select";
 import { withBasePath } from "@/lib/shared/base-path";
+import { moved } from "@/lib/shared/sortable";
 import { AgendaPanel, PokerSettings, RetroSettings } from "./agenda-panel";
 import { squareImage } from "./avatar-picker";
 import { CalendarSyncPanel } from "./calendar-sync-panel";
 import { GuestLinksPanel } from "./guest-links-panel";
+import { type IntegrationItem, IntegrationsHub } from "./integrations-hub";
 import { MeetingMark } from "./meeting-mark";
 import { MeetingProjectsPanel } from "./meeting-projects-panel";
 import { MeetingWikiPanel } from "./meeting-wiki-panel";
 import { ModulesPanel } from "./modules-panel";
 import { NotificationsPanel } from "./notifications-panel";
+import { NotificationsPreview } from "./notifications-preview";
 import { useRonde } from "./ronde-provider";
 import { SchedulePanel } from "./schedule-panel";
 import { NewTab } from "./shell/new-tab";
+import { SortGrip, useSortable } from "./sortable";
 import { Avatar } from "./stage";
+import { ToolMark } from "./tool-mark";
 
 export function SettingsView() {
   const t = useTranslations("settings");
@@ -56,6 +94,21 @@ const SETTINGS_CATEGORIES = [
   "danger",
 ] as const;
 type SettingsCategory = (typeof SETTINGS_CATEGORIES)[number];
+/** What each category is about, at a glance in the side navigation */
+const CATEGORY_ICONS: Record<SettingsCategory, LucideIcon> = {
+  general: SlidersHorizontal,
+  schedule: CalendarClock,
+  people: Users,
+  sections: ListChecks,
+  agenda: ListOrdered,
+  projects: FolderKanban,
+  modules: Puzzle,
+  appearance: Palette,
+  notifications: Bell,
+  integrations: Plug,
+  template: LayoutTemplate,
+  danger: TriangleAlert,
+};
 const isCategory = (v: string): v is SettingsCategory => (SETTINGS_CATEGORIES as readonly string[]).includes(v);
 
 /** Key of a new section, picked here so it stays the same from one save to the next */
@@ -93,32 +146,59 @@ function SettingsLayout({
       <nav className="cfg-nav" aria-label={t("nav.label")}>
         <ul>
           {categories.map((c) => (
-            <li key={c.id}>
+            <li key={c.id} className={c.id === "danger" ? "cfg-danger" : undefined}>
               <button type="button" aria-current={c.id === shown.id ? "page" : undefined} onClick={() => open(c.id)}>
-                {t(`nav.${c.id}`)}
+                {(() => {
+                  const NavIcon = CATEGORY_ICONS[c.id];
+                  return <NavIcon className="cfg-ico" size={17} strokeWidth={2} aria-hidden="true" />;
+                })()}
+                <span>{t(`nav.${c.id}`)}</span>
               </button>
             </li>
           ))}
         </ul>
       </nav>
       <div className="cfg-main">
-        <div className="cfg-status" role="status" aria-live="polite">
-          {status === "saving" || status === "pending"
-            ? t("status.saving")
-            : status === "saved"
-              ? `✓ ${t("status.saved")}`
-              : status === "invalid"
-                ? t("status.invalid")
-                : status === "failed"
-                  ? t("status.failed")
-                  : t("status.auto")}
-          {status === "saved" && onUndo && (
-            <button type="button" className="linkbtn" onClick={onUndo}>
-              {t("status.undo")}
-            </button>
-          )}
-        </div>
-        <h2 className="cfg-title">{t(`nav.${shown.id}`)}</h2>
+        <header className="cfg-head">
+          {(() => {
+            const HeadIcon = CATEGORY_ICONS[shown.id];
+            return (
+              <span className={`cfg-head-ico${shown.id === "danger" ? " danger" : ""}`} aria-hidden="true">
+                <HeadIcon size={22} strokeWidth={2} />
+              </span>
+            );
+          })()}
+          <div>
+            <h2 className="cfg-title">{t(`nav.${shown.id}`)}</h2>
+            <p className="hint">{t(`navHints.${shown.id}`)}</p>
+          </div>
+          {/* The save status at the end of the header's row: the header starts level with the side navigation */}
+          <div className={`cfg-status is-${status}`} role="status" aria-live="polite">
+            {status === "saving" || status === "pending" ? (
+              <LoaderCircle className="cfg-spin" size={15} strokeWidth={2.2} aria-hidden="true" />
+            ) : status === "saved" ? (
+              <CircleCheck size={15} strokeWidth={2.2} aria-hidden="true" />
+            ) : status === "invalid" || status === "failed" ? (
+              <CircleAlert size={15} strokeWidth={2.2} aria-hidden="true" />
+            ) : (
+              <CloudCheck size={15} strokeWidth={2} aria-hidden="true" />
+            )}
+            {status === "saving" || status === "pending"
+              ? t("status.saving")
+              : status === "saved"
+                ? t("status.saved")
+                : status === "invalid"
+                  ? t("status.invalid")
+                  : status === "failed"
+                    ? t("status.failed")
+                    : t("status.auto")}
+            {status === "saved" && onUndo && (
+              <button type="button" className="linkbtn" onClick={onUndo}>
+                {t("status.undo")}
+              </button>
+            )}
+          </div>
+        </header>
         <div className="cfg-panels">
           {shown.nodes.filter(Boolean).map((n, i) => (
             <Fragment key={`${shown.id}-${i}`}>{n}</Fragment>
@@ -171,9 +251,9 @@ function IconPanel() {
     try {
       const r = await fetch(`${s.context.api}/image`, { method, body, headers: body ? { "Content-Type": body.type } : undefined });
       if (!r.ok) throw new Error(((await r.json().catch(() => null)) as { error?: string } | null)?.error ?? t("icon.notSaved"));
-      toast(method === "PUT" ? t("icon.imageSaved") : t("icon.imageRemoved"));
+      toast(method === "PUT" ? t("icon.imageSaved") : t("icon.imageRemoved"), "ok");
     } catch (e) {
-      toast((e as Error).message);
+      toast((e as Error).message, "error");
     } finally {
       setBusy(false);
     }
@@ -207,7 +287,7 @@ function IconPanel() {
               try {
                 await send("PUT", await squareImage(picked));
               } catch {
-                toast(t("icon.notSaved"));
+                toast(t("icon.notSaved"), "error");
               }
             }}
           />
@@ -266,12 +346,22 @@ function AppearancePanel({ accent, onAccent }: { accent: Accent; onAccent: (a: A
       <p className="hint" style={{ margin: 0 }}>
         {t("appearance.accentHint")}
       </p>
+      {/* Each colour as it will look: the shared screen's bar, timer and button, in miniature */}
       <div className="accent-pick" role="radiogroup" aria-label={t("appearance.accent")}>
         {ACCENTS.map((a) => (
-          <label key={a} className="accent-swatch" data-swatch={a}>
+          <label key={a} className="accent-card" data-swatch={a}>
             <input type="radio" name="accent" value={a} checked={accent === a} onChange={() => onAccent(a)} />
-            <span className="dot" aria-hidden="true" />
-            {t(`appearance.accents.${a}`)}
+            <span className="accent-preview" aria-hidden="true">
+              <i className="ap-bar" />
+              <i className="ap-ring" />
+              <i className="ap-lines" />
+              <i className="ap-btn" />
+            </span>
+            <span className="accent-name">
+              <span className="dot" aria-hidden="true" />
+              {t(`appearance.accents.${a}`)}
+              {accent === a && <Check size={15} strokeWidth={2.6} aria-hidden="true" className="accent-check" />}
+            </span>
           </label>
         ))}
       </div>
@@ -357,9 +447,9 @@ function VideoPanel() {
                 setCreating(true);
                 const res = await createVideoRoomAction(s.context.workspace.slug, s.context.meetingId, a.id);
                 setCreating(false);
-                if (!res.ok) return toast(res.error);
+                if (!res.ok) return toast(res.error, "error");
                 setLink(res.data);
-                toast(t("video.roomCreated"));
+                toast(t("video.roomCreated"), "ok");
               }}
             >
               {a.name === t(`video.kinds.${a.kind}`) ? a.name : `${t(`video.kinds.${a.kind}`)} · ${a.name}`}
@@ -641,11 +731,9 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
   const meeting = (
     <form className="panel form" data-cfg onSubmit={submit}>
       <h3 style={{ margin: 0 }}>{t("meeting.title")}</h3>
-      <div className="grid2">
-        <div className="field">
-          <label htmlFor="cTeam">{t("meeting.teamName")}</label>
-          <input id="cTeam" type="text" required value={f.teamName} onChange={(e) => set("teamName", e.target.value)} />
-        </div>
+      <div className="field">
+        <label htmlFor="cTeam">{t("meeting.teamName")}</label>
+        <input id="cTeam" type="text" required value={f.teamName} onChange={(e) => set("teamName", e.target.value)} />
       </div>
       <div className="grid2">
         <div className="field">
@@ -716,7 +804,7 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
             }}
           />
         </div>
-        <div className="field">
+        <div className="field field-check">
           <span className="lbl-s">{t("meeting.timer")}</span>
           <label className="check">
             <input type="checkbox" checked={f.autoStart} onChange={(e) => set("autoStart", e.target.checked)} /> {t("meeting.autoStart")}
@@ -727,6 +815,7 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
         <label htmlFor="cAnn">{t("meeting.announcements")}</label>
         <textarea
           id="cAnn"
+          className="grow"
           value={f.announcementsText}
           onChange={(e) => set("announcementsText", e.target.value)}
           placeholder={t("onePerLine")}
@@ -755,22 +844,19 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
     role === "custom" ? t("sections.customPlaceholder") : tSections(`defaults.${ROLE_KIND[role]}`);
   const roleTaken = (role: SectionRole, i: number) => role !== "custom" && secs.some((x, j) => j !== i && x.role === role);
   const patchSec = (i: number, patch: Partial<SectionDef>) => setSecs(secs.map((x, j) => (j === i ? { ...x, ...patch } : x)));
-  const moveSec = (i: number, delta: -1 | 1) => {
-    const next = [...secs];
-    [next[i], next[i + delta]] = [next[i + delta]!, next[i]!];
-    setSecs(next);
-  };
+  const sortSecs = useSortable({ items: secs, keyOf: (x) => x.key, onMove: (from, to) => setSecs(moved(secs, from, to)) });
   // The plans that an achievement section can bring back: the section holding the "plan" role, if any
   const planSec = secs.find((x) => x.role === "plan");
   const sections = (
     <form className="panel form" data-cfg onSubmit={submit}>
-      <h3 style={{ margin: 0 }}>{t("sections.title")}</h3>
       <ol className="sec-list">
-        {secs.map((x, i) => {
+        {sortSecs.list.map((x, i) => {
           const label = x.label.trim() || defaultLabel(x.role);
+          const place = sortSecs.row(i);
           return (
-            <li className="sec-item" key={x.key || `new-${i}`}>
+            <li key={x.key || `new-${i}`} {...place} className={`sec-item ${place.className}`}>
               <div className="sec-row">
+                <SortGrip {...sortSecs.grip(i, t("sections.reorder", { label }))} />
                 <input
                   type="text"
                   aria-label={t("sections.nameOf", { n: i + 1 })}
@@ -804,30 +890,12 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
                 <span className="sec-tools">
                   <button
                     type="button"
-                    className="icon-btn"
-                    aria-label={t("sections.moveUp", { label })}
-                    disabled={i === 0}
-                    onClick={() => moveSec(i, -1)}
-                  >
-                    ↑
-                  </button>
-                  <button
-                    type="button"
-                    className="icon-btn"
-                    aria-label={t("sections.moveDown", { label })}
-                    disabled={i === secs.length - 1}
-                    onClick={() => moveSec(i, 1)}
-                  >
-                    ↓
-                  </button>
-                  <button
-                    type="button"
-                    className="icon-btn"
+                    className="icon-btn danger"
                     aria-label={t("sections.removeOf", { label })}
                     disabled={secs.length === 1}
                     onClick={() => setSecs(secs.filter((_, j) => j !== i))}
                   >
-                    ✕
+                    <X size={14} strokeWidth={2.2} aria-hidden="true" />
                   </button>
                 </span>
               </div>
@@ -923,6 +991,7 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
         <label htmlFor="cIce">{t("warmUp.bank")}</label>
         <textarea
           id="cIce"
+          className="grow"
           value={f.icebreakersText}
           onChange={(e) => set("icebreakersText", e.target.value)}
           placeholder={t("onePerLine")}
@@ -932,23 +1001,80 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
     </form>
   );
 
+  const gitlabUser = s.settings.gitlabUser;
   const sources = isAdmin && s.modules.gitlab && (
     <form className="panel form" onSubmit={saveSources}>
       <AdminTitle>{t("sources.title")}</AdminTitle>
-      <TokenField
-        id="tGitlab"
-        label={t("sources.gitlabToken")}
-        saved={initial.tokensSet.gitlab}
-        value={tokens.gitlab}
-        onChange={(v) => setTokens((x) => ({ ...x, gitlab: v }))}
-        placeholder="glpat-…"
-        locked={!s.integrations.secrets}
-      />
-      {!s.integrations.secrets && <div className="note-box">{t("sources.noSecretKey")}</div>}
-      <span className="hint">
-        {t.rich("sources.tokenHint", { code: (chunks) => <code>{chunks}</code> })}
-        {!initial.tokensSet.gitlab && s.integrations.gitlab ? ` ${t("sources.serverToken")}` : ""}
-      </span>
+      {/* Connected with GitLab (OAuth, renewed by itself) rather than a personal token that expires */}
+      {s.integrations.gitlabOAuth && (
+        <div className={`gl-connect${gitlabUser !== null ? " on" : ""}`}>
+          {gitlabUser !== null ? (
+            <>
+              <span className="gl-connect-state">
+                <CircleCheck size={18} strokeWidth={2.2} aria-hidden="true" />
+                {gitlabUser ? t("sources.connectedAs", { user: gitlabUser }) : t("sources.connected")}
+              </span>
+              <button
+                type="button"
+                className="linkbtn danger"
+                onClick={() =>
+                  void rpc(
+                    { op: "gitlab.configure", projects: a.gitlabProjects, groups: a.gitlabGroups, token: "" },
+                    t("sources.disconnected"),
+                  )
+                }
+              >
+                <Unplug size={14} strokeWidth={2.2} aria-hidden="true" /> {t("sources.disconnect")}
+              </button>
+            </>
+          ) : (
+            <>
+              <a className="btn primary" href={withBasePath(`/api/gitlab/connect?w=${s.context.workspace.slug}&m=${s.context.meetingId}`)}>
+                <Plug size={16} strokeWidth={2.2} aria-hidden="true" /> {t("sources.connect")}
+              </a>
+              <span className="hint">{t("sources.connectHint")}</span>
+            </>
+          )}
+        </div>
+      )}
+      {s.integrations.gitlabOAuth ? (
+        gitlabUser === null && (
+          <details className="gl-token">
+            <summary>{t("sources.usePersonalToken")}</summary>
+            <TokenField
+              id="tGitlab"
+              label={t("sources.gitlabToken")}
+              saved={initial.tokensSet.gitlab}
+              value={tokens.gitlab}
+              onChange={(v) => setTokens((x) => ({ ...x, gitlab: v }))}
+              placeholder="glpat-…"
+              locked={!s.integrations.secrets}
+            />
+            {!s.integrations.secrets && <div className="note-box">{t("sources.noSecretKey")}</div>}
+            <span className="hint">
+              {t.rich("sources.tokenHint", { code: (chunks) => <code>{chunks}</code> })}
+              {!initial.tokensSet.gitlab && s.integrations.gitlab ? ` ${t("sources.serverToken")}` : ""}
+            </span>
+          </details>
+        )
+      ) : (
+        <>
+          <TokenField
+            id="tGitlab"
+            label={t("sources.gitlabToken")}
+            saved={initial.tokensSet.gitlab}
+            value={tokens.gitlab}
+            onChange={(v) => setTokens((x) => ({ ...x, gitlab: v }))}
+            placeholder="glpat-…"
+            locked={!s.integrations.secrets}
+          />
+          {!s.integrations.secrets && <div className="note-box">{t("sources.noSecretKey")}</div>}
+          <span className="hint">
+            {t.rich("sources.tokenHint", { code: (chunks) => <code>{chunks}</code> })}
+            {!initial.tokensSet.gitlab && s.integrations.gitlab ? ` ${t("sources.serverToken")}` : ""}
+          </span>
+        </>
+      )}
       <div className="field">
         <label htmlFor="gGroups">{t("sources.groups")}</label>
         <input
@@ -978,6 +1104,85 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
 
   const githubSources = isAdmin && s.modules.github && <GithubSources key="github" />;
 
+  // Every tool the meeting works with, where it stands; GitLab, GitHub and the wiki are set up from their card
+  const rulesOn = s.notifications?.rules.filter((r) => r.enabled).length ?? 0;
+  const off = (goTo = "modules") => ({ state: "off" as const, stateText: t("hub.off"), goTo, goToLabel: t("hub.turnOn") });
+  const integrations: IntegrationItem[] = [
+    {
+      id: "gitlab",
+      name: "GitLab",
+      mark: <ToolMark kind="gitlab" size={22} />,
+      description: t("hub.gitlab"),
+      ...(!s.modules.gitlab
+        ? off()
+        : {
+            state: s.integrations.gitlab ? "on" : "todo",
+            stateText: s.integrations.gitlab
+              ? s.settings.gitlabUser
+                ? `@${s.settings.gitlabUser}`
+                : t("hub.connected")
+              : t("hub.toConnect"),
+            panel: sources || <IntegrationsHint key="hint" />,
+          }),
+    },
+    {
+      id: "github",
+      name: "GitHub",
+      mark: <ToolMark kind="github" size={22} />,
+      description: t("hub.github"),
+      ...(!s.modules.github
+        ? off()
+        : {
+            state: s.settings.githubRepos.trim() ? "on" : "todo",
+            stateText: s.settings.githubRepos.trim() ? t("hub.configured") : t("hub.toSetUp"),
+            panel: githubSources || <IntegrationsHint key="hint" />,
+          }),
+    },
+    {
+      id: "wiki",
+      name: t("hub.wikiName"),
+      mark: <BookOpen size={22} strokeWidth={2} />,
+      description: t("hub.wiki"),
+      state: s.wikis?.current ? "on" : s.wikis?.list.length ? "todo" : "off",
+      stateText: s.wikis?.current ? s.wikis.current.name : s.wikis?.list.length ? t("hub.toSetUp") : t("hub.noneInWorkspace"),
+      panel: <MeetingWikiPanel key="wiki" />,
+    },
+    {
+      id: "video",
+      name: t("hub.videoName"),
+      mark: <Video size={22} strokeWidth={2} />,
+      description: t("hub.video"),
+      ...(!s.modules.video
+        ? off()
+        : {
+            state: s.settings.videoUrl ? "on" : "todo",
+            stateText: s.settings.videoUrl ? t("hub.ready") : t("hub.toSetUp"),
+            goTo: "general",
+            goToLabel: t("hub.goGeneral"),
+          }),
+    },
+    {
+      id: "calendar",
+      name: t("hub.calendarName"),
+      mark: <CalendarDays size={22} strokeWidth={2} />,
+      description: t("hub.calendar"),
+      state: s.calendars?.current ? "on" : "todo",
+      stateText: s.calendars?.current ? t("hub.synced") : t("hub.toSetUp"),
+      goTo: "schedule",
+      goToLabel: t("hub.goSchedule"),
+    },
+    {
+      id: "notifications",
+      name: t("hub.notificationsName"),
+      mark: <Bell size={22} strokeWidth={2} />,
+      description: t("hub.notifications"),
+      state: rulesOn ? "on" : "todo",
+      stateText: rulesOn ? t("hub.rulesOn", { count: rulesOn }) : t("hub.toSetUp"),
+      goTo: "notifications",
+      goToLabel: t("hub.goNotifications"),
+    },
+  ];
+
   const categories: { id: SettingsCategory; nodes: React.ReactNode[] }[] = [
     { id: "general", nodes: [meeting, s.modules.video && <VideoPanel key="video" />, <TranscriptionPanel key="transcription" />, warmUp] },
     { id: "schedule", nodes: [<SchedulePanel key="schedule" />, <CalendarSyncPanel key="calendar" />, reminder] },
@@ -1003,14 +1208,11 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
     },
     {
       id: "notifications",
-      nodes: [<NotificationsPanel key="notifications" />, <ReminderPreview key="preview" />],
+      nodes: [<NotificationsPanel key="notifications" />, <NotificationsPreview key="preview" reminder={<ReminderPreview />} />],
     },
     {
       id: "integrations",
-      nodes: [
-        <MeetingWikiPanel key="wiki" />,
-        ...(sources || githubSources ? [sources, githubSources] : [<IntegrationsHint key="hint" />]),
-      ],
+      nodes: [<IntegrationsHub key="hub" items={integrations} />],
     },
     { id: "template", nodes: [<SaveTemplatePanel key="template" />] },
     { id: "danger", nodes: [<DangerZone key="danger" />] },
@@ -1021,7 +1223,29 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
 /** Saves the meeting as a template of the workspace: sections, format, modules and schedule, without people or secrets */
 function SaveTemplatePanel() {
   const t = useTranslations("settings");
+  const locale = useLocale() as Locale;
   const { s, rpc } = useRonde();
+  // What a template takes from this meeting, with this meeting's own values, and what stays here
+  const sched = s.settings.schedule;
+  const carries: { icon: LucideIcon; label: string; value: string }[] = [
+    { icon: ListChecks, label: t("template.items.sections"), value: t("template.counts.sections", { count: s.settings.sections.length }) },
+    { icon: ListOrdered, label: t("template.items.agenda"), value: t("template.counts.agenda", { count: s.settings.agenda.length }) },
+    {
+      icon: Puzzle,
+      label: t("template.items.modules"),
+      value: t("template.counts.modules", { count: Object.values(s.modules).filter(Boolean).length }),
+    },
+    {
+      icon: CalendarClock,
+      label: t("template.items.schedule"),
+      value: describeSchedule(sched.rules, sched.meetingTimeZone ?? sched.timeZone, locale),
+    },
+  ];
+  const stays = [
+    t("template.items.people", { count: s.members.length + s.observers.length }),
+    t("template.items.history"),
+    t("template.items.tokens"),
+  ];
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -1032,6 +1256,33 @@ function SaveTemplatePanel() {
       <p className="hint" style={{ margin: 0 }}>
         {t("template.intro")}
       </p>
+      <div className="tpl-split">
+        <section className="tpl-col" aria-labelledby="tplCarries">
+          <h4 id="tplCarries">{t("template.carries")}</h4>
+          <ul>
+            {carries.map(({ icon: ItemIcon, label, value }) => (
+              <li key={label}>
+                <ItemIcon size={16} strokeWidth={2} aria-hidden="true" />
+                <span>
+                  <strong>{label}</strong>
+                  <span className="hint">{value}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+        <section className="tpl-col stays" aria-labelledby="tplStays">
+          <h4 id="tplStays">{t("template.stays")}</h4>
+          <ul>
+            {stays.map((label) => (
+              <li key={label}>
+                <Lock size={15} strokeWidth={2} aria-hidden="true" />
+                <span>{label}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
       {open ? (
         <form
           className="form"
@@ -1074,7 +1325,8 @@ function SaveTemplatePanel() {
         </form>
       ) : (
         <div>
-          <button type="button" className="btn" onClick={() => setOpen(true)}>
+          <button type="button" className="btn primary" onClick={() => setOpen(true)}>
+            <LayoutTemplate size={16} strokeWidth={2} aria-hidden="true" />
             {t("template.open")}
           </button>
         </div>
@@ -1115,7 +1367,7 @@ function TokenField(p: {
               {t("token.keep")}
             </button>
           ) : (
-            <button type="button" className="icon-btn" onClick={() => p.onChange("")}>
+            <button type="button" className="icon-btn danger" onClick={() => p.onChange("")}>
               {t("remove")}
             </button>
           ))}
@@ -1247,6 +1499,7 @@ function GitlabProjectsPicker({
   );
 }
 
+/** The reminder email as it will be sent, to the first person who gets it */
 function ReminderPreview() {
   const t = useTranslations("settings");
   const locale = useLocale();
@@ -1274,32 +1527,28 @@ function ReminderPreview() {
     reply: s.integrations.inbound,
   });
   return (
-    <div className="panel">
-      <h3>{t("preview.title")}</h3>
-      <div className="mail">
-        <div className="muted">
-          {t("preview.to", {
-            email: ex.email,
-            date: formatters(locale).dateShort(reminderDate(date, s.settings.reminderWhen)),
-            time: s.settings.reminderTime,
-          })}
-          {s.settings.reminderEnabled ? "" : ` · ${t("preview.disabled")}`}
-        </div>
-        <div className="subj">{mail.subject}</div>
-        <iframe
-          title={t("preview.frameTitle", { name: ex.name })}
-          className="mail-preview"
-          sandbox="allow-same-origin"
-          srcDoc={mail.html}
-          onLoad={(e) => {
-            const frame = e.currentTarget;
-            if (frame.contentDocument) {
-              frame.style.height = "480px";
-              frame.style.height = `${frame.contentDocument.documentElement.scrollHeight}px`;
-            }
-          }}
-        />
+    <div className="mail">
+      <div className="muted">
+        {t("preview.to", {
+          email: ex.email,
+          date: formatters(locale).dateShort(reminderDate(date, s.settings.reminderWhen)),
+          time: s.settings.reminderTime,
+        })}
       </div>
+      <div className="subj">{mail.subject}</div>
+      <iframe
+        title={t("preview.frameTitle", { name: ex.name })}
+        className="mail-preview"
+        sandbox="allow-same-origin"
+        srcDoc={mail.html}
+        onLoad={(e) => {
+          const frame = e.currentTarget;
+          if (frame.contentDocument) {
+            frame.style.height = "480px";
+            frame.style.height = `${frame.contentDocument.documentElement.scrollHeight}px`;
+          }
+        }}
+      />
     </div>
   );
 }
@@ -1312,6 +1561,42 @@ interface DirectoryPerson {
 }
 
 const ROLES = ["host", "cohost", "participant", "observer"] as const;
+const ROLE_ICONS: Record<(typeof ROLES)[number], LucideIcon> = {
+  host: Clapperboard,
+  cohost: Handshake,
+  participant: MessageCircle,
+  observer: Eye,
+};
+
+/** What each role of a meeting may do, at a glance, before giving one */
+function RolesGuide() {
+  const t = useTranslations("settings");
+  const tm = useTranslations("meetings");
+  return (
+    <details className="roles-guide">
+      <summary>
+        <Info size={15} strokeWidth={2.2} aria-hidden="true" /> {t("people.rolesGuide")}
+        <ChevronDown size={16} strokeWidth={2.2} aria-hidden="true" className="roles-guide-chev" />
+      </summary>
+      <ul>
+        {ROLES.map((r) => {
+          const RoleIcon = ROLE_ICONS[r];
+          return (
+            <li key={r} className={`role-card role-${r}`}>
+              <span className="role-card-ico" aria-hidden="true">
+                <RoleIcon size={18} strokeWidth={2} />
+              </span>
+              <span>
+                <strong>{tm(`roles.${r}`)}</strong>
+                <span className="hint">{t(`people.roleHints.${r}`)}</span>
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </details>
+  );
+}
 
 /** People of the meeting and their role; profiles are edited in the workspace directory */
 function ParticipantsPanel() {
@@ -1341,9 +1626,23 @@ function ParticipantsPanel() {
       <p className="hint" style={{ marginBottom: 6 }}>
         {t("people.intro")}
       </p>
-      {everyone.map((m) => (
-        <ParticipantRow key={m.id} m={m} />
-      ))}
+      <RolesGuide />
+      {/* A table: what each column is, said once above it rather than beside every box */}
+      <div className={`ptable${s.modules.github ? " with-gh" : ""}`}>
+        <div className="prow prow-head" aria-hidden="true">
+          <span />
+          <span>{t("people.colPerson")}</span>
+          <span>{t("people.colRole")}</span>
+          <span className="prow-center">{t("people.speaks")}</span>
+          <span className="prow-center">{t("people.remind")}</span>
+          <span>GitLab</span>
+          {s.modules.github && <span>GitHub</span>}
+          <span />
+        </div>
+        {everyone.map((m) => (
+          <ParticipantRow key={m.id} m={m} />
+        ))}
+      </div>
       {people && people.length === 0 ? (
         <p className="hint" style={{ marginTop: 10 }}>
           {t("people.nobodyLeft")}
@@ -1427,13 +1726,30 @@ function ParticipantRow({ m }: { m: MemberDTO }) {
           </option>
         ))}
       </Select>
-      <label className="check" title={t("people.speaksHint")}>
-        <input type="checkbox" disabled={observer} checked={m.active && !observer} onChange={(e) => save({ active: e.target.checked })} />{" "}
-        {t("people.speaks")}
+      {/* The column's heading names the box; on a phone, where the headings are gone, the word shows beside it */}
+      <label className="check prow-check" title={t("people.speaksHint")}>
+        <input
+          type="checkbox"
+          aria-label={t("people.speaksOf", { name: m.name })}
+          disabled={observer}
+          checked={m.active && !observer}
+          onChange={(e) => save({ active: e.target.checked })}
+        />
+        <span className="prow-check-text" aria-hidden="true">
+          {t("people.speaks")}
+        </span>
       </label>
-      <label className="check">
-        <input type="checkbox" disabled={observer} checked={m.remind && !observer} onChange={(e) => save({ remind: e.target.checked })} />{" "}
-        {t("people.remind")}
+      <label className="check prow-check">
+        <input
+          type="checkbox"
+          aria-label={t("people.remindOf", { name: m.name })}
+          disabled={observer}
+          checked={m.remind && !observer}
+          onChange={(e) => save({ remind: e.target.checked })}
+        />
+        <span className="prow-check-text" aria-hidden="true">
+          {t("people.remind")}
+        </span>
       </label>
       <input
         type="text"
@@ -1468,7 +1784,7 @@ function ParticipantRow({ m }: { m: MemberDTO }) {
           </button>
         </span>
       ) : (
-        <button type="button" className="icon-btn" onClick={() => setConfirm(true)}>
+        <button type="button" className="icon-btn danger" onClick={() => setConfirm(true)}>
           {t("people.remove")}
         </button>
       )}

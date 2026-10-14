@@ -62,8 +62,8 @@ eine Idee teilen, auf Wunsch mit Screenshot. Mit der Nachricht gehen die Adresse
 Browser, die Fenstergröße, die Sprache und die Ronde-Version mit. Die Admins lesen die Nachrichten unter
 **Serververwaltung**, antworten per E-Mail, wenn die Person es wünscht, und können für ein Problem von Ronde selbst
 ein vorausgefülltes Issue im Ronde-Projekt öffnen. Ist `SENTRY_DSN` gesetzt, landen die Nachrichten auch als User
-Feedback in diesem Sentry-Projekt. Nachrichten werden nach einem Jahr gelöscht; `RONDE_FEEDBACK=off` entfernt den
-Button.
+Feedback in diesem Sentry-Projekt. Nachrichten werden nach einem Jahr gelöscht; auf einer selbst gehosteten Instanz ist der
+Button standardmäßig aus: `RONDE_FEEDBACK=on` zeigt ihn an.
 
 ## Arbeitsbereiche
 

@@ -3,7 +3,7 @@
   "sidebar": "Sidebar",
   "workspaceNav": "Workspace",
   "breadcrumb": "Location",
-  "home": "Home",
+  "home": "Dashboard",
   "people": "Directory",
   "settings": "Settings",
   "meetings": "Meetings",
@@ -29,5 +29,6 @@
   "kudos": "Kudos",
   "persons": "People",
   "projects": "Projects",
-  "feedback": "Send feedback"
+  "feedback": "Send feedback",
+  "teams": "Teams"
 }

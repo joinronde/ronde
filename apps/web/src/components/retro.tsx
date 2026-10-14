@@ -1,6 +1,7 @@
 "use client";
 
 import type { Step } from "@ronde/core/meeting";
+import { Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { byVotes, titleOf } from "@/lib/shared/modules";
@@ -162,11 +163,11 @@ export function RetroPanel() {
                           </button>
                           <button
                             type="button"
-                            className="icon-btn"
+                            className="icon-btn danger"
                             aria-label={t("me.delete", { text: x.text })}
                             onClick={() => rpc({ op: "retro.card.delete", id: x.id })}
                           >
-                            ✕
+                            <Trash2 size={14} strokeWidth={2.2} aria-hidden="true" />
                           </button>
                         </span>
                       </li>

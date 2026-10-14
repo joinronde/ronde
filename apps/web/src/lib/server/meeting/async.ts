@@ -2,15 +2,13 @@ import "server-only";
 import { buildMinutes, minutesToMarkdown } from "@ronde/core/minutes";
 import { digestEmail } from "@ronde/core/notifications";
 import { parseRecord } from "@ronde/core/record";
-import { prisma, scoped } from "@ronde/db";
-import type { WorkspaceSettings } from "../authz";
+import { prisma } from "@ronde/db";
 import { emailBrand } from "../branding";
-import { publish } from "../bus";
 import { sendEmail } from "../mailer";
 import { notifiedMeeting } from "../notified-meeting";
 import { minutesPayload, notifyEvent } from "../notify/dispatch";
 import { publishSession } from "../wikis";
-import { archiveSession } from "./session";
+import { closeDueSessions } from "./close-due";
 
 // Async mode: a session without a live meeting is archived at its planned time, then its digest is emailed
 
@@ -74,32 +72,9 @@ export async function closeAsyncSessions(now = new Date()): Promise<number> {
     },
     include: { meeting: { include: { workspace: true } } },
   });
-  let closed = 0;
-  for (const row of due) {
-    try {
-      const { meeting, ...session } = row;
-      const record = await scoped(prisma, row.workspaceId).$transaction(
-        async (db) => {
-          // Taken once: a host publishing at the same moment, or another replica, finds it already done
-          const { count } = await db.session.updateMany({
-            where: { id: session.id, status: "current", startedAt: null },
-            data: { rev: { increment: 1 } },
-          });
-          if (!count) return null;
-          const fresh = await db.session.findFirstOrThrow({ where: { id: session.id } });
-          const workspace = { ...meeting.workspace, settings: (meeting.workspace.settings ?? {}) as WorkspaceSettings };
-          return archiveSession(db, { meeting, ws: { workspace } }, fresh, { summary: null, omit: [] });
-        },
-        { timeout: 30_000 },
-      );
-      if (!record) continue;
-      closed++;
-      await publish(meeting.id, { kind: "history" });
-      await publish(meeting.id, { kind: "state" });
-      await afterPublish(meeting.id, session, record);
-    } catch (e) {
-      console.error(`[jobs] closing the async session ${row.id} failed`, e);
-    }
-  }
-  return closed;
+  return closeDueSessions(due, {
+    still: { startedAt: null },
+    after: (meetingId, session, record) => afterPublish(meetingId, session, record),
+    what: "async session",
+  });
 }

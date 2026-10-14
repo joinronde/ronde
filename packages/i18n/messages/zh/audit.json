@@ -92,9 +92,10 @@
     },
     "workspace": {
       "update": "工作空间设置已修改",
-      "categoryAdd": "已添加职位类别",
-      "categoryRename": "职位类别已重命名",
-      "categoryDelete": "职位类别已删除",
+      "categoryAdd": "已添加团队",
+      "categoryRename": "已重命名团队",
+      "categoryDelete": "已删除团队",
+      "categoryMove": "已移动团队",
       "auditStream": "审计推送已修改",
       "logo": "Logo 已更换",
       "logoRemoved": "Logo 已移除",

@@ -3,7 +3,7 @@
   "sidebar": "Barre latérale",
   "workspaceNav": "Espace de travail",
   "breadcrumb": "Emplacement",
-  "home": "Accueil",
+  "home": "Tableau de bord",
   "people": "Annuaire",
   "settings": "Réglages",
   "meetings": "Réunions",
@@ -29,5 +29,6 @@
   "kudos": "Remerciements",
   "persons": "Personnes",
   "projects": "Projets",
-  "feedback": "Envoyer un retour"
+  "feedback": "Envoyer un retour",
+  "teams": "Équipes"
 }

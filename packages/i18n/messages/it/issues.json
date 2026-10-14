@@ -1,0 +1,12 @@
+{
+  "tooSmall": "almeno {min}",
+  "tooBig": "al massimo {max}",
+  "tooShort": "almeno {min, plural, one {# carattere} other {# caratteri}}",
+  "tooLong": "al massimo {max, plural, one {# carattere} other {# caratteri}}",
+  "tooFew": "almeno {min, plural, one {# elemento} other {# elementi}}",
+  "tooMany": "al massimo {max, plural, one {# elemento} other {# elementi}}",
+  "format": "un valore non ha il formato previsto",
+  "missing": "manca un valore",
+  "invalid": "un valore non è accettato",
+  "at": "{field}: {problem}"
+}

@@ -10,6 +10,19 @@
   "kickerLive": "Acontecendo agora",
   "liveNow": "Ao vivo agora",
   "liveShort": "ao vivo",
+  "liveStep": {
+    "intro": "Introdução",
+    "turn": "Vez de {name} · {n}/{total}",
+    "projects": "Ronda de projetos",
+    "topics": "Assuntos diversos",
+    "end": "Encerramento",
+    "block": "A decorrer"
+  },
+  "liveSince": "Começou às {time}",
+  "liveSinceDay": "Começou a {day} às {time}",
+  "turnsDone": "{done}/{total} vezes feitas",
+  "yourTurnNow": "É a sua vez!",
+  "yourTurnIn": "{count, plural, one {A sua vez depois de # pessoa} other {A sua vez depois de # pessoas}}",
   "today": "Hoje",
   "tomorrow": "Amanhã",
   "inDays": "{count, plural, one {Em # dia} other {Em # dias}}",
@@ -45,9 +58,12 @@
   "nextOn": "Próxima em {date}",
   "people": "{count, plural, one {# pessoa} other {# pessoas}}",
   "gettingStarted": "Primeiros passos",
+  "skipSteps": "Saltar",
   "progress": "{done} de {total} feitos",
   "stepsDone": "Etapas feitas",
   "sheetReady": "Ficha de {project} escrita",
   "sheetEmpty": "Ficha de {project} a escrever",
-  "readyCount": "{ready}/{total} fichas preenchidas"
+  "readyCount": "{ready}/{total} fichas preenchidas",
+  "seatReady": "ficha preenchida",
+  "seatToFill": "ficha por preencher"
 }

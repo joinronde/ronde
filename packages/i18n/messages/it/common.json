@@ -21,5 +21,9 @@
   },
   "cancel": "Annulla",
   "delete": "Elimina",
-  "exportCsv": "Esporta in CSV"
+  "exportCsv": "Esporta in CSV",
+  "dragToReorder": "Trascina per riordinare (o tasti ↑ ↓)",
+  "searchPlaceholder": "Cerca…",
+  "noResults": "Nessun risultato",
+  "showMore": "Mostra altri {count} ({total} rimanenti)"
 }

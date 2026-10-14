@@ -2,7 +2,9 @@ import "server-only";
 import { agendaOf } from "@ronde/core/agenda";
 import type { ScheduleRule } from "@ronde/core/schedule";
 import {
+  BLANK_TEMPLATE,
   BUILTIN_TEMPLATES,
+  blankTemplate,
   builtinTemplate,
   describeRhythm,
   isBuiltinTemplate,
@@ -17,6 +19,7 @@ import { resolveSections } from "@ronde/core/util";
 import type { Prisma, ScopedClient, ScopedTx } from "@ronde/db";
 import { type Locale, translator } from "@ronde/i18n";
 import { newRoom } from "@ronde/modules";
+import { CATALOG } from "@ronde/modules/catalog";
 import type { WorkspaceContext } from "./authz";
 import { AccessError, OpError } from "./errors";
 import { toSection } from "./meeting/dto";
@@ -93,14 +96,37 @@ export async function meetingTemplate(db: Db, meetingId: string): Promise<Templa
   };
 }
 
+const summaryOf = (data: TemplateData, locale: Locale) => ({
+  sections: resolveSections({ sections: data.sections }, locale).map((s) => s.label),
+  // A template gives a rhythm, not a date: the team picks its day and time when creating the meeting
+  schedule: describeRhythm(data.schedule, locale),
+});
+
+/** Modules a blank meeting starts without: every one but the integrations (which wait for their settings) */
+const blankModules = () => CATALOG.filter((m) => m.category !== "integrations").map((m) => m.id);
+const BLANK_ICON = "📋";
+
+/** Starting from nothing, as the creation wizard offers it next to the templates */
+export function blankSummary(locale: Locale): TemplateSummary {
+  const t = translator(locale, "meetings");
+  const data = blankTemplate(blankModules());
+  return {
+    ref: BLANK_TEMPLATE,
+    builtin: true,
+    name: t("wizard.blank.name"),
+    description: t("wizard.blank.description"),
+    icon: BLANK_ICON,
+    category: "own",
+    data,
+    ...summaryOf(data, locale),
+    canDelete: false,
+  };
+}
+
 /** Built-in templates, then the workspace's own */
 export async function listTemplates(ctx: WorkspaceContext, locale: Locale): Promise<TemplateSummary[]> {
   const t = translator(locale, "templates");
-  const summary = (data: TemplateData) => ({
-    sections: resolveSections({ sections: data.sections }, locale).map((s) => s.label),
-    // A template gives a rhythm, not a date: the team picks its day and time when creating the meeting
-    schedule: describeRhythm(data.schedule, locale),
-  });
+  const summary = (data: TemplateData) => summaryOf(data, locale);
   const builtins = BUILTIN_TEMPLATES.map((id): TemplateSummary => {
     const data = builtinTemplate(id, locale);
     return {
@@ -142,6 +168,7 @@ const canManageTemplate = (ctx: WorkspaceContext, createdById: string | null) =>
 
 /** The template behind a reference: built-in ("builtin:<id>") or saved by the workspace */
 export async function resolveTemplate(ctx: WorkspaceContext, ref: string, locale: Locale): Promise<TemplateData> {
+  if (ref === BLANK_TEMPLATE) return blankTemplate(blankModules());
   if (ref.startsWith("builtin:")) {
     const id = ref.slice(8);
     if (!isBuiltinTemplate(id)) throw new OpError("notFound");
@@ -155,6 +182,7 @@ export async function resolveTemplate(ctx: WorkspaceContext, ref: string, locale
 
 /** The emoji a meeting made from a template starts with: the template's own */
 export async function templateIcon(ctx: WorkspaceContext, ref: string): Promise<string> {
+  if (ref === BLANK_TEMPLATE) return BLANK_ICON;
   if (ref.startsWith("builtin:")) {
     const id = ref.slice(8);
     return isBuiltinTemplate(id) ? TEMPLATE_ICONS[id] : "";

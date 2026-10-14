@@ -226,14 +226,27 @@ export const controlOps = [
     name: "meeting.move",
     permission: "session.run",
     session: "lock",
-    input: z.object({ id: str(50), delta: z.union([z.literal(1), z.literal(-1)]) }),
+    /** One place up or down (`delta`), or dragged before someone (`before`; null: last) */
+    input: z.union([
+      z.object({ id: str(50), delta: z.union([z.literal(1), z.literal(-1)]) }),
+      z.object({ id: str(50), before: str(50).nullable() }),
+    ]),
     run: async ({ db, requireSession }, o) => {
       const s = requireSession();
       const order = [...s.order];
       const i = order.indexOf(o.id);
-      const j = i + o.delta;
-      if (i < 0 || j < 0 || j >= order.length) return;
-      [order[i], order[j]] = [order[j]!, order[i]!];
+      if (i < 0) return;
+      if ("delta" in o) {
+        const j = i + o.delta;
+        if (j < 0 || j >= order.length) return;
+        [order[i], order[j]] = [order[j]!, order[i]!];
+      } else {
+        // Dropped on itself: it stays where it is
+        if (o.before === o.id) return;
+        order.splice(i, 1);
+        const j = o.before === null ? -1 : order.indexOf(o.before);
+        order.splice(j < 0 ? order.length : j, 0, o.id);
+      }
       await db.session.update({ where: { id: s.id }, data: { order } });
     },
   }),

@@ -132,6 +132,44 @@ describe("SCIM provisioning", () => {
     expect(actions).toEqual(expect.arrayContaining(["scim.create", "scim.update", "scim.deactivate", "scim.delete"]));
   });
 
+  it("brings the phone, the team (the department) and the birthday, and keeps them in step", async () => {
+    const ENT = "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User";
+    const made = await call(POST, ["Users"], {
+      body: {
+        schemas: ["urn:ietf:params:scim:schemas:core:2.0:User", ENT],
+        userName: "ada@acme.test",
+        name: { givenName: "Ada", familyName: "Lovelace" },
+        phoneNumbers: [
+          { value: "+44 20 7946 0001", type: "mobile" },
+          { value: "+44 20 7946 0000", type: "work", primary: true },
+        ],
+        [ENT]: { department: "Engines" },
+        birthday: "1815-12-10",
+      },
+    });
+    expect(made.status).toBe(201);
+    const ada = made.json!.id as string;
+    const card = () =>
+      prisma.person.findUniqueOrThrow({
+        where: { id: ada },
+        select: { phone: true, birthday: true, jobCategory: { select: { name: true } } },
+      });
+    expect(await card()).toEqual({ phone: "+44 20 7946 0000", birthday: "12-10", jobCategory: { name: "Engines" } });
+    expect(made.json).toMatchObject({ phoneNumbers: [{ value: "+44 20 7946 0000" }], [ENT]: { department: "Engines" } });
+    // Okta's PATCH: a new department (the team is made), the phone removed
+    await call(PATCH, ["Users", ada], {
+      method: "PATCH",
+      body: {
+        Operations: [
+          { op: "replace", path: `${ENT}:department`, value: "Analytics" },
+          { op: "remove", path: "phoneNumbers" },
+        ],
+      },
+    });
+    expect(await card()).toEqual({ phone: null, birthday: "12-10", jobCategory: { name: "Analytics" } });
+    expect(await prisma.jobCategory.count({ where: { workspaceId: w.ws.id, name: { in: ["Engines", "Analytics"] } } })).toBe(2);
+  });
+
   it("answers the discovery endpoints, and nothing without the license", async () => {
     expect((await call(GET, ["ServiceProviderConfig"])).json).toMatchObject({ patch: { supported: true } });
     expect((await call(GET, ["Groups"])).json).toMatchObject({ totalResults: 0 });

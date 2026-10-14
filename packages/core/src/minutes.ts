@@ -101,6 +101,21 @@ const DECISION_RE = new RegExp(
   "i",
 );
 
+/** "Action:" prefixes of the follow-up actions written in the notes, in every language */
+const ACTION_PREFIXES = [...new Set(locales.map((l) => translator(l, "control")("notes.actionPrefix")))];
+const startOf = (prefixes: string[]) =>
+  new RegExp(`^\\s*(?:[-*+]|\\d+[.)])?\\s*(?:\\*\\*)?(?:${prefixes.map(escapeRe).join("|")})\\s*(?:\\*\\*)?\\s*[:：]`, "i");
+const DECISION_START = startOf(DECISION_PREFIXES);
+const ACTION_START = startOf(ACTION_PREFIXES);
+
+/**
+ * What a line of the notes starts as, in any language: a decision ("Decision:") or an action ("Action:"), even
+ * before anything is written after it; the editor gives them their look as they are typed
+ */
+export function noteLineKind(line: string): "decision" | "action" | null {
+  return DECISION_START.test(line) ? "decision" : ACTION_START.test(line) ? "action" : null;
+}
+
 /** Decisions of a note: "Decision: …" lines (bold or not, bulleted or not; the colon may be the full-width one
  * Chinese keyboards type) */
 export function decisionsOf(text: string | undefined): string[] {

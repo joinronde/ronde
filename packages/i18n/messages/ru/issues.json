@@ -1,0 +1,12 @@
+{
+  "tooSmall": "не меньше {min}",
+  "tooBig": "не больше {max}",
+  "tooShort": "не короче {min, plural, one {# символа} few {# символов} many {# символов} other {# символа}}",
+  "tooLong": "не длиннее {max, plural, one {# символа} few {# символов} many {# символов} other {# символа}}",
+  "tooFew": "не меньше {min, plural, one {# элемента} few {# элементов} many {# элементов} other {# элемента}}",
+  "tooMany": "не больше {max, plural, one {# элемента} few {# элементов} many {# элементов} other {# элемента}}",
+  "format": "значение в неверном формате",
+  "missing": "не хватает значения",
+  "invalid": "значение не принято",
+  "at": "{field}: {problem}"
+}

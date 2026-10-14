@@ -7,7 +7,7 @@
   "count": "{count, plural, one {# व्यक्ति} other {# लोग}}",
   "columns": {
     "name": "नाम",
-    "category": "कार्य श्रेणी",
+    "category": "टीम",
     "role": "भूमिका",
     "status": "स्थिति",
     "actions": "कार्रवाइयाँ"
@@ -32,8 +32,8 @@
   "lastName": "उपनाम",
   "email": "ईमेल",
   "emailLocked": "उनके खाते से जुड़ा: वे इसे ख़ुद बदलते हैं।",
-  "category": "कार्य श्रेणी",
-  "noCategory": "कोई नहीं",
+  "category": "टीम",
+  "noCategory": "बिना टीम",
   "birthday": "जन्मदिन",
   "birthdayHint": "केवल दिन और महीना, साल कभी नहीं।",
   "month": "महीना",
@@ -63,5 +63,7 @@
   "noCustomRole": "कोई अतिरिक्त भूमिका नहीं",
   "phone": "मोबाइल नंबर",
   "phoneHint": "SMS और WhatsApp रिमाइंडर के लिए, अंतरराष्ट्रीय प्रारूप में (+91…)। वैकल्पिक।",
-  "formerMember": "पूर्व सदस्य"
+  "formerMember": "पूर्व सदस्य",
+  "teamFilter": "टीम",
+  "allTeams": "सभी टीमें"
 }

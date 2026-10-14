@@ -12,6 +12,8 @@ test.beforeAll(() => stripe.listen());
 test.afterAll(() => stripe.close());
 
 test("a workspace moves to Team through Checkout, manages it in the portal and cancels", async ({ page }) => {
+  // The app's own pages: while one streams in, a hidden copy may stand beside its loading skeleton
+  const main = page.locator("#main");
   test.setTimeout(240_000);
   await page.goto(`/sign-up?next=${encodeURIComponent("/onboarding?plan=team")}`);
   await page.getByLabel("Full name").fill("Lea Owner");
@@ -24,7 +26,7 @@ test("a workspace moves to Team through Checkout, manages it in the portal and c
   await page.waitForURL(/\/settings\/billing$/);
   const billing = page.url();
   await expect(page.getByRole("heading", { name: "Community", level: 2 })).toBeVisible();
-  await expect(page.getByText("Nobody has taken part in a meeting yet: you start with one seat.")).toBeVisible();
+  await expect(main.getByText("Nobody has taken part in a meeting yet: you start with one seat.")).toBeVisible();
   await expect(page.getByRole("link", { name: "Billing" })).toHaveAttribute("aria-current", "page");
 
   // Checkout left without paying: nothing changes, and the page says nothing was charged
@@ -32,17 +34,17 @@ test("a workspace moves to Team through Checkout, manages it in the portal and c
   await expect(page.getByRole("heading", { name: "Fake Stripe Checkout" })).toBeVisible();
   await expect(page.getByText("1 × price_team_monthly")).toBeVisible();
   await page.getByRole("link", { name: "Back" }).click();
-  await expect(page.getByText("The payment was not completed: nothing was charged.")).toBeVisible();
+  await expect(main.getByText("The payment was not completed: nothing was charged.")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Community", level: 2 })).toBeVisible();
 
   // Paid: the webhook moves the workspace to Team, before the person is back
   await page.getByRole("button", { name: "Move to Team, monthly" }).click();
   await page.getByRole("button", { name: "Pay" }).click();
   await page.waitForURL(`${billing}?checkout=done`);
-  await expect(page.getByText("Thank you! Your workspace moves to Team as soon as Stripe confirms the payment.")).toBeVisible();
+  await expect(main.getByText("Thank you! Your workspace moves to Team as soon as Stripe confirms the payment.")).toBeVisible();
   await page.reload();
   await expect(page.getByRole("heading", { name: "Team", level: 2 })).toBeVisible();
-  await expect(page.getByText("Active", { exact: true })).toBeVisible();
+  await expect(main.getByText("Active", { exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "Move to Team, monthly" })).toHaveCount(0);
   // The Checkout started first was closed before a new one opened: never two ways to pay twice
   expect(stripe.calls.filter((c) => /^POST \/v1\/checkout\/sessions\/[^/]+\/expire$/.test(c))).toHaveLength(1);

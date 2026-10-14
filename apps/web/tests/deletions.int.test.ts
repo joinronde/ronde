@@ -13,7 +13,8 @@ import { type Fixture, meeting, workspace } from "./fixtures";
 let current: WorkspaceContext | null = null;
 vi.mock("next/cache", () => ({ revalidatePath: () => {}, revalidateTag: () => {} }));
 vi.mock("next/headers", () => ({
-  headers: async () => new Headers(),
+  // The messages are read in English, whatever language the instance defaults to (DEFAULT_LOCALE)
+  headers: async () => new Headers({ "accept-language": "en" }),
   cookies: async () => ({ get: () => undefined, set: () => {}, delete: () => {}, getAll: () => [] }),
 }));
 vi.mock("@/lib/server/authz", async (original) => {
@@ -176,7 +177,7 @@ describe("project themes", () => {
     expect(await projectActions.deleteThemeAction(f.w.ws.slug, theme.id)).toEqual(failed(DENIED));
 
     await signIn(f, "admin");
-    expect(await projectActions.renameThemeAction(f.w.ws.slug, theme.id, "  Platform ")).toEqual(failed(t("categoryExists")));
+    expect(await projectActions.renameThemeAction(f.w.ws.slug, theme.id, "  Platform ")).toEqual(failed(t("themeExists")));
     expect(await projectActions.renameThemeAction(f.w.ws.slug, theme.id, "   ")).toEqual(failed(t("nameRequired")));
     expect(await projectActions.renameThemeAction(f.w.ws.slug, theme.id, " Revenue ")).toMatchObject(ok);
     expect(await prisma.projectTheme.findUniqueOrThrow({ where: { id: theme.id } })).toMatchObject({ name: "Revenue" });
@@ -502,6 +503,9 @@ describe("an LDAP directory in the cloud", () => {
     userFilter: "(mail={{email}})",
     emailAttribute: "mail",
     nameAttribute: "cn",
+    phoneAttribute: "",
+    teamAttribute: "",
+    birthdayAttribute: "",
     enabled: true,
   });
   let f: Fixture & { w: Place };

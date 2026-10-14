@@ -33,7 +33,7 @@
     "stepCheckIn": "Fill in your check-in",
     "stepCheckInHint": "What you did, what you plan, what blocks: a few lines before the meeting.",
     "stepSession": "Run a first session",
-    "stepSessionHint": "Open the control room, start the meeting, then archive it with its minutes."
+    "stepSessionHint": "Open the control room, start the meeting, then publish its minutes."
   },
   "settings": {
     "title": "Workspace settings",
@@ -47,13 +47,14 @@
     "meetingCreationMembers": "Every member",
     "meetingCreationAdmins": "Organizers and admins",
     "saved": "Saved",
-    "categories": "Job categories",
-    "categoriesHint": "Shown on check-ins and used to group stats.",
+    "categories": "Teams",
+    "manageTeams": "Manage the teams",
+    "categoriesHint": "Shown on the check-ins and used to group the stats. Teams can sit inside each other: they are managed in the directory.",
     "categoryPlaceholder": "e.g. Engineering",
     "add": "Add",
     "rename": "Rename {name}",
     "delete": "Delete {name}",
-    "noCategories": "No job category yet.",
+    "noCategories": "No team yet.",
     "danger": "Danger zone",
     "leave": "Leave the workspace",
     "leaveHint": "You lose access to its meetings. Your profile stays in the directory.",

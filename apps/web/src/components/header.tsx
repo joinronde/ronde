@@ -1,5 +1,6 @@
 "use client";
 
+import { ChartColumn, Clapperboard, History, Scale, Settings2, UserRound } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -17,12 +18,12 @@ import { SwipeRow } from "./swipe-row";
 // then the meeting's tabs. Participants have a single page, "My screen", with its own tabs: no tab row.
 
 const TABS = [
-  { href: "/control", key: "control" },
-  { href: "/me", key: "me" },
-  { href: "/history", key: "history" },
-  { href: "/stats", key: "stats" },
-  { href: "/decisions", key: "decisions" },
-  { href: "/settings", key: "settings" },
+  { href: "/control", key: "control", icon: Clapperboard },
+  { href: "/me", key: "me", icon: UserRound },
+  { href: "/history", key: "history", icon: History },
+  { href: "/stats", key: "stats", icon: ChartColumn },
+  { href: "/decisions", key: "decisions", icon: Scale },
+  { href: "/settings", key: "settings", icon: Settings2 },
 ] as const;
 
 const PAGE_ACTIONS = "page-actions";
@@ -94,6 +95,7 @@ export function MeetingFrame() {
                 aria-current={path.startsWith(base + n.href) ? "page" : undefined}
                 data-tour={n.key === "settings" ? "settings-tab" : undefined}
               >
+                <n.icon className="tab-ico" size={16} strokeWidth={2} aria-hidden="true" />
                 {tPages(n.key)}
               </Link>
             ))}

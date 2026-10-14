@@ -1,0 +1,13 @@
+{
+  "search": "Pesquisar uma pessoa ou equipa…",
+  "selected": "{count} de {total} selecionadas",
+  "all": "Todos",
+  "none": "Ninguém",
+  "teams": "Equipas",
+  "pickTeam": "{name}: {count, plural, one {# pessoa} other {# pessoas}}, subequipas incluídas",
+  "noMatch": "Ninguém corresponde.",
+  "noTeam": "Sem equipa",
+  "withSubTeams": "subequipas incluídas",
+  "fold": "Recolher {name}",
+  "unfold": "Expandir {name}"
+}

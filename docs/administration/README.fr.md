@@ -63,7 +63,7 @@ ou de proposer une idée, avec une capture d'écran si on le souhaite. Partent a
 lisent les messages dans **Administration du serveur**, répondent par e-mail aux personnes qui l'ont demandé, et
 peuvent ouvrir un ticket prérempli sur le projet Ronde pour un problème propre à Ronde. Si `SENTRY_DSN` est
 renseigné, les messages arrivent aussi dans ce projet Sentry comme retours d'utilisateurs. Les messages sont
-supprimés au bout d'un an ; `RONDE_FEEDBACK=off` retire le bouton.
+supprimés au bout d'un an ; sur une instance auto-hébergée, le bouton est masqué par défaut : `RONDE_FEEDBACK=on` l'affiche.
 
 ## Espaces de travail
 

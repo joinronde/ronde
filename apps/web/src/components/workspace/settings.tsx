@@ -1,17 +1,11 @@
 "use client";
 
 import { Modal } from "@ronde/ui/modal";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useId, useRef, useState } from "react";
-import {
-  addJobCategoryAction,
-  deleteJobCategoryAction,
-  deleteWorkspaceAction,
-  leaveWorkspaceAction,
-  renameJobCategoryAction,
-  updateWorkspaceAction,
-} from "@/app/w/[ws]/actions";
+import { deleteWorkspaceAction, leaveWorkspaceAction, updateWorkspaceAction } from "@/app/w/[ws]/actions";
 import { Field, FormAlert } from "@/components/auth/fields";
 import { Select } from "@/components/select";
 import type { ConnectorView } from "@/lib/server/notify/connectors";
@@ -239,7 +233,7 @@ export function WorkspaceSettingsView({
 
       {transcription && <TranscriptionSettings {...transcription} />}
 
-      <JobCategories slug={workspace.slug} categories={categories} canManage={canManage} onError={setError} confirm={confirm} />
+      <JobCategories slug={workspace.slug} categories={categories} />
 
       {slack && <SlackSettings {...slack} confirm={confirm} />}
 
@@ -286,38 +280,9 @@ export function WorkspaceSettingsView({
   );
 }
 
-function JobCategories({
-  slug,
-  categories,
-  canManage,
-  onError,
-  confirm,
-}: {
-  slug: string;
-  categories: { id: string; name: string }[];
-  canManage: boolean;
-  onError: (e: string | null) => void;
-  confirm: ReturnType<typeof useConfirm>[1];
-}) {
+/** The directory's teams, managed on their own page (a tree of teams): here, how many and the way there */
+function JobCategories({ slug, categories }: { slug: string; categories: { id: string; name: string }[] }) {
   const t = useTranslations("workspace.settings");
-  const tCommon = useTranslations("common");
-  const router = useRouter();
-  const [name, setName] = useState("");
-  const [busy, setBusy] = useState(false);
-  const done = (res: { ok: boolean; error?: string }) => {
-    if (!res.ok) onError(res.error ?? null);
-    else {
-      onError(null);
-      router.refresh();
-    }
-    return res.ok;
-  };
-  const add = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setBusy(true);
-    if (done(await addJobCategoryAction(slug, name))) setName("");
-    setBusy(false);
-  };
   return (
     <section className="panel" id="categories" aria-labelledby="categories-title">
       <h2 id="categories-title">{t("categories")}</h2>
@@ -325,54 +290,18 @@ function JobCategories({
       {categories.length === 0 ? (
         <p className="empty-state">{t("noCategories")}</p>
       ) : (
-        <ul className="edit-list">
-          {categories.map((c) => (
-            <li key={c.id}>
-              <input
-                type="text"
-                defaultValue={c.name}
-                aria-label={t("rename", { name: c.name })}
-                disabled={!canManage}
-                onBlur={async (e) => {
-                  const value = e.target.value.trim();
-                  if (value === c.name) return;
-                  if (!value || !done(await renameJobCategoryAction(slug, c.id, value))) e.target.value = c.name;
-                }}
-              />
-              {canManage && (
-                <button
-                  type="button"
-                  className="icon-btn"
-                  aria-label={t("delete", { name: c.name })}
-                  onClick={async () => {
-                    if (await confirm({ message: t("delete", { name: c.name }), confirmLabel: tCommon("delete"), danger: true })) {
-                      done(await deleteJobCategoryAction(slug, c.id));
-                    }
-                  }}
-                >
-                  ✕
-                </button>
-              )}
-            </li>
+        <p className="team-names">
+          {categories.slice(0, 12).map((c) => (
+            <span key={c.id} className="pill view">
+              {c.name}
+            </span>
           ))}
-        </ul>
+          {categories.length > 12 && <span className="hint">+{categories.length - 12}</span>}
+        </p>
       )}
-      {canManage && (
-        <form className="inline-form" onSubmit={add}>
-          <input
-            type="text"
-            required
-            maxLength={60}
-            placeholder={t("categoryPlaceholder")}
-            aria-label={t("categories")}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <button type="submit" className="btn" disabled={busy || !name.trim()}>
-            {t("add")}
-          </button>
-        </form>
-      )}
+      <Link href={`/w/${slug}/teams`} className="btn">
+        {t("manageTeams")} →
+      </Link>
     </section>
   );
 }

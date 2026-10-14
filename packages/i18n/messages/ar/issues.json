@@ -1,0 +1,12 @@
+{
+  "tooSmall": "{min} على الأقل",
+  "tooBig": "{max} على الأكثر",
+  "tooShort": "{min, plural, one {حرف واحد} two {حرفان} few {# أحرف} many {# حرفًا} other {# حرف}} على الأقل",
+  "tooLong": "{max, plural, one {حرف واحد} two {حرفان} few {# أحرف} many {# حرفًا} other {# حرف}} على الأكثر",
+  "tooFew": "{min, plural, one {عنصر واحد} two {عنصران} few {# عناصر} many {# عنصرًا} other {# عنصر}} على الأقل",
+  "tooMany": "{max, plural, one {عنصر واحد} two {عنصران} few {# عناصر} many {# عنصرًا} other {# عنصر}} على الأكثر",
+  "format": "قيمة ليست بالصيغة المتوقعة",
+  "missing": "قيمة مفقودة",
+  "invalid": "قيمة غير مقبولة",
+  "at": "{field}: {problem}"
+}

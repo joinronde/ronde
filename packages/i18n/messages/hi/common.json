@@ -21,5 +21,9 @@
   },
   "cancel": "रद्द करें",
   "delete": "हटाएँ",
-  "exportCsv": "CSV में निर्यात करें"
+  "exportCsv": "CSV में निर्यात करें",
+  "dragToReorder": "क्रम बदलने के लिए खींचें (या ↑ ↓ कुंजियाँ)",
+  "searchPlaceholder": "खोजें…",
+  "noResults": "कोई परिणाम नहीं",
+  "showMore": "{count} और दिखाएँ ({total} बाकी)"
 }

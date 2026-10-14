@@ -62,7 +62,7 @@ dirección de la página (sin sus parámetros), el navegador, el tamaño de la v
 Los administradores leen los mensajes en **Administración del servidor**, responden por correo a quien lo pidió y
 pueden abrir un issue prerrellenado en el proyecto Ronde para un problema del propio Ronde. Si `SENTRY_DSN` está
 definido, los mensajes también llegan a ese proyecto de Sentry como comentarios de usuarios. Los mensajes se
-eliminan al cabo de un año; `RONDE_FEEDBACK=off` quita el botón.
+eliminan al cabo de un año; en una instancia autoalojada el botón está desactivado por defecto: `RONDE_FEEDBACK=on` lo muestra.
 
 ## Espacios de trabajo
 

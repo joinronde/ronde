@@ -2,6 +2,7 @@
 
 import type { WorkspaceRole } from "@ronde/core/permissions";
 import { Modal } from "@ronde/ui/modal";
+import { MoreHorizontal, Pencil, Search, Send, Undo2, UserMinus } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useFormatter, useTranslations } from "next-intl";
@@ -16,6 +17,7 @@ import {
   updatePersonAction,
 } from "@/app/w/[ws]/actions";
 import { Field, FormAlert } from "@/components/auth/fields";
+import { type PickerTeam, TeamChip, teamAndBelow, teamOptions, teamPath } from "@/components/people-picker";
 import { Select } from "@/components/select";
 import { withBasePath } from "@/lib/shared/base-path";
 import { track } from "@/lib/shared/track";
@@ -51,7 +53,9 @@ interface Props {
   slug: string;
   workspaceName: string;
   people: PersonRow[];
-  categories: { id: string; name: string }[];
+  categories: PickerTeam[];
+  /** Team picked in the address (?team=), its sub-teams included */
+  team: string | null;
   canInvite: boolean;
   canManage: boolean;
   canChangeRoles: boolean;
@@ -87,10 +91,16 @@ export function PeopleDirectory(props: Props) {
     const person = props.openEdit ? people.find((p) => p.id === props.openEdit) : undefined;
     return person && (canManage || person.isMe) ? { kind: "edit", person } : null;
   });
-  const category = useMemo(() => new Map(categories.map((c) => [c.id, c.name])), [categories]);
+  // A team is searched by its whole path: "Product › Design" finds the people of both
+  const category = useMemo(() => new Map(categories.map((c) => [c.id, teamPath(categories, c.id)])), [categories]);
   const [confirmDialog, confirm] = useConfirm();
+  const [team, setTeam] = useState(props.team ?? "");
+  const inTeam = useMemo(() => (team ? teamAndBelow(categories, team) : null), [categories, team]);
 
-  const shown = useMemo(() => peopleMatching(people, query, category), [people, query, category]);
+  const shown = useMemo(
+    () => peopleMatching(people, query, category).filter((p) => !inTeam || (p.jobCategoryId && inTeam.has(p.jobCategoryId))),
+    [people, query, category, inTeam],
+  );
 
   const flash = (message: string) => {
     setToast(message);
@@ -131,7 +141,32 @@ export function PeopleDirectory(props: Props) {
       </header>
       <FormAlert>{error}</FormAlert>
       <div className="toolbar">
-        <input type="search" placeholder={t("search")} aria-label={t("search")} value={query} onChange={(e) => setQuery(e.target.value)} />
+        <label className="search-input">
+          <Search size={16} strokeWidth={2} aria-hidden="true" />
+          <input
+            type="search"
+            placeholder={t("search")}
+            aria-label={t("search")}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </label>
+        {categories.length > 0 && (
+          <Select
+            className="compact team-filter"
+            searchable={categories.length > 8}
+            aria-label={t("teamFilter")}
+            value={team}
+            onChange={(e) => setTeam(e.target.value)}
+          >
+            <option value="">{t("allTeams")}</option>
+            {teamOptions(categories).map(({ team: c, depth }) => (
+              <option key={c.id} value={c.id}>
+                {`${"  ".repeat(depth)}${depth ? "↳ " : ""}${c.name}`}
+              </option>
+            ))}
+          </Select>
+        )}
         <span className="hint" aria-live="polite">
           {t("count", { count: shown.length })}
         </span>
@@ -183,7 +218,9 @@ export function PeopleDirectory(props: Props) {
                         </span>
                       </span>
                     </td>
-                    <td>{category.get(p.jobCategoryId ?? "") ?? ""}</td>
+                    <td>
+                      <TeamChip teams={categories} id={p.jobCategoryId} />
+                    </td>
                     <td>
                       {p.role && roleEditable ? (
                         <Select
@@ -241,7 +278,7 @@ export function PeopleDirectory(props: Props) {
                     </td>
                     <td className="row-actions">
                       {(editable || canInvite || canManage) && (
-                        <Menu label={t("actionsFor", { name })} button={<span aria-hidden="true">⋯</span>}>
+                        <Menu label={t("actionsFor", { name })} button={<MoreHorizontal size={18} strokeWidth={2} aria-hidden="true" />}>
                           {(closeMenu) => (
                             <>
                               {editable && (
@@ -253,6 +290,7 @@ export function PeopleDirectory(props: Props) {
                                     setDialog({ kind: "edit", person: p });
                                   }}
                                 >
+                                  <Pencil className="ico" size={16} strokeWidth={1.9} aria-hidden="true" />
                                   {t("edit")}
                                 </button>
                               )}
@@ -265,6 +303,7 @@ export function PeopleDirectory(props: Props) {
                                     setDialog({ kind: "invite", person: p });
                                   }}
                                 >
+                                  <Send className="ico" size={16} strokeWidth={1.9} aria-hidden="true" />
                                   {t("inviteAgain")}
                                 </button>
                               )}
@@ -277,6 +316,7 @@ export function PeopleDirectory(props: Props) {
                                     act(() => revokeInvitationAction(slug, p.invitation!.id), t("saved"));
                                   }}
                                 >
+                                  <Undo2 className="ico" size={16} strokeWidth={1.9} aria-hidden="true" />
                                   {t("revoke")}
                                 </button>
                               )}
@@ -294,6 +334,7 @@ export function PeopleDirectory(props: Props) {
                                     if (ok) act(() => removePersonAction(slug, p.id), t("removed", { name }));
                                   }}
                                 >
+                                  <UserMinus className="ico" size={16} strokeWidth={1.9} aria-hidden="true" />
                                   {t("remove")}
                                 </button>
                               )}
@@ -360,7 +401,7 @@ export function PeopleDirectory(props: Props) {
       {dialog?.kind === "link" && <InvitationLink {...dialog} mailConfigured={props.mailConfigured} onClose={close} />}
       {confirmDialog}
       {toast && (
-        <div className="toast" role="status">
+        <div className="toast ok" role="status">
           {toast}
         </div>
       )}
@@ -388,7 +429,7 @@ function PersonDialog({
 }: {
   mode: "invite" | "add" | "edit";
   person?: PersonRow;
-  categories: { id: string; name: string }[];
+  categories: PickerTeam[];
   roles?: WorkspaceRole[];
   onClose: () => void;
   onSubmit: (values: PersonFormValues) => Promise<{ ok: true } | { ok: false; error: string }>;
@@ -462,9 +503,9 @@ function PersonDialog({
             {(p) => (
               <Select {...p} value={values.jobCategoryId ?? ""} onChange={(e) => set({ jobCategoryId: e.target.value || null })}>
                 <option value="">{t("noCategory")}</option>
-                {categories.map((c) => (
+                {teamOptions(categories).map(({ team: c, depth }) => (
                   <option key={c.id} value={c.id}>
-                    {c.name}
+                    {`${"  ".repeat(depth)}${depth ? "↳ " : ""}${c.name}`}
                   </option>
                 ))}
               </Select>

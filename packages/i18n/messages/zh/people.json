@@ -7,7 +7,7 @@
   "count": "{count, plural, other {# 人}}",
   "columns": {
     "name": "姓名",
-    "category": "职位类别",
+    "category": "团队",
     "role": "角色",
     "status": "状态",
     "actions": "操作"
@@ -32,8 +32,8 @@
   "lastName": "姓",
   "email": "电子邮件",
   "emailLocked": "与其账户绑定：由本人修改。",
-  "category": "职位类别",
-  "noCategory": "无",
+  "category": "团队",
+  "noCategory": "无团队",
   "birthday": "生日",
   "birthdayHint": "只填日和月，不填年份。",
   "month": "月",
@@ -63,5 +63,7 @@
   "noCustomRole": "无附加角色",
   "phone": "手机号码",
   "phoneHint": "用于短信和 WhatsApp 提醒，使用国际格式（+86…）。可选。",
-  "formerMember": "前成员"
+  "formerMember": "前成员",
+  "teamFilter": "团队",
+  "allTeams": "所有团队"
 }

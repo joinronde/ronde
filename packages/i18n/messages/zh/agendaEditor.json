@@ -1,6 +1,8 @@
 {
   "title": "议程",
   "intro": "每次会议的环节，按顺序排列。会议总是以总结结束。",
+  "end": "收尾与会议纪要",
+  "endHint": "始终在最后",
   "blocks": {
     "intro": "开场",
     "round": "轮流发言",
@@ -10,13 +12,21 @@
     "poker": "计划扑克",
     "projects": "按项目轮流"
   },
+  "blockHints": {
+    "intro": "首轮之前的欢迎、公告和破冰",
+    "round": "每人轮流发言，计时并在屏幕上显示其签到",
+    "projects": "逐个项目，项目成员一起发言",
+    "topics": "团队提出并投票的议题",
+    "timebox": "一个单独的议题，有自己的时长",
+    "retro": "分栏的匿名便签：分组、投票、再讨论",
+    "poker": "团队用暗牌估算任务"
+  },
   "timeboxTitle": "议题",
   "minutes": "分钟",
-  "up": "上移“{label}”",
-  "down": "下移“{label}”",
   "remove": "移除“{label}”",
+  "reorder": "移动“{label}”",
   "add": "添加环节",
-  "pick": "选择一个环节…",
+  "alreadyThere": "已在议程中",
   "newTimebox": "新议题",
   "saved": "议程已保存",
   "turnOn": "请先在“模块”中开启该模块，才能添加此环节。",

@@ -3,7 +3,7 @@
   "sidebar": "侧边栏",
   "workspaceNav": "工作空间",
   "breadcrumb": "位置",
-  "home": "首页",
+  "home": "仪表板",
   "people": "目录",
   "settings": "设置",
   "meetings": "会议",
@@ -29,5 +29,6 @@
   "kudos": "致谢",
   "persons": "成员",
   "projects": "项目",
-  "feedback": "发送反馈"
+  "feedback": "发送反馈",
+  "teams": "团队"
 }

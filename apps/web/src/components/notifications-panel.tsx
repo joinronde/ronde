@@ -4,6 +4,7 @@ import { NOTIFY_EVENTS, type NotifyEvent } from "@ronde/core/notify";
 import type { NotifyConnectorDTO, NotifyRuleDTO } from "@ronde/core/types";
 import { WORKFLOW_FIELDS, WORKFLOW_OPS, WORKFLOW_VARIABLES, type WorkflowField, type WorkflowOp } from "@ronde/core/workflows";
 import { hasFeature } from "@ronde/editions";
+import { X } from "lucide-react";
 import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
@@ -245,11 +246,11 @@ export function NotificationsPanel() {
                     )}
                     <button
                       type="button"
-                      className="icon-btn"
+                      className="icon-btn danger"
                       aria-label={t("remove")}
                       onClick={() => setRules((list) => list.filter((_, j) => j !== i))}
                     >
-                      ✕
+                      <X size={14} strokeWidth={2.2} aria-hidden="true" />
                     </button>
                   </div>
                   {open === i && <WorkflowEditor rule={r} available={workflows} plans={s.upgradeHints} onChange={(p) => patch(i, p)} />}
@@ -386,11 +387,11 @@ function WorkflowEditor({
               />
               <button
                 type="button"
-                className="icon-btn"
+                className="icon-btn danger"
                 aria-label={t("removeCondition")}
                 onClick={() => onChange({ conditions: rule.conditions.filter((_, j) => j !== k) })}
               >
-                ✕
+                <X size={14} strokeWidth={2.2} aria-hidden="true" />
               </button>
             </li>
           ))}

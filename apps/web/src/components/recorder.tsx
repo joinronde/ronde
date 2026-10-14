@@ -108,7 +108,7 @@ export function Recorder() {
 
   const begin = async () => {
     setAsking(false);
-    if (typeof MediaRecorder === "undefined") return toast(t("unsupported"));
+    if (typeof MediaRecorder === "undefined") return toast(t("unsupported"), "error");
     let media: MediaStream;
     try {
       if (source === "mic")
@@ -119,9 +119,9 @@ export function Recorder() {
         media = new MediaStream(shared.getAudioTracks());
       }
     } catch {
-      return toast(t("denied"));
+      return toast(t("denied"), "error");
     }
-    if (!media.getAudioTracks().length) return toast(t("noSound"));
+    if (!media.getAudioTracks().length) return toast(t("noSound"), "error");
     if (!(await rpc({ op: "recording.start" }))) {
       for (const track of media.getTracks()) track.stop();
       return;

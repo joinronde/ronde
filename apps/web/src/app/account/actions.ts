@@ -5,6 +5,7 @@ import { prisma } from "@ronde/db";
 import { isLocale, LOCALE_COOKIE } from "@ronde/i18n";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { setAccountBirthday } from "@/lib/server/account-birthday";
 import { deleteAccount } from "@/lib/server/account-data";
 import { run } from "@/lib/server/action";
 import { requireUser } from "@/lib/server/authz";
@@ -35,6 +36,16 @@ export async function updateProfileAction(input: { name: string; locale: string;
     if (locale) jar.set(LOCALE_COOKIE, locale, { path: "/", maxAge: 31_536_000, sameSite: "lax" });
     else jar.delete(LOCALE_COOKIE);
     revalidatePath("/", "layout");
+    return null;
+  });
+}
+
+/** The birthday on the person's cards in every workspace ("MM-DD"), or none */
+export async function setBirthdayAction(birthday: string | null) {
+  return run(async () => {
+    const user = await requireUser();
+    await setAccountBirthday(user.id, birthday);
+    revalidatePath("/account");
     return null;
   });
 }

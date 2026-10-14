@@ -17,7 +17,9 @@ if (!url) {
 }
 const app = path.resolve(import.meta.dirname, "..");
 const env = { ...process.env, DATABASE_URL: url, E2E_BUILD: "1" };
-const run = (cmd: string, args: string[]) => execFileSync(cmd, args, { cwd: app, env, stdio: "inherit" });
+// On Windows, pnpm is a script (pnpm.cmd) that only a shell finds
+const run = (cmd: string, args: string[]) =>
+  execFileSync(cmd, args, { cwd: app, env, stdio: "inherit", shell: process.platform === "win32" });
 
 for (const spec of ["media.spec.ts", "clips.spec.ts"]) {
   run("pnpm", ["--silent", "db:seed", "--force"]);

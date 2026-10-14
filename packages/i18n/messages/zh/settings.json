@@ -63,9 +63,8 @@
     "carryPlansSwitch": "该栏目将改为清单。",
     "carryPlansHint": "每个人会看到自己上次的计划，以复选框形式出现，完成一项勾一项。未勾选的不算完成。",
     "carryPlans": "带回上次“{plan}”中的内容",
-    "moveUp": "上移“{label}”",
-    "moveDown": "下移“{label}”",
     "removeOf": "移除“{label}”",
+    "reorder": "移动“{label}”",
     "customPlaceholder": "例如：调研、要展示的演示、需要帮助",
     "add": "添加板块",
     "hint": "每种作用（已完成、计划、阻碍、其他）最多对应一个板块。修改板块的名称、作用或输入方式时，已填写的内容会保留。"
@@ -90,6 +89,13 @@
   },
   "sources": {
     "title": "任务来源",
+    "connect": "连接 GitLab",
+    "connectHint": "您的 GitLab 账户，只读，自动续期：无需复制令牌，也无需在过期时更换。",
+    "connected": "已连接 GitLab",
+    "connectedAs": "已以 @{user} 身份连接 GitLab",
+    "disconnect": "断开连接",
+    "disconnected": "已断开 GitLab",
+    "usePersonalToken": "改用个人令牌",
     "gitlabToken": "GitLab 令牌",
     "noSecretKey": "服务器未配置令牌加密：请让运维人员设置 SECRET_KEY 密钥。",
     "tokenHint": "令牌在保存前会被加密，且不会再次显示。GitLab：需要具有 <code>read_api</code> 范围的令牌。",
@@ -106,10 +112,36 @@
     "githubReposHint": "“owner/repository”或整个“owner”，每行一个；留空：所有仓库。另请在“人员”区块中填写每个人的 GitHub 用户名。",
     "githubSave": "保存 GitHub 访问"
   },
+  "hub": {
+    "intro": "此会议使用的工具及其状态。打开卡片即可配置。",
+    "configure": "配置",
+    "close": "关闭",
+    "off": "已关闭",
+    "turnOn": "在模块中开启",
+    "connected": "已连接",
+    "toConnect": "待连接",
+    "configured": "已配置",
+    "toSetUp": "待配置",
+    "ready": "链接已就绪",
+    "synced": "已同步",
+    "noneInWorkspace": "工作区中没有",
+    "rulesOn": "{count} 条规则已启用",
+    "gitlab": "每个人的工单和合并请求显示在其签到中",
+    "github": "所关注仓库的 issue 和 pull request",
+    "wikiName": "Wiki",
+    "wiki": "会议纪要发布到团队 Wiki",
+    "videoName": "视频通话",
+    "video": "大家加入会议的链接",
+    "calendarName": "日历",
+    "calendar": "会话同步到每个人的日历",
+    "notificationsName": "通知",
+    "notifications": "围绕会议的聊天、邮件和短信",
+    "goGeneral": "在“常规”中",
+    "goSchedule": "在“日程”中",
+    "goNotifications": "在“通知”中"
+  },
   "preview": {
-    "title": "提醒预览",
     "to": "收件人：{email} · {date} {time}",
-    "disabled": "提醒已关闭",
     "frameTitle": "发给 {name} 的提醒邮件预览"
   },
   "token": {
@@ -132,7 +164,10 @@
   },
   "people": {
     "title": "人员（{count}）",
+    "colPerson": "成员",
+    "colRole": "角色",
     "intro": "个人资料来自工作空间目录。角色决定每个人在此会议中能做什么。",
+    "rolesGuide": "谁能做什么？",
     "roles": {
       "host": "主持人",
       "cohost": "联合主持人",
@@ -147,8 +182,10 @@
     },
     "roleOf": "{name} 的角色",
     "speaks": "参与发言",
+    "speaksOf": "{name} 参与轮流发言",
     "speaksHint": "纳入轮流发言",
     "remind": "提醒",
+    "remindOf": "提醒 {name}",
     "gitlab": "GitLab 用户名",
     "remove": "移除",
     "confirmRemove": "从会议中移除",
@@ -161,12 +198,28 @@
     "add": "添加",
     "nobodyLeft": "目录中的所有人都已参加。",
     "directory": "管理目录",
-    "categoriesHint": "职位类别、生日和姓名在工作空间目录中编辑。",
+    "categoriesHint": "团队、生日和姓名在空间通讯录中编辑。",
     "github": "GitHub 用户名"
   },
   "template": {
     "title": "复用此形式",
-    "intro": "将板块、形式、模块和日程保存为工作空间模板，用于创建其他会议。人员、历史和令牌留在这里。",
+    "intro": "以此会议为基础创建其他会议：在工作区中创建会议时会提供该模板。",
+    "carries": "纳入模板",
+    "stays": "保留在本会议中",
+    "items": {
+      "sections": "签到栏目",
+      "agenda": "议程",
+      "modules": "模块",
+      "schedule": "时间安排",
+      "people": "{count} 位成员及其角色",
+      "history": "历史与会议纪要",
+      "tokens": "访问令牌与集成"
+    },
+    "counts": {
+      "sections": "{count} 个栏目",
+      "agenda": "{count} 个环节",
+      "modules": "已启用 {count} 个模块"
+    },
     "open": "保存为模板",
     "name": "模板名称",
     "description": "描述（可选）",
@@ -188,6 +241,20 @@
     "danger": "危险区域",
     "agenda": "议程",
     "projects": "项目"
+  },
+  "navHints": {
+    "general": "会议的名称、图标、形式和计时。",
+    "schedule": "会议的时间安排及例外。",
+    "people": "谁参加，以及每人的权限。",
+    "sections": "每个人会前填写的内容。",
+    "agenda": "会议流程，逐块安排。",
+    "projects": "跟进的项目，各有其轮次。",
+    "modules": "引导、形式与工具，按需启用。",
+    "appearance": "会议在所有屏幕上的颜色。",
+    "notifications": "围绕会议发送的提醒和消息。",
+    "integrations": "视频会议、工单工具和维基。",
+    "template": "将此会议保存为空间模板。",
+    "danger": "不可撤销的操作：退出、停止或删除。"
   },
   "status": {
     "auto": "更改会自动保存。",

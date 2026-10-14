@@ -1,0 +1,23 @@
+{
+  "date": {
+    "placeholder": "Pick a date",
+    "clear": "Clear",
+    "today": "Today",
+    "previous": "Previous month",
+    "next": "Next month",
+    "required": "Pick a date.",
+    "tooEarly": "Pick {date} or later.",
+    "tooLate": "Pick {date} or earlier."
+  },
+  "time": {
+    "placeholder": "Pick a time",
+    "list": "Times",
+    "invalid": "Type a time such as 9:30"
+  },
+  "duration": {
+    "less": "Shorter",
+    "more": "Longer",
+    "suggestions": "Usual durations",
+    "typeHint": "Type any duration: 25, 1h15, 1:30…"
+  }
+}

@@ -2,6 +2,7 @@ import { isTheme } from "@ronde/core/appearance";
 import { prisma } from "@ronde/db";
 import { getTranslations } from "next-intl/server";
 import { AccountProfileView } from "@/components/workspace/account";
+import { accountBirthday } from "@/lib/server/account-birthday";
 import { accountPhoto } from "@/lib/server/account-photo";
 import { pageUser } from "@/lib/server/authz";
 import { env } from "@/lib/server/env";
@@ -18,11 +19,12 @@ export async function generateMetadata() {
 /** The account's profile: photo, name, language, time zone, appearance */
 export default async function AccountPage() {
   const user = await pageUser("/account");
-  const [workspaces, themePref, hintsPref, photo] = await Promise.all([
+  const [workspaces, themePref, hintsPref, photo, birthday] = await Promise.all([
     userWorkspaces(user.id),
     prisma.userPref.findUnique({ where: { userId_key: { userId: user.id, key: "theme" } } }),
     prisma.userPref.findUnique({ where: { userId_key: { userId: user.id, key: HIDE_UPGRADE_HINTS } } }),
     accountPhoto(user.id),
+    accountBirthday(user.id),
   ]);
   // The people who choose a plan see its suggestions: only they get the switch (unless the instance turned them off)
   const admin = workspaces.some((w) => ["owner", "admin", "billing"].includes(w.members[0]?.role ?? ""));
@@ -32,6 +34,7 @@ export default async function AccountPage() {
       photo={photo}
       theme={isTheme(themePref?.value) ? themePref.value : "system"}
       upgradeHints={admin && !env.hideUpgradeHints() ? !hintsPref : null}
+      birthday={birthday.offered || birthday.birthday ? birthday.birthday : undefined}
     />
   );
 }

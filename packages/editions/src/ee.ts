@@ -77,7 +77,12 @@ export interface IdentityHost {
    */
   allowed: (feature: "identity.saml" | "identity.ldap" | "identity.scim", workspaceId: string | null) => Promise<boolean>;
   /** Someone signed in through a workspace's own provider: they become a member of it if they are not */
-  joinWorkspace: (user: { id: string; email: string; name: string }, workspaceId: string) => Promise<void>;
+  /** `profile`: what the directory says of the person (phone, team, birthday), copied to their card */
+  joinWorkspace: (
+    user: { id: string; email: string; name: string },
+    workspaceId: string,
+    profile?: { phone?: string; team?: string; birthday?: string },
+  ) => Promise<void>;
   /** Company directory for an address (its domain verified by a workspace with a directory), secrets decrypted */
   ldapDirectoryFor: (email: string) => Promise<(LdapSettings & { workspaceId: string }) | null>;
 }
@@ -92,6 +97,10 @@ export interface LdapSettings {
   userFilter: string;
   emailAttribute: string;
   nameAttribute: string;
+  /** Copied to the person's card at each sign-in; empty: not read */
+  phoneAttribute?: string;
+  teamAttribute?: string;
+  birthdayAttribute?: string;
 }
 
 /** An identity provider of a workspace, as its settings show it (never its secrets) */

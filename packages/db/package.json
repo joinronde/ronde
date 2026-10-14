@@ -12,7 +12,8 @@
     "./tenancy": "./src/tenancy.ts",
     "./package.json": "./package.json",
     "./plans": "./src/plans.ts",
-    "./migrations": "./src/migrations.ts"
+    "./migrations": "./src/migrations.ts",
+    "./teams": "./src/teams.ts"
   },
   "scripts": {
     "db:generate": "prisma generate",

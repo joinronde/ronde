@@ -3,7 +3,7 @@
 import type { Section } from "@ronde/core/types";
 import { taskItem, taskOf } from "@ronde/core/util";
 import { useTranslations } from "next-intl";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 /** Check-in item as shown: ticked or not for a checklist */
 export function ItemText({ item }: { item: string }) {
@@ -83,6 +83,15 @@ export function ListEditor({
   const inputs = useRef<(HTMLTextAreaElement | null)[]>([]);
   const newInput = useRef<HTMLTextAreaElement | null>(null);
   const [draft, setDraft] = useState("");
+  // A line typed without Enter joins the list when the field is left; closing the page meanwhile would lose it:
+  // the browser asks first
+  const typing = !!draft.trim();
+  useEffect(() => {
+    if (!typing) return;
+    const warn = (e: BeforeUnloadEvent) => e.preventDefault();
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [typing]);
   const [drag, setDrag] = useState<number | null>(null);
   const [over, setOver] = useState<number | null>(null);
   const focusAt = useRef<{ i: number; caret?: number } | null>(null);
@@ -235,7 +244,7 @@ export function ListEditor({
               {aside?.(items[i]!)}
               <button
                 type="button"
-                className="del"
+                className="del danger"
                 aria-label={t("removeItem", { text: r.text || t("emptyItem") })}
                 title={t("remove")}
                 onClick={() => remove(i, null)}

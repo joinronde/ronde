@@ -1,6 +1,8 @@
 import "server-only";
 import { agendaOf, hasTurns } from "@ronde/core/agenda";
 import { localDate } from "@ronde/core/schedule";
+import { nextEvent } from "@/lib/shared/calendar";
+import { type LiveProgress, liveProgress, turnsBefore } from "@/lib/shared/live-progress";
 import type { WorkspaceContext } from "./authz";
 import { type CalendarEvent, calendarEvents } from "./calendar-view";
 import { sheetWritten } from "./meeting/projects";
@@ -37,6 +39,8 @@ export interface NextSession {
   attendance: "yes" | "no" | null;
   /** Sheets of the projects the person works on that the meeting follows: written for this session or not */
   sheets: { name: string; written: boolean }[];
+  /** A session going on: when it started, where it stands, how many turns before the person's (null: not started yet) */
+  progress: (LiveProgress & { startedAt: number; yourTurn: number | null }) | null;
 }
 
 export interface DashboardData {
@@ -86,9 +90,8 @@ export async function dashboard(ctx: WorkspaceContext): Promise<DashboardData> {
     avatar: p.avatar ? p.avatar.updatedAt.getTime() : null,
   });
 
-  // The next session: one running now, otherwise the first planned one from today
-  const coming = events.filter((e) => e.date >= today && (e.status === "live" || e.status === "planned"));
-  const first = coming.find((e) => e.status === "live") ?? coming[0];
+  // The next session: one running now (even started the day before), otherwise the first planned one from today
+  const first = nextEvent(events, today);
   let next: NextSession | null = null;
   if (first) {
     const [participants, items, followed, filled, lastArchived, meetingRow] = await Promise.all([
@@ -129,6 +132,20 @@ export async function dashboard(ctx: WorkspaceContext): Promise<DashboardData> {
       }),
       ctx.db.meeting.findUnique({ where: { id: first.meetingId }, select: { agenda: true } }),
     ]);
+    const live = first.status === "live";
+    const session = live
+      ? await ctx.db.session.findFirst({
+          where: { meetingId: first.meetingId, status: "current", startedAt: { not: null }, endedAt: null },
+          select: { startedAt: true, stepKey: true, order: true, absent: true },
+        })
+      : null;
+    const progress = session
+      ? liveProgress(
+          agendaOf(meetingRow?.agenda),
+          session.order.filter((id) => participants.some((p) => p.personId === id) && !session.absent.includes(id)),
+          session.stepKey,
+        )
+      : null;
     const since = lastArchived?.archivedAt?.getTime() ?? 0;
     const readyIds = new Set(filled.filter((c) => c.updatedAt.getTime() >= since).map((c) => c.personId));
     const byId = new Map(people.map((p) => [p.id, p]));
@@ -160,6 +177,10 @@ export async function dashboard(ctx: WorkspaceContext): Promise<DashboardData> {
             written: p.updates.some(sheetWritten),
           }))
         : [],
+      progress:
+        progress && session?.startedAt
+          ? { startedAt: session.startedAt.getTime(), ...progress, yourTurn: turnsBefore(progress, ctx.member.personId) }
+          : null,
     };
   }
 

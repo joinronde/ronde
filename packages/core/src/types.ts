@@ -265,6 +265,10 @@ export interface ActionDTO {
   doneAt: number | null;
 }
 
+/** Who adds projects for a meeting to follow: whoever configures it, or everyone taking part */
+export const PROJECTS_BY = ["hosts", "participants"] as const;
+export type ProjectsBy = (typeof PROJECTS_BY)[number];
+
 export interface SettingsDTO {
   teamName: string;
   /** Emoji of the meeting in the menus (empty: its initials), and the version of its own image (null: none) */
@@ -282,6 +286,8 @@ export interface SettingsDTO {
   video: { provider: "link" | "jitsi" | "bbb"; link: string; jitsiUrl: string; bbbUrl: string };
   speakSec: number;
   autoStart: boolean;
+  /** Who adds projects for the meeting to follow: its hosts, or every participant */
+  projectsBy: ProjectsBy;
   targetMin: number;
   announcements: string[];
   reminderEnabled: boolean;
@@ -294,6 +300,8 @@ export interface SettingsDTO {
   githubRepos: string;
   /** Tokens set in the settings (the value is never sent; always false for non-hosts) */
   tokensSet: { gitlab: boolean; github: boolean; bbb: boolean };
+  /** The GitLab account connected with OAuth (null: none, or a personal token) */
+  gitlabUser: string | null;
   /** Job categories of the workspace */
   jobCategories: string[];
   /** Recurrence of the meeting */
@@ -328,10 +336,15 @@ export interface CommentDTO {
   /** Project tab of the item; null: the person's own */
   projectId: string | null;
   byId: string;
-  /** Empty for a 👍 */
+  /** Empty for a reaction */
   text: string;
+  /** A reaction's emoji (one of LINE_REACTIONS); empty for a comment */
+  emoji: string;
   createdAt: number;
 }
+
+/** The reactions offered on a line of a check-in */
+export const LINE_REACTIONS = ["👍", "🎉", "❤️", "💡", "👀"] as const;
 
 /** A person who took part in an item someone else wrote: their face shows on it too */
 export interface ContributorDTO {
@@ -394,7 +407,7 @@ export interface Snapshot {
   /** Projects the meeting follows, in its order, with their sheets */
   projects: ProjectDTO[];
   /** Projects of the workspace the meeting could follow, for the people configuring it (null otherwise) */
-  projectChoices: { id: string; name: string; theme: string; status: ProjectStatus }[] | null;
+  projectChoices: { id: string; name: string; theme: string; status: ProjectStatus; color: number }[] | null;
   /** Host notes of the current meeting, per step */
   notes: Record<string, string>;
   interactions: InteractionDTO[];
@@ -421,7 +434,8 @@ export interface Snapshot {
    * `secrets`: an encryption key is configured, so tokens can be saved.
    */
   /** inbound: replies to reminders fill check-ins (INBOUND_IMAP_URL) */
-  integrations: { gitlab: boolean; github: boolean; smtp: boolean; secrets: boolean; inbound: boolean };
+  /** `gitlabOAuth`: the server has a GitLab OAuth application ("Connect with GitLab") */
+  integrations: { gitlab: boolean; gitlabOAuth: boolean; github: boolean; smtp: boolean; secrets: boolean; inbound: boolean };
   /** What module blocks of the agenda expand from (retro groups and their votes…) */
   blockData: BlockData;
   /** The retrospective of the session, as this viewer sees it (null without a retro block) */
@@ -615,6 +629,9 @@ export interface PollDTO {
   /** Shown on the shared screen */
   shown: boolean;
   answers: number;
-  results: { value: string; count: number; people: string[] }[];
+  /** Per answer: how many, and who (names and ids, empty when anonymous) */
+  results: { value: string; count: number; people: string[]; ids: string[] }[];
+  /** Who answered (empty when anonymous) */
+  respondents?: string[];
   mine: string[] | null;
 }

@@ -1,15 +1,34 @@
 "use client";
 
 import { formatters, type Locale } from "@ronde/i18n";
+import {
+  ChevronLeft,
+  ChevronRight,
+  CircleCheckBig,
+  CircleDashed,
+  Clapperboard,
+  Columns3,
+  Hourglass,
+  List,
+  ListTodo,
+  type LucideIcon,
+  PlayCircle,
+  Search,
+  Ticket,
+  UserRound,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createTicketAction, setActionStatusAction } from "@/app/w/[ws]/actions";
 import { FormAlert } from "@/components/auth/fields";
 import { ExportCsv } from "@/components/export-csv";
+import { EmptyHero } from "@/components/illustration";
 import { PersonFace } from "@/components/person-face";
+import { Select } from "@/components/select";
 import type { ActionRow, ActionScope } from "@/lib/server/my-actions";
+import { type ActionColumn, columnsOf, filterActions, isStuck, nextColumn } from "@/lib/shared/actions-board";
 import { NewTab } from "../shell/new-tab";
 import { Menu } from "./menu";
 
@@ -27,21 +46,42 @@ interface Props {
 }
 
 const tint = (color: number) => ({ "--c": `var(--c${color % 6})` }) as React.CSSProperties;
+const LAYOUT_KEY = "ronde:actions-layout";
+const COLUMN_ICONS: Record<ActionColumn, LucideIcon> = { open: CircleDashed, doing: PlayCircle, done: CircleCheckBig };
 
-/** Follow-up actions across meetings, in progress first, ticked off in one click */
+/** Follow-up actions across meetings, as a list or as a board, ticked off in one click or moved between columns */
 export function ActionsView({ slug, view, hosts, me, actions, trackers }: Props) {
   const t = useTranslations("actions");
   const router = useRouter();
   const [moved, setMoved] = useState<Record<string, Status>>({});
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [meeting, setMeeting] = useState<string | null>(null);
+  const [meeting, setMeeting] = useState<string>("");
+  const [query, setQuery] = useState("");
+  const [layout, setLayout] = useState<"list" | "board">("list");
+  const [dragging, setDragging] = useState<string | null>(null);
+  const [over, setOver] = useState<Status | null>(null);
+  // The list or the board: a choice of this browser, kept from one visit to the next
+  useEffect(() => {
+    try {
+      if (localStorage.getItem(LAYOUT_KEY) === "board") setLayout("board");
+    } catch {}
+  }, []);
+  const pickLayout = (next: "list" | "board") => {
+    setLayout(next);
+    try {
+      localStorage.setItem(LAYOUT_KEY, next);
+    } catch {}
+  };
 
   const rows = actions.map((a) => ({ ...a, status: moved[a.id] ?? a.status }));
   const meetings = [...new Map(rows.map((a) => [a.meetingId, { id: a.meetingId, name: a.meeting, color: a.color }])).values()];
-  const shown = rows.filter((a) => !meeting || a.meetingId === meeting);
+  const shown = filterActions(rows, meeting || null, query);
+  const columns = columnsOf(shown);
+  const stuck = shown.filter(isStuck).length;
 
   const move = async (a: ActionRow, status: Status) => {
+    if (a.status === status) return;
     setMoved((m) => ({ ...m, [a.id]: status }));
     setBusy(a.id);
     const res = await setActionStatusAction(slug, a.id, status);
@@ -54,14 +94,27 @@ export function ActionsView({ slug, view, hosts, me, actions, trackers }: Props)
     router.refresh();
   };
 
-  const groups = (["doing", "open", "done"] as const).map((status) => ({ status, items: shown.filter((a) => a.status === status) }));
   const base = `/w/${slug}/actions`;
+  const item = (a: ActionRow & { status: Status }) => ({
+    a,
+    slug,
+    showOwner: view === "hosted" && a.owner.id !== me,
+    busy: busy === a.id,
+    onMove: (s: Status) => move(a, s),
+    trackers,
+    onError: setError,
+  });
   return (
     <div className="page actions-page">
       <header className="page-head row">
-        <div>
-          <h1>{t("title")}</h1>
-          <p className="muted">{view === "mine" ? t("introMine") : t("introHosted")}</p>
+        <div className="page-title-with-ico">
+          <span className="page-ico" aria-hidden="true">
+            <ListTodo size={22} strokeWidth={2} />
+          </span>
+          <div>
+            <h1>{t("title")}</h1>
+            <p className="muted">{view === "mine" ? t("introMine") : t("introHosted")}</p>
+          </div>
         </div>
         {rows.length > 0 && (
           <div className="page-head-actions">
@@ -77,81 +130,208 @@ export function ActionsView({ slug, view, hosts, me, actions, trackers }: Props)
       {hosts && (
         <nav className="tabs settings-tabs" aria-label={t("views")}>
           <Link href={base} aria-current={view === "mine" ? "page" : undefined}>
+            <UserRound size={16} strokeWidth={2} aria-hidden="true" />
             {t("mine")}
           </Link>
           <Link href={`${base}?view=hosted`} aria-current={view === "hosted" ? "page" : undefined}>
+            <Clapperboard size={16} strokeWidth={2} aria-hidden="true" />
             {t("hosted")}
           </Link>
         </nav>
       )}
       <FormAlert>{error}</FormAlert>
       {rows.length === 0 ? (
-        <div className="empty-state act-empty">
-          <span className="act-empty-mark" aria-hidden="true">
-            <CheckMark />
-          </span>
-          <p>{view === "mine" ? t("emptyMine") : t("emptyHosted")}</p>
-          <p className="hint">{t("emptyHint")}</p>
-        </div>
+        <EmptyHero art="actions" title={view === "mine" ? t("emptyMine") : t("emptyHosted")} hint={t("emptyHint")} />
       ) : (
         <>
-          <div className="act-bar">
-            <p className="act-summary" aria-live="polite">
-              {groups
-                .filter((g) => g.items.length)
-                .map((g) => (
-                  <span key={g.status} className={`act-count ${g.status}`}>
-                    {t(`count.${g.status}`, { count: g.items.length })}
+          {/* At a glance: what is to do, in progress, done lately, and what waits too long */}
+          <div className="act-kpis">
+            {columns.map((c) => {
+              const KpiIcon = COLUMN_ICONS[c.status];
+              return (
+                <div key={c.status} className={`act-kpi ${c.status}`}>
+                  <span className="act-kpi-ico" aria-hidden="true">
+                    <KpiIcon size={18} strokeWidth={2.2} />
                   </span>
-                ))}
-            </p>
-            {meetings.length > 1 && (
-              <div className="chips" role="group" aria-label={t("filter")}>
-                <button type="button" className="chip" aria-pressed={!meeting} onClick={() => setMeeting(null)}>
-                  {t("all")}
-                </button>
-                {meetings.map((m) => (
-                  <button
-                    key={m.id}
-                    type="button"
-                    className="chip act-chip"
-                    style={tint(m.color)}
-                    aria-pressed={meeting === m.id}
-                    onClick={() => setMeeting(meeting === m.id ? null : m.id)}
-                  >
-                    {m.name}
-                  </button>
-                ))}
-              </div>
-            )}
+                  <strong>{c.items.length}</strong>
+                  <span>{t(`group.${c.status}`)}</span>
+                </div>
+              );
+            })}
+            <div className={`act-kpi stuck${stuck ? " on" : ""}`}>
+              <span className="act-kpi-ico" aria-hidden="true">
+                <Hourglass size={18} strokeWidth={2.2} />
+              </span>
+              <strong>{stuck}</strong>
+              <span>{t("stuck")}</span>
+            </div>
           </div>
-          {groups.map(
-            (g) =>
-              g.items.length > 0 && (
-                <section key={g.status} className="act-group" aria-labelledby={`act-${g.status}`}>
-                  <h2 id={`act-${g.status}`}>
-                    {t(`group.${g.status}`)} <span className="hint">{g.items.length}</span>
-                  </h2>
-                  <ul className="act-list">
-                    {g.items.map((a) => (
-                      <ActionItem
-                        key={`${a.id}-${a.status}`}
-                        a={a}
-                        slug={slug}
-                        showOwner={view === "hosted" && a.owner.id !== me}
-                        busy={busy === a.id}
-                        onMove={(s) => move(a, s)}
-                        trackers={trackers}
-                        onError={setError}
-                      />
-                    ))}
-                  </ul>
-                </section>
-              ),
+          <div className="act-toolbar">
+            <label className="search-input">
+              <Search size={16} strokeWidth={2} aria-hidden="true" />
+              <input
+                type="search"
+                value={query}
+                placeholder={t("search")}
+                aria-label={t("search")}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </label>
+            {meetings.length > 1 && (
+              <Select className="compact act-filter" aria-label={t("filter")} value={meeting} onChange={(e) => setMeeting(e.target.value)}>
+                <option value="">{t("allMeetings")}</option>
+                {meetings.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.name}
+                  </option>
+                ))}
+              </Select>
+            )}
+            <span className="seg act-layout" role="group" aria-label={t("layout")}>
+              <button type="button" aria-pressed={layout === "list"} onClick={() => pickLayout("list")}>
+                <List size={16} strokeWidth={2} aria-hidden="true" /> {t("layoutList")}
+              </button>
+              <button type="button" aria-pressed={layout === "board"} onClick={() => pickLayout("board")}>
+                <Columns3 size={16} strokeWidth={2} aria-hidden="true" /> {t("layoutBoard")}
+              </button>
+            </span>
+          </div>
+          {shown.length === 0 && <p className="empty-state">{t("noMatch")}</p>}
+          {layout === "list" ? (
+            columns.map(
+              (g) =>
+                g.items.length > 0 && (
+                  <section key={g.status} className="act-group" aria-labelledby={`act-${g.status}`}>
+                    <h2 id={`act-${g.status}`} className={`act-group-title ${g.status}`}>
+                      {g.status === "done" ? t("group.doneLately") : t(`group.${g.status}`)} <span className="act-n">{g.items.length}</span>
+                    </h2>
+                    <ul className="act-list">
+                      {g.items.map((a) => (
+                        <ActionItem key={`${a.id}-${a.status}`} {...item(a)} />
+                      ))}
+                    </ul>
+                  </section>
+                ),
+            )
+          ) : (
+            <div className="act-board">
+              {columns.map((c) => {
+                const ColIcon = COLUMN_ICONS[c.status];
+                return (
+                  <section
+                    key={c.status}
+                    className={`act-col ${c.status}${over === c.status && dragging ? " over" : ""}`}
+                    aria-labelledby={`col-${c.status}`}
+                    onDragOver={(e) => {
+                      if (!dragging) return;
+                      e.preventDefault();
+                      setOver(c.status);
+                    }}
+                    onDragLeave={(e) => {
+                      if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOver(null);
+                    }}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      const a = rows.find((x) => x.id === dragging);
+                      setDragging(null);
+                      setOver(null);
+                      if (a) void move(a, c.status);
+                    }}
+                  >
+                    <h2 id={`col-${c.status}`} className="act-col-head">
+                      <ColIcon size={16} strokeWidth={2.2} aria-hidden="true" />
+                      {c.status === "done" ? t("group.doneLately") : t(`group.${c.status}`)}
+                      <span className="act-n">{c.items.length}</span>
+                    </h2>
+                    <ul className="act-cards">
+                      {c.items.map((a) => (
+                        <ActionCard key={a.id} {...item(a)} dragging={dragging === a.id} onDrag={(on) => setDragging(on ? a.id : null)} />
+                      ))}
+                      {c.items.length === 0 && <li className="act-col-empty">{t("dropHere")}</li>}
+                    </ul>
+                  </section>
+                );
+              })}
+            </div>
           )}
         </>
       )}
     </div>
+  );
+}
+
+/** An action on the board: dragged to another column, or moved with its arrows (keyboard, touch screens) */
+function ActionCard({
+  a,
+  slug,
+  showOwner,
+  busy,
+  onMove,
+  dragging,
+  onDrag,
+}: {
+  a: ActionRow;
+  slug: string;
+  showOwner: boolean;
+  busy: boolean;
+  onMove: (s: Status) => void;
+  trackers: Props["trackers"];
+  onError: (error: string | null) => void;
+  dragging: boolean;
+  onDrag: (on: boolean) => void;
+}) {
+  const t = useTranslations("actions");
+  const fmt = formatters(useLocale() as Locale);
+  return (
+    <li
+      className={`act-card ${a.status}${dragging ? " dragging" : ""}${isStuck(a) ? " stuck" : ""}`}
+      style={tint(a.color)}
+      draggable={!busy}
+      onDragStart={(e) => {
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plain", a.text);
+        onDrag(true);
+      }}
+      onDragEnd={() => onDrag(false)}
+    >
+      <p className="act-text">{a.text}</p>
+      <p className="act-meta">
+        <Link href={`/w/${slug}/m/${a.meetingId}`} className="act-meeting">
+          <span className="act-dot" aria-hidden="true" />
+          {a.meeting}
+        </Link>
+        {a.originDate && <span className="hint">{fmt.dayMonth(a.originDate)}</span>}
+        {isStuck(a) && <span className="st-pill act-late">{t("carried", { count: a.carried })}</span>}
+        {a.ticket && (
+          <a href={a.ticket.url} target="_blank" rel="noopener" className="act-ticket" title={t("openTicket")}>
+            <Ticket size={13} strokeWidth={2} aria-hidden="true" /> {a.ticket.key}
+          </a>
+        )}
+      </p>
+      <div className="act-card-foot">
+        {showOwner ? <PersonFace slug={slug} person={a.owner} title={a.owner.name} /> : <span />}
+        <span className="act-card-moves">
+          <button
+            type="button"
+            className="icon-btn"
+            disabled={busy || a.status === "open"}
+            aria-label={t("moveTo", { text: a.text, column: t(`group.${nextColumn(a.status, -1)}`) })}
+            onClick={() => onMove(nextColumn(a.status, -1))}
+          >
+            <ChevronLeft size={14} strokeWidth={2.2} aria-hidden="true" className="flip-rtl" />
+          </button>
+          <button
+            type="button"
+            className="icon-btn"
+            disabled={busy || a.status === "done"}
+            aria-label={t("moveTo", { text: a.text, column: t(`group.${nextColumn(a.status, 1)}`) })}
+            onClick={() => onMove(nextColumn(a.status, 1))}
+          >
+            <ChevronRight size={14} strokeWidth={2.2} aria-hidden="true" className="flip-rtl" />
+          </button>
+        </span>
+      </div>
+    </li>
   );
 }
 
@@ -217,7 +397,7 @@ function ActionItem({
           {a.carried >= 2 && <span className="st-pill act-late">{t("carried", { count: a.carried })}</span>}
           {a.ticket && (
             <a href={a.ticket.url} target="_blank" rel="noopener" className="act-ticket" title={t("openTicket")}>
-              🎫 {a.ticket.key}
+              <Ticket size={13} strokeWidth={2} aria-hidden="true" /> {a.ticket.key}
               <NewTab />
             </a>
           )}

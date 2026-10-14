@@ -207,7 +207,16 @@ export function MinutesView({ doc, id, query = "" }: { doc: MinutesDoc; id: stri
       b.type === "person" || b.type === "project" ? [{ id: `${prefix}-p-${b.id}`, label: b.name, sub: true }] : [],
     ),
   ]);
-  const go = (target: string) => document.getElementById(target)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  // The part reached lights up a moment, so the eye lands on it
+  const go = (target: string) => {
+    const el = document.getElementById(target);
+    if (!el) return;
+    el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+    el.classList.remove("studio-hit");
+    void el.offsetWidth;
+    el.classList.add("studio-hit");
+    setTimeout(() => el.classList.remove("studio-hit"), 1400);
+  };
   return (
     <div className="minutes-read">
       {toc.length > 2 && (

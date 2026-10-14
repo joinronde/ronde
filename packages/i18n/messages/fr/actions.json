@@ -6,16 +6,20 @@
   "mine": "Les miennes",
   "hosted": "Réunions que j'anime",
   "filter": "Réunion",
-  "all": "Toutes",
-  "count": {
-    "open": "{count, plural, =0 {rien à faire} one {# à faire} other {# à faire}}",
-    "doing": "{count, plural, =0 {aucune en cours} one {# en cours} other {# en cours}}",
-    "done": "{count, plural, =0 {aucune faite récemment} one {# faite récemment} other {# faites récemment}}"
-  },
+  "allMeetings": "Toutes les réunions",
+  "search": "Rechercher une action, une réunion, une personne…",
+  "noMatch": "Aucune action ne correspond.",
+  "layout": "Affichage",
+  "layoutList": "Liste",
+  "layoutBoard": "Kanban",
+  "stuck": "En attente depuis trop longtemps",
+  "dropHere": "Déposez une action ici",
+  "moveTo": "Déplacer « {text} » vers {column}",
   "group": {
     "open": "À faire",
     "doing": "En cours",
-    "done": "Faites ces deux dernières semaines"
+    "done": "Faites",
+    "doneLately": "Faites ces deux dernières semaines"
   },
   "markDone": "Marquer « {text} » comme faite",
   "reopen": "Rouvrir « {text} »",

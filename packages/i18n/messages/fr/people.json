@@ -7,7 +7,7 @@
   "count": "{count, plural, one {# personne} other {# personnes}}",
   "columns": {
     "name": "Nom",
-    "category": "Catégorie de métier",
+    "category": "Équipe",
     "role": "Rôle",
     "status": "Statut",
     "actions": "Actions"
@@ -32,8 +32,8 @@
   "lastName": "Nom",
   "email": "E-mail",
   "emailLocked": "Liée à son compte : la personne la modifie elle-même.",
-  "category": "Catégorie de métier",
-  "noCategory": "Aucune",
+  "category": "Équipe",
+  "noCategory": "Sans équipe",
   "birthday": "Anniversaire",
   "birthdayHint": "Jour et mois uniquement, jamais l'année.",
   "month": "Mois",
@@ -63,5 +63,7 @@
   "noCustomRole": "Aucun rôle supplémentaire",
   "phone": "Numéro de mobile",
   "phoneHint": "Pour les rappels par SMS et WhatsApp, au format international (+33…). Facultatif.",
-  "formerMember": "Ancien membre"
+  "formerMember": "Ancien membre",
+  "teamFilter": "Équipe",
+  "allTeams": "Toutes les équipes"
 }

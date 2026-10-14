@@ -20,6 +20,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { Op } from "@/lib/server/meeting/ops";
 import { withBasePath } from "@/lib/shared/base-path";
+import { MEETING_MARK_EVENT, type MeetingMarkChange } from "@/lib/shared/meeting-mark";
 
 interface RondeCtx {
   s: Snapshot;
@@ -143,6 +144,19 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
       for (const el of targets) delete el.dataset.accent;
     };
   }, [accent]);
+
+  // The sidebar around the meeting's pages follows its name, mark and live state as they change, with no reload
+  const live = !!s.meeting?.startedAt && !s.meeting?.endedAt;
+  useEffect(() => {
+    const detail: MeetingMarkChange = {
+      id: s.context.meetingId,
+      name: s.settings.teamName,
+      icon: s.settings.icon,
+      image: s.settings.image,
+      live,
+    };
+    window.dispatchEvent(new CustomEvent(MEETING_MARK_EVENT, { detail }));
+  }, [s.context.meetingId, s.settings.teamName, s.settings.icon, s.settings.image, live]);
 
   const refetchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sRef = useRef(s);
@@ -276,7 +290,7 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
           return false;
         }
         if (!opts?.silent) scheduleRefetch();
-        if (okMessage) toast(okMessage, opts?.tone);
+        if (okMessage) toast(okMessage, opts?.tone ?? "ok");
         return true;
       } catch {
         if (!opts?.silent) toast(t("serverUnreachable"), "error");
@@ -532,7 +546,6 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
           role={t.tone === "error" ? "alert" : "status"}
           style={{ transform: `translate(-50%, ${-i * 48}px)` }}
         >
-          {t.tone === "ok" ? "✓ " : t.tone === "off" ? "○ " : ""}
           {t.msg}
         </div>
       ))}

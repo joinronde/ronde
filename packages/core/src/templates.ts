@@ -589,6 +589,46 @@ export const DEFAULT_TEMPLATE_SETTINGS: TemplateData["settings"] = {
   reminderTime: "15:00",
 };
 
+/** A meeting started from nothing rather than from a template: "blank" in the creation wizard */
+export const BLANK_TEMPLATE = "blank";
+
+/**
+ * What a meeting started from nothing gets: the round table's usual three lists (changed in the wizard or the
+ * settings), the default format and no facilitation module, the person adding the ones they want
+ */
+export function blankTemplate(moduleIds: readonly string[]): TemplateData {
+  return {
+    v: 1,
+    settings: { ...DEFAULT_TEMPLATE_SETTINGS },
+    sections: [
+      { key: "done", role: "achievement", input: "list", label: "" },
+      { key: "next", role: "plan", input: "list", label: "" },
+      { key: "blockers", role: "blocker", input: "list", label: "" },
+    ],
+    modules: Object.fromEntries(moduleIds.map((id) => [id, { enabled: false }])),
+    schedule: [weekly(1, "10:00", 30)],
+  };
+}
+
+/** The sections a meeting may be created with, checked as a template's are */
+export const parseSections = (raw: unknown): TemplateData["sections"] | null => {
+  const parsed = templateData.shape.sections.safeParse(raw);
+  if (!parsed.success) return null;
+  // Each key once: the check-ins are filed under them
+  return new Set(parsed.data.map((s) => s.key)).size === parsed.data.length ? parsed.data : null;
+};
+
+/**
+ * What is wrong with a meeting's sections, the same wherever they are set (its settings, the creation wizard):
+ * a role held by two sections, or a section of its own without a name
+ */
+export function sectionsProblem(sections: readonly { role: string; label: string }[]): "sectionRoleTaken" | "sectionLabelRequired" | null {
+  const roles = sections.filter((s) => s.role !== "custom").map((s) => s.role);
+  if (new Set(roles).size !== roles.length) return "sectionRoleTaken";
+  if (sections.some((s) => s.role === "custom" && !s.label.trim())) return "sectionLabelRequired";
+  return null;
+}
+
 /** A built-in template, its section labels in a language */
 export function builtinTemplate(id: BuiltinTemplateId, locale: Locale): TemplateData {
   const t = translator(locale, "templates");

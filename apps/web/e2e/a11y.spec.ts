@@ -39,9 +39,11 @@ test("the main pages pass the accessibility audit", async ({ page }) => {
 
   await page.goto(`${workspace}/meetings/new`);
   await audit(page, "wizard: template");
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await audit(page, "wizard: details");
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await audit(page, "wizard: sections and modules");
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await audit(page, "wizard: review");
   await page.getByRole("button", { name: "Create the meeting" }).click();
   await page.waitForURL(/\/control$/);

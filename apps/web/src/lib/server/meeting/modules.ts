@@ -44,10 +44,15 @@ export function moduleStatesFrom(
   );
 }
 
+/** The icebreaker questions a meeting starts with, in its language */
+export function defaultIcebreakerBank(locale: Locale): string[] {
+  const t = translator(locale, "defaults");
+  return (["win", "tool", "smile", "eager", "skill", "bug"] as const).map((k) => t(`icebreakers.${k}`));
+}
+
 /** Modules of a new meeting, configured in the workspace language (the icebreaker questions…) */
 export function defaultInstallations(workspaceId: string, meetingId: string, locale: Locale) {
-  const t = translator(locale, "defaults");
-  const bank = (["win", "tool", "smile", "eager", "skill", "bug"] as const).map((k) => t(`icebreakers.${k}`));
+  const bank = defaultIcebreakerBank(locale);
   return ALL_MODULES.map((mod) => ({
     workspaceId,
     meetingId,

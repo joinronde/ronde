@@ -2,6 +2,7 @@
 // Sign-in against a company directory (LDAP, Active Directory): a service account finds the person by
 // address, then their own password is checked by binding as them. Nothing of the password is kept.
 
+import { directoryProfile } from "@ronde/core/directory";
 import type { IdentityHost, LdapSettings } from "@ronde/editions/ee";
 import type { BetterAuthPlugin } from "better-auth";
 import { APIError, createAuthEndpoint } from "better-auth/api";
@@ -31,7 +32,12 @@ async function find(s: LdapSettings, email: string) {
     const { searchEntries } = await client.search(s.baseDn, {
       scope: "sub",
       filter,
-      attributes: [s.emailAttribute, s.nameAttribute],
+      // Attribute names match whatever their case: asked in lower case, which every directory understands
+      attributes: [
+        s.emailAttribute,
+        s.nameAttribute,
+        ...[s.phoneAttribute, s.teamAttribute, s.birthdayAttribute].map((x) => x?.toLowerCase()),
+      ].filter((a): a is string => !!a),
       sizeLimit: 2,
     });
     return searchEntries;
@@ -57,7 +63,17 @@ export async function ldapAuthenticate(s: LdapSettings, rawEmail: string, passwo
   } finally {
     await client.unbind().catch(() => {});
   }
-  return { email, name: first(entry[s.nameAttribute]) || email.split("@")[0]! };
+  // Attribute names are case-insensitive in LDAP: "telephoneNumber" may come back as "telephonenumber"
+  const read = (attribute: string | undefined) => {
+    if (!attribute) return undefined;
+    const key = Object.keys(entry).find((k) => k.toLowerCase() === attribute.toLowerCase());
+    return key ? first(entry[key]) : undefined;
+  };
+  return {
+    email,
+    name: first(entry[s.nameAttribute]) || email.split("@")[0]!,
+    profile: directoryProfile({ phone: read(s.phoneAttribute), team: read(s.teamAttribute), birthday: read(s.birthdayAttribute) }),
+  };
 }
 
 export async function ldapTest(s: LdapSettings, sampleEmail: string) {
@@ -95,7 +111,7 @@ export function ldapPlugin(host: IdentityHost) {
               { email: person.email, name: person.name, emailVerified: true },
               { method: "ldap" },
             ));
-          await host.joinWorkspace({ id: user.id, email: user.email, name: user.name }, directory.workspaceId);
+          await host.joinWorkspace({ id: user.id, email: user.email, name: user.name }, directory.workspaceId, person.profile);
           const session = await ctx.context.internalAdapter.createSession(user.id, rememberMe === false);
           await setSessionCookie(ctx, { session, user }, rememberMe === false);
           return ctx.json({ user: { id: user.id, email: user.email, name: user.name }, redirect: false });

@@ -31,13 +31,16 @@ export const RESERVED_SLUGS = new Set([
 export const isSlugFormat = (slug: string) => /^[a-z0-9](?:[a-z0-9-]{0,38}[a-z0-9])?$/.test(slug);
 export const isValidSlug = (slug: string) => isSlugFormat(slug) && !RESERVED_SLUGS.has(slug);
 
-/** First free slug: "team", then "team-2", "team-3"… */
-export function availableSlug(base: string, taken: ReadonlySet<string>): string {
-  const root = RESERVED_SLUGS.has(base) ? `${base}-team` : base;
-  if (!taken.has(root)) return root;
+/**
+ * First free slug: "team", then "team-2", "team-3"… A reserved one is skipped the same way ("admin" → "admin-2"),
+ * unless it may be used (the instance's administrators)
+ */
+export function availableSlug(base: string, taken: ReadonlySet<string>, allowReserved = false): string {
+  const free = (slug: string) => !taken.has(slug) && (allowReserved || !RESERVED_SLUGS.has(slug));
+  if (free(base)) return base;
   for (let n = 2; ; n++) {
-    const candidate = `${root.slice(0, 36)}-${n}`;
-    if (!taken.has(candidate)) return candidate;
+    const candidate = `${base.slice(0, 36)}-${n}`;
+    if (free(candidate)) return candidate;
   }
 }
 

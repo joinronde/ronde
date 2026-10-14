@@ -1,4 +1,12 @@
-import { BUILTIN_TEMPLATES, builtinTemplate, describeRhythm, parseTemplate, templateData } from "@ronde/core/templates";
+import {
+  BUILTIN_TEMPLATES,
+  blankTemplate,
+  builtinTemplate,
+  describeRhythm,
+  parseSections,
+  parseTemplate,
+  templateData,
+} from "@ronde/core/templates";
 import { locales } from "@ronde/i18n";
 import { describe, expect, it } from "vitest";
 
@@ -52,5 +60,22 @@ describe("template rhythm", () => {
     // A handover at each change of shift, morning and evening
     expect(rhythm(builtinTemplate("shiftHandover", "en").schedule, "en")).toBe("Every day · 15 min");
     expect(rhythm(builtinTemplate("shiftHandover", "fr").schedule, "fr")).toBe("Chaque jour · 15 min");
+  });
+});
+
+describe("a meeting started from nothing", () => {
+  it("has the three usual lists and every module given turned off", () => {
+    const data = blankTemplate(["mood", "kudos"]);
+    expect(data.sections.map((s) => s.role)).toEqual(["achievement", "plan", "blocker"]);
+    expect(data.modules).toEqual({ mood: { enabled: false }, kudos: { enabled: false } });
+    expect(templateData.safeParse(data).success).toBe(true);
+  });
+
+  it("takes the sections picked in the wizard only when they can be filed", () => {
+    const ok = [{ key: "done", role: "achievement", input: "list", label: "" }];
+    expect(parseSections(ok)).toEqual(ok);
+    expect(parseSections([])).toBeNull();
+    expect(parseSections([...ok, ...ok])).toBeNull();
+    expect(parseSections([{ key: "Bad key", role: "custom", input: "list", label: "" }])).toBeNull();
   });
 });

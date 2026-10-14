@@ -63,9 +63,8 @@
     "carryPlansSwitch": "A seção passa a ser um checklist.",
     "carryPlansHint": "Cada pessoa encontra o que tinha previsto como caixas para marcar à medida que avança. Uma caixa não marcada não conta como feita.",
     "carryPlans": "Retomar o que estava em “{plan}” da última vez",
-    "moveUp": "Subir “{label}”",
-    "moveDown": "Descer “{label}”",
     "removeOf": "Remover “{label}”",
+    "reorder": "Mover «{label}»",
     "customPlaceholder": "Ex.: Pesquisa, Demo para mostrar, Preciso de ajuda",
     "add": "Adicionar uma seção",
     "hint": "Cada papel (feito, previsto, bloqueio, outros) vai para no máximo uma seção. Uma seção mantém o que foi escrito quando seu nome, papel ou entrada muda."
@@ -90,6 +89,13 @@
   },
   "sources": {
     "title": "Fontes de tarefas",
+    "connect": "Ligar com o GitLab",
+    "connectHint": "A sua conta GitLab, só de leitura, renovada sozinha: nenhum token para copiar nem substituir quando expira.",
+    "connected": "Ligado ao GitLab",
+    "connectedAs": "Ligado ao GitLab como @{user}",
+    "disconnect": "Desligar",
+    "disconnected": "GitLab desligado",
+    "usePersonalToken": "Usar antes um token pessoal",
     "gitlabToken": "Token do GitLab",
     "noSecretKey": "A criptografia de tokens não está configurada no servidor: peça aos operadores para definir a chave SECRET_KEY.",
     "tokenHint": "Os tokens são criptografados antes de serem salvos e nunca são mostrados de novo. GitLab: um token com o escopo <code>read_api</code>.",
@@ -106,10 +112,36 @@
     "githubReposHint": "“dono/repositório” ou um “dono” inteiro, um por linha; vazio: todos os repositórios. Informe também o usuário do GitHub de cada pessoa no bloco Pessoas.",
     "githubSave": "Salvar o acesso ao GitHub"
   },
+  "hub": {
+    "intro": "As ferramentas com que esta reunião trabalha e em que ponto está cada uma. Abra um cartão para a configurar.",
+    "configure": "Configurar",
+    "close": "Fechar",
+    "off": "Desativada",
+    "turnOn": "Ativar em Módulos",
+    "connected": "Ligada",
+    "toConnect": "Por ligar",
+    "configured": "Configurada",
+    "toSetUp": "Por configurar",
+    "ready": "Ligação pronta",
+    "synced": "Sincronizado",
+    "noneInWorkspace": "Nenhum no espaço",
+    "rulesOn": "{count, plural, one {# regra ativa} other {# regras ativas}}",
+    "gitlab": "Tickets e merge requests de cada um na sua ficha",
+    "github": "Issues e pull requests dos repositórios seguidos",
+    "wikiName": "Wiki",
+    "wiki": "Atas publicadas na wiki da equipa",
+    "videoName": "Videochamada",
+    "video": "A ligação pela qual todos entram",
+    "calendarName": "Calendário",
+    "calendar": "As sessões nos calendários de todos, sincronizadas",
+    "notificationsName": "Notificações",
+    "notifications": "Chat, email e SMS à volta da reunião",
+    "goGeneral": "Em Geral",
+    "goSchedule": "Em Planeamento",
+    "goNotifications": "Em Notificações"
+  },
   "preview": {
-    "title": "Pré-visualização do lembrete",
     "to": "Para: {email} · {date} às {time}",
-    "disabled": "lembretes desativados",
     "frameTitle": "Pré-visualização do e-mail de lembrete para {name}"
   },
   "token": {
@@ -132,7 +164,10 @@
   },
   "people": {
     "title": "Pessoas ({count})",
+    "colPerson": "Pessoa",
+    "colRole": "Função",
     "intro": "Os perfis vêm do diretório do espaço de trabalho. O papel define o que cada pessoa pode fazer nesta reunião.",
+    "rolesGuide": "Quem pode fazer o quê?",
     "roles": {
       "host": "Anfitrião",
       "cohost": "Coanfitrião",
@@ -147,8 +182,10 @@
     },
     "roleOf": "Papel de {name}",
     "speaks": "Tem a vez",
+    "speaksOf": "{name} tem a sua vez",
     "speaksHint": "Incluído na rodada",
     "remind": "Lembrete",
+    "remindOf": "Lembrar {name}",
     "gitlab": "Usuário do GitLab",
     "remove": "Remover",
     "confirmRemove": "Remover da reunião",
@@ -161,12 +198,28 @@
     "add": "Adicionar",
     "nobodyLeft": "Todos do diretório já participam.",
     "directory": "Gerenciar o diretório",
-    "categoriesHint": "Categorias profissionais, aniversários e nomes são editados no diretório do espaço de trabalho.",
+    "categoriesHint": "As equipas, aniversários e nomes editam-se no diretório do espaço.",
     "github": "Usuário do GitHub"
   },
   "template": {
     "title": "Reutilizar este formato",
-    "intro": "Salve as seções, o formato, os módulos e a agenda como modelo do espaço de trabalho, para criar outras reuniões a partir dele. Pessoas, histórico e tokens ficam aqui.",
+    "intro": "Crie outras reuniões a partir desta: o modelo é proposto ao criar uma reunião no espaço.",
+    "carries": "Vai para o modelo",
+    "stays": "Fica nesta reunião",
+    "items": {
+      "sections": "Secções da ficha",
+      "agenda": "Ordem do dia",
+      "modules": "Módulos",
+      "schedule": "Horário",
+      "people": "{count, plural, one {# pessoa e a sua função} other {# pessoas e as suas funções}}",
+      "history": "Histórico e atas",
+      "tokens": "Tokens de acesso e integrações"
+    },
+    "counts": {
+      "sections": "{count, plural, one {# secção} other {# secções}}",
+      "agenda": "{count, plural, one {# bloco} other {# blocos}}",
+      "modules": "{count, plural, one {# módulo ativo} other {# módulos ativos}}"
+    },
     "open": "Salvar como modelo",
     "name": "Nome do modelo",
     "description": "Descrição (opcional)",
@@ -188,6 +241,20 @@
     "danger": "Zona de perigo",
     "agenda": "Pauta",
     "projects": "Projetos"
+  },
+  "navHints": {
+    "general": "Nome, ícone, formato e cronómetro da reunião.",
+    "schedule": "Quando decorrem as sessões, e as suas exceções.",
+    "people": "Quem participa e o que cada um pode fazer.",
+    "sections": "O que cada um preenche antes da reunião.",
+    "agenda": "O desenrolar da reunião, bloco a bloco.",
+    "projects": "Os projetos acompanhados, cada um com a sua volta.",
+    "modules": "Animação, formatos e ferramentas, ativados conforme necessário.",
+    "appearance": "A cor da reunião em todos os ecrãs.",
+    "notifications": "Lembretes e mensagens enviados em torno da reunião.",
+    "integrations": "Videochamada, ferramentas de tickets e wiki.",
+    "template": "Guardar esta reunião como modelo do espaço.",
+    "danger": "O que não se desfaz: sair, parar ou eliminar."
   },
   "status": {
     "auto": "As alterações são salvas automaticamente.",

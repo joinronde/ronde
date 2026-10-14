@@ -29,9 +29,11 @@ test("the live meeting, as hosts asked for it", async ({ page, browser }) => {
   const link = await page.getByRole("dialog", { name: "Invitation link" }).getByRole("textbox").inputValue();
 
   await page.goto(`${workspace}/meetings/new`);
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByLabel("Name").fill("Weekly sync");
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  // Sections and modules: the template's, kept as they are
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByRole("button", { name: "Create the meeting" }).click();
   await page.waitForURL(/\/m\/[^/]+\/control$/, { timeout: 120_000 });
   const meeting = page.url().replace(/\/control$/, "");
@@ -53,8 +55,13 @@ test("the live meeting, as hosts asked for it", async ({ page, browser }) => {
     .getByPlaceholder(/Add an item/)
     .first()
     .fill("Shipped the login page");
-  await max.getByRole("button", { name: "Save my check-in" }).click();
-  await expect(max.getByText("Unsaved changes")).toHaveCount(0);
+  // The line joins the list as the field is left, and the check-in saves itself a moment later
+  await max
+    .getByPlaceholder(/Add an item/)
+    .first()
+    .press("Tab");
+  await expect(max.locator(".checkin-status")).toContainText("Saving");
+  await expect(max.locator(".checkin-status")).toContainText("Saved");
   await max.getByRole("textbox", { name: "Topic" }).fill("Office move");
   await max.getByRole("button", { name: "Propose" }).click();
 
@@ -77,8 +84,8 @@ test("the live meeting, as hosts asked for it", async ({ page, browser }) => {
   await page.getByRole("tab", { name: /^Polls/ }).click();
   await expect(page.getByRole("tab", { name: /^Polls/ })).toHaveAttribute("aria-selected", "true");
   await page.getByRole("button", { name: /Yes or no, now/ }).click();
-  await max.getByRole("radio", { name: "Yes" }).check();
-  await max.locator(".poll-answer").getByRole("button", { name: "Answer" }).click();
+  // Two big buttons: the answer goes in one click
+  await max.getByRole("button", { name: "Yes", exact: true }).click();
   await expect(page.locator(".poll-host").getByText("1 answer")).toBeVisible();
   const screen = await page.context().newPage();
   await screen.goto(`${meeting}/screen`);
@@ -97,8 +104,10 @@ test("the live meeting, as hosts asked for it", async ({ page, browser }) => {
   await lea.getByRole("tab", { name: "Live" }).click();
   await lea.getByRole("button", { name: "Me too on “Shipped the login page”" }).click();
   await expect(lea.getByRole("button", { name: "Stop showing on “Shipped the login page”" })).toHaveAttribute("aria-pressed", "true");
-  await lea.locator(".line-actions .vote-btn").first().click();
-  await expect(lea.locator(".line-actions .vote-btn").first()).toHaveAttribute("aria-pressed", "true");
+  // A reaction on the line, picked among a few: the 👍 then shows as one's own
+  await lea.locator(".line-actions .rx-add").first().click();
+  await lea.locator(".rx-pop").getByRole("button", { name: "👍" }).click();
+  await expect(lea.locator(".line-actions .rx-chip.mine").first()).toHaveAttribute("aria-pressed", "true");
 
   // During his turn, focus is on by itself on Max's screen only: reactions still fly on the shared screen (on a
   // computer the reactions are in the dock, no tray to open)

@@ -13,6 +13,7 @@ import { Select } from "@/components/select";
 import { withBasePath } from "@/lib/shared/base-path";
 import { readWikiError } from "@/lib/shared/wiki-error";
 import { copyText, downloadBlob, LoadError, Modal } from "./common";
+import { EmptyHero } from "./illustration";
 import { MinutesView } from "./minutes-view";
 import { printMinutes } from "./print-minutes";
 import { useRonde } from "./ronde-provider";
@@ -87,7 +88,7 @@ export function HistoryView() {
       setItems([...items, ...p.items]);
       setMore(p.more);
     } catch {
-      toast(t("loadFailed"));
+      toast(t("loadFailed"), "error");
     }
     setLoadingMore(false);
   };
@@ -99,7 +100,7 @@ export function HistoryView() {
 
   if (error) return <LoadError onRetry={() => setRetry((n) => n + 1)} />;
   if (!items) return <p className="loading">{t("loading")}</p>;
-  if (!items.length && !query) return <div className="emptybox">{t("empty")}</div>;
+  if (!items.length && !query) return <EmptyHero art="history" title={t("empty")} />;
   return (
     <div className="hist">
       <div className="hist-bar">
@@ -127,7 +128,7 @@ export function HistoryView() {
           onSuggest={s.ai ? () => setSuggesting(h) : undefined}
           onCopy={async () => {
             const md = minutesToMarkdown(docs.get(h.date)!);
-            if (await copyText(md)) toast(t("copied"));
+            if (await copyText(md)) toast(t("copied"), "ok");
             else setCopyBox(md);
           }}
           onPdf={async () => {
@@ -137,7 +138,7 @@ export function HistoryView() {
                 logo: s.brand.logo && withBasePath(s.brand.logo),
               });
             } catch {
-              toast(t("pdfFailed"));
+              toast(t("pdfFailed"), "error");
             }
           }}
         />

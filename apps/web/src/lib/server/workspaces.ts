@@ -5,7 +5,9 @@ import { authEmail } from "@ronde/core/emails";
 import { assignableRoles, type WorkspaceRole } from "@ronde/core/permissions";
 import { availableSlug, isSlugFormat, RESERVED_SLUGS, slugify, splitName } from "@ronde/core/slug";
 import { prisma } from "@ronde/db";
+import { TEAM_PALETTE_SIZE } from "@ronde/db/teams";
 import { isLocale, type Locale, resolveLocale } from "@ronde/i18n";
+import { isTeamIcon } from "@/lib/shared/team-icons";
 import { erasePerson } from "./account-data";
 import type { CurrentUser, WorkspaceContext, WorkspaceSettings } from "./authz";
 import { billingOn, endSubscription } from "./billing";
@@ -22,7 +24,8 @@ import { publicUrl } from "./public-url";
 import { disconnectSlack } from "./slack";
 
 const INVITATION_DAYS = 14;
-const PALETTE_SIZE = 6;
+/** Colours a team may take: the same palette as the teams a directory makes */
+const PALETTE_SIZE = TEAM_PALETTE_SIZE;
 
 export const hashToken = (token: string) => createHash("sha256").update(token).digest("hex");
 const normalizeEmail = (email: string) => email.trim().toLowerCase();
@@ -45,11 +48,11 @@ export function userWorkspaces(userId: string) {
   });
 }
 
-/** Suggested slug for a new workspace name */
-export async function suggestSlug(name: string): Promise<string> {
+/** Suggested slug for a new workspace name: the name itself, a reserved one only for the instance's administrators */
+export async function suggestSlug(name: string, user?: Pick<CurrentUser, "instanceRole">): Promise<string> {
   const base = slugify(name);
   const taken = await prisma.workspace.findMany({ where: { slug: { startsWith: base } }, select: { slug: true } });
-  return availableSlug(base, new Set(taken.map((w) => w.slug)));
+  return availableSlug(base, new Set(taken.map((w) => w.slug)), user?.instanceRole === "admin");
 }
 
 /**
@@ -59,7 +62,7 @@ export async function suggestSlug(name: string): Promise<string> {
 function checkSlug(user: CurrentUser, slug: string, current?: string) {
   if (!isSlugFormat(slug)) throw new OpError("slugInvalid");
   if (slug !== current && RESERVED_SLUGS.has(slug) && user.instanceRole !== "admin")
-    throw new OpError("slugReserved", { slug: `${slug}-team` });
+    throw new OpError("slugReserved", { slug: availableSlug(slug, new Set()) });
 }
 
 /** Creates a workspace: its creator becomes the owner, with their directory profile */
@@ -69,7 +72,7 @@ export async function createWorkspace(
 ): Promise<{ slug: string }> {
   const name = input.name.trim();
   if (!name) throw new OpError("nameRequired");
-  const slug = input.slug?.trim() ? input.slug.trim().toLowerCase() : await suggestSlug(name);
+  const slug = input.slug?.trim() ? input.slug.trim().toLowerCase() : await suggestSlug(name, user);
   checkSlug(user, slug);
   if (await prisma.workspace.findUnique({ where: { slug }, select: { id: true } })) throw new OpError("slugTaken");
   const locale: Locale = resolveLocale(input.locale, user.locale, (await instanceSettings()).defaultLocale);
@@ -177,7 +180,8 @@ export interface PersonInput {
   phone?: string | null;
 }
 
-const BIRTHDAY = /^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+/** A birthday as stored: "MM-DD", never the year */
+export const BIRTHDAY = /^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
 async function personData(ctx: WorkspaceContext, input: PersonInput) {
   const email = normalizeEmail(input.email);
@@ -437,12 +441,56 @@ export async function acceptInvitationById(user: CurrentUser, invitationId: stri
 
 // ---------- Job categories ----------
 
-export async function addJobCategory(ctx: WorkspaceContext, name: string) {
+/** Teams go this deep at most: a department, its teams, their squads, a group in one */
+const TEAM_DEPTH = 4;
+
+/** The team a team may move under: one of the workspace, never itself nor one of its own sub-teams, not too deep */
+async function checkParent(ctx: WorkspaceContext, id: string | null, parentId: string | null) {
+  if (!parentId) return null;
+  const teams = await ctx.db.jobCategory.findMany({ select: { id: true, parentId: true } });
+  const byId = new Map(teams.map((t) => [t.id, t.parentId]));
+  if (!byId.has(parentId)) throw new OpError("invalidRequest", { details: "parentId" });
+  // Up from the new parent: meeting the team itself would make a loop
+  let depth = 1;
+  for (let at: string | null | undefined = parentId; at; at = byId.get(at)) {
+    if (at === id) throw new OpError("teamLoop");
+    if (++depth > TEAM_DEPTH + 1) break;
+  }
+  // Down from the team: its deepest sub-team must stay within the limit
+  const below = (from: string): number => {
+    const children = teams.filter((t) => t.parentId === from);
+    return children.length ? 1 + Math.max(...children.map((c) => below(c.id))) : 0;
+  };
+  if (depth + (id ? below(id) : 0) > TEAM_DEPTH) throw new OpError("teamTooDeep", { max: TEAM_DEPTH });
+  return parentId;
+}
+
+export async function addJobCategory(ctx: WorkspaceContext, name: string, parentId: string | null = null) {
   const label = name.trim();
   if (!label) throw new OpError("nameRequired");
   if (await ctx.db.jobCategory.findFirst({ where: { name: label }, select: { id: true } })) throw new OpError("categoryExists");
+  const parent = await checkParent(ctx, null, parentId);
   const position = await ctx.db.jobCategory.count();
-  return ctx.db.jobCategory.create({ data: { workspaceId: ctx.workspace.id, name: label, position, color: position % PALETTE_SIZE } });
+  return ctx.db.jobCategory.create({
+    data: { workspaceId: ctx.workspace.id, name: label, position, color: position % PALETTE_SIZE, parentId: parent },
+  });
+}
+
+/** A team moved under another one, or to the top (null) */
+export async function moveJobCategory(ctx: WorkspaceContext, id: string, parentId: string | null) {
+  const parent = await checkParent(ctx, id, parentId);
+  const { count } = await ctx.db.jobCategory.updateMany({ where: { id }, data: { parentId: parent } });
+  if (!count) throw new OpError("notFound");
+}
+
+/** A team's colour (of the palette) and drawing (of the app's set; empty: a group of people) */
+export async function styleJobCategory(ctx: WorkspaceContext, id: string, style: { color?: number; icon?: string }) {
+  const { color, icon } = style;
+  if (color !== undefined && (!Number.isInteger(color) || color < 0 || color >= PALETTE_SIZE))
+    throw new OpError("invalidRequest", { details: "color" });
+  if (icon !== undefined && icon !== "" && !isTeamIcon(icon)) throw new OpError("invalidRequest", { details: "icon" });
+  const { count } = await ctx.db.jobCategory.updateMany({ where: { id }, data: { color, icon } });
+  if (!count) throw new OpError("notFound");
 }
 
 export async function renameJobCategory(ctx: WorkspaceContext, id: string, name: string) {
@@ -455,6 +503,11 @@ export async function renameJobCategory(ctx: WorkspaceContext, id: string, name:
 }
 
 export async function deleteJobCategory(ctx: WorkspaceContext, id: string) {
-  const { count } = await ctx.db.jobCategory.deleteMany({ where: { id } });
-  if (!count) throw new OpError("notFound");
+  const team = await ctx.db.jobCategory.findFirst({ where: { id }, select: { parentId: true } });
+  if (!team) throw new OpError("notFound");
+  // Its sub-teams move up to where it was; its people stay in the directory, without a team
+  await ctx.db.$transaction(async (tx) => {
+    await tx.jobCategory.updateMany({ where: { parentId: id }, data: { parentId: team.parentId } });
+    await tx.jobCategory.deleteMany({ where: { id } });
+  });
 }

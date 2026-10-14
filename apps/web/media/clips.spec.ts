@@ -63,8 +63,9 @@ test("clips of the site and the promo video", async ({ browser }) => {
     await glide(phone, "role=group[name='My mood']");
     await phone.getByRole("button", { name: "Sunny" }).click();
     await phone.waitForTimeout(800);
-    await glide(phone, "role=button[name='Save my check-in']");
-    await phone.getByRole("button", { name: "Save my check-in" }).click();
+    // No button: the check-in saves itself a moment after the last change, and says so
+    await glide(phone, ".checkin-status");
+    await expect(phone.locator(".checkin-status")).toContainText("Saved");
     await phone.waitForTimeout(1500);
   });
   encodeClip(checkin, "checkin", { width: 780 });
@@ -97,7 +98,7 @@ test("clips of the site and the promo video", async ({ browser }) => {
     await host.page.waitForTimeout(1000);
     await host.page.getByRole("button", { name: /^Next: / }).click();
     await host.page.waitForTimeout(1200);
-    await host.page.getByRole("button", { name: "+ Decision" }).click();
+    await host.page.getByRole("button", { name: "Decision", exact: true }).click();
     await write(host.page, "The new spacing scale ships with the next release");
     await host.page.waitForTimeout(1800);
   });
@@ -107,11 +108,12 @@ test("clips of the site and the promo video", async ({ browser }) => {
   await phone.getByRole("tab", { name: /Live meeting|Meeting/ }).click();
   await phone.waitForTimeout(800);
   // On a phone the reactions wait behind their button
-  await phone.getByRole("button", { name: "Reactions" }).click();
+  await phone.getByRole("button", { name: "Reactions", exact: true }).click();
   const reactions = await film(screen, "reactions", async () => {
     await screen.waitForTimeout(600);
-    for (const emoji of ["👏", "🎉", "👍", "👏"]) {
-      await phone.getByRole("button", { name: `React ${emoji}` }).click();
+    // Each reaction is named for what it says: 👏 "Well done", 🎉 "Let's celebrate", 👍 "I agree"
+    for (const name of ["Well done", "Let's celebrate", "I agree", "Well done"]) {
+      await phone.getByRole("button", { name, exact: true }).click();
       await screen.waitForTimeout(450);
     }
     await phone.getByRole("button", { name: "Raise my hand" }).click();
@@ -134,12 +136,14 @@ test("clips of the site and the promo video", async ({ browser }) => {
     await host.page.getByRole("button", { name: "Yes, end it" }).click();
     await screen.waitForTimeout(7000);
   });
+  // At the wrap-up, the control room's main button opens the minutes: summed up and published from there
+  await host.page.getByRole("button", { name: "Review and publish the minutes" }).click();
   await host.page
     .getByRole("textbox", { name: "Summary" })
     .fill("A good week: the help center outline is approved and the spacing scale ships.");
-  await host.page.getByRole("button", { name: "Archive the meeting" }).click();
-  await host.page.getByRole("button", { name: "Yes, archive" }).click();
-  await expect(host.page.getByText(/Meeting archived with its minutes/)).toBeVisible();
+  await host.page.getByRole("button", { name: "Publish the minutes", exact: true }).click();
+  await host.page.getByRole("button", { name: "Yes, publish" }).click();
+  await expect(host.page.getByText(/Minutes published, session closed/)).toBeVisible();
   await host.page.goto(`${meeting}/history`);
   await host.page.waitForTimeout(1500);
   const minutes = await film(host.page, "minutes", async () => {

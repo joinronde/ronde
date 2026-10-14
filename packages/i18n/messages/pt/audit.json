@@ -92,9 +92,10 @@
     },
     "workspace": {
       "update": "Configurações do espaço alteradas",
-      "categoryAdd": "Categoria de cargo adicionada",
-      "categoryRename": "Categoria de cargo renomeada",
-      "categoryDelete": "Categoria de cargo excluída",
+      "categoryAdd": "Equipa adicionada",
+      "categoryRename": "Equipa renomeada",
+      "categoryDelete": "Equipa eliminada",
+      "categoryMove": "Equipa movida",
       "auditStream": "Envio da auditoria alterado",
       "logo": "Logo alterado",
       "logoRemoved": "Logo removido",

@@ -1,6 +1,8 @@
 {
   "title": "Pauta",
   "intro": "As etapas de cada sessão, em ordem. O encerramento sempre fecha a reunião.",
+  "end": "Encerramento e ata",
+  "endHint": "sempre no fim",
   "blocks": {
     "intro": "Abertura",
     "round": "Rodada",
@@ -10,13 +12,21 @@
     "poker": "Planning poker",
     "projects": "Rodada por projeto"
   },
+  "blockHints": {
+    "intro": "Boas-vindas, avisos e quebra-gelo antes da primeira volta",
+    "round": "Cada pessoa à vez, cronometrada, com a ficha no ecrã",
+    "projects": "Projeto a projeto, os seus membros falam juntos",
+    "topics": "Os temas trazidos e votados pela equipa",
+    "timebox": "Um tema à parte, com a sua própria duração",
+    "retro": "Notas anónimas em colunas, agrupadas, votadas e depois discutidas",
+    "poker": "A equipa estima itens com cartas escondidas"
+  },
   "timeboxTitle": "Assunto",
   "minutes": "Minutos",
-  "up": "Subir “{label}”",
-  "down": "Descer “{label}”",
   "remove": "Remover “{label}”",
+  "reorder": "Mover «{label}»",
   "add": "Adicionar um bloco",
-  "pick": "Escolha um bloco…",
+  "alreadyThere": "Já está na ordem de trabalhos",
   "newTimebox": "Novo assunto",
   "saved": "Pauta salva",
   "turnOn": "Ative o módulo em “Módulos” para adicionar este bloco.",

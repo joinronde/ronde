@@ -10,6 +10,19 @@
   "kickerLive": "अभी चल रहा है",
   "liveNow": "अभी लाइव",
   "liveShort": "लाइव",
+  "liveStep": {
+    "intro": "परिचय",
+    "turn": "{name} की बारी · {n}/{total}",
+    "projects": "प्रोजेक्ट राउंड",
+    "topics": "अन्य विषय",
+    "end": "समापन",
+    "block": "जारी"
+  },
+  "liveSince": "{time} पर शुरू हुई",
+  "liveSinceDay": "{day} को {time} पर शुरू हुई",
+  "turnsDone": "{done}/{total} बारियाँ पूरी",
+  "yourTurnNow": "आपकी बारी है!",
+  "yourTurnIn": "{count, plural, one {# व्यक्ति के बाद आपकी बारी} other {# लोगों के बाद आपकी बारी}}",
   "today": "आज",
   "tomorrow": "कल",
   "inDays": "{count, plural, one {# दिन में} other {# दिनों में}}",
@@ -45,9 +58,12 @@
   "nextOn": "अगली: {date}",
   "people": "{count, plural, one {# व्यक्ति} other {# लोग}}",
   "gettingStarted": "शुरुआत करें",
+  "skipSteps": "छोड़ें",
   "progress": "{total} में से {done} पूरे",
   "stepsDone": "पूरे हुए चरण",
   "sheetReady": "{project} की शीट लिखी गई",
   "sheetEmpty": "{project} की शीट लिखनी है",
-  "readyCount": "{ready}/{total} चेक-इन भरे गए"
+  "readyCount": "{ready}/{total} चेक-इन भरे गए",
+  "seatReady": "चेक-इन भरा गया",
+  "seatToFill": "चेक-इन भरना बाकी"
 }

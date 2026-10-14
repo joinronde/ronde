@@ -206,6 +206,18 @@ describe("the clock and the speaking order", () => {
     await expect(runOp(ana, { op: "meeting.move", id: f.memberId, delta: 1 })).rejects.toMatchObject({ status: 403, key: "hostOnly" });
   });
 
+  it("drags a person before someone, or last", async () => {
+    const others = await addPeople(2);
+    await setSession({ order: [f.hostPersonId, f.memberId, ...others] });
+    await runOp(f.ctx, { op: "meeting.move", id: others[1]!, before: f.hostPersonId });
+    expect((await session()).order).toEqual([others[1], f.hostPersonId, f.memberId, others[0]]);
+    await runOp(f.ctx, { op: "meeting.move", id: others[1]!, before: null });
+    expect((await session()).order).toEqual([f.hostPersonId, f.memberId, others[0], others[1]]);
+    // Dropped on itself: it stays (it used to go last)
+    await runOp(f.ctx, { op: "meeting.move", id: f.memberId, before: f.memberId });
+    expect((await session()).order).toEqual([f.hostPersonId, f.memberId, others[0], others[1]]);
+  });
+
   it("shuffles who is still to speak, never those who already spoke", async () => {
     const others = await addPeople(4);
     const order = [f.hostPersonId, f.memberId, ...others];

@@ -36,19 +36,22 @@ export function HealthPicker({
   return (
     <fieldset className="health-picker" disabled={disabled}>
       <legend className="lbl-s">{t("healthLabel")}</legend>
-      {[...PROJECT_HEALTHS, null].map((h) => (
-        <label key={h ?? "none"} className={`h-${h ?? "none"}`}>
-          <input type="radio" name={name} checked={value === h} onChange={() => onChange(h)} />
-          <Icon name={HEALTH_ICON[h ?? "none"]} size={16} />
-          {t(`health.${h ?? "none"}`)}
-        </label>
-      ))}
+      {/* One row: a segmented control, "not given" as its dash alone (named by its tooltip) */}
+      <span className="health-seg">
+        {[...PROJECT_HEALTHS, null].map((h) => (
+          <label key={h ?? "none"} className={`h-${h ?? "none"}`} title={h ? undefined : t("health.none")}>
+            <input type="radio" name={name} checked={value === h} onChange={() => onChange(h)} />
+            <Icon name={HEALTH_ICON[h ?? "none"]} size={16} />
+            <span className={h ? undefined : "sr-only"}>{t(`health.${h ?? "none"}`)}</span>
+          </label>
+        ))}
+      </span>
     </fieldset>
   );
 }
 
 /** A project's name with its colour, and its logo when it has one (the colour square when it cannot be shown) */
-export function ProjectChip({ name, color, logo }: { name: string; color: number; logo?: string | null }) {
+export function ProjectChip({ name, color, logo }: { name: React.ReactNode; color: number; logo?: string | null }) {
   const [broken, setBroken] = useState<string | null>(null);
   const shown = logo && broken !== logo ? logo : null;
   return (

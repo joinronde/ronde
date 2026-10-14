@@ -66,7 +66,7 @@ share an idea, with a screenshot if they want. With the message go the page's ad
 browser, the window size, the language and Ronde's version. The administrators read the messages in **Server
 administration**, answer by email the people who asked for it, and can open a pre-filled issue on the Ronde project
 for a problem of Ronde itself. When `SENTRY_DSN` is set, the messages also reach that Sentry project as user
-feedback. Messages are deleted after a year; `RONDE_FEEDBACK=off` removes the button.
+feedback. Messages are deleted after a year; on a self-hosted instance the button is off by default: `RONDE_FEEDBACK=on` shows it.
 
 ## Workspaces
 

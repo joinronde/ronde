@@ -1,0 +1,13 @@
+{
+  "search": "Search a person or a team…",
+  "selected": "{count} of {total} selected",
+  "all": "Everyone",
+  "none": "Nobody",
+  "teams": "Teams",
+  "pickTeam": "{name}: {count, plural, one {# person} other {# people}}, sub-teams included",
+  "noMatch": "Nobody matches.",
+  "noTeam": "No team",
+  "withSubTeams": "sub-teams included",
+  "fold": "Fold {name}",
+  "unfold": "Unfold {name}"
+}

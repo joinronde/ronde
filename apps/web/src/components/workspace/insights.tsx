@@ -6,6 +6,7 @@ import { formatters, type Locale } from "@ronde/i18n";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { ExportCsv } from "@/components/export-csv";
+import { EmptyHero } from "@/components/illustration";
 
 const pct = (v: number | null) => (v === null ? "—" : `${Math.round(v * 100)}%`);
 
@@ -196,7 +197,7 @@ export function InsightsView({
             </table>
           </div>
         ) : (
-          <div className="emptybox">{t("empty")}</div>
+          <EmptyHero art="stats" title={t("empty")} compact />
         )}
         <p className="hint">{t("engagementHow")}</p>
       </section>

@@ -17,6 +17,9 @@ const DEFAULTS: LdapView = {
   userFilter: "(&(objectClass=person)(mail={{email}}))",
   emailAttribute: "mail",
   nameAttribute: "cn",
+  phoneAttribute: "telephoneNumber",
+  teamAttribute: "department",
+  birthdayAttribute: "",
   enabled: true,
   passwordSet: false,
 };
@@ -129,6 +132,43 @@ export function LdapDirectory({ slug, directory }: { slug: string; directory: Ld
             {(p) => <input {...p} value={values.nameAttribute} onChange={(e) => set({ nameAttribute: e.target.value })} />}
           </Field>
         </div>
+        {/* What else the directory brings to each person's card, at every sign-in */}
+        <fieldset className="plain">
+          <legend className="lbl-s">{t("profileTitle")}</legend>
+          <p className="hint">{t("profileHint")}</p>
+          <div className="grid3">
+            <Field label={t("phoneAttribute")}>
+              {(p) => (
+                <input
+                  {...p}
+                  value={values.phoneAttribute}
+                  placeholder="telephoneNumber"
+                  onChange={(e) => set({ phoneAttribute: e.target.value })}
+                />
+              )}
+            </Field>
+            <Field label={t("teamAttribute")}>
+              {(p) => (
+                <input
+                  {...p}
+                  value={values.teamAttribute}
+                  placeholder="department"
+                  onChange={(e) => set({ teamAttribute: e.target.value })}
+                />
+              )}
+            </Field>
+            <Field label={t("birthdayAttribute")}>
+              {(p) => (
+                <input
+                  {...p}
+                  value={values.birthdayAttribute}
+                  placeholder="birthDate"
+                  onChange={(e) => set({ birthdayAttribute: e.target.value })}
+                />
+              )}
+            </Field>
+          </div>
+        </fieldset>
         <label className="check">
           <input type="checkbox" checked={values.enabled} onChange={(e) => set({ enabled: e.target.checked })} /> {t("enabled")}
         </label>

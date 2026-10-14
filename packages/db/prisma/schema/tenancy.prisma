@@ -153,12 +153,18 @@ model PersonAvatar {
 }
 
 model JobCategory {
-  id          String    @id @default(uuid(7))
+  id          String        @id @default(uuid(7))
   workspaceId String
-  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   name        String
-  color       Int       @default(0)
-  position    Int       @default(0)
+  color       Int           @default(0)
+  /// A small drawing that says what the team does (a name from the app's set of icons); empty: a group of people
+  icon        String        @default("")
+  position    Int           @default(0)
+  /// The team it belongs to (a squad in a department): the directory shows the tree, picking a team picks its sub-teams
+  parentId    String?
+  parent      JobCategory?  @relation("TeamTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children    JobCategory[] @relation("TeamTree")
   people      Person[]
 
   @@unique([id, workspaceId])

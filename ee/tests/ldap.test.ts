@@ -20,7 +20,15 @@ beforeAll(async () => {
     {
       dn: "uid=ada,ou=people,dc=acme,dc=test",
       password: "ada-secret",
-      attributes: { mail: "ada@acme.test", cn: "Ada Lovelace", uid: "ada" },
+      attributes: {
+        mail: "ada@acme.test",
+        cn: "Ada Lovelace",
+        uid: "ada",
+        // Stored in lower case, as directories match attribute names whatever their case
+        telephonenumber: "+44 20 7946 0000",
+        department: "Engines",
+        birthdate: "18151210",
+      },
     },
     { dn: "uid=twin1,ou=people,dc=acme,dc=test", password: "x", attributes: { mail: "twin@acme.test", cn: "Twin One" } },
     { dn: "uid=twin2,ou=people,dc=acme,dc=test", password: "x", attributes: { mail: "twin@acme.test", cn: "Twin Two" } },
@@ -38,7 +46,25 @@ describe("escapeFilter", () => {
 
 describe("ldapAuthenticate", () => {
   it("signs in a person with their directory password", async () => {
-    expect(await ldapAuthenticate(settings(), "ADA@acme.test", "ada-secret")).toEqual({ email: "ada@acme.test", name: "Ada Lovelace" });
+    expect(await ldapAuthenticate(settings(), "ADA@acme.test", "ada-secret")).toEqual({
+      email: "ada@acme.test",
+      name: "Ada Lovelace",
+      profile: {},
+    });
+  });
+
+  it("brings the phone, the team and the birthday from the attributes set", async () => {
+    const s = { ...settings(), phoneAttribute: "telephoneNumber", teamAttribute: "department", birthdayAttribute: "birthDate" };
+    expect((await ldapAuthenticate(s, "ada@acme.test", "ada-secret"))?.profile).toEqual({
+      phone: "+44 20 7946 0000",
+      team: "Engines",
+      birthday: "12-10",
+    });
+    // An attribute left empty is not read
+    expect((await ldapAuthenticate({ ...s, birthdayAttribute: "" }, "ada@acme.test", "ada-secret"))?.profile).toEqual({
+      phone: "+44 20 7946 0000",
+      team: "Engines",
+    });
   });
 
   it("refuses a wrong password, an empty one, an unknown address and an injected filter", async () => {

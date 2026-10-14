@@ -34,7 +34,7 @@
     "meeting": {
       "create": "Session prepared",
       "reset": "Session reset",
-      "archive": "Session archived",
+      "archive": "Minutes published",
       "publish": "Digest published",
       "remove": "Meeting deleted",
       "new": "Meeting created",
@@ -92,9 +92,10 @@
     },
     "workspace": {
       "update": "Workspace settings changed",
-      "categoryAdd": "Job category added",
-      "categoryRename": "Job category renamed",
-      "categoryDelete": "Job category deleted",
+      "categoryAdd": "Team added",
+      "categoryRename": "Team renamed",
+      "categoryDelete": "Team deleted",
+      "categoryMove": "Team moved",
       "auditStream": "Audit stream changed",
       "logo": "Logo changed",
       "logoRemoved": "Logo removed",

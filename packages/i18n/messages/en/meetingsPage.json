@@ -4,12 +4,21 @@
   "new": "New meeting",
   "filter": "Which meetings",
   "search": "Filter by name",
+  "sortBy": "Sort by",
+  "sorts": {
+    "next": "Next session",
+    "name": "Name",
+    "recent": "Last held",
+    "actions": "Open actions"
+  },
   "filters": {
     "all": "All",
+    "live": "Live",
     "mine": "I take part",
     "run": "I run"
   },
   "liveNow": "Live now",
+  "sessionOf": "Session of {time}",
   "next": "Next session",
   "noNext": "No session planned",
   "held": "{count, plural, one {session held} other {sessions held}}",

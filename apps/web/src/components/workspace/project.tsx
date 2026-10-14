@@ -17,11 +17,13 @@ import {
 } from "@/app/w/[ws]/project-actions";
 import { type MarkProject, ProjectMark, projectLogoSrc } from "@/components/project-mark";
 import { Select } from "@/components/select";
+import { ShowMore, useShowMore } from "@/components/show-more";
 import { squareImage } from "@/components/square-image";
 import { ToolMark } from "@/components/tool-mark";
 import type { ProjectPage } from "@/lib/server/projects";
 import { withBasePath } from "@/lib/shared/base-path";
 import { ago, firstLine } from "@/lib/shared/helpers";
+import { byMonth, limitGroups } from "@/lib/shared/show-more";
 import { HealthBadge } from "../project-bits";
 import { Icon } from "../shell/icons";
 import { NewTab } from "../shell/new-tab";
@@ -35,7 +37,17 @@ const ROLE_ORDER = ["achievement", "plan", "blocker", "note", "custom"] as const
 
 export function ProjectView({ slug, page }: { slug: string; page: ProjectPage }) {
   const t = useTranslations("projects");
-  const fmt = formatters(useLocale() as Locale);
+  const locale = useLocale();
+  const fmt = formatters(locale as Locale);
+  // The timeline a month at a time, the first sessions then more on demand
+  const more = useShowMore(10);
+  const timelineMonths = byMonth(page.timeline, (e) => e.date);
+  const shownMonths = limitGroups(timelineMonths, more.limit);
+  const monthTotal = (key: string) => timelineMonths.find((m) => m.key === key)?.items.length ?? 0;
+  const monthName = (key: string) => {
+    const s = new Date(`${key}-01T12:00:00Z`).toLocaleDateString(locale, { month: "long", year: "numeric", timeZone: "UTC" });
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  };
   const router = useRouter();
   const { project: p } = page;
   const [editing, setEditing] = useState(false);
@@ -133,53 +145,63 @@ export function ProjectView({ slug, page }: { slug: string; page: ProjectPage })
           <section aria-labelledby="pj-timeline">
             <h2 id="pj-timeline">{t("timeline")}</h2>
             {page.timeline.length ? (
-              <ol className="project-timeline">
-                {page.timeline.map((e) => (
-                  <li key={e.sessionId} className="panel">
-                    <header>
-                      <strong>{fmt.dateShort(e.date)}</strong>
-                      <Link href={`/w/${slug}/m/${e.meeting.id}/history`} className="link">
-                        {e.meeting.name}
-                      </Link>
-                      {e.health && <HealthBadge health={e.health} />}
-                    </header>
-                    {e.headline.trim() && (
-                      <div className="md project-headline" dangerouslySetInnerHTML={{ __html: markdownToHtml(e.headline) }} />
-                    )}
-                    {ROLE_ORDER.map((role) => {
-                      const items = e.items.filter((i) => i.role === role);
-                      if (!items.length) return null;
-                      return (
-                        <div key={role} className="timeline-role">
-                          <h3 className={`role-${role}`}>{t(`roles.${role}`)}</h3>
-                          <ul>
-                            {items.map((i, n) => {
-                              const task = taskOf(i.text);
-                              return (
-                                <li key={n}>
-                                  <span className="muted">{i.name} · </span>
-                                  {task.done === true ? "☑ " : task.done === false ? "☐ " : ""}
-                                  {task.text}
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </div>
-                      );
-                    })}
-                    {e.decisions.length > 0 && (
-                      <div className="timeline-role">
-                        <h3>{t("decisions")}</h3>
-                        <ul>
-                          {e.decisions.map((d, n) => (
-                            <li key={n}>{d}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </li>
+              <div className="project-months">
+                {shownMonths.groups.map((mo) => (
+                  <section key={mo.key} className="project-month" aria-label={monthName(mo.key)}>
+                    <h3 className="project-month-title">
+                      {monthName(mo.key)} <span className="act-n">{monthTotal(mo.key)}</span>
+                    </h3>
+                    <ol className="project-timeline">
+                      {mo.items.map((e) => (
+                        <li key={e.sessionId} className="panel">
+                          <header>
+                            <strong>{fmt.dateShort(e.date)}</strong>
+                            <Link href={`/w/${slug}/m/${e.meeting.id}/history`} className="link">
+                              {e.meeting.name}
+                            </Link>
+                            {e.health && <HealthBadge health={e.health} />}
+                          </header>
+                          {e.headline.trim() && (
+                            <div className="md project-headline" dangerouslySetInnerHTML={{ __html: markdownToHtml(e.headline) }} />
+                          )}
+                          {ROLE_ORDER.map((role) => {
+                            const items = e.items.filter((i) => i.role === role);
+                            if (!items.length) return null;
+                            return (
+                              <div key={role} className="timeline-role">
+                                <h3 className={`role-${role}`}>{t(`roles.${role}`)}</h3>
+                                <ul>
+                                  {items.map((i, n) => {
+                                    const task = taskOf(i.text);
+                                    return (
+                                      <li key={n}>
+                                        <span className="muted">{i.name} · </span>
+                                        {task.done === true ? "☑ " : task.done === false ? "☐ " : ""}
+                                        {task.text}
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                              </div>
+                            );
+                          })}
+                          {e.decisions.length > 0 && (
+                            <div className="timeline-role">
+                              <h3>{t("decisions")}</h3>
+                              <ul>
+                                {e.decisions.map((d, n) => (
+                                  <li key={n}>{d}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </li>
+                      ))}
+                    </ol>
+                  </section>
                 ))}
-              </ol>
+                <ShowMore hidden={shownMonths.hidden} step={more.step} onMore={more.more} />
+              </div>
             ) : (
               <p className="muted">{t("noTimeline")}</p>
             )}
@@ -546,7 +568,7 @@ function LogoPicker({
       {project.logo && (
         <button
           type="button"
-          className="logo-remove"
+          className="logo-remove danger"
           disabled={busy}
           aria-label={t("logo.remove")}
           title={t("logo.remove")}

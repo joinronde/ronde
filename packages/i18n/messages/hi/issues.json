@@ -1,0 +1,12 @@
+{
+  "tooSmall": "कम से कम {min}",
+  "tooBig": "अधिकतम {max}",
+  "tooShort": "कम से कम {min, plural, one {# अक्षर} other {# अक्षर}}",
+  "tooLong": "अधिकतम {max, plural, one {# अक्षर} other {# अक्षर}}",
+  "tooFew": "कम से कम {min, plural, one {# आइटम} other {# आइटम}}",
+  "tooMany": "अधिकतम {max, plural, one {# आइटम} other {# आइटम}}",
+  "format": "कोई मान अपेक्षित फ़ॉर्मैट में नहीं है",
+  "missing": "कोई मान छूटा है",
+  "invalid": "कोई मान स्वीकार्य नहीं है",
+  "at": "{field}: {problem}"
+}

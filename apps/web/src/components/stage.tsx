@@ -30,6 +30,7 @@ import { writersOf } from "@/lib/shared/sheets";
 import { joinedOf, plannedStart, projectEntries, projectsWithTurn, sectionsHave, waitLabel, waitTone } from "@/lib/shared/stage";
 import { AmbienceLayer, useAmbience } from "./ambience";
 import { ItemText } from "./check-in-fields";
+import { LineReactions } from "./line-reactions";
 import { PokerStage } from "./poker";
 import { PollBand } from "./polls";
 import { HealthBadge, ProjectChip } from "./project-bits";
@@ -206,7 +207,7 @@ function ListCard({ sec, entries, spot, joinable }: { sec: Section; entries: Ent
                 {e.tag}
                 <ItemText item={e.text} />
                 {joinable ? (
-                  <LineActions entry={e} section={sec.k} likes={cs.filter((c) => !c.text).map((c) => c.byId)} notes={notes.length} />
+                  <LineActions entry={e} section={sec.k} notes={notes.length} />
                 ) : (
                   (likes > 0 || notes.length > 0) && (
                     <span className="item-rx">
@@ -357,32 +358,16 @@ function SpeakerBody({ step, live, spot, joinable }: { step: Step; live: boolean
  * On a participant's own screen, after a line of the turn: 👍 (who liked it in its tooltip), and "me too" to put
  * one's face on a line of someone's round
  */
-function LineActions({ entry, section, likes, notes }: { entry: Entry; section: string; likes: (string | null)[]; notes: number }) {
+function LineActions({ entry, section, notes }: { entry: Entry; section: string; notes: number }) {
   const t = useTranslations("me");
-  const { s, rpc, nameOf, host } = useRonde();
+  const { s, rpc } = useRonde();
   const me = s.viewer.memberId;
   const plain = plainItem(entry.text);
-  const liked = !!me && likes.includes(me);
   const joined = !!me && joinedOf(s, { ...entry, section }).includes(me);
   const target = { ownerId: entry.ownerId, section, itemText: entry.text, projectId: entry.projectId };
   return (
     <span className="line-actions">
-      {me && (
-        <button
-          type="button"
-          className="vote-btn"
-          aria-pressed={liked}
-          title={likes.length ? likes.map((id) => first(nameOf(id)) || host).join(", ") : t("like")}
-          onClick={() => rpc({ op: "comment.like", ...target })}
-        >
-          👍 {likes.length || ""}
-        </button>
-      )}
-      {!me && likes.length > 0 && (
-        <span className="item-rx" title={likes.map((id) => first(nameOf(id)) || host).join(", ")}>
-          👍 {likes.length}
-        </span>
-      )}
+      <LineReactions target={target} />
       {notes > 0 && <span className="item-rx">💬 {notes}</span>}
       {me && me !== entry.ownerId && entry.projectId === null && (
         <button
@@ -908,26 +893,29 @@ function MiscBody() {
   );
 }
 
-/** Number counting up to its value */
+/**
+ * Number counting up to its value when it first shows, then following it as it is: a value that keeps moving (the
+ * duration of a meeting still running) must not start its count again at every tick
+ */
 function useCountUp(target: number, ms = 1200) {
-  const [v, setV] = useState(0);
+  const [k, setK] = useState(0);
   useEffect(() => {
     // Animations off: the number shows right away
     if (!motionAllowed()) {
-      setV(target);
+      setK(1);
       return;
     }
     const t0 = performance.now();
     let raf = 0;
     const tick = (t: number) => {
-      const k = Math.min(1, (t - t0) / ms);
-      setV(target * (1 - Math.pow(1 - k, 3)));
-      if (k < 1) raf = requestAnimationFrame(tick);
+      const x = Math.min(1, (t - t0) / ms);
+      setK(x);
+      if (x < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [target, ms]);
-  return v;
+  }, [ms]);
+  return k >= 1 ? target : target * (1 - (1 - k) ** 3);
 }
 
 function EndBody({ celebrate }: { celebrate?: boolean }) {

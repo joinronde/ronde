@@ -40,10 +40,10 @@
   "openInRonde": "Ouvrir dans Ronde",
   "meeting": {
     "title": "Publier le compte rendu",
-    "intro": "À chaque archivage, le compte rendu devient une page du wiki, nommée par la date de la séance. Quand le résumé est modifié, la page suit.",
+    "intro": "À chaque compte rendu publié, il devient une page du wiki, nommée par la date de la séance. Quand le résumé est modifié, la page suit.",
     "wiki": "Wiki",
     "none": "Nulle part",
-    "hint": "Les séances déjà archivées se publient depuis l'historique.",
+    "hint": "Les séances passées se publient depuis l'historique.",
     "noWiki": "Aucun wiki dans cet espace pour l'instant.",
     "addWiki": "En ajouter un dans les réglages de l'espace",
     "on": "Le compte rendu sera publié dans {name}.",

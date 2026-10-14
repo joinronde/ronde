@@ -7,6 +7,8 @@ import { useState } from "react";
 
 export { Modal } from "@ronde/ui/modal";
 
+import { DateInput } from "./date-input";
+import { EmptyHero } from "./illustration";
 import { useRonde } from "./ronde-provider";
 
 export function NoMeeting() {
@@ -18,8 +20,7 @@ export function NoMeeting() {
     () => s.settings.schedule.upcoming.find((o) => !o.cancelled)?.date ?? new Date().toISOString().slice(0, 10),
   );
   return (
-    <div className="emptybox">
-      <h3>{t("noMeeting.title")}</h3>
+    <EmptyHero art="meetings" title={t("noMeeting.title")} compact>
       {!s.viewer.isHost ? (
         <p>{t("noMeeting.notPrepared", { host })}</p>
       ) : s.members.length ? (
@@ -29,14 +30,7 @@ export function NoMeeting() {
             <label htmlFor="newMeetingDate" className="sr-only">
               {t("noMeeting.dateLabel")}
             </label>
-            <input
-              id="newMeetingDate"
-              type="date"
-              required
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              style={{ width: "auto" }}
-            />
+            <DateInput id="newMeetingDate" required value={date} onChange={setDate} className="auto" />
             <button className="btn primary" disabled={!date} onClick={() => rpc({ op: "meeting.create", date })}>
               {t("noMeeting.prepare", { date: formatters(locale).dateShort(date) })}
             </button>
@@ -50,7 +44,7 @@ export function NoMeeting() {
           </Link>
         </>
       )}
-    </div>
+    </EmptyHero>
   );
 }
 
@@ -58,13 +52,11 @@ export function NoMeeting() {
 export function LoadError({ onRetry }: { onRetry: () => void }) {
   const t = useTranslations("common");
   return (
-    <div className="emptybox" role="alert">
-      <h3>{t("loadError.title")}</h3>
-      <p className="muted">{t("loadError.body")}</p>
+    <EmptyHero art="error" title={t("loadError.title")} hint={t("loadError.body")} compact alert>
       <button type="button" className="btn primary" onClick={onRetry}>
         {t("loadError.retry")}
       </button>
-    </div>
+    </EmptyHero>
   );
 }
 

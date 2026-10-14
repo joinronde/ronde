@@ -33,7 +33,7 @@
     "stepCheckIn": "Remplir votre fiche",
     "stepCheckInHint": "Ce que vous avez fait, ce que vous prévoyez, ce qui bloque : quelques lignes avant la réunion.",
     "stepSession": "Animer une première séance",
-    "stepSessionHint": "Ouvrez la régie, démarrez la réunion, puis archivez-la avec son compte rendu."
+    "stepSessionHint": "Ouvrez la régie, démarrez la réunion, puis publiez son compte rendu."
   },
   "settings": {
     "title": "Réglages de l'espace",
@@ -47,13 +47,14 @@
     "meetingCreationMembers": "Tous les membres",
     "meetingCreationAdmins": "Les organisateurs et les admins",
     "saved": "Enregistré",
-    "categories": "Catégories de métier",
-    "categoriesHint": "Affichées sur les fiches et utilisées pour regrouper les statistiques.",
+    "categories": "Équipes",
+    "manageTeams": "Gérer les équipes",
+    "categoriesHint": "Affichées sur les fiches et utilisées pour regrouper les statistiques. Les équipes peuvent s'imbriquer : elles se gèrent dans l'annuaire.",
     "categoryPlaceholder": "ex. Développement",
     "add": "Ajouter",
     "rename": "Renommer {name}",
     "delete": "Supprimer {name}",
-    "noCategories": "Aucune catégorie de métier pour l'instant.",
+    "noCategories": "Aucune équipe pour l'instant.",
     "danger": "Zone de danger",
     "leave": "Quitter l'espace",
     "leaveHint": "Vous perdez l'accès à ses réunions. Votre profil reste dans l'annuaire.",

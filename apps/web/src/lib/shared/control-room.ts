@@ -132,16 +132,14 @@ export function projectOrderOf(s: OrderState, agenda: Step[]) {
   return { steps, ids, done, skipped, added, filled, showOrder };
 }
 
-/** Whether a project can move up or down: never above the step running or already done, it would be skipped */
-export const canMove = (steps: Step[], done: Set<string>, i: number, d: -1 | 1) =>
-  d === -1 ? !(i === 0 || done.has(steps[i]!.key) || done.has(steps[i - 1]!.key)) : !(i === steps.length - 1 || done.has(steps[i]!.key));
-
-/** The order with the project at `i` swapped with its neighbour (only called within bounds: the buttons say so) */
-export const moveProject = (ids: string[], i: number, d: -1 | 1) => {
-  const next = [...ids];
-  [next[i], next[i + d]] = [next[i + d]!, next[i]!];
-  return next;
-};
+/** Whether the project at `from` can be dragged to `to`: no step it passes over has run or is running */
+export const canPlace = (steps: Step[], done: Set<string>, from: number, to: number) =>
+  from !== to &&
+  from >= 0 &&
+  to >= 0 &&
+  from < steps.length &&
+  to < steps.length &&
+  !steps.slice(Math.min(from, to), Math.max(from, to) + 1).some((x) => done.has(x.key));
 
 /** The order drawn at random (Fisher-Yates), with the random source passed in for the tests */
 export const shuffleProjects = (ids: string[], random: () => number = Math.random) => {
@@ -152,3 +150,18 @@ export const shuffleProjects = (ids: string[], random: () => number = Math.rando
   }
   return next;
 };
+
+/** The module behind a part of the minutes: without it, the meeting has nothing of that kind to put in them */
+const PART_MODULE: Partial<Record<MinutesPart, string>> = {
+  questions: "hands",
+  icebreaker: "icebreaker",
+  mood: "mood",
+  rating: "rating",
+  kudos: "kudos",
+  retro: "retro",
+  polls: "polls",
+};
+
+/** Parts of the minutes to choose from: the check-ins and topics always, the others only with their module on */
+export const minutesPartsOf = (moduleOn: (id: string) => boolean): MinutesPart[] =>
+  MINUTES_PARTS.filter((p) => !PART_MODULE[p] || moduleOn(PART_MODULE[p]!));

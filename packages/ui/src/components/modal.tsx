@@ -12,7 +12,18 @@ const open: HTMLElement[] = [];
  * Dialog: focus trapped inside, Escape closes it, focus goes back to the element that opened it. It starts on
  * the element marked data-autofocus, otherwise on the first button or text area.
  */
-export function Modal({ onClose, labelledBy, children }: { onClose: () => void; labelledBy?: string; children: React.ReactNode }) {
+export function Modal({
+  onClose,
+  labelledBy,
+  size,
+  children,
+}: {
+  onClose: () => void;
+  labelledBy?: string;
+  /** Width: "lg" for a form in two columns, "xl" for a document beside its editor; the default fits a form */
+  size?: "lg" | "xl";
+  children: React.ReactNode;
+}) {
   const box = useRef<HTMLDivElement>(null);
   // Some callers pass a new onClose on every render (the control room re-renders every second): keep the
   // latest one without re-running the effect, otherwise focus would keep jumping back to the first field
@@ -52,7 +63,7 @@ export function Modal({ onClose, labelledBy, children }: { onClose: () => void; 
   }, []);
   return (
     <div className="modal" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="box" role="dialog" aria-modal="true" aria-labelledby={labelledBy} ref={box}>
+      <div className={size ? `box ${size}` : "box"} role="dialog" aria-modal="true" aria-labelledby={labelledBy} ref={box}>
         {children}
       </div>
     </div>

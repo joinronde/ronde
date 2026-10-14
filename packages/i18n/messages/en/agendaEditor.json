@@ -1,6 +1,8 @@
 {
   "title": "Agenda",
   "intro": "The steps of each session, in order. The wrap-up always closes the meeting.",
+  "end": "Wrap-up and minutes",
+  "endHint": "always last",
   "blocks": {
     "intro": "Intro",
     "round": "Round table",
@@ -10,13 +12,21 @@
     "poker": "Planning poker",
     "projects": "Project round"
   },
+  "blockHints": {
+    "intro": "Welcome, announcements and the icebreaker, before the first turn",
+    "round": "Each person in turn, timed, with their check-in on screen",
+    "projects": "Project by project, its people speaking together",
+    "topics": "The open topics the team brought and voted for",
+    "timebox": "A topic of its own, with its own duration",
+    "retro": "Anonymous notes in columns, grouped, voted, then discussed",
+    "poker": "The team estimates items with hidden cards"
+  },
   "timeboxTitle": "Topic",
   "minutes": "Minutes",
-  "up": "Move “{label}” up",
-  "down": "Move “{label}” down",
   "remove": "Remove “{label}”",
+  "reorder": "Move “{label}”",
   "add": "Add a block",
-  "pick": "Choose a block…",
+  "alreadyThere": "Already in the agenda",
   "newTimebox": "New topic",
   "saved": "Agenda saved",
   "turnOn": "Turn the module on in “Modules” to add this block.",

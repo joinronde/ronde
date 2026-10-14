@@ -68,9 +68,11 @@ export async function joinWithNewAccount(browser: Browser, link: string, who: Wh
 /** A weekly sync with everyone of the workspace; the control room is open, its tour skipped. Returns its address */
 export async function createMeeting(page: Page, workspace: string, name: string): Promise<string> {
   await page.goto(`${workspace}/meetings/new`);
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByLabel("Name").fill(name);
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  // Sections and modules: the template's, kept as they are
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByRole("button", { name: "Create the meeting" }).click();
   await page.waitForURL(/\/m\/[^/]+\/control$/, { timeout: 120_000 });
   await page.getByRole("button", { name: "Skip the tour" }).click();
@@ -90,8 +92,10 @@ export async function openTab(page: Page, name: RegExp | string) {
 export async function fillCheckIn(page: Page, items: string[]) {
   const fields = page.getByPlaceholder(/Add an item/);
   for (const [i, item] of items.entries()) await fields.nth(i).fill(item);
-  await page.getByRole("button", { name: "Save my check-in" }).click();
-  await expect(page.getByText("Unsaved changes")).toHaveCount(0);
+  // A line typed without Enter joins the list as the field is left; the check-in then saves itself
+  await fields.nth(items.length - 1).press("Tab");
+  await expect(page.locator(".checkin-status")).toContainText("Saving");
+  await expect(page.locator(".checkin-status")).toContainText("Saved");
 }
 
 /** A small valid PNG (a red and blue square), built here so no binary file sits in the repository */

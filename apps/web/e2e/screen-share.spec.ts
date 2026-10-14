@@ -27,9 +27,11 @@ test("the host's screen shows on the room screen, and leaves it when the share s
   await page.getByRole("button", { name: "Create the workspace" }).click();
   await page.waitForURL(/\/w\/share-/);
   await page.goto(`${page.url()}/meetings/new`);
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByLabel("Name").fill("Room meeting");
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  // Sections and modules: the template's, kept as they are
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByRole("button", { name: "Create the meeting" }).click();
   await page.waitForURL(/\/m\/[^/]+\/control$/, { timeout: 120_000 });
   const meeting = page.url().replace(/\/control$/, "");

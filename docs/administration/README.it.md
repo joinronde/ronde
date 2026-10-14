@@ -62,7 +62,7 @@ problema o proporre un'idea, con uno screenshot se lo si desidera. Con il messag
 leggono i messaggi in **Amministrazione del server**, rispondono via email a chi l'ha chiesto e possono aprire una
 issue precompilata sul progetto Ronde per un problema di Ronde stesso. Se `SENTRY_DSN` è impostato, i messaggi
 arrivano anche a quel progetto Sentry come feedback degli utenti. I messaggi vengono eliminati dopo un anno;
-`RONDE_FEEDBACK=off` rimuove il pulsante.
+su un'istanza self-hosted il pulsante è disattivato per impostazione predefinita: `RONDE_FEEDBACK=on` lo mostra.
 
 ## Spazi di lavoro
 

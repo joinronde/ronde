@@ -92,9 +92,10 @@
     },
     "workspace": {
       "update": "تم تغيير إعدادات مساحة العمل",
-      "categoryAdd": "تمت إضافة فئة وظيفية",
-      "categoryRename": "تمت إعادة تسمية فئة وظيفية",
-      "categoryDelete": "تم حذف فئة وظيفية",
+      "categoryAdd": "أضيف فريق",
+      "categoryRename": "أعيدت تسمية فريق",
+      "categoryDelete": "حُذف فريق",
+      "categoryMove": "نُقل فريق",
       "auditStream": "تم تغيير إرسال التدقيق",
       "logo": "تم تغيير الشعار",
       "logoRemoved": "تمت إزالة الشعار",

@@ -10,6 +10,19 @@
   "kickerLive": "正在进行",
   "liveNow": "正在直播",
   "liveShort": "进行中",
+  "liveStep": {
+    "intro": "开场",
+    "turn": "轮到 {name} · {n}/{total}",
+    "projects": "项目轮次",
+    "topics": "其他事项",
+    "end": "收尾",
+    "block": "进行中"
+  },
+  "liveSince": "{time} 开始",
+  "liveSinceDay": "{day} {time} 开始",
+  "turnsDone": "已完成 {done}/{total} 轮",
+  "yourTurnNow": "轮到您了！",
+  "yourTurnIn": "再过 {count} 人轮到您",
   "today": "今天",
   "tomorrow": "明天",
   "inDays": "{count, plural, other {# 天后}}",
@@ -45,9 +58,12 @@
   "nextOn": "下一场：{date}",
   "people": "{count, plural, other {# 人}}",
   "gettingStarted": "快速上手",
+  "skipSteps": "跳过",
   "progress": "已完成 {done}/{total}",
   "stepsDone": "已完成的步骤",
   "sheetReady": "{project}的项目卡已填写",
   "sheetEmpty": "{project}的项目卡待填写",
-  "readyCount": "已填写 {ready}/{total} 份进展卡"
+  "readyCount": "已填写 {ready}/{total} 份进展卡",
+  "seatReady": "已填写签到",
+  "seatToFill": "签到待填写"
 }

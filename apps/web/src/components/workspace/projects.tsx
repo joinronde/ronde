@@ -5,18 +5,46 @@ import type { PortfolioDTO } from "@ronde/editions/ee";
 import { formatters, type Locale } from "@ronde/i18n";
 import { MdEditor } from "@ronde/ui/md-editor";
 import { Modal } from "@ronde/ui/modal";
+import {
+  ArrowDownUp,
+  ChevronDown,
+  ChevronsDownUp,
+  ChevronsUpDown,
+  Download,
+  LayoutGrid,
+  type LucideIcon,
+  Plus,
+  Rows3,
+  Search,
+  Table2,
+  Tags,
+  Trash2,
+  UserRound,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { addThemeAction, createProjectAction, deleteThemeAction, renameThemeAction } from "@/app/w/[ws]/project-actions";
 import { Field, FormAlert } from "@/components/auth/fields";
+import { DateInput } from "@/components/date-input";
 import { ExportCsv } from "@/components/export-csv";
+import { EmptyHero } from "@/components/illustration";
 import { type FacePerson, PersonFace } from "@/components/person-face";
 import { ProjectMark, projectLogoSrc } from "@/components/project-mark";
 import { Select } from "@/components/select";
 import { ToolMark } from "@/components/tool-mark";
 import type { Portfolio, PortfolioProject, ProjectLink } from "@/lib/server/projects";
+import {
+  defaultDensity,
+  PAGE_SIZE,
+  PORTFOLIO_DENSITIES,
+  PORTFOLIO_SORTS,
+  type PortfolioDensity,
+  type PortfolioSort,
+  sortProjects,
+} from "@/lib/shared/portfolio";
 import { isRepository, type SourceKind, type SourceWhat } from "@/lib/shared/project-sources";
 import {
   depthIn,
@@ -54,6 +82,9 @@ export function PeopleStack({ slug, people, max = 5 }: { slug: string; people: F
     </span>
   );
 }
+
+const DENSITY_KEY = "ronde:portfolio-density";
+const DENSITY_ICONS: Record<PortfolioDensity, LucideIcon> = { cards: LayoutGrid, list: Rows3, table: Table2 };
 
 function ProjectCard({ slug, p, programme }: { slug: string; p: PortfolioProject; programme?: string }) {
   const t = useTranslations("projects");
@@ -106,6 +137,223 @@ function ProjectCard({ slug, p, programme }: { slug: string; p: PortfolioProject
   );
 }
 
+/** A project on one line: for a portfolio too long for cards */
+function ProjectRow({ slug, p, programme }: { slug: string; p: PortfolioProject; programme?: string }) {
+  const t = useTranslations("projects");
+  const fmt = formatters(useLocale() as Locale);
+  const today = new Date().toISOString().slice(0, 10);
+  const late = !!p.targetDate && p.targetDate < today && !["done", "cancelled"].includes(p.status);
+  return (
+    <li className={`project-row${p.archived ? " archived" : ""}`} style={tint(p.color)}>
+      <ProjectMark project={p} src={projectLogoSrc(slug, p)} />
+      <span className="project-row-main">
+        <Link href={`/w/${slug}/projects/${p.slug}`} className="project-row-name">
+          {p.name}
+        </Link>
+        <span className="project-row-sub">
+          {programme && <span className="status-chip">{t("partOf", { name: programme })}</span>}
+          {p.summary || (p.last && plain(p.last.headline)) || ""}
+        </span>
+      </span>
+      <HealthBadge health={p.health} />
+      <span className="project-row-status">
+        {p.status !== "active" ? <span className={`status-chip s-${p.status}`}>{t(`status.${p.status}`)}</span> : null}
+      </span>
+      <span className={`project-row-due${late ? " late" : ""}`}>{p.targetDate ? fmt.dayMonthYear(p.targetDate) : ""}</span>
+      <PeopleStack slug={slug} people={p.members} max={4} />
+    </li>
+  );
+}
+
+type SortKey = PortfolioSort;
+
+/** The portfolio as a table: every project on a row, sorted by a click on a column */
+function ProjectTable({
+  slug,
+  items,
+  sort,
+  onSort,
+}: {
+  slug: string;
+  items: PortfolioProject[];
+  sort: SortKey;
+  onSort: (s: SortKey) => void;
+}) {
+  const t = useTranslations("projects");
+  const fmt = formatters(useLocale() as Locale);
+  const today = new Date().toISOString().slice(0, 10);
+  const th = (key: SortKey | null, label: string) => (
+    <th scope="col" aria-sort={key && sort === key ? "ascending" : undefined}>
+      {key ? (
+        <button type="button" className={`th-sort${sort === key ? " on" : ""}`} onClick={() => onSort(key)}>
+          {label}
+          <ArrowDownUp size={12} strokeWidth={2.2} aria-hidden="true" />
+        </button>
+      ) : (
+        label
+      )}
+    </th>
+  );
+  return (
+    <div className="table-wrap">
+      <table className="table project-table">
+        {/* The same widths in every group, so that the columns line up down the page */}
+        <colgroup>
+          {[24, 14, 9, 14, 12, 11, 16].map((w, i) => (
+            <col key={i} style={{ width: `${w}%` }} />
+          ))}
+        </colgroup>
+        <thead>
+          <tr>
+            {th("name", t("columns.project"))}
+            {th("health", t("columns.health"))}
+            {th(null, t("columns.status"))}
+            {th(null, t("lead"))}
+            {th("due", t("columns.due"))}
+            {th(null, t("columns.progress"))}
+            {th("updated", t("columns.updated"))}
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((p) => {
+            const late = !!p.targetDate && p.targetDate < today && !["done", "cancelled"].includes(p.status);
+            return (
+              <tr key={p.id} style={tint(p.color)} className={p.archived ? "archived" : undefined}>
+                <td>
+                  <span className="project-cell">
+                    <ProjectMark project={p} src={projectLogoSrc(slug, p)} />
+                    <Link href={`/w/${slug}/projects/${p.slug}`}>{p.name}</Link>
+                  </span>
+                </td>
+                <td>
+                  <HealthBadge health={p.health} />
+                </td>
+                <td>{t(`status.${p.status}`)}</td>
+                <td className="muted">{p.lead?.name}</td>
+                <td className={late ? "late" : "muted"}>{p.targetDate ? fmt.dayMonthYear(p.targetDate) : null}</td>
+                <td>{p.progress !== null ? fmt.percent(p.progress) : null}</td>
+                <td className="muted">{p.last ? fmt.dayMonth(p.last.date) : null}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+type PortfolioGroup = { key: string; title: string; sub?: string; color: number | null; items: PortfolioProject[] };
+
+/** Folds every group of the portfolio, or opens them all again once they are */
+function FoldAll({ groups, folded, setFolded }: { groups: PortfolioGroup[]; folded: Set<string>; setFolded: (f: Set<string>) => void }) {
+  const t = useTranslations("projects");
+  const shownGroups = groups.filter((g) => g.items.length);
+  if (shownGroups.length < 2) return null;
+  const allFolded = shownGroups.every((g) => folded.has(g.key));
+  const FoldIcon = allFolded ? ChevronsUpDown : ChevronsDownUp;
+  return (
+    <button
+      type="button"
+      className="btn ghost sm portfolio-fold"
+      onClick={() => setFolded(allFolded ? new Set() : new Set(shownGroups.map((g) => g.key)))}
+    >
+      <FoldIcon size={15} strokeWidth={2.2} aria-hidden="true" />
+      {allFolded ? t("unfoldAll") : t("foldAll")}
+    </button>
+  );
+}
+
+/** The groups of the portfolio, each folded or open, its projects shown at the density chosen, a page at a time */
+function PortfolioGroups({
+  slug,
+  groups,
+  density,
+  sort,
+  onSort,
+  programmeOf,
+  folded,
+  setFolded,
+}: {
+  slug: string;
+  groups: PortfolioGroup[];
+  density: PortfolioDensity;
+  sort: SortKey;
+  onSort: (s: SortKey) => void;
+  programmeOf: (p: PortfolioProject) => string | undefined;
+  folded: Set<string>;
+  setFolded: React.Dispatch<React.SetStateAction<Set<string>>>;
+}) {
+  const t = useTranslations("projects");
+  const locale = useLocale();
+  const [pages, setPages] = useState<Record<string, number>>({});
+  const shownGroups = groups.filter((g) => g.items.length);
+  return (
+    <>
+      {shownGroups.map((g) => {
+        const isFolded = folded.has(g.key);
+        const items = sortProjects(g.items, sort, locale);
+        const limit = (pages[g.key] ?? 1) * PAGE_SIZE[density];
+        const visible = items.slice(0, limit);
+        return (
+          <section key={g.key} className={`portfolio-group${isFolded ? " folded" : ""}`} aria-labelledby={`pg-${g.key}`}>
+            <h2 id={`pg-${g.key}`}>
+              <button
+                type="button"
+                className="portfolio-group-toggle"
+                aria-expanded={!isFolded}
+                onClick={() =>
+                  setFolded((f) => {
+                    const n = new Set(f);
+                    n.has(g.key) ? n.delete(g.key) : n.add(g.key);
+                    return n;
+                  })
+                }
+              >
+                <ChevronDown size={16} strokeWidth={2.2} aria-hidden="true" className="portfolio-chev" />
+                {g.color !== null && <span className="theme-dot" style={tint(g.color)} aria-hidden="true" />}
+                {g.title}
+                <span className="cnt">{g.items.length}</span>
+              </button>
+            </h2>
+            {!isFolded && (
+              <>
+                {g.sub && <p className="muted">{g.sub}</p>}
+                {density === "cards" ? (
+                  <div className="project-grid">
+                    {visible.map((p) => (
+                      <ProjectCard key={p.id} slug={slug} p={p} programme={programmeOf(p)} />
+                    ))}
+                  </div>
+                ) : density === "list" ? (
+                  <ul className="project-rows">
+                    {visible.map((p) => (
+                      <ProjectRow key={p.id} slug={slug} p={p} programme={programmeOf(p)} />
+                    ))}
+                  </ul>
+                ) : (
+                  <ProjectTable slug={slug} items={visible} sort={sort} onSort={onSort} />
+                )}
+                {items.length > visible.length && (
+                  <button
+                    type="button"
+                    className="btn portfolio-more"
+                    onClick={() => setPages((x) => ({ ...x, [g.key]: (x[g.key] ?? 1) + 1 }))}
+                  >
+                    {t("showMore", {
+                      count: Math.min(PAGE_SIZE[density], items.length - visible.length),
+                      total: items.length - visible.length,
+                    })}
+                  </button>
+                )}
+              </>
+            )}
+          </section>
+        );
+      })}
+    </>
+  );
+}
+
 export function PortfolioView({
   slug,
   portfolio,
@@ -146,6 +394,23 @@ export function PortfolioView({
   const [health, setHealth] = useState<HealthFilter>("");
   const hasProgrammes = portfolio.projects.some((p) => p.parentId);
   const [group, setGroup] = useState<"theme" | "status" | "programme">("theme");
+  const [sort, setSort] = useState<PortfolioSort>("health");
+  /** The groups folded, by key: kept while the filters change */
+  const [folded, setFolded] = useState<Set<string>>(new Set());
+  // Cards, a list or a table: by the size of the portfolio at first, then as this browser chose
+  const [density, setDensity] = useState<PortfolioDensity>(() => defaultDensity(portfolio.projects.length));
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(DENSITY_KEY);
+      if (saved && (PORTFOLIO_DENSITIES as readonly string[]).includes(saved)) setDensity(saved as PortfolioDensity);
+    } catch {}
+  }, []);
+  const pickDensity = (d: PortfolioDensity) => {
+    setDensity(d);
+    try {
+      localStorage.setItem(DENSITY_KEY, d);
+    } catch {}
+  };
   const [dialog, setDialog] = useState<"new" | "themes" | "import" | null>(openNew && portfolio.canCreate ? "new" : null);
   /** The projects the last import brought, until dismissed */
   const [imported, setImported] = useState<{ ids: string[]; failed: number } | null>(null);
@@ -174,17 +439,17 @@ export function PortfolioView({
         <div className="actions">
           {portfolio.canManage && (
             <button type="button" className="btn" onClick={() => setDialog("themes")}>
-              {t("themes")}
+              <Tags size={16} strokeWidth={2} aria-hidden="true" /> {t("themes")}
             </button>
           )}
           {portfolio.canCreate && (
             <button type="button" className="btn" ref={importButton} onClick={() => setDialog("import")}>
-              {t("import")}
+              <Download size={16} strokeWidth={2} aria-hidden="true" /> {t("import")}
             </button>
           )}
           {portfolio.canCreate && (
             <button type="button" className="btn primary" onClick={() => setDialog("new")}>
-              {t("new")}
+              <Plus size={16} strokeWidth={2.2} aria-hidden="true" /> {t("new")}
             </button>
           )}
         </div>
@@ -223,7 +488,7 @@ export function PortfolioView({
                   importButton.current?.focus();
                 }}
               >
-                ✕
+                <X size={14} strokeWidth={2.2} aria-hidden="true" />
               </button>
             </p>
           )}
@@ -250,7 +515,10 @@ export function PortfolioView({
       ) : (
         <>
           <div className="toolbar portfolio-filters">
-            <input type="search" placeholder={t("search")} aria-label={t("search")} value={q} onChange={(e) => setQ(e.target.value)} />
+            <label className="search-input">
+              <Search size={16} strokeWidth={2} aria-hidden="true" />
+              <input type="search" placeholder={t("search")} aria-label={t("search")} value={q} onChange={(e) => setQ(e.target.value)} />
+            </label>
             <Select
               aria-label={t("statusFilter")}
               style={{ width: "auto" }}
@@ -275,38 +543,63 @@ export function PortfolioView({
               <option value="status">{t("byStatus")}</option>
               {(portfolio.programs || hasProgrammes) && <option value="programme">{t("byProgramme")}</option>}
             </Select>
+            <Select
+              aria-label={t("sortBy")}
+              style={{ width: "auto" }}
+              value={sort}
+              onChange={(e) => setSort(e.target.value as PortfolioSort)}
+            >
+              {PORTFOLIO_SORTS.map((x) => (
+                <option key={x} value={x}>
+                  {t(`sorts.${x}`)}
+                </option>
+              ))}
+            </Select>
             <button type="button" className="chip" aria-pressed={mine} onClick={() => setMine(!mine)}>
-              {t("mine")}
+              <UserRound size={14} strokeWidth={2} aria-hidden="true" /> {t("mine")}
             </button>
-          </div>
-          {/* The portfolio at a glance: how many projects in each health, each one a filter */}
-          {portfolio.projects.length > 0 && (
-            <div className="health-summary" role="group" aria-label={t("healthFilter")}>
-              <button type="button" className="chip" aria-pressed={!health} onClick={() => setHealth("")}>
-                {t("healthAll")} <span className="cnt">{counted.length}</span>
-              </button>
-              {(["offTrack", "atRisk", "onTrack", "none"] as const).map((h) => {
-                const n = counted.filter((p) => hasHealth(p, h)).length;
-                if (!n && health !== h) return null;
+            <span className="seg portfolio-density" role="group" aria-label={t("density")}>
+              {PORTFOLIO_DENSITIES.map((d) => {
+                const DensityIcon = DENSITY_ICONS[d];
                 return (
-                  <button
-                    key={h}
-                    type="button"
-                    className={`chip h-${h}`}
-                    aria-pressed={health === h}
-                    onClick={() => setHealth(health === h ? "" : h)}
-                  >
-                    <HealthBadge health={h === "none" ? null : h} /> <span className="cnt">{n}</span>
+                  <button key={d} type="button" aria-pressed={density === d} title={t(`densities.${d}`)} onClick={() => pickDensity(d)}>
+                    <DensityIcon size={16} strokeWidth={2} aria-hidden="true" />
+                    <span className="sr-only">{t(`densities.${d}`)}</span>
                   </button>
                 );
               })}
+            </span>
+          </div>
+          {/* The portfolio at a glance: how many projects in each health, each one a filter */}
+          {portfolio.projects.length > 0 && (
+            <div className="portfolio-bar">
+              <div className="health-summary" role="group" aria-label={t("healthFilter")}>
+                <button type="button" className="chip" aria-pressed={!health} onClick={() => setHealth("")}>
+                  {t("healthAll")} <span className="cnt">{counted.length}</span>
+                </button>
+                {(["offTrack", "atRisk", "onTrack", "none"] as const).map((h) => {
+                  const n = counted.filter((p) => hasHealth(p, h)).length;
+                  if (!n && health !== h) return null;
+                  return (
+                    <button
+                      key={h}
+                      type="button"
+                      className={`chip h-${h}`}
+                      aria-pressed={health === h}
+                      onClick={() => setHealth(health === h ? "" : h)}
+                    >
+                      <HealthBadge health={h === "none" ? null : h} /> <span className="cnt">{n}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              {shown.length > 0 && <FoldAll groups={groups} folded={folded} setFolded={setFolded} />}
             </div>
           )}
           {!portfolio.projects.length ? (
-            <div className="emptybox">
-              <p>{t("empty")}</p>
+            <EmptyHero art="projects" title={t("empty")}>
               {portfolio.canCreate && (
-                <div className="row">
+                <>
                   <button type="button" className="btn primary" onClick={() => setDialog("new")}>
                     {t("new")}
                   </button>
@@ -314,34 +607,22 @@ export function PortfolioView({
                   <button type="button" className="btn" onClick={() => setDialog("import")}>
                     {t("importFromTools")}
                   </button>
-                </div>
+                </>
               )}
-            </div>
+            </EmptyHero>
           ) : !shown.length ? (
-            <p className="empty-state">{t("noMatch")}</p>
+            <EmptyHero art="search" title={t("noMatch")} compact />
           ) : (
-            groups
-              .filter((g) => g.items.length)
-              .map((g) => (
-                <section key={g.key} className="portfolio-group" aria-labelledby={`pg-${g.key}`}>
-                  <h2 id={`pg-${g.key}`}>
-                    {g.color !== null && <span className="theme-dot" style={tint(g.color)} aria-hidden="true" />}
-                    {g.title}
-                    <span className="cnt">{g.items.length}</span>
-                  </h2>
-                  {g.sub && <p className="muted">{g.sub}</p>}
-                  <div className="project-grid">
-                    {g.items.map((p) => (
-                      <ProjectCard
-                        key={p.id}
-                        slug={slug}
-                        p={p}
-                        programme={group !== "programme" && p.parentId ? byId.get(p.parentId)?.name : undefined}
-                      />
-                    ))}
-                  </div>
-                </section>
-              ))
+            <PortfolioGroups
+              slug={slug}
+              groups={groups}
+              density={density}
+              sort={sort}
+              onSort={setSort}
+              programmeOf={(p) => (group !== "programme" && p.parentId ? byId.get(p.parentId)?.name : undefined)}
+              folded={folded}
+              setFolded={setFolded}
+            />
           )}
         </>
       )}
@@ -445,7 +726,8 @@ export function ProjectDialog({
       themeId: null,
       status: "active",
       health: null,
-      leadId: null,
+      // A new project is led by whoever creates it, shown as themselves in the list (not as a second "Me")
+      leadId: people.find((x) => x.isMe)?.id ?? null,
       startDate: null,
       targetDate: null,
       links: [],
@@ -469,7 +751,7 @@ export function ProjectDialog({
     if (!res.ok) setError(res.error);
   };
   return (
-    <Modal onClose={onClose} labelledBy={titleId}>
+    <Modal onClose={onClose} labelledBy={titleId} size="lg">
       <form className="form dialog-form project-form" onSubmit={submit}>
         <h2 id={titleId}>{initial ? t("editTitle", { name: initial.name }) : t("newTitle")}</h2>
         {syncedWith && (
@@ -553,19 +835,20 @@ export function ProjectDialog({
         )}
         <div className="grid2">
           <Field label={t("start")}>
-            {(p) => <input {...p} type="date" value={v.startDate ?? ""} onChange={(e) => set({ startDate: e.target.value || null })} />}
+            {(p) => <DateInput {...p} compact value={v.startDate ?? ""} onChange={(d) => set({ startDate: d || null })} />}
           </Field>
           <Field label={t("target")}>
-            {(p) => <input {...p} type="date" value={v.targetDate ?? ""} onChange={(e) => set({ targetDate: e.target.value || null })} />}
+            {(p) => <DateInput {...p} compact value={v.targetDate ?? ""} onChange={(d) => set({ targetDate: d || null })} />}
           </Field>
         </div>
         <Field label={t("lead")} hint={canChangeLead ? undefined : t("leadLocked")}>
           {(p) => (
             <Select {...p} disabled={!canChangeLead} value={v.leadId ?? ""} onChange={(e) => set({ leadId: e.target.value || null })}>
-              <option value="">{initial ? t("noLead") : t("leadMe")}</option>
+              {/* A new project always has a lead: whoever creates it unless someone else is picked */}
+              {initial && <option value="">{t("noLead")}</option>}
               {people.map((x) => (
                 <option key={x.id} value={x.id}>
-                  {x.name}
+                  {x.isMe ? t("leadIsMe", { name: x.name }) : x.name}
                 </option>
               ))}
             </Select>
@@ -629,11 +912,11 @@ export function ProjectDialog({
               />
               <button
                 type="button"
-                className="icon-btn"
+                className="icon-btn danger"
                 aria-label={t("linkRemove")}
                 onClick={() => set({ links: v.links.filter((_, j) => j !== i) })}
               >
-                ✕
+                <X size={14} strokeWidth={2.2} aria-hidden="true" />
               </button>
             </div>
           ))}
@@ -693,25 +976,27 @@ function ThemesDialog({ slug, themes, onClose }: { slug: string; themes: Portfol
           {themes.map((th) => (
             <li key={th.id}>
               <span className="theme-dot" style={tint(th.color)} aria-hidden="true" />
+              {/* A theme added since the dialog opened has no edit yet: its name is the saved one */}
               <input
                 aria-label={t("themeName")}
-                value={names[th.id] ?? ""}
+                value={names[th.id] ?? th.name}
                 maxLength={60}
                 onChange={(e) => setNames((x) => ({ ...x, [th.id]: e.target.value }))}
                 onBlur={async () => {
-                  if ((names[th.id] ?? "").trim() && names[th.id] !== th.name) after(await renameThemeAction(slug, th.id, names[th.id]!));
+                  const value = names[th.id] ?? th.name;
+                  if (value.trim() && value !== th.name) after(await renameThemeAction(slug, th.id, value));
                 }}
               />
               <button
                 type="button"
-                className="icon-btn"
+                className="icon-btn danger"
                 aria-label={t("themeDelete", { name: th.name })}
                 onClick={async () => {
                   if (await confirm({ message: t("themeDeleteConfirm", { name: th.name }), confirmLabel: t("delete"), danger: true }))
                     after(await deleteThemeAction(slug, th.id));
                 }}
               >
-                ✕
+                <Trash2 size={15} strokeWidth={2} aria-hidden="true" />
               </button>
             </li>
           ))}
@@ -723,15 +1008,16 @@ function ThemesDialog({ slug, themes, onClose }: { slug: string; themes: Portfol
             if (name.trim() && after(await addThemeAction(slug, name))) setName("");
           }}
         >
+          {/* Named for what it does: the fields above are the themes' names */}
           <input
-            aria-label={t("themeName")}
+            aria-label={t("themeNew")}
             placeholder={t("themeNew")}
             maxLength={60}
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <button type="submit" className="btn">
-            {t("themeAdd")}
+          <button type="submit" className="btn" disabled={!name.trim()}>
+            <Plus size={16} strokeWidth={2.2} aria-hidden="true" /> {t("themeAdd")}
           </button>
         </form>
         <div className="dialog-actions">

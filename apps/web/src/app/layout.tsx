@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ServiceWorker } from "@/components/service-worker";
+import { Tooltips } from "@/components/tooltips";
 import { currentUser } from "@/lib/server/authz";
 import { env } from "@/lib/server/env";
 import { withBasePath } from "@/lib/shared/base-path";
@@ -95,6 +96,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
         <ServiceWorker />
+        <Tooltips />
       </body>
     </html>
   );

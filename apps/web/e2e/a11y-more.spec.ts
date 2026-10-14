@@ -38,6 +38,12 @@ test("the live meeting, its history and the other pages pass the accessibility a
   await page.goto(`${meeting}/settings#integrations`);
   await page.reload();
   await audit(page, "settings: integrations");
+  // Each integration has its card; GitLab's opens its form under the cards
+  const gitlabCard = page.getByRole("button", { name: /^GitLab/ });
+  await gitlabCard.click();
+  await expect(gitlabCard).toHaveAttribute("aria-expanded", "true");
+  await expect(page.getByRole("heading", { name: "Task sources" })).toBeVisible();
+  await audit(page, "settings: integrations, GitLab open");
   await page.goto(`${meeting}/settings#people`);
   await page.getByRole("textbox", { name: "Who it is for" }).fill("Board");
   await page.getByRole("button", { name: "Create a link" }).click();
@@ -65,7 +71,7 @@ test("the live meeting, its history and the other pages pass the accessibility a
   await pia.getByRole("button", { name: "Propose" }).click();
   await page.goto(`${meeting}/control`);
   await expect(async () => {
-    await page.getByRole("button", { name: "▶ Start the meeting" }).click();
+    await page.getByRole("button", { name: "Start the meeting", exact: true }).click();
     await expect(page.getByRole("button", { name: /End the meeting/ })).toBeVisible({ timeout: 2000 });
   }).toPass();
   await pia.getByRole("button", { name: "✋ Raise my hand" }).first().click();
@@ -74,7 +80,7 @@ test("the live meeting, its history and the other pages pass the accessibility a
     await audit(page, `control room live: ${pane}`);
   }
   await openTab(pia, "Live meeting");
-  await expect(pia.getByRole("button", { name: "💜 Thanks" })).toBeVisible();
+  await expect(pia.getByRole("button", { name: "Thanks", exact: true })).toBeVisible();
   await audit(pia, "my screen: live with the dock");
   await visitor.goto(guestLink);
   await audit(visitor, "guest link, live");
@@ -85,18 +91,20 @@ test("the live meeting, its history and the other pages pass the accessibility a
   await expect(page.getByRole("button", { name: "Yes, end it" })).toBeVisible();
   await audit(page, "end confirmation");
   await page.getByRole("button", { name: "Yes, end it" }).click();
-  await page.getByRole("button", { name: "Archive the meeting" }).click();
-  await expect(page.getByRole("button", { name: "Yes, archive" })).toBeVisible();
+  // At the wrap-up, the control room's main button opens the minutes, published from there
+  await page.getByRole("button", { name: "Review and publish the minutes" }).click();
+  await page.getByRole("button", { name: "Publish the minutes", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Yes, publish" })).toBeVisible();
   await audit(page, "archive confirmation");
-  await page.getByRole("button", { name: "Yes, archive" }).click();
-  await expect(page.getByText("Meeting archived with its minutes. The next one is ready.")).toBeVisible();
+  await page.getByRole("button", { name: "Yes, publish" }).click();
+  await expect(page.getByText("Minutes published, session closed. The next one is ready.")).toBeVisible();
 
   // After it: the history with its minutes, the stats with their data
   await page.goto(`${meeting}/history`);
   await expect(page.locator(".minutes-doc").getByText("Shipped the invoices")).toBeVisible();
   await audit(page, "history with an archived session");
   await page.goto(`${meeting}/stats`);
-  const archived = page.locator(".kpi").filter({ has: page.locator(".l", { hasText: /^Archived meetings$/ }) });
+  const archived = page.locator(".kpi").filter({ has: page.locator(".l", { hasText: /^Sessions held$/ }) });
   await expect(archived.locator(".v")).toHaveText("1");
   await audit(page, "stats with data");
   await pia.context().close();

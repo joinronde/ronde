@@ -1,0 +1,23 @@
+{
+  "date": {
+    "placeholder": "Escolher uma data",
+    "clear": "Limpar",
+    "today": "Hoje",
+    "previous": "Mês anterior",
+    "next": "Próximo mês",
+    "required": "Escolha uma data.",
+    "tooEarly": "Escolha {date} ou depois.",
+    "tooLate": "Escolha {date} ou antes."
+  },
+  "time": {
+    "placeholder": "Escolher um horário",
+    "list": "Horários",
+    "invalid": "Digite um horário como 9:30"
+  },
+  "duration": {
+    "less": "Mais curto",
+    "more": "Mais longo",
+    "suggestions": "Durações habituais",
+    "typeHint": "Digite qualquer duração: 25, 1h15, 1:30…"
+  }
+}

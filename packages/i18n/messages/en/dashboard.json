@@ -10,6 +10,19 @@
   "kickerLive": "Happening now",
   "liveNow": "Live now",
   "liveShort": "live",
+  "liveStep": {
+    "intro": "Introduction",
+    "turn": "{name}'s turn · {n}/{total}",
+    "projects": "Project round",
+    "topics": "Open topics",
+    "end": "Wrap-up",
+    "block": "Under way"
+  },
+  "liveSince": "Started at {time}",
+  "liveSinceDay": "Started on {day} at {time}",
+  "turnsDone": "{done}/{total} turns done",
+  "yourTurnNow": "It's your turn!",
+  "yourTurnIn": "{count, plural, one {Your turn after # person} other {Your turn after # people}}",
   "today": "Today",
   "tomorrow": "Tomorrow",
   "inDays": "{count, plural, one {In # day} other {In # days}}",
@@ -45,9 +58,12 @@
   "nextOn": "Next {date}",
   "people": "{count, plural, one {# person} other {# people}}",
   "gettingStarted": "Getting started",
+  "skipSteps": "Skip",
   "progress": "{done} of {total} done",
   "stepsDone": "Steps done",
   "sheetReady": "Sheet of {project} written",
   "sheetEmpty": "Sheet of {project} to write",
-  "readyCount": "{ready}/{total} check-ins filled in"
+  "readyCount": "{ready}/{total} check-ins filled in",
+  "seatReady": "check-in filled in",
+  "seatToFill": "check-in to fill in"
 }

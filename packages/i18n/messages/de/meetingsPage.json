@@ -4,12 +4,21 @@
   "new": "Neues Meeting",
   "filter": "Welche Meetings",
   "search": "Nach Name filtern",
+  "sortBy": "Sortieren nach",
+  "sorts": {
+    "next": "Nächste Sitzung",
+    "name": "Name",
+    "recent": "Zuletzt abgehalten",
+    "actions": "Offene Aufgaben"
+  },
   "filters": {
     "all": "Alle",
+    "live": "Live",
     "mine": "Ich nehme teil",
     "run": "Ich moderiere"
   },
   "liveNow": "Jetzt live",
+  "sessionOf": "Sitzung um {time}",
   "next": "Nächste Sitzung",
   "noNext": "Keine Sitzung geplant",
   "held": "{count, plural, one {Sitzung abgehalten} other {Sitzungen abgehalten}}",

@@ -110,6 +110,8 @@ model Meeting {
   autoStart           Boolean              @default(true)
   /// Target duration, in minutes
   targetMin           Int                  @default(25)
+  /// Who adds projects for the meeting to follow: "hosts" (whoever configures it) or "participants" (everyone taking part)
+  projectsBy          String               @default("hosts")
   /// Email reminder to people whose check-in is not ready
   reminderEnabled     Boolean              @default(false)
   /// "dayBefore" (working day before the meeting) or "sameDay"
@@ -446,6 +448,8 @@ model CheckInComment {
   /// Person id, or "host"
   byId        String
   text        String      @default("")
+  /// A reaction (no text): its emoji; empty on a reaction from before they had several (a 👍)
+  emoji       String      @default("")
   createdAt   DateTime    @default(now())
 
   @@index([sessionId, ownerId])

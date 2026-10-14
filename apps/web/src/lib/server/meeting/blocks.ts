@@ -154,15 +154,19 @@ export function pollResults(
 ): PollDTO["results"] {
   const fold = (w: string) => w.trim().toLowerCase();
   const base = poll.kind === "scale" ? SCALE : poll.kind === "words" ? [] : poll.options;
-  const counts = new Map<string, { value: string; count: number; people: string[] }>(
-    base.map((v) => [v, { value: v, count: 0, people: [] }]),
+  const counts = new Map<string, { value: string; count: number; people: string[]; ids: string[] }>(
+    base.map((v) => [v, { value: v, count: 0, people: [], ids: [] }]),
   );
   for (const a of answers)
     for (const v of a.values) {
       const key = poll.kind === "words" ? fold(v) : v;
-      const row = counts.get(key) ?? { value: v.trim(), count: 0, people: [] };
+      const row = counts.get(key) ?? { value: v.trim(), count: 0, people: [], ids: [] };
       row.count++;
-      if (!poll.anonymous) row.people.push(names[a.personId] ?? "");
+      // Who answered what, faces and names, unless the poll is anonymous
+      if (!poll.anonymous) {
+        row.people.push(names[a.personId] ?? "");
+        row.ids.push(a.personId);
+      }
       counts.set(key, row);
     }
   const rows = [...counts.values()];
@@ -190,6 +194,7 @@ export async function pollsView(
     shown: session.shownPollId === p.id,
     answers: p.answers.length,
     results: pollResults(p, p.answers, names),
+    respondents: p.anonymous ? [] : p.answers.map((a) => a.personId),
     mine: p.answers.find((a) => a.personId === me)?.values ?? null,
   }));
 }

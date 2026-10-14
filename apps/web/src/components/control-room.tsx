@@ -1,9 +1,10 @@
 "use client";
 
+import * as Popover from "@radix-ui/react-popover";
 import { BLOCK_MODULE, hasTurns } from "@ronde/core/agenda";
 import { birthdaysAround } from "@ronde/core/ambience";
 import { baseKeyOf, type Step, spentOf } from "@ronde/core/meeting";
-import { buildMinutes, MINUTES_PARTS, type MinutesPart } from "@ronde/core/minutes";
+import { buildMinutes, MINUTES_PARTS, type MinutesPart, noteLineKind } from "@ronde/core/minutes";
 import type { RecordV1 } from "@ronde/core/record";
 import { BOARD_SOUNDS, CUES, MUSIC_GROUPS, MUSIC_STYLES, type MusicStyle, type SoundKey, type SoundOutput } from "@ronde/core/sound";
 import type { ActionStatus, InteractionDTO } from "@ronde/core/types";
@@ -21,6 +22,29 @@ import {
 import { formatters } from "@ronde/i18n";
 import { MdEditor } from "@ronde/ui/md-editor";
 import { Tour } from "@ronde/ui/tour";
+import {
+  ArrowRight,
+  BellOff,
+  BellRing,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  FileText,
+  Flag,
+  Gavel,
+  ListChecks,
+  Pause,
+  PenLine,
+  Play,
+  RotateCcw,
+  Send,
+  Sparkles,
+  SquareCheckBig,
+  TimerReset,
+  Trash2,
+  Undo2,
+  Users,
+} from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { renderSVG } from "uqr";
@@ -28,12 +52,12 @@ import { Select } from "@/components/select";
 import { withBasePath } from "@/lib/shared/base-path";
 import {
   blockersOf,
-  canMove,
+  canPlace,
   filledCount,
   isTracked,
   memberOfStep,
   minutesCheck,
-  moveProject,
+  minutesPartsOf,
   nextLabel as nextLabelOf,
   parseOmit,
   projectOrderOf,
@@ -49,9 +73,10 @@ import { Board } from "./board";
 import { CommandPalette, ShortcutsHelp, useControlShortcuts } from "./command-palette";
 import { Modal, NoMeeting } from "./common";
 import { CONTROL_TOUR_KEY, type ControlPane, useControlTour } from "./control-room-tour";
+import { DateInput } from "./date-input";
 import { PageActions } from "./header";
 import { CheckInForm, useCheckInDraft } from "./me";
-import { MinutesView } from "./minutes-view";
+import { MinutesStudio } from "./minutes-studio";
 import { PokerHost } from "./poker";
 import { PollsHost } from "./polls";
 import { HealthPicker } from "./project-bits";
@@ -63,6 +88,7 @@ import { SharePreview, ShareScreenButton } from "./screen-share";
 import { Icon } from "./shell/icons";
 import { ModKey } from "./shell/mod-key";
 import { NewTab } from "./shell/new-tab";
+import { SortGrip, useSortable } from "./sortable";
 import { controlMonitorOn, SoundPlayer } from "./sound-player";
 import { Avatar, BLOCK_ICON, projectEntries, projectsWithTurn, Stage, sectionsHave, Timer, UpCount } from "./stage";
 import { SwipeRow } from "./swipe-row";
@@ -220,6 +246,19 @@ export function ControlRoomView() {
   const title = stepTitle(step, tStage);
   const nextLabel = nextLabelOf(next, (count) => t("nextQuestions", { count }));
   const pend = s.interactions.filter((i) => !i.resolved).length;
+  /** A pane of the side panel shown: on a narrow screen it sits far below, so it is brought into view and lit up */
+  const showPane = (p: Parameters<typeof setPane>[0]) => {
+    setPane(p);
+    requestAnimationFrame(() => {
+      const panel = document.querySelector<HTMLElement>('[data-tour="pane"]')?.closest<HTMLElement>(".panel");
+      if (!panel) return;
+      panel.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" });
+      panel.classList.remove("flash");
+      void panel.offsetWidth;
+      panel.classList.add("flash");
+      setTimeout(() => panel.classList.remove("flash"), 1200);
+    });
+  };
   const tops = s.topics.filter((x) => !x.done).length;
 
   return (
@@ -266,120 +305,166 @@ export function ControlRoomView() {
               title: t("blocks.deck"),
               node: (
                 <div className="panel deck">
+                  {/* Where the meeting stands: live or paused, which step of how many */}
+                  <div className="deck-head">
+                    <span className={`deck-status${!m.startedAt ? "" : step.type === "end" ? " ended" : running ? " live" : " paused"}`}>
+                      <span className="deck-dot" aria-hidden="true" />
+                      {!m.startedAt ? t("notStarted") : step.type === "end" ? t("endedNow") : running ? t("current") : t("pausedNow")}
+                    </span>
+                    <span className="deck-step">
+                      {t("stepOf", { n: cur + 1, total: agenda.length })}
+                      {step.type === "speaker"
+                        ? ` · ${t("turnOf", { n: sp.findIndex((x) => x.key === step.key) + 1, total: sp.length })}`
+                        : ""}
+                      {step.type === "project"
+                        ? ` · ${t("projectOf", { n: pr.findIndex((x) => x.key === step.key) + 1, total: pr.length })}`
+                        : ""}
+                    </span>
+                  </div>
+                  <AgendaProgress />
                   <div className="deck-now" data-tour="deck-now">
                     <div className="what">
-                      <div className="eyebrow">
-                        {t("current")}
-                        {step.type === "speaker" ? ` · ${sp.findIndex((x) => x.key === step.key) + 1} / ${sp.length}` : ""}
-                        {step.type === "project" ? ` · ${pr.findIndex((x) => x.key === step.key) + 1} / ${pr.length}` : ""}
-                      </div>
                       <h2>{title}</h2>
                       <div className="nxt">
-                        {step.type === "intro" && sp.length > 0 && hasTurns(s.settings.agenda)
-                          ? `${t("checkInsFilled", { filled: filledN, total: sp.length })} · `
-                          : ""}
-                        {t("then", { next: next ? next.label : t("endOfMeeting") })}
+                        {step.type === "intro" && sp.length > 0 && hasTurns(s.settings.agenda) && (
+                          <span className="deck-filled">
+                            <Users size={15} strokeWidth={2} aria-hidden="true" />
+                            {t("checkInsFilled", { filled: filledN, total: sp.length })}
+                          </span>
+                        )}
+                        <span className="deck-then">
+                          <ArrowRight size={15} strokeWidth={2} aria-hidden="true" className="flip-rtl" />
+                          {next?.type === "speaker" && <Avatar id={next.key} sm />}
+                          {t("then", { next: next ? next.label : t("endOfMeeting") })}
+                        </span>
                         {!m.startedAt && s.notify.nudge && filledN < sp.length && (
-                          <>
-                            {" · "}
-                            <button className="linkbtn" onClick={() => rpc({ op: "notifications.nudge" }, t("nudgeSent"))}>
-                              {t("nudge")}
-                            </button>
-                          </>
+                          <button type="button" className="linkbtn" onClick={() => rpc({ op: "notifications.nudge" }, t("nudgeSent"))}>
+                            <BellRing size={14} strokeWidth={2} aria-hidden="true" /> {t("nudge")}
+                          </button>
                         )}
                       </div>
                     </div>
                     {step.type === "speaker" || step.type === "project" ? (
                       <Timer stepKey={step.key} live />
                     ) : step.type !== "end" ? (
-                      <UpCount className="upcount" />
+                      <div className="deck-clock" role="timer">
+                        <UpCount className="upcount" />
+                        <span className="lbl">{t("elapsed")}</span>
+                      </div>
                     ) : null}
                   </div>
-                  <div className="controls" data-tour="controls">
-                    <button
-                      className="btn big"
-                      disabled={cur <= 0 || !m.startedAt}
-                      onClick={() => rpc({ op: "meeting.step", delta: -1, from: m.stepKey })}
-                    >
-                      ← {t("previous")}
-                    </button>
-                    <button
-                      className={"btn big" + (m.startedAt ? " primary" : "")}
-                      disabled={!next || !m.startedAt}
-                      title={m.startedAt ? undefined : t("startFirst")}
-                      onClick={() => rpc({ op: "meeting.step", delta: 1, from: m.stepKey })}
-                    >
-                      {next ? `${t("next", { label: nextLabel })} →` : t("lastStep")}
-                    </button>
-                    <span className="sep" />
-                    {!m.startedAt && step.type === "intro" ? (
+                  <div className="deck-controls" data-tour="controls">
+                    <div className="deck-nav">
                       <button
-                        className="btn big primary"
-                        // A session prepared for another day happens today: it is dated today, the schedule keeps its occurrence
-                        title={startOp(m.date) === "session.now" ? t("startToday") : undefined}
-                        onClick={() =>
-                          void rpc({ op: startOp(m.date) }, t("started") + (s.notify.started ? ` ${t("startedAnnounced")}` : "")).then(
-                            (ok) => ok && track("session_started"),
-                          )
-                        }
+                        type="button"
+                        className="btn big"
+                        disabled={cur <= 0 || !m.startedAt}
+                        aria-label={t("previous")}
+                        title={t("shortcut", { key: "←" })}
+                        onClick={() => rpc({ op: "meeting.step", delta: -1, from: m.stepKey })}
                       >
-                        ▶ {t("start")}
+                        <ChevronLeft size={18} strokeWidth={2.4} aria-hidden="true" className="flip-rtl" />
+                        <span className="deck-prev-label">{t("previous")}</span>
                       </button>
-                    ) : (
-                      step.type !== "end" && (
-                        <>
-                          <button className="btn" onClick={() => rpc({ op: "meeting.togglePlay" })}>
-                            {running ? `⏸ ${t("pause")}` : `▶ ${t("timer")}`}
-                          </button>
+                      {!m.startedAt && step.type === "intro" ? (
+                        <button
+                          type="button"
+                          className="btn big primary deck-main"
+                          // A session prepared for another day happens today: it is dated today, the schedule keeps its occurrence
+                          title={startOp(m.date) === "session.now" ? t("startToday") : undefined}
+                          onClick={() =>
+                            void rpc({ op: startOp(m.date) }, t("started") + (s.notify.started ? ` ${t("startedAnnounced")}` : "")).then(
+                              (ok) => ok && track("session_started"),
+                            )
+                          }
+                        >
+                          <Play size={18} strokeWidth={2.4} aria-hidden="true" />
+                          {t("start")}
+                        </button>
+                      ) : step.type === "end" && m.startedAt ? (
+                        <button type="button" className="btn big primary deck-main attention" onClick={() => showPane("minutes")}>
+                          <FileText size={18} strokeWidth={2.2} aria-hidden="true" />
+                          {t("reviewMinutes")}
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className={"btn big deck-main" + (m.startedAt ? " primary" : "")}
+                          disabled={!next || !m.startedAt}
+                          title={m.startedAt ? t("shortcut", { key: "→" }) : t("startFirst")}
+                          onClick={() => rpc({ op: "meeting.step", delta: 1, from: m.stepKey })}
+                        >
+                          {next ? t("next", { label: nextLabel }) : t("lastStep")}
+                          {next && <ChevronRight size={18} strokeWidth={2.4} aria-hidden="true" className="flip-rtl" />}
+                        </button>
+                      )}
+                    </div>
+                    {m.startedAt && step.type !== "end" && (
+                      <div className="deck-timer-tools" role="group" aria-label={t("timerTools")}>
+                        <button
+                          type="button"
+                          className={`btn${running ? "" : " deck-resume"}`}
+                          title={t("shortcut", { key: t("spaceKey") })}
+                          onClick={() => rpc({ op: "meeting.togglePlay" })}
+                        >
+                          {running ? (
+                            <Pause size={16} strokeWidth={2.4} aria-hidden="true" />
+                          ) : (
+                            <Play size={16} strokeWidth={2.4} aria-hidden="true" />
+                          )}
+                          {running ? t("pause") : t("timer")}
+                        </button>
+                        <button
+                          type="button"
+                          className="btn icon-only"
+                          onClick={() => rpc({ op: "meeting.resetTimer" })}
+                          aria-label={t("resetTimer")}
+                          title={t("resetTimer")}
+                        >
+                          <RotateCcw size={16} strokeWidth={2.4} aria-hidden="true" />
+                        </button>
+                        {(step.type === "speaker" || step.type === "project") && (
                           <button
+                            type="button"
                             className="btn"
-                            onClick={() => rpc({ op: "meeting.resetTimer" })}
-                            aria-label={t("resetTimer")}
-                            title={t("resetTimer")}
+                            title={t("bonusHint")}
+                            onClick={() =>
+                              rpc(
+                                { op: "meeting.bonus" },
+                                t("bonusAdded", { name: step.type === "speaker" ? first(step.label) : step.label }),
+                              )
+                            }
                           >
-                            ↺
+                            <TimerReset size={16} strokeWidth={2.4} aria-hidden="true" />
+                            +30 s
                           </button>
-                        </>
-                      )
-                    )}
-                    {(step.type === "speaker" || step.type === "project") && (
-                      <button
-                        className="btn"
-                        onClick={() =>
-                          rpc({ op: "meeting.bonus" }, t("bonusAdded", { name: step.type === "speaker" ? first(step.label) : step.label }))
-                        }
-                      >
-                        +30 s
-                      </button>
+                        )}
+                      </div>
                     )}
                   </div>
                   {step.type === "project" && <ProjectHost step={step} />}
-                  {!m.endedAt && (
-                    <SheetsSummary
-                      onOpen={() => {
-                        setPane("sheets");
-                        // On a narrow screen the side panel sits far below: brought into view
-                        requestAnimationFrame(() =>
-                          document
-                            .querySelector('[data-tour="pane"]')
-                            ?.closest(".panel")
-                            ?.scrollIntoView({
-                              behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-                              block: "start",
-                            }),
-                        );
-                      }}
-                    />
-                  )}
+                  {!m.endedAt && <SheetsSummary onOpen={() => showPane("sheets")} />}
                   {!m.endedAt && <ProjectOrder />}
                   {step.type === "block" && step.block === "retro" && <RetroHost />}
                   {step.type === "block" && step.block === "poker" && <PokerHost />}
-                  <StopControls />
                   {!!m.startedAt && (
-                    <div className="controls" data-tour="beep">
-                      <label className="check">
-                        <input type="checkbox" checked={beep} onChange={(e) => setBeep(e.target.checked)} /> {t("beep")}
-                      </label>
+                    <div className="deck-foot">
+                      <StopControls />
+                      <button
+                        type="button"
+                        className="chip deck-beep"
+                        aria-pressed={beep}
+                        data-tour="beep"
+                        title={t("beepHint")}
+                        onClick={() => setBeep(!beep)}
+                      >
+                        {beep ? (
+                          <BellRing size={15} strokeWidth={2} aria-hidden="true" />
+                        ) : (
+                          <BellOff size={15} strokeWidth={2} aria-hidden="true" />
+                        )}
+                        {t("beep")}
+                      </button>
                     </div>
                   )}
                 </div>
@@ -402,7 +487,15 @@ export function ControlRoomView() {
                   {step.type !== "end" ? (
                     <NotesBox stepKey={m.stepKey} label={step.type === "speaker" ? first(step.label) : title} />
                   ) : (
-                    <div className="note-box">{t("endedReview")}</div>
+                    <div className="end-callout" role="status">
+                      <span className="end-callout-ico" aria-hidden="true">
+                        <FileText size={22} strokeWidth={2} />
+                      </span>
+                      <div className="end-callout-text">
+                        <strong>{t("endedTitle")}</strong>
+                        <span>{t("endedNext")}</span>
+                      </div>
+                    </div>
                   )}
                 </div>
               ),
@@ -456,13 +549,24 @@ export function ControlRoomView() {
                         role="tab"
                         aria-selected={pane === k}
                         // Raised hand or question pending: the tab calls the host as long as they are elsewhere
-                        className={k === "live" && n > 0 && pane !== k ? "alert" : undefined}
-                        title={k === "live" && n > 0 ? t("pendingRequests", { count: n }) : undefined}
+                        // At the wrap-up, the minutes are what is left to do: their tab stands out until published
+                        className={
+                          k === "live" && n > 0 && pane !== k ? "alert" : k === "minutes" && m.stepKey === "end" ? "todo-tab" : undefined
+                        }
+                        title={
+                          k === "live" && n > 0
+                            ? t("pendingRequests", { count: n })
+                            : k === "minutes" && m.stepKey === "end"
+                              ? t("reviewMinutes")
+                              : undefined
+                        }
                         onClick={() => setPane(k)}
                       >
                         {k === "live" && n > 0 && pane !== k && <span aria-hidden="true">✋ </span>}
+                        {k === "minutes" && m.stepKey === "end" && <FileText size={14} strokeWidth={2.2} aria-hidden="true" />}
                         {t(`panes.${k}`)}
                         {n > 0 && <span className="cnt">{n}</span>}
+                        {k === "minutes" && m.stepKey === "end" && <span className="todo-dot" aria-hidden="true" />}
                       </button>
                     ))}
                   </SwipeRow>
@@ -482,15 +586,15 @@ export function ControlRoomView() {
             {
               id: "sounds",
               title: t("blocks.sounds"),
-              // Folded: music, cues and soundboard are there when wanted, not in the way (the player inside stays
-              // mounted, the host's tab plays the sounds of "My screen")
+              // Always open: music, cues and soundboard at hand during the meeting (the host's tab plays the sounds
+              // of "My screen")
               node: mod("sounds") && (
-                <details className="panel snd-fold" data-tour="sounds">
-                  <summary>
+                <section className="panel snd-panel" data-tour="sounds" aria-labelledby="snd-title">
+                  <h3 id="snd-title" className="snd-title">
                     <Icon name="volume" size={16} /> {t("blocks.sounds")}
-                  </summary>
+                  </h3>
                   <SoundPanel />
-                </details>
+                </section>
               ),
             },
           ],
@@ -972,28 +1076,29 @@ function NotesBox({ stepKey, label, autoFocus }: { stepKey: string; label: strin
         onChange={change}
         onBlur={() => void flush(keyRef.current, textRef.current)}
         placeholder={t("notes.placeholder", { decision: tMinutes("decisionPrefix") })}
+        markLine={noteLineKind}
         extra={(insert) => {
           insertRef.current = insert;
           return (
             <>
               <button
                 type="button"
-                className="md-btn md-tpl"
+                className="md-btn md-tpl md-tpl-decision"
                 title={t("notes.decisionHint")}
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={() => insert(`**${tMinutes("decisionPrefix")}:** `)}
               >
-                + {tMinutes("decisionPrefix")}
+                <Gavel size={15} strokeWidth={2.2} aria-hidden="true" /> {tMinutes("decisionPrefix")}
               </button>
               <button
                 type="button"
-                className="md-btn md-tpl"
+                className="md-btn md-tpl md-tpl-action"
                 title={t("notes.actionHint")}
                 aria-expanded={!!action}
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={() => (action ? setAction(null) : openAction())}
               >
-                + {t("notes.actionPrefix")}
+                <SquareCheckBig size={15} strokeWidth={2.2} aria-hidden="true" /> {t("notes.actionPrefix")}
               </button>
             </>
           );
@@ -1041,7 +1146,39 @@ function NotesBox({ stepKey, label, autoFocus }: { stepKey: string; label: strin
   );
 }
 
+/** The agenda as a strip: one segment per step, done, current or to come; its name when pointed at */
+function AgendaProgress() {
+  const t = useTranslations("control");
+  const { s, agenda, cur } = useRonde();
+  if (agenda.length < 2) return null;
+  const started = !!s.meeting?.startedAt;
+  return (
+    <div
+      className="deck-progress"
+      role="progressbar"
+      aria-label={t("progress")}
+      aria-valuemin={1}
+      aria-valuemax={agenda.length}
+      aria-valuenow={cur + 1}
+      aria-valuetext={t("stepOf", { n: cur + 1, total: agenda.length })}
+    >
+      {agenda.map((x, i) => (
+        <span
+          key={x.key}
+          className={`seg${i < cur ? " done" : i === cur ? (started ? " cur" : " cur waiting") : ""} t-${x.type}`}
+          data-tip={x.label}
+        />
+      ))}
+    </div>
+  );
+}
+
 function RunRow(p: {
+  /** Where the row stands while another one is dragged, and its grip */
+  sort?: { className: string; style?: React.CSSProperties; "data-sort-row": string };
+  grip?: React.ReactNode;
+  /** A person's turn: their check-in dot and face instead of an icon */
+  person?: boolean;
   state: string;
   label: string;
   ico?: React.ReactNode;
@@ -1053,9 +1190,15 @@ function RunRow(p: {
 }) {
   const t = useTranslations("control");
   return (
-    <li className={`${p.cls} ${p.isCur ? "cur" : ""}`}>
+    // A person's turn ("turn") or a fixed step of the agenda ("fixed"): the lines between them differ
+    <li
+      {...p.sort}
+      className={`${p.person ? "turn" : p.cls === "qa" ? "" : "fixed"} ${p.cls} ${p.isCur ? "cur" : ""} ${p.sort?.className ?? ""}`}
+    >
+      {/* Every name starts at the same place: a step without a grip or a face keeps their room */}
+      {p.grip ?? <span className="sort-grip-space" aria-hidden="true" />}
       <span className="st">{p.state}</span>
-      {p.ico}
+      {p.person ? p.ico : <span className="run-ico">{p.ico}</span>}
       <span className="nm">{p.label}</span>
       {p.noted && (
         <span className="noted" title={t("run.notedHint")} role="img" aria-label={t("run.noted")}>
@@ -1154,6 +1297,12 @@ function PaneRun() {
   const m = s.meeting!;
   const absent = new Set(m.absent);
   const order = m.order.filter((id) => members[id]);
+  // The speaking order, dragged into place: the person lands before the one now after them
+  const sortRound = useSortable({
+    items: order,
+    keyOf: (id) => id,
+    onMove: (_from, to, next) => rpc({ op: "meeting.move", id: next[to]!, before: next[to + 1] ?? null }),
+  });
   const at = now();
   const idx = (k: string) => agenda.findIndex((x) => x.key === k);
   const st = (k: string) => {
@@ -1167,9 +1316,17 @@ function PaneRun() {
         {t("run.go")}
       </button>
     ) : null;
-  const row = (k: string, label: string, acts: React.ReactNode, opts: { ico?: React.ReactNode; cls?: string } = {}) => (
+  const row = (
+    k: string,
+    label: string,
+    acts: React.ReactNode,
+    opts: { ico?: React.ReactNode; cls?: string; sort?: ReturnType<typeof sortRound.row>; grip?: React.ReactNode } = {},
+  ) => (
     <RunRow
       key={k}
+      sort={opts.sort}
+      grip={opts.grip}
+      person={!!opts.grip}
       state={st(k)}
       label={label}
       ico={opts.ico}
@@ -1182,34 +1339,18 @@ function PaneRun() {
   );
   const qa = (k: string) => {
     const x: Step | undefined = agenda.find((a) => a.key === "qa:" + k);
-    return x ? row(x.key, `✋ ${t("run.questions", { pending: x.pending ?? 0, total: x.total ?? 0 })}`, go(x.key), { cls: "qa" }) : null;
+    return x ? row(x.key, t("run.questions", { pending: x.pending ?? 0, total: x.total ?? 0 }), go(x.key), { cls: "qa", ico: "✋" }) : null;
   };
   // Blocks of the agenda whose module is on, in order
   const blocks = s.settings.agenda.filter((b) => !BLOCK_MODULE[b.type] || s.modules[BLOCK_MODULE[b.type]!]);
   const roundRows = () =>
-    order.map((id, i) => {
+    sortRound.list.map((id, i) => {
       const f = s.checkIns[id];
       return [
         row(
           id,
           members[id]!.name,
           <>
-            <button
-              className="icon-btn"
-              disabled={i === 0}
-              aria-label={t("run.moveUp")}
-              onClick={() => rpc({ op: "meeting.move", id, delta: -1 })}
-            >
-              ↑
-            </button>
-            <button
-              className="icon-btn"
-              disabled={i === order.length - 1}
-              aria-label={t("run.moveDown")}
-              onClick={() => rpc({ op: "meeting.move", id, delta: 1 })}
-            >
-              ↓
-            </button>
             <button className="icon-btn" onClick={() => rpc({ op: "meeting.absent", id })}>
               {absent.has(id) ? t("run.markPresent") : t("run.markAbsent")}
             </button>
@@ -1220,6 +1361,8 @@ function PaneRun() {
           </>,
           {
             cls: absent.has(id) ? "abs" : "",
+            sort: sortRound.row(i),
+            grip: <SortGrip {...sortRound.grip(i, t("run.reorder", { name: members[id]!.name }))} />,
             ico: (
               <>
                 <span
@@ -1252,8 +1395,8 @@ function PaneRun() {
       </div>
       <ul className="run" data-tour="run-list">
         {blocks.map((b) => {
-          if (b.type === "intro") return [row("intro", t("run.intro"), go("intro")), qa("intro")];
-          if (b.type === "topics") return [row("misc", t("run.topics"), go("misc")), qa("misc")];
+          if (b.type === "intro") return [row("intro", t("run.intro"), go("intro"), { ico: <Icon name="play" size={14} /> }), qa("intro")];
+          if (b.type === "topics") return [row("misc", t("run.topics"), go("misc"), { ico: <Icon name="pin" size={14} /> }), qa("misc")];
           if (b.type === "round") return roundRows();
           // A module block: each of its steps (retro phases, a timebox…)
           return agenda
@@ -1263,7 +1406,7 @@ function PaneRun() {
               qa(x.key),
             ]);
         })}
-        {row("end", t("run.end"), go("end"))}
+        {row("end", t("run.end"), go("end"), { ico: <Icon name="flag" size={14} /> })}
       </ul>
       <p className="hint" style={{ marginTop: 8 }}>
         {t.rich("run.legend", { note: () => <Icon name="note" size={13} /> })}
@@ -1293,17 +1436,21 @@ function MeetingDate() {
       <label htmlFor="meetingDate" className="lbl-s">
         {t("meetingOf")}
       </label>
-      <input
+      <DateInput
         id="meetingDate"
-        type="date"
         required
+        compact
+        className="auto"
         value={date}
-        onChange={(e) => setDate(e.target.value)}
-        onBlur={async () => {
-          if (date && date !== m.date && !(await rpc({ op: "meeting.setDate", date }, t("meetingMoved", { date: fmt.dateShort(date) }))))
+        onChange={async (next) => {
+          setDate(next);
+          if (
+            next &&
+            next !== m.date &&
+            !(await rpc({ op: "meeting.setDate", date: next }, t("meetingMoved", { date: fmt.dateShort(next) })))
+          )
             setDate(m.date);
         }}
-        style={{ width: "auto" }}
       />
       {past && <span className="err">{t("pastDate")}</span>}
     </span>
@@ -1541,19 +1688,34 @@ function PaneTopics() {
             >
               ▲ {x.votes}
             </button>
-            {/* Shown big by the spotlight: without its module, the screen would show nothing */}
-            {mod("spotlight") && (
-              <button
-                className="icon-btn"
-                title={t("topics.showBig")}
-                aria-label={t("topics.showBig")}
-                onClick={() => rpc({ op: "spotlight.set", label: t("spotlight.topic"), text: x.text })}
-              >
-                ✨
-              </button>
-            )}
-            <button className="icon-btn" onClick={() => rpc({ op: "topic.delete", id: x.id })}>
-              {t("remove")}
+            {/* Put forward by the spotlight, pressed while it is on screen (a second click takes it off): without
+                its module, the screen would show nothing */}
+            {mod("spotlight") &&
+              (() => {
+                const shown = s.meeting?.spotlight?.label === t("spotlight.topic") && s.meeting?.spotlight?.text === x.text;
+                return (
+                  <button
+                    type="button"
+                    className={`icon-btn spot-toggle${shown ? " on" : ""}`}
+                    aria-pressed={shown}
+                    title={shown ? t("topics.unfeature") : t("topics.showBig")}
+                    onClick={() =>
+                      shown ? rpc({ op: "spotlight.clear" }) : rpc({ op: "spotlight.set", label: t("spotlight.topic"), text: x.text })
+                    }
+                  >
+                    <Sparkles size={15} strokeWidth={2} aria-hidden="true" />
+                    <span>{shown ? t("topics.featured") : t("topics.showBig")}</span>
+                  </button>
+                );
+              })()}
+            <button
+              type="button"
+              className="icon-btn danger"
+              aria-label={t("topics.removeNamed", { text: x.text })}
+              title={t("remove")}
+              onClick={() => rpc({ op: "topic.delete", id: x.id })}
+            >
+              <Trash2 size={15} strokeWidth={2} aria-hidden="true" />
             </button>
           </div>
         ))
@@ -1607,11 +1769,11 @@ function ParkingLot() {
             {t("parking.discuss")}
           </button>
           <button
-            className="icon-btn"
+            className="icon-btn danger"
             aria-label={t("parking.remove", { text: x.text })}
             onClick={() => rpc({ op: "topic.delete", id: x.id })}
           >
-            ✕
+            <Trash2 size={14} strokeWidth={2.2} aria-hidden="true" />
           </button>
         </div>
       ))}
@@ -1650,7 +1812,8 @@ function StopControls() {
       <div className="controls" role="group" aria-label={t("stop.confirmation")} data-tour="stop">
         <span style={{ flex: 1, minWidth: "14em", fontSize: 14.5 }}>{ask === "end" ? t("stop.endAsk") : t("stop.resetAsk")}</span>
         <button
-          className="btn primary"
+          type="button"
+          className={`btn ${ask === "reset" ? "danger-solid" : "primary"}`}
           onClick={async () => {
             const ok =
               ask === "end"
@@ -1667,14 +1830,14 @@ function StopControls() {
       </div>
     );
   return (
-    <div className="controls" data-tour="stop">
+    <div className="controls deck-stop" data-tour="stop">
       {m.stepKey !== "end" && (
-        <button className="btn" onClick={() => setAsk("end")}>
-          ■ {t("stop.end")}
+        <button type="button" className="btn" onClick={() => setAsk("end")}>
+          <Flag size={16} strokeWidth={2.2} aria-hidden="true" /> {t("stop.end")}
         </button>
       )}
-      <button className="linkbtn" onClick={() => setAsk("reset")}>
-        {t("stop.cancelStart")}
+      <button type="button" className="linkbtn danger" onClick={() => setAsk("reset")}>
+        <Undo2 size={14} strokeWidth={2.2} aria-hidden="true" /> {t("stop.cancelStart")}
       </button>
     </div>
   );
@@ -1753,7 +1916,9 @@ function MinutesCheck() {
 function PaneMinutes({ draft: saved, setDraft: setSaved }: { draft: MinutesDraft; setDraft: (d: MinutesDraft) => void }) {
   const t = useTranslations("control");
   const tParts = useTranslations("minutes");
-  const { s, rpc, toast, api } = useRonde();
+  const { s, rpc, toast, api, mod, agenda } = useRonde();
+  // Only what the meeting's modules can bring: a part of a module turned off has nothing to choose
+  const parts = minutesPartsOf(mod);
   const [confirm, setConfirm] = useState(false);
   const [preview, setPreview] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -1771,7 +1936,7 @@ function PaneMinutes({ draft: saved, setDraft: setSaved }: { draft: MinutesDraft
     else {
       // Shown in place: the pane never stays on "Generating…" forever
       setFailed(true);
-      toast(t("minutesPane.generationFailed"));
+      toast(t("minutesPane.generationFailed"), "error");
     }
   }, [api, toast, t]);
   const notesSig = JSON.stringify(s.notes);
@@ -1788,7 +1953,73 @@ function PaneMinutes({ draft: saved, setDraft: setSaved }: { draft: MinutesDraft
     setOmit(next);
     writeOmit(next);
   };
-  const userOnly = MINUTES_PARTS.every((p) => omit.includes(p));
+  const userOnly = parts.every((p) => omit.includes(p));
+  const kept = parts.filter((p) => !omit.includes(p)).length;
+
+  const publish = async () => {
+    setBusy(true);
+    const ok = await rpc({ op: "meeting.archive", summary: summary.trim() || null, omit }, t("minutesPane.archived"));
+    if (ok) track("session_archived");
+    setBusy(false);
+    if (ok) {
+      setConfirm(false);
+      setPreview(false);
+      setSaved(null);
+    }
+  };
+  const publishControls = confirm ? (
+    <span className="publish-confirm">
+      <span className="publish-ask">{t("minutesPane.archiveAsk")}</span>
+      <button type="button" className="btn primary" disabled={busy} aria-busy={busy} onClick={() => void publish()}>
+        <Send size={15} strokeWidth={2.2} aria-hidden="true" className="flip-rtl" /> {t("minutesPane.archiveYes")}
+      </button>
+      <button type="button" className="btn" onClick={() => setConfirm(false)}>
+        {t("cancel")}
+      </button>
+    </span>
+  ) : (
+    <button type="button" className="btn primary" onClick={() => setConfirm(true)}>
+      <Send size={15} strokeWidth={2.2} aria-hidden="true" className="flip-rtl" /> {t("minutesPane.archive")}
+    </button>
+  );
+
+  // What the minutes keep of the team's inputs: in the pane, and in the studio's head bar
+  const partsLabel =
+    kept === parts.length
+      ? t("minutesPane.everything")
+      : userOnly
+        ? t("minutesPane.notesOnly")
+        : t("minutesPane.partsOf", { count: kept, total: parts.length });
+  const partsEditor = (
+    <div className="minutes-parts-in">
+      <div className="seg minutes-parts-seg" role="group" aria-label={t("minutesPane.content")}>
+        <button type="button" aria-pressed={kept === parts.length} onClick={() => choose([])}>
+          <ListChecks size={14} strokeWidth={2.2} aria-hidden="true" /> {t("minutesPane.includeAll")}
+        </button>
+        <button type="button" aria-pressed={userOnly} onClick={() => choose([...MINUTES_PARTS])}>
+          <PenLine size={14} strokeWidth={2.2} aria-hidden="true" /> {t("minutesPane.myNotesOnly")}
+        </button>
+      </div>
+      <fieldset className="plain">
+        <legend className="lbl-s">{t("minutesPane.teamInputs")}</legend>
+        <div className="minutes-parts-list">
+          {parts.map((p) => (
+            <label className="check" key={p}>
+              <input
+                type="checkbox"
+                checked={!omit.includes(p)}
+                onChange={(e) => choose(e.target.checked ? omit.filter((k) => k !== p) : [...omit, p])}
+              />{" "}
+              {tParts(`parts.${p}`)}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <span className="hint">{t("minutesPane.alwaysIncluded")}</span>
+    </div>
+  );
+  const notedSteps = agenda.filter((x) => x.key && x.type !== "qa" && x.type !== "end");
+  const notedCount = notedSteps.filter((x) => s.notes[x.key]?.trim()).length;
 
   if (!doc)
     return failed ? (
@@ -1802,50 +2033,32 @@ function PaneMinutes({ draft: saved, setDraft: setSaved }: { draft: MinutesDraft
       <p className="muted">{t("minutesPane.generating")}</p>
     );
   return (
-    <>
+    <div className="mp">
       {atEnd && <MinutesCheck />}
-      <p className="hint" style={{ marginBottom: 8 }}>
-        {t("minutesPane.intro")}
-      </p>
+      {/* The minutes in one card: what they are, how much is written, the way into the studio */}
+      <div className="mp-card">
+        <span className="mp-card-ico" aria-hidden="true">
+          <FileText size={22} strokeWidth={2} />
+        </span>
+        <div className="mp-card-text">
+          <strong>{doc.title}</strong>
+          <span className="hint">{t("studio.notedSteps", { count: notedCount, total: notedSteps.length })}</span>
+        </div>
+        <button type="button" className="btn" onClick={() => setPreview(true)}>
+          <PenLine size={16} strokeWidth={2.2} aria-hidden="true" /> {t("minutesPane.review")}
+        </button>
+      </div>
+      <p className="hint mp-intro">{t("minutesPane.intro")}</p>
       <details className="minutes-parts" data-tour="minutes-parts">
         <summary>
-          {t("minutesPane.content")}{" "}
-          <strong>
-            {omit.length === 0
-              ? t("minutesPane.everything")
-              : userOnly
-                ? t("minutesPane.notesOnly")
-                : t("minutesPane.partsOf", { count: MINUTES_PARTS.length - omit.length, total: MINUTES_PARTS.length })}
-          </strong>
+          <ListChecks size={15} strokeWidth={2.2} aria-hidden="true" /> {t("minutesPane.content")} <strong>{partsLabel}</strong>
+          <ChevronDown size={15} strokeWidth={2.2} aria-hidden="true" className="minutes-parts-chev" />
         </summary>
-        <div className="minutes-parts-in">
-          <div className="controls">
-            <button type="button" className="btn soft" aria-pressed={userOnly} onClick={() => choose([...MINUTES_PARTS])}>
-              {t("minutesPane.myNotesOnly")}
-            </button>
-            <button type="button" className="btn soft" aria-pressed={omit.length === 0} onClick={() => choose([])}>
-              {t("minutesPane.includeAll")}
-            </button>
-          </div>
-          <fieldset>
-            <legend className="lbl-s">{t("minutesPane.teamInputs")}</legend>
-            {MINUTES_PARTS.map((p) => (
-              <label className="check" key={p}>
-                <input
-                  type="checkbox"
-                  checked={!omit.includes(p)}
-                  onChange={(e) => choose(e.target.checked ? omit.filter((k) => k !== p) : [...omit, p])}
-                />{" "}
-                {tParts(`parts.${p}`)}
-              </label>
-            ))}
-          </fieldset>
-          <span className="hint">{t("minutesPane.alwaysIncluded")}</span>
-        </div>
+        {partsEditor}
       </details>
       {/* Visible title; the editor carries the accessible label itself */}
-      <div className="lbl-s" aria-hidden="true">
-        {tParts("summaryTitle")}
+      <div className="lbl-s mp-summary-title" aria-hidden="true">
+        <Sparkles size={14} strokeWidth={2.2} aria-hidden="true" /> {tParts("summaryTitle")}
       </div>
       <MdEditor
         id="minutesSummary"
@@ -1856,56 +2069,35 @@ function PaneMinutes({ draft: saved, setDraft: setSaved }: { draft: MinutesDraft
         onChange={(v) => setSaved({ summary: v })}
       />
       <p className="hint">{t("minutesPane.summaryHint")}</p>
-      <div className="controls" style={{ marginTop: 10 }}>
-        <button type="button" className="btn" onClick={() => setPreview(true)}>
-          {t("minutesPane.preview")}
-        </button>
-        <span className="sep" />
-        {!atEnd ? (
-          <span className="hint">{t("minutesPane.archiveAtEnd")}</span>
-        ) : confirm ? (
-          <>
-            <span style={{ fontSize: 13 }}>{t("minutesPane.archiveAsk")}</span>
-            <button
-              type="button"
-              className="btn primary"
-              disabled={busy}
-              onClick={async () => {
-                setBusy(true);
-                const ok = await rpc({ op: "meeting.archive", summary: summary.trim() || null, omit }, t("minutesPane.archived"));
-                if (ok) track("session_archived");
-                setBusy(false);
-                if (ok) {
-                  setConfirm(false);
-                  setSaved(null);
-                }
-              }}
-            >
-              {t("minutesPane.archiveYes")}
-            </button>
-            <button type="button" className="btn" onClick={() => setConfirm(false)}>
-              {t("cancel")}
-            </button>
-          </>
-        ) : (
-          <button type="button" className="btn primary" onClick={() => setConfirm(true)}>
-            {t("minutesPane.archive")}
-          </button>
-        )}
-      </div>
+      <div className="mp-publish">{!atEnd ? <span className="hint">{t("minutesPane.archiveAtEnd")}</span> : publishControls}</div>
       {preview && (
-        <Modal onClose={() => setPreview(false)}>
-          <h2 style={{ marginTop: 0 }}>{doc.title}</h2>
-          <MinutesView doc={doc} id="draft" />
-          <div className="controls">
-            <span className="sep" />
-            <button type="button" className="btn" onClick={() => setPreview(false)}>
-              {t("close")}
-            </button>
-          </div>
-        </Modal>
+        <MinutesStudio
+          doc={doc}
+          summary={summary}
+          setSummary={(v) => setSaved({ summary: v })}
+          onClose={() => setPreview(false)}
+          notesBox={(x) => <NotesBox stepKey={x.key} label={x.type === "speaker" ? first(x.label) : x.label} />}
+          tools={
+            <>
+              <Popover.Root>
+                <Popover.Trigger asChild>
+                  <button type="button" className="btn studio-parts">
+                    <ListChecks size={15} strokeWidth={2.2} aria-hidden="true" /> {t("minutesPane.content")} {partsLabel}
+                    <ChevronDown size={14} strokeWidth={2.2} aria-hidden="true" />
+                  </button>
+                </Popover.Trigger>
+                <Popover.Portal>
+                  <Popover.Content className="studio-parts-pop" sideOffset={6} align="end" collisionPadding={12}>
+                    {partsEditor}
+                  </Popover.Content>
+                </Popover.Portal>
+              </Popover.Root>
+              {atEnd ? publishControls : <span className="hint">{t("minutesPane.archiveAtEnd")}</span>}
+            </>
+          }
+        />
       )}
-    </>
+    </div>
   );
 }
 
@@ -1942,7 +2134,13 @@ function ProjectOrder() {
   // Projects nobody wrote about have no step (skipped): the host may present one anyway this session
   const { steps, ids, done, skipped, added, filled, showOrder } = projectOrderOf(s, agenda);
   const save = (order: string[]) => rpc({ op: "project.order", order });
-  const move = (i: number, d: -1 | 1) => void save(moveProject(ids, i, d));
+  // Dragged into place; never above the step running or done, it would be skipped
+  const sort = useSortable({
+    items: steps,
+    keyOf: (x) => x.projectId!,
+    onMove: (_from, _to, order) => save(order),
+    canMove: (from, to) => canPlace(steps, done, from, to),
+  });
   const shuffle = () => void save(shuffleProjects(ids));
   if (!showOrder && !skipped.length) return null;
   return (
@@ -1970,8 +2168,13 @@ function ProjectOrder() {
         <details className="project-order">
           <summary>{t("projectOrder")}</summary>
           <ol>
-            {steps.map((x, i) => (
-              <li key={x.key} className={done.has(x.key) ? "done" : ""}>
+            {sort.list.map((x, i) => (
+              <li key={x.key} {...sort.row(i)} className={`${sort.row(i).className}${done.has(x.key) ? " done" : ""}`}>
+                {done.has(x.key) ? (
+                  <span className="sort-grip-space" aria-hidden="true" />
+                ) : (
+                  <SortGrip {...sort.grip(i, t("projectReorder", { name: x.label }))} />
+                )}
                 <span className="grow">
                   {x.label}
                   {added.has(x.projectId!) && !filled.has(x.projectId!) && <span className="tag-added">{t("projectAddedTag")}</span>}
@@ -1987,25 +2190,6 @@ function ProjectOrder() {
                     ×
                   </button>
                 )}
-                <button
-                  type="button"
-                  className="icon-btn"
-                  // A project never moves above the step running or already done: it would be skipped
-                  disabled={!canMove(steps, done, i, -1)}
-                  aria-label={t("projectUp", { name: x.label })}
-                  onClick={() => move(i, -1)}
-                >
-                  ↑
-                </button>
-                <button
-                  type="button"
-                  className="icon-btn"
-                  disabled={!canMove(steps, done, i, 1)}
-                  aria-label={t("projectDown", { name: x.label })}
-                  onClick={() => move(i, 1)}
-                >
-                  ↓
-                </button>
               </li>
             ))}
           </ol>

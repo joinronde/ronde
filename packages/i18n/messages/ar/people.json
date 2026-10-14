@@ -7,7 +7,7 @@
   "count": "{count, plural, zero {لا أحد} one {شخص واحد} two {شخصان} few {# أشخاص} many {# شخصًا} other {# شخص}}",
   "columns": {
     "name": "الاسم",
-    "category": "الفئة الوظيفية",
+    "category": "الفريق",
     "role": "الدور",
     "status": "الحالة",
     "actions": "الإجراءات"
@@ -32,8 +32,8 @@
   "lastName": "اسم العائلة",
   "email": "البريد الإلكتروني",
   "emailLocked": "مرتبط بحسابه: يغيّره بنفسه.",
-  "category": "الفئة الوظيفية",
-  "noCategory": "لا شيء",
+  "category": "الفريق",
+  "noCategory": "بلا فريق",
   "birthday": "عيد الميلاد",
   "birthdayHint": "اليوم والشهر فقط، دون السنة أبدًا.",
   "month": "الشهر",
@@ -63,5 +63,7 @@
   "noCustomRole": "لا دور إضافي",
   "phone": "رقم الجوال",
   "phoneHint": "لتذكيرات SMS وWhatsApp، بالصيغة الدولية (+966…). اختياري.",
-  "formerMember": "عضو سابق"
+  "formerMember": "عضو سابق",
+  "teamFilter": "الفريق",
+  "allTeams": "كل الفرق"
 }

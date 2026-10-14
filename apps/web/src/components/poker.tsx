@@ -2,6 +2,7 @@
 
 import { first } from "@ronde/core/util";
 import { formatters } from "@ronde/i18n";
+import { Trash2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { average, currentItem } from "@/lib/shared/modules";
@@ -136,11 +137,11 @@ export function PokerHost() {
             )}
             <button
               type="button"
-              className="icon-btn"
+              className="icon-btn danger"
               aria-label={t("remove", { title: i.title })}
               onClick={() => rpc({ op: "poker.item.remove", id: i.id })}
             >
-              ✕
+              <Trash2 size={14} strokeWidth={2.2} aria-hidden="true" />
             </button>
           </li>
         ))}

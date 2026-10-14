@@ -4,6 +4,7 @@ import { prisma, scoped } from "@ronde/db";
 import { EDITIONS, hasFeature } from "@ronde/editions";
 import type { IdentityHost } from "@ronde/editions/ee";
 import { audit } from "./audit";
+import { applyProfile } from "./directory-profile";
 import { env } from "./env";
 import { edition, featureOn, isCloud, loadLicense } from "./license";
 import { decryptSecret } from "./secrets";
@@ -83,7 +84,10 @@ async function allowedAmong(feature: IdentityFeature, workspaceIds: string[]): P
 
 export const identityHost: IdentityHost = {
   allowed,
-  joinWorkspace: (user, workspaceId) => joinWorkspace(user, workspaceId, "members.sso"),
+  joinWorkspace: async (user, workspaceId, profile) => {
+    await joinWorkspace(user, workspaceId, "members.sso");
+    if (profile) await applyProfile(user.email, workspaceId, profile);
+  },
   ldapDirectoryFor: async (email) => {
     const workspaces = await allowedAmong("identity.ldap", await verifiedWorkspaces(email));
     if (!workspaces.length) return null;

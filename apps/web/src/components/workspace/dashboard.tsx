@@ -1,13 +1,16 @@
 "use client";
 
 import { formatters, type Locale } from "@ronde/i18n";
+import { ArrowRight, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
-import { openSampleAction, setActionStatusAction } from "@/app/w/[ws]/actions";
+import { openSampleAction, setActionStatusAction, setFirstStepsHiddenAction } from "@/app/w/[ws]/actions";
 import type { DashboardData, DashboardPerson, NextSession } from "@/lib/server/dashboard";
 import { withBasePath } from "@/lib/shared/base-path";
+import { liveSeats } from "@/lib/shared/live-progress";
+import { liveFirst } from "@/lib/shared/meetings-list";
 import { track } from "@/lib/shared/track";
 import { daysBetween, heroSeats } from "@/lib/shared/workspace-lists";
 import { MeetingMark } from "../meeting-mark";
@@ -68,6 +71,8 @@ export function Dashboard({ slug, moment, firstName, today, data, meetings, step
   const fmt = formatters(locale);
   const base = `/w/${slug}`;
   const done = steps.filter((s) => s.done).length;
+  /** Skipped here: gone at once, before the page comes back without them */
+  const [stepsGone, setStepsGone] = useState(false);
   const head = (
     <header className="dash-head">
       <div>
@@ -128,11 +133,21 @@ export function Dashboard({ slug, moment, firstName, today, data, meetings, step
     <div className="page dash">
       {head}
 
-      {done < steps.length && (
+      {done < steps.length && !stepsGone && (
         <section className="dash-card dash-steps" style={order(0)} aria-labelledby="dash-steps">
           <div className="dash-card-head">
             <h2 id="dash-steps">{t("gettingStarted")}</h2>
             <span className="hint">{t("progress", { done, total: steps.length })}</span>
+            <button
+              type="button"
+              className="btn ghost sm dash-steps-skip"
+              onClick={async () => {
+                setStepsGone(true);
+                if (!(await setFirstStepsHiddenAction(slug, true)).ok) setStepsGone(false);
+              }}
+            >
+              <X size={14} strokeWidth={2.2} aria-hidden="true" /> {t("skipSteps")}
+            </button>
           </div>
           <progress className="meter" value={done} max={steps.length} aria-labelledby="dash-steps" />
           <ol className="step-tiles">
@@ -218,9 +233,9 @@ export function Dashboard({ slug, moment, firstName, today, data, meetings, step
               <span className="hint">{meetings.length}</span>
             </div>
             <ul className="dash-meeting-list">
-              {meetings.map((m) => (
+              {liveFirst(meetings, (m) => !!m.next?.live).map((m) => (
                 <li key={m.id}>
-                  <Link href={`${base}/m/${m.id}`} className="dash-meeting" style={tint(m.color)}>
+                  <Link href={`${base}/m/${m.id}`} className={`dash-meeting${m.next?.live ? " is-live" : ""}`} style={tint(m.color)}>
                     <MeetingMark slug={slug} meeting={m} className="dash-meeting-mark" />
                     <span className="dash-meeting-main">
                       <strong>{m.name}</strong>
@@ -228,7 +243,13 @@ export function Dashboard({ slug, moment, firstName, today, data, meetings, step
                     </span>
                     <span className="dash-meeting-meta">
                       {m.next?.live ? (
-                        <span className="pill live">{t("live")}</span>
+                        <>
+                          <span className="pill live">{t("live")}</span>
+                          <span className="dash-join">
+                            {t("join")}
+                            <ArrowRight size={14} strokeWidth={2.4} aria-hidden="true" className="flip-rtl" />
+                          </span>
+                        </>
                       ) : m.next ? (
                         <span className="hint">{t("nextOn", { date: fmt.dayMonth(m.next.date) })}</span>
                       ) : null}
@@ -306,8 +327,23 @@ function Hero({ slug, next, today }: { slug: string; next: NextSession; today: s
   const when = next.live ? t("liveNow") : days === 0 ? t("today") : days === 1 ? t("tomorrow") : t("inDays", { count: days });
   // The ready people first, from the top: the arc then runs exactly over their seats
   const ready = new Set(next.turns ? next.ready : []);
-  // Over the ready seats shown, ending halfway to the next one; the whole ring once everyone is ready
-  const { seats, more, share } = heroSeats(next.people, ready, 8);
+  // Over the ready seats shown, ending halfway to the next one; the whole ring once everyone is ready.
+  // Live, the table follows the session instead: the turns in their order, done, speaking or waiting
+  const live = next.live ? next.progress : null;
+  const { seats, more, share } = live
+    ? liveSeats(next.people, live, 8)
+    : { ...heroSeats(next.people, ready, 8), seats: heroSeats(next.people, ready, 8).seats.map((x) => ({ ...x, state: null })) };
+  const nameOf = (id: string | null) => next.people.find((p) => p.id === id)?.name.split(" ")[0] ?? "";
+  const stepText = !live
+    ? null
+    : live.step === "turn"
+      ? t("liveStep.turn", { name: nameOf(live.speaking), n: live.turns.indexOf(live.speaking ?? "") + 1, total: live.turns.length })
+      : live.step === "block"
+        ? live.title || t("liveStep.block")
+        : t(`liveStep.${live.step}`);
+  // A live session's day and time are when it started, in the workspace's time zone (the same on the server)
+  const startedTime = next.time;
+  const startedDay = next.date;
   // Seats, ring and arc on one circle, 42% from the centre
   const R = 42;
   return (
@@ -319,13 +355,30 @@ function Hero({ slug, next, today }: { slug: string; next: NextSession; today: s
             {next.meeting}
           </Link>
         </h2>
-        <p className="hero-when">
-          <strong>{when}</strong>
-          <span className="hint">
-            {fmt.dateShort(next.date)} · {next.time} · {t("minutes", { count: next.durationMin })}
-            {next.turns && next.people.length > 0 && ` · ${t("readyCount", { ready: next.ready.length, total: next.people.length })}`}
-          </span>
-        </p>
+        {live ? (
+          <p className="hero-when">
+            <strong>{stepText}</strong>
+            <span className="hint">
+              {startedDay === today
+                ? t("liveSince", { time: startedTime })
+                : t("liveSinceDay", { day: fmt.dayMonth(startedDay), time: startedTime })}
+              {live.turns.length > 0 && ` · ${t("turnsDone", { done: live.spoke.length, total: live.turns.length })}`}
+            </span>
+            {live.yourTurn !== null && (
+              <span className={`hero-your-turn${live.yourTurn === 0 ? " now" : ""}`}>
+                {live.yourTurn === 0 ? t("yourTurnNow") : t("yourTurnIn", { count: live.yourTurn })}
+              </span>
+            )}
+          </p>
+        ) : (
+          <p className="hero-when">
+            <strong>{when}</strong>
+            <span className="hint">
+              {fmt.dateShort(next.date)} · {next.time} · {t("minutes", { count: next.durationMin })}
+              {next.turns && next.people.length > 0 && ` · ${t("readyCount", { ready: next.ready.length, total: next.people.length })}`}
+            </span>
+          </p>
+        )}
         <ul className="hero-facts">
           {next.checkIn !== null && (
             <li className={next.checkIn > 0 ? "ok" : "todo"}>
@@ -367,29 +420,37 @@ function Hero({ slug, next, today }: { slug: string; next: NextSession; today: s
       </div>
       <div className="hero-table" aria-hidden="true">
         <div className="hero-ring" />
-        {/* The table getting ready: the arc grows to the share of check-ins filled in */}
-        <svg className="hero-arc" viewBox="0 0 100 100" focusable="false">
-          <circle
-            cx="50"
-            cy="50"
-            r={R}
-            pathLength={100}
-            transform="rotate(-90 50 50)"
-            style={{ strokeDasharray: `${seats.length ? share * 100 : 0} 100` }}
-          />
-        </svg>
+        {/* Live only: the arc runs over the turns done. Before the session a ring that fills would read as a session
+            under way; the seats say whose check-in is ready instead */}
+        {live && (
+          <svg className="hero-arc" viewBox="0 0 100 100" focusable="false">
+            <circle
+              cx="50"
+              cy="50"
+              r={R}
+              pathLength={100}
+              transform="rotate(-90 50 50)"
+              style={{ strokeDasharray: `${seats.length ? share * 100 : 0} 100` }}
+            />
+          </svg>
+        )}
         <div className="hero-center">
           <span className="hero-center-time">{next.live ? "●" : next.time}</span>
           <span className="hero-center-day">{next.live ? t("liveShort") : fmt.dayMonth(next.date)}</span>
+          {live && live.turns.length > 0 && (
+            <span className="hero-center-turns">
+              {live.spoke.length}/{live.turns.length}
+            </span>
+          )}
         </div>
         {seats.map((p, i) => {
           const a = (i / seats.length) * Math.PI * 2 - Math.PI / 2;
           return (
             <span
               key={p.id}
-              className={`hero-seat${ready.has(p.id) ? " ready" : ""}`}
+              className={`hero-seat${p.state ? ` ${p.state}` : ready.has(p.id) ? " ready" : ""}`}
               style={{ left: `${50 + R * Math.cos(a)}%`, top: `${50 + R * Math.sin(a)}%`, "--d": `${i * 0.08}s` } as React.CSSProperties}
-              title={p.name}
+              title={live ? p.name : `${p.name} · ${ready.has(p.id) ? t("seatReady") : t("seatToFill")}`}
             >
               <Face slug={slug} p={p} />
             </span>

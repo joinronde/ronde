@@ -101,11 +101,15 @@ describe("polls", () => {
     const seen = await loadSnapshot(ana);
     const shown = seen.polls.find((p) => p.shown)!;
     expect(shown.results.slice(0, 2)).toEqual([
-      { value: "Intense", count: 2, people: [] },
-      { value: "Fun", count: 1, people: [] },
+      { value: "Intense", count: 2, people: [], ids: [] },
+      { value: "Fun", count: 1, people: [], ids: [] },
     ]);
     // Not anonymous: the names show next to the totals
     expect(seen.polls.find((p) => p.id === ready!.id)?.results.find((r) => r.value === "Yes")?.people).toHaveLength(1);
+    // ...and their faces: the ids of who answered, for each answer and for the poll
+    const readyView = seen.polls.find((p) => p.id === ready!.id)!;
+    expect(readyView.results.find((r) => r.value === "Yes")?.ids).toHaveLength(1);
+    expect(readyView.respondents).toHaveLength(1);
   });
 
   it("keeps a quick yes or no told apart, whatever the language of those who see it", async () => {

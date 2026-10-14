@@ -92,9 +92,10 @@
     },
     "workspace": {
       "update": "Impostazioni dello spazio modificate",
-      "categoryAdd": "Categoria professionale aggiunta",
-      "categoryRename": "Categoria professionale rinominata",
-      "categoryDelete": "Categoria professionale eliminata",
+      "categoryAdd": "Team aggiunto",
+      "categoryRename": "Team rinominato",
+      "categoryDelete": "Team eliminato",
+      "categoryMove": "Team spostato",
       "auditStream": "Invio dell'audit modificato",
       "logo": "Logo cambiato",
       "logoRemoved": "Logo rimosso",

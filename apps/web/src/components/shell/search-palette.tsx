@@ -7,6 +7,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import type { SearchHit, SearchKind } from "@/lib/server/search";
 import { withBasePath } from "@/lib/shared/base-path";
 import { matchesWords } from "@/lib/shared/search";
+import { Highlighted } from "../highlighted";
 import { MeetingMark, type MeetingMarkData } from "../meeting-mark";
 import type { ShellData } from "./app-shell";
 import { Icon, type IconName } from "./icons";
@@ -218,7 +219,9 @@ export function SearchPalette({ data, onClose }: { data: ShellData; onClose: () 
                     </span>
                   )}
                   <span className="search-text">
-                    <span className="search-title">{item.title}</span>
+                    <span className="search-title">
+                      <Highlighted text={item.title} query={q} anywhere />
+                    </span>
                     {item.detail && <span className="hint">{item.detail}</span>}
                   </span>
                   {i === index && (

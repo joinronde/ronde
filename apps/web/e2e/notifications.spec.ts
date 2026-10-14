@@ -29,9 +29,11 @@ test("an admin adds a connector, a meeting sends its notifications through it", 
 
   // A meeting starts from the suggested set
   await page.goto(`${workspace}/meetings/new`);
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByLabel("Name").fill("Release sync");
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  // Sections and modules: the template's, kept as they are
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByRole("button", { name: "Create the meeting" }).click();
   await page.waitForURL(/\/m\/[^/]+\/control$/, { timeout: 120_000 });
   const meeting = page.url().replace(/\/control$/, "");
