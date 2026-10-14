@@ -60,15 +60,19 @@ function instanceConnection(kind: ForgeKind): ForgeConnectionView | null {
   return { id: INSTANCE_CONNECTION, kind, name: "", url: defaultUrl(kind), account: "", scope: "instance", oauth: false };
 }
 
-const view = (r: Row): ForgeConnectionView => ({
+/** `withOAuth`: whether it was connected with OAuth, read from its secret (decrypted: for the settings only) */
+const view = (r: Row, withOAuth: boolean): ForgeConnectionView => ({
   id: r.id,
   kind: r.kind,
   name: r.name,
   url: r.url,
   account: r.account,
   scope: r.meetingId ? "meeting" : "workspace",
-  oauth: !!parseGitlabSecret(safeDecrypt(r.secret)).grant,
+  oauth: withOAuth && isOAuth(r.secret),
 });
+
+/** Whether a connection's secret is the grant of "Connect with GitLab" */
+export const isOAuth = (secret: string) => !!parseGitlabSecret(safeDecrypt(secret)).grant;
 
 function safeDecrypt(secret: string): string {
   try {
@@ -94,13 +98,13 @@ export function forgeUrl(kind: ForgeKind, raw: string | undefined): string {
 }
 
 /** Connections the workspace (meetingId null) or a meeting may use: the workspace's, the meeting's own, the instance's */
-export async function listForgeConnections(db: ScopedClient, meetingId: string | null): Promise<ForgeConnectionView[]> {
+export async function listForgeConnections(db: ScopedClient, meetingId: string | null, withOAuth = true): Promise<ForgeConnectionView[]> {
   const rows = await db.forgeConnection.findMany({
     where: meetingId ? { OR: [{ meetingId: null }, { meetingId }] } : { meetingId: null },
     orderBy: { createdAt: "asc" },
   });
   const instance = FORGE_KINDS.map(instanceConnection).filter((c): c is ForgeConnectionView => !!c);
-  return [...rows.map(view), ...instance];
+  return [...rows.map((r) => view(r, withOAuth)), ...instance];
 }
 
 /** The forge account a token reads as; throws when the forge refuses it */
@@ -112,7 +116,8 @@ export async function forgeAccount(access: Omit<ForgeAccess, "id">): Promise<str
       ...(access.kind === "github" ? { Accept: "application/vnd.github+json", "User-Agent": "Ronde" } : {}),
     },
     cache: "no-store",
-    signal: AbortSignal.timeout(15_000),
+    // Short: a meeting's connection is checked within its operation's transaction
+    signal: AbortSignal.timeout(8_000),
   }).catch(() => {
     throw new IntegrationError(access.kind === "gitlab" ? "gitlabUnreachable" : "githubUnreachable", { url: access.url });
   });
@@ -122,7 +127,9 @@ export async function forgeAccount(access: Omit<ForgeAccess, "id">): Promise<str
     throw access.kind === "gitlab"
       ? new IntegrationError("gitlabStatus", { status: res.status, path: "/user" })
       : new IntegrationError("githubStatus", { status: res.status });
-  const me = (await res.json()) as { username?: string; login?: string };
+  // A page rather than the API (the site's address, a sign-in portal): the address is not the forge's API
+  const me = (await res.json().catch(() => null)) as { username?: string; login?: string } | null;
+  if (!me || typeof me !== "object") throw new OpError("forgeUrlInvalid");
   return me.username ?? me.login ?? "";
 }
 
@@ -140,6 +147,9 @@ export async function saveForgeConnection(
   if (input.id && !existing) throw new OpError("notFound");
   const kind = existing?.kind ?? input.kind;
   const url = forgeUrl(kind, input.url);
+  // Another server than the instance's is reached from Ronde's network: its administrators decide, as for imports
+  if (meetingId && url !== defaultUrl(kind) && url !== existing?.url && !ctx.can("connectors.manage"))
+    throw new AccessError(403, "forgeServerAdminOnly", { host: new URL(url).host });
   const token = input.token?.trim() ?? "";
   if (!token && !existing?.secret) throw new OpError("connectorSecretRequired");
   if (token && !TOKEN_FORMAT.test(token)) throw new OpError("tokenInvalid");
@@ -184,7 +194,7 @@ export async function testForgeConnection(ctx: WorkspaceContext, id: string, mee
   const access = await forgeAccess(ctx.db, id, meetingId);
   if (!access) throw new OpError("notFound");
   const account = await forgeAccount(access);
-  if (id !== INSTANCE_CONNECTION) await ctx.db.forgeConnection.updateMany({ where: { id }, data: { account } });
+  await ctx.db.forgeConnection.updateMany({ where: { id }, data: { account } });
   return { account };
 }
 
@@ -299,8 +309,9 @@ export async function meetingForges(
   db: ScopedClient,
   meetingId: string,
   mods: { gitlab?: { config: unknown } | null; github?: { config: unknown } | null },
+  withOAuth = true,
 ): Promise<ForgeSettings> {
-  const connections = await listForgeConnections(db, meetingId);
+  const connections = await listForgeConnections(db, meetingId, withOAuth);
   const gl = readConfig(gitlab, mods.gitlab?.config);
   const gh = readConfig(github, mods.github?.config);
   return {
@@ -321,11 +332,14 @@ export async function meetingSources<K extends ForgeKind>(
   // GitLab is on until turned off; GitHub is off until turned on
   if (kind === "gitlab" ? row && !row.enabled : !row?.enabled) throw new AccessError(403, "moduleDisabled");
   const forges = await meetingForges(db, meetingId, { [kind]: row });
-  const out: { source: SourceOf<K>; access: ForgeAccess }[] = [];
-  for (const source of forges[kind].sources as SourceOf<K>[]) {
-    const access = await accessOrInstance(db, source.connection, meetingId, kind);
-    if (access) out.push({ source, access });
-  }
+  const sources = forges[kind].sources as SourceOf<K>[];
+  // A connection that cannot be read (a secret of another key, a renewal refused) leaves the others; its error is
+  // only thrown when no connection is left
+  const results = await Promise.allSettled(sources.map((source) => accessOrInstance(db, source.connection, meetingId, kind)));
+  const out = results.flatMap((r, i) => (r.status === "fulfilled" && r.value ? [{ source: sources[i]!, access: r.value }] : []));
+  const failed = results.find((r): r is PromiseRejectedResult => r.status === "rejected");
+  if (failed) console.error(`[${kind}] a connection could not be used`, failed.reason instanceof Error ? failed.reason.name : "");
+  if (!out.length && failed) throw failed.reason;
   return out;
 }
 
@@ -355,8 +369,14 @@ export async function forgeItems<S extends { access: ForgeAccess }>(
   const results = await Promise.allSettled(sources.map(read));
   const failed = results.filter((r): r is PromiseRejectedResult => r.status === "rejected");
   if (sources.length && failed.length === sources.length) throw failed[0]!.reason;
+  // Two servers may give the same ids: each item says through which connection it came. Two connections to one
+  // server give the same item twice: its address keeps the first
+  const seen = new Set<string>();
   return results.flatMap((r, i) =>
-    // Two servers may give the same ids: each item says through which connection it came
-    r.status === "fulfilled" ? r.value.map((item) => ({ ...item, id: `${sources[i]!.access.id}:${item.id}` })) : [],
+    r.status === "fulfilled"
+      ? r.value
+          .filter((item) => !item.url || (!seen.has(item.url) && !!seen.add(item.url)))
+          .map((item) => ({ ...item, id: `${sources[i]!.access.id}:${item.id}` }))
+      : [],
   );
 }

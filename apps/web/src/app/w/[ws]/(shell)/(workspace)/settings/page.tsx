@@ -16,7 +16,7 @@ import { publicUrl } from "@/lib/server/public-url";
 import { canEncrypt, decryptSecret } from "@/lib/server/secrets";
 import { slackOn, slackView } from "@/lib/server/slack";
 import { teamsOn, teamsView } from "@/lib/server/teams";
-import { listTrackers, trackersOn } from "@/lib/server/trackers";
+import { listTrackers, trackerCanUse, trackersOn } from "@/lib/server/trackers";
 import { transcriptionOn } from "@/lib/server/transcripts";
 import { listVideoAccounts, videoLinksOn } from "@/lib/server/video-accounts";
 import { listWikis, wikisOn } from "@/lib/server/wikis";
@@ -75,8 +75,8 @@ export default async function WorkspaceSettingsPage({ params }: { params: Promis
       ? {
           slug: ctx.workspace.slug,
           trackers: trackersAvailable ? await listTrackers(ctx) : [],
-          // GitLab and GitHub trackers open tickets with a connection of the workspace
-          connections: forgeConnections.filter((c) => c.scope === "workspace"),
+          // GitLab and GitHub trackers open tickets with a connection of the workspace that can write
+          connections: forgeConnections.filter((c) => c.scope === "workspace" && trackerCanUse(c)),
           available: trackersAvailable,
           plansUrl: plans,
         }

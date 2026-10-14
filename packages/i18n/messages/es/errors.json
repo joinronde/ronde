@@ -51,6 +51,8 @@
   "gitlabTokenFirst": "Añada o elija primero una conexión de GitLab.",
   "forgeUrlInvalid": "La dirección del servidor no es válida: https://… (http solo en un servidor autoalojado).",
   "forgeConnectionRequired": "Elija primero una conexión de GitLab o GitHub del espacio.",
+  "forgeServerAdminOnly": "Solo un administrador del espacio puede conectar una reunión a {host}: las conexiones propias de una reunión van al servidor de la instancia.",
+  "forgeConnectionReadOnly": "Esta conexión no puede abrir tickets: los trackers de GitLab necesitan un token personal («Conectar con GitLab» solo lee), los de GitHub una conexión a github.com.",
   "nameRequired": "Ponle un nombre.",
   "slugInvalid": "Usa de 1 a 40 minúsculas, cifras y guiones, sin guion al principio ni al final.",
   "slugReserved": "Esta dirección está reservada para Ronde. Elige otra, por ejemplo {slug}.",

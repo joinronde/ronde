@@ -129,6 +129,56 @@ describe("forge connections", () => {
     expect(list.find((c) => c.id === broken.id)).toMatchObject({ name: "Broken", oauth: false });
   });
 
+  it("of a meeting reach the instance's server, unless an administrator adds them", async () => {
+    vi.stubGlobal("fetch", async () => Response.json({ username: "hana" }));
+    const host = { ...f.ctx, can: (p: string) => p !== "connectors.manage" && f.ctx.can(p as never) };
+    host.ws = { ...f.ctx.ws, can: (p: string) => p !== "connectors.manage" && f.ctx.ws.can(p as never) };
+    // From Ronde's network: a host could otherwise make the server call any address
+    await expect(
+      runOp(host, { op: "forge.add", kind: "gitlab", url: "https://intranet.acme.test", token: "glpat-x" }),
+    ).rejects.toMatchObject({
+      status: 403,
+      key: "forgeServerAdminOnly",
+    });
+    expect(await prisma.forgeConnection.count({ where: { meetingId: f.meetingId, url: "https://intranet.acme.test" } })).toBe(0);
+    await runOp(host, { op: "forge.add", kind: "gitlab", name: "Hana's", token: "glpat-x" });
+    expect(await prisma.forgeConnection.count({ where: { meetingId: f.meetingId, url: "https://gitlab.com" } })).toBe(1);
+    await runOp(f.ctx, { op: "forge.add", kind: "gitlab", name: "Intranet", url: "https://intranet.acme.test", token: "glpat-x" });
+    expect(await prisma.forgeConnection.count({ where: { meetingId: f.meetingId, url: "https://intranet.acme.test" } })).toBe(1);
+  });
+
+  it("refuse an address that answers with a page rather than the forge's API", async () => {
+    vi.stubGlobal("fetch", async () => new Response("<html>Sign in</html>", { status: 200, headers: { "content-type": "text/html" } }));
+    await expect(
+      saveForgeConnection(f.ctx.ws, { kind: "github", name: "Site", url: "https://github.com", token: "ghp_x" }, null),
+    ).rejects.toMatchObject({ key: "forgeUrlInvalid" });
+  });
+
+  it("that cannot be read leave the meeting's other connections working", async () => {
+    vi.stubEnv("GITLAB_TOKEN", "");
+    const good = await connection("gitlab", "Good");
+    const broken = await connection("gitlab", "Unreadable", null, "v1:not-really-encrypted");
+    await runOp(f.ctx, {
+      op: "gitlab.configure",
+      sources: [
+        { connection: broken.id, groups: "", projects: "" },
+        { connection: good.id, groups: "", projects: "" },
+      ],
+    });
+    expect((await meetingSources(f.ctx.ws.db, f.meetingId, "gitlab")).map((s) => s.access.id)).toEqual([good.id]);
+  });
+
+  it("are not decrypted for the people who do not configure the meeting", async () => {
+    const decrypt = vi.spyOn(await import("@/lib/server/secrets"), "decryptSecret");
+    const theirs = await meetingForges(f.ctx.ws.db, f.meetingId, {}, false);
+    expect(theirs.connections.length).toBeGreaterThan(0);
+    expect(decrypt).not.toHaveBeenCalled();
+    // Those who do see whether each was made with OAuth
+    await meetingForges(f.ctx.ws.db, f.meetingId, {}, true);
+    expect(decrypt).toHaveBeenCalled();
+    decrypt.mockRestore();
+  });
+
   it("removed take the trackers that opened tickets with them", async () => {
     const shared = await connection("github", "Shared");
     const tracker = await prisma.issueTracker.create({
@@ -159,6 +209,12 @@ describe("forge items through several connections", () => {
       return [item("issue-1")];
     });
     expect(items.map((i) => i.id)).toEqual(["a:issue-1", "b:issue-1"]);
+  });
+
+  it("shows once an item read through two connections to the same server", async () => {
+    const same = { ...item("issue-1"), url: "https://gitlab.test/acme/app/-/issues/1" };
+    const items = await forgeItems([source("a"), source("b")], async () => [same]);
+    expect(items.map((i) => i.id)).toEqual(["a:issue-1"]);
   });
 
   it("fails when every connection failed", async () => {

@@ -51,6 +51,8 @@
   "gitlabTokenFirst": "请先添加或选择一个 GitLab 连接。",
   "forgeUrlInvalid": "服务器地址无效：https://…（仅自托管服务器可用 http）。",
   "forgeConnectionRequired": "请先选择工作区的 GitLab 或 GitHub 连接。",
+  "forgeServerAdminOnly": "只有工作区管理员才能将会议连接到 {host}：会议自己的连接只能访问实例的服务器。",
+  "forgeConnectionReadOnly": "此连接无法创建工单：GitLab 跟踪器需要个人令牌（“使用 GitLab 连接”只能读取），GitHub 跟踪器需要 github.com 的连接。",
   "nameRequired": "请输入名称。",
   "slugInvalid": "请使用 1 到 40 个小写字母、数字和连字符，开头和结尾不能是连字符。",
   "slugReserved": "此地址为 Ronde 保留。请换一个，例如 {slug}。",

@@ -86,7 +86,8 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
     moduleStates(db, meeting.id),
   ]);
   const on = (id: string) => !!mods[id]?.enabled;
-  const forges = on("gitlab") || on("github") ? await meetingForges(db, meeting.id, mods) : NO_FORGES;
+  // Whether each connection was made with OAuth is read from its secret: for the people configuring the meeting only
+  const forges = on("gitlab") || on("github") ? await meetingForges(db, meeting.id, mods, viewer.isAdmin) : NO_FORGES;
   const sections: SectionDef[] = sectionRows.map(toSection);
   const checkIns = await loadCheckIns(db, meeting.id, sections);
   const sid = session?.id ?? "-";

@@ -51,6 +51,8 @@
   "gitlabTokenFirst": "Add or choose a GitLab connection first.",
   "forgeUrlInvalid": "The server address is not valid: https://… (http only on a self-hosted server).",
   "forgeConnectionRequired": "Choose a GitLab or GitHub connection of the workspace first.",
+  "forgeServerAdminOnly": "Only an administrator of the workspace can connect a meeting to {host}: a meeting's own connections reach the instance's server.",
+  "forgeConnectionReadOnly": "This connection cannot open tickets: GitLab trackers need a personal token (\"Connect with GitLab\" only reads), GitHub trackers a github.com connection.",
   "nameRequired": "Give it a name.",
   "slugInvalid": "Use 1 to 40 lowercase letters, digits and dashes, without a dash at the start or the end.",
   "slugReserved": "This address is kept for Ronde itself. Pick another one, such as {slug}.",

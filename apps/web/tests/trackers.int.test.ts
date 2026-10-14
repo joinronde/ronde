@@ -79,6 +79,35 @@ describe("issue trackers", () => {
     await expect(
       saveTracker(f.ctx.ws, { kind: "github", name: "App", config: { repo: "acme/app" }, connectionId: own.id }),
     ).rejects.toMatchObject({ key: "forgeConnectionRequired" });
+    // "Connect with GitLab" only reads, and GitHub tickets go to github.com: neither can open tickets
+    const oauth = await prisma.forgeConnection.create({
+      data: {
+        workspaceId: f.workspaceId,
+        kind: "gitlab",
+        name: "OAuth",
+        url: "https://gitlab.com",
+        secret: encryptSecret(JSON.stringify({ kind: "oauth", access: "a", refresh: "r", expiresAt: Date.now() + 3_600_000, user: "u" })),
+      },
+    });
+    await expect(
+      saveTracker(f.ctx.ws, { kind: "gitlab", name: "App", config: { project: "acme/app" }, connectionId: oauth.id }),
+    ).rejects.toMatchObject({
+      key: "forgeConnectionReadOnly",
+    });
+    const enterprise = await prisma.forgeConnection.create({
+      data: {
+        workspaceId: f.workspaceId,
+        kind: "github",
+        name: "GHE",
+        url: "https://ghe.acme.test/api/v3",
+        secret: encryptSecret("ghp_ghe"),
+      },
+    });
+    await expect(
+      saveTracker(f.ctx.ws, { kind: "github", name: "App", config: { repo: "acme/app" }, connectionId: enterprise.id }),
+    ).rejects.toMatchObject({
+      key: "forgeConnectionReadOnly",
+    });
     const shared = await prisma.forgeConnection.create({
       data: {
         workspaceId: f.workspaceId,
