@@ -22,7 +22,7 @@ function gitlab(answer: (path: string, token: string) => unknown) {
     "fetch",
     vi.fn(async (url: string, init: RequestInit) => {
       const path = decodeURIComponent(new URL(url).pathname + new URL(url).search).replace("/api/v4", "");
-      const token = new Headers(init.headers).get("private-token") ?? "";
+      const token = (new Headers(init.headers).get("authorization") ?? "").replace(/^Bearer /, "");
       calls.push({ path, token });
       return new Response(JSON.stringify(answer(path, token)), { status: 200 });
     }),

@@ -1,0 +1,68 @@
+{
+  "title": "GitLab 和 GitHub",
+  "intro": "与代码托管平台的连接，为整个工作区设置一次：每个会议都可以通过它们读取每个人的事项，事项跟踪器也用它们创建工单。",
+  "empty": "还没有连接。",
+  "kinds": {
+    "gitlab": "GitLab",
+    "github": "GitHub"
+  },
+  "scopes": {
+    "workspace": "工作区",
+    "meeting": "仅此会议",
+    "instance": "服务器"
+  },
+  "instanceName": "服务器的 {kind}",
+  "instanceHint": "由服务器变量设置（GITLAB_TOKEN、GITHUB_TOKEN）；没有令牌时，GitHub 只读取公开仓库。",
+  "as": "身份为 @{account}",
+  "oauth": "已通过 GitLab 连接",
+  "add": "添加连接",
+  "addOwn": "添加仅用于此会议的连接",
+  "addOwnHint": "只有此会议可见，用于工作区没有的服务器或账号。",
+  "connect": "使用 GitLab 连接",
+  "connectHint": "您的 GitLab 账号，只读，自动续期：无需复制令牌，也无需在过期时更换。",
+  "reconnect": "重新连接",
+  "orToken": "或使用个人令牌",
+  "kind": "工具",
+  "name": "名称",
+  "url": "服务器",
+  "urlHint": "留空：{url}",
+  "token": "令牌",
+  "tokenKept": "令牌留空即保留已保存的令牌。",
+  "tokenHints": {
+    "gitlab": "具有 <code>read_api</code> 范围的个人令牌（创建工单的跟踪器需要 <code>api</code>）。",
+    "github": "可读取 issue 和 pull request 的细粒度令牌（创建工单的跟踪器还需要写入权限）。"
+  },
+  "encrypted": "令牌在保存前加密，之后不再显示。",
+  "noSecretKey": "服务器未配置令牌加密：请让运维人员设置 SECRET_KEY 密钥。",
+  "save": "保存",
+  "saved": "已保存。",
+  "cancel": "取消",
+  "edit": "编辑",
+  "test": "测试",
+  "works": "可用",
+  "remove": "移除",
+  "removeConfirm": "移除连接 {name}？使用它的会议将不再通过它读取，用它创建工单的跟踪器也会被移除。",
+  "removeOwnConfirm": "移除此会议的连接 {name}？",
+  "back": {
+    "connected": "GitLab 已连接。",
+    "failed": "GitLab 连接失败：请重试，或使用个人令牌。",
+    "denied": "您无权在此连接 GitLab。",
+    "cancelled": "已取消 GitLab 连接。"
+  },
+  "meeting": {
+    "title": "{kind} 连接",
+    "inherited": "在您选择之前，此会议使用工作区的连接。",
+    "picked": "此会议使用下方勾选的连接。",
+    "use": "使用",
+    "none": "没有 {kind} 连接：管理员可以为工作区添加一个，或在下方添加仅用于此会议的连接。",
+    "save": "保存 {kind} 访问",
+    "repos": "关注的仓库",
+    "reposHint": "“所有者/仓库”或整个“所有者”，每行一个；留空：所有仓库。还请在“人员与角色”中填写每个人的 GitHub 用户名。",
+    "groups": "群组",
+    "projects": "关注的项目",
+    "projectsHint": "只有这些项目的事项可供导入。还请在“人员与角色”中填写每个人的 GitLab 用户名。"
+  },
+  "hub": {
+    "count": "{count, plural, other {# 个连接}}"
+  }
+}

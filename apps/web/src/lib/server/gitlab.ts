@@ -2,21 +2,11 @@ import "server-only";
 import { createHash } from "node:crypto";
 import type { ForgeItem, GitlabProject } from "@ronde/core/types";
 import { matchesProjects } from "@ronde/core/util";
-import type { ScopedClient } from "@ronde/db";
-import { readConfig } from "@ronde/module-sdk";
-import { gitlab } from "@ronde/modules";
-import { type GitlabGrant, grantDue, parseGitlabSecret } from "@/lib/shared/gitlab-grant";
-import { singleFlight } from "@/lib/shared/single-flight";
-import { env } from "./env";
-import { AccessError, IntegrationError } from "./errors";
-import { renewGrant, saveGrant } from "./gitlab-oauth";
-import { isCloud } from "./license";
+import { IntegrationError } from "./errors";
 import { outboundFetch } from "./outbound";
-import { decryptSecret } from "./secrets";
 
-// Recent issues and merge requests of a person, through the GitLab API.
-// The access is the account connected with GitLab (OAuth, renewed in time), a token entered in the settings,
-// otherwise the GITLAB_TOKEN variable.
+// Recent issues and merge requests of a person, through the GitLab API, with one of the connections the meeting
+// uses (forges.ts)
 
 interface GlIssue {
   id: number;
@@ -34,49 +24,8 @@ interface GlProject {
   archived?: boolean;
 }
 
-/** `bearer`: an OAuth access token (sent as Authorization), otherwise a personal token */
-type GitlabConfig = { url: string; token: string; bearer?: boolean };
-
-/** One renewal of a meeting's GitLab grant at a time on this server */
-const renewOnce = singleFlight<GitlabGrant>();
-
-/** The instance's token serves every meeting of a self-hosted server; in the cloud each meeting brings its own */
-const instanceToken = (token: string) => (isCloud() ? "" : token);
-
-/** GitLab module of a meeting: its access (own token, otherwise the instance one) and followed projects */
-export async function meetingGitlab(db: ScopedClient, meetingId: string) {
-  const row = await db.moduleInstallation.findFirst({ where: { meetingId, moduleId: "gitlab" } });
-  if (row && !row.enabled) throw new AccessError(403, "moduleDisabled");
-  const config = readConfig(gitlab, row?.config);
-  const { token, grant } = parseGitlabSecret(decryptSecret(row?.secret ?? ""));
-  if (grant && row) {
-    let current = grant;
-    if (grantDue(grant)) {
-      try {
-        // Requests of this server seeing it due share one renewal (GitLab takes each refresh token once)
-        current = await renewOnce(meetingId, async () => {
-          const renewed = await renewGrant(grant);
-          await saveGrant(db, row.workspaceId, meetingId, renewed);
-          return renewed;
-        });
-      } catch (e) {
-        // Renewed meanwhile by another server, whose save may come a moment later: the new grant then serves
-        let fresh: GitlabGrant | null = null;
-        for (const wait of [0, 300, 900]) {
-          if (wait) await new Promise((r) => setTimeout(r, wait));
-          const again = await db.moduleInstallation.findFirst({ where: { meetingId, moduleId: "gitlab" } });
-          fresh = parseGitlabSecret(decryptSecret(again?.secret ?? "")).grant;
-          if (fresh && !grantDue(fresh)) break;
-        }
-        if (!fresh || grantDue(fresh)) throw e;
-        current = fresh;
-      }
-    }
-    return { cfg: { url: env.gitlabUrl(), token: current.access, bearer: true }, projects: config.projects, groups: config.groups };
-  }
-  const cfg: GitlabConfig = { url: env.gitlabUrl(), token: token || instanceToken(env.gitlabToken()) };
-  return { cfg, projects: config.projects, groups: config.groups };
-}
+/** The server and the token: a personal token or an OAuth access token, both sent as "Authorization: Bearer" */
+type GitlabConfig = { url: string; token: string };
 
 const cache = new Map<string, { at: number; items: ForgeItem[] }>();
 
@@ -89,7 +38,7 @@ const cacheKey = (cfg: GitlabConfig, ...parts: string[]) =>
 
 async function glFetch(cfg: GitlabConfig, path: string): Promise<Response> {
   const res = await outboundFetch(`${cfg.url}/api/v4${path}`, {
-    headers: cfg.bearer ? { Authorization: `Bearer ${cfg.token}` } : { "PRIVATE-TOKEN": cfg.token },
+    headers: { Authorization: `Bearer ${cfg.token}` },
     cache: "no-store",
     signal: AbortSignal.timeout(15_000),
   }).catch(() => {

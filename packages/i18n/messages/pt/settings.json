@@ -88,29 +88,7 @@
     "bankHint": "Uma pergunta é sorteada para cada reunião; a sala de controle pode trocá-la. Deixe vazio para desativar o quebra-gelo."
   },
   "sources": {
-    "title": "Fontes de tarefas",
-    "connect": "Ligar com o GitLab",
-    "connectHint": "A sua conta GitLab, só de leitura, renovada sozinha: nenhum token para copiar nem substituir quando expira.",
-    "connected": "Ligado ao GitLab",
-    "connectedAs": "Ligado ao GitLab como @{user}",
-    "disconnect": "Desligar",
-    "disconnected": "GitLab desligado",
-    "usePersonalToken": "Usar antes um token pessoal",
-    "gitlabToken": "Token do GitLab",
-    "noSecretKey": "A criptografia de tokens não está configurada no servidor: peça aos operadores para definir a chave SECRET_KEY.",
-    "tokenHint": "Os tokens são criptografados antes de serem salvos e nunca são mostrados de novo. GitLab: um token com o escopo <code>read_api</code>.",
-    "serverToken": "(o token do servidor é usado até você informar um)",
-    "groups": "Grupos do GitLab",
-    "projects": "Projetos do GitLab acompanhados",
-    "projectsHint": "Só as issues destes projetos são oferecidas para importação. Informe também o usuário do GitLab de cada pessoa no bloco Pessoas.",
-    "save": "Salvar o acesso ao GitLab",
-    "turnOn": "Nenhuma integração está ativada nesta reunião. Ative GitLab ou GitHub em “Módulos” para importar as issues e merge ou pull requests de cada pessoa.",
-    "githubTitle": "GitHub",
-    "githubToken": "Token do GitHub",
-    "githubTokenHint": "Opcional para repositórios públicos. Para os privados: um token granular com leitura de issues e pull requests. Criptografado, nunca mostrado de novo.",
-    "githubRepos": "Repositórios acompanhados",
-    "githubReposHint": "“dono/repositório” ou um “dono” inteiro, um por linha; vazio: todos os repositórios. Informe também o usuário do GitHub de cada pessoa no bloco Pessoas.",
-    "githubSave": "Salvar o acesso ao GitHub"
+    "turnOn": "Nenhuma integração está ativada nesta reunião. Ative GitLab ou GitHub em “Módulos” para importar as issues e merge ou pull requests de cada pessoa."
   },
   "hub": {
     "intro": "As ferramentas com que esta reunião trabalha e em que ponto está cada uma. Abra um cartão para a configurar.",
@@ -154,7 +132,6 @@
     "followed": "{count, plural, one {# projeto ou grupo acompanhado} other {# projetos ou grupos acompanhados}}",
     "noFilter": "Sem filtro: todos os projetos são acompanhados",
     "untickAll": "Desmarcar tudo",
-    "tokenFirst": "Informe e salve o token do GitLab para mostrar os projetos dos grupos.",
     "loading": "Carregando projetos…",
     "saveForGroups": "Salve as configurações para mostrar os projetos dos novos grupos.",
     "filter": "Filtrar projetos",

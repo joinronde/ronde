@@ -13,6 +13,7 @@ export const TENANT_MODELS = [
   "InboxItem",
   "WorkspaceLogo",
   "IssueTracker",
+  "ForgeConnection",
   "Wiki",
   "WikiPage",
   "VideoAccount",

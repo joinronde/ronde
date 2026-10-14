@@ -1,0 +1,68 @@
+{
+  "title": "GitLab and GitHub",
+  "intro": "Connections to your code forges, made once for the whole workspace: every meeting can read each person's issues through them, and trackers open tickets with them.",
+  "empty": "No connection yet.",
+  "kinds": {
+    "gitlab": "GitLab",
+    "github": "GitHub"
+  },
+  "scopes": {
+    "workspace": "Workspace",
+    "meeting": "This meeting only",
+    "instance": "Server"
+  },
+  "instanceName": "{kind} of the server",
+  "instanceHint": "Set by the server's variables (GITLAB_TOKEN, GITHUB_TOKEN); without a token, GitHub reads public repositories.",
+  "as": "as @{account}",
+  "oauth": "connected with GitLab",
+  "add": "Add a connection",
+  "addOwn": "Add a connection for this meeting only",
+  "addOwnHint": "Seen by this meeting alone, for a server or an account the workspace does not have.",
+  "connect": "Connect with GitLab",
+  "connectHint": "Your GitLab account, read-only, renewed by itself: no token to copy or to replace when it expires.",
+  "reconnect": "Connect again",
+  "orToken": "or with a personal token",
+  "kind": "Tool",
+  "name": "Name",
+  "url": "Server",
+  "urlHint": "Empty: {url}",
+  "token": "Token",
+  "tokenKept": "Leave the token empty to keep the saved one.",
+  "tokenHints": {
+    "gitlab": "A personal token with the <code>read_api</code> scope (<code>api</code> for a tracker that opens issues).",
+    "github": "A fine-grained token that reads issues and pull requests (and writes them, for a tracker that opens issues)."
+  },
+  "encrypted": "Tokens are encrypted before being saved and are never shown again.",
+  "noSecretKey": "Token encryption is not configured on the server: ask the operators to set the SECRET_KEY key.",
+  "save": "Save",
+  "saved": "Saved.",
+  "cancel": "Cancel",
+  "edit": "Edit",
+  "test": "Test",
+  "works": "Works",
+  "remove": "Remove",
+  "removeConfirm": "Remove the connection {name}? The meetings using it no longer read through it, and the trackers that open tickets with it are removed.",
+  "removeOwnConfirm": "Remove the connection {name} of this meeting?",
+  "back": {
+    "connected": "GitLab connected.",
+    "failed": "Connecting with GitLab failed: try again, or use a personal token.",
+    "denied": "You are not allowed to connect GitLab here.",
+    "cancelled": "Connecting with GitLab was cancelled."
+  },
+  "meeting": {
+    "title": "{kind} connections",
+    "inherited": "Until you pick, this meeting uses the workspace's connections.",
+    "picked": "This meeting uses the connections ticked below.",
+    "use": "Use",
+    "none": "No {kind} connection: an administrator can add one to the workspace, or add one for this meeting only below.",
+    "save": "Save the {kind} access",
+    "repos": "Followed repositories",
+    "reposHint": "“owner/repository” or a whole “owner”, one per line; empty: every repository. Also enter each person's GitHub username in “People and roles”.",
+    "groups": "Groups",
+    "projects": "Followed projects",
+    "projectsHint": "Only issues from these projects are offered for import. Also enter each person's GitLab username in “People and roles”."
+  },
+  "hub": {
+    "count": "{count, plural, one {# connection} other {# connections}}"
+  }
+}

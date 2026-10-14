@@ -54,6 +54,7 @@ model Workspace {
   guestLinks    GuestLink[]
   logo          WorkspaceLogo?
   trackers      IssueTracker[]
+  forges        ForgeConnection[]
   wikis         Wiki[]
   videoAccounts VideoAccount[]
   calendars     CalendarAccount[]

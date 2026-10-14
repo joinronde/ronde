@@ -140,6 +140,7 @@ model Meeting {
   attendances         Attendance[]
   notificationRules   NotificationRule[]
   calendarEvents      CalendarEvent[]
+  forges              ForgeConnection[]
   guestLinks          GuestLink[]
   projects            MeetingProject[]
   projectUpdates      ProjectUpdate[]

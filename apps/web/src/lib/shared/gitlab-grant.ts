@@ -1,5 +1,5 @@
-// What a meeting's GitLab secret holds: a personal token typed in the settings (as before), or the grant of a
-// "Connect with GitLab" round trip, renewed before it runs out. Pure, for the server-free tests
+// What a GitLab connection's secret holds: a personal token typed in the settings, or the grant of a "Connect with
+// GitLab" round trip, renewed before it runs out. Pure, for the server-free tests
 
 export interface GitlabGrant {
   kind: "oauth";

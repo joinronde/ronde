@@ -6,6 +6,8 @@ import { pageWorkspace } from "@/lib/server/authz";
 import { brandingOn } from "@/lib/server/branding";
 import { calendarSyncOn, listCalendarAccounts } from "@/lib/server/calendars";
 import { env } from "@/lib/server/env";
+import { defaultUrl, listForgeConnections } from "@/lib/server/forges";
+import { gitlabOAuthOn } from "@/lib/server/gitlab-oauth";
 import { holidayCountries, holidayRegions } from "@/lib/server/holidays";
 import { featureOn, isCloud } from "@/lib/server/license";
 import { listConnectors } from "@/lib/server/notify/connectors";
@@ -14,7 +16,7 @@ import { publicUrl } from "@/lib/server/public-url";
 import { canEncrypt, decryptSecret } from "@/lib/server/secrets";
 import { slackOn, slackView } from "@/lib/server/slack";
 import { teamsOn, teamsView } from "@/lib/server/teams";
-import { listTrackers, trackersOn } from "@/lib/server/trackers";
+import { listTrackers, trackerCanUse, trackersOn } from "@/lib/server/trackers";
 import { transcriptionOn } from "@/lib/server/transcripts";
 import { listVideoAccounts, videoLinksOn } from "@/lib/server/video-accounts";
 import { listWikis, wikisOn } from "@/lib/server/wikis";
@@ -57,12 +59,24 @@ export default async function WorkspaceSettingsPage({ params }: { params: Promis
           plansUrl: plans,
         }
       : null;
+  const forgeConnections = canConnect ? await listForgeConnections(ctx.db, null) : [];
+  const forges = canConnect
+    ? {
+        slug: ctx.workspace.slug,
+        connections: forgeConnections,
+        servers: { gitlab: defaultUrl("gitlab"), github: defaultUrl("github") },
+        oauth: gitlabOAuthOn(),
+        canEncrypt: canEncrypt(),
+      }
+    : null;
   const trackersAvailable = trackersOn(ctx.workspace);
   const trackers =
     canConnect && trackersAvailable
       ? {
           slug: ctx.workspace.slug,
           trackers: trackersAvailable ? await listTrackers(ctx) : [],
+          // GitLab and GitHub trackers open tickets with a connection of the workspace that can write
+          connections: forgeConnections.filter((c) => c.scope === "workspace" && trackerCanUse(c)),
           available: trackersAvailable,
           plansUrl: plans,
         }
@@ -164,6 +178,7 @@ export default async function WorkspaceSettingsPage({ params }: { params: Promis
       canEncrypt={canEncrypt()}
       branding={branding}
       ai={ai}
+      forges={forges}
       trackers={trackers}
       wikis={wikis}
       videoAccounts={videoAccounts}

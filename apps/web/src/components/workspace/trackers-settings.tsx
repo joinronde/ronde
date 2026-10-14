@@ -1,5 +1,6 @@
 "use client";
 
+import type { ForgeConnectionView } from "@ronde/core/types";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -16,29 +17,35 @@ type ConfirmFn = ReturnType<typeof useConfirm>[1];
 type Kind = TrackerView["kind"];
 
 /** Fields each tool asks for, with an example */
-const FIELDS: Record<Kind, { key: "site" | "project" | "email" | "team" | "url" | "repo"; placeholder: string }[]> = {
+const FIELDS: Record<Kind, { key: "site" | "project" | "email" | "team" | "repo"; placeholder: string }[]> = {
   jira: [
     { key: "site", placeholder: "https://acme.atlassian.net" },
     { key: "project", placeholder: "OPS" },
     { key: "email", placeholder: "bot@acme.com" },
   ],
   linear: [{ key: "team", placeholder: "ENG" }],
-  gitlab: [
-    { key: "url", placeholder: "https://gitlab.com" },
-    { key: "project", placeholder: "acme/app" },
-  ],
+  gitlab: [{ key: "project", placeholder: "acme/app" }],
   github: [{ key: "repo", placeholder: "acme/app" }],
 };
 
 export interface TrackersSettingsProps {
   slug: string;
   trackers: TrackerView[];
+  /** The workspace's GitLab and GitHub connections, which those trackers open tickets with */
+  connections: ForgeConnectionView[];
   available: boolean;
   plansUrl: string | null;
 }
 
 /** Issue trackers of the workspace, where follow-up actions become tickets (Team) */
-export function TrackersSettings({ slug, trackers, available, plansUrl, confirm }: TrackersSettingsProps & { confirm: ConfirmFn }) {
+export function TrackersSettings({
+  slug,
+  trackers,
+  connections,
+  available,
+  plansUrl,
+  confirm,
+}: TrackersSettingsProps & { confirm: ConfirmFn }) {
   const t = useTranslations("trackers");
   const tm = useTranslations("modules");
   const tf = useTranslations("features");
@@ -124,6 +131,7 @@ export function TrackersSettings({ slug, trackers, available, plansUrl, confirm 
         <TrackerForm
           slug={slug}
           tracker={editing === "new" ? null : editing}
+          connections={connections}
           onDone={() => {
             setEditing(null);
             router.refresh();
@@ -145,11 +153,13 @@ export function TrackersSettings({ slug, trackers, available, plansUrl, confirm 
 function TrackerForm({
   slug,
   tracker,
+  connections,
   onDone,
   onError,
 }: {
   slug: string;
   tracker: TrackerView | null;
+  connections: ForgeConnectionView[];
   onDone: () => void;
   onError: (e: string | null) => void;
 }) {
@@ -158,7 +168,12 @@ function TrackerForm({
   const [name, setName] = useState(tracker?.name ?? "");
   const [config, setConfig] = useState<Record<string, string>>(tracker?.config ?? {});
   const [token, setToken] = useState("");
+  const [connectionId, setConnectionId] = useState(tracker?.connectionId ?? "");
   const [busy, setBusy] = useState(false);
+  // GitLab and GitHub open tickets with a connection of the workspace, Jira and Linear with their own token
+  const forge = kind === "gitlab" || kind === "github";
+  const usable = connections.filter((c) => c.kind === kind);
+  const connection = usable.some((c) => c.id === connectionId) ? connectionId : (usable[0]?.id ?? "");
   return (
     <form
       className="form tracker-form"
@@ -170,7 +185,7 @@ function TrackerForm({
           kind,
           name: name || t(`kinds.${kind}`),
           config: Object.fromEntries(FIELDS[kind].map((f) => [f.key, (config[f.key] ?? "").trim()])),
-          token,
+          ...(forge ? { connectionId: connection } : { token }),
         });
         setBusy(false);
         if (!res.ok) return onError(res.error);
@@ -206,22 +221,41 @@ function TrackerForm({
             />
           </div>
         ))}
-        <div className="field">
-          <label htmlFor="trToken">{t("token")}</label>
-          <input
-            id="trToken"
-            type="password"
-            autoComplete="off"
-            required={!tracker}
-            value={token}
-            placeholder={tracker ? "••••" : ""}
-            onChange={(e) => setToken(e.target.value)}
-          />
-        </div>
+        {forge ? (
+          <div className="field">
+            <label htmlFor="trConnection">{t("connection")}</label>
+            <Select id="trConnection" value={connection} required onChange={(e) => setConnectionId(e.target.value)}>
+              {usable.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+            </Select>
+          </div>
+        ) : (
+          <div className="field">
+            <label htmlFor="trToken">{t("token")}</label>
+            <input
+              id="trToken"
+              type="password"
+              autoComplete="off"
+              required={!tracker}
+              value={token}
+              placeholder={tracker ? "••••" : ""}
+              onChange={(e) => setToken(e.target.value)}
+            />
+          </div>
+        )}
       </div>
-      <p className="hint">{tracker ? t("tokenKept") : t(`hints.${kind}`)}</p>
+      {forge && !usable.length ? (
+        <div className="note-box">
+          {t("noConnection", { kind: t(`kinds.${kind}`) })} <a href="#forges">{t("toConnections")}</a>
+        </div>
+      ) : (
+        <p className="hint">{tracker && !forge ? t("tokenKept") : t(`hints.${kind}`)}</p>
+      )}
       <div className="form-foot">
-        <button type="submit" className="btn primary" disabled={busy} aria-busy={busy}>
+        <button type="submit" className="btn primary" disabled={busy || (forge && !connection)} aria-busy={busy}>
           {t("save")}
         </button>
         <button type="button" className="btn ghost" onClick={onDone}>

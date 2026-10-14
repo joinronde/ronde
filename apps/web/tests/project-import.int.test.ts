@@ -9,6 +9,7 @@ import { followedProjects, toProjectDTO } from "@/lib/server/meeting/projects";
 import { configOf, importProjects, previewImport, syncProject, syncProjects, unlinkSource } from "@/lib/server/project-import";
 import { setProjectLogo } from "@/lib/server/project-logo";
 import { adfToMarkdown, readSourceOf } from "@/lib/server/project-sources";
+import { encryptSecret } from "@/lib/server/secrets";
 import { deleteTracker, saveTracker } from "@/lib/server/trackers";
 import { type Fixture, meeting, workspace } from "./fixtures";
 
@@ -139,6 +140,14 @@ const repo = (id: number, name: string, extra: Record<string, unknown> = {}) => 
 
 let f: Fixture;
 let ws: WorkspaceContext;
+
+/** A GitLab or GitHub connection of the workspace, which trackers of those tools read and write with */
+const connection = async (kind: "gitlab" | "github", url: string, token: string) =>
+  (
+    await prisma.forgeConnection.create({
+      data: { workspaceId: f.workspaceId, kind, name: kind, url, secret: encryptSecret(token) },
+    })
+  ).id;
 /** The same workspace as a plain member */
 let member: WorkspaceContext;
 let memberEmail: string;
@@ -351,7 +360,8 @@ describe("importing projects (every edition)", () => {
     const source = { kind: "gitlab" as const, what: "milestones" as const, address: "https://gitlab.acme.test/acme/app", token: "glpat-x" };
     const ms = await previewImport(ws, source);
     expect(ms.items[0]).toMatchObject({ name: "app · Q4 roadmap", status: "active", progress: null });
-    expect(asked[0]!.auth).toBe("glpat-x");
+    // As a bearer, as GitLab takes personal and OAuth tokens alike
+    expect(asked[0]!.auth).toBe("Bearer glpat-x");
     const imported = await importProjects(ws, source, { ids: ids(ms.items) });
     expect(await row(imported.created[0]!.id)).toMatchObject({ startDate: "2026-10-01", targetDate: "2026-12-20" });
     expect(await sourceOf(imported.created[0]!.id)).toMatchObject({ done: 6, total: 8, progress: 0.75 });
@@ -449,7 +459,12 @@ describe("keeping imported projects in sync (Team)", () => {
   beforeAll(async () => {
     await saveLicense(KEY);
     ({ id: linearTracker } = await saveTracker(ws, { kind: "linear", name: "Linear", config: { team: "ENG" }, token: "lin_api_x" }));
-    ({ id: githubTracker } = await saveTracker(ws, { kind: "github", name: "Acme", config: { repo: "acme/app" }, token: "ghp_x" }));
+    ({ id: githubTracker } = await saveTracker(ws, {
+      kind: "github",
+      name: "Acme",
+      config: { repo: "acme/app" },
+      connectionId: await connection("github", "https://api.github.com", "ghp_x"),
+    }));
   });
 
   it("imports Linear projects through a saved tracker, then follows them every hour", async () => {
@@ -637,11 +652,12 @@ describe("keeping imported projects in sync (Team)", () => {
     expect(await row(search)).toMatchObject({ sourceTrackerId: null, name: "Search" });
 
     // The GitLab tracker now points at another server: the projects of the old one stop following it
+    const glConnection = await connection("gitlab", "https://gitlab.acme.test", "glpat");
     const { id: gitlab } = await saveTracker(ws, {
       kind: "gitlab",
       name: "GitLab",
-      config: { url: "https://gitlab.acme.test", project: "acme/app" },
-      token: "glpat",
+      config: { project: "acme/app" },
+      connectionId: glConnection,
     });
     glProjects = [
       {
@@ -658,7 +674,7 @@ describe("keeping imported projects in sync (Team)", () => {
       { trackerId: gitlab, what: "projects" },
       { ids: ["https://gitlab.acme.test#project:81"], sync: true },
     );
-    await saveTracker(ws, { id: gitlab, kind: "gitlab", name: "GitLab", config: { url: "https://gitlab.new.test", project: "acme/app" } });
+    await prisma.forgeConnection.update({ where: { id: glConnection }, data: { url: "https://gitlab.new.test" } });
     asked.length = 0;
     await syncProject(ws, gl.created[0]!.id);
     // Nothing was sent to the new server with the old projects' ids
@@ -699,7 +715,12 @@ describe("keeping imported projects in sync (Team)", () => {
 
   it("goes on with the other projects when one cannot be read this time", async () => {
     repos = [repo(901, "alpha"), repo(902, "beta")];
-    const { id: gh } = await saveTracker(ws, { kind: "github", name: "Acme 2", config: { repo: "acme/app" }, token: "ghp_y" });
+    const { id: gh } = await saveTracker(ws, {
+      kind: "github",
+      name: "Acme 2",
+      config: { repo: "acme/app" },
+      connectionId: await connection("github", "https://api.github.com", "ghp_y"),
+    });
     const { created } = await importProjects(
       ws,
       { trackerId: gh, what: "repos" },

@@ -468,10 +468,10 @@ describe("secrets", () => {
   it("are refused rather than stored in clear when no key is configured", async () => {
     await enable(f, "github");
     withoutKey();
-    await expect(runOp(f.ctx, { op: "github.configure", repos: "acme/app", token: "ghp_secret" })).rejects.toMatchObject({
+    await expect(runOp(f.ctx, { op: "forge.add", kind: "github", token: "ghp_secret" })).rejects.toMatchObject({
       key: "encryptionNotConfigured",
     });
-    await expect(runOp(f.ctx, { op: "gitlab.configure", projects: "acme/app", groups: "", token: "glpat-secret" })).rejects.toMatchObject({
+    await expect(runOp(f.ctx, { op: "forge.add", kind: "gitlab", token: "glpat-secret" })).rejects.toMatchObject({
       key: "encryptionNotConfigured",
     });
     await expect(
@@ -485,28 +485,34 @@ describe("secrets", () => {
       }),
     ).rejects.toMatchObject({ key: "encryptionNotConfigured" });
     // Nothing was half saved
+    expect(await prisma.forgeConnection.count({ where: { meetingId: f.meetingId, NOT: { id: f.forgeConnectionId } } })).toBe(0);
     expect(await configOf("github")).toEqual({});
     expect(await configOf("gitlab")).toBeNull();
     expect(await configOf("video")).toBeNull();
     const rows = await prisma.moduleInstallation.findMany({ where: { meetingId: f.meetingId } });
     expect(rows.every((r) => r.secret === "")).toBe(true);
-    // Removing a token, or leaving it as it is, needs no key
-    await runOp(f.ctx, { op: "github.configure", repos: "acme/app", token: "" });
-    await runOp(f.ctx, { op: "gitlab.configure", projects: "acme/app", groups: "" });
-    expect(await configOf("github")).toEqual({ repos: "acme/app" });
+    // Picking the connections a meeting uses needs no key
+    await runOp(f.ctx, { op: "github.configure", sources: [{ connection: "instance", repos: "acme/app" }] });
+    expect(await configOf("github")).toEqual({ picked: true, sources: [{ connection: "instance", repos: "acme/app" }] });
   });
 
   it("are stored encrypted when a key is configured", async () => {
-    await runOp(f.ctx, { op: "gitlab.configure", projects: "acme/app", groups: "acme", token: "glpat-secret" });
-    const row = await prisma.moduleInstallation.findFirstOrThrow({ where: { meetingId: f.meetingId, moduleId: "gitlab" } });
+    vi.stubGlobal("fetch", async () => Response.json({ username: "hana" }));
+    try {
+      await runOp(f.ctx, { op: "forge.add", kind: "gitlab", url: "https://gitlab.example.org", token: "glpat-secret" });
+    } finally {
+      vi.unstubAllGlobals();
+    }
+    const row = await prisma.forgeConnection.findFirstOrThrow({ where: { meetingId: f.meetingId, url: "https://gitlab.example.org" } });
     expect(row.secret).toMatch(/^v1:/);
     expect(row.secret).not.toContain("glpat-secret");
+    expect(row.account).toBe("hana");
   });
 
   it("need the module's installation (always given by runOp)", async () => {
     const bare = { module: null } as never;
-    await expect(github.ops[0].run(bare, { repos: "", token: "x" })).rejects.toMatchObject({ key: "notFound" });
-    await expect(gitlab.ops[0].run(bare, { projects: "", groups: "", token: "x" })).rejects.toMatchObject({ key: "notFound" });
+    await expect(github.ops[0].run(bare, { sources: [] })).rejects.toMatchObject({ key: "notFound" });
+    await expect(gitlab.ops[0].run(bare, { sources: [] })).rejects.toMatchObject({ key: "notFound" });
     await expect(video.ops[0].run(bare, { provider: "link", link: "", jitsiUrl: "", bbbUrl: "" })).rejects.toMatchObject({
       key: "notFound",
     });
@@ -534,13 +540,13 @@ describe("module gates", () => {
         key: "moduleNotInEdition",
       });
       // An installation kept from before runs none of its operations either
-      await expect(runOp(f.ctx, { op: "github.configure", repos: "acme/app" })).rejects.toMatchObject({
+      await expect(runOp(f.ctx, { op: "github.configure", sources: [] })).rejects.toMatchObject({
         status: 403,
         key: "moduleNotInEdition",
       });
     });
     await runOp(f.ctx, { op: "modules.set", moduleId: "github", enabled: false });
-    await expect(runOp(f.ctx, { op: "github.configure", repos: "acme/app" })).rejects.toMatchObject({ status: 403, key: "moduleDisabled" });
+    await expect(runOp(f.ctx, { op: "github.configure", sources: [] })).rejects.toMatchObject({ status: 403, key: "moduleDisabled" });
   });
 
   it("attendance: each person answers for themselves, the host for the meeting's people", async () => {

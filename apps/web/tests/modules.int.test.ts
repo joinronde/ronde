@@ -1,5 +1,5 @@
 import { prisma } from "@ronde/db";
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 import { runOp } from "@/lib/server/meeting/ops";
 import { loadSnapshot } from "@/lib/server/meeting/state";
 import { type Fixture, meeting, workspace } from "./fixtures";
@@ -72,34 +72,37 @@ describe("modules", () => {
     await expect(runOp(participant, { op: "modules.set", moduleId: "kudos", enabled: false })).rejects.toMatchObject({ status: 403 });
   });
 
-  it("stores a module secret encrypted, never in the snapshot", async () => {
-    await runOp(f.ctx, { op: "gitlab.configure", projects: "acme/api", groups: "acme", token: "glpat-secret-token" });
-    const row = await prisma.moduleInstallation.findFirstOrThrow({ where: { meetingId: f.meetingId, moduleId: "gitlab" } });
+  it("keeps a meeting's own connection token encrypted, never in the snapshot, and uses the connection", async () => {
+    vi.stubGlobal("fetch", async () => Response.json({ username: "hana.host" }));
+    try {
+      await runOp(f.ctx, { op: "forge.add", kind: "gitlab", name: "Acme GitLab", token: "glpat-secret-token" });
+    } finally {
+      vi.unstubAllGlobals();
+    }
+    const row = await prisma.forgeConnection.findFirstOrThrow({ where: { meetingId: f.meetingId, name: "Acme GitLab" } });
     expect(row.secret).not.toContain("glpat-secret-token");
     const snap = await loadSnapshot(f.ctx);
     expect(JSON.stringify(snap)).not.toContain("glpat");
-    expect(snap.settings.tokensSet.gitlab).toBe(true);
-    expect(snap.settings.gitlabProjects).toBe("acme/api");
+    expect(snap.settings.forges.connections.find((c) => c.id === row.id)).toMatchObject({
+      name: "Acme GitLab",
+      scope: "meeting",
+      account: "hana.host",
+      oauth: false,
+    });
+    expect(snap.settings.forges.gitlab.sources).toEqual([{ connection: row.id, groups: "", projects: "" }]);
+    expect(snap.integrations.gitlab).toBe(true);
   });
 
-  it("names the GitLab account the meeting is connected with to its admins only", async () => {
-    // Sent to every participant, observer and guest screen before
-    const { saveGrant } = await import("@/lib/server/gitlab-oauth");
-    await saveGrant(f.ctx.ws.db, f.ctx.ws.workspace.id, f.meetingId, {
-      kind: "oauth",
-      access: "gl-access",
-      refresh: "gl-refresh",
-      expiresAt: Date.now() + 3_600_000,
-      user: "hana.host",
-    });
-    expect((await loadSnapshot(f.ctx)).settings.gitlabUser).toBe("hana.host");
+  it("shows the connections, and whose accounts they read as, to the meeting's admins only", async () => {
+    // The account of a connection was sent to every participant, observer and guest screen before
     const participant = {
       ...f.ctx,
       viewer: { ...f.ctx.viewer, isAdmin: false },
       can: (p: string) => p !== "meeting.configure" && f.ctx.can(p as never),
     };
     const theirs = await loadSnapshot(participant);
-    expect(theirs.settings.gitlabUser).toBeNull();
+    expect(theirs.settings.forges.connections).toEqual([]);
     expect(JSON.stringify(theirs)).not.toContain("hana.host");
+    expect(JSON.stringify(theirs)).not.toContain("Acme GitLab");
   });
 });
