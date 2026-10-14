@@ -112,13 +112,15 @@ test("the password is changed, then signing out everywhere ends every session", 
   // A wrong current password: refused
   await page.goto("/account/security");
   await page.getByLabel("Current password").fill("not-my-password-1");
-  await page.getByLabel("New password").fill("second-password-456");
+  await page.getByLabel("New password", { exact: true }).fill("second-password-456");
+  await page.getByLabel("New password, again").fill("second-password-456");
   await page.getByRole("button", { name: "Change the password" }).click();
   await expect(page.locator(".form-alert")).toHaveText("Wrong email or password.");
 
   // Changed: the other devices are signed out, this one stays
   await page.getByLabel("Current password").fill(who.password);
-  await page.getByLabel("New password").fill("second-password-456");
+  await page.getByLabel("New password", { exact: true }).fill("second-password-456");
+  await page.getByLabel("New password, again").fill("second-password-456");
   await page.getByRole("button", { name: "Change the password" }).click();
   await expect(page.getByText("Password changed. Your other devices were signed out.")).toBeVisible();
   await other.goto("/account");

@@ -46,10 +46,12 @@ test("a host creates a meeting, a participant fills in their check-in and raises
   // exist before sign-up), in three steps
   await page.goto(`${workspace}/meetings/new`);
   await expect(page.getByRole("radio", { name: /Weekly sync/ })).toBeChecked();
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByLabel("Name").fill("Weekly sync");
   await expect(page.getByRole("checkbox", { name: /Gus Guest/ })).toBeChecked();
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  // Sections and modules: the template's, kept as they are
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await expect(page.getByText("2 people in the round table")).toBeVisible();
   await page.getByRole("button", { name: "Create the meeting" }).click();
   await page.waitForURL(/\/m\/[^/]+\/control$/, { timeout: 120_000 });
@@ -65,13 +67,18 @@ test("a host creates a meeting, a participant fills in their check-in and raises
     .getByRole("link", { name: /Weekly sync/ })
     .click();
   await gus.waitForURL(/\/me$/, { timeout: 120_000 });
-  // Typed without Enter, then saved straight away: the pending item is kept and the click is not lost
+  // Typed without Enter, then the field left: the item is kept, and saves itself
   await gus
     .getByPlaceholder(/Add an item/)
     .first()
     .fill("Shipped the login page");
-  await gus.getByRole("button", { name: "Save my check-in" }).click();
-  await expect(gus.getByText("Unsaved changes")).toHaveCount(0);
+  await gus
+    .getByPlaceholder(/Add an item/)
+    .first()
+    .press("Tab");
+  // The check-in saves itself a moment after the last keystroke
+  await expect(gus.locator(".checkin-status")).toContainText("Saving");
+  await expect(gus.locator(".checkin-status")).toContainText("Saved");
 
   // The host sees the check-in ready, without reloading (real time)
   await expect(page.getByText("1/2 check-ins filled in")).toBeVisible({ timeout: 15_000 });
@@ -79,7 +86,7 @@ test("a host creates a meeting, a participant fills in their check-in and raises
   // Live: the host starts, the participant raises a hand, the host sees it
   await page.getByRole("button", { name: "Start the meeting" }).click();
   await gus.getByRole("button", { name: "Raise my hand" }).click();
-  await expect(page.getByRole("button", { name: "Next: Questions (1) →" })).toBeVisible({ timeout: 15_000 });
+  await expect(page.getByRole("button", { name: "Next: Questions (1)" })).toBeVisible({ timeout: 15_000 });
 
   // Command palette: Ctrl+K, a few words, Enter
   await page.keyboard.press("Control+k");
@@ -115,10 +122,12 @@ test("a host creates a meeting, a participant fills in their check-in and raises
   await page.goto(`${meeting}/control`);
   await page.getByRole("button", { name: /End the meeting/ }).click();
   await page.getByRole("button", { name: "Yes, end it" }).click();
+  // At the wrap-up, the control room's main button opens the minutes: summed up and published from there
+  await page.getByRole("button", { name: "Review and publish the minutes" }).click();
   await page.getByRole("textbox", { name: "Summary" }).fill("A productive week for the login page.");
-  await page.getByRole("button", { name: "Archive the meeting" }).click();
-  await page.getByRole("button", { name: "Yes, archive" }).click();
-  await expect(page.getByText("Meeting archived with its minutes.")).toBeVisible();
+  await page.getByRole("button", { name: "Publish the minutes", exact: true }).click();
+  await page.getByRole("button", { name: "Yes, publish" }).click();
+  await expect(page.getByText("Minutes published, session closed.")).toBeVisible();
 
   // History: minutes built from the record
   await page.goto(`${meeting}/history`);
@@ -141,7 +150,7 @@ test("a host creates a meeting, a participant fills in their check-in and raises
 
   // Stats, computed by the server
   await page.goto(`${meeting}/stats`);
-  const archived = page.locator(".kpi").filter({ has: page.locator(".l", { hasText: /^Archived meetings$/ }) });
+  const archived = page.locator(".kpi").filter({ has: page.locator(".l", { hasText: /^Sessions held$/ }) });
   await expect(archived.locator(".v")).toHaveText("1");
 
   // Exports for a spreadsheet: UTF-8 with its byte order mark, one line per archived session

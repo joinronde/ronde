@@ -1,5 +1,4 @@
 import { expect, type Page, test } from "@playwright/test";
-import { choose } from "./select";
 
 // A poll and a planning poker round with a host and one participant, through the browsers
 
@@ -35,9 +34,11 @@ test("a poll and a planning poker round", async ({ page, browser }) => {
 
   // Weekly sync with the planning poker module and its block before the open topics
   await page.goto(`${workspace}/meetings/new`);
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByLabel("Name").fill("Sprint planning");
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  // Sections and modules: the template's, kept as they are
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByRole("button", { name: "Create the meeting" }).click();
   await page.waitForURL(/\/m\/[^/]+\/control$/, { timeout: 120_000 });
   const meeting = page.url().replace(/\/control$/, "");
@@ -50,8 +51,12 @@ test("a poll and a planning poker round", async ({ page, browser }) => {
     await expect(page.getByText(`${name} turned on`)).toBeVisible();
   }
   await page.goto(`${meeting}/settings#agenda`);
-  await choose(page, page.getByLabel("Add a block"), "poker");
-  await page.getByRole("button", { name: "Move “Planning poker” up" }).click();
+  // Each block of the menu says what it brings
+  await page.getByRole("button", { name: "Add a block" }).click();
+  await expect(page.getByRole("button", { name: /^Planning poker/ })).toContainText("estimate");
+  await page.getByRole("button", { name: /^Planning poker/ }).click();
+  // Moved up with the keyboard on its grip
+  await page.getByRole("button", { name: "Move “Planning poker”", exact: true }).press("ArrowUp");
   await expect(page.getByText("Agenda saved")).toBeVisible();
 
   const max = await (await browser.newContext({ locale: "en-US" })).newPage();
@@ -69,15 +74,32 @@ test("a poll and a planning poker round", async ({ page, browser }) => {
   await max.getByRole("tab", { name: "Live" }).click();
   await page.getByRole("tab", { name: /^Polls/ }).click();
   await page.getByLabel("Question").fill("Ready for the sprint?");
-  await page.getByLabel("Choices, one per line").fill("Yes\nNo");
+  await page.getByRole("textbox", { name: "Choice 1" }).fill("Yes");
+  await page.getByRole("textbox", { name: "Choice 2" }).fill("No");
+  // Not anonymous: who answered what shows as faces
+  await page.locator(".poll-new").getByRole("checkbox", { name: "Anonymous" }).uncheck();
   await page.getByRole("button", { name: "Ask the team" }).click();
   await max.getByRole("radio", { name: "Yes" }).check();
-  await max.locator(".poll-answer").getByRole("button", { name: "Answer" }).click();
+  await max.locator(".poll-card").getByRole("button", { name: "Answer" }).click();
   await expect(page.locator(".poll-host").getByText("1 answer")).toBeVisible();
+  await expect(page.locator(".poll-host .poll-faces").first()).toBeVisible();
   await page.getByRole("button", { name: "Show on the shared screen" }).click();
   await expect(max.locator(".poll-band").getByRole("heading", { name: "Ready for the sprint?" })).toBeVisible();
   await shot(page, "1-poll-control");
   await shot(max, "1-poll-me");
+
+  // A few words: one field that turns each word into a chip, three at most (not three empty fields)
+  await page.getByLabel("Question").fill("One word for this sprint?");
+  await page.locator(".poll-kinds").getByText("A few words (word cloud)").click();
+  await page.getByRole("button", { name: "Ask the team" }).click();
+  const words = max.locator(".poll-card").filter({ hasText: "One word for this sprint?" });
+  await expect(words.getByRole("textbox")).toHaveCount(1);
+  await words.getByRole("textbox").fill("fast");
+  await words.getByRole("textbox").press("Enter");
+  await words.getByRole("textbox").fill("fun,");
+  await expect(words.locator(".word-chip")).toHaveText(["fast", "fun"]);
+  await words.getByRole("button", { name: "Answer" }).click();
+  await expect(page.locator(".poll-host").filter({ hasText: "One word for this sprint?" }).locator(".poll-cloud")).toContainText("fast");
 
   // Random tools: the wheel spins on every screen and lands on the same person
   await page.getByRole("tab", { name: "Random" }).click();
@@ -119,8 +141,10 @@ test("a poll and a planning poker round", async ({ page, browser }) => {
   // Archived: the estimate and the poll in the minutes
   await page.getByRole("button", { name: /End the meeting/ }).click();
   await page.getByRole("button", { name: "Yes, end it" }).click();
-  await page.getByRole("button", { name: "Archive the meeting" }).click();
-  await page.getByRole("button", { name: "Yes, archive" }).click();
+  // At the wrap-up, the control room's main button opens the minutes, published from there
+  await page.getByRole("button", { name: "Review and publish the minutes" }).click();
+  await page.getByRole("button", { name: "Publish the minutes", exact: true }).click();
+  await page.getByRole("button", { name: "Yes, publish" }).click();
   await page.goto(`${meeting}/history`);
   await expect(page.locator(".minutes-sec").filter({ hasText: "Estimates" }).getByText("Login with SSO")).toBeVisible();
   await shot(page, "4-minutes");

@@ -54,10 +54,12 @@ test("a retrospective with three people, from the notes to the minutes", async (
   }
   await page.goto(`${workspace}/meetings/new`);
   await page.getByText("Monthly retrospective", { exact: true }).click();
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByLabel("Name").fill("Team retro");
   await page.getByLabel("I also take a turn in the round table").uncheck();
-  await page.getByRole("button", { name: "Next →" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  // Sections and modules: the template's, kept as they are
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByRole("button", { name: "Create the meeting" }).click();
   await page.waitForURL(/\/m\/[^/]+\/control$/, { timeout: 120_000 });
   const meeting = page.url().replace(/\/control$/, "");
@@ -112,9 +114,11 @@ test("a retrospective with three people, from the notes to the minutes", async (
   await page.waitForTimeout(1500);
   await page.getByRole("button", { name: /End the meeting/ }).click();
   await page.getByRole("button", { name: "Yes, end it" }).click();
-  await page.getByRole("button", { name: "Archive the meeting" }).click();
-  await page.getByRole("button", { name: "Yes, archive" }).click();
-  await expect(page.getByText("Meeting archived with its minutes.")).toBeVisible();
+  // At the wrap-up, the control room's main button opens the minutes, published from there
+  await page.getByRole("button", { name: "Review and publish the minutes" }).click();
+  await page.getByRole("button", { name: "Publish the minutes", exact: true }).click();
+  await page.getByRole("button", { name: "Yes, publish" }).click();
+  await expect(page.getByText("Minutes published, session closed.")).toBeVisible();
 
   // Minutes: the groups and the decision, nobody's name in the retro
   await page.goto(`${meeting}/history`);

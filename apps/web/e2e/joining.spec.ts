@@ -74,8 +74,9 @@ test("a template picked on the site opens the wizard of the first meeting on it"
   await page.waitForURL(/\/meetings\/new\?template=builtin%3Aretro$/, { timeout: 60_000 });
   // Straight to the details of a meeting on that template
   await expect(page.getByLabel("Name")).toHaveAttribute("placeholder", "Monthly retrospective");
-  await page.getByRole("button", { name: "Next →" }).click();
-  await expect(page.getByRole("definition").filter({ hasText: "Monthly retrospective" }).first()).toBeVisible();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await expect(page.getByText("From the “Monthly retrospective” template")).toBeVisible();
 
   // An unknown template is ignored: the plain onboarding
   await page.goto("/onboarding?template=nope");

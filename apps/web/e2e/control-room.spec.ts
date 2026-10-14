@@ -19,7 +19,7 @@ async function key(page: Page, name: string) {
 async function start(page: Page) {
   // Clicked again until it holds: the click can come before the control room is ready
   await expect(async () => {
-    await page.getByRole("button", { name: "▶ Start the meeting" }).click();
+    await page.getByRole("button", { name: "Start the meeting", exact: true }).click();
     await expect(page.getByRole("button", { name: /End the meeting/ })).toBeVisible({ timeout: 2000 });
   }).toPass();
 }
@@ -56,11 +56,23 @@ test("the host runs a session from the control room, from the order of the turns
   // The intro, three turns, the open topics and the wrap-up
   await expect(agenda).toHaveCount(6);
 
-  // Order: Cora, first, moves down one place; the shuffle says what it did
+  // Order: Cora, first, is dragged by her grip one place down, then back up with the keyboard
   await expect(agenda.nth(1)).toContainText("Cora Control");
   const second = (await agenda.nth(2).textContent())!.includes("Pia") ? "Pia Part" : "Dan Dorsey";
-  await row("Cora Control").getByRole("button", { name: "Move down" }).click();
+  const grip = page.getByRole("button", { name: "Move Cora Control in the order" });
+  // Dropped where the next row stood when the drag began (that row makes way as the grip moves, so a drop aimed
+  // at the row itself would follow it back)
+  const from = (await grip.boundingBox())!;
+  const to = (await row(second).boundingBox())!;
+  await page.mouse.move(from.x + from.width / 2, from.y + from.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(from.x + from.width / 2, to.y + to.height / 2 + 4, { steps: 6 });
+  await page.mouse.up();
   await expect(agenda.nth(1)).toContainText(second);
+  await expect(agenda.nth(2)).toContainText("Cora Control");
+  await grip.press("ArrowUp");
+  await expect(agenda.nth(1)).toContainText("Cora Control");
+  await grip.press("ArrowDown");
   await expect(agenda.nth(2)).toContainText("Cora Control");
   await page.getByRole("button", { name: "Shuffle" }).click();
   await expect(page.getByText("Order shuffled for those who have not spoken yet")).toBeVisible();
@@ -84,7 +96,7 @@ test("the host runs a session from the control room, from the order of the turns
   await expect(next).toHaveText(/^Next: Open topics/);
 
   // Back, with the button then with the keyboard; forward with →
-  await page.getByRole("button", { name: "← Previous" }).click();
+  await page.getByRole("button", { name: "Previous", exact: true }).click();
   await expect(now(page)).toHaveText(turns[0]!);
   await key(page, "ArrowLeft");
   await expect(now(page)).toHaveText("Introduction");
@@ -99,14 +111,14 @@ test("the host runs a session from the control room, from the order of the turns
   await expect(now(page)).toHaveText("Dan Dorsey");
 
   // Timer: pause and resume with the button and Space, 30 more seconds for the speaker
-  await page.getByRole("button", { name: "⏸ Pause" }).click();
-  await expect(page.getByRole("button", { name: "▶ Timer" })).toBeVisible();
-  await page.getByRole("button", { name: "▶ Timer" }).click();
-  await expect(page.getByRole("button", { name: "⏸ Pause" })).toBeVisible();
+  await page.getByRole("button", { name: "Pause", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Timer", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Timer", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Pause", exact: true })).toBeVisible();
   await key(page, "Space");
-  await expect(page.getByRole("button", { name: "▶ Timer" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Timer", exact: true })).toBeVisible();
   await key(page, "Space");
-  await expect(page.getByRole("button", { name: "⏸ Pause" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Pause", exact: true })).toBeVisible();
   await page.getByRole("button", { name: "+30 s" }).click();
   await expect(page.getByText("30 more seconds for Dan")).toBeVisible();
 
@@ -114,7 +126,7 @@ test("the host runs a session from the control room, from the order of the turns
   await page.getByRole("button", { name: "Cancel the start" }).click();
   await page.getByRole("group", { name: "Confirmation" }).getByRole("button", { name: "Yes, back to waiting" }).click();
   await expect(page.getByText("Start cancelled: back to the waiting screen.")).toBeVisible();
-  await expect(page.getByRole("button", { name: "▶ Start the meeting" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Start the meeting", exact: true })).toBeVisible();
   await expect(now(page)).toHaveText("Introduction");
 
   // The host fixes Pia's check-in: she sees it on her screen
@@ -170,13 +182,13 @@ test("the host runs a session from the control room, from the order of the turns
   const coffee = pane.locator(".item").filter({ hasText: "Coffee machine" });
   await expect(coffee).toBeVisible();
   // Shown big only with the Spotlight module, off in a weekly sync: turned on from another tab, the pane follows
-  await expect(office.getByRole("button", { name: "Show big on screen" })).toHaveCount(0);
+  await expect(office.getByRole("button", { name: "Put forward" })).toHaveCount(0);
   const settings = await page.context().newPage();
   await settings.goto(`${meeting}/settings#modules`);
   await settings.getByRole("switch", { name: "Use Spotlight in this meeting" }).click();
   await expect(settings.getByText("Spotlight turned on")).toBeVisible();
   await settings.close();
-  await office.getByRole("button", { name: "Show big on screen" }).click();
+  await office.getByRole("button", { name: "Put forward" }).click();
   await expect(page.locator(".preview-frame")).toContainText("Office move");
   // Ticked once the server has it: clicked, not checked
   await office.getByRole("checkbox", { name: "Topic handled" }).click();
@@ -187,19 +199,33 @@ test("the host runs a session from the control room, from the order of the turns
   // End, then the minutes without the open topics, previewed, then archived
   await page.getByRole("button", { name: /End the meeting/ }).click();
   await page.getByRole("button", { name: "Yes, end it" }).click();
-  await expect(page.getByText("Meeting ended: review the minutes, then archive them.")).toBeVisible();
+  await expect(page.getByText("Meeting ended: review the minutes, then publish them.")).toBeVisible();
+  // At the wrap-up the deck says what is left to do, and leads there
+  await page.getByRole("button", { name: "Review and publish the minutes" }).click();
   await openTab(page, /^Minutes/);
   await pane.getByText("Content:").click();
   await pane.getByRole("checkbox", { name: "Open topics" }).uncheck();
-  await expect(pane.getByText("Content:")).toContainText("9 of 10 team inputs");
-  await pane.getByRole("button", { name: "Preview" }).click();
-  const preview = page.getByRole("dialog");
-  await expect(preview).toContainText("Shipped the invoices");
-  await expect(preview).not.toContainText("Office move");
-  await preview.getByRole("button", { name: "Close" }).click();
-  await page.getByRole("button", { name: "Archive the meeting" }).click();
-  await page.getByRole("button", { name: "Yes, archive" }).click();
-  await expect(page.getByText("Meeting archived with its minutes. The next one is ready.")).toBeVisible();
+  // One team input fewer than there are (how many depends on the modules on)
+  await expect(pane.getByText("Content:")).toContainText(/(\d+) of (\d+) team inputs/);
+  const [kept, total] = ((await pane.getByText("Content:").textContent()) ?? "")
+    .match(/(\d+) of (\d+)/)!
+    .slice(1)
+    .map(Number);
+  expect(total! - kept!).toBe(1);
+  // Read over in the studio: the whole central space, each step's notes beside the minutes as they will read
+  await pane.getByRole("button", { name: "Review and edit" }).click();
+  const studio = page.getByRole("dialog", { name: "The minutes, before they are published" });
+  await expect(studio.locator(".studio-paper")).toContainText("Shipped the invoices");
+  await expect(studio.locator(".studio-paper")).not.toContainText("Office move");
+  await studio.getByRole("button", { name: "Next" }).click();
+  await expect(studio.getByText("2 / ")).toBeVisible();
+  await studio.getByRole("button", { name: "Back to the control room" }).click();
+  await expect(studio).toHaveCount(0);
+  // At the wrap-up, the control room's main button opens the minutes, published from there
+  await page.getByRole("button", { name: "Review and publish the minutes" }).click();
+  await page.getByRole("button", { name: "Publish the minutes", exact: true }).click();
+  await page.getByRole("button", { name: "Yes, publish" }).click();
+  await expect(page.getByText("Minutes published, session closed. The next one is ready.")).toBeVisible();
 
   // History: the omitted part is missing; a summary added afterwards; search
   await page.goto(`${meeting}/history`);

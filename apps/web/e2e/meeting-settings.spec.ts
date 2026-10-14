@@ -38,7 +38,7 @@ test("people, sections, schedule, template and deletion of a meeting; leaving an
   await expect(page.getByRole("combobox", { name: "Role of Rui Rocha" })).toContainText("Observer");
   // An observer follows the sessions without a check-in of his own
   await rui.goto(`${meeting}/me`);
-  await expect(rui.getByRole("button", { name: "Save my check-in" })).toHaveCount(0);
+  await expect(rui.locator(".checkin-status")).toHaveCount(0);
   // Back as a participant, so the section added below shows on his check-in
   await choose(page, page.getByRole("combobox", { name: "Role of Rui Rocha" }), "participant");
   await expect(page.getByRole("combobox", { name: "Role of Rui Rocha" })).toContainText("Participant");
@@ -47,30 +47,40 @@ test("people, sections, schedule, template and deletion of a meeting; leaving an
   await page.goto(`${meeting}/settings#sections`);
   await page.getByRole("button", { name: "+ Add a section" }).click();
   await page.getByRole("textbox", { name: "Name of section 5" }).fill("Demo to show");
-  await expect(page.locator(".cfg-status")).toContainText("✓");
+  await expect(page.locator(".cfg-status")).toHaveClass(/is-saved/);
   await page.reload();
   await expect(page.getByRole("textbox", { name: "Name of section 5" })).toHaveValue("Demo to show");
   await rui.goto(`${meeting}/me`);
   await expect(rui.getByRole("group", { name: "Demo to show" })).toBeVisible();
   await rui.getByRole("textbox", { name: "Demo to show" }).fill("The new login page");
-  await rui.getByRole("button", { name: "Save my check-in" }).click();
-  await expect(rui.getByText("Unsaved changes")).toHaveCount(0);
+  // The line joins the list as the field is left, and the check-in saves itself a moment later
+  await rui.getByRole("textbox", { name: "Demo to show" }).press("Tab");
+  await expect(rui.locator(".checkin-status")).toContainText("Saving");
+  await expect(rui.locator(".checkin-status")).toContainText("Saved");
   await rui.reload();
   await expect(rui.getByRole("group", { name: "Demo to show" })).toContainText("The new login page");
 
-  // Schedule: Thursday instead of Monday; the summary and the next dates follow once saved
+  // Schedule: Thursday instead of Monday; the summary and the next dates follow once saved (by itself)
   await page.goto(`${meeting}/settings#schedule`);
   await expect(page.locator(".schedule-summary")).toHaveText(/^Every Monday at 10:00/);
   await page.getByRole("button", { name: "Thu", exact: true }).click();
   await page.getByRole("button", { name: "Mon", exact: true }).click();
   await expect(page.getByRole("button", { name: "Thu", exact: true })).toHaveAttribute("aria-pressed", "true");
-  await page.getByRole("button", { name: "Save the schedule" }).click();
-  await expect(page.getByText("Schedule saved")).toBeVisible();
+  // Saved by itself a moment later, like the other settings
+  await expect(page.locator(".schedule-status")).toHaveText("Schedule saved");
   await page.reload();
   await expect(page.locator(".schedule-summary")).toHaveText(/^Every Thursday at 10:00/);
   const dates = page.getByRole("region", { name: "Next dates" }).getByRole("listitem");
   await expect(dates.first()).toContainText("Thursday");
   await expect(dates.filter({ hasText: "Monday" })).toHaveCount(0);
+  // A long list is searched rather than scrolled: the time zone, by part of a city's name
+  await page.getByRole("combobox", { name: "Time zone", exact: true }).click();
+  const search = page.getByRole("combobox", { name: "Search…" });
+  await expect(search).toBeFocused();
+  await search.fill("new y");
+  await expect(page.getByRole("listbox").getByRole("option")).toHaveCount(1);
+  await search.press("Escape");
+  await expect(page.getByRole("listbox")).toHaveCount(0);
 
   // Kept as a template: offered by the wizard, with the section added above, and deleted from there
   await page.goto(`${meeting}/settings#template`);
@@ -82,7 +92,13 @@ test("people, sections, schedule, template and deletion of a meeting; leaving an
   await page.goto(`${workspace}/meetings/new`);
   const mine = page.getByRole("radio", { name: new RegExp(`Our sync ${run}`) });
   await expect(mine).toBeVisible();
-  await expect(mine).toHaveAccessibleName(/Demo to show/);
+  // Picked, its preview lists the section added above
+  await page
+    .locator("label.nm-tpl")
+    .filter({ hasText: `Our sync ${run}` })
+    .click();
+  await expect(mine).toBeChecked();
+  await expect(page.locator(".nm-preview")).toContainText("Demo to show");
   await page.getByRole("button", { name: `Delete the template Our sync ${run}` }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Delete" }).click();
   await expect(mine).toHaveCount(0);
@@ -104,7 +120,8 @@ test("people, sections, schedule, template and deletion of a meeting; leaving an
 
   // Rui leaves the workspace from its settings, after a confirmation
   await rui.goto(`${workspace}/settings`);
-  await expect(rui.getByText("Only admins can change these settings.")).toBeVisible();
+  // In the page itself (while it streams in, a hidden copy may stand beside its loading skeleton)
+  await expect(rui.locator("#main").getByText("Only admins can change these settings.")).toBeVisible();
   await rui.getByRole("button", { name: "Leave the workspace" }).click();
   const leave = rui.getByRole("dialog");
   await expect(leave).toContainText(`Leave Settings ${run}?`);
