@@ -140,6 +140,34 @@ test("people, sections, schedule, template and deletion of a meeting; leaving an
   expect((await page.goto(workspace))?.status()).toBe(404);
 });
 
+test("a BigBlueButton server of the workspace, picked by a meeting (every edition)", async ({ page }) => {
+  test.setTimeout(180_000);
+  const workspace = await hostWithWorkspace(
+    page,
+    { name: "Bea Bigblue", email: `bea-${run}@example.com`, password: "bigblue-password-123" },
+    `Bigblue ${run}`,
+  );
+  const meeting = await createMeeting(page, workspace, "Lectures");
+  await page.goto(`${workspace}/settings`);
+  const videoCard = page.locator(".video-accounts");
+  await videoCard.getByRole("button", { name: "Add a video account" }).click();
+  await videoCard.getByLabel("Name").fill("Campus");
+  await videoCard.getByLabel("Server address").fill("https://bbb.campus.test/bigbluebutton");
+  await videoCard.getByLabel("Shared secret of the server").fill("campus-secret");
+  await videoCard.getByRole("button", { name: "Save" }).click();
+  await expect(videoCard.locator(".tracker-list li").filter({ hasText: "Campus" })).toBeVisible();
+  // The meeting opens its rooms on it
+  await page.goto(`${meeting}/settings#general`);
+  await choose(page, page.getByLabel("Video tool"), "bbb");
+  await expect(page.getByLabel("Server", { exact: true })).toContainText("Campus");
+  await expect(page.getByText("People join with:")).toBeVisible();
+  // Its card says where the call comes from
+  await page.goto(`${meeting}/settings#integrations`);
+  const card = page.locator(".integ-card").filter({ hasText: "Video call" });
+  await expect(card).toContainText("Campus");
+  await expect(card.locator(".integ-origin")).toHaveText("From the workspace");
+});
+
 test("GitLab and GitHub connections: the workspace's, and a meeting's own", async ({ page }) => {
   test.setTimeout(180_000);
   const workspace = await hostWithWorkspace(
@@ -169,30 +197,23 @@ test("GitLab and GitHub connections: the workspace's, and a meeting's own", asyn
   await expect(page.locator(".forge-own").getByLabel("Token", { exact: true })).toBeVisible();
 });
 
-test("a BigBlueButton server of the workspace, picked by a meeting (every edition)", async ({ page }) => {
+test("the usual durations open under their field", async ({ page }) => {
   test.setTimeout(180_000);
   const workspace = await hostWithWorkspace(
     page,
-    { name: "Bea Bigblue", email: `bea-${run}@example.com`, password: "bigblue-password-123" },
-    `Bigblue ${run}`,
+    { name: "Dora Duration", email: `dora-${run}@example.com`, password: "duration-password-123" },
+    `Durations ${run}`,
   );
-  const meeting = await createMeeting(page, workspace, "Lectures");
-  await page.goto(`${workspace}/settings`);
-  const videoCard = page.locator(".video-accounts");
-  await videoCard.getByRole("button", { name: "Add a video account" }).click();
-  await videoCard.getByLabel("Name").fill("Campus");
-  await videoCard.getByLabel("Server address").fill("https://bbb.campus.test/bigbluebutton");
-  await videoCard.getByLabel("Shared secret of the server").fill("campus-secret");
-  await videoCard.getByRole("button", { name: "Save" }).click();
-  await expect(videoCard.locator(".tracker-list li").filter({ hasText: "Campus" })).toBeVisible();
-  // The meeting opens its rooms on it
+  const meeting = await createMeeting(page, workspace, "Durations");
   await page.goto(`${meeting}/settings#general`);
-  await choose(page, page.getByLabel("Video tool"), "bbb");
-  await expect(page.getByLabel("Server", { exact: true })).toContainText("Campus");
-  await expect(page.getByText("People join with:")).toBeVisible();
-  // Its card says where the call comes from
-  await page.goto(`${meeting}/settings#integrations`);
-  const card = page.locator(".integ-card").filter({ hasText: "Video call" });
-  await expect(card).toContainText("Campus");
-  await expect(card.locator(".integ-origin")).toHaveText("From the workspace");
+  const field = page.locator(".duration-box").filter({ has: page.locator("#cSpeak") });
+  await field.getByRole("button", { name: "Usual durations" }).click();
+  const list = page.locator(".duration-pop");
+  await expect(list).toBeVisible();
+  // It once opened at the top left corner of the page, its anchor being a detached trigger
+  const box = (await field.boundingBox())!;
+  const pop = (await list.boundingBox())!;
+  expect(Math.abs(pop.y - (box.y + box.height)) < 20 || Math.abs(pop.y + pop.height - box.y) < 20).toBe(true);
+  expect(pop.x + pop.width).toBeGreaterThan(box.x);
+  expect(pop.x).toBeLessThan(box.x + box.width);
 });
