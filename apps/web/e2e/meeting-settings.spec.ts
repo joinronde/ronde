@@ -167,6 +167,7 @@ test("GitLab and GitHub connections: the workspace's, and a meeting's own", asyn
   await expect(page.getByText("No GitLab connection")).toBeVisible();
   await page.getByRole("button", { name: "Add a connection for this meeting only" }).click();
   await expect(page.locator(".forge-own").getByLabel("Token", { exact: true })).toBeVisible();
+});
 
 test("a BigBlueButton server of the workspace, picked by a meeting (every edition)", async ({ page }) => {
   test.setTimeout(180_000);
