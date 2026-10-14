@@ -52,17 +52,19 @@ export function DurationField({ id, value, unit, presets, min, max, format, onCh
   return (
     <div className="duration-field">
       <Popover.Root open={open} onOpenChange={setOpen}>
-        <div className={`duration-box${open ? " open" : ""}${draft !== null && outside ? " invalid" : ""}`}>
-          <button
-            type="button"
-            className="duration-step"
-            aria-label={`${t("less")} (${format(step)})`}
-            disabled={value <= min}
-            onClick={() => nudge(-1)}
-          >
-            <Minus size={15} strokeWidth={2.2} aria-hidden="true" />
-          </button>
-          <Popover.Anchor asChild>
+        {/* The whole box anchors the list, and it must contain the trigger: an anchor beside it is overridden by the
+            trigger's own one, which is then remounted, and the list opens at the corner of the page */}
+        <Popover.Anchor asChild>
+          <div className={`duration-box${open ? " open" : ""}${draft !== null && outside ? " invalid" : ""}`}>
+            <button
+              type="button"
+              className="duration-step"
+              aria-label={`${t("less")} (${format(step)})`}
+              disabled={value <= min}
+              onClick={() => nudge(-1)}
+            >
+              <Minus size={15} strokeWidth={2.2} aria-hidden="true" />
+            </button>
             <input
               ref={input}
               id={id}
@@ -88,22 +90,22 @@ export function DurationField({ id, value, unit, presets, min, max, format, onCh
                 }
               }}
             />
-          </Popover.Anchor>
-          <Popover.Trigger asChild>
-            <button type="button" className="duration-step duration-open" aria-label={t("suggestions")} tabIndex={-1}>
-              <ChevronDown size={15} strokeWidth={2.2} aria-hidden="true" />
+            <Popover.Trigger asChild>
+              <button type="button" className="duration-step duration-open" aria-label={t("suggestions")} tabIndex={-1}>
+                <ChevronDown size={15} strokeWidth={2.2} aria-hidden="true" />
+              </button>
+            </Popover.Trigger>
+            <button
+              type="button"
+              className="duration-step"
+              aria-label={`${t("more")} (${format(step)})`}
+              disabled={value >= max}
+              onClick={() => nudge(1)}
+            >
+              <Plus size={15} strokeWidth={2.2} aria-hidden="true" />
             </button>
-          </Popover.Trigger>
-          <button
-            type="button"
-            className="duration-step"
-            aria-label={`${t("more")} (${format(step)})`}
-            disabled={value >= max}
-            onClick={() => nudge(1)}
-          >
-            <Plus size={15} strokeWidth={2.2} aria-hidden="true" />
-          </button>
-        </div>
+          </div>
+        </Popover.Anchor>
         <Popover.Portal>
           <Popover.Content
             className="time-pop duration-pop"
