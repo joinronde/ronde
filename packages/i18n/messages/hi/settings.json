@@ -120,7 +120,6 @@
     "origin": {
       "inherited": "कार्यक्षेत्र से प्राप्त",
       "workspace": "कार्यक्षेत्र से",
-      "workspaceNamed": "कार्यक्षेत्र से: {name}",
       "meeting": "इस मीटिंग का अपना",
       "instance": "सर्वर से"
     }

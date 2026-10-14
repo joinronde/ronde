@@ -44,7 +44,6 @@ import { createVideoRoomAction } from "@/app/w/[ws]/actions";
 import { DurationField } from "@/components/duration-field";
 import { Select } from "@/components/select";
 import { withBasePath } from "@/lib/shared/base-path";
-import { forgeOrigins, videoOrigin } from "@/lib/shared/integration-origin";
 import { moved } from "@/lib/shared/sortable";
 import { AgendaPanel, PokerSettings, RetroSettings } from "./agenda-panel";
 import { squareImage } from "./avatar-picker";
@@ -990,11 +989,7 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
   const sources = isAdmin && s.modules.gitlab && <ForgeSources key="gitlab" kind="gitlab" />;
   const githubSources = isAdmin && s.modules.github && <ForgeSources key="github" kind="github" />;
   // Where each tool's access comes from: the workspace's, the meeting's own, the server's
-  const forgeOrigin = (kind: "gitlab" | "github") =>
-    forgeOrigins(s.settings.forges, kind)
-      .map((o) => t(`hub.origin.${o}`))
-      .join(" · ");
-  const video = videoOrigin(s.settings.video, s.videoAccounts);
+  const forgeOrigin = (kind: "gitlab" | "github") => s.origins[kind].map((o) => t(`hub.origin.${o}`)).join(" · ");
   const forgeState = (kind: "gitlab" | "github") => {
     const used = s.settings.forges[kind].sources;
     const names = used.map((u) => s.settings.forges.connections.find((c) => c.id === u.connection)).filter((c) => !!c);
@@ -1052,8 +1047,8 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
         ? off()
         : {
             state: s.settings.videoUrl ? "on" : "todo",
-            stateText: !s.settings.videoUrl ? t("hub.toSetUp") : (video.server ?? t("hub.ready")),
-            origin: s.settings.videoUrl ? t(`hub.origin.${video.origin}`) : undefined,
+            stateText: !s.settings.videoUrl ? t("hub.toSetUp") : s.origins.video.name || t("hub.ready"),
+            origin: s.settings.videoUrl ? t(`hub.origin.${s.origins.video.origin}`) : undefined,
             goTo: "general",
             goToLabel: t("hub.goGeneral"),
           }),
@@ -1064,10 +1059,11 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
       mark: <CalendarDays size={22} strokeWidth={2} />,
       description: t("hub.calendar"),
       state: s.calendars?.current ? "on" : "todo",
-      stateText: s.calendars?.current ? t("hub.synced") : t("hub.toSetUp"),
-      origin: s.calendars?.current
-        ? t("hub.origin.workspaceNamed", { name: s.calendars.accounts.find((a) => a.id === s.calendars?.current)?.name ?? "" })
-        : undefined,
+      // The account of the workspace it syncs with, as for the wiki
+      stateText: s.calendars?.current
+        ? (s.calendars.accounts.find((a) => a.id === s.calendars?.current)?.name ?? t("hub.synced"))
+        : t("hub.toSetUp"),
+      origin: s.calendars?.current ? t("hub.origin.workspace") : undefined,
       goTo: "schedule",
       goToLabel: t("hub.goSchedule"),
     },

@@ -120,7 +120,6 @@
     "origin": {
       "inherited": "Ereditato dallo spazio",
       "workspace": "Dallo spazio",
-      "workspaceNamed": "Dallo spazio: {name}",
       "meeting": "Proprio di questa riunione",
       "instance": "Dal server"
     }

@@ -473,6 +473,8 @@ export interface Snapshot {
    * the BigBlueButton servers (every edition)
    */
   videoAccounts: { id: string; name: string; kind: "zoom" | "meet" | "teams" | "bbb" }[];
+  /** Where the meeting's access to each tool comes from, as its integration cards say */
+  origins: IntegrationOrigins;
   /** Calendar sync of the meeting, for the people configuring it (Team): the accounts, the one in use */
   calendars: { accounts: { id: string; name: string; kind: "google" | "microsoft" | "caldav" }[]; current: string | null } | null;
   /**
@@ -553,6 +555,18 @@ export interface ForgeConnectionView {
   scope: "workspace" | "meeting" | "instance";
   /** Connected with OAuth, renewed by itself, rather than with a personal token */
   oauth: boolean;
+}
+
+/** Where a meeting's access to a tool comes from: inherited from the workspace (its hosts picked nothing), the
+ * workspace's, the meeting's own, the server's */
+export type IntegrationOrigin = "inherited" | "workspace" | "meeting" | "instance";
+
+export interface IntegrationOrigins {
+  /** Each origin of the connections used, once */
+  gitlab: IntegrationOrigin[];
+  github: IntegrationOrigin[];
+  /** The account of the workspace it comes from (a BigBlueButton server, a Zoom account that made the room), named */
+  video: { origin: IntegrationOrigin; name: string };
 }
 
 /** A GitLab connection a meeting uses: the groups whose projects it offers, the projects followed (empty: all) */

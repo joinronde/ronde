@@ -120,7 +120,6 @@
     "origin": {
       "inherited": "继承自工作区",
       "workspace": "来自工作区",
-      "workspaceNamed": "来自工作区：{name}",
       "meeting": "此会议专用",
       "instance": "来自服务器"
     }

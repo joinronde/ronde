@@ -2,6 +2,8 @@ import { generateKeyPairSync, sign } from "node:crypto";
 import { prisma } from "@ronde/db";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { saveLicense } from "@/lib/server/license";
+import { runOp } from "@/lib/server/meeting/ops";
+import { loadSnapshot } from "@/lib/server/meeting/state";
 import { createMeetingRoom, saveVideoAccount } from "@/lib/server/video-accounts";
 import { type Fixture, meeting, workspace } from "./fixtures";
 
@@ -54,7 +56,13 @@ describe("video accounts", () => {
     const m = await prisma.meeting.findUniqueOrThrow({ where: { id: f.meetingId } });
     expect(m.videoUrl).toBe("https://zoom.us/j/42");
     const mod = await prisma.moduleInstallation.findFirstOrThrow({ where: { meetingId: f.meetingId, moduleId: "video" } });
-    expect(mod.config).toMatchObject({ provider: "link" });
+    expect(mod.config).toMatchObject({ provider: "link", roomAccount: id });
+    // Its card says the room comes from the workspace's account, until another link is typed over it
+    expect((await loadSnapshot(f.ctx)).origins.video).toEqual({ origin: "workspace", name: "Zoom" });
+    await runOp(f.ctx, { op: "video.configure", provider: "link", link: "https://zoom.us/j/42", jitsiUrl: "", bbbAccount: "", bbbUrl: "" });
+    expect((await loadSnapshot(f.ctx)).origins.video).toEqual({ origin: "workspace", name: "Zoom" });
+    await runOp(f.ctx, { op: "video.configure", provider: "link", link: "https://meet.example.org/team", jitsiUrl: "", bbbAccount: "", bbbUrl: "" });
+    expect((await loadSnapshot(f.ctx)).origins.video).toEqual({ origin: "meeting", name: "" });
   });
 
   it("never sends a BigBlueButton server to create a room, as a Zoom account would", async () => {

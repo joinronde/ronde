@@ -120,7 +120,6 @@
     "origin": {
       "inherited": "Inherited from the workspace",
       "workspace": "From the workspace",
-      "workspaceNamed": "From the workspace: {name}",
       "meeting": "This meeting's own",
       "instance": "From the server"
     }

@@ -9,6 +9,7 @@ const config = (o: Partial<VideoConfig>): VideoConfig => ({
   bbbAccount: "",
   bbbUrl: "",
   room: "abc",
+  roomAccount: "",
   ...o,
 });
 

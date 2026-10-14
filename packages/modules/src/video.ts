@@ -16,10 +16,12 @@ const schema = z.object({
   bbbUrl: url,
   /** Random room name, drawn once: hard to guess, the same for every session */
   room: z.string().max(40),
+  /** The video account of the workspace that created the free link's room (Zoom, Meet, Teams); empty: typed */
+  roomAccount: z.string().max(60),
 });
 export type VideoConfig = z.infer<typeof schema>;
 
-const defaults: VideoConfig = { provider: "link", jitsiUrl: "", bbbAccount: "", bbbUrl: "", room: "" };
+const defaults: VideoConfig = { provider: "link", jitsiUrl: "", bbbAccount: "", bbbUrl: "", room: "", roomAccount: "" };
 
 export const DEFAULT_JITSI = "https://meet.jit.si";
 
@@ -63,6 +65,9 @@ export const video = defineModule({
       run: async ({ db, m, meetingId, module }, o) => {
         if (!module) throw new OpError("notFound");
         const current = module.config as Partial<VideoConfig>;
+        // A link typed over a room an account created is the meeting's own (the link as saved now, in the transaction)
+        const saved = await db.meeting.findFirst({ where: { id: meetingId }, select: { videoUrl: true } });
+        const roomAccount = o.link === saved?.videoUrl ? (current.roomAccount ?? "") : "";
         // A server of the meeting's own is reached from Ronde's network: a new one is for administrators, whatever
         // the tool picked now (one kept with a free link would otherwise be used once BigBlueButton is picked)
         if (o.bbbUrl && o.bbbUrl !== (current.bbbUrl ?? "") && !m.can("connectors.manage"))
@@ -82,6 +87,7 @@ export const video = defineModule({
           bbbAccount,
           bbbUrl: o.bbbUrl,
           room: current.room || newRoom(),
+          roomAccount,
         });
         if (o.secret !== undefined) await module.setSecret(o.secret);
         await db.meeting.update({ where: { id: meetingId }, data: { videoUrl: o.link } });
