@@ -67,16 +67,19 @@ export const video = defineModule({
         // the tool picked now (one kept with a free link would otherwise be used once BigBlueButton is picked)
         if (o.bbbUrl && o.bbbUrl !== (current.bbbUrl ?? "") && !m.can("connectors.manage"))
           throw new AccessError(403, "videoServerAdminOnly", { host: new URL(o.bbbUrl).host });
-        // A server of this workspace (the transaction is confined to it)
-        if (o.bbbAccount) {
-          const account = await db.videoAccount.findFirst({ where: { id: o.bbbAccount, kind: "bbb" }, select: { id: true } });
-          if (!account) throw new OpError("notFound");
+        // A server of this workspace (the transaction is confined to it); the one picked before, removed meanwhile, is
+        // let go rather than blocking every later change
+        let bbbAccount = o.bbbAccount;
+        if (bbbAccount) {
+          const account = await db.videoAccount.findFirst({ where: { id: bbbAccount, kind: "bbb" }, select: { id: true } });
+          if (!account && bbbAccount !== current.bbbAccount) throw new OpError("notFound");
+          if (!account) bbbAccount = "";
         }
-        if (o.provider === "bbb" && !o.bbbAccount && !o.bbbUrl) throw new OpError("videoBbbUrl");
+        if (o.provider === "bbb" && !bbbAccount && !o.bbbUrl) throw new OpError("videoBbbUrl");
         await module.setConfig({
           provider: o.provider,
           jitsiUrl: o.jitsiUrl,
-          bbbAccount: o.bbbAccount,
+          bbbAccount,
           bbbUrl: o.bbbUrl,
           room: current.room || newRoom(),
         });

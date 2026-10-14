@@ -57,8 +57,9 @@ export interface VideoAccountInput {
   secret?: string;
 }
 
-export async function listVideoAccounts(db: WorkspaceContext["db"]): Promise<VideoAccountView[]> {
-  const rows = await db.videoAccount.findMany({ orderBy: { createdAt: "asc" } });
+/** The workspace's video accounts its plan has: BigBlueButton servers in every edition, the others with the plan */
+export async function listVideoAccounts(db: WorkspaceContext["db"], ws: PlanScope): Promise<VideoAccountView[]> {
+  const rows = await db.videoAccount.findMany({ where: videoLinksOn(ws) ? {} : { kind: "bbb" }, orderBy: { createdAt: "asc" } });
   return rows.map((r) => ({ id: r.id, kind: r.kind, name: r.name, config: r.config as Record<string, string> }));
 }
 
@@ -88,18 +89,16 @@ export async function saveVideoAccount(ctx: WorkspaceContext, input: VideoAccoun
 }
 
 export async function deleteVideoAccount(ctx: WorkspaceContext, id: string): Promise<void> {
-  // The meetings that opened their rooms on this BigBlueButton server no longer show a link that leads nowhere
-  const using = await ctx.db.moduleInstallation.findMany({
-    where: { moduleId: "video", config: { path: ["bbbAccount"], equals: id } },
-    select: { meetingId: true, config: true },
+  // At once, with the meetings that opened their rooms on this BigBlueButton server: they lose it and the
+  // meeting's own server kept behind it, rather than showing a link that leads nowhere or to a server dropped
+  const meetings = await ctx.db.$transaction(async (tx) => {
+    await tx.videoAccount.deleteMany({ where: { id } });
+    return tx.$queryRaw<{ meetingId: string }[]>`
+      UPDATE "ModuleInstallation" SET "config" = "config" || '{"bbbAccount": "", "bbbUrl": ""}'::jsonb
+      WHERE "workspaceId" = ${ctx.workspace.id} AND "moduleId" = 'video' AND "config"->>'bbbAccount' = ${id}
+      RETURNING "meetingId"`;
   });
-  for (const row of using)
-    await ctx.db.moduleInstallation.update({
-      where: { meetingId_moduleId: { meetingId: row.meetingId, moduleId: "video" } },
-      data: { config: { ...(row.config as Prisma.JsonObject), bbbAccount: "" } },
-    });
-  await ctx.db.videoAccount.deleteMany({ where: { id } });
-  for (const row of using) await publish(row.meetingId, { kind: "state" });
+  await Promise.all(meetings.map((m) => publish(m.meetingId, { kind: "state" })));
   await audit(ctx, ctx.db, { action: "video.delete", targetType: "videoAccount", targetId: id });
 }
 
@@ -112,10 +111,13 @@ const access = (row: { kind: VideoKind; config: unknown; secret: string }): Vide
 
 export async function testVideoAccount(ctx: WorkspaceContext, id: string): Promise<{ ok: true } | { ok: false; error: string }> {
   const row = await ctx.db.videoAccount.findFirst({ where: { id } });
-  // Without the plan, only a BigBlueButton server can be tested
-  if (!row) throw videoLinksOn(ctx.workspace) ? new OpError("notFound") : new AccessError(403, "featureNotInPlan");
+  if (!row) throw new OpError("notFound");
   if (!videoKindOn(row.kind, ctx.workspace)) throw new AccessError(403, "featureNotInPlan");
-  if (row.kind === "bbb") return bbbCheck((row.config as { url?: string }).url ?? "", decryptSecret(row.secret));
+  if (row.kind === "bbb") {
+    const res = await bbbCheck((row.config as { url?: string }).url ?? "", decryptSecret(row.secret));
+    if (!res.ok) throw new OpError("videoServerFailed", { detail: res.error });
+    return res;
+  }
   return enterprise.video.test(access({ ...row, kind: row.kind }));
 }
 
@@ -130,7 +132,8 @@ export async function meetingBbb(
   if (video.config.bbbAccount) {
     const row = await db.videoAccount.findFirst({ where: { id: video.config.bbbAccount, kind: "bbb" } });
     const server = (row?.config as { url?: string } | undefined)?.url ?? "";
-    return row && server ? { server, secret: decryptSecret(row.secret) } : null;
+    const secret = row ? decryptSecret(row.secret) : "";
+    return server && secret ? { server, secret } : null;
   }
   const secret = decryptSecret(video.secret);
   return video.config.bbbUrl && secret ? { server: video.config.bbbUrl, secret } : null;

@@ -16,7 +16,7 @@ import { slackOn, slackView } from "@/lib/server/slack";
 import { teamsOn, teamsView } from "@/lib/server/teams";
 import { listTrackers, trackersOn } from "@/lib/server/trackers";
 import { transcriptionOn } from "@/lib/server/transcripts";
-import { listVideoAccounts, videoKindOn, videoLinksOn } from "@/lib/server/video-accounts";
+import { listVideoAccounts, videoLinksOn } from "@/lib/server/video-accounts";
 import { listWikis, wikisOn } from "@/lib/server/wikis";
 
 export async function generateMetadata() {
@@ -75,7 +75,7 @@ export default async function WorkspaceSettingsPage({ params }: { params: Promis
   const videoAccounts = canConnect
     ? {
         slug: ctx.workspace.slug,
-        accounts: (await listVideoAccounts(ctx.db)).filter((a) => videoKindOn(a.kind, ctx.workspace)),
+        accounts: await listVideoAccounts(ctx.db, ctx.workspace),
         available: videoAvailable,
         plansUrl: plans,
       }

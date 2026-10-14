@@ -105,6 +105,7 @@
   "githubStatus": "أجاب GitHub بـ {status}.",
   "videoBbbUrl": "أدخل عنوان خادم BigBlueButton.",
   "videoServerAdminOnly": "لا يستطيع تعيين خادم BigBlueButton خاص بالاجتماع ({host}) إلا مسؤول مساحة العمل: اختر خادمًا من مساحة العمل.",
+  "videoServerFailed": "لم يقبل خادم BigBlueButton التحقق: {detail}",
   "videoUnreachable": "خادم مكالمات الفيديو لا يستجيب. حاول بعد قليل أو اطلب من المضيف التحقق من الإعدادات.",
   "publishLive": "بدأت هذه الجلسة مباشرة: أنهها من غرفة التحكم لأرشفتها.",
   "licenseFormat": "هذا ليس مفتاح ترخيص Ronde: الصق المفتاح كاملًا، وهو يبدأ بـ «ronde_lic_v1.».",

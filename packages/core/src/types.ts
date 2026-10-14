@@ -436,7 +436,16 @@ export interface Snapshot {
    */
   /** inbound: replies to reminders fill check-ins (INBOUND_IMAP_URL) */
   /** `gitlabOAuth`: the server has a GitLab OAuth application ("Connect with GitLab") */
-  integrations: { gitlab: boolean; gitlabOAuth: boolean; github: boolean; smtp: boolean; secrets: boolean; inbound: boolean };
+  /** `ownVideoServer`: the viewer may set a BigBlueButton server of the meeting's own (an administrator of the workspace) */
+  integrations: {
+    gitlab: boolean;
+    gitlabOAuth: boolean;
+    github: boolean;
+    smtp: boolean;
+    secrets: boolean;
+    inbound: boolean;
+    ownVideoServer: boolean;
+  };
   /** What module blocks of the agenda expand from (retro groups and their votes…) */
   blockData: BlockData;
   /** The retrospective of the session, as this viewer sees it (null without a retro block) */

@@ -63,7 +63,11 @@ describe("BigBlueButton servers of the workspace", () => {
       "fetch",
       async () => new Response("<response><returncode>FAILED</returncode><messageKey>checksumError</messageKey></response>"),
     );
-    expect(await testVideoAccount(f.ctx.ws, campus.id)).toEqual({ ok: false, error: "checksumError" });
+    // Said as a check that failed, not as a room that could not be created
+    await expect(testVideoAccount(f.ctx.ws, campus.id)).rejects.toMatchObject({
+      key: "videoServerFailed",
+      values: { detail: "checksumError" },
+    });
   });
 
   it("are picked by a meeting, which opens its room on them with their secret", async () => {
@@ -76,6 +80,10 @@ describe("BigBlueButton servers of the workspace", () => {
     expect((await loadSnapshot(f.ctx)).videoAccounts).toContainEqual({ id: campus.id, name: "Picked", kind: "bbb" });
     const participant = { ...f.ctx, can: (p: string) => p !== "meeting.configure" && f.ctx.can(p as never) };
     expect((await loadSnapshot(participant)).videoAccounts).toEqual([]);
+    // A server of the meeting's own is offered to administrators only
+    expect((await loadSnapshot(f.ctx)).integrations.ownVideoServer).toBe(true);
+    const host = { ...f.ctx, can: (p: string) => p !== "connectors.manage" && f.ctx.can(p as never) };
+    expect((await loadSnapshot(host)).integrations.ownVideoServer).toBe(false);
   });
 
   it("of another workspace cannot be picked", async () => {
@@ -87,13 +95,29 @@ describe("BigBlueButton servers of the workspace", () => {
     expect(await meetingBbb(f.ctx.ws.db, { config: { bbbAccount: theirs.id, bbbUrl: "" }, secret: "" })).toBeNull();
   });
 
-  it("removed, leave the meetings that used them without a link that leads nowhere", async () => {
+  it("removed, leave the meetings that used them without a link, not on an old server kept behind", async () => {
     const campus = await server(f, "Removed");
-    await runOp(f.ctx, { op: "video.configure", provider: "bbb", link: "", jitsiUrl: "", bbbAccount: campus.id, bbbUrl: "" });
+    const pick = { op: "video.configure", provider: "bbb", link: "", jitsiUrl: "", bbbAccount: campus.id } as const;
+    await runOp(f.ctx, { ...pick, bbbUrl: "https://old.bbb.test/bigbluebutton", secret: "old-secret" });
     await deleteVideoAccount(f.ctx.ws, campus.id);
     const v = await videoOf(f);
-    expect(v.config.bbbAccount).toBe("");
+    expect(v.config).toMatchObject({ bbbAccount: "", bbbUrl: "" });
     expect(videoLink(v.config, "", "/join")).toBe("");
+    // A server that was never the meeting's is still refused
+    await expect(runOp(f.ctx, { ...pick, bbbUrl: "" })).rejects.toMatchObject({ key: "notFound" });
+    // Removed while a meeting still names it (picked meanwhile): its next change lets it go instead of failing
+    const gone = await server(f, "Gone");
+    await runOp(f.ctx, { ...pick, bbbAccount: gone.id, bbbUrl: "" });
+    await prisma.videoAccount.delete({ where: { id: gone.id } });
+    await runOp(f.ctx, { ...pick, provider: "link", link: "https://meet.example.org/x", bbbAccount: gone.id, bbbUrl: "" });
+    expect((await videoOf(f)).config).toMatchObject({ provider: "link", bbbAccount: "" });
+  });
+
+  it("without a secret that can be read, open no room rather than a refused one", async () => {
+    const blank = await prisma.videoAccount.create({
+      data: { workspaceId: f.workspaceId, kind: "bbb", name: "Blank", config: { url: "https://bbb.blank.test/bigbluebutton" } },
+    });
+    expect(await meetingBbb(f.ctx.ws.db, { config: { bbbAccount: blank.id, bbbUrl: "" }, secret: "" })).toBeNull();
   });
 });
 

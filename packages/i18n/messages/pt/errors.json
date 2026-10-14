@@ -105,6 +105,7 @@
   "githubStatus": "O GitHub respondeu {status}.",
   "videoBbbUrl": "Informe o endereço do servidor BigBlueButton.",
   "videoServerAdminOnly": "Só um administrador do espaço pode definir um servidor BigBlueButton próprio da reunião ({host}): escolha um servidor do espaço.",
+  "videoServerFailed": "O servidor BigBlueButton não aceitou a verificação: {detail}",
   "videoUnreachable": "O servidor de videochamada não responde. Tente de novo em instantes ou peça ao anfitrião para verificar as configurações.",
   "publishLive": "Esta sessão foi iniciada ao vivo: encerre-a pela sala de controle para arquivá-la.",
   "licenseFormat": "Esta não é uma chave de licença do Ronde: cole a chave inteira, começando por “ronde_lic_v1.”.",
