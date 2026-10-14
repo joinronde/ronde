@@ -15,7 +15,12 @@ const connection = (id: string, scope: ForgeConnectionView["scope"]): ForgeConne
   oauth: false,
 });
 const forges = (picked: boolean, used: string[]): ForgeSettings => ({
-  connections: [connection("ws", "workspace"), connection("ws2", "workspace"), connection("own", "meeting"), connection("instance", "instance")],
+  connections: [
+    connection("ws", "workspace"),
+    connection("ws2", "workspace"),
+    connection("own", "meeting"),
+    connection("instance", "instance"),
+  ],
   servers: { gitlab: "https://gitlab.test", github: "https://api.github.com" },
   gitlab: { picked, sources: used.map((id) => ({ connection: id, groups: "", projects: "" })) },
   github: { picked: false, sources: [] },

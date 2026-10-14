@@ -1,12 +1,5 @@
 import "server-only";
-import type {
-  ForgeConnectionView,
-  ForgeItem,
-  ForgeSettings,
-  GithubSource,
-  GitlabSource,
-  IntegrationOrigin,
-} from "@ronde/core/types";
+import type { ForgeConnectionView, ForgeItem, ForgeSettings, GithubSource, GitlabSource, IntegrationOrigin } from "@ronde/core/types";
 import type { Prisma, ScopedClient } from "@ronde/db";
 import { readConfig } from "@ronde/module-sdk";
 import { github, gitlab } from "@ronde/modules";
@@ -316,9 +309,7 @@ export function usedSources<K extends ForgeKind>(
  * workspace's, by usedSources), otherwise each one's scope
  */
 export function forgeOrigins(forges: ForgeSettings, kind: ForgeKind): IntegrationOrigin[] {
-  const scopes = [
-    ...new Set(forges[kind].sources.flatMap((u) => forges.connections.find((c) => c.id === u.connection)?.scope ?? [])),
-  ];
+  const scopes = [...new Set(forges[kind].sources.flatMap((u) => forges.connections.find((c) => c.id === u.connection)?.scope ?? []))];
   // Not picked: the workspace's connections, otherwise the instance's (usedSources)
   if (!forges[kind].picked) return scopes[0] === "workspace" ? ["inherited"] : scopes;
   return scopes;

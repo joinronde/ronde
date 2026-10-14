@@ -61,7 +61,14 @@ describe("video accounts", () => {
     expect((await loadSnapshot(f.ctx)).origins.video).toEqual({ origin: "workspace", name: "Zoom" });
     await runOp(f.ctx, { op: "video.configure", provider: "link", link: "https://zoom.us/j/42", jitsiUrl: "", bbbAccount: "", bbbUrl: "" });
     expect((await loadSnapshot(f.ctx)).origins.video).toEqual({ origin: "workspace", name: "Zoom" });
-    await runOp(f.ctx, { op: "video.configure", provider: "link", link: "https://meet.example.org/team", jitsiUrl: "", bbbAccount: "", bbbUrl: "" });
+    await runOp(f.ctx, {
+      op: "video.configure",
+      provider: "link",
+      link: "https://meet.example.org/team",
+      jitsiUrl: "",
+      bbbAccount: "",
+      bbbUrl: "",
+    });
     expect((await loadSnapshot(f.ctx)).origins.video).toEqual({ origin: "meeting", name: "" });
   });
 
