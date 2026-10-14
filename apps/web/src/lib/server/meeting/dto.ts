@@ -88,7 +88,7 @@ export function toSettings(
     meetingLocale: isLocale(m.locale) ? m.locale : null,
     hostLabel: m.hostLabel,
     videoUrl: mods.video?.enabled ? videoLink(vc, m.videoUrl, joinPath) : "",
-    video: { provider: vc.provider, link: m.videoUrl, jitsiUrl: vc.jitsiUrl, bbbUrl: vc.bbbUrl },
+    video: { provider: vc.provider, link: m.videoUrl, jitsiUrl: vc.jitsiUrl, bbbAccount: vc.bbbAccount, bbbUrl: vc.bbbUrl },
     speakSec: m.speakSec,
     autoStart: m.autoStart,
     projectsBy: m.projectsBy === "participants" ? "participants" : "hosts",

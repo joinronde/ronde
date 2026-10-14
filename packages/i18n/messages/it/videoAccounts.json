@@ -1,6 +1,6 @@
 {
   "title": "Account video",
-  "intro": "Lascia che Ronde crei una stanza permanente Zoom, Google Meet o Teams per ogni riunione, con un account dello spazio di lavoro. Nessuno deve accedere.",
+  "intro": "Gli account video dello spazio: un server BigBlueButton su cui le sue riunioni aprono la loro stanza, o un account Zoom, Google Meet o Teams che crea una stanza permanente per ogni riunione. Nessuno deve accedere.",
   "empty": "Ancora nessun account video.",
   "add": "Aggiungi un account video",
   "kind": "Provider",
@@ -16,7 +16,8 @@
   "kinds": {
     "zoom": "Zoom",
     "meet": "Google Meet",
-    "teams": "Microsoft Teams"
+    "teams": "Microsoft Teams",
+    "bbb": "BigBlueButton"
   },
   "fields": {
     "accountId": "ID account",
@@ -24,17 +25,21 @@
     "clientEmail": "Email dell'account di servizio",
     "subject": "Utente a cui appartengono le stanze",
     "tenant": "Tenant (ID o dominio)",
-    "organizer": "Organizzatore delle riunioni"
+    "organizer": "Organizzatore delle riunioni",
+    "url": "Indirizzo del server"
   },
   "secret": {
     "zoom": "Client secret",
     "meet": "Chiave privata dell'account di servizio",
-    "teams": "Client secret"
+    "teams": "Client secret",
+    "bbb": "Segreto condiviso del server"
   },
   "hints": {
     "zoom": "Nello Zoom App Marketplace, crea un'app «Server-to-Server OAuth» con lo scope meeting:write:meeting:admin, poi copia account ID, client ID e secret.",
     "meet": "In Google Cloud, crea un account di servizio, concedigli la delega a livello di dominio per lo scope meetings.space.created nella console di amministrazione di Google Workspace, poi incolla la private_key della sua chiave JSON.",
-    "teams": "In Microsoft Entra, registra un'applicazione con il permesso applicativo OnlineMeetings.ReadWrite.All (consenso dell'amministratore) e un criterio di accesso applicativo per l'organizzatore."
+    "teams": "In Microsoft Entra, registra un'applicazione con il permesso applicativo OnlineMeetings.ReadWrite.All (consenso dell'amministratore) e un criterio di accesso applicativo per l'organizzatore.",
+    "bbb": "L'indirizzo del server (https://…/bigbluebutton) e il suo segreto condiviso, fornito da bbb-conf --secret sul server."
   },
-  "useIt": "Poi, nelle impostazioni di una riunione, Generale → Videochiamata: «Crea una stanza permanente»."
+  "useIt": "Poi, nelle impostazioni di una riunione, Generale → Videochiamata: «Crea una stanza permanente».",
+  "useItBbb": "Un server BigBlueButton viene poi proposto nelle impostazioni di ogni riunione, Generale → Videochiamata."
 }

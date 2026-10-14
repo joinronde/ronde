@@ -71,6 +71,7 @@ beforeAll(async () => {
   });
 });
 
+// As a template saved before a setting existed keeps it (no bbbAccount): the others still come with it
 const VIDEO = { provider: "jitsi", jitsiUrl: "", bbbUrl: "" };
 
 describe("templates", () => {

@@ -167,4 +167,26 @@ test("GitLab and GitHub connections: the workspace's, and a meeting's own", asyn
   await expect(page.getByText("No GitLab connection")).toBeVisible();
   await page.getByRole("button", { name: "Add a connection for this meeting only" }).click();
   await expect(page.locator(".forge-own").getByLabel("Token", { exact: true })).toBeVisible();
+
+test("a BigBlueButton server of the workspace, picked by a meeting (every edition)", async ({ page }) => {
+  test.setTimeout(180_000);
+  const workspace = await hostWithWorkspace(
+    page,
+    { name: "Bea Bigblue", email: `bea-${run}@example.com`, password: "bigblue-password-123" },
+    `Bigblue ${run}`,
+  );
+  const meeting = await createMeeting(page, workspace, "Lectures");
+  await page.goto(`${workspace}/settings`);
+  const videoCard = page.locator(".video-accounts");
+  await videoCard.getByRole("button", { name: "Add a video account" }).click();
+  await videoCard.getByLabel("Name").fill("Campus");
+  await videoCard.getByLabel("Server address").fill("https://bbb.campus.test/bigbluebutton");
+  await videoCard.getByLabel("Shared secret of the server").fill("campus-secret");
+  await videoCard.getByRole("button", { name: "Save" }).click();
+  await expect(videoCard.locator(".tracker-list li").filter({ hasText: "Campus" })).toBeVisible();
+  // The meeting opens its rooms on it
+  await page.goto(`${meeting}/settings#general`);
+  await choose(page, page.getByLabel("Video tool"), "bbb");
+  await expect(page.getByLabel("Server", { exact: true })).toContainText("Campus");
+  await expect(page.getByText("People join with:")).toBeVisible();
 });

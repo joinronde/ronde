@@ -273,6 +273,9 @@
     "jitsiUrl": "Jitsi 服务器",
     "jitsiHint": "留空：meet.jit.si。房间名只抽取一次，难以猜测，且每场都相同。",
     "bbbUrl": "BigBlueButton 服务器",
+    "server": "服务器",
+    "ownServer": "此会议自己的服务器",
+    "serverHint": "工作区的服务器由其管理员在工作区设置中添加。",
     "bbbSecret": "服务器共享密钥",
     "bbbHint": "有人加入时 Ronde 会打开房间，并以各自的姓名让每个人进入；主持人以主持者身份加入。密钥会被加密且不再显示。",
     "current": "大家通过以下方式加入：",
@@ -283,7 +286,8 @@
     "kinds": {
       "zoom": "Zoom",
       "meet": "Google Meet",
-      "teams": "Teams"
+      "teams": "Teams",
+      "bbb": "BigBlueButton"
     }
   },
   "logoHint": "工作空间徽标会显示在共享屏幕、邮件和会议纪要中。",

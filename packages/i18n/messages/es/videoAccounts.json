@@ -1,6 +1,6 @@
 {
   "title": "Cuentas de vídeo",
-  "intro": "Deja que Ronde cree una sala permanente de Zoom, Google Meet o Teams para cada reunión, con una cuenta del espacio de trabajo. Nadie tiene que iniciar sesión.",
+  "intro": "Las cuentas de vídeo del espacio: un servidor BigBlueButton en el que sus reuniones abren su sala, o una cuenta de Zoom, Google Meet o Teams que crea una sala duradera para cada reunión. Nadie tiene que iniciar sesión.",
   "empty": "Todavía no hay cuentas de vídeo.",
   "add": "Añadir una cuenta de vídeo",
   "kind": "Proveedor",
@@ -16,7 +16,8 @@
   "kinds": {
     "zoom": "Zoom",
     "meet": "Google Meet",
-    "teams": "Microsoft Teams"
+    "teams": "Microsoft Teams",
+    "bbb": "BigBlueButton"
   },
   "fields": {
     "accountId": "ID de la cuenta",
@@ -24,17 +25,21 @@
     "clientEmail": "Correo de la cuenta de servicio",
     "subject": "Usuario al que pertenecen las salas",
     "tenant": "Inquilino (ID o dominio)",
-    "organizer": "Organizador de las reuniones"
+    "organizer": "Organizador de las reuniones",
+    "url": "Dirección del servidor"
   },
   "secret": {
     "zoom": "Secreto de cliente",
     "meet": "Clave privada de la cuenta de servicio",
-    "teams": "Secreto de cliente"
+    "teams": "Secreto de cliente",
+    "bbb": "Secreto compartido del servidor"
   },
   "hints": {
     "zoom": "En el Zoom App Marketplace, crea una app «Server-to-Server OAuth» con el alcance meeting:write:meeting:admin y copia su ID de cuenta, ID de cliente y secreto.",
     "meet": "En Google Cloud, crea una cuenta de servicio, dale delegación en todo el dominio para el alcance meetings.space.created en la consola de administración de Google Workspace y pega el private_key de su clave JSON.",
-    "teams": "En Microsoft Entra, registra una aplicación con el permiso de aplicación OnlineMeetings.ReadWrite.All (con consentimiento de administrador) y una directiva de acceso de aplicación para el organizador."
+    "teams": "En Microsoft Entra, registra una aplicación con el permiso de aplicación OnlineMeetings.ReadWrite.All (con consentimiento de administrador) y una directiva de acceso de aplicación para el organizador.",
+    "bbb": "La dirección del servidor (https://…/bigbluebutton) y su secreto compartido, que da bbb-conf --secret en el servidor."
   },
-  "useIt": "Después, en los ajustes de una reunión, General → Videollamada: «Crear una sala permanente»."
+  "useIt": "Después, en los ajustes de una reunión, General → Videollamada: «Crear una sala permanente».",
+  "useItBbb": "Después se ofrece un servidor BigBlueButton en los ajustes de cada reunión, General → Videollamada."
 }

@@ -513,7 +513,7 @@ describe("secrets", () => {
     const bare = { module: null } as never;
     await expect(github.ops[0].run(bare, { sources: [] })).rejects.toMatchObject({ key: "notFound" });
     await expect(gitlab.ops[0].run(bare, { sources: [] })).rejects.toMatchObject({ key: "notFound" });
-    await expect(video.ops[0].run(bare, { provider: "link", link: "", jitsiUrl: "", bbbUrl: "" })).rejects.toMatchObject({
+    await expect(video.ops[0].run(bare, { provider: "link", link: "", jitsiUrl: "", bbbAccount: "", bbbUrl: "" })).rejects.toMatchObject({
       key: "notFound",
     });
   });

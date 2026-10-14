@@ -18,7 +18,7 @@ import { upgradeTarget } from "../plans";
 import { visibleWhere } from "../projects";
 import { canEncrypt } from "../secrets";
 import { transcriptionConfig, transcriptionOn } from "../transcripts";
-import { listVideoAccounts, videoLinksOn } from "../video-accounts";
+import { listVideoAccounts } from "../video-accounts";
 import { wikisOn } from "../wikis";
 import { activeBlocks, blockData, pokerView, pollsView, retroView } from "./blocks";
 import { lastPlans, loadCheckIns } from "./checkins";
@@ -180,7 +180,9 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
           ...settings,
           // A guest link watches the shared screen: the team's call is not its to join
           ...(guestLink ? { videoUrl: "" } : {}),
-          video: guestLink ? { ...settings.video, link: "", jitsiUrl: "", bbbUrl: "" } : { ...settings.video, bbbUrl: "" },
+          video: guestLink
+            ? { ...settings.video, link: "", jitsiUrl: "", bbbAccount: "", bbbUrl: "" }
+            : { ...settings.video, bbbAccount: "", bbbUrl: "" },
           tokensSet: { bbb: false },
         },
     members: people(participants),
@@ -250,10 +252,10 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
             return { list: ctx.can("meeting.configure") ? list : [], current: list.find((w) => w.id === ctx.meeting.wikiId) ?? null };
           })()
         : null,
-    videoAccounts:
-      videoLinksOn(ctx.ws.workspace) && ctx.can("meeting.configure")
-        ? (await listVideoAccounts(ctx.ws.db)).map(({ id, name, kind }) => ({ id, name, kind }))
-        : [],
+    // Names only, never their settings
+    videoAccounts: ctx.can("meeting.configure")
+      ? (await listVideoAccounts(ctx.ws.db, ctx.ws.workspace)).map(({ id, name, kind }) => ({ id, name, kind }))
+      : [],
     ai: ctx.can("minutes.edit") && !!aiConfig(ctx.ws.workspace.settings, ctx.ws.workspace),
     brand: { logo: brand ? logoPath(ctx.ws.workspace.slug, brand.updatedAt.getTime()) : null, allowed: brandingOn(ctx.ws.workspace) },
     integrations: {
@@ -264,6 +266,7 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
       smtp: !!env.smtpUrl(),
       secrets: canEncrypt(),
       inbound: inboundOn(),
+      ownVideoServer: ctx.can("connectors.manage"),
     },
     blockData: blocksData,
     retro,

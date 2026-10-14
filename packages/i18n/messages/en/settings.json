@@ -273,6 +273,9 @@
     "jitsiUrl": "Jitsi server",
     "jitsiHint": "Empty: meet.jit.si. The room name is drawn once, hard to guess, and stays the same for every session.",
     "bbbUrl": "BigBlueButton server",
+    "server": "Server",
+    "ownServer": "A server of this meeting's own",
+    "serverHint": "The workspace's servers are added by its administrators, in the workspace settings.",
     "bbbSecret": "Shared secret of the server",
     "bbbHint": "Ronde opens the room when someone joins and brings each person in with their name; hosts join as moderators. The secret is encrypted and never shown again.",
     "current": "People join with:",
@@ -283,7 +286,8 @@
     "kinds": {
       "zoom": "Zoom",
       "meet": "Google Meet",
-      "teams": "Teams"
+      "teams": "Teams",
+      "bbb": "BigBlueButton"
     }
   },
   "logoHint": "The workspace logo shows on the shared screen, in emails and minutes.",

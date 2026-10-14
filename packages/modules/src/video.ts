@@ -1,23 +1,25 @@
-import { defineModule, defineOp, OpError } from "@ronde/module-sdk";
+import { AccessError, defineModule, defineOp, OpError } from "@ronde/module-sdk";
 import { z } from "zod";
 import { str } from "./shared";
 
 // Video call of the meeting: a free link (any tool), a Jitsi room, or a BigBlueButton room that Ronde opens
-// and joins with each person's name (hosts as moderators).
+// and joins with each person's name (hosts as moderators), on a server of the workspace or the meeting's own.
 
 const url = z.union([z.literal(""), z.string().trim().url().max(300)]);
 const schema = z.object({
   provider: z.enum(["link", "jitsi", "bbb"]),
   /** Jitsi server, meet.jit.si by default */
   jitsiUrl: url,
-  /** BigBlueButton server, e.g. https://bbb.example.com/bigbluebutton (its shared secret is kept as the module secret) */
+  /** A BigBlueButton server of the workspace (a video account); empty: the meeting's own, below */
+  bbbAccount: z.string().max(60),
+  /** The meeting's own BigBlueButton server, e.g. https://bbb.example.com/bigbluebutton (its shared secret is kept as the module secret) */
   bbbUrl: url,
   /** Random room name, drawn once: hard to guess, the same for every session */
   room: z.string().max(40),
 });
 export type VideoConfig = z.infer<typeof schema>;
 
-const defaults: VideoConfig = { provider: "link", jitsiUrl: "", bbbUrl: "", room: "" };
+const defaults: VideoConfig = { provider: "link", jitsiUrl: "", bbbAccount: "", bbbUrl: "", room: "" };
 
 export const DEFAULT_JITSI = "https://meet.jit.si";
 
@@ -34,7 +36,7 @@ export function newRoom(): string {
  */
 export function videoLink(config: VideoConfig, freeLink: string, joinPath: string): string {
   if (config.provider === "jitsi" && config.room) return `${(config.jitsiUrl || DEFAULT_JITSI).replace(/\/$/, "")}/Ronde${config.room}`;
-  if (config.provider === "bbb") return config.bbbUrl && config.room ? joinPath : "";
+  if (config.provider === "bbb") return (config.bbbAccount || config.bbbUrl) && config.room ? joinPath : "";
   return freeLink;
 }
 
@@ -54,14 +56,33 @@ export const video = defineModule({
         provider: z.enum(["link", "jitsi", "bbb"]),
         link: z.union([z.literal(""), z.string().trim().url().max(500)]),
         jitsiUrl: url,
+        bbbAccount: z.string().trim().max(60).default(""),
         bbbUrl: url,
         secret: str(200).optional(),
       }),
-      run: async ({ db, meetingId, module }, o) => {
+      run: async ({ db, m, meetingId, module }, o) => {
         if (!module) throw new OpError("notFound");
-        if (o.provider === "bbb" && !o.bbbUrl) throw new OpError("videoBbbUrl");
         const current = module.config as Partial<VideoConfig>;
-        await module.setConfig({ provider: o.provider, jitsiUrl: o.jitsiUrl, bbbUrl: o.bbbUrl, room: current.room || newRoom() });
+        // A server of the meeting's own is reached from Ronde's network: a new one is for administrators, whatever
+        // the tool picked now (one kept with a free link would otherwise be used once BigBlueButton is picked)
+        if (o.bbbUrl && o.bbbUrl !== (current.bbbUrl ?? "") && !m.can("connectors.manage"))
+          throw new AccessError(403, "videoServerAdminOnly", { host: new URL(o.bbbUrl).host });
+        // A server of this workspace (the transaction is confined to it); the one picked before, removed meanwhile, is
+        // let go rather than blocking every later change
+        let bbbAccount = o.bbbAccount;
+        if (bbbAccount) {
+          const account = await db.videoAccount.findFirst({ where: { id: bbbAccount, kind: "bbb" }, select: { id: true } });
+          if (!account && bbbAccount !== current.bbbAccount) throw new OpError("notFound");
+          if (!account) bbbAccount = "";
+        }
+        if (o.provider === "bbb" && !bbbAccount && !o.bbbUrl) throw new OpError("videoBbbUrl");
+        await module.setConfig({
+          provider: o.provider,
+          jitsiUrl: o.jitsiUrl,
+          bbbAccount,
+          bbbUrl: o.bbbUrl,
+          room: current.room || newRoom(),
+        });
         if (o.secret !== undefined) await module.setSecret(o.secret);
         await db.meeting.update({ where: { id: meetingId }, data: { videoUrl: o.link } });
       },
