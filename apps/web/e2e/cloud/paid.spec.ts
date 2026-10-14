@@ -29,7 +29,7 @@ test("an Enterprise workspace uses its paid features, and a Community one is tol
 
   // Logo (Team): uploaded, then shown in the sidebar instead of Ronde's
   await page.goto(`${base}/settings`);
-  await page.locator('.logo-settings input[type="file"]').setInputFiles(path.join(import.meta.dirname, "../../public/icon.png"));
+  await page.locator('#main .logo-settings input[type="file"]').setInputFiles(path.join(import.meta.dirname, "../../public/icon.png"));
   await expect(page.locator("img.side-ws-logo")).toBeVisible();
 
   // A CalDAV calendar account (Team): saved, then listed
@@ -89,7 +89,8 @@ test("an Enterprise workspace uses its paid features, and a Community one is tol
   await expect(page.getByRole("heading", { name: "Insights" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Report by email" })).toBeVisible();
   // Sent every week to the administrators
-  await page.getByLabel("Every Monday (the week before)").check();
+  // In the page itself (while it streams in, a hidden copy may stand beside its loading skeleton)
+  await page.locator("#main").getByLabel("Every Monday (the week before)").check();
   await page.getByRole("button", { name: "Save", exact: true }).click();
   await expect(page.getByRole("status").filter({ hasText: "✓" })).toBeVisible();
 
