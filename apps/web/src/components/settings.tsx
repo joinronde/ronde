@@ -401,7 +401,8 @@ function VideoPanel() {
       link: link.trim(),
       jitsiUrl: jitsiUrl.trim(),
       bbbAccount,
-      bbbUrl: bbbAccount ? "" : bbbUrl.trim(),
+      // Kept while a server of the workspace is picked: going back to it needs no administrator
+      bbbUrl: bbbUrl.trim(),
       ...(withSecret && secret !== null ? { secret: secret.trim() } : {}),
     });
     if (!ok) return;
@@ -414,7 +415,7 @@ function VideoPanel() {
     link.trim() !== v.link ||
     jitsiUrl.trim() !== v.jitsiUrl ||
     bbbAccount !== v.bbbAccount ||
-    (!bbbAccount && bbbUrl.trim() !== v.bbbUrl);
+    bbbUrl.trim() !== v.bbbUrl;
   useEffect(() => {
     if (!changed) return;
     setDone(false);
@@ -499,7 +500,12 @@ function VideoPanel() {
       {provider === "bbb" && (bbbServers.length > 0 || bbbAccount) && (
         <div className="field">
           <label htmlFor="vBbbServer">{t("video.server")}</label>
-          <Select id="vBbbServer" value={bbbAccount} onChange={(e) => setBbbAccount(e.target.value)}>
+          <Select
+            id="vBbbServer"
+            // A server removed meanwhile is not shown as another one
+            value={bbbServers.some((a) => a.id === bbbAccount) ? bbbAccount : ""}
+            onChange={(e) => setBbbAccount(e.target.value)}
+          >
             {bbbServers.map((a) => (
               <option key={a.id} value={a.id}>
                 {a.name}
@@ -510,7 +516,7 @@ function VideoPanel() {
           <span className="hint">{t("video.serverHint")}</span>
         </div>
       )}
-      {provider === "bbb" && !bbbAccount && (
+      {provider === "bbb" && !bbbServers.some((a) => a.id === bbbAccount) && (
         <>
           <div className="field">
             <label htmlFor="vBbb">{t("video.bbbUrl")}</label>

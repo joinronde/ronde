@@ -56,4 +56,14 @@ describe("video accounts", () => {
     const mod = await prisma.moduleInstallation.findFirstOrThrow({ where: { meetingId: f.meetingId, moduleId: "video" } });
     expect(mod.config).toMatchObject({ provider: "link" });
   });
+
+  it("never sends a BigBlueButton server to create a room, as a Zoom account would", async () => {
+    const bbb = await prisma.videoAccount.create({
+      data: { workspaceId: f.workspaceId, kind: "bbb", name: "Campus", config: { url: "https://bbb.campus.test/bigbluebutton" } },
+    });
+    const fetch = vi.fn();
+    vi.stubGlobal("fetch", fetch);
+    await expect(createMeetingRoom(f.ctx, bbb.id)).rejects.toMatchObject({ key: "notFound" });
+    expect(fetch).not.toHaveBeenCalled();
+  });
 });

@@ -63,16 +63,16 @@ export const video = defineModule({
       run: async ({ db, m, meetingId, module }, o) => {
         if (!module) throw new OpError("notFound");
         const current = module.config as Partial<VideoConfig>;
-        if (o.provider === "bbb") {
-          if (o.bbbAccount) {
-            // A server of this workspace (the transaction is confined to it)
-            const account = await db.videoAccount.findFirst({ where: { id: o.bbbAccount, kind: "bbb" }, select: { id: true } });
-            if (!account) throw new OpError("notFound");
-          } else if (!o.bbbUrl) throw new OpError("videoBbbUrl");
-          // A server of the meeting's own is reached from Ronde's network: a new one is for administrators
-          else if (o.bbbUrl !== current.bbbUrl && !m.can("connectors.manage"))
-            throw new AccessError(403, "videoServerAdminOnly", { host: new URL(o.bbbUrl).host });
+        // A server of the meeting's own is reached from Ronde's network: a new one is for administrators, whatever
+        // the tool picked now (one kept with a free link would otherwise be used once BigBlueButton is picked)
+        if (o.bbbUrl && o.bbbUrl !== (current.bbbUrl ?? "") && !m.can("connectors.manage"))
+          throw new AccessError(403, "videoServerAdminOnly", { host: new URL(o.bbbUrl).host });
+        // A server of this workspace (the transaction is confined to it)
+        if (o.bbbAccount) {
+          const account = await db.videoAccount.findFirst({ where: { id: o.bbbAccount, kind: "bbb" }, select: { id: true } });
+          if (!account) throw new OpError("notFound");
         }
+        if (o.provider === "bbb" && !o.bbbAccount && !o.bbbUrl) throw new OpError("videoBbbUrl");
         await module.setConfig({
           provider: o.provider,
           jitsiUrl: o.jitsiUrl,

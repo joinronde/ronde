@@ -88,7 +88,18 @@ export async function saveVideoAccount(ctx: WorkspaceContext, input: VideoAccoun
 }
 
 export async function deleteVideoAccount(ctx: WorkspaceContext, id: string): Promise<void> {
+  // The meetings that opened their rooms on this BigBlueButton server no longer show a link that leads nowhere
+  const using = await ctx.db.moduleInstallation.findMany({
+    where: { moduleId: "video", config: { path: ["bbbAccount"], equals: id } },
+    select: { meetingId: true, config: true },
+  });
+  for (const row of using)
+    await ctx.db.moduleInstallation.update({
+      where: { meetingId_moduleId: { meetingId: row.meetingId, moduleId: "video" } },
+      data: { config: { ...(row.config as Prisma.JsonObject), bbbAccount: "" } },
+    });
   await ctx.db.videoAccount.deleteMany({ where: { id } });
+  for (const row of using) await publish(row.meetingId, { kind: "state" });
   await audit(ctx, ctx.db, { action: "video.delete", targetType: "videoAccount", targetId: id });
 }
 
@@ -101,7 +112,8 @@ const access = (row: { kind: VideoKind; config: unknown; secret: string }): Vide
 
 export async function testVideoAccount(ctx: WorkspaceContext, id: string): Promise<{ ok: true } | { ok: false; error: string }> {
   const row = await ctx.db.videoAccount.findFirst({ where: { id } });
-  if (!row) throw new OpError("notFound");
+  // Without the plan, only a BigBlueButton server can be tested
+  if (!row) throw videoLinksOn(ctx.workspace) ? new OpError("notFound") : new AccessError(403, "featureNotInPlan");
   if (!videoKindOn(row.kind, ctx.workspace)) throw new AccessError(403, "featureNotInPlan");
   if (row.kind === "bbb") return bbbCheck((row.config as { url?: string }).url ?? "", decryptSecret(row.secret));
   return enterprise.video.test(access({ ...row, kind: row.kind }));
@@ -128,8 +140,8 @@ export async function meetingBbb(
 export async function createMeetingRoom(m: MeetingCtx, accountId: string): Promise<string> {
   if (!videoLinksOn(m.ws.workspace)) throw new AccessError(403, "featureNotInPlan");
   if (!m.can("meeting.configure")) throw new AccessError(403, "accessDenied");
+  const row = await m.ws.db.videoAccount.findFirst({ where: { id: accountId } });
   // A BigBlueButton server opens its rooms itself, at each session
-  const row = await m.ws.db.videoAccount.findFirst({ where: { id: accountId, kind: { not: "bbb" } } });
   if (!row || row.kind === "bbb") throw new OpError("notFound");
   let url: string;
   try {

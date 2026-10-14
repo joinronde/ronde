@@ -227,12 +227,13 @@ export function installationsFrom(
   return base.map((row) => {
     const mod = ALL_MODULES.find((m) => m.id === row.moduleId);
     const fromTemplate = data.modules[row.moduleId];
-    // Over the module's defaults: a template saved before a setting existed still brings the others
-    const saved =
+    // Over the module's defaults, as readConfig reads them: a template saved before a setting existed still brings
+    // the others
+    const parsed =
       fromTemplate?.config && typeof fromTemplate.config === "object" && mod
-        ? { ...(mod.config.defaults as object), ...(fromTemplate.config as object) }
-        : fromTemplate?.config;
-    const config = saved !== undefined && mod?.config.schema.safeParse(saved).success ? saved : row.config;
+        ? mod.config.schema.safeParse({ ...(mod.config.defaults as object), ...(fromTemplate.config as object) })
+        : null;
+    const config = parsed?.success ? parsed.data : row.config;
     const enabled = overrides[row.moduleId] ?? fromTemplate?.enabled ?? row.enabled;
     // Each meeting has its own video room
     const own = row.moduleId === "video" ? { ...(config as object), room: newRoom() } : config;

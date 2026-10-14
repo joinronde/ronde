@@ -5,7 +5,7 @@ import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { runOp } from "@/lib/server/meeting/ops";
 import { loadSnapshot } from "@/lib/server/meeting/state";
 import { encryptSecret } from "@/lib/server/secrets";
-import { createMeetingRoom, meetingBbb, saveVideoAccount, testVideoAccount } from "@/lib/server/video-accounts";
+import { deleteVideoAccount, meetingBbb, saveVideoAccount, testVideoAccount } from "@/lib/server/video-accounts";
 import { type Fixture, meeting, workspace } from "./fixtures";
 
 // BigBlueButton servers of the workspace, in every edition: added once by an administrator, picked by its meetings,
@@ -87,9 +87,13 @@ describe("BigBlueButton servers of the workspace", () => {
     expect(await meetingBbb(f.ctx.ws.db, { config: { bbbAccount: theirs.id, bbbUrl: "" }, secret: "" })).toBeNull();
   });
 
-  it("do not create rooms the way Zoom accounts do", async () => {
-    const campus = await server(f, "NoRooms");
-    await expect(createMeetingRoom(f.ctx, campus.id)).rejects.toMatchObject({ status: 403 });
+  it("removed, leave the meetings that used them without a link that leads nowhere", async () => {
+    const campus = await server(f, "Removed");
+    await runOp(f.ctx, { op: "video.configure", provider: "bbb", link: "", jitsiUrl: "", bbbAccount: campus.id, bbbUrl: "" });
+    await deleteVideoAccount(f.ctx.ws, campus.id);
+    const v = await videoOf(f);
+    expect(v.config.bbbAccount).toBe("");
+    expect(videoLink(v.config, "", "/join")).toBe("");
   });
 });
 
@@ -105,5 +109,14 @@ describe("a meeting's own BigBlueButton server", () => {
     });
     await runOp(host, { ...own, bbbUrl: "https://bbb.own.test/bigbluebutton" });
     expect(await meetingBbb(f.ctx.ws.db, await videoOf(f))).toEqual({ server: "https://bbb.own.test/bigbluebutton", secret: "own-secret" });
+    // Nor with another tool first, to switch to BigBlueButton once it is kept
+    await expect(
+      runOp(host, { ...own, provider: "link", link: "https://meet.example.org/x", bbbUrl: "https://intranet.acme.test/bigbluebutton" }),
+    ).rejects.toMatchObject({ key: "videoServerAdminOnly" });
+    // A server of the workspace picked meanwhile keeps the meeting's own: the host can go back to it
+    const campus = await server(f, "Meanwhile");
+    await runOp(host, { ...own, bbbAccount: campus.id, bbbUrl: "https://bbb.own.test/bigbluebutton" });
+    await runOp(host, { ...own, bbbUrl: "https://bbb.own.test/bigbluebutton" });
+    expect((await videoOf(f)).config).toMatchObject({ bbbAccount: "", bbbUrl: "https://bbb.own.test/bigbluebutton" });
   });
 });

@@ -82,9 +82,10 @@ const CASES: [
       actions.saveTranscriptionAction(slug, { enabled: false, baseUrl: "https://api.openai.com/v1", model: "whisper-1", language: "" }),
   ],
   ["integrations.writeBack", "team", (slug) => actions.testTrackerAction(slug, "00000000-0000-7000-8000-000000000000")],
+  ["integrations.videoLinks", "team", (slug) => actions.testVideoAccountAction(slug, "00000000-0000-7000-8000-000000000000")],
   // A Zoom account (a BigBlueButton server comes with every edition)
   [
-    "integrations.videoLinks",
+    "integrations.videoLinks (a Zoom account)",
     "team",
     (slug) => actions.saveVideoAccountAction(slug, { kind: "zoom", name: "Zoom", config: { accountId: "", clientId: "" }, secret: "" }),
   ],
