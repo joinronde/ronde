@@ -116,7 +116,13 @@
     "notifications": "围绕会议的聊天、邮件和短信",
     "goGeneral": "在“常规”中",
     "goSchedule": "在“日程”中",
-    "goNotifications": "在“通知”中"
+    "goNotifications": "在“通知”中",
+    "origin": {
+      "inherited": "继承自工作区",
+      "workspace": "来自工作区",
+      "meeting": "此会议专用",
+      "instance": "来自服务器"
+    }
   },
   "preview": {
     "to": "收件人：{email} · {date} {time}",

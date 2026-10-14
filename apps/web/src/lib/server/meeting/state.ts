@@ -4,12 +4,14 @@ import type { CheckInDTO, SectionDef, Snapshot, WikiChoice } from "@ronde/core/t
 import { HOST_ID, plainItem } from "@ronde/core/util";
 import { prisma, type ScopedClient, type ScopedTx } from "@ronde/db";
 import { resolveLocale } from "@ronde/i18n";
+import { readConfig } from "@ronde/module-sdk";
+import { video } from "@ronde/modules";
 import { HIDE_UPGRADE_HINTS } from "@/lib/shared/prefs";
 import { aiConfig } from "../ai";
 import { brandingOn, logoPath } from "../branding";
 import { calendarSyncOn, listCalendarAccounts } from "../calendars";
 import { env } from "../env";
-import { meetingForges } from "../forges";
+import { forgeOrigins, meetingForges } from "../forges";
 import { gitlabOAuthOn } from "../gitlab-oauth";
 import { inboundOn } from "../inbound";
 import { editionOf } from "../license";
@@ -18,7 +20,7 @@ import { upgradeTarget } from "../plans";
 import { visibleWhere } from "../projects";
 import { canEncrypt } from "../secrets";
 import { transcriptionConfig, transcriptionOn } from "../transcripts";
-import { listVideoAccounts } from "../video-accounts";
+import { listVideoAccounts, videoOrigin } from "../video-accounts";
 import { wikisOn } from "../wikis";
 import { activeBlocks, blockData, pokerView, pollsView, retroView } from "./blocks";
 import { lastPlans, loadCheckIns } from "./checkins";
@@ -88,6 +90,9 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
   const on = (id: string) => !!mods[id]?.enabled;
   // Whether each connection was made with OAuth is read from its secret: for the people configuring the meeting only
   const forges = on("gitlab") || on("github") ? await meetingForges(db, meeting.id, mods, viewer.isAdmin) : NO_FORGES;
+  const videoAccounts = ctx.can("meeting.configure")
+    ? (await listVideoAccounts(db, ctx.ws.workspace)).map(({ id, name, kind }) => ({ id, name, kind }))
+    : [];
   const sections: SectionDef[] = sectionRows.map(toSection);
   const checkIns = await loadCheckIns(db, meeting.id, sections);
   const sid = session?.id ?? "-";
@@ -253,9 +258,15 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
           })()
         : null,
     // Names only, never their settings
-    videoAccounts: ctx.can("meeting.configure")
-      ? (await listVideoAccounts(ctx.ws.db, ctx.ws.workspace)).map(({ id, name, kind }) => ({ id, name, kind }))
-      : [],
+    videoAccounts,
+    // For the integration cards of the people configuring the meeting
+    origins: ctx.can("meeting.configure")
+      ? {
+          gitlab: forgeOrigins(forges, "gitlab"),
+          github: forgeOrigins(forges, "github"),
+          video: videoOrigin(readConfig(video, mods.video?.config), videoAccounts),
+        }
+      : { gitlab: [], github: [], video: { origin: "meeting", name: "" } },
     ai: ctx.can("minutes.edit") && !!aiConfig(ctx.ws.workspace.settings, ctx.ws.workspace),
     brand: { logo: brand ? logoPath(ctx.ws.workspace.slug, brand.updatedAt.getTime()) : null, allowed: brandingOn(ctx.ws.workspace) },
     integrations: {

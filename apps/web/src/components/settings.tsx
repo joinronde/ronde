@@ -988,6 +988,8 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
 
   const sources = isAdmin && s.modules.gitlab && <ForgeSources key="gitlab" kind="gitlab" />;
   const githubSources = isAdmin && s.modules.github && <ForgeSources key="github" kind="github" />;
+  // Where each tool's access comes from: the workspace's, the meeting's own, the server's
+  const forgeOrigin = (kind: "gitlab" | "github") => s.origins[kind].map((o) => t(`hub.origin.${o}`)).join(" · ");
   const forgeState = (kind: "gitlab" | "github") => {
     const used = s.settings.forges[kind].sources;
     const names = used.map((u) => s.settings.forges.connections.find((c) => c.id === u.connection)).filter((c) => !!c);
@@ -1008,6 +1010,7 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
         : {
             state: s.integrations.gitlab ? "on" : "todo",
             stateText: s.integrations.gitlab ? forgeState("gitlab") : t("hub.toConnect"),
+            origin: s.integrations.gitlab ? forgeOrigin("gitlab") : undefined,
             panel: sources || <IntegrationsHint key="hint" />,
           }),
     },
@@ -1021,6 +1024,7 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
         : {
             state: s.settings.forges.github.sources.length ? "on" : "todo",
             stateText: s.settings.forges.github.sources.length ? forgeState("github") : t("hub.toSetUp"),
+            origin: s.settings.forges.github.sources.length ? forgeOrigin("github") : undefined,
             panel: githubSources || <IntegrationsHint key="hint" />,
           }),
     },
@@ -1031,6 +1035,7 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
       description: t("hub.wiki"),
       state: s.wikis?.current ? "on" : s.wikis?.list.length ? "todo" : "off",
       stateText: s.wikis?.current ? s.wikis.current.name : s.wikis?.list.length ? t("hub.toSetUp") : t("hub.noneInWorkspace"),
+      origin: s.wikis?.current ? t("hub.origin.workspace") : undefined,
       panel: <MeetingWikiPanel key="wiki" />,
     },
     {
@@ -1042,7 +1047,8 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
         ? off()
         : {
             state: s.settings.videoUrl ? "on" : "todo",
-            stateText: s.settings.videoUrl ? t("hub.ready") : t("hub.toSetUp"),
+            stateText: !s.settings.videoUrl ? t("hub.toSetUp") : s.origins.video.name || t("hub.ready"),
+            origin: s.settings.videoUrl ? t(`hub.origin.${s.origins.video.origin}`) : undefined,
             goTo: "general",
             goToLabel: t("hub.goGeneral"),
           }),
@@ -1053,7 +1059,11 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
       mark: <CalendarDays size={22} strokeWidth={2} />,
       description: t("hub.calendar"),
       state: s.calendars?.current ? "on" : "todo",
-      stateText: s.calendars?.current ? t("hub.synced") : t("hub.toSetUp"),
+      // The account of the workspace it syncs with, as for the wiki
+      stateText: s.calendars?.current
+        ? (s.calendars.accounts.find((a) => a.id === s.calendars?.current)?.name ?? t("hub.synced"))
+        : t("hub.toSetUp"),
+      origin: s.calendars?.current ? t("hub.origin.workspace") : undefined,
       goTo: "schedule",
       goToLabel: t("hub.goSchedule"),
     },
@@ -1064,6 +1074,8 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
       description: t("hub.notifications"),
       state: rulesOn ? "on" : "todo",
       stateText: rulesOn ? t("hub.rulesOn", { count: rulesOn }) : t("hub.toSetUp"),
+      // Sent through the workspace's connectors
+      origin: rulesOn ? t("hub.origin.workspace") : undefined,
       goTo: "notifications",
       goToLabel: t("hub.goNotifications"),
     },

@@ -159,7 +159,8 @@ export async function createMeetingRoom(m: MeetingCtx, accountId: string): Promi
   const workspaceId = m.ws.workspace.id;
   // The video module shows the link as is
   const current = await m.ws.db.moduleInstallation.findFirst({ where: { meetingId, moduleId: "video" } });
-  const config = { ...((current?.config as object | null) ?? {}), provider: "link" } as Prisma.InputJsonObject;
+  // The account is kept: the room comes from the workspace
+  const config = { ...((current?.config as object | null) ?? {}), provider: "link", roomAccount: row.id } as Prisma.InputJsonObject;
   await m.ws.db.moduleInstallation.upsert({
     where: { meetingId_moduleId: { meetingId, moduleId: "video" } },
     create: { workspaceId, meetingId, moduleId: "video", enabled: true, config },
@@ -169,4 +170,17 @@ export async function createMeetingRoom(m: MeetingCtx, accountId: string): Promi
   await audit(m.ws, m.ws.db, { action: "video.room", targetType: "meeting", targetId: meetingId, meetingId, data: { kind: row.kind } });
   await publish(meetingId, { kind: "state" });
   return url;
+}
+
+/**
+ * Where a meeting's call comes from: a BigBlueButton server of the workspace it picked, or the room a video account
+ * of the workspace created (named); otherwise the meeting's own link, room or server
+ */
+export function videoOrigin(
+  config: { provider: string; bbbAccount: string; roomAccount: string },
+  accounts: { id: string; name: string; kind: string }[],
+): { origin: "workspace" | "meeting"; name: string } {
+  const id = config.provider === "bbb" ? config.bbbAccount : config.provider === "link" ? config.roomAccount : "";
+  const account = id ? accounts.find((a) => a.id === id && (a.kind === "bbb") === (config.provider === "bbb")) : undefined;
+  return account ? { origin: "workspace", name: account.name } : { origin: "meeting", name: "" };
 }

@@ -116,7 +116,13 @@
     "notifications": "Чат, почта и SMS вокруг встречи",
     "goGeneral": "В разделе «Общие»",
     "goSchedule": "В разделе «Расписание»",
-    "goNotifications": "В разделе «Уведомления»"
+    "goNotifications": "В разделе «Уведомления»",
+    "origin": {
+      "inherited": "Унаследовано от пространства",
+      "workspace": "От пространства",
+      "meeting": "Собственное для этой встречи",
+      "instance": "От сервера"
+    }
   },
   "preview": {
     "to": "Кому: {email} · {date} в {time}",

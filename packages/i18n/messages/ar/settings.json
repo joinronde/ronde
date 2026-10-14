@@ -116,7 +116,13 @@
     "notifications": "الدردشة والبريد والرسائل حول الاجتماع",
     "goGeneral": "في عام",
     "goSchedule": "في الجدولة",
-    "goNotifications": "في الإشعارات"
+    "goNotifications": "في الإشعارات",
+    "origin": {
+      "inherited": "موروث من مساحة العمل",
+      "workspace": "من مساحة العمل",
+      "meeting": "خاص بهذا الاجتماع",
+      "instance": "من الخادم"
+    }
   },
   "preview": {
     "to": "إلى: {email} · {date} الساعة {time}",

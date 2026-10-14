@@ -116,7 +116,13 @@
     "notifications": "Chat, email and text messages around the meeting",
     "goGeneral": "In General",
     "goSchedule": "In Schedule",
-    "goNotifications": "In Notifications"
+    "goNotifications": "In Notifications",
+    "origin": {
+      "inherited": "Inherited from the workspace",
+      "workspace": "From the workspace",
+      "meeting": "This meeting's own",
+      "instance": "From the server"
+    }
   },
   "preview": {
     "to": "To: {email} · {date} at {time}",

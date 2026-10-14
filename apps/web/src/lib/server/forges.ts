@@ -1,5 +1,5 @@
 import "server-only";
-import type { ForgeConnectionView, ForgeItem, ForgeSettings, GithubSource, GitlabSource } from "@ronde/core/types";
+import type { ForgeConnectionView, ForgeItem, ForgeSettings, GithubSource, GitlabSource, IntegrationOrigin } from "@ronde/core/types";
 import type { Prisma, ScopedClient } from "@ronde/db";
 import { readConfig } from "@ronde/module-sdk";
 import { github, gitlab } from "@ronde/modules";
@@ -302,6 +302,17 @@ export function usedSources<K extends ForgeKind>(
   const shared = mine.filter((c) => c.scope === "workspace");
   const defaults = shared.length ? shared : mine.filter((c) => c.scope === "instance");
   return defaults.map((c) => config.sources.find((s) => s.connection === c.id) ?? blank(kind, c.id));
+}
+
+/**
+ * Where the connections a meeting uses come from, each once: inherited while its hosts picked nothing (the
+ * workspace's, by usedSources), otherwise each one's scope
+ */
+export function forgeOrigins(forges: ForgeSettings, kind: ForgeKind): IntegrationOrigin[] {
+  const scopes = [...new Set(forges[kind].sources.flatMap((u) => forges.connections.find((c) => c.id === u.connection)?.scope ?? []))];
+  // Not picked: the workspace's connections, otherwise the instance's (usedSources)
+  if (!forges[kind].picked) return scopes[0] === "workspace" ? ["inherited"] : scopes;
+  return scopes;
 }
 
 /** A meeting's GitLab and GitHub: the connections it may use and those it uses */
