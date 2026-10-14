@@ -162,3 +162,53 @@ test("a BigBlueButton server of the workspace, picked by a meeting (every editio
   await expect(page.getByLabel("Server", { exact: true })).toContainText("Campus");
   await expect(page.getByText("People join with:")).toBeVisible();
 });
+
+test("GitLab and GitHub connections: the workspace's, and a meeting's own", async ({ page }) => {
+  test.setTimeout(180_000);
+  const workspace = await hostWithWorkspace(
+    page,
+    { name: "Fern Forges", email: `fern-${run}@example.com`, password: "forges-password-123" },
+    `Forges ${run}`,
+  );
+  const meeting = await createMeeting(page, workspace, "Forges");
+  // The workspace's: added once for every meeting; an address that is not one is refused before the forge is asked
+  await page.goto(`${workspace}/settings`);
+  const forges = page.locator("#forges");
+  await expect(forges.getByRole("heading", { name: "GitLab and GitHub" })).toBeVisible();
+  // The server's own GitHub access, which reads public repositories, is listed but cannot be changed here
+  await expect(forges.getByRole("listitem").filter({ hasText: "GitHub of the server" })).toBeVisible();
+  await expect(forges.getByRole("listitem").filter({ hasText: "GitHub of the server" }).getByRole("button")).toHaveCount(0);
+  await forges.getByRole("button", { name: "Add a connection" }).click();
+  await forges.getByLabel("Server", { exact: true }).fill("ftp://git.acme.test");
+  await forges.getByLabel("Token", { exact: true }).fill("glpat-demo");
+  await forges.getByRole("button", { name: "Save" }).click();
+  await expect(forges.getByText("The server address is not valid")).toBeVisible();
+  // The meeting's GitLab card: the connections it uses, and one of its own to add
+  await page.goto(`${meeting}/settings#integrations`);
+  await page.getByRole("button", { name: /^GitLab/ }).click();
+  await expect(page.getByRole("heading", { name: "GitLab connections" })).toBeVisible();
+  await expect(page.getByText("No GitLab connection")).toBeVisible();
+  await page.getByRole("button", { name: "Add a connection for this meeting only" }).click();
+  await expect(page.locator(".forge-own").getByLabel("Token", { exact: true })).toBeVisible();
+});
+
+test("the usual durations open under their field", async ({ page }) => {
+  test.setTimeout(180_000);
+  const workspace = await hostWithWorkspace(
+    page,
+    { name: "Dora Duration", email: `dora-${run}@example.com`, password: "duration-password-123" },
+    `Durations ${run}`,
+  );
+  const meeting = await createMeeting(page, workspace, "Durations");
+  await page.goto(`${meeting}/settings#general`);
+  const field = page.locator(".duration-box").filter({ has: page.locator("#cSpeak") });
+  await field.getByRole("button", { name: "Usual durations" }).click();
+  const list = page.locator(".duration-pop");
+  await expect(list).toBeVisible();
+  // It once opened at the top left corner of the page, its anchor being a detached trigger
+  const box = (await field.boundingBox())!;
+  const pop = (await list.boundingBox())!;
+  expect(Math.abs(pop.y - (box.y + box.height)) < 20 || Math.abs(pop.y + pop.height - box.y) < 20).toBe(true);
+  expect(pop.x + pop.width).toBeGreaterThan(box.x);
+  expect(pop.x).toBeLessThan(box.x + box.width);
+});

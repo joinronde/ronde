@@ -1,0 +1,68 @@
+{
+  "title": "GitLab e GitHub",
+  "intro": "Le connessioni alle vostre forge di codice, fatte una volta per tutto lo spazio: ogni riunione può leggervi le issue di ciascuno, e i tracker vi aprono i ticket.",
+  "empty": "Ancora nessuna connessione.",
+  "kinds": {
+    "gitlab": "GitLab",
+    "github": "GitHub"
+  },
+  "scopes": {
+    "workspace": "Spazio",
+    "meeting": "Solo questa riunione",
+    "instance": "Server"
+  },
+  "instanceName": "{kind} del server",
+  "instanceHint": "Impostata dalle variabili del server (GITLAB_TOKEN, GITHUB_TOKEN); senza token, GitHub legge i repository pubblici.",
+  "as": "come @{account}",
+  "oauth": "connessa con GitLab",
+  "add": "Aggiungi una connessione",
+  "addOwn": "Aggiungi una connessione solo per questa riunione",
+  "addOwnHint": "Vista solo da questa riunione, per un server o un account che lo spazio non ha.",
+  "connect": "Connetti con GitLab",
+  "connectHint": "Il tuo account GitLab, in sola lettura, rinnovato da solo: nessun token da copiare o da sostituire quando scade.",
+  "reconnect": "Riconnetti",
+  "orToken": "oppure con un token personale",
+  "kind": "Strumento",
+  "name": "Nome",
+  "url": "Server",
+  "urlHint": "Vuoto: {url}",
+  "token": "Token",
+  "tokenKept": "Lascia vuoto il token per mantenere quello salvato.",
+  "tokenHints": {
+    "gitlab": "Un token personale con l'ambito <code>read_api</code> (<code>api</code> per un tracker che apre ticket).",
+    "github": "Un token a grana fine che legge issue e pull request (e le scrive, per un tracker che apre ticket)."
+  },
+  "encrypted": "I token vengono cifrati prima di essere salvati e non vengono mai più mostrati.",
+  "noSecretKey": "La cifratura dei token non è configurata sul server: chiedi agli operatori di impostare la chiave SECRET_KEY.",
+  "save": "Salva",
+  "saved": "Salvato.",
+  "cancel": "Annulla",
+  "edit": "Modifica",
+  "test": "Prova",
+  "works": "Funziona",
+  "remove": "Rimuovi",
+  "removeConfirm": "Rimuovere la connessione {name}? Le riunioni che la usano non leggono più attraverso di essa, e i tracker che vi aprono ticket vengono rimossi.",
+  "removeOwnConfirm": "Rimuovere la connessione {name} di questa riunione?",
+  "back": {
+    "connected": "GitLab connesso.",
+    "failed": "La connessione con GitLab non è riuscita: riprova o usa un token personale.",
+    "denied": "Non hai il permesso di connettere GitLab qui.",
+    "cancelled": "La connessione con GitLab è stata annullata."
+  },
+  "meeting": {
+    "title": "Connessioni {kind}",
+    "inherited": "Finché non ne scegli, questa riunione usa le connessioni dello spazio.",
+    "picked": "Questa riunione usa le connessioni spuntate qui sotto.",
+    "use": "Usa",
+    "none": "Nessuna connessione {kind}: un amministratore può aggiungerne una allo spazio, oppure aggiungine qui sotto una solo per questa riunione.",
+    "save": "Salva l'accesso {kind}",
+    "repos": "Repository seguiti",
+    "reposHint": "«proprietario/repository» o un intero «proprietario», uno per riga; vuoto: tutti i repository. Inserisci anche il nome utente GitHub di ogni persona in «Persone e ruoli».",
+    "groups": "Gruppi",
+    "projects": "Progetti seguiti",
+    "projectsHint": "Solo le issue di questi progetti sono proposte per l'importazione. Inserisci anche il nome utente GitLab di ogni persona in «Persone e ruoli»."
+  },
+  "hub": {
+    "count": "{count, plural, one {# connessione} other {# connessioni}}"
+  }
+}

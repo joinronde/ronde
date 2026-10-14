@@ -74,20 +74,52 @@ enum TrackerKind {
   github
 }
 
+enum ForgeKind {
+  gitlab
+  github
+}
+
+/// An account of a code forge (GitLab, GitHub): it reads the tickets of a meeting's people, and a tracker opens
+/// tickets with it. The workspace's serves any meeting; a meeting's own is seen by that meeting alone
+model ForgeConnection {
+  id          String         @id @default(uuid(7))
+  workspaceId String
+  workspace   Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  /// Set: the connection of this meeting only
+  meetingId   String?
+  meeting     Meeting?       @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  kind        ForgeKind
+  name        String
+  /// The server: https://gitlab.com or a GitLab of one's own, https://api.github.com or a GitHub Enterprise API
+  url         String
+  /// The forge account the access belongs to, when known
+  account     String         @default("")
+  /// A personal token, or the grant of an OAuth connection (JSON), encrypted with SECRET_KEY
+  secret      String         @default("")
+  createdAt   DateTime       @default(now())
+  trackers    IssueTracker[]
+
+  @@index([workspaceId])
+  @@index([meetingId])
+}
+
 /// An issue tracker of the workspace where actions become tickets (Team)
 model IssueTracker {
-  id          String      @id @default(uuid(7))
-  workspaceId String
-  workspace   Workspace   @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  kind        TrackerKind
-  name        String
-  /// Where tickets go: { site, project } (Jira), { team } (Linear), { url, project } (GitLab), { repo } (GitHub)
-  config      Json        @default("{}")
-  /// API token, encrypted with SECRET_KEY
-  secret      String      @default("")
-  createdAt   DateTime    @default(now())
+  id           String           @id @default(uuid(7))
+  workspaceId  String
+  workspace    Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  kind         TrackerKind
+  name         String
+  /// Where tickets go: { site, project, email } (Jira), { team } (Linear), { project } (GitLab), { repo } (GitHub)
+  config       Json             @default("{}")
+  /// API token (Jira, Linear), encrypted with SECRET_KEY
+  secret       String           @default("")
+  /// GitLab, GitHub: the workspace's connection the tickets are opened with
+  connectionId String?
+  connection   ForgeConnection? @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+  createdAt    DateTime         @default(now())
   /// Projects imported through it and kept in sync
-  projects    Project[]
+  projects     Project[]
 
   @@index([workspaceId])
 }

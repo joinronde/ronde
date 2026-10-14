@@ -88,29 +88,7 @@
     "bankHint": "Se saca una pregunta al azar para cada reunión; la sala de control puede cambiarla. Déjalo vacío para desactivar el rompehielos."
   },
   "sources": {
-    "title": "Fuentes de tareas",
-    "connect": "Conectar con GitLab",
-    "connectHint": "Su cuenta de GitLab, de solo lectura, renovada sola: ningún token que copiar ni que reemplazar cuando caduque.",
-    "connected": "Conectado a GitLab",
-    "connectedAs": "Conectado a GitLab como @{user}",
-    "disconnect": "Desconectar",
-    "disconnected": "GitLab desconectado",
-    "usePersonalToken": "Usar en su lugar un token personal",
-    "gitlabToken": "Token de GitLab",
-    "noSecretKey": "El cifrado de tokens no está configurado en el servidor: pide a los operadores que definan la clave SECRET_KEY.",
-    "tokenHint": "Los tokens se cifran antes de guardarse y no se vuelven a mostrar. GitLab: un token con el alcance <code>read_api</code>.",
-    "serverToken": "(se usa el token del servidor hasta que introduzcas uno)",
-    "groups": "Grupos de GitLab",
-    "projects": "Proyectos de GitLab seguidos",
-    "projectsHint": "Solo se proponen para importar las incidencias de estos proyectos. Introduce también el usuario de GitLab de cada persona en el bloque Personas.",
-    "save": "Guardar el acceso a GitLab",
-    "turnOn": "No hay ninguna integración activada en esta reunión. Activa GitLab o GitHub en «Módulos» para importar las incidencias y merge o pull requests de cada persona.",
-    "githubTitle": "GitHub",
-    "githubToken": "Token de GitHub",
-    "githubTokenHint": "Opcional para repositorios públicos. Para los privados: un token detallado con acceso de lectura a issues y pull requests. Cifrado, no se vuelve a mostrar.",
-    "githubRepos": "Repositorios seguidos",
-    "githubReposHint": "«propietario/repositorio» o un «propietario» entero, uno por línea; vacío: todos los repositorios. Introduce también el usuario de GitHub de cada persona en el bloque Personas.",
-    "githubSave": "Guardar el acceso a GitHub"
+    "turnOn": "No hay ninguna integración activada en esta reunión. Activa GitLab o GitHub en «Módulos» para importar las incidencias y merge o pull requests de cada persona."
   },
   "hub": {
     "intro": "Las herramientas con las que trabaja esta reunión y en qué punto está cada una. Abra una tarjeta para configurarla.",
@@ -154,7 +132,6 @@
     "followed": "{count, plural, one {# proyecto o grupo seguido} other {# proyectos o grupos seguidos}}",
     "noFilter": "Sin filtro: se siguen todos los proyectos",
     "untickAll": "Desmarcar todo",
-    "tokenFirst": "Introduce y guarda el token de GitLab para mostrar los proyectos de los grupos.",
     "loading": "Cargando proyectos…",
     "saveForGroups": "Guarda los ajustes para mostrar los proyectos de los grupos nuevos.",
     "filter": "Filtrar proyectos",

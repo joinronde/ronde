@@ -1,3 +1,4 @@
+import type { TrackerKind } from "@ronde/editions/ee";
 import "server-only";
 import { Prisma, prisma, scoped } from "@ronde/db";
 import { z } from "zod";
@@ -33,8 +34,7 @@ import {
   TOOL_NAMES,
 } from "./project-sources";
 import { createProject, editableProject, visibleWhere } from "./projects";
-import { decryptSecret } from "./secrets";
-import { trackersOn } from "./trackers";
+import { trackerAccess, trackersOn } from "./trackers";
 
 // Projects imported from GitHub, GitLab, Jira or Linear (every edition): the person picks the repositories,
 // milestones, epics or projects to bring into the portfolio, read with a token that is not kept. Members read
@@ -206,9 +206,10 @@ async function accessOf(ctx: WorkspaceContext, raw: ImportSourceInput): Promise<
     if (!row) throw new OpError("notFound");
     const kind = row.kind as SourceKind;
     const what = isWhatOf(kind, input.what) ? input.what : SOURCE_WHATS[kind][0];
-    const config = trackerConfig(kind, what, row.config as Record<string, string>);
+    const tracker = await trackerAccess(ctx.db, row);
+    const config = trackerConfig(kind, what, tracker.config);
     if (!config) throw new OpError("sourceAddressInvalid", { tool: TOOL_NAMES[kind] });
-    return { access: { kind, what, config, token: decryptSecret(row.secret) }, trackerId: row.id };
+    return { access: { kind, what, config, token: tracker.token }, trackerId: row.id };
   }
   if (!TOKEN_FORMAT.test(input.token)) throw new OpError("tokenInvalid");
   const what = isWhatOf(input.kind, input.what) ? input.what : SOURCE_WHATS[input.kind][0];
@@ -529,7 +530,7 @@ function synced(row: SyncedRow, item: SourceItem | null, now: Date) {
 /** Reads again some projects of one tracker, read from the same place; returns how many were read */
 async function syncGroup(
   db: ReturnType<typeof scoped>,
-  tracker: { id: string; kind: string; config: unknown; secret: string },
+  tracker: { id: string; kind: TrackerKind; config: unknown; secret: string; connectionId: string | null },
   rows: SyncedRow[],
 ): Promise<number> {
   const first = rows[0]!.source;
@@ -548,8 +549,14 @@ async function syncGroup(
   const note = async (problem: SourceProblem) => {
     for (const r of rows) await write(r.id, { source: json({ ...r.source, problem: problemOf(r, problem) }), syncedAt: now });
   };
+  // Its connection removed or refused: noted, the projects keep following it until it works again
+  const access = await trackerAccess(db, tracker).catch(() => null);
+  if (!access) {
+    await note("refused");
+    return 0;
+  }
   // The server and account the tracker reads with now, where the projects were imported from
-  const config = { ...first.config, ...trackerAccount(kind, tracker.config as Record<string, string>) };
+  const config = { ...first.config, ...trackerAccount(kind, access.config) };
   if (serverOf(config) !== serverOf(first.config)) {
     // The tracker now points at another server: these projects belong to the old one, they stop following it
     for (const r of rows) await write(r.id, { sourceTrackerId: null, source: json({ ...r.source, stopped: "moved", problem: null }) });
@@ -558,7 +565,7 @@ async function syncGroup(
   let read: Map<string, SourceItem | null | ReadFailure>;
   try {
     read = await readSource(
-      { kind, what: first.what, config, token: decryptSecret(tracker.secret) },
+      { kind, what: first.what, config, token: access.token },
       rows.map((r) => r.source.ref),
     );
   } catch (e) {

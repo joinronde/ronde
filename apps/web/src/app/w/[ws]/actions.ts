@@ -27,6 +27,7 @@ import {
 } from "@/lib/server/calendars";
 import { domainsOn, domainTakenElsewhere, endDomainSessions, ssoEnforcementOn } from "@/lib/server/domains";
 import { AccessError, OpError } from "@/lib/server/errors";
+import { deleteForgeConnection, type ForgeConnectionInput, saveForgeConnection, testForgeConnection } from "@/lib/server/forges";
 import { createGuestLink, listGuestLinks, revokeGuestLink } from "@/lib/server/guest-links";
 import { INTERNAL_HEADER, INTERNAL_TOKEN, identityHost, refreshTrustedOrigins, withPendingOrigin } from "@/lib/server/identity";
 import { meetingContext } from "@/lib/server/meeting/context";
@@ -744,6 +745,35 @@ export async function testAiAction(slug: string) {
       const code = (e as { code?: string }).code;
       throw new OpError(code === "aiKey" ? "aiKey" : "aiUnavailable");
     }
+  });
+}
+
+// ---------- GitLab and GitHub connections ----------
+
+export async function saveForgeConnectionAction(slug: string, input: ForgeConnectionInput) {
+  return run(async () => {
+    const ctx = await authorize(slug, "connectors.manage");
+    const res = await saveForgeConnection(ctx, input, null);
+    refresh(slug);
+    return res;
+  });
+}
+
+export async function deleteForgeConnectionAction(slug: string, id: string) {
+  return run(async () => {
+    const ctx = await authorize(slug, "connectors.manage");
+    await deleteForgeConnection(ctx, id, null);
+    refresh(slug);
+    return null;
+  });
+}
+
+export async function testForgeConnectionAction(slug: string, id: string) {
+  return run(async () => {
+    const ctx = await authorize(slug, "connectors.manage");
+    const res = await testForgeConnection(ctx, id, null);
+    refresh(slug);
+    return res;
   });
 }
 

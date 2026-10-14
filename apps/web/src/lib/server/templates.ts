@@ -51,14 +51,27 @@ export interface TemplateSummary {
 export const rulesFrom = (patterns: RulePattern[], startDate: string): ScheduleRule[] =>
   patterns.map((p, i) => ({ ...p, id: String(i), startDate, until: null, count: null }));
 
+/**
+ * GitLab and GitHub settings without the meeting's own connections, which another meeting cannot see; with none
+ * left, the copy uses the workspace's connections
+ */
+function withoutOwnForges(config: unknown, own: Set<string>): object | undefined {
+  const c = config as { picked?: boolean; sources?: { connection: string }[] } | null;
+  if (!c || !Array.isArray(c.sources)) return c ?? undefined;
+  const sources = c.sources.filter((x) => !own.has(x.connection));
+  return { ...c, sources, picked: !!c.picked && sources.length > 0 };
+}
+
 /** Everything that shapes a meeting, without its people, its history or any secret */
 export async function meetingTemplate(db: Db, meetingId: string): Promise<TemplateData> {
-  const [meeting, sections, modules, rules] = await Promise.all([
+  const [meeting, sections, modules, rules, ownForges] = await Promise.all([
     db.meeting.findFirstOrThrow({ where: { id: meetingId } }),
     db.section.findMany({ where: { meetingId }, orderBy: { position: "asc" } }),
     db.moduleInstallation.findMany({ where: { meetingId } }),
     db.scheduleRule.findMany({ where: { meetingId }, orderBy: [{ position: "asc" }, { createdAt: "asc" }] }),
+    db.forgeConnection.findMany({ where: { meetingId }, select: { id: true } }),
   ]);
+  const own = new Set(ownForges.map((c) => c.id));
   return {
     v: 1,
     settings: {
@@ -78,7 +91,12 @@ export async function meetingTemplate(db: Db, meetingId: string): Promise<Templa
         m.moduleId,
         {
           enabled: m.enabled,
-          config: m.moduleId === "video" && m.config ? { ...(m.config as object), room: "" } : (m.config ?? undefined),
+          config:
+            m.moduleId === "video" && m.config
+              ? { ...(m.config as object), room: "" }
+              : m.moduleId === "gitlab" || m.moduleId === "github"
+                ? withoutOwnForges(m.config, own)
+                : (m.config ?? undefined),
         },
       ]),
     ),

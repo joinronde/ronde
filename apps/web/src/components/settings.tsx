@@ -3,7 +3,7 @@
 import { ACCENTS, type Accent } from "@ronde/core/appearance";
 import { reminderEmail } from "@ronde/core/notifications";
 import { describeSchedule } from "@ronde/core/schedule";
-import type { GitlabProject, MemberDTO, SectionDef, SectionRole, SectionType, SettingsDTO } from "@ronde/core/types";
+import type { MemberDTO, SectionDef, SectionRole, SectionType, SettingsDTO } from "@ronde/core/types";
 import { fmtMinutes, hostName, lines, mmssPlain, ROLE_KIND, reminderDate, SECTION_ROLES, SECTION_TYPES } from "@ronde/core/util";
 import { formatters, type Locale, localeNames, locales } from "@ronde/i18n";
 import {
@@ -33,14 +33,13 @@ import {
   Puzzle,
   SlidersHorizontal,
   TriangleAlert,
-  Unplug,
   Users,
   Video,
   X,
 } from "lucide-react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
-import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { createVideoRoomAction } from "@/app/w/[ws]/actions";
 import { DurationField } from "@/components/duration-field";
 import { Select } from "@/components/select";
@@ -49,6 +48,8 @@ import { moved } from "@/lib/shared/sortable";
 import { AgendaPanel, PokerSettings, RetroSettings } from "./agenda-panel";
 import { squareImage } from "./avatar-picker";
 import { CalendarSyncPanel } from "./calendar-sync-panel";
+import { useConnectionLabel } from "./forge-connections";
+import { ForgeSources } from "./forge-sources";
 import { GuestLinksPanel } from "./guest-links-panel";
 import { type IntegrationItem, IntegrationsHub } from "./integrations-hub";
 import { MeetingMark } from "./meeting-mark";
@@ -572,43 +573,6 @@ function VideoPanel() {
   );
 }
 
-/** GitHub access of the meeting: a token (optional for public repositories) and the followed repositories */
-function GithubSources() {
-  const t = useTranslations("settings");
-  const { s, rpc } = useRonde();
-  const [repos, setRepos] = useState(s.settings.githubRepos);
-  const [token, setToken] = useState<string | null>(null);
-  const save = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (await rpc({ op: "github.configure", repos, ...(token !== null ? { token: token.trim() } : {}) }, t("saved"))) setToken(null);
-  };
-  return (
-    <form className="panel form" onSubmit={save}>
-      <AdminTitle>{t("sources.githubTitle")}</AdminTitle>
-      <TokenField
-        id="tGithub"
-        label={t("sources.githubToken")}
-        saved={s.settings.tokensSet.github}
-        value={token}
-        onChange={setToken}
-        placeholder="github_pat_…"
-        locked={!s.integrations.secrets}
-      />
-      <span className="hint">{t("sources.githubTokenHint")}</span>
-      <div className="field">
-        <label htmlFor="gRepos">{t("sources.githubRepos")}</label>
-        <textarea id="gRepos" value={repos} onChange={(e) => setRepos(e.target.value)} placeholder={"my-org\nmy-org/api"} />
-        <span className="hint">{t("sources.githubReposHint")}</span>
-      </div>
-      <div>
-        <button type="submit" className="btn primary">
-          {t("sources.githubSave")}
-        </button>
-      </div>
-    </form>
-  );
-}
-
 function IntegrationsHint() {
   const t = useTranslations("settings");
   return <div className="note-box">{t("sources.turnOn")}</div>;
@@ -650,13 +614,10 @@ function DangerZone() {
   );
 }
 
-/** Block title */
-function AdminTitle({ children }: { children: React.ReactNode }) {
-  return <h3 style={{ margin: 0 }}>{children}</h3>;
-}
-
 function SettingsForm({ initial }: { initial: SettingsDTO }) {
   const t = useTranslations("settings");
+  const tForges = useTranslations("forges");
+  const connectionLabel = useConnectionLabel();
   const tSections = useTranslations("sections");
   const locale = useLocale();
   const { rpc, s } = useRonde();
@@ -667,17 +628,9 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
     announcementsText: initial.announcements.join("\n"),
     icebreakersText: initial.icebreakers.join("\n"),
   });
-  // Integrations: GitLab
-  const [a, setA] = useState({
-    gitlabProjects: initial.gitlabProjects,
-    gitlabGroups: initial.gitlabGroups,
-  });
   // Sections, in order; a new section has an empty key until it is saved
   const [secs, setSecs] = useState<SectionDef[]>(() => initial.sections.map((x) => ({ ...x })));
-  // Tokens: null while untouched (the saved token is kept), "" to remove it
-  const [tokens, setTokens] = useState<{ gitlab: string | null }>({ gitlab: null });
   const set = <K extends keyof typeof f>(k: K, v: (typeof f)[K]) => setF((x) => ({ ...x, [k]: v }));
-  const setAdm = <K extends keyof typeof a>(k: K, v: (typeof a)[K]) => setA((x) => ({ ...x, [k]: v }));
   // Everything but the GitLab access is saved by itself, a moment after the last change
   type Saved = { f: typeof f; secs: SectionDef[] };
   const snapshot = (): Saved => ({ f, secs });
@@ -760,21 +713,6 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
     for (const form of document.querySelectorAll<HTMLFormElement>("form[data-cfg]")) if (!form.reportValidity()) return;
     if (dirty) void saveCore(snapshot(), saved);
   };
-  // GitLab access: saved on demand (a token is never saved half typed)
-  const saveSources = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const ok = await rpc(
-      {
-        op: "gitlab.configure",
-        projects: a.gitlabProjects,
-        groups: a.gitlabGroups,
-        ...(tokens.gitlab !== null ? { token: tokens.gitlab.trim() } : {}),
-      },
-      t("saved"),
-    );
-    if (ok) setTokens({ gitlab: null });
-  };
-
   const meeting = (
     <form className="panel form" data-cfg onSubmit={submit}>
       <h3 style={{ margin: 0 }}>{t("meeting.title")}</h3>
@@ -1048,108 +986,13 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
     </form>
   );
 
-  const gitlabUser = s.settings.gitlabUser;
-  const sources = isAdmin && s.modules.gitlab && (
-    <form className="panel form" onSubmit={saveSources}>
-      <AdminTitle>{t("sources.title")}</AdminTitle>
-      {/* Connected with GitLab (OAuth, renewed by itself) rather than a personal token that expires */}
-      {s.integrations.gitlabOAuth && (
-        <div className={`gl-connect${gitlabUser !== null ? " on" : ""}`}>
-          {gitlabUser !== null ? (
-            <>
-              <span className="gl-connect-state">
-                <CircleCheck size={18} strokeWidth={2.2} aria-hidden="true" />
-                {gitlabUser ? t("sources.connectedAs", { user: gitlabUser }) : t("sources.connected")}
-              </span>
-              <button
-                type="button"
-                className="linkbtn danger"
-                onClick={() =>
-                  void rpc(
-                    { op: "gitlab.configure", projects: a.gitlabProjects, groups: a.gitlabGroups, token: "" },
-                    t("sources.disconnected"),
-                  )
-                }
-              >
-                <Unplug size={14} strokeWidth={2.2} aria-hidden="true" /> {t("sources.disconnect")}
-              </button>
-            </>
-          ) : (
-            <>
-              <a className="btn primary" href={withBasePath(`/api/gitlab/connect?w=${s.context.workspace.slug}&m=${s.context.meetingId}`)}>
-                <Plug size={16} strokeWidth={2.2} aria-hidden="true" /> {t("sources.connect")}
-              </a>
-              <span className="hint">{t("sources.connectHint")}</span>
-            </>
-          )}
-        </div>
-      )}
-      {s.integrations.gitlabOAuth ? (
-        gitlabUser === null && (
-          <details className="gl-token">
-            <summary>{t("sources.usePersonalToken")}</summary>
-            <TokenField
-              id="tGitlab"
-              label={t("sources.gitlabToken")}
-              saved={initial.tokensSet.gitlab}
-              value={tokens.gitlab}
-              onChange={(v) => setTokens((x) => ({ ...x, gitlab: v }))}
-              placeholder="glpat-…"
-              locked={!s.integrations.secrets}
-            />
-            {!s.integrations.secrets && <div className="note-box">{t("sources.noSecretKey")}</div>}
-            <span className="hint">
-              {t.rich("sources.tokenHint", { code: (chunks) => <code>{chunks}</code> })}
-              {!initial.tokensSet.gitlab && s.integrations.gitlab ? ` ${t("sources.serverToken")}` : ""}
-            </span>
-          </details>
-        )
-      ) : (
-        <>
-          <TokenField
-            id="tGitlab"
-            label={t("sources.gitlabToken")}
-            saved={initial.tokensSet.gitlab}
-            value={tokens.gitlab}
-            onChange={(v) => setTokens((x) => ({ ...x, gitlab: v }))}
-            placeholder="glpat-…"
-            locked={!s.integrations.secrets}
-          />
-          {!s.integrations.secrets && <div className="note-box">{t("sources.noSecretKey")}</div>}
-          <span className="hint">
-            {t.rich("sources.tokenHint", { code: (chunks) => <code>{chunks}</code> })}
-            {!initial.tokensSet.gitlab && s.integrations.gitlab ? ` ${t("sources.serverToken")}` : ""}
-          </span>
-        </>
-      )}
-      <div className="field">
-        <label htmlFor="gGroups">{t("sources.groups")}</label>
-        <input
-          id="gGroups"
-          type="text"
-          value={a.gitlabGroups}
-          onChange={(e) => setAdm("gitlabGroups", e.target.value)}
-          placeholder="my-group, my-group/sub-group"
-        />
-      </div>
-      <div className="field">
-        <span className="lbl-s">{t("sources.projects")}</span>
-        <GitlabProjectsPicker
-          value={a.gitlabProjects}
-          onChange={(v) => setAdm("gitlabProjects", v)}
-          groupsChanged={a.gitlabGroups !== initial.gitlabGroups}
-        />
-        <span className="hint">{t("sources.projectsHint")}</span>
-      </div>
-      <div>
-        <button type="submit" className="btn primary">
-          {t("sources.save")}
-        </button>
-      </div>
-    </form>
-  );
-
-  const githubSources = isAdmin && s.modules.github && <GithubSources key="github" />;
+  const sources = isAdmin && s.modules.gitlab && <ForgeSources key="gitlab" kind="gitlab" />;
+  const githubSources = isAdmin && s.modules.github && <ForgeSources key="github" kind="github" />;
+  const forgeState = (kind: "gitlab" | "github") => {
+    const used = s.settings.forges[kind].sources;
+    const names = used.map((u) => s.settings.forges.connections.find((c) => c.id === u.connection)).filter((c) => !!c);
+    return names.length === 1 ? connectionLabel(names[0]) : tForges("hub.count", { count: names.length });
+  };
 
   // Every tool the meeting works with, where it stands; GitLab, GitHub and the wiki are set up from their card
   const rulesOn = s.notifications?.rules.filter((r) => r.enabled).length ?? 0;
@@ -1164,11 +1007,7 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
         ? off()
         : {
             state: s.integrations.gitlab ? "on" : "todo",
-            stateText: s.integrations.gitlab
-              ? s.settings.gitlabUser
-                ? `@${s.settings.gitlabUser}`
-                : t("hub.connected")
-              : t("hub.toConnect"),
+            stateText: s.integrations.gitlab ? forgeState("gitlab") : t("hub.toConnect"),
             panel: sources || <IntegrationsHint key="hint" />,
           }),
     },
@@ -1180,8 +1019,8 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
       ...(!s.modules.github
         ? off()
         : {
-            state: s.settings.githubRepos.trim() ? "on" : "todo",
-            stateText: s.settings.githubRepos.trim() ? t("hub.configured") : t("hub.toSetUp"),
+            state: s.settings.forges.github.sources.length ? "on" : "todo",
+            stateText: s.settings.forges.github.sources.length ? forgeState("github") : t("hub.toSetUp"),
             panel: githubSources || <IntegrationsHint key="hint" />,
           }),
     },
@@ -1419,129 +1258,6 @@ function TokenField(p: {
             </button>
           ))}
       </div>
-    </div>
-  );
-}
-
-const splitList = (v: string) =>
-  v
-    .split(",")
-    .map((x) => x.trim())
-    .filter(Boolean);
-
-/** Pick the followed projects among those of the GitLab groups; ticking a group follows all its projects */
-function GitlabProjectsPicker({
-  value,
-  onChange,
-  groupsChanged,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  groupsChanged: boolean;
-}) {
-  const t = useTranslations("settings");
-  const { s, api } = useRonde();
-  const [projects, setProjects] = useState<GitlabProject[] | null>(null);
-  const [error, setError] = useState("");
-  const [q, setQ] = useState("");
-  const picked = useMemo(() => new Set(splitList(value)), [value]);
-  const tokenReady = s.integrations.gitlab;
-  const savedGroups = s.settings.gitlabGroups;
-  const unreachable = t("gitlab.unreachable");
-
-  useEffect(() => {
-    if (!tokenReady) return;
-    setProjects(null);
-    setError("");
-    fetch(api("/gitlab/projects"), { cache: "no-store" })
-      .then(async (r) => {
-        if (!r.ok) throw new Error(((await r.json().catch(() => null)) as { error?: string } | null)?.error ?? unreachable);
-        return (await r.json()) as GitlabProject[];
-      })
-      .then(setProjects)
-      .catch((e: Error) => setError(e.message));
-  }, [tokenReady, savedGroups, unreachable]);
-
-  const toggle = (path: string, on: boolean) => {
-    const next = new Set(picked);
-    if (on) next.add(path);
-    else next.delete(path);
-    onChange([...next].join(", "));
-  };
-  const inGroup = (p: string, g: string) => p.toLowerCase().startsWith(g.toLowerCase() + "/");
-  const groups = splitList(savedGroups);
-  const needle = q.trim().toLowerCase();
-  const shown = (projects ?? []).filter((p) => !needle || p.path.toLowerCase().includes(needle) || p.name.toLowerCase().includes(needle));
-  // Ticked projects no longer in the groups: shown so they can be unticked
-  const orphans = [...picked].filter(
-    (x) => projects && !groups.some((g) => g.toLowerCase() === x.toLowerCase()) && !projects.some((p) => p.path === x),
-  );
-
-  return (
-    <div className="gl-picker">
-      <div className="controls">
-        <span className="grow hint" style={{ flex: 1 }}>
-          {picked.size ? t("gitlab.followed", { count: picked.size }) : t("gitlab.noFilter")}
-        </span>
-        {picked.size > 0 && (
-          <button type="button" className="icon-btn" onClick={() => onChange("")}>
-            {t("gitlab.untickAll")}
-          </button>
-        )}
-      </div>
-      {!tokenReady ? (
-        <p className="hint">{t("gitlab.tokenFirst")}</p>
-      ) : error ? (
-        <p className="err">{error}</p>
-      ) : projects === null ? (
-        <p className="muted">{t("gitlab.loading")}</p>
-      ) : (
-        <>
-          {groupsChanged && <p className="hint">{t("gitlab.saveForGroups")}</p>}
-          <label htmlFor="gSearch" className="sr-only">
-            {t("gitlab.filter")}
-          </label>
-          <input
-            id="gSearch"
-            type="search"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder={t("gitlab.filterPlaceholder", { count: projects.length })}
-          />
-          <div className="gl-list">
-            {orphans.map((x) => (
-              <label className="check" key={x}>
-                <input type="checkbox" checked onChange={() => toggle(x, false)} /> <code>{x}</code>{" "}
-                <span className="hint">{t("gitlab.outsideGroups")}</span>
-              </label>
-            ))}
-            {groups.map((g) => {
-              const list = shown.filter((p) => p.group === g);
-              const whole = [...picked].some((x) => x.toLowerCase() === g.toLowerCase());
-              if (needle && !list.length) return null;
-              return (
-                <div key={g} className="gl-group">
-                  <label className="check gl-group-head">
-                    <input type="checkbox" checked={whole} onChange={(e) => toggle(g, e.target.checked)} /> <strong>{g}</strong>
-                    <span className="hint">{t("gitlab.wholeGroup", { count: projects.filter((p) => p.group === g).length })}</span>
-                  </label>
-                  {list.map((p) => (
-                    <label className="check" key={p.path} title={p.path}>
-                      <input
-                        type="checkbox"
-                        disabled={whole && inGroup(p.path, g)}
-                        checked={picked.has(p.path) || (whole && inGroup(p.path, g))}
-                        onChange={(e) => toggle(p.path, e.target.checked)}
-                      />{" "}
-                      {p.name} <span className="hint">{p.path.slice(g.length + 1, -(p.path.split("/").pop()!.length + 1)) || ""}</span>
-                    </label>
-                  ))}
-                </div>
-              );
-            })}
-          </div>
-        </>
-      )}
     </div>
   );
 }

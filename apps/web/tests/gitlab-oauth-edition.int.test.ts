@@ -18,6 +18,9 @@ describe("GitLab connected with OAuth, on an edition without the module", () => 
   it("is neither offered nor started", async () => {
     const { connectUrl, gitlabOAuthOn } = await import("@/lib/server/gitlab-oauth");
     expect(gitlabOAuthOn()).toBe(false);
-    await expect(connectUrl("meeting", "user")).rejects.toMatchObject({ status: 403, key: "moduleNotInEdition" });
+    await expect(connectUrl({ workspaceId: "ws", meetingId: "meeting", connectionId: null, userId: "user" })).rejects.toMatchObject({
+      status: 403,
+      key: "moduleNotInEdition",
+    });
   });
 });

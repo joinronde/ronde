@@ -295,14 +295,10 @@ export interface SettingsDTO {
   /** Working day before the meeting, or the same day before the meeting */
   reminderWhen: ReminderWhen;
   reminderTime: string;
-  gitlabProjects: string;
-  gitlabGroups: string;
-  /** Followed GitHub repositories ("owner/repo" or "owner", by line or comma; empty: all) */
-  githubRepos: string;
+  /** GitLab and GitHub connections the meeting may use, and those it uses (empty for non-hosts) */
+  forges: ForgeSettings;
   /** Tokens set in the settings (the value is never sent; always false for non-hosts) */
-  tokensSet: { gitlab: boolean; github: boolean; bbb: boolean };
-  /** The GitLab account connected with OAuth (null: none, or a personal token) */
-  gitlabUser: string | null;
+  tokensSet: { bbb: boolean };
   /** Job categories of the workspace */
   jobCategories: string[];
   /** Recurrence of the meeting */
@@ -542,6 +538,46 @@ export interface ForgeItem {
   assignee: string | null;
   updatedAt: number;
   url: string;
+}
+
+/** A connection to a code forge as the settings show it, never its secret */
+export interface ForgeConnectionView {
+  id: string;
+  kind: "gitlab" | "github";
+  name: string;
+  /** The server */
+  url: string;
+  /** The forge account it reads as, when known */
+  account: string;
+  /** "workspace": any meeting may use it; "meeting": this meeting's own; "instance": the server's variables */
+  scope: "workspace" | "meeting" | "instance";
+  /** Connected with OAuth, renewed by itself, rather than with a personal token */
+  oauth: boolean;
+}
+
+/** A GitLab connection a meeting uses: the groups whose projects it offers, the projects followed (empty: all) */
+export interface GitlabSource {
+  connection: string;
+  groups: string;
+  projects: string;
+}
+
+/** A GitHub connection a meeting uses: the followed repositories, "owner/repo" or "owner" (empty: all) */
+export interface GithubSource {
+  connection: string;
+  repos: string;
+}
+
+/**
+ * The forge connections a meeting may use and those it uses. Until its hosts pick them (`picked`), a meeting
+ * uses the workspace's connections, otherwise the instance's.
+ */
+export interface ForgeSettings {
+  connections: ForgeConnectionView[];
+  /** The servers a connection reaches when none is typed (GITLAB_URL, GITHUB_API_URL) */
+  servers: { gitlab: string; github: string };
+  gitlab: { picked: boolean; sources: GitlabSource[] };
+  github: { picked: boolean; sources: GithubSource[] };
 }
 
 /** Project offered in the settings ("Followed GitLab projects") */

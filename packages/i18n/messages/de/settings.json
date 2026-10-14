@@ -88,29 +88,7 @@
     "bankHint": "Für jedes Meeting wird zufällig eine Frage gezogen; die Regie kann sie ändern. Leer lassen, um den Eisbrecher auszuschalten."
   },
   "sources": {
-    "title": "Aufgabenquellen",
-    "connect": "Mit GitLab verbinden",
-    "connectHint": "Ihr GitLab-Konto, nur lesend, erneuert sich selbst: kein Token zum Kopieren oder Ersetzen, wenn es abläuft.",
-    "connected": "Mit GitLab verbunden",
-    "connectedAs": "Mit GitLab verbunden als @{user}",
-    "disconnect": "Trennen",
-    "disconnected": "GitLab getrennt",
-    "usePersonalToken": "Stattdessen ein persönliches Token verwenden",
-    "gitlabToken": "GitLab-Token",
-    "noSecretKey": "Die Token-Verschlüsselung ist auf dem Server nicht eingerichtet: Bitte den Betrieb, SECRET_KEY zu setzen.",
-    "tokenHint": "Tokens werden vor dem Speichern verschlüsselt und nie wieder angezeigt. GitLab: ein Token mit dem Scope <code>read_api</code>.",
-    "serverToken": "(das Server-Token wird verwendet, bis du eins eingibst)",
-    "groups": "GitLab-Gruppen",
-    "projects": "Verfolgte GitLab-Projekte",
-    "projectsHint": "Nur Issues aus diesen Projekten werden zum Import angeboten. Trag außerdem den GitLab-Benutzernamen jeder Person im Block Personen ein.",
-    "save": "GitLab-Zugang speichern",
-    "turnOn": "Für dieses Meeting ist keine Integration eingeschaltet. Schalte GitLab oder GitHub unter „Module“ ein, um Issues und Merge- bzw. Pull-Requests jeder Person zu importieren.",
-    "githubTitle": "GitHub",
-    "githubToken": "GitHub-Token",
-    "githubTokenHint": "Optional für öffentliche Repositorys. Für private: ein Fine-grained-Token mit Lesezugriff auf Issues und Pull Requests. Verschlüsselt, nie wieder angezeigt.",
-    "githubRepos": "Verfolgte Repositorys",
-    "githubReposHint": "„owner/repository“ oder ein ganzer „owner“, eins pro Zeile; leer: alle Repositorys. Trag außerdem den GitHub-Benutzernamen jeder Person im Block Personen ein.",
-    "githubSave": "GitHub-Zugang speichern"
+    "turnOn": "Für dieses Meeting ist keine Integration eingeschaltet. Schalte GitLab oder GitHub unter „Module“ ein, um Issues und Merge- bzw. Pull-Requests jeder Person zu importieren."
   },
   "hub": {
     "intro": "Die Werkzeuge dieser Besprechung und ihr Stand. Öffnen Sie eine Karte, um sie einzurichten.",
@@ -154,7 +132,6 @@
     "followed": "{count, plural, one {# Projekt oder Gruppe verfolgt} other {# Projekte oder Gruppen verfolgt}}",
     "noFilter": "Kein Filter: Alle Projekte werden verfolgt",
     "untickAll": "Alle abwählen",
-    "tokenFirst": "Gib das GitLab-Token ein und speichere es, um die Projekte der Gruppen zu sehen.",
     "loading": "Projekte werden geladen…",
     "saveForGroups": "Speichere die Einstellungen, um die Projekte der neuen Gruppen zu sehen.",
     "filter": "Projekte filtern",

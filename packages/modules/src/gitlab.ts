@@ -2,12 +2,21 @@ import { defineModule, defineOp, OpError } from "@ronde/module-sdk";
 import { z } from "zod";
 import { str } from "./shared";
 
-// GitLab: recent issues and merge requests of each person, imported into their check-in
-const schema = z.object({
-  /** Followed projects, full paths separated by commas (empty: all) */
-  projects: z.string().max(20_000),
+// GitLab: recent issues and merge requests of each person, imported into their check-in, through the GitLab
+// connections the meeting uses (the workspace's, its own, or the instance's)
+const source = z.object({
+  /** A connection of the workspace or of the meeting, or "instance" */
+  connection: str(60),
   /** Groups whose projects are offered in the settings */
-  groups: z.string().max(500),
+  groups: str(500),
+  /** Followed projects, full paths separated by commas (empty: all) */
+  projects: str(20_000),
+});
+
+const schema = z.object({
+  /** false: the workspace's connections (with the filters of `sources`); true: those of `sources` only */
+  picked: z.boolean(),
+  sources: z.array(source).max(10),
 });
 
 export const gitlab = defineModule({
@@ -16,17 +25,15 @@ export const gitlab = defineModule({
   feature: "integrations.gitlab",
   defaultEnabled: true,
   icon: "🦊",
-  config: { schema, defaults: { projects: "", groups: "" } },
+  config: { schema, defaults: { picked: false, sources: [] } },
   ops: [
     defineOp({
       name: "gitlab.configure",
       permission: "meeting.configure",
-      /** token missing: unchanged; empty string: removed */
-      input: z.object({ projects: str(20_000), groups: str(500), token: str(500).optional() }),
+      input: z.object({ sources: schema.shape.sources }),
       run: async ({ module }, o) => {
         if (!module) throw new OpError("notFound");
-        await module.setConfig({ projects: o.projects, groups: o.groups });
-        if (o.token !== undefined) await module.setSecret(o.token);
+        await module.setConfig({ picked: true, sources: o.sources });
       },
     }),
   ],

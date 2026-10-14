@@ -14,6 +14,7 @@ import { AiSettings, type AiSettingsProps } from "./ai-settings";
 import { CalendarAccountsSettings, type CalendarAccountsSettingsProps } from "./calendar-accounts-settings";
 import { useConfirm } from "./confirm";
 import { ConnectorsSection } from "./connectors";
+import { ForgesSettings, type ForgesSettingsProps } from "./forges-settings";
 import { LocaleSelect, TimeZoneSelect } from "./inputs";
 import { LogoSettings, type LogoSettingsProps } from "./logo-settings";
 import { SlackSettings, type SlackSettingsProps } from "./slack-settings";
@@ -50,6 +51,8 @@ interface Props {
   branding: LogoSettingsProps | null;
   /** The AI assistant, for the people managing the workspace (null: not shown) */
   ai: AiSettingsProps | null;
+  /** GitLab and GitHub connections, for the people managing connectors (null: not shown) */
+  forges: ForgesSettingsProps | null;
   /** Issue trackers, for the people managing connectors (null: not shown) */
   trackers: TrackersSettingsProps | null;
   teams: TeamsSettingsProps | null;
@@ -75,6 +78,7 @@ export function WorkspaceSettingsView({
   canEncrypt,
   branding,
   ai,
+  forges,
   trackers,
   wikis,
   videoAccounts,
@@ -242,6 +246,8 @@ export function WorkspaceSettingsView({
       {connectors && (
         <ConnectorsSection slug={workspace.slug} connectors={connectors} canEncrypt={canEncrypt} phoneOn={phoneOn} confirm={confirm} />
       )}
+
+      {forges && <ForgesSettings {...forges} confirm={confirm} />}
 
       {trackers && <TrackersSettings {...trackers} confirm={confirm} />}
 

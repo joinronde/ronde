@@ -6,6 +6,9 @@
   "kind": "Tool",
   "name": "Name",
   "token": "API token",
+  "connection": "Connection",
+  "noConnection": "No {kind} connection in the workspace yet.",
+  "toConnections": "Add one under “GitLab and GitHub”.",
   "tokenKept": "A token is saved. Type a new one to replace it.",
   "save": "Save",
   "cancel": "Cancel",
@@ -24,14 +27,13 @@
     "project": "Project key",
     "email": "Email of the account",
     "team": "Team key or ID",
-    "url": "GitLab address",
     "repo": "Repository (owner/name)"
   },
   "hints": {
     "jira": "An API token created at id.atlassian.com, for the account whose email is above.",
     "linear": "A personal API key from Linear settings → API. The team key (ENG in ENG-12) comes before each issue number.",
-    "gitlab": "A project or personal access token with the api scope. Project: its path (group/project) or its number.",
-    "github": "A fine-grained token with “Issues: read and write” on the repository."
+    "gitlab": "Project: its path (group/project) or its number. Tickets are opened with the connection's token, which needs the api scope.",
+    "github": "Repository: owner/name. Tickets are opened with the connection's token, which needs “Issues: read and write” on it."
   },
   "assignee": "Owners are assigned in GitLab and GitHub when their username is in their directory profile.",
   "edit": "Edit"

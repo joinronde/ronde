@@ -39,6 +39,8 @@ describe("issue trackers", () => {
     expect((await create(t, issue)).key).toBe("#12");
     expect(f.calls[1]!.url).toBe("https://gitlab.example.org/api/v4/projects/acme%2Fapp/issues");
     expect(body(f.calls[1]!)).toMatchObject({ assignee_ids: [7] });
+    // As a bearer: a personal token and the access token of a "Connect with GitLab" connection alike
+    expect((f.calls[1]!.init.headers as Record<string, string>).authorization).toBe("Bearer glpat");
   });
 
   it("creates Linear issues in the team given by its key, assigned to the owner found by address", async () => {

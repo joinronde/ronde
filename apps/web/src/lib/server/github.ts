@@ -1,17 +1,11 @@
 import "server-only";
 import { createHash } from "node:crypto";
 import type { ForgeItem } from "@ronde/core/types";
-import type { ScopedClient } from "@ronde/db";
-import { readConfig } from "@ronde/module-sdk";
-import { github } from "@ronde/modules";
-import { env } from "./env";
-import { AccessError, IntegrationError } from "./errors";
-import { isCloud } from "./license";
+import { IntegrationError } from "./errors";
 import { outboundFetch } from "./outbound";
-import { decryptSecret } from "./secrets";
 
-// Recent issues and pull requests of a person, through the GitHub search API.
-// The token is the one entered in the settings, otherwise the GITHUB_TOKEN variable (public repositories work without).
+// Recent issues and pull requests of a person, through the GitHub search API, with one of the connections the
+// meeting uses (forges.ts); without a token, public repositories only
 
 interface GhIssue {
   id: number;
@@ -25,18 +19,6 @@ interface GhIssue {
 }
 
 type GithubConfig = { url: string; token: string };
-
-/** The instance's token serves every meeting of a self-hosted server; in the cloud each meeting brings its own */
-const instanceToken = (token: string) => (isCloud() ? "" : token);
-
-/** GitHub module of a meeting: its access (own token, otherwise the instance one) and followed repositories */
-export async function meetingGithub(db: ScopedClient, meetingId: string) {
-  const row = await db.moduleInstallation.findFirst({ where: { meetingId, moduleId: "github" } });
-  if (!row?.enabled) throw new AccessError(403, "moduleDisabled");
-  const config = readConfig(github, row.config);
-  const cfg: GithubConfig = { url: env.githubApiUrl(), token: decryptSecret(row.secret ?? "") || instanceToken(env.githubToken()) };
-  return { cfg, repos: config.repos };
-}
 
 /** The repository follows the filter: "owner/repo", or a whole "owner"; an empty filter follows everything */
 export function followsRepo(fullName: string, filter: string): boolean {

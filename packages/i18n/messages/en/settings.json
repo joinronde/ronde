@@ -88,29 +88,7 @@
     "bankHint": "A random question is drawn for each meeting; the control room can change it. Leave empty to turn the icebreaker off."
   },
   "sources": {
-    "title": "Task sources",
-    "connect": "Connect with GitLab",
-    "connectHint": "Your GitLab account, read-only, renewed by itself: no token to copy or to replace when it expires.",
-    "connected": "Connected to GitLab",
-    "connectedAs": "Connected to GitLab as @{user}",
-    "disconnect": "Disconnect",
-    "disconnected": "GitLab disconnected",
-    "usePersonalToken": "Use a personal token instead",
-    "gitlabToken": "GitLab token",
-    "noSecretKey": "Token encryption is not configured on the server: ask the operators to set the SECRET_KEY key.",
-    "tokenHint": "Tokens are encrypted before being saved and are never shown again. GitLab: a token with the <code>read_api</code> scope.",
-    "serverToken": "(the server token is used until you enter one)",
-    "groups": "GitLab groups",
-    "projects": "Followed GitLab projects",
-    "projectsHint": "Only issues from these projects are offered for import. Also enter each person's GitLab username in the People block.",
-    "save": "Save the GitLab access",
-    "turnOn": "No integration is on for this meeting. Turn GitLab or GitHub on in “Modules” to import each person's issues and merge or pull requests.",
-    "githubTitle": "GitHub",
-    "githubToken": "GitHub token",
-    "githubTokenHint": "Optional for public repositories. For private ones: a fine-grained token with read access to issues and pull requests. Encrypted, never shown again.",
-    "githubRepos": "Followed repositories",
-    "githubReposHint": "“owner/repository” or a whole “owner”, one per line; empty: every repository. Also enter each person's GitHub username in the People block.",
-    "githubSave": "Save the GitHub access"
+    "turnOn": "No integration is on for this meeting. Turn GitLab or GitHub on in “Modules” to import each person's issues and merge or pull requests."
   },
   "hub": {
     "intro": "The tools this meeting works with, and where each stands. Open a card to set it up.",
@@ -154,7 +132,6 @@
     "followed": "{count, plural, one {# project or group followed} other {# projects or groups followed}}",
     "noFilter": "No filter: all projects are followed",
     "untickAll": "Untick all",
-    "tokenFirst": "Enter and save the GitLab token to show the projects of the groups.",
     "loading": "Loading projects…",
     "saveForGroups": "Save the settings to show the projects of the new groups.",
     "filter": "Filter projects",

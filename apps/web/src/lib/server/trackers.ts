@@ -1,6 +1,6 @@
 import "server-only";
 import { can } from "@ronde/core/permissions";
-import { Prisma, prisma, scoped } from "@ronde/db";
+import { Prisma, prisma, type ScopedClient, scoped } from "@ronde/db";
 import type { TicketRef, TrackerAccess, TrackerKind } from "@ronde/editions/ee";
 import { formatters, resolveLocale } from "@ronde/i18n";
 import { z } from "zod";
@@ -8,6 +8,7 @@ import { enterprise } from "@/ee-bridge";
 import { audit } from "./audit";
 import type { WorkspaceContext } from "./authz";
 import { AccessError, OpError } from "./errors";
+import { type ForgeKind, forgeAccess, isOAuth } from "./forges";
 import { featureOn, type PlanScope } from "./license";
 import { personName } from "./meeting/dto";
 import { outboundFetch } from "./outbound";
@@ -21,6 +22,8 @@ export const trackersOn = (ws: PlanScope) => featureOn("integrations.writeBack",
 
 export const TRACKER_KINDS = ["jira", "linear", "gitlab", "github"] as const;
 
+const GITHUB_API = "https://api.github.com";
+
 /** What each tracker needs to know where tickets go */
 const CONFIG: Record<TrackerKind, z.ZodType<Record<string, string>>> = {
   jira: z.object({
@@ -29,7 +32,7 @@ const CONFIG: Record<TrackerKind, z.ZodType<Record<string, string>>> = {
     email: z.string().email().max(200),
   }),
   linear: z.object({ team: z.string().min(1).max(100) }),
-  gitlab: z.object({ url: z.string().url().max(200), project: z.string().min(1).max(200) }),
+  gitlab: z.object({ project: z.string().min(1).max(200) }),
   github: z.object({ repo: z.string().regex(/^[\w.-]+\/[\w.-]+$/) }),
 };
 
@@ -38,6 +41,8 @@ export interface TrackerView {
   kind: TrackerKind;
   name: string;
   config: Record<string, string>;
+  /** GitLab, GitHub: the workspace's connection it opens tickets with */
+  connectionId: string | null;
 }
 
 export interface TrackerInput {
@@ -45,9 +50,20 @@ export interface TrackerInput {
   kind: TrackerKind;
   name: string;
   config: Record<string, string>;
-  /** Empty: keep the saved token */
+  /** GitLab, GitHub: a connection of the workspace */
+  connectionId?: string;
+  /** Jira, Linear; empty: keep the saved token */
   token?: string;
 }
+
+const FORGE = (kind: TrackerKind): kind is ForgeKind => kind === "gitlab" || kind === "github";
+
+/**
+ * Whether a tracker can open tickets with a connection: not one of "Connect with GitLab", whose grant only reads,
+ * and for GitHub one of github.com, where the tickets go
+ */
+export const trackerCanUse = (c: { kind: ForgeKind; url: string; oauth: boolean }) =>
+  !c.oauth && (c.kind === "gitlab" || c.url === GITHUB_API);
 
 /** What the database keeps on an action once its ticket exists */
 export interface ExternalRef extends TicketRef {
@@ -60,7 +76,13 @@ export const readRef = (raw: unknown): ExternalRef | null =>
 
 export async function listTrackers(ctx: WorkspaceContext): Promise<TrackerView[]> {
   const rows = await ctx.db.issueTracker.findMany({ orderBy: { createdAt: "asc" } });
-  return rows.map((r) => ({ id: r.id, kind: r.kind, name: r.name, config: r.config as Record<string, string> }));
+  return rows.map((r) => ({
+    id: r.id,
+    kind: r.kind,
+    name: r.name,
+    config: r.config as Record<string, string>,
+    connectionId: r.connectionId,
+  }));
 }
 
 export async function saveTracker(ctx: WorkspaceContext, input: TrackerInput): Promise<{ id: string }> {
@@ -71,13 +93,28 @@ export async function saveTracker(ctx: WorkspaceContext, input: TrackerInput): P
   if (!config.success) throw new OpError("connectorInvalid", { detail: config.error.issues[0]?.message ?? "" });
   const existing = input.id ? await ctx.db.issueTracker.findFirst({ where: { id: input.id } }) : null;
   if (input.id && !existing) throw new OpError("notFound");
-  const token = input.token?.trim();
-  if (!token && !existing?.secret) throw new OpError("connectorSecretRequired");
-  if (token && !TOKEN_FORMAT.test(token)) throw new OpError("tokenInvalid");
-  if (token && !canEncrypt()) throw new OpError("encryptionNotConfigured");
+  // GitLab and GitHub open tickets with a connection of the workspace; Jira and Linear keep their own token
+  let connectionId: string | null = null;
+  const token = FORGE(input.kind) ? "" : input.token?.trim();
+  if (FORGE(input.kind)) {
+    const connection = await ctx.db.forgeConnection.findFirst({
+      where: { id: input.connectionId ?? "-", meetingId: null, kind: input.kind },
+      select: { id: true, url: true, secret: true },
+    });
+    if (!connection) throw new OpError("forgeConnectionRequired");
+    // "Connect with GitLab" only reads; trackers write to github.com's API only
+    if (!trackerCanUse({ kind: input.kind, url: connection.url, oauth: isOAuth(connection.secret) }))
+      throw new OpError("forgeConnectionReadOnly");
+    connectionId = connection.id;
+  } else {
+    if (!token && !existing?.secret) throw new OpError("connectorSecretRequired");
+    if (token && !TOKEN_FORMAT.test(token)) throw new OpError("tokenInvalid");
+    if (token && !canEncrypt()) throw new OpError("encryptionNotConfigured");
+  }
   const data = {
     name,
     config: config.data as Prisma.InputJsonObject,
+    connectionId,
     ...(token ? { secret: encryptSecret(token.slice(0, 500)) } : {}),
   };
   const row = existing
@@ -109,17 +146,21 @@ export async function deleteTracker(ctx: WorkspaceContext, id: string): Promise<
   await audit(ctx, ctx.db, { action: "trackers.delete", targetType: "tracker", targetId: id });
 }
 
-const access = (row: { kind: TrackerKind; config: unknown; secret: string }): TrackerAccess => ({
-  kind: row.kind,
-  config: row.config as Record<string, string>,
-  token: decryptSecret(row.secret),
-  fetch: outboundFetch,
-});
+type TrackerRow = { kind: TrackerKind; config: unknown; secret: string; connectionId: string | null };
+
+/** How a tracker reads and writes: its own token, or its connection's (whose server joins its settings) */
+export async function trackerAccess(db: ScopedClient, row: TrackerRow): Promise<TrackerAccess> {
+  const config = row.config as Record<string, string>;
+  if (!FORGE(row.kind)) return { kind: row.kind, config, token: decryptSecret(row.secret), fetch: outboundFetch };
+  const connection = row.connectionId ? await forgeAccess(db, row.connectionId, null) : null;
+  if (!connection) throw new OpError("forgeConnectionRequired");
+  return { kind: row.kind, config: { ...config, url: connection.url }, token: connection.token, fetch: outboundFetch };
+}
 
 export async function testTracker(ctx: WorkspaceContext, id: string) {
   const row = await ctx.db.issueTracker.findFirst({ where: { id } });
   if (!row) throw new OpError("notFound");
-  return enterprise.trackers.test(access(row));
+  return enterprise.trackers.test(await trackerAccess(ctx.db, row));
 }
 
 /** Opens the ticket of a follow-up action; the owner of the action or a host of its meeting may do it */
@@ -152,7 +193,7 @@ export async function createTicket(ctx: WorkspaceContext, actionId: string, trac
   ].join("\n\n");
   let ref: TicketRef;
   try {
-    ref = await enterprise.trackers.create(access(tracker), {
+    ref = await enterprise.trackers.create(await trackerAccess(ctx.db, tracker), {
       title: action.text,
       body,
       assignee: { ...handles, ...(action.owner.email ? { email: action.owner.email } : {}) },
@@ -189,8 +230,9 @@ export async function syncTickets(): Promise<number> {
     const ref = readRef(a.externalRef);
     if (!ref || ref.closed || !trackersOn(a.meeting.workspace)) continue;
     if (!trackers.has(ref.trackerId)) {
-      const row = await scoped(prisma, a.workspaceId).issueTracker.findFirst({ where: { id: ref.trackerId } });
-      trackers.set(ref.trackerId, row ? access(row) : null);
+      const db = scoped(prisma, a.workspaceId);
+      const row = await db.issueTracker.findFirst({ where: { id: ref.trackerId } });
+      trackers.set(ref.trackerId, row ? await trackerAccess(db, row).catch(() => null) : null);
     }
     const tracker = trackers.get(ref.trackerId);
     if (!tracker) continue;

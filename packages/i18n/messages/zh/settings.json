@@ -88,29 +88,7 @@
     "bankHint": "每次会议随机抽取一道题；控制台可以更换。留空则关闭破冰。"
   },
   "sources": {
-    "title": "任务来源",
-    "connect": "连接 GitLab",
-    "connectHint": "您的 GitLab 账户，只读，自动续期：无需复制令牌，也无需在过期时更换。",
-    "connected": "已连接 GitLab",
-    "connectedAs": "已以 @{user} 身份连接 GitLab",
-    "disconnect": "断开连接",
-    "disconnected": "已断开 GitLab",
-    "usePersonalToken": "改用个人令牌",
-    "gitlabToken": "GitLab 令牌",
-    "noSecretKey": "服务器未配置令牌加密：请让运维人员设置 SECRET_KEY 密钥。",
-    "tokenHint": "令牌在保存前会被加密，且不会再次显示。GitLab：需要具有 <code>read_api</code> 范围的令牌。",
-    "serverToken": "（在你输入令牌之前使用服务器令牌）",
-    "groups": "GitLab 群组",
-    "projects": "关注的 GitLab 项目",
-    "projectsHint": "只有这些项目的 issue 会提供导入。另请在“人员”区块中填写每个人的 GitLab 用户名。",
-    "save": "保存 GitLab 访问",
-    "turnOn": "此会议未开启任何集成。在“模块”中开启 GitLab 或 GitHub，即可导入每个人的 issue 及合并/拉取请求。",
-    "githubTitle": "GitHub",
-    "githubToken": "GitHub 令牌",
-    "githubTokenHint": "公开仓库可不填。私有仓库：需要对 issue 和拉取请求有读取权限的细粒度令牌。已加密，不会再次显示。",
-    "githubRepos": "关注的仓库",
-    "githubReposHint": "“owner/repository”或整个“owner”，每行一个；留空：所有仓库。另请在“人员”区块中填写每个人的 GitHub 用户名。",
-    "githubSave": "保存 GitHub 访问"
+    "turnOn": "此会议未开启任何集成。在“模块”中开启 GitLab 或 GitHub，即可导入每个人的 issue 及合并/拉取请求。"
   },
   "hub": {
     "intro": "此会议使用的工具及其状态。打开卡片即可配置。",
@@ -154,7 +132,6 @@
     "followed": "{count, plural, other {已关注 # 个项目或群组}}",
     "noFilter": "无过滤：关注所有项目",
     "untickAll": "全部取消勾选",
-    "tokenFirst": "输入并保存 GitLab 令牌以显示群组中的项目。",
     "loading": "正在加载项目……",
     "saveForGroups": "保存设置以显示新群组中的项目。",
     "filter": "筛选项目",

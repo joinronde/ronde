@@ -88,29 +88,7 @@
     "bankHint": "Per ogni riunione viene estratta una domanda a caso; la regia può cambiarla. Lascia vuoto per disattivare il rompighiaccio."
   },
   "sources": {
-    "title": "Fonti delle attività",
-    "connect": "Connetti con GitLab",
-    "connectHint": "Il tuo account GitLab, in sola lettura, rinnovato da solo: nessun token da copiare né da sostituire quando scade.",
-    "connected": "Connesso a GitLab",
-    "connectedAs": "Connesso a GitLab come @{user}",
-    "disconnect": "Disconnetti",
-    "disconnected": "GitLab disconnesso",
-    "usePersonalToken": "Usa invece un token personale",
-    "gitlabToken": "Token GitLab",
-    "noSecretKey": "La cifratura dei token non è configurata sul server: chiedi agli operatori di impostare la chiave SECRET_KEY.",
-    "tokenHint": "I token vengono cifrati prima del salvataggio e non vengono più mostrati. GitLab: un token con lo scope <code>read_api</code>.",
-    "serverToken": "(si usa il token del server finché non ne inserisci uno)",
-    "groups": "Gruppi GitLab",
-    "projects": "Progetti GitLab seguiti",
-    "projectsHint": "Solo le issue di questi progetti vengono proposte per l'importazione. Inserisci anche lo username GitLab di ogni persona nel blocco Persone.",
-    "save": "Salva l'accesso a GitLab",
-    "turnOn": "Nessuna integrazione è attiva in questa riunione. Attiva GitLab o GitHub in «Moduli» per importare issue e merge o pull request di ogni persona.",
-    "githubTitle": "GitHub",
-    "githubToken": "Token GitHub",
-    "githubTokenHint": "Facoltativo per i repository pubblici. Per quelli privati: un token fine-grained con lettura di issue e pull request. Cifrato, non più mostrato.",
-    "githubRepos": "Repository seguiti",
-    "githubReposHint": "«owner/repository» o un intero «owner», uno per riga; vuoto: tutti i repository. Inserisci anche lo username GitHub di ogni persona nel blocco Persone.",
-    "githubSave": "Salva l'accesso a GitHub"
+    "turnOn": "Nessuna integrazione è attiva in questa riunione. Attiva GitLab o GitHub in «Moduli» per importare issue e merge o pull request di ogni persona."
   },
   "hub": {
     "intro": "Gli strumenti con cui lavora questa riunione e a che punto è ciascuno. Apri una scheda per configurarla.",
@@ -154,7 +132,6 @@
     "followed": "{count, plural, one {# progetto o gruppo seguito} other {# progetti o gruppi seguiti}}",
     "noFilter": "Nessun filtro: tutti i progetti sono seguiti",
     "untickAll": "Deseleziona tutto",
-    "tokenFirst": "Inserisci e salva il token GitLab per mostrare i progetti dei gruppi.",
     "loading": "Caricamento dei progetti…",
     "saveForGroups": "Salva le impostazioni per mostrare i progetti dei nuovi gruppi.",
     "filter": "Filtra i progetti",

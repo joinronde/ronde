@@ -42,7 +42,7 @@ test("the live meeting, its history and the other pages pass the accessibility a
   const gitlabCard = page.getByRole("button", { name: /^GitLab/ });
   await gitlabCard.click();
   await expect(gitlabCard).toHaveAttribute("aria-expanded", "true");
-  await expect(page.getByRole("heading", { name: "Task sources" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "GitLab connections" })).toBeVisible();
   await audit(page, "settings: integrations, GitLab open");
   await page.goto(`${meeting}/settings#people`);
   await page.getByRole("textbox", { name: "Who it is for" }).fill("Board");

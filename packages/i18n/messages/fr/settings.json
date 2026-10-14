@@ -88,29 +88,7 @@
     "bankHint": "Une question est tirée au hasard pour chaque réunion ; la Régie peut en changer. Laissez vide pour désactiver le brise-glace."
   },
   "sources": {
-    "title": "Sources de tâches",
-    "connect": "Se connecter avec GitLab",
-    "connectHint": "Votre compte GitLab, en lecture seule, renouvelé tout seul : aucun jeton à copier ni à remplacer quand il expire.",
-    "connected": "Connecté à GitLab",
-    "connectedAs": "Connecté à GitLab en tant que @{user}",
-    "disconnect": "Déconnecter",
-    "disconnected": "GitLab déconnecté",
-    "usePersonalToken": "Utiliser plutôt un jeton personnel",
-    "gitlabToken": "Jeton GitLab",
-    "noSecretKey": "Le chiffrement des jetons n'est pas configuré sur le serveur : demandez à l'exploitation de renseigner la clé SECRET_KEY.",
-    "tokenHint": "Les jetons sont chiffrés avant d'être enregistrés et ne sont jamais réaffichés. GitLab : jeton avec la portée <code>read_api</code>.",
-    "serverToken": "(celui du serveur est utilisé tant que vous n'en saisissez pas)",
-    "groups": "Groupes GitLab",
-    "projects": "Projets GitLab suivis",
-    "projectsHint": "Seuls les tickets de ces projets sont proposés à l'import. Renseignez aussi l'identifiant GitLab de chaque personne dans « Personnes et rôles ».",
-    "save": "Enregistrer l'accès GitLab",
-    "turnOn": "Aucune intégration n'est activée pour cette réunion. Activez GitLab ou GitHub dans « Modules » pour importer les tickets et les merge ou pull requests de chacun.",
-    "githubTitle": "GitHub",
-    "githubToken": "Jeton GitHub",
-    "githubTokenHint": "Facultatif pour les dépôts publics. Pour les dépôts privés : un jeton à granularité fine avec accès en lecture aux tickets et aux pull requests. Chiffré, jamais réaffiché.",
-    "githubRepos": "Dépôts suivis",
-    "githubReposHint": "« propriétaire/dépôt » ou tout un « propriétaire », un par ligne ; vide : tous les dépôts. Renseignez aussi l'identifiant GitHub de chaque personne dans le bloc Personnes.",
-    "githubSave": "Enregistrer l'accès GitHub"
+    "turnOn": "Aucune intégration n'est activée pour cette réunion. Activez GitLab ou GitHub dans « Modules » pour importer les tickets et les merge ou pull requests de chacun."
   },
   "hub": {
     "intro": "Les outils avec lesquels cette réunion travaille, et où chacun en est. Ouvrez une carte pour la configurer.",
@@ -154,7 +132,6 @@
     "followed": "{count, plural, one {# projet ou groupe suivi} other {# projets ou groupes suivis}}",
     "noFilter": "Aucun filtre : tous les projets sont suivis",
     "untickAll": "Tout décocher",
-    "tokenFirst": "Saisissez et enregistrez le jeton GitLab pour afficher les projets des groupes.",
     "loading": "Chargement des projets…",
     "saveForGroups": "Enregistrez les réglages pour afficher les projets des nouveaux groupes.",
     "filter": "Filtrer les projets",
