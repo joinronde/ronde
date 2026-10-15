@@ -259,7 +259,7 @@ export function RandomHost() {
   if (!s.meeting) return null;
   return (
     <div className="stack">
-      <div className="seg" role="group" aria-label={t("tool")}>
+      <div className="seg seg-grid" role="group" aria-label={t("tool")}>
         {KINDS.map((k) => (
           <button key={k} type="button" aria-pressed={kind === k} onClick={() => setKind(k)}>
             {t(`kinds.${k}`)}

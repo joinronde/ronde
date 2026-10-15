@@ -17,13 +17,14 @@ import { SwipeRow } from "./swipe-row";
 // Top of the meeting pages: where you are (workspace / meeting / page), the video call, the connection,
 // then the meeting's tabs. Participants have a single page, "My screen", with its own tabs: no tab row.
 
+/** The meeting's pages, each with its pictogram and its colour (pictogram colours, light and dark) */
 const TABS = [
-  { href: "/control", key: "control", icon: Clapperboard },
-  { href: "/me", key: "me", icon: UserRound },
-  { href: "/history", key: "history", icon: History },
-  { href: "/stats", key: "stats", icon: ChartColumn },
-  { href: "/decisions", key: "decisions", icon: Scale },
-  { href: "/settings", key: "settings", icon: Settings2 },
+  { href: "/control", key: "control", icon: Clapperboard, color: "var(--accent)" },
+  { href: "/me", key: "me", icon: UserRound, color: "var(--pic-blue)" },
+  { href: "/history", key: "history", icon: History, color: "var(--pic-violet)" },
+  { href: "/stats", key: "stats", icon: ChartColumn, color: "var(--pic-teal)" },
+  { href: "/decisions", key: "decisions", icon: Scale, color: "var(--pic-amber)" },
+  { href: "/settings", key: "settings", icon: Settings2, color: "var(--pic-green)" },
 ] as const;
 
 const PAGE_ACTIONS = "page-actions";
@@ -94,8 +95,12 @@ export function MeetingFrame() {
                 href={base + n.href}
                 aria-current={path.startsWith(base + n.href) ? "page" : undefined}
                 data-tour={n.key === "settings" ? "settings-tab" : undefined}
+                className="page-tab"
+                style={{ "--tc": n.color } as React.CSSProperties}
               >
-                <n.icon className="tab-ico" size={16} strokeWidth={2} aria-hidden="true" />
+                <span className="tab-chip" aria-hidden="true">
+                  <n.icon size={15} strokeWidth={2.2} />
+                </span>
                 {tPages(n.key)}
               </Link>
             ))}

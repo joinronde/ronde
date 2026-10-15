@@ -4475,3 +4475,46 @@ textarea.grow{field-sizing:content;min-height:calc(3lh + 22px);max-height:calc(1
 /* The date field's checked value: out of sight, where the field starts (the browser's notice points there) */
 .date-input-check{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0}
 
+
+/* ---------- Coloured pictograms (tabs) ---------- */
+/* Bright colours for pictograms, livelier than the palette of meetings and people; lighter in the dark */
+:root,body.th-light{--pic-blue:#2563eb;--pic-pink:#db2777;--pic-green:#16a34a;--pic-amber:#d97706;--pic-violet:#7c3aed;--pic-teal:#0d9488;--pic-red:#dc2626;--pic-orange:#ea580c}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pic-blue:#60a5fa;--pic-pink:#f472b6;--pic-green:#4ade80;--pic-amber:#fbbf24;--pic-violet:#a78bfa;--pic-teal:#2dd4bf;--pic-red:#f87171;--pic-orange:#fb923c}}
+:root[data-theme="dark"],body.th-dark{--pic-blue:#60a5fa;--pic-pink:#f472b6;--pic-green:#4ade80;--pic-amber:#fbbf24;--pic-violet:#a78bfa;--pic-teal:#2dd4bf;--pic-red:#f87171;--pic-orange:#fb923c}
+
+/* The meeting's pages: each pictogram in its colour's chip, filled on the current page, which is tinted and underlined in it */
+.page-tabs .tabs a.page-tab{--tc:var(--accent);gap:8px;color:var(--ink-2)}
+.tab-chip{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:8px;color:var(--tc);background:color-mix(in srgb,var(--tc) 16%,var(--surface));transition:background var(--duration-fast),color var(--duration-fast),transform var(--duration-fast) var(--ease-out)}
+.page-tabs .tabs a.page-tab:hover{background:color-mix(in srgb,var(--tc) 8%,var(--surface));color:var(--ink)}
+.page-tabs .tabs a.page-tab:hover .tab-chip{transform:translateY(-1px);background:color-mix(in srgb,var(--tc) 26%,var(--surface))}
+.page-tabs .tabs a.page-tab[aria-current="page"]{background:color-mix(in srgb,var(--tc) 12%,var(--surface));color:var(--ink)}
+.page-tabs .tabs a.page-tab[aria-current="page"] .tab-chip{background:var(--tc);color:var(--surface);box-shadow:0 2px 6px color-mix(in srgb,var(--tc) 40%,transparent)}
+.page-tabs .tabs a.page-tab[aria-current="page"]::after{background:var(--tc)}
+
+/* Side panel tabs: a coloured pictogram over each label, the count as a badge on it */
+.panes button{--tc:var(--accent);position:relative;display:grid;justify-items:center;align-content:start;gap:3px;padding:6px 8px 5px;font-size:13px;font-weight:600;transition:background var(--duration-fast),color var(--duration-fast)}
+.panes button:hover{background:color-mix(in srgb,var(--tc) 8%,transparent);color:var(--ink)}
+.pane-ico{width:34px;height:30px;display:grid;place-items:center;border-radius:9px;color:var(--tc);background:color-mix(in srgb,var(--tc) 18%,var(--surface));transition:background var(--duration-fast),color var(--duration-fast),transform var(--duration-fast) var(--ease-out)}
+.panes button[aria-selected="true"] .pane-ico{background:var(--tc);color:var(--surface);transform:scale(1.04);box-shadow:0 2px 6px color-mix(in srgb,var(--tc) 40%,transparent)}
+.panes button > .cnt{position:absolute;top:1px;inset-inline-start:calc(50% + 8px);margin:0;min-width:17px;height:17px;padding:0 4px;border-radius:9px;font-size:11px;line-height:17px;text-align:center;background:var(--tc);color:var(--surface);box-shadow:0 0 0 2px var(--surface-2)}
+.panes button[aria-selected="true"] > .cnt{box-shadow:0 0 0 2px var(--surface)}
+.panes button.alert .pane-ico{background:var(--accent-ink);color:var(--accent)}
+.panes button.alert > .cnt{background:var(--accent-ink);color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+/* Something left to do in a tab (the minutes at the wrap-up): its label stays like the others; a ring breathes
+   around its pictogram and a dot sits on it */
+.panes button.todo-tab{display:grid;color:var(--ink-2);font-weight:600}
+.panes button.todo-tab[aria-selected="true"]{background:var(--surface);color:var(--ink)}
+.panes button.todo-tab .pane-ico{box-shadow:0 0 0 2px color-mix(in srgb,var(--tc) 70%,transparent);animation:tab-ring 1.8s ease-in-out infinite}
+@keyframes tab-ring{50%{box-shadow:0 0 0 4px color-mix(in srgb,var(--tc) 25%,transparent)}}
+.panes button > .todo-dot{position:absolute;top:1px;inset-inline-start:calc(50% + 11px);background:var(--tc);box-shadow:0 0 0 2px var(--surface-2)}
+@media (prefers-reduced-motion:reduce){.panes button.todo-tab .pane-ico{animation:none}.tab-chip,.pane-ico{transition:none}.page-tabs .tabs a.page-tab:hover .tab-chip{transform:none}}
+
+/* ---------- Nothing wider than the screen ---------- */
+/* A button never outgrows its container; on a phone its label wraps rather than pushing the page sideways */
+.btn{max-width:100%}
+@media (max-width:640px){.btn{white-space:normal;text-align:center;overflow-wrap:anywhere}}
+/* Segmented choices wrap onto a second row instead of overflowing (each keeps its label whole) */
+.seg{flex-wrap:wrap;max-width:100%}
+.seg button{white-space:nowrap}
+/* Four choices or more: an even grid of equal cells when they do not fit on one row (two by two on a phone) */
+.seg.seg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,120px),1fr))}
