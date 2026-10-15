@@ -18,7 +18,7 @@
   "ownKudosOnly": "你只能移除自己的点赞。",
   "ownCommentsOnly": "你只能移除自己的评论。",
   "ownTopicsOnly": "你只能移除自己的议题。",
-  "ownActionsOnly": "你只能修改自己行动项的状态。",
+  "ownActionsOnly": "你只能添加或修改自己的行动项。",
   "ownCheckInOnly": "你只能编辑自己的进展卡。",
   "ownBirthdayOnly": "你只能修改自己的生日。",
   "membersOnlyVote": "只有团队成员可以投票。",

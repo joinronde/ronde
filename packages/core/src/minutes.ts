@@ -452,11 +452,13 @@ export function buildMinutes(r: RecordV1, locale: Locale, options: MinutesOption
 
   if (r.actions.length) {
     const status = translator(locale, "actionStatus");
+    // Where each one stands, as its owner wrote it: a column only when someone did
+    const progress = r.actions.some((a) => a.progress);
     part("actions", t("actions"), [
       {
         type: "table",
-        head: [t("action"), t("owner"), t("status")],
-        rows: r.actions.map((a) => [a.text, nm(a.ownerId), status(a.status)]),
+        head: [t("action"), t("owner"), t("status"), ...(progress ? [t("progress")] : [])],
+        rows: r.actions.map((a) => [a.text, nm(a.ownerId), status(a.status), ...(progress ? [a.progress ?? ""] : [])]),
       },
     ]);
   }

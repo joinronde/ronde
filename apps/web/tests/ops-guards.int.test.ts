@@ -228,6 +228,63 @@ describe("someone else's data", () => {
     expect(await prisma.action.findUniqueOrThrow({ where: { id: f.actionId } })).toMatchObject({ status: "done", ownerId: brunoId });
     expect(await prisma.inboxItem.count({ where: { personId: brunoId, kind: "action.assigned" } })).toBe(1);
   });
+
+  it("actions: anyone of the meeting gives one to themselves, only the host to someone else", async () => {
+    await expect(runOp(bruno, { op: "action.add", text: "Your turn", ownerId: f.memberId })).rejects.toMatchObject({
+      status: 403,
+      key: "ownActionsOnly",
+    });
+    // The session of the fixture, in 2030, not started yet
+    await prisma.session.update({ where: { id: f.sessionId }, data: { startedAt: null } });
+    await runOp(bruno, { op: "action.add", text: "Chase the supplier", ownerId: brunoId });
+    expect(await prisma.action.findFirstOrThrow({ where: { text: "Chase the supplier" } })).toMatchObject({
+      ownerId: brunoId,
+      originText: "Chase the supplier",
+    });
+    // Nothing in their own bell for what they just did
+    expect(await prisma.inboxItem.count({ where: { personId: brunoId } })).toBe(0);
+    // Written ahead of a session still to come: decided today; once it has started, even early, on its date
+    const { date } = await session();
+    expect((await prisma.action.findFirstOrThrow({ where: { text: "Chase the supplier" } })).originDate! < date).toBe(true);
+    await prisma.session.update({ where: { id: f.sessionId }, data: { startedAt: new Date() } });
+    await runOp(bruno, { op: "action.add", text: "Book the demo", ownerId: brunoId });
+    expect(await prisma.action.findFirstOrThrow({ where: { text: "Book the demo" } })).toMatchObject({ originDate: date });
+    // An observer, who can be given actions, can also give themselves one, and move it forward
+    const olga = await person(f, "Olga");
+    await join(f, olga.id, "observer");
+    const observer = as(f, olga.id, "observer");
+    await runOp(observer, { op: "action.add", text: "Read the audit", ownerId: olga.id });
+    const theirs = await prisma.action.findFirstOrThrow({ where: { ownerId: olga.id } });
+    await runOp(observer, { op: "action.update", id: theirs.id, status: "done" });
+    expect(await prisma.action.findUniqueOrThrow({ where: { id: theirs.id } })).toMatchObject({ status: "done" });
+    // Someone who is not one of the meeting's people
+    const outsider = await person(f, "Out");
+    await expect(runOp(as(f, outsider.id, null, "admin"), { op: "action.add", text: "x", ownerId: outsider.id })).rejects.toMatchObject({
+      key: "unknownOwner",
+    });
+  });
+
+  it("actions: their owner or the host says where they stand, in one sentence", async () => {
+    await runOp(ana, { op: "action.update", id: f.actionId, progress: "  Called IT twice,\n  no answer yet  " });
+    const noted = await prisma.action.findUniqueOrThrow({ where: { id: f.actionId } });
+    expect(noted).toMatchObject({ progress: "Called IT twice, no answer yet", progressAt: expect.any(Date), status: "open" });
+    // Saved again unchanged: its date stays
+    await runOp(ana, { op: "action.update", id: f.actionId, progress: "Called IT twice, no answer yet" });
+    expect((await prisma.action.findUniqueOrThrow({ where: { id: f.actionId } })).progressAt).toEqual(noted.progressAt);
+
+    await expect(runOp(bruno, { op: "action.update", id: f.actionId, progress: "Not mine" })).rejects.toMatchObject({
+      status: 403,
+      key: "ownActionsOnly",
+    });
+    await expect(runOp(ana, { op: "action.update", id: f.actionId, progress: "x".repeat(301) })).rejects.toMatchObject({
+      key: "invalidRequest",
+    });
+    await runOp(f.ctx, { op: "action.update", id: f.actionId, progress: "IT replied: Monday" });
+    expect(await prisma.action.findUniqueOrThrow({ where: { id: f.actionId } })).toMatchObject({ progress: "IT replied: Monday" });
+    // Emptied: gone, with its date
+    await runOp(ana, { op: "action.update", id: f.actionId, progress: " " });
+    expect(await prisma.action.findUniqueOrThrow({ where: { id: f.actionId } })).toMatchObject({ progress: null, progressAt: null });
+  });
 });
 
 describe("deletion", () => {

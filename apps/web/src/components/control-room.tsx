@@ -26,18 +26,25 @@ import {
   ArrowRight,
   BellOff,
   BellRing,
+  ChartBar,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
   FileText,
   Flag,
+  FolderKanban,
   Gavel,
+  Hand,
   ListChecks,
+  ListOrdered,
+  type LucideIcon,
   Pause,
   PenLine,
+  Pin,
   Play,
   RotateCcw,
   Send,
+  Shuffle,
   Sparkles,
   SquareCheckBig,
   TimerReset,
@@ -69,6 +76,7 @@ import {
 } from "@/lib/shared/control-room";
 import { actionOwners, sheetRows, sheetsToComplete, writersOf } from "@/lib/shared/sheets";
 import { track } from "@/lib/shared/track";
+import { ActionProgress } from "./action-progress";
 import { Board } from "./board";
 import { CommandPalette, ShortcutsHelp, useControlShortcuts } from "./command-palette";
 import { Modal, NoMeeting } from "./common";
@@ -96,6 +104,18 @@ import { soundLength } from "./synth";
 import { Assignments } from "./upcoming-sessions";
 
 type Pane = ControlPane;
+
+/** Each tab of the side panel: its pictogram and its colour (pictogram colours, light and dark) */
+const PANE_LOOK: Record<Pane, { icon: LucideIcon; color: string }> = {
+  run: { icon: ListOrdered, color: "var(--pic-blue)" },
+  live: { icon: Hand, color: "var(--pic-pink)" },
+  actions: { icon: ListChecks, color: "var(--pic-green)" },
+  topics: { icon: Pin, color: "var(--pic-amber)" },
+  sheets: { icon: FolderKanban, color: "var(--pic-violet)" },
+  polls: { icon: ChartBar, color: "var(--pic-teal)" },
+  random: { icon: Shuffle, color: "var(--pic-red)" },
+  minutes: { icon: FileText, color: "var(--pic-orange)" },
+};
 
 /** Minutes draft: kept when switching panes, regenerated as long as it was not edited */
 /** Summary being written for the minutes, kept while the host switches panes */
@@ -560,11 +580,12 @@ export function ControlRoomView() {
                               ? t("reviewMinutes")
                               : undefined
                         }
+                        style={{ "--tc": PANE_LOOK[k].color } as React.CSSProperties}
                         onClick={() => setPane(k)}
                       >
-                        {k === "live" && n > 0 && pane !== k && <span aria-hidden="true">✋ </span>}
-                        {k === "minutes" && m.stepKey === "end" && <FileText size={14} strokeWidth={2.2} aria-hidden="true" />}
+                        <PaneIcon icon={PANE_LOOK[k].icon} />
                         {t(`panes.${k}`)}
+                        {/* After the label, so the tab is named "Topics 2"; drawn as a badge on the pictogram */}
                         {n > 0 && <span className="cnt">{n}</span>}
                         {k === "minutes" && m.stepKey === "end" && <span className="todo-dot" aria-hidden="true" />}
                       </button>
@@ -1531,6 +1552,7 @@ function PaneLive() {
 
 function PaneActions() {
   const t = useTranslations("control");
+  const tAct = useTranslations("actions");
   const tStatus = useTranslations("actionStatus");
   const fmt = formatters(useLocale());
   const { s, agenda, rpc, sections } = useRonde();
@@ -1574,6 +1596,13 @@ function PaneActions() {
             <div className="body">
               {a.text}
               <div className="meta">{a.originDate ? t("actions.since", { date: fmt.dayMonth(a.originDate) }) : ""}</div>
+              <ActionProgress
+                text={a.text}
+                progress={a.progress}
+                at={a.progressAt}
+                editable={a.status !== "done" || !!a.progress}
+                onSave={(progress) => rpc({ op: "action.update", id: a.id, progress }, tAct("progressSaved"))}
+              />
               <div className="controls" style={{ marginTop: 6 }}>
                 <Select
                   aria-label={t("owner")}
@@ -2277,5 +2306,14 @@ function PaneSheets() {
         <p className="muted">{todo ? t("sheets.noMatch") : t("sheets.allDoneHint")}</p>
       )}
     </div>
+  );
+}
+
+/** The pictogram of a side-panel tab, in its colour's chip */
+function PaneIcon({ icon: Glyph }: { icon: LucideIcon }) {
+  return (
+    <span className="pane-ico" aria-hidden="true">
+      <Glyph size={17} strokeWidth={2.2} />
+    </span>
   );
 }

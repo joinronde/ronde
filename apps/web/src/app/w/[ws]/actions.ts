@@ -689,13 +689,26 @@ export async function sendTestReportAction(slug: string) {
 }
 
 /** Moves a follow-up action forward from the actions page, with the same rules as in the meeting */
-export async function setActionStatusAction(slug: string, actionId: string, status: "open" | "doing" | "done") {
+export async function updateActionAction(slug: string, actionId: string, patch: { status?: "open" | "doing" | "done"; progress?: string }) {
   return run(async () => {
     const ctx = await authorize(slug);
     const action = await ctx.db.action.findFirst({ where: { id: actionId }, select: { meetingId: true } });
     const meeting = action && (await meetingContext(slug, action.meetingId));
     if (!meeting) throw new AccessError(403, "accessDenied");
-    await runOp(meeting, { op: "action.update", id: actionId, status });
+    // Only these two fields: the rest of the operation (which one, on what) is decided here
+    await runOp(meeting, { op: "action.update", id: actionId, status: patch.status, progress: patch.progress });
+    revalidatePath(`/w/${slug}/actions`);
+    return null;
+  });
+}
+
+/** Adds an action to one's own list, in one of one's meetings: it comes back at its sessions like the others */
+export async function addOwnActionAction(slug: string, meetingId: string, text: string) {
+  return run(async () => {
+    const meeting = await meetingContext(slug, meetingId);
+    if (!meeting) throw new AccessError(403, "accessDenied");
+    // Not tied to the project the session may be presenting right now: the person is not in the meeting's screen
+    await runOp(meeting, { op: "action.add", text: text.trim(), ownerId: meeting.ws.member.personId, originText: null, projectId: null });
     revalidatePath(`/w/${slug}/actions`);
     return null;
   });

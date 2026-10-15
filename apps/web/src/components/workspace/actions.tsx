@@ -13,6 +13,7 @@ import {
   ListTodo,
   type LucideIcon,
   PlayCircle,
+  Plus,
   Search,
   Ticket,
   UserRound,
@@ -21,7 +22,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { createTicketAction, setActionStatusAction } from "@/app/w/[ws]/actions";
+import { addOwnActionAction, createTicketAction, updateActionAction } from "@/app/w/[ws]/actions";
+import { ActionProgress } from "@/components/action-progress";
 import { FormAlert } from "@/components/auth/fields";
 import { ExportCsv } from "@/components/export-csv";
 import { EmptyHero } from "@/components/illustration";
@@ -41,6 +43,8 @@ interface Props {
   hosts: boolean;
   me: string;
   actions: ActionRow[];
+  /** Meetings the person takes part in, where they can give themselves an action */
+  meetings: { id: string; name: string; color: number }[];
   /** Issue trackers where an action can become a ticket (Team) */
   trackers: { id: string; name: string; kind: string }[];
 }
@@ -50,7 +54,7 @@ const LAYOUT_KEY = "ronde:actions-layout";
 const COLUMN_ICONS: Record<ActionColumn, LucideIcon> = { open: CircleDashed, doing: PlayCircle, done: CircleCheckBig };
 
 /** Follow-up actions across meetings, as a list or as a board, ticked off in one click or moved between columns */
-export function ActionsView({ slug, view, hosts, me, actions, trackers }: Props) {
+export function ActionsView({ slug, view, hosts, me, actions, meetings: own, trackers }: Props) {
   const t = useTranslations("actions");
   const router = useRouter();
   const [moved, setMoved] = useState<Record<string, Status>>({});
@@ -61,6 +65,7 @@ export function ActionsView({ slug, view, hosts, me, actions, trackers }: Props)
   const [layout, setLayout] = useState<"list" | "board">("list");
   const [dragging, setDragging] = useState<string | null>(null);
   const [over, setOver] = useState<Status | null>(null);
+  const [adding, setAdding] = useState(false);
   // The list or the board: a choice of this browser, kept from one visit to the next
   useEffect(() => {
     try {
@@ -84,7 +89,7 @@ export function ActionsView({ slug, view, hosts, me, actions, trackers }: Props)
     if (a.status === status) return;
     setMoved((m) => ({ ...m, [a.id]: status }));
     setBusy(a.id);
-    const res = await setActionStatusAction(slug, a.id, status);
+    const res = await updateActionAction(slug, a.id, { status });
     setBusy(null);
     if (!res.ok) {
       setMoved((m) => ({ ...m, [a.id]: a.status }));
@@ -116,14 +121,22 @@ export function ActionsView({ slug, view, hosts, me, actions, trackers }: Props)
             <p className="muted">{view === "mine" ? t("introMine") : t("introHosted")}</p>
           </div>
         </div>
-        {rows.length > 0 && (
+        {(rows.length > 0 || own.length > 0) && (
           <div className="page-head-actions">
             {/* The file holds every action of the view, also those done before the two weeks the page keeps */}
-            <ExportCsv
-              name={t("csv.fileName")}
-              href={`/api/w/${slug}/actions/export?${new URLSearchParams({ view, ...(meeting ? { meeting } : {}) })}`}
-              title={t("csv.hint")}
-            />
+            {rows.length > 0 && (
+              <ExportCsv
+                name={t("csv.fileName")}
+                href={`/api/w/${slug}/actions/export?${new URLSearchParams({ view, ...(meeting ? { meeting } : {}) })}`}
+                title={t("csv.hint")}
+              />
+            )}
+            {own.length > 0 && !adding && (
+              <button type="button" className="btn primary" onClick={() => setAdding(true)}>
+                <Plus size={16} strokeWidth={2.4} aria-hidden="true" />
+                {t("new")}
+              </button>
+            )}
           </div>
         )}
       </header>
@@ -138,6 +151,21 @@ export function ActionsView({ slug, view, hosts, me, actions, trackers }: Props)
             {t("hosted")}
           </Link>
         </nav>
+      )}
+      {adding && (
+        <NewAction
+          slug={slug}
+          meetings={own}
+          // The meeting picked in the filter, when the person takes part in it
+          initial={own.some((m) => m.id === meeting) ? meeting : own[0]!.id}
+          onClose={() => setAdding(false)}
+          onAdded={() => {
+            setAdding(false);
+            // What they just added is theirs: show it where it is
+            if (view !== "mine") router.push(base);
+            else router.refresh();
+          }}
+        />
       )}
       <FormAlert>{error}</FormAlert>
       {rows.length === 0 ? (
@@ -269,6 +297,7 @@ function ActionCard({
   onMove,
   dragging,
   onDrag,
+  onError,
 }: {
   a: ActionRow;
   slug: string;
@@ -282,6 +311,7 @@ function ActionCard({
 }) {
   const t = useTranslations("actions");
   const fmt = formatters(useLocale() as Locale);
+  const saveProgress = useSaveProgress(slug, a.id, onError);
   return (
     <li
       className={`act-card ${a.status}${dragging ? " dragging" : ""}${isStuck(a) ? " stuck" : ""}`}
@@ -308,6 +338,13 @@ function ActionCard({
           </a>
         )}
       </p>
+      <ActionProgress
+        text={a.text}
+        progress={a.progress}
+        at={a.progressAt}
+        editable={a.status !== "done" || !!a.progress}
+        onSave={saveProgress}
+      />
       <div className="act-card-foot">
         {showOwner ? <PersonFace slug={slug} person={a.owner} title={a.owner.name} /> : <span />}
         <span className="act-card-moves">
@@ -373,6 +410,7 @@ function ActionItem({
     onError(null);
     router.refresh();
   };
+  const saveProgress = useSaveProgress(slug, a.id, onError);
   return (
     <li className={`act-row ${a.status}`} style={tint(a.color)}>
       <button
@@ -402,6 +440,8 @@ function ActionItem({
             </a>
           )}
         </p>
+        {/* Every action of the page is the viewer's own, or one of a meeting they run: they can write where it stands */}
+        <ActionProgress text={a.text} progress={a.progress} at={a.progressAt} editable={!done || !!a.progress} onSave={saveProgress} />
       </div>
       {(showOwner || !done) && (
         <div className="act-side">
@@ -456,5 +496,91 @@ function ActionItem({
         </div>
       )}
     </li>
+  );
+}
+
+/** Saves where an action stands, then reloads the page's data; false when it failed, so the field stays open */
+function useSaveProgress(slug: string, id: string, onError: (error: string | null) => void) {
+  const router = useRouter();
+  return async (progress: string) => {
+    const res = await updateActionAction(slug, id, { progress });
+    if (!res.ok) {
+      onError(res.error);
+      return false;
+    }
+    onError(null);
+    router.refresh();
+    return true;
+  };
+}
+
+/** Adds an action to one's own list: what they will do, and the meeting whose sessions will follow it */
+function NewAction({
+  slug,
+  meetings,
+  initial,
+  onClose,
+  onAdded,
+}: {
+  slug: string;
+  meetings: Props["meetings"];
+  initial: string;
+  onClose: () => void;
+  onAdded: () => void;
+}) {
+  const t = useTranslations("actions");
+  const [text, setText] = useState("");
+  const [meetingId, setMeetingId] = useState(initial);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!text.trim()) return;
+    setBusy(true);
+    const res = await addOwnActionAction(slug, meetingId, text);
+    setBusy(false);
+    if (!res.ok) return setError(res.error);
+    onAdded();
+  };
+  return (
+    <form className="panel form act-new" onSubmit={submit}>
+      <h2>{t("newTitle")}</h2>
+      <FormAlert>{error}</FormAlert>
+      <div className="act-new-fields">
+        <div className="field act-new-text">
+          <label htmlFor="actNewText">{t("newText")}</label>
+          <input
+            id="actNewText"
+            type="text"
+            value={text}
+            maxLength={300}
+            placeholder={t("newPlaceholder")}
+            onChange={(e) => setText(e.target.value)}
+            onKeyDown={(e) => e.key === "Escape" && onClose()}
+            autoFocus
+          />
+        </div>
+        {meetings.length > 1 && (
+          <div className="field">
+            <label htmlFor="actNewMeeting">{t("newMeeting")}</label>
+            <Select id="actNewMeeting" value={meetingId} onChange={(e) => setMeetingId(e.target.value)}>
+              {meetings.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.name}
+                </option>
+              ))}
+            </Select>
+          </div>
+        )}
+      </div>
+      <div className="controls">
+        <button type="submit" className="btn primary" disabled={busy || !text.trim()}>
+          {t("add")}
+        </button>
+        <button type="button" className="btn ghost" onClick={onClose} disabled={busy}>
+          {t("cancel")}
+        </button>
+      </div>
+    </form>
   );
 }

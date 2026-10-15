@@ -48,5 +48,6 @@
   "projectRound": "Projects",
   "aboutProject": "About {project}",
   "rating": "Usefulness",
-  "ratingAverage": "{avg}/5 · {count, plural, one {# rating} other {# ratings}}"
+  "ratingAverage": "{avg}/5 · {count, plural, one {# rating} other {# ratings}}",
+  "progress": "Progress"
 }

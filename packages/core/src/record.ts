@@ -89,7 +89,15 @@ export const recordV1 = z.object({
     }),
   ),
   topics: z.array(z.object({ text: z.string(), byId: z.string().nullable(), done: z.boolean(), votes: z.number().default(0) })),
-  actions: z.array(z.object({ text: z.string(), ownerId: z.string(), status: z.enum(["open", "doing", "done"]) })),
+  actions: z.array(
+    z.object({
+      text: z.string(),
+      ownerId: z.string(),
+      status: z.enum(["open", "doing", "done"]),
+      /** Where it stood at the end of the session, in its owner's words */
+      progress: z.string().nullable().default(null),
+    }),
+  ),
   /** Names of everyone mentioned, participants or not */
   names: z.record(z.string(), z.string()),
   icebreaker: z

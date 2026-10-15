@@ -28,10 +28,14 @@ export function writersOf(s: Writing, projectId: string, sections: Section[]): s
   return [...out];
 }
 
-/** The people an action can go to: the meeting's active members, whether they speak in the round or not, then its observers */
+/**
+ * The people an action can go to: the meeting's members in the round, its hosts even when they only run it (out of
+ * the round), then its observers. Someone taken out of the round is not offered.
+ */
 export function actionOwners(s: Snapshot): { id: string; name: string }[] {
   const seen = new Set<string>();
-  return [...s.members.filter((x) => x.active), ...s.observers].filter((x) => !seen.has(x.id) && seen.add(x.id));
+  const runs = (x: Snapshot["members"][number]) => x.role === "host" || x.role === "cohost";
+  return [...s.members.filter((x) => x.active || runs(x)), ...s.observers].filter((x) => !seen.has(x.id) && seen.add(x.id));
 }
 
 export type SheetRow = { p: Snapshot["projects"][number]; missing: string[]; lines: { id: string; n: number }[]; complete: boolean };

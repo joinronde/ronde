@@ -31,7 +31,7 @@
   "carried": "{count, plural, one {aperta da # sessione} other {aperta da # sessioni}}",
   "emptyMine": "Niente in sospeso per te.",
   "emptyHosted": "Nessuna azione nelle riunioni che conduci.",
-  "emptyHint": "Le azioni decise durante una sessione compaiono qui, con la riunione da cui provengono.",
+  "emptyHint": "Le azioni decise durante una sessione, e quelle che aggiungi tu, compaiono qui con la riunione in cui sono seguite.",
   "openTicket": "Apri il ticket",
   "ticketFor": "Crea un ticket per «{text}»",
   "ticket": "Crea un ticket",
@@ -48,6 +48,22 @@
     "ticket": "Ticket",
     "done": "Fatta",
     "hint": "Tutte le azioni di questa vista, anche quelle fatte più di due settimane fa",
-    "fileName": "azioni"
-  }
+    "fileName": "azioni",
+    "progress": "Avanzamento"
+  },
+  "new": "Nuova azione",
+  "newTitle": "Aggiungi un'azione a mio nome",
+  "newText": "Cosa farai",
+  "newPlaceholder": "es. Sollecitare il fornitore sul ritardo",
+  "newMeeting": "Seguita in",
+  "add": "Aggiungi alla mia lista",
+  "added": "Azione aggiunta alla tua lista",
+  "cancel": "Annulla",
+  "progress": "Annota l'avanzamento",
+  "progressFor": "Avanzamento di «{text}»",
+  "progressPlaceholder": "Cosa hai provato, cosa resta…",
+  "progressOn": "annotato il {date}",
+  "progressEdit": "Modifica",
+  "progressSave": "Salva",
+  "progressSaved": "Avanzamento annotato"
 }

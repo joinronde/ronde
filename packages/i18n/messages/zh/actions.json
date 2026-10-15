@@ -31,7 +31,7 @@
   "carried": "{count, plural, other {已持续 # 次会议未完成}}",
   "emptyMine": "你手上没有待办事项。",
   "emptyHosted": "你主持的会议中没有行动项。",
-  "emptyHint": "会议中决定的行动项会显示在这里，并注明来自哪个会议。",
+  "emptyHint": "会议中决定的行动项，以及你自己添加的行动项，都会显示在这里，并注明跟进它们的会议。",
   "openTicket": "打开工单",
   "ticketFor": "为“{text}”创建工单",
   "ticket": "创建工单",
@@ -48,6 +48,22 @@
     "ticket": "工单",
     "done": "已完成",
     "hint": "此视图中的所有行动项，包括两周前已完成的",
-    "fileName": "xingdongxiang"
-  }
+    "fileName": "xingdongxiang",
+    "progress": "进展"
+  },
+  "new": "新行动项",
+  "newTitle": "为我添加行动项",
+  "newText": "你要做的事",
+  "newPlaceholder": "例如：就延误问题催促供应商",
+  "newMeeting": "跟进会议",
+  "add": "加入我的列表",
+  "added": "行动项已加入你的列表",
+  "cancel": "取消",
+  "progress": "记录进展",
+  "progressFor": "“{text}”的进展",
+  "progressPlaceholder": "你尝试了什么，还剩什么……",
+  "progressOn": "记录于 {date}",
+  "progressEdit": "编辑",
+  "progressSave": "保存",
+  "progressSaved": "进展已记录"
 }

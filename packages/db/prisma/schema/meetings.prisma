@@ -498,6 +498,9 @@ model Action {
   ownerId     String
   owner       Person       @relation(fields: [ownerId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
   status      ActionStatus @default(open)
+  /// Where it stands, in its owner's words (what was tried, what is left), and when that was written
+  progress    String?
+  progressAt  DateTime?
   /// Date of the session it came from, and the item it came from
   originDate  String?
   originText  String?

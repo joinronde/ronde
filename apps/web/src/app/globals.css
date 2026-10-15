@@ -139,8 +139,10 @@ kbd{font-family:var(--mono);font-size:12.5px;border:1px solid var(--line);border
 .card.blockers li::before{content:"!";color:var(--warn);inset-inline-start:.3em}
 .card.other li::before{content:"·";color:var(--ink-3);inset-inline-start:.3em}
 .card.blockers.has{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 40%,transparent)}
-.card.acts li{display:flex;gap:.6em;align-items:center;padding-inline-start:0}
+.card.acts li{display:flex;gap:.6em;align-items:baseline;padding-inline-start:0}
 .card.acts li::before{content:none}
+.card.acts .act-tx{display:grid;gap:.15em;min-width:0;overflow-wrap:anywhere}
+.card.acts .act-prog{font-size:.82em;color:var(--ink-2);padding-inline-start:.6em;border-inline-start:2px solid var(--line)}
 .card .empty{color:var(--ink-3);font-style:italic;font-size:.92em}
 
 .intro{display:grid;grid-template-columns:1.2fr 1fr;gap:2em}
@@ -2112,6 +2114,25 @@ body.has-dock .page-main{padding-bottom:120px}
 .act-side{display:flex;align-items:center;gap:12px;flex:none}
 .act-doing{flex:none}
 .act-doing.on{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
+/* Where an action stands, in its owner's words: a quoted line under it, written in place */
+.act-progress{margin:2px 0 0;display:flex;align-items:baseline;gap:4px 10px;flex-wrap:wrap;font-size:14px;color:var(--ink-2);padding-inline-start:10px;border-inline-start:2px solid color-mix(in srgb,var(--c,var(--accent)) 45%,var(--line))}
+.act-progress-text{overflow-wrap:anywhere;color:var(--ink)}
+.act-progress .hint{font-size:12.5px}
+.act-progress .link-btn,.act-progress-add{font-size:13px;padding:0}
+.act-progress-add{justify-self:start;margin-top:2px;color:var(--ink-2)}
+.act-progress-add:hover{color:var(--accent)}
+.act-progress-form{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.act-progress-form input{flex:1 1 220px;min-width:0}
+.act-mine-new{display:flex;gap:6px 8px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.act-mine-new .lbl-s{flex-basis:100%}
+.act-mine-new input{flex:1 1 200px;min-width:0}
+/* Where an action stands, read-only, under it in the lists that only show it */
+.act-prog-line{display:block;margin-top:2px;font-size:13px;font-weight:400;color:var(--ink-2);padding-inline-start:8px;border-inline-start:2px solid var(--line);overflow-wrap:anywhere}
+.act-new{display:grid;gap:12px}
+.act-new h2{font-size:16px;margin:0}
+.act-new-fields{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:12px}
+.act-new-fields:has(> :only-child){grid-template-columns:1fr}
+@media (max-width:640px){.act-new-fields{grid-template-columns:1fr}}
 .act-empty{display:grid;justify-items:center;gap:6px;padding:40px 20px}
 .act-empty p{margin:0}
 .act-empty-mark{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--ok-soft);color:var(--ok);margin-bottom:6px}
@@ -4454,3 +4475,46 @@ textarea.grow{field-sizing:content;min-height:calc(3lh + 22px);max-height:calc(1
 /* The date field's checked value: out of sight, where the field starts (the browser's notice points there) */
 .date-input-check{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;border:0;padding:0}
 
+
+/* ---------- Coloured pictograms (tabs) ---------- */
+/* Bright colours for pictograms, livelier than the palette of meetings and people; lighter in the dark */
+:root,body.th-light{--pic-blue:#2563eb;--pic-pink:#db2777;--pic-green:#16a34a;--pic-amber:#d97706;--pic-violet:#7c3aed;--pic-teal:#0d9488;--pic-red:#dc2626;--pic-orange:#ea580c}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pic-blue:#60a5fa;--pic-pink:#f472b6;--pic-green:#4ade80;--pic-amber:#fbbf24;--pic-violet:#a78bfa;--pic-teal:#2dd4bf;--pic-red:#f87171;--pic-orange:#fb923c}}
+:root[data-theme="dark"],body.th-dark{--pic-blue:#60a5fa;--pic-pink:#f472b6;--pic-green:#4ade80;--pic-amber:#fbbf24;--pic-violet:#a78bfa;--pic-teal:#2dd4bf;--pic-red:#f87171;--pic-orange:#fb923c}
+
+/* The meeting's pages: each pictogram in its colour's chip, filled on the current page, which is tinted and underlined in it */
+.page-tabs .tabs a.page-tab{--tc:var(--accent);gap:8px;color:var(--ink-2)}
+.tab-chip{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:8px;color:var(--tc);background:color-mix(in srgb,var(--tc) 16%,var(--surface));transition:background var(--duration-fast),color var(--duration-fast),transform var(--duration-fast) var(--ease-out)}
+.page-tabs .tabs a.page-tab:hover{background:color-mix(in srgb,var(--tc) 8%,var(--surface));color:var(--ink)}
+.page-tabs .tabs a.page-tab:hover .tab-chip{transform:translateY(-1px);background:color-mix(in srgb,var(--tc) 26%,var(--surface))}
+.page-tabs .tabs a.page-tab[aria-current="page"]{background:color-mix(in srgb,var(--tc) 12%,var(--surface));color:var(--ink)}
+.page-tabs .tabs a.page-tab[aria-current="page"] .tab-chip{background:var(--tc);color:var(--surface);box-shadow:0 2px 6px color-mix(in srgb,var(--tc) 40%,transparent)}
+.page-tabs .tabs a.page-tab[aria-current="page"]::after{background:var(--tc)}
+
+/* Side panel tabs: a coloured pictogram over each label, the count as a badge on it */
+.panes button{--tc:var(--accent);position:relative;display:grid;justify-items:center;align-content:start;gap:3px;padding:6px 8px 5px;font-size:13px;font-weight:600;transition:background var(--duration-fast),color var(--duration-fast)}
+.panes button:hover{background:color-mix(in srgb,var(--tc) 8%,transparent);color:var(--ink)}
+.pane-ico{width:34px;height:30px;display:grid;place-items:center;border-radius:9px;color:var(--tc);background:color-mix(in srgb,var(--tc) 18%,var(--surface));transition:background var(--duration-fast),color var(--duration-fast),transform var(--duration-fast) var(--ease-out)}
+.panes button[aria-selected="true"] .pane-ico{background:var(--tc);color:var(--surface);transform:scale(1.04);box-shadow:0 2px 6px color-mix(in srgb,var(--tc) 40%,transparent)}
+.panes button > .cnt{position:absolute;top:1px;inset-inline-start:calc(50% + 8px);margin:0;min-width:17px;height:17px;padding:0 4px;border-radius:9px;font-size:11px;line-height:17px;text-align:center;background:var(--tc);color:var(--surface);box-shadow:0 0 0 2px var(--surface-2)}
+.panes button[aria-selected="true"] > .cnt{box-shadow:0 0 0 2px var(--surface)}
+.panes button.alert .pane-ico{background:var(--accent-ink);color:var(--accent)}
+.panes button.alert > .cnt{background:var(--accent-ink);color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+/* Something left to do in a tab (the minutes at the wrap-up): its label stays like the others; a ring breathes
+   around its pictogram and a dot sits on it */
+.panes button.todo-tab{display:grid;color:var(--ink-2);font-weight:600}
+.panes button.todo-tab[aria-selected="true"]{background:var(--surface);color:var(--ink)}
+.panes button.todo-tab .pane-ico{box-shadow:0 0 0 2px color-mix(in srgb,var(--tc) 70%,transparent);animation:tab-ring 1.8s ease-in-out infinite}
+@keyframes tab-ring{50%{box-shadow:0 0 0 4px color-mix(in srgb,var(--tc) 25%,transparent)}}
+.panes button > .todo-dot{position:absolute;top:1px;inset-inline-start:calc(50% + 11px);background:var(--tc);box-shadow:0 0 0 2px var(--surface-2)}
+@media (prefers-reduced-motion:reduce){.panes button.todo-tab .pane-ico{animation:none}.tab-chip,.pane-ico{transition:none}.page-tabs .tabs a.page-tab:hover .tab-chip{transform:none}}
+
+/* ---------- Nothing wider than the screen ---------- */
+/* A button never outgrows its container; on a phone its label wraps rather than pushing the page sideways */
+.btn{max-width:100%}
+@media (max-width:640px){.btn{white-space:normal;text-align:center;overflow-wrap:anywhere}}
+/* Segmented choices wrap onto a second row instead of overflowing (each keeps its label whole) */
+.seg{flex-wrap:wrap;max-width:100%}
+.seg button{white-space:nowrap}
+/* Four choices or more: an even grid of equal cells when they do not fit on one row (two by two on a phone) */
+.seg.seg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,120px),1fr))}

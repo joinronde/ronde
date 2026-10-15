@@ -31,7 +31,7 @@
   "carried": "{count, plural, one {open for # session} other {open for # sessions}}",
   "emptyMine": "Nothing on your plate.",
   "emptyHosted": "No actions in the meetings you run.",
-  "emptyHint": "Actions decided during a session show up here, with the meeting they come from.",
+  "emptyHint": "Actions decided during a session, and those you add yourself, show up here with the meeting they belong to.",
   "openTicket": "Open the ticket",
   "ticketFor": "Create a ticket for “{text}”",
   "ticket": "Create a ticket",
@@ -48,6 +48,22 @@
     "ticket": "Ticket",
     "done": "Done",
     "hint": "Every action of this view, also those done more than two weeks ago",
-    "fileName": "actions"
-  }
+    "fileName": "actions",
+    "progress": "Progress"
+  },
+  "new": "New action",
+  "newTitle": "Add an action for me",
+  "newText": "What you will do",
+  "newPlaceholder": "e.g. Chase the supplier about the delay",
+  "newMeeting": "Followed in",
+  "add": "Add to my list",
+  "added": "Action added to your list",
+  "cancel": "Cancel",
+  "progress": "Note progress",
+  "progressFor": "Progress of “{text}”",
+  "progressPlaceholder": "What you tried, what is left…",
+  "progressOn": "noted {date}",
+  "progressEdit": "Edit",
+  "progressSave": "Save",
+  "progressSaved": "Progress noted"
 }

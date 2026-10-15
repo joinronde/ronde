@@ -13,6 +13,9 @@ export interface ActionRow {
   id: string;
   text: string;
   status: "open" | "doing" | "done";
+  /** Where it stands, in its owner's words, and when that was written */
+  progress: string | null;
+  progressAt: string | null;
   meetingId: string;
   meeting: string;
   /** Index of the meeting, for its colour (same as the calendar) */
@@ -63,6 +66,8 @@ export async function listActions(ctx: WorkspaceContext, scope: ActionScope, { a
       id: true,
       text: true,
       status: true,
+      progress: true,
+      progressAt: true,
       meetingId: true,
       originDate: true,
       doneAt: true,
@@ -79,6 +84,8 @@ export async function listActions(ctx: WorkspaceContext, scope: ActionScope, { a
     id: r.id,
     text: r.text,
     status: r.status,
+    progress: r.progress,
+    progressAt: r.progressAt?.toISOString() ?? null,
     meetingId: r.meetingId,
     meeting: meetings[index.get(r.meetingId)!]!.name,
     color: index.get(r.meetingId)!,
@@ -88,6 +95,12 @@ export async function listActions(ctx: WorkspaceContext, scope: ActionScope, { a
     carried: r.status === "done" || !r.originDate ? 0 : held.filter((s) => s.meetingId === r.meetingId && s.date > r.originDate!).length,
     ticket: ticketOf(r.externalRef),
   }));
+}
+
+/** Meetings the person takes part in, observers included, where they can give themselves an action; same colours as the list */
+export async function ownMeetings(ctx: WorkspaceContext): Promise<{ id: string; name: string; color: number }[]> {
+  const meetings = await visibleMeetings(ctx);
+  return meetings.flatMap((m, color) => (m.participants.length ? [{ id: m.id, name: m.name, color }] : []));
 }
 
 /** For the sidebar: what is left to do */
