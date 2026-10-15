@@ -1,5 +1,6 @@
 import { generateKeyPairSync } from "node:crypto";
 import { can, type Permission, type WorkspaceRole } from "@ronde/core/permissions";
+import { localDate } from "@ronde/core/schedule";
 import { prisma, scoped } from "@ronde/db";
 import { translator } from "@ronde/i18n";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
@@ -589,24 +590,50 @@ describe("an action's status from the list of actions", () => {
     const own = await prisma.action.create({ data: { workspaceId: f.workspaceId, meetingId: f.meetingId, text: "Mine", ownerId: pia.id } });
     await signIn(f, "member", pia);
 
-    expect(await actions.setActionStatusAction(f.w.ws.slug, own.id, "done")).toMatchObject(ok);
+    expect(await actions.updateActionAction(f.w.ws.slug, own.id, { status: "done" })).toMatchObject(ok);
     expect(await prisma.action.findUniqueOrThrow({ where: { id: own.id } })).toMatchObject({ status: "done", doneAt: expect.any(Date) });
-    expect(await actions.setActionStatusAction(f.w.ws.slug, own.id, "open")).toMatchObject(ok);
+    expect(await actions.updateActionAction(f.w.ws.slug, own.id, { status: "open" })).toMatchObject(ok);
     expect(await prisma.action.findUniqueOrThrow({ where: { id: own.id } })).toMatchObject({ status: "open", doneAt: null });
     // Someone else's action in the same meeting
-    expect(await actions.setActionStatusAction(f.w.ws.slug, f.actionId, "done")).toEqual(failed(t("ownActionsOnly")));
+    expect(await actions.updateActionAction(f.w.ws.slug, f.actionId, { status: "done" })).toEqual(failed(t("ownActionsOnly")));
     // An action of another workspace, named by its id
-    expect(await actions.setActionStatusAction(f.w.ws.slug, other.actionId, "done")).toEqual(failed(DENIED));
+    expect(await actions.updateActionAction(f.w.ws.slug, other.actionId, { status: "done" })).toEqual(failed(DENIED));
     expect(await prisma.action.findUniqueOrThrow({ where: { id: other.actionId } })).toMatchObject({ status: "open" });
 
     // The owner of an action who is not in its meeting any more
     await prisma.meetingParticipant.deleteMany({ where: { meetingId: f.meetingId, personId: pia.id } });
-    expect(await actions.setActionStatusAction(f.w.ws.slug, own.id, "done")).toEqual(failed(DENIED));
+    expect(await actions.updateActionAction(f.w.ws.slug, own.id, { status: "done" })).toEqual(failed(DENIED));
     expect(await prisma.action.findUniqueOrThrow({ where: { id: own.id } })).toMatchObject({ status: "open" });
 
     // The host moves anyone's
     await signIn(f, "owner");
-    expect(await actions.setActionStatusAction(f.w.ws.slug, f.actionId, "doing")).toMatchObject(ok);
+    expect(await actions.updateActionAction(f.w.ws.slug, f.actionId, { status: "doing" })).toMatchObject(ok);
     expect(await prisma.action.findUniqueOrThrow({ where: { id: f.actionId } })).toMatchObject({ status: "doing" });
+  });
+
+  it("adds an action to one's own list and says where it stands, in a meeting one takes part in", async () => {
+    const f = await place("own-actions", "community");
+    const other = await place("own-actions-other", "community");
+    const pia = await person(f, "Pia", "participant");
+    await signIn(f, "member", pia);
+    // The session of the fixture, in 2030, not started yet
+    await prisma.session.updateMany({ where: { meetingId: f.meetingId }, data: { startedAt: null } });
+
+    expect(await actions.addOwnActionAction(f.w.ws.slug, f.meetingId, "  Chase the supplier ")).toMatchObject(ok);
+    const own = await prisma.action.findFirstOrThrow({ where: { meetingId: f.meetingId, ownerId: pia.id } });
+    expect(own).toMatchObject({ text: "Chase the supplier", status: "open" });
+    // Decided today, not on the date of a session still to come (no time zone is ahead of Kiritimati)
+    expect(own.originDate! <= localDate(Date.now(), "Pacific/Kiritimati")).toBe(true);
+    expect(await actions.updateActionAction(f.w.ws.slug, own.id, { progress: "Sent a reminder" })).toMatchObject(ok);
+    expect(await prisma.action.findUniqueOrThrow({ where: { id: own.id } })).toMatchObject({ progress: "Sent a reminder" });
+    // Someone else's action, a meeting of another workspace
+    expect(await actions.updateActionAction(f.w.ws.slug, f.actionId, { progress: "Not mine" })).toEqual(failed(t("ownActionsOnly")));
+    expect(await actions.addOwnActionAction(f.w.ws.slug, other.meetingId, "Elsewhere")).toEqual(failed(DENIED));
+    expect(await actions.addOwnActionAction(f.w.ws.slug, f.meetingId, " ")).toMatchObject({ ok: false });
+    // No session under way: still dated, so it is counted as carried over the next ones
+    await prisma.session.updateMany({ where: { meetingId: f.meetingId }, data: { status: "archived" } });
+    expect(await actions.addOwnActionAction(f.w.ws.slug, f.meetingId, "Between sessions")).toMatchObject(ok);
+    const between = await prisma.action.findFirstOrThrow({ where: { text: "Between sessions" } });
+    expect(between).toMatchObject({ originDate: expect.stringMatching(/^\d{4}-\d{2}-\d{2}$/), projectId: null });
   });
 });

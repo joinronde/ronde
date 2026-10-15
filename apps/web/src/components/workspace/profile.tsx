@@ -110,6 +110,7 @@ export function PersonProfile({ slug, profile: p }: { slug: string; profile: Pro
                         <span className="act-dot" aria-hidden="true" /> {a.meeting}
                         {a.status === "doing" && <> · {t("inProgress")}</>}
                       </span>
+                      {a.progress && <span className="act-prog-line">{a.progress}</span>}
                     </span>
                   </li>
                 ))}

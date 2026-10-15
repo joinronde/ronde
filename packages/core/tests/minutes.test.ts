@@ -45,6 +45,23 @@ describe("minutesMarkdown", () => {
     expect(md).toContain("| Follow up / with IT | Alice Martin | In progress |");
     expect(md).toContain("## Blockers raised\n- Staging access (Alice Martin)");
     expect(md).toMatch(/Next meeting: Monday, September 28/);
+    // Nobody wrote where an action stands: no empty column
+    expect(md).toContain("| Action | Owner | Status |\n");
+  });
+
+  it("says where each action stands when its owner wrote it", () => {
+    const progress = minutesMarkdown(
+      v1({
+        actions: [
+          { text: "Follow up with IT", ownerId: "a", status: "doing", progress: "Called twice | no answer yet" },
+          { text: "Book the room", ownerId: "a", status: "open" },
+        ],
+      }),
+      "fr",
+    );
+    expect(progress).toContain("| Action | Responsable | Statut | Avancement |");
+    expect(progress).toContain("| Follow up with IT | Alice Martin | En cours | Called twice / no answer yet |");
+    expect(progress).toContain("| Book the room | Alice Martin | À traiter |  |");
   });
 
   it("groups decisions at the top", () => {

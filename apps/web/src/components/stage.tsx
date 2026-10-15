@@ -343,7 +343,7 @@ function SpeakerBody({ step, live, spot, joinable }: { step: Step; live: boolean
               {acts.map((a) => (
                 <li key={a.id}>
                   <StatusPill status={a.status} />
-                  <span>{a.text}</span>
+                  <ActText a={a} />
                 </li>
               ))}
             </ul>
@@ -351,6 +351,16 @@ function SpeakerBody({ step, live, spot, joinable }: { step: Step; live: boolean
         )}
       </div>
     </div>
+  );
+}
+
+/** An open action on the stage, with where it stands in its owner's words, so the room hears what was tried */
+function ActText({ a }: { a: { text: string; progress: string | null } }) {
+  return (
+    <span className="act-tx">
+      {a.text}
+      {a.progress && <span className="act-prog">{a.progress}</span>}
+    </span>
   );
 }
 
@@ -508,7 +518,7 @@ function ProjectBody({ step, live, spot }: { step: Step; live: boolean; spot?: s
               {acts.map((a) => (
                 <li key={a.id}>
                   <StatusPill status={a.status} />
-                  <span>{a.text}</span>
+                  <ActText a={a} />
                 </li>
               ))}
             </ul>

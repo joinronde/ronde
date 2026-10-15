@@ -13,16 +13,19 @@ export interface BoardAction {
   meetingId: string;
   meeting: string;
   owner: { id: string; name: string };
+  /** Where it stands, in its owner's words */
+  progress?: string | null;
   originDate: string | null;
   doneAt: string | null;
   carried: number;
 }
 
-/** The actions of a meeting (or all), whose text, meeting or owner holds the search (case and accents aside) */
+/** The actions of a meeting (or all), whose text, progress, meeting or owner holds the search (case and accents aside) */
 export function filterActions<A extends BoardAction>(rows: A[], meetingId: string | null, query: string): A[] {
   const q = fold(query.trim());
   return rows.filter(
-    (a) => (!meetingId || a.meetingId === meetingId) && (!q || fold(`${a.text} ${a.meeting} ${a.owner.name}`).includes(q)),
+    (a) =>
+      (!meetingId || a.meetingId === meetingId) && (!q || fold(`${a.text} ${a.progress ?? ""} ${a.meeting} ${a.owner.name}`).includes(q)),
   );
 }
 

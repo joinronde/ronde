@@ -1,4 +1,5 @@
 import { projectOfKey } from "@ronde/core/meeting";
+import { localDate } from "@ronde/core/schedule";
 import "server-only";
 import { LINE_REACTIONS } from "@ronde/core/types";
 import { sectionKeyOf, VOTES_PER_PERSON } from "@ronde/core/util";
@@ -8,6 +9,7 @@ import { z } from "zod";
 import { AccessError, OpError } from "../../errors";
 import { deliver } from "../../inbox";
 import { toSection } from "../dto";
+import { timeZoneOf } from "../schedule";
 import { defineOp } from "./define";
 
 // What everyone does around a session: open topics and votes, comments on check-ins, follow-up actions.
@@ -36,6 +38,17 @@ export async function commentedItem(
     : null;
   if (!item) throw new OpError("notFound");
   return item;
+}
+
+/**
+ * The day an action was decided: its session's, once that session has started (whatever day it is dated); before
+ * it starts, today when it is still to come; today too when there is no session (an action one gives oneself)
+ */
+function decidedOn(session: { date: string; startedAt: Date | null } | null, timeZone: string): string {
+  const today = localDate(Date.now(), timeZone);
+  if (!session) return today;
+  if (session.startedAt) return session.date;
+  return session.date < today ? session.date : today;
 }
 
 export const liveOps = [
@@ -160,7 +173,8 @@ export const liveOps = [
   }),
   defineOp({
     name: "action.add",
-    permission: "session.run",
+    // The host gives actions to anyone of the meeting; everyone else, observers included, only to themselves
+    permission: "meeting.read",
     session: "read",
     input: z.object({
       text: str(300).min(1),
@@ -170,6 +184,7 @@ export const liveOps = [
       projectId: str(50).nullable().optional(),
     }),
     run: async ({ db, session, meetingId, workspaceId, m }, o) => {
+      if (!m.viewer.isHost && o.ownerId !== m.viewer.personId) throw new AccessError(403, "ownActionsOnly");
       await requireParticipant({ db, meetingId }, o.ownerId, "unknownOwner");
       const projectId = o.projectId === undefined ? projectOfKey(session?.stepKey ?? "") : o.projectId;
       if (projectId && !(await db.meetingProject.findFirst({ where: { meetingId, projectId }, select: { projectId: true } })))
@@ -188,7 +203,7 @@ export const liveOps = [
           meetingId,
           text: o.text,
           ownerId: o.ownerId,
-          originDate: session?.date ?? null,
+          originDate: decidedOn(session, timeZoneOf(m.meeting, m.workspace)),
           originText: o.originText ?? o.text,
           projectId,
         },
@@ -197,13 +212,21 @@ export const liveOps = [
   }),
   defineOp({
     name: "action.update",
-    permission: "session.participate",
-    input: z.object({ id: str(50), status: z.enum(["open", "doing", "done"]).optional(), ownerId: str(50).optional() }),
+    // Observers can own actions too: they move them forward like anyone
+    permission: "meeting.read",
+    input: z.object({
+      id: str(50),
+      status: z.enum(["open", "doing", "done"]).optional(),
+      ownerId: str(50).optional(),
+      /** Where it stands, in a sentence; empty clears it */
+      progress: z.string().max(300).optional(),
+    }),
     run: async ({ db, m, meetingId, workspaceId }, o) => {
       const a = await db.action.findFirst({ where: { id: o.id, meetingId } });
       if (!a) throw new OpError("notFound");
       // A participant only moves their own actions forward; reassigning them is up to the host
-      if (!m.viewer.isHost && (a.ownerId !== m.viewer.memberId || o.ownerId)) throw new AccessError(403, "ownActionsOnly");
+      if (!m.viewer.isHost && (a.ownerId !== m.viewer.personId || o.ownerId)) throw new AccessError(403, "ownActionsOnly");
+      const progress = o.progress === undefined ? undefined : o.progress.replace(/\s+/g, " ").trim() || null;
       if (o.ownerId) await requireParticipant({ db, meetingId }, o.ownerId, "unknownOwner");
       if (o.ownerId && o.ownerId !== a.ownerId)
         await deliver(db, workspaceId, {
@@ -219,6 +242,7 @@ export const liveOps = [
         data: {
           ...(o.ownerId ? { ownerId: o.ownerId } : {}),
           ...(o.status ? { status: o.status, doneAt: o.status === "done" ? new Date() : null } : {}),
+          ...(progress !== undefined && progress !== a.progress ? { progress, progressAt: progress ? new Date() : null } : {}),
         },
       });
     },

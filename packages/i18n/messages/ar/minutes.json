@@ -48,5 +48,6 @@
   "projectRound": "المشاريع",
   "aboutProject": "عن {project}",
   "rating": "الفائدة",
-  "ratingAverage": "{avg}/5 · {count, plural, one {تقييم واحد} two {تقييمان} few {# تقييمات} many {# تقييمًا} other {# تقييم}}"
+  "ratingAverage": "{avg}/5 · {count, plural, one {تقييم واحد} two {تقييمان} few {# تقييمات} many {# تقييمًا} other {# تقييم}}",
+  "progress": "التقدّم"
 }

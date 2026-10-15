@@ -31,7 +31,7 @@
   "carried": "{count, plural, one {seit # Sitzung offen} other {seit # Sitzungen offen}}",
   "emptyMine": "Nichts auf deinem Tisch.",
   "emptyHosted": "Keine Aufgaben in den Meetings, die du leitest.",
-  "emptyHint": "In einer Sitzung beschlossene Aufgaben erscheinen hier, mit dem Meeting, aus dem sie stammen.",
+  "emptyHint": "In einer Sitzung beschlossene Aufgaben und die, die du selbst hinzufügst, erscheinen hier mit dem Meeting, in dem sie verfolgt werden.",
   "openTicket": "Ticket öffnen",
   "ticketFor": "Ticket für „{text}“ erstellen",
   "ticket": "Ticket erstellen",
@@ -48,6 +48,22 @@
     "ticket": "Ticket",
     "done": "Erledigt",
     "hint": "Alle Aufgaben dieser Ansicht, auch die vor mehr als zwei Wochen erledigten",
-    "fileName": "aufgaben"
-  }
+    "fileName": "aufgaben",
+    "progress": "Stand"
+  },
+  "new": "Neue Aufgabe",
+  "newTitle": "Eine Aufgabe für mich hinzufügen",
+  "newText": "Was du tun wirst",
+  "newPlaceholder": "z. B. Beim Lieferanten wegen der Verzögerung nachhaken",
+  "newMeeting": "Verfolgt in",
+  "add": "Zu meiner Liste hinzufügen",
+  "added": "Aufgabe zu deiner Liste hinzugefügt",
+  "cancel": "Abbrechen",
+  "progress": "Stand notieren",
+  "progressFor": "Stand von „{text}“",
+  "progressPlaceholder": "Was du versucht hast, was noch fehlt…",
+  "progressOn": "notiert am {date}",
+  "progressEdit": "Bearbeiten",
+  "progressSave": "Speichern",
+  "progressSaved": "Stand notiert"
 }

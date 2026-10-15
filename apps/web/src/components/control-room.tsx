@@ -69,6 +69,7 @@ import {
 } from "@/lib/shared/control-room";
 import { actionOwners, sheetRows, sheetsToComplete, writersOf } from "@/lib/shared/sheets";
 import { track } from "@/lib/shared/track";
+import { ActionProgress } from "./action-progress";
 import { Board } from "./board";
 import { CommandPalette, ShortcutsHelp, useControlShortcuts } from "./command-palette";
 import { Modal, NoMeeting } from "./common";
@@ -1531,6 +1532,7 @@ function PaneLive() {
 
 function PaneActions() {
   const t = useTranslations("control");
+  const tAct = useTranslations("actions");
   const tStatus = useTranslations("actionStatus");
   const fmt = formatters(useLocale());
   const { s, agenda, rpc, sections } = useRonde();
@@ -1574,6 +1576,13 @@ function PaneActions() {
             <div className="body">
               {a.text}
               <div className="meta">{a.originDate ? t("actions.since", { date: fmt.dayMonth(a.originDate) }) : ""}</div>
+              <ActionProgress
+                text={a.text}
+                progress={a.progress}
+                at={a.progressAt}
+                editable={a.status !== "done" || !!a.progress}
+                onSave={(progress) => rpc({ op: "action.update", id: a.id, progress }, tAct("progressSaved"))}
+              />
               <div className="controls" style={{ marginTop: 6 }}>
                 <Select
                   aria-label={t("owner")}

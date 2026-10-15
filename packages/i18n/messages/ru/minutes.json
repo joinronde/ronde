@@ -48,5 +48,6 @@
   "projectRound": "Проекты",
   "aboutProject": "О проекте «{project}»",
   "rating": "Польза",
-  "ratingAverage": "{avg}/5 · {count, plural, one {# оценка} few {# оценки} other {# оценок}}"
+  "ratingAverage": "{avg}/5 · {count, plural, one {# оценка} few {# оценки} other {# оценок}}",
+  "progress": "Ход работы"
 }

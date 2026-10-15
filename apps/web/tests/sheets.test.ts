@@ -71,9 +71,15 @@ describe("project sheets", () => {
 });
 
 describe("action owners", () => {
-  it("are the active members, then the observers, each once", () => {
+  it("are the members in the round, then the observers, each once", () => {
     const s = state({ observers: [{ id: "olivia", name: "Olivia Watcher" }, member("alice")] as unknown as Snapshot["observers"] });
     expect(actionOwners(s).map((x) => x.id)).toEqual(["alice", "bruno", "olivia"]);
+  });
+
+  it("include the host who runs the meeting without speaking in the round", () => {
+    const hana = { ...member("hana", false), role: "host" };
+    const s = state({ members: [member("alice"), hana, member("chloe", false)] as unknown as Snapshot["members"] });
+    expect(actionOwners(s).map((x) => x.id)).toEqual(["alice", "hana", "olivia"]);
   });
 });
 

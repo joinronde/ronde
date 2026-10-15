@@ -50,7 +50,10 @@ export async function exportAccount(userId: string) {
       }),
       db.meetingParticipant.findMany({ where: { personId: m.personId }, select: { role: true, meeting: { select: { name: true } } } }),
       db.checkInItem.findMany({ where: { personId: m.personId }, select: { sectionKey: true, text: true, createdAt: true } }),
-      db.action.findMany({ where: { ownerId: m.personId }, select: { text: true, status: true, createdAt: true, doneAt: true } }),
+      db.action.findMany({
+        where: { ownerId: m.personId },
+        select: { text: true, status: true, progress: true, createdAt: true, doneAt: true },
+      }),
       db.attendance.findMany({ where: { personId: m.personId }, select: { occurrenceKey: true, status: true } }),
       db.absence.findMany({ where: { personId: m.personId }, select: { from: true, to: true, note: true } }),
       db.kudo.findMany({ where: { fromId: m.personId }, select: { text: true, createdAt: true } }),

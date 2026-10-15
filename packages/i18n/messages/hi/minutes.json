@@ -48,5 +48,6 @@
   "projectRound": "प्रोजेक्ट",
   "aboutProject": "{project} के बारे में",
   "rating": "उपयोगिता",
-  "ratingAverage": "{avg}/5 · {count, plural, one {# रेटिंग} other {# रेटिंग}}"
+  "ratingAverage": "{avg}/5 · {count, plural, one {# रेटिंग} other {# रेटिंग}}",
+  "progress": "प्रगति"
 }

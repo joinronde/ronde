@@ -257,7 +257,7 @@ export async function buildRecord(db: ScopedTx, ctx: RecordCtx, s: Session, omit
     parking: mods.parking?.enabled ? topics.filter((t) => t.parked).map((t) => ({ text: t.text, byId: t.byId })) : [],
     actions: actions
       .filter((a) => a.status !== "done" || (a.doneAt?.getTime() ?? 0) > weekAgo)
-      .map((a) => ({ text: a.text, ownerId: a.ownerId, status: a.status })),
+      .map((a) => ({ text: a.text, ownerId: a.ownerId, status: a.status, progress: a.progress })),
     names,
     icebreaker: s.icebreaker ? { question: s.icebreaker, answers: answers.map((a) => ({ byId: a.byId, text: a.text })) } : null,
     kudos: kudos.map((k) => ({ fromId: k.fromId, toId: k.toId, text: k.text })),

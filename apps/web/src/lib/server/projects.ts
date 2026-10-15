@@ -324,7 +324,7 @@ export interface ProjectPage {
     items: { personId: string; name: string; role: string; text: string }[];
     decisions: string[];
   }[];
-  actions: { id: string; text: string; status: string; owner: string; meetingId: string }[];
+  actions: { id: string; text: string; status: string; progress: string | null; owner: string; meetingId: string }[];
   themes: Portfolio["themes"];
   people: Portfolio["people"];
   canManage: boolean;
@@ -492,7 +492,7 @@ export async function loadProject(ctx: WorkspaceContext, slug: string): Promise<
     timeline,
     actions: actions
       .filter((a) => readable(meetingsRead, a.meetingId))
-      .map((a) => ({ id: a.id, text: a.text, status: a.status, owner: personName(a.owner), meetingId: a.meetingId })),
+      .map((a) => ({ id: a.id, text: a.text, status: a.status, progress: a.progress, owner: personName(a.owner), meetingId: a.meetingId })),
     themes,
     people,
     canManage: editsProject(ctx, governed),

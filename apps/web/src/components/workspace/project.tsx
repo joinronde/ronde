@@ -316,6 +316,7 @@ export function ProjectView({ slug, page }: { slug: string; page: ProjectPage })
                 {page.actions.map((a) => (
                   <li key={a.id}>
                     {a.text} <span className="muted">· {a.owner}</span>
+                    {a.progress && <span className="act-prog-line">{a.progress}</span>}
                   </li>
                 ))}
               </ul>

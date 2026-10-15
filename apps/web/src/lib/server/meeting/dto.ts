@@ -249,6 +249,8 @@ export const toAction = (a: Action): ActionDTO => ({
   text: a.text,
   ownerId: a.ownerId,
   status: a.status,
+  progress: a.progress,
+  progressAt: ms(a.progressAt),
   originDate: a.originDate,
   originText: a.originText,
   projectId: a.projectId,

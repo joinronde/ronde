@@ -58,6 +58,8 @@ const action = (patch: Partial<ActionDTO> = {}): ActionDTO => ({
   text: "Something to do",
   ownerId: "alice",
   status: "open",
+  progress: null,
+  progressAt: null,
   originDate: null,
   originText: null,
   projectId: null,

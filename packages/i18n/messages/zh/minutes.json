@@ -48,5 +48,6 @@
   "projectRound": "项目",
   "aboutProject": "关于{project}",
   "rating": "会议价值",
-  "ratingAverage": "{avg}/5 · {count, plural, other {# 个评分}}"
+  "ratingAverage": "{avg}/5 · {count, plural, other {# 个评分}}",
+  "progress": "进展"
 }

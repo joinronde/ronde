@@ -26,6 +26,10 @@ describe("filterActions", () => {
     expect(filterActions(rows, null, "retro").map((a) => a.id)).toEqual(["b"]);
     expect(filterActions(rows, null, "lea").map((a) => a.id)).toEqual(["a", "b", "c"]);
   });
+  it("finds the search in where an action stands too", () => {
+    const noted = [...rows, action("d", { progress: "Relancé le fournisseur" })];
+    expect(filterActions(noted, null, "relance").map((a) => a.id)).toEqual(["d"]);
+  });
 });
 
 describe("columnsOf", () => {

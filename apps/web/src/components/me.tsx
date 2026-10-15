@@ -48,6 +48,7 @@ import { type LiveStatus, liveStatus } from "@/lib/shared/live-status";
 import { reactionAllowance } from "@/lib/shared/pickers";
 import { linesAbout, writersOf } from "@/lib/shared/sheets";
 import { track } from "@/lib/shared/track";
+import { ActionProgress } from "./action-progress";
 import { AvatarPicker } from "./avatar-picker";
 import { Board } from "./board";
 import { FreeText, ItemText, ListEditor } from "./check-in-fields";
@@ -1371,14 +1372,11 @@ function OthersLines({ projectId, sec, memberId, canJoin }: { projectId: string;
 
 function CheckInBoard({ memberId, draft }: { memberId: string; draft: ReturnType<typeof useCheckInDraft> }) {
   const t = useTranslations("me");
-  const tStatus = useTranslations("actionStatus");
-  const fmt = formatters(useLocale());
   const { s, rpc, nameOf, sections, host, mod } = useRonde();
   const { append } = draft;
   const tabProject = draft.d.tab ? s.projects.find((p) => p.id === draft.d.tab) : undefined;
   const [topic, setTopic] = useState("");
   const lw = s.lastWeek[memberId];
-  const acts = s.actions.filter((a) => a.ownerId === memberId && a.status !== "done");
   const votesLeft = VOTES_PER_PERSON - s.topics.filter((x) => x.mine).length;
   const topics = (
     <form
@@ -1608,39 +1606,85 @@ function CheckInBoard({ memberId, draft }: { memberId: string; draft: ReturnType
           {
             id: "actions",
             title: t("actions"),
-            node: acts.length > 0 && (
-              <div className="panel">
-                <h3>{t("actions")}</h3>
-                {acts.map((a) => (
-                  <div className="item" key={a.id}>
-                    <div className="body">
-                      {a.text}
-                      <div className="meta">{a.originDate ? t("since", { date: fmt.dayMonth(a.originDate) }) : ""}</div>
-                    </div>
-                    <Select
-                      aria-label={t("status")}
-                      value={a.status}
-                      onChange={(e) =>
-                        rpc(
-                          { op: "action.update", id: a.id, status: e.target.value as ActionStatus },
-                          t("actionStatusChanged", { status: tStatus(e.target.value as ActionStatus) }),
-                        )
-                      }
-                    >
-                      {ACTION_STATUSES.map((k) => (
-                        <option key={k} value={k}>
-                          {tStatus(k)}
-                        </option>
-                      ))}
-                    </Select>
-                  </div>
-                ))}
-              </div>
-            ),
+            node: <MyActions memberId={memberId} />,
           },
         ],
       ]}
     />
+  );
+}
+
+/** The person's open actions: where each one stands, in their own words, and one more for themselves */
+function MyActions({ memberId }: { memberId: string }) {
+  const t = useTranslations("me");
+  const tAct = useTranslations("actions");
+  const tStatus = useTranslations("actionStatus");
+  const fmt = formatters(useLocale());
+  const { s, rpc } = useRonde();
+  const [text, setText] = useState("");
+  const acts = s.actions.filter((a) => a.ownerId === memberId && a.status !== "done");
+  return (
+    <div className="panel">
+      <h3>{t("actions")}</h3>
+      {acts.map((a) => (
+        <div className="item" key={a.id}>
+          <div className="body">
+            {a.text}
+            <div className="meta">{a.originDate ? t("since", { date: fmt.dayMonth(a.originDate) }) : ""}</div>
+            <ActionProgress
+              text={a.text}
+              progress={a.progress}
+              at={a.progressAt}
+              editable
+              onSave={(progress) => rpc({ op: "action.update", id: a.id, progress }, tAct("progressSaved"))}
+            />
+          </div>
+          <Select
+            aria-label={t("status")}
+            value={a.status}
+            onChange={(e) =>
+              rpc(
+                { op: "action.update", id: a.id, status: e.target.value as ActionStatus },
+                t("actionStatusChanged", { status: tStatus(e.target.value as ActionStatus) }),
+              )
+            }
+          >
+            {ACTION_STATUSES.map((k) => (
+              <option key={k} value={k}>
+                {tStatus(k)}
+              </option>
+            ))}
+          </Select>
+        </div>
+      ))}
+      <form
+        className="act-mine-new"
+        onSubmit={async (e) => {
+          e.preventDefault();
+          if (!text.trim()) return;
+          const ok = await rpc(
+            { op: "action.add", text: text.trim(), ownerId: memberId, originText: null, projectId: null },
+            tAct("added"),
+          );
+          if (ok) setText("");
+        }}
+      >
+        <label htmlFor="myActionText" className="lbl-s">
+          {tAct("newTitle")}
+        </label>
+        <input
+          id="myActionText"
+          type="text"
+          value={text}
+          maxLength={300}
+          placeholder={tAct("newPlaceholder")}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <button className="btn soft" type="submit" disabled={!text.trim()}>
+          {tAct("add")}
+        </button>
+      </form>
+    </div>
   );
 }
 

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
-import { openSampleAction, setActionStatusAction, setFirstStepsHiddenAction } from "@/app/w/[ws]/actions";
+import { openSampleAction, setFirstStepsHiddenAction, updateActionAction } from "@/app/w/[ws]/actions";
 import type { DashboardData, DashboardPerson, NextSession } from "@/lib/server/dashboard";
 import { withBasePath } from "@/lib/shared/base-path";
 import { liveSeats } from "@/lib/shared/live-progress";
@@ -504,7 +504,7 @@ function MyActions({ slug, actions, open }: { slug: string; actions: DashboardDa
   const [ticked, setTicked] = useState<Record<string, boolean>>({});
   const tick = async (id: string) => {
     setTicked((s) => ({ ...s, [id]: true }));
-    const res = await setActionStatusAction(slug, id, "done");
+    const res = await updateActionAction(slug, id, { status: "done" });
     if (!res.ok) setTicked((s) => ({ ...s, [id]: false }));
     // Leaves the tick on screen a moment before the list moves on
     setTimeout(() => router.refresh(), 700);

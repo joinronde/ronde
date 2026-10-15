@@ -258,6 +258,9 @@ export interface ActionDTO {
   text: string;
   ownerId: string;
   status: ActionStatus;
+  /** Where it stands, in its owner's words, and when that was written */
+  progress: string | null;
+  progressAt: number | null;
   originDate: string | null;
   originText: string | null;
   projectId: string | null;
