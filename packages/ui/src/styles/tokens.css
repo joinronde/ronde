@@ -5,47 +5,47 @@
 :root,
 body.th-light {
   color-scheme: light;
-  --bg: #fbf6ec;
+  --bg: #faf8f5;
   --surface: #ffffff;
-  --surface-2: #f4ebda;
-  --ink: #2b1d0e;
-  --ink-2: #5e4b35;
-  --ink-3: #76624b;
-  --line: #e9dcc4;
-  --accent: #b53b0a;
+  --surface-2: #f2eee8;
+  --ink: #1f1a14;
+  --ink-2: #544b42;
+  --ink-3: #6f665c;
+  --line: #e5dfd5;
+  --accent: #bb3e0c;
   --accent-ink: #ffffff;
-  --accent-soft: #feeee2;
-  --sun: #b07a08;
+  --accent-soft: #fdeee4;
+  --sun: #94590a;
   --sun-soft: #fbefc8;
   --live: #c62828;
   --live-soft: #fbe3e1;
   --warn: #9a5b00;
   --warn-soft: #fbefd9;
-  --ok: #1c7f52;
+  --ok: #19774c;
   --ok-soft: #dcf1e6;
-  --c0: #b53b0a;
+  --c0: #bb3e0c;
   --c1: #86590a;
   --c2: #13723a;
   --c3: #be185d;
   --c4: #0c6a82;
-  --c5: #7c4a1e;
-  --shadow: 0 1px 2px rgb(60 35 8 / 0.07), 0 4px 16px rgb(60 35 8 / 0.07);
+  --c5: #6b5a4a;
+  --shadow: 0 1px 2px rgb(40 30 20 / 0.07), 0 4px 16px rgb(40 30 20 / 0.07);
 }
 
 /* Dark palette: follows the system unless light is forced, or when dark is picked explicitly */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #17110a;
-    --surface: #211a11;
-    --surface-2: #2c2317;
-    --ink: #f7efe3;
-    --ink-2: #d2c3ac;
-    --ink-3: #a38f75;
-    --line: #3b3024;
-    --accent: #ff9447;
-    --accent-ink: #1f1206;
-    --accent-soft: #3e2413;
+    --bg: #141210;
+    --surface: #1d1a17;
+    --surface-2: #27231f;
+    --ink: #f5f1ea;
+    --ink-2: #cfc6b9;
+    --ink-3: #a0968a;
+    --line: #36312b;
+    --accent: #ff8a4c;
+    --accent-ink: #1c0f06;
+    --accent-soft: #3b2215;
     --sun: #f2c14e;
     --sun-soft: #3a2d0f;
     --live: #ff5a5a;
@@ -54,28 +54,28 @@ body.th-light {
     --warn-soft: #382a12;
     --ok: #4bc98a;
     --ok-soft: #12301f;
-    --c0: #ff9447;
+    --c0: #ff8a4c;
     --c1: #e8b84a;
     --c2: #4bc98a;
     --c3: #f27ba3;
     --c4: #4cc3d1;
-    --c5: #d2a67c;
+    --c5: #c9b49c;
     --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 6px 20px rgb(0 0 0 / 0.25);
   }
 }
 :root[data-theme="dark"],
 body.th-dark {
   color-scheme: dark;
-  --bg: #17110a;
-  --surface: #211a11;
-  --surface-2: #2c2317;
-  --ink: #f7efe3;
-  --ink-2: #d2c3ac;
-  --ink-3: #a38f75;
-  --line: #3b3024;
-  --accent: #ff9447;
-  --accent-ink: #1f1206;
-  --accent-soft: #3e2413;
+  --bg: #141210;
+  --surface: #1d1a17;
+  --surface-2: #27231f;
+  --ink: #f5f1ea;
+  --ink-2: #cfc6b9;
+  --ink-3: #a0968a;
+  --line: #36312b;
+  --accent: #ff8a4c;
+  --accent-ink: #1c0f06;
+  --accent-soft: #3b2215;
   --sun: #f2c14e;
   --sun-soft: #3a2d0f;
   --live: #ff5a5a;
@@ -84,12 +84,12 @@ body.th-dark {
   --warn-soft: #382a12;
   --ok: #4bc98a;
   --ok-soft: #12301f;
-  --c0: #ff9447;
+  --c0: #ff8a4c;
   --c1: #e8b84a;
   --c2: #4bc98a;
   --c3: #f27ba3;
   --c4: #4cc3d1;
-  --c5: #d2a67c;
+  --c5: #c9b49c;
   --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 6px 20px rgb(0 0 0 / 0.25);
 }
 

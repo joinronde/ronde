@@ -279,6 +279,6 @@ export function toDiscord(m: RichMessage): object {
   );
   const description = toMarkdown({ summary: m.summary, blocks: body.filter((b) => b.kind !== "facts") }).slice(0, 4096);
   return {
-    embeds: [{ title: title.slice(0, 256), description, color: 0xb53b0a, ...(fields.length ? { fields: fields.slice(0, 25) } : {}) }],
+    embeds: [{ title: title.slice(0, 256), description, color: 0xbb3e0c, ...(fields.length ? { fields: fields.slice(0, 25) } : {}) }],
   };
 }
