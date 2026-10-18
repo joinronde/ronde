@@ -22,7 +22,13 @@ function luminance(hex: string): number {
 /** `color-mix(in srgb, a k, b)`: each channel weighted, as hex */
 function mix(a: string, b: string, k: number): string {
   const ch = (h: string, i: number) => Number.parseInt(h.slice(i, i + 2), 16);
-  return `#${[1, 3, 5].map((i) => Math.round(ch(a, i) * k + ch(b, i) * (1 - k)).toString(16).padStart(2, "0")).join("")}`;
+  return `#${[1, 3, 5]
+    .map((i) =>
+      Math.round(ch(a, i) * k + ch(b, i) * (1 - k))
+        .toString(16)
+        .padStart(2, "0"),
+    )
+    .join("")}`;
 }
 
 function contrast(a: string, b: string): number {
