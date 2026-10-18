@@ -225,6 +225,7 @@ export async function createSample(ctx: WorkspaceContext): Promise<{ id: string 
       poker: [],
       parking: [],
       polls: [],
+      slides: [],
     };
     await ctx.db.session.create({
       data: {

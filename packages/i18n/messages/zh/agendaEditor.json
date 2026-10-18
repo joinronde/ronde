@@ -10,7 +10,8 @@
     "retro": "回顾会",
     "timebox": "限时议题",
     "poker": "计划扑克",
-    "projects": "按项目轮流"
+    "projects": "按项目轮流",
+    "slide": "幻灯片"
   },
   "blockHints": {
     "intro": "首轮之前的欢迎、公告和破冰",
@@ -19,7 +20,8 @@
     "topics": "团队提出并投票的议题",
     "timebox": "一个单独的议题，有自己的时长",
     "retro": "分栏的匿名便签：分组、投票、再讨论",
-    "poker": "团队用暗牌估算任务"
+    "poker": "团队用暗牌估算任务",
+    "slide": "单独的一屏：自由内容、团队的困扰，或回顾未完成的行动项"
   },
   "timeboxTitle": "议题",
   "minutes": "分钟",
@@ -39,5 +41,16 @@
     "health": "遇到困难的项目优先"
   },
   "perProject": "每个项目的分钟数",
-  "perProjectAuto": "自动"
+  "perProjectAuto": "自动",
+  "newSlide": "困扰",
+  "slideTitle": "幻灯片标题",
+  "slideKind": "幻灯片用途",
+  "slideKinds": {
+    "free": "自由内容",
+    "irritants": "困扰",
+    "actions": "回顾未完成的行动项"
+  },
+  "slideAnonymous": "不显示姓名",
+  "slideBody": "屏幕上的文字",
+  "slideBodyHint": "Markdown：背景、数据、规则提醒…"
 }

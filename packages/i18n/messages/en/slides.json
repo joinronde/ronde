@@ -1,0 +1,26 @@
+{
+  "stage": {
+    "items": "Raised by the team",
+    "tracked": "Action",
+    "emptyIrritants": "Nothing raised yet: everyone can add theirs from “My screen”.",
+    "anonymous": "Posted without names.",
+    "review": "Open actions ({count})",
+    "noActions": "No open action: all clear.",
+    "decided": "Decided here ({count})"
+  },
+  "me": {
+    "hint": "Raise what gets in the way now: it is dealt with here, not in the middle of someone's turn.",
+    "anonymous": "Your name is not shown.",
+    "placeholder": "What gets in the way…",
+    "add": "Add",
+    "mine": "What you raised",
+    "remove": "Remove “{text}”"
+  },
+  "host": {
+    "count": "Raised: {count}",
+    "empty": "Nothing raised yet. People add theirs from “My screen”, before the meeting too.",
+    "owner": "Owner",
+    "toAction": "Make it an action",
+    "created": "Action created"
+  }
+}

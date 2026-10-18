@@ -4,7 +4,7 @@ import { buildAgenda, elapsedOf, transition } from "@ronde/core/meeting";
 import type { MinutesPart, RecordV1 } from "@ronde/core/record";
 import type { MeetingDTO, SectionDef } from "@ronde/core/types";
 import { moodAverage, RATING_MIN_VOTES, withEffectiveRoles } from "@ronde/core/util";
-import { Prisma, type ScopedTx, type Session } from "@ronde/db";
+import { type Action, Prisma, type ScopedTx, type Session } from "@ronde/db";
 import { type Locale, resolveLocale } from "@ronde/i18n";
 import { readConfig } from "@ronde/module-sdk";
 import { retro, retroColumns } from "@ronde/modules";
@@ -267,7 +267,12 @@ export async function buildRecord(db: ScopedTx, ctx: RecordCtx, s: Session, omit
     comments: comments.filter((c) => saidIds.has(c.itemId)).map((c) => ({ itemId: c.itemId, byId: c.byId, text: c.text })),
     nextDate: (await nextSessionOccurrence(db, meeting, ctx.ws.workspace, nextDay(s.date)))?.date ?? null,
     omit,
-    agenda: blocks.map((b) => ({ id: b.id, type: b.type, ...(b.type === "timebox" ? { title: b.title } : {}) })),
+    agenda: blocks.map((b) => ({
+      id: b.id,
+      type: b.type,
+      ...(b.type === "timebox" ? { title: b.title } : b.type === "slide" ? { title: b.title, kind: b.kind } : {}),
+    })),
+    slides: await slidesRecord(db, blocks, s, actions),
     retro: await retroRecord(db, blocks, s, mods, locale),
     ...(await pokerAndPolls(db, s, mods)),
   };
@@ -306,6 +311,26 @@ async function retroRecord(
         .map((c) => ({ id: c.id, column: c.column, title: c.text.slice(0, 80), votes: 0, cards: [c.text] })),
     ].sort((a, b) => b.votes - a.votes),
   };
+}
+
+/** Slides of the session: their text, what people posted on them, and the actions decided while each was on */
+async function slidesRecord(
+  db: ScopedTx,
+  blocks: AgendaBlock[],
+  s: Session,
+  actions: Pick<Action, "text" | "ownerId" | "originDate" | "originStep">[],
+): Promise<RecordV1["slides"]> {
+  const slides = blocks.filter((b) => b.type === "slide");
+  if (!slides.length) return [];
+  const items = await db.slideItem.findMany({ where: { sessionId: s.id }, orderBy: { createdAt: "asc" } });
+  return slides.map((b) => ({
+    blockId: b.id,
+    body: b.body ?? "",
+    items: items
+      .filter((i) => i.blockId === b.id)
+      .map((i) => ({ text: i.text, byId: b.anonymous ? null : i.authorId, tracked: !!i.actionId })),
+    actions: actions.filter((a) => a.originDate === s.date && a.originStep === b.id).map((a) => ({ text: a.text, ownerId: a.ownerId })),
+  }));
 }
 
 /** Planning poker items with their estimate, polls with their totals (never who answered what) */

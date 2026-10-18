@@ -176,5 +176,9 @@
   "tokenInvalid": "Dieses Token enthält Zeichen, die ein Token nicht haben kann (Leerzeichen, Zeilenumbrüche). Kopiere es erneut aus dem Tool.",
   "feedbackTooMany": "Du hast in kurzer Zeit mehrere Nachrichten gesendet. Versuch es in ein paar Minuten erneut.",
   "feedbackTooLarge": "Die Nachricht ist zu groß zum Senden. Versuch es mit einem kleineren Screenshot.",
-  "feedbackImageFormat": "Der Screenshot muss ein PNG-, JPEG- oder WebP-Bild sein."
+  "feedbackImageFormat": "Der Screenshot muss ein PNG-, JPEG- oder WebP-Bild sein.",
+  "slideClosed": "Die Sitzung ist vorbei: Auf ihren Folien kann nichts mehr ergänzt werden.",
+  "slideTooManyItems": "Du hast so viel gepostet, wie eine Folie aufnimmt.",
+  "ownSlideItemsOnly": "Du kannst nur entfernen, was du selbst gepostet hast.",
+  "slideItemTracked": "Dieser Punkt ist bereits eine Aufgabe."
 }

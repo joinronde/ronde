@@ -10,7 +10,8 @@
     "retro": "Retrospectiva",
     "timebox": "Tempo limitado",
     "poker": "Planning poker",
-    "projects": "Rodada por projeto"
+    "projects": "Rodada por projeto",
+    "slide": "Slide"
   },
   "blockHints": {
     "intro": "Boas-vindas, avisos e quebra-gelo antes da primeira volta",
@@ -19,7 +20,8 @@
     "topics": "Os temas trazidos e votados pela equipa",
     "timebox": "Um tema à parte, com a sua própria duração",
     "retro": "Notas anónimas em colunas, agrupadas, votadas e depois discutidas",
-    "poker": "A equipa estima itens com cartas escondidas"
+    "poker": "A equipa estima itens com cartas escondidas",
+    "slide": "Uma tela própria: conteúdo livre, os incômodos da equipe ou uma revisão das ações em aberto"
   },
   "timeboxTitle": "Assunto",
   "minutes": "Minutos",
@@ -39,5 +41,16 @@
     "health": "Projetos em dificuldade primeiro"
   },
   "perProject": "min por projeto",
-  "perProjectAuto": "auto"
+  "perProjectAuto": "auto",
+  "newSlide": "Incômodos",
+  "slideTitle": "Título do slide",
+  "slideKind": "Para que serve o slide",
+  "slideKinds": {
+    "free": "Conteúdo livre",
+    "irritants": "Incômodos",
+    "actions": "Revisão das ações em aberto"
+  },
+  "slideAnonymous": "Sem nomes",
+  "slideBody": "Texto na tela",
+  "slideBodyHint": "Markdown: contexto, números, um lembrete das regras…"
 }

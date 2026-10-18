@@ -14,6 +14,7 @@ export type MinutesKind =
   | "summary"
   | "decisions"
   | "intro"
+  | "slide"
   | "mood"
   | "icebreaker"
   | "round"
@@ -137,7 +138,13 @@ const itemOf = (text: string): MinutesItem => {
 export function recordDecisions(r: RecordV1, locale: Locale): MinutesItem[] {
   const t = translator(locale, "minutes");
   const blockName = (b: RecordV1["agenda"][number]) =>
-    b.type === "timebox" ? b.title || t("timebox") : b.type === "poker" ? t("poker") : b.type === "retro" ? t("retro") : "";
+    b.type === "timebox" || b.type === "slide"
+      ? b.title || t(b.type)
+      : b.type === "poker"
+        ? t("poker")
+        : b.type === "retro"
+          ? t("retro")
+          : "";
   const places: [string, string][] = [
     ["intro", t("introduction")],
     ["qa:intro", t("questionsAbout", { what: t("introduction") })],
@@ -201,6 +208,43 @@ export function buildMinutes(r: RecordV1, locale: Locale, options: MinutesOption
       ? [{ type: "label", text: t("exchanges"), tone: "qa" } as const, ...notesBlock(r.notes["qa:intro"])]
       : []),
   ]);
+
+  // Slides: their text, what the team raised on them, the actions decided there, the host notes and the exchanges
+  const slidePart = (b: RecordV1["agenda"][number]) => {
+    const slide = r.slides.find((x) => x.blockId === b.id);
+    const items = slide?.items ?? [];
+    const actions = slide?.actions ?? [];
+    part("slide", b.title || t("slide"), [
+      ...(slide?.body.trim() ? [{ type: "markdown", text: slide.body.trim() } as const] : []),
+      ...(items.length
+        ? [
+            { type: "label", text: t("slideItems"), tone: "custom" } as const,
+            {
+              type: "list",
+              items: items.map((i) => ({
+                text: i.text,
+                ...(i.byId ? { by: nm(i.byId) } : {}),
+                ...(i.tracked ? { meta: ` · ${t("slideTracked")}` } : {}),
+              })),
+            } as const,
+          ]
+        : []),
+      ...(actions.length
+        ? [
+            { type: "label", text: t("slideActions"), tone: "notes" } as const,
+            { type: "list", items: actions.map((a) => ({ text: a.text, meta: ` (${nm(a.ownerId)})` })) } as const,
+          ]
+        : []),
+      ...notesBlock(r.notes[b.id]),
+      ...(r.notes[`qa:${b.id}`]?.trim()
+        ? [{ type: "label", text: t("exchanges"), tone: "qa" } as const, ...notesBlock(r.notes[`qa:${b.id}`])]
+        : []),
+    ]);
+  };
+  // Slides placed before the turns read right after the intro, as they were run; the others after the turns
+  const firstTurn = r.agenda.findIndex((b) => b.type === "round" || b.type === "projects");
+  const slides = r.agenda.map((b, i) => ({ b, early: firstTurn < 0 || i < firstTurn })).filter((x) => x.b.type === "slide");
+  for (const x of slides.filter((y) => y.early)) slidePart(x.b);
 
   if (on("mood") && r.mood?.counts.some(Boolean)) {
     const avg = r.mood.avg;
@@ -349,6 +393,8 @@ export function buildMinutes(r: RecordV1, locale: Locale, options: MinutesOption
         ? [{ type: "label", text: t("exchanges"), tone: "qa" } as const, ...notesBlock(r.notes[`qa:${b.id}`])]
         : []),
     ]);
+
+  for (const x of slides.filter((y) => !y.early)) slidePart(x.b);
 
   // Retro: per column, the groups most voted first, their notes and the host notes of their discussion
   if (r.retro && on("retro")) {

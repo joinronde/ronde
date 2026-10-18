@@ -120,8 +120,19 @@ export const recordV1 = z.object({
   nextDate: z.string().nullable().default(null),
   /** Team inputs left out of the minutes */
   omit: z.array(z.enum(MINUTES_PARTS)).default([]),
-  /** Blocks of the agenda that were run (timeboxes keep their title) */
-  agenda: z.array(z.object({ id: z.string(), type: z.string(), title: z.string().optional() })).default([]),
+  /** Blocks of the agenda that were run (timeboxes and slides keep their title, slides their kind) */
+  agenda: z.array(z.object({ id: z.string(), type: z.string(), title: z.string().optional(), kind: z.string().optional() })).default([]),
+  /** Slides: their text, what people posted (no author on an anonymous slide) and the actions decided there */
+  slides: z
+    .array(
+      z.object({
+        blockId: z.string(),
+        body: z.string().default(""),
+        items: z.array(z.object({ text: z.string(), byId: z.string().nullable(), tracked: z.boolean() })).default([]),
+        actions: z.array(z.object({ text: z.string(), ownerId: z.string() })).default([]),
+      }),
+    )
+    .default([]),
   /** Retrospective: columns and groups, with the text of their notes but never their authors */
   retro: z
     .object({

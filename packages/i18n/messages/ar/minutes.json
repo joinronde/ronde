@@ -49,5 +49,9 @@
   "aboutProject": "عن {project}",
   "rating": "الفائدة",
   "ratingAverage": "{avg}/5 · {count, plural, one {تقييم واحد} two {تقييمان} few {# تقييمات} many {# تقييمًا} other {# تقييم}}",
-  "progress": "التقدّم"
+  "progress": "التقدّم",
+  "slide": "شريحة",
+  "slideItems": "ما طرحه الفريق",
+  "slideTracked": "أُنشئ إجراء",
+  "slideActions": "الإجراءات المقرّرة"
 }

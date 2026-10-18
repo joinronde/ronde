@@ -19,6 +19,7 @@ const ICONS: Partial<Record<MinutesKind, IconName>> = {
   round: "people",
   projects: "folder",
   timebox: "hourglass",
+  slide: "screen",
   retro: "search",
   poker: "cards",
   polls: "poll",

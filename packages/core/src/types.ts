@@ -263,9 +263,22 @@ export interface ActionDTO {
   progressAt: number | null;
   originDate: string | null;
   originText: string | null;
+  /** Step of the session it was decided at (a slide…) */
+  originStep: string | null;
   projectId: string | null;
   createdAt: number;
   doneAt: number | null;
+}
+
+/** What someone posted on a slide of the session (an irritant…); its author is left out on an anonymous slide */
+export interface SlideItemDTO {
+  id: string;
+  blockId: string;
+  text: string;
+  authorId: string | null;
+  mine: boolean;
+  /** Action it became */
+  actionId: string | null;
 }
 
 /** Who adds projects for a meeting to follow: whoever configures it, or everyone taking part */
@@ -453,6 +466,8 @@ export interface Snapshot {
   poker: PokerDTO | null;
   /** Polls of the session (empty when the module is off) */
   polls: PollDTO[];
+  /** What people posted on the slides of the session, oldest first */
+  slideItems: SlideItemDTO[];
   /** Notification rules in force: the control room offers a nudge and says when the start is announced */
   notify: { nudge: boolean; started: boolean };
   /** Connectors of the workspace and rules of the meeting, for the people configuring it (null otherwise) */

@@ -58,6 +58,7 @@ export const TENANT_MODELS = [
   "Delivery",
   "Template",
   "RetroCard",
+  "SlideItem",
   "RetroGroup",
   "RetroVote",
   "PokerItem",

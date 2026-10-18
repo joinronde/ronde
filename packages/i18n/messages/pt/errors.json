@@ -176,5 +176,9 @@
   "tokenInvalid": "Este token tem caracteres que um token não pode ter (espaços, quebras de linha). Copie-o de novo na ferramenta.",
   "feedbackTooMany": "Você enviou várias mensagens em pouco tempo. Tente de novo em alguns minutos.",
   "feedbackTooLarge": "A mensagem é grande demais para enviar. Tente com uma captura menor.",
-  "feedbackImageFormat": "A captura de tela deve ser uma imagem PNG, JPEG ou WebP."
+  "feedbackImageFormat": "A captura de tela deve ser uma imagem PNG, JPEG ou WebP.",
+  "slideClosed": "A sessão terminou: nada mais pode ser adicionado aos seus slides.",
+  "slideTooManyItems": "Você já publicou o máximo que um slide aceita.",
+  "ownSlideItemsOnly": "Você só pode remover o que publicou.",
+  "slideItemTracked": "Este ponto já é uma ação."
 }

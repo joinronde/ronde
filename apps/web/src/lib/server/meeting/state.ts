@@ -22,7 +22,7 @@ import { canEncrypt } from "../secrets";
 import { transcriptionConfig, transcriptionOn } from "../transcripts";
 import { listVideoAccounts, videoOrigin } from "../video-accounts";
 import { wikisOn } from "../wikis";
-import { activeBlocks, blockData, pokerView, pollsView, retroView } from "./blocks";
+import { activeBlocks, blockData, pokerView, pollsView, retroView, slideItemsView } from "./blocks";
 import { lastPlans, loadCheckIns } from "./checkins";
 import type { MeetingCtx } from "./context";
 import {
@@ -127,11 +127,12 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
   const names = Object.fromEntries([...participants, ...observers].map((p) => [p.personId, personName(p.person)]));
   const brand = brandingOn(ctx.ws.workspace) ? await ctx.ws.db.workspaceLogo.findFirst({ select: { updatedAt: true } }) : null;
   const projects = await followedProjects(db, meeting.id);
-  const [blocksData, retro, poker, polls] = await Promise.all([
+  const [blocksData, retro, poker, polls, slideItems] = await Promise.all([
     blockData(db, meeting, blocks, session, mods, projects),
     retroView(db, meeting, session, mods, viewer, locale),
     pokerView(db, meeting, session, mods, viewer),
     pollsView(db, session, mods, viewer, names),
+    slideItemsView(db, blocks, session, viewer),
   ]);
   const schedule = await scheduleDTO(db, meeting, ctx.ws.workspace, locale);
   // Attendance answers of the upcoming occurrences
@@ -283,6 +284,7 @@ export async function loadSnapshot(ctx: MeetingCtx, viewerLocale?: string): Prom
     retro,
     poker,
     polls,
+    slideItems,
     notify: {
       nudge: notify.rules.some((r) => r.enabled && r.event === "checkin.reminder"),
       started: notify.rules.some((r) => r.enabled && r.event === "session.started"),

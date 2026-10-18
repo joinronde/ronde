@@ -176,5 +176,9 @@
   "tokenInvalid": "Ce jeton contient des caractères qu’un jeton ne peut pas avoir (espaces, retours à la ligne). Copiez-le à nouveau depuis l’outil.",
   "feedbackTooMany": "Vous avez envoyé plusieurs messages en peu de temps. Réessayez dans quelques minutes.",
   "feedbackTooLarge": "Le message est trop lourd pour être envoyé. Essayez avec une capture plus petite.",
-  "feedbackImageFormat": "La capture d'écran doit être une image PNG, JPEG ou WebP."
+  "feedbackImageFormat": "La capture d'écran doit être une image PNG, JPEG ou WebP.",
+  "slideClosed": "La session est terminée : plus rien ne peut être ajouté à ses slides.",
+  "slideTooManyItems": "Vous avez atteint le maximum pour cette slide.",
+  "ownSlideItemsOnly": "Vous ne pouvez retirer que ce que vous avez ajouté.",
+  "slideItemTracked": "Ce point est déjà une action."
 }

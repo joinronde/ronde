@@ -556,6 +556,7 @@ async function main() {
       poker: [],
       parking: [],
       polls: [],
+      slides: [],
       // Each person presented their project in their turn; the Billing API slipped when staging stayed closed
       projects: five.map((k) => ({
         id: projectIds[k]!,

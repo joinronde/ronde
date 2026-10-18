@@ -49,5 +49,9 @@
   "aboutProject": "{project} के बारे में",
   "rating": "उपयोगिता",
   "ratingAverage": "{avg}/5 · {count, plural, one {# रेटिंग} other {# रेटिंग}}",
-  "progress": "प्रगति"
+  "progress": "प्रगति",
+  "slide": "स्लाइड",
+  "slideItems": "टीम द्वारा उठाई गईं",
+  "slideTracked": "कार्य बनाया गया",
+  "slideActions": "तय किए गए कार्य"
 }

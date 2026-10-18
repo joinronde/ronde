@@ -1,0 +1,26 @@
+{
+  "stage": {
+    "items": "Levantados pela equipe",
+    "tracked": "Ação",
+    "emptyIrritants": "Nada por enquanto: cada pessoa pode adicionar os seus em “Minha tela”.",
+    "anonymous": "Publicados sem nomes.",
+    "review": "Ações em aberto ({count})",
+    "noActions": "Nenhuma ação em aberto: tudo em dia.",
+    "decided": "Decidido aqui ({count})"
+  },
+  "me": {
+    "hint": "Diga agora o que atrapalha: isso é tratado aqui, não no meio da vez de outra pessoa.",
+    "anonymous": "Seu nome não aparece.",
+    "placeholder": "O que me atrapalha…",
+    "add": "Adicionar",
+    "mine": "O que você levantou",
+    "remove": "Remover “{text}”"
+  },
+  "host": {
+    "count": "Levantados: {count}",
+    "empty": "Nada por enquanto. Cada pessoa adiciona os seus em “Minha tela”, antes da reunião também.",
+    "owner": "Responsável",
+    "toAction": "Transformar em ação",
+    "created": "Ação criada"
+  }
+}

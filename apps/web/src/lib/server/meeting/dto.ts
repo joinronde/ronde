@@ -253,6 +253,7 @@ export const toAction = (a: Action): ActionDTO => ({
   progressAt: ms(a.progressAt),
   originDate: a.originDate,
   originText: a.originText,
+  originStep: a.originStep,
   projectId: a.projectId,
   createdAt: a.createdAt.getTime(),
   doneAt: ms(a.doneAt),

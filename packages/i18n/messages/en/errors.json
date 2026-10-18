@@ -176,5 +176,9 @@
   "tokenInvalid": "This token holds characters a token cannot have (spaces, line breaks). Copy it again from the tool.",
   "feedbackTooMany": "You sent several messages in a short time. Try again in a few minutes.",
   "feedbackTooLarge": "The message is too large to send. Try a smaller screenshot.",
-  "feedbackImageFormat": "The screenshot must be a PNG, JPEG or WebP image."
+  "feedbackImageFormat": "The screenshot must be a PNG, JPEG or WebP image.",
+  "slideClosed": "The session is over: nothing more can be posted on its slides.",
+  "slideTooManyItems": "You have posted as much as one slide takes.",
+  "ownSlideItemsOnly": "You can only remove what you posted.",
+  "slideItemTracked": "This item is already an action."
 }

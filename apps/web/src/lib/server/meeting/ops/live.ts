@@ -1,4 +1,4 @@
-import { projectOfKey } from "@ronde/core/meeting";
+import { baseKeyOf, projectOfKey } from "@ronde/core/meeting";
 import { localDate } from "@ronde/core/schedule";
 import "server-only";
 import { LINE_REACTIONS } from "@ronde/core/types";
@@ -205,6 +205,8 @@ export const liveOps = [
           ownerId: o.ownerId,
           originDate: decidedOn(session, timeZoneOf(m.meeting, m.workspace)),
           originText: o.originText ?? o.text,
+          // Decided during the session: the step it was decided at, so the minutes list it under that slide or turn
+          originStep: session?.startedAt && !session.endedAt ? baseKeyOf(session.stepKey) : null,
           projectId,
         },
       });

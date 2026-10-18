@@ -49,5 +49,9 @@
   "aboutProject": "Zu {project}",
   "rating": "Nutzen",
   "ratingAverage": "{avg}/5 · {count, plural, one {# Bewertung} other {# Bewertungen}}",
-  "progress": "Stand"
+  "progress": "Stand",
+  "slide": "Folie",
+  "slideItems": "Vom Team genannt",
+  "slideTracked": "Aufgabe erstellt",
+  "slideActions": "Beschlossene Aufgaben"
 }

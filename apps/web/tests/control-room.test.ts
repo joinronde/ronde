@@ -62,6 +62,7 @@ const action = (patch: Partial<ActionDTO> = {}): ActionDTO => ({
   progressAt: null,
   originDate: null,
   originText: null,
+  originStep: null,
   projectId: null,
   createdAt: n,
   doneAt: null,

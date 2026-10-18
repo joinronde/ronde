@@ -10,7 +10,8 @@
     "retro": "Retrospektive",
     "timebox": "Timebox",
     "poker": "Planning Poker",
-    "projects": "Projektrunde"
+    "projects": "Projektrunde",
+    "slide": "Folie"
   },
   "blockHints": {
     "intro": "Begrüßung, Ankündigungen und Eisbrecher vor der ersten Runde",
@@ -19,7 +20,8 @@
     "topics": "Die Themen, die das Team eingebracht und gewählt hat",
     "timebox": "Ein eigenes Thema mit eigener Dauer",
     "retro": "Anonyme Notizen in Spalten, gruppiert, gewählt, dann besprochen",
-    "poker": "Das Team schätzt Aufgaben mit verdeckten Karten"
+    "poker": "Das Team schätzt Aufgaben mit verdeckten Karten",
+    "slide": "Ein eigener Bildschirm: freier Inhalt, Ärgernisse des Teams oder ein Blick auf die offenen Aufgaben"
   },
   "timeboxTitle": "Thema",
   "minutes": "Minuten",
@@ -39,5 +41,16 @@
     "health": "Projekte in Schwierigkeiten zuerst"
   },
   "perProject": "Min. pro Projekt",
-  "perProjectAuto": "auto"
+  "perProjectAuto": "auto",
+  "newSlide": "Ärgernisse",
+  "slideTitle": "Titel der Folie",
+  "slideKind": "Wofür die Folie ist",
+  "slideKinds": {
+    "free": "Freier Inhalt",
+    "irritants": "Ärgernisse",
+    "actions": "Offene Aufgaben durchgehen"
+  },
+  "slideAnonymous": "Ohne Namen",
+  "slideBody": "Text auf dem Bildschirm",
+  "slideBodyHint": "Markdown: Kontext, Zahlen, eine Erinnerung an die Regeln…"
 }
