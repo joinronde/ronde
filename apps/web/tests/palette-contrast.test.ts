@@ -19,6 +19,12 @@ function luminance(hex: string): number {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
+/** `color-mix(in srgb, a k, b)`: each channel weighted, as hex */
+function mix(a: string, b: string, k: number): string {
+  const ch = (h: string, i: number) => Number.parseInt(h.slice(i, i + 2), 16);
+  return `#${[1, 3, 5].map((i) => Math.round(ch(a, i) * k + ch(b, i) * (1 - k)).toString(16).padStart(2, "0")).join("")}`;
+}
+
 function contrast(a: string, b: string): number {
   const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
   return (hi + 0.05) / (lo + 0.05);
@@ -40,6 +46,16 @@ describe("palette contrast", () => {
     }
     it(`${theme}: accent-ink on accent reaches 4.5:1`, () => {
       expect(contrast(t["accent-ink"] as string, t.accent as string)).toBeGreaterThanOrEqual(4.5);
+    });
+    // Grounds the CSS mixes from a colour (color-mix in srgb): the initials of an avatar on its tinted disc
+    // (.av), and a count on a pressed chip, lightened by its own text (.nm-cat-n)
+    for (const c of ["c0", "c1", "c2", "c3", "c4", "c5"])
+      it(`${theme}: an avatar's initials in ${c} reach 4.5:1 on their disc`, () => {
+        expect(contrast(t[c] as string, mix(t[c] as string, t.surface as string, 0.15))).toBeGreaterThanOrEqual(4.5);
+      });
+    it(`${theme}: a count on a pressed chip reaches 4.5:1`, () => {
+      const ink = t["accent-ink"] as string;
+      expect(contrast(ink, mix(ink, t.accent as string, 0.14))).toBeGreaterThanOrEqual(4.5);
     });
   }
 

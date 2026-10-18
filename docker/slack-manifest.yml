@@ -5,7 +5,7 @@
 display_information:
   name: Ronde
   description: Fill in your check-in, get reminders and follow your team meetings from Slack.
-  background_color: "#bb3e0c"
+  background_color: "#b23a0b"
 features:
   app_home:
     home_tab_enabled: false

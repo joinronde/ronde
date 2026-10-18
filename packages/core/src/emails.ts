@@ -29,7 +29,7 @@ export function authEmail(
 <html lang="${locale}" dir="${dir}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(subject)}</title></head>
 <body dir="${dir}" style="margin:0;padding:0;background-color:#FAF8F5;color:#1F1A14;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#FAF8F5"><tr><td align="center" style="padding:20px 12px">
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background-color:#FFFFFF;border:1px solid #E5DFD5;border-top:4px solid #BB3E0C;border-radius:14px">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background-color:#FFFFFF;border:1px solid #E5DFD5;border-top:4px solid #B23A0B;border-radius:14px">
 <tr><td style="padding:24px">
 ${
   // A workspace with its own logo (Team) invites under it
@@ -39,8 +39,8 @@ ${
 }
 <h1 style="margin:0 0 12px;font-size:22px;line-height:1.3">${esc(subject)}</h1>
 <p style="margin:0 0 20px">${esc(intro)}</p>
-<table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 0 16px"><tr><td bgcolor="#BB3E0C" style="border-radius:8px"><a href="${esc(url)}" style="display:inline-block;padding:12px 22px;border-radius:8px;background-color:#BB3E0C;color:#FFFFFF;font-weight:bold;text-decoration:none">${esc(action)} ${dir === "rtl" ? "←" : "→"}</a></td></tr></table>
-<p style="margin:0;font-size:12px;color:#6F665C;overflow-wrap:anywhere">${esc(t("fallbackLink"))} <a href="${esc(url)}" style="color:#BB3E0C">${esc(url)}</a></p>
+<table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 0 16px"><tr><td bgcolor="#B23A0B" style="border-radius:8px"><a href="${esc(url)}" style="display:inline-block;padding:12px 22px;border-radius:8px;background-color:#B23A0B;color:#FFFFFF;font-weight:bold;text-decoration:none">${esc(action)} ${dir === "rtl" ? "←" : "→"}</a></td></tr></table>
+<p style="margin:0;font-size:12px;color:#6F665C;overflow-wrap:anywhere">${esc(t("fallbackLink"))} <a href="${esc(url)}" style="color:#B23A0B">${esc(url)}</a></p>
 </td></tr><tr><td style="padding:16px 24px;border-top:1px solid #E5DFD5;background-color:#FAF8F5;border-radius:0 0 13px 13px;color:#6F665C;font-size:12px">${esc(footer)}</td></tr>
 </table></td></tr></table></body></html>`;
   return { subject, text, html };

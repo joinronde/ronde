@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-bb3e0c" alt="License: AGPL-3.0" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-b23a0b" alt="License: AGPL-3.0" /></a>
   <img src="https://img.shields.io/badge/status-beta-94590a" alt="Status: beta" />
   <a href="docs/self-hosting/README.md"><img src="https://img.shields.io/badge/self--host-Docker%20Compose-0c6a82" alt="Self-host with Docker Compose" /></a>
   <img src="https://img.shields.io/badge/languages-10-13723a" alt="Ten languages" />
