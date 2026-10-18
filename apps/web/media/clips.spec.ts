@@ -127,6 +127,8 @@ test("clips of the site and the promo video", async ({ browser }) => {
     await host.page.getByRole("button", { name: /^Next: / }).click();
     await host.page.waitForTimeout(1200);
     await host.page.getByRole("button", { name: "Decision", exact: true }).click();
+    // The editor takes the focus a moment after the button: typed earlier, the first letter would be lost
+    await host.page.waitForTimeout(400);
     await write(host.page, "The new spacing scale ships with the next release");
     await host.page.waitForTimeout(1800);
   });
