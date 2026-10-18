@@ -63,7 +63,7 @@ test("clips of the site and the promo video", async ({ browser }) => {
 
   // Hugo is in the directory without an account: the host invites him, he signs up from his phone
   const { context: phoneContext, page: phone } = await joins(browser, await inviteFromDirectory(host.page, HUGO.name), HUGO, PHONE);
-  const voters = [];
+  const voters: Awaited<ReturnType<typeof joins>>[] = [];
   for (const who of VOTERS) voters.push(await joins(browser, await inviteFromDirectory(host.page, who.name), who, DESKTOP));
 
   // Before: Hugo's check-in, on his phone
