@@ -232,7 +232,7 @@ const TEAM_NAME = "Product team (demo)";
 const CATEGORIES = ["Engineering", "Product", "Design"];
 
 /** Modules the demo meeting leaves off */
-const SHOWCASE_OFF = new Set(["rotation", "retro", "poker", "async", "github"]);
+const SHOWCASE_OFF = new Set(["rotation", "async", "github"]);
 
 async function main() {
   const force = process.argv.includes("--force");
@@ -345,6 +345,13 @@ async function main() {
       icon: "🚀",
       videoUrl: "https://meet.example.com/product-team",
       announcements: ["Welcome to Hugo, who joins the design team", "The mobile app release is planned for October 12"],
+      // The irritants come first, right after the intro: dealt with there, not in the middle of someone's turn
+      agenda: [
+        { id: "intro", type: "intro" },
+        { id: "irritants", type: "slide", kind: "irritants", title: "Irritants" },
+        { id: "round", type: "round" },
+        { id: "topics", type: "topics" },
+      ],
       createdById: user.id,
     },
   });
@@ -359,8 +366,9 @@ async function main() {
     occurrenceKey: `${rule.id}:${date}`,
     startsAt: new Date(zonedInstant(date, "14:00", "Europe/Paris")),
   });
-  // The demo shows what Ronde can do: the facilitation modules on (a new meeting starts with fewer), the formats
-  // and the extra integrations off; the icebreaker gets the demo question bank
+  // The demo shows what Ronde can do: the facilitation modules and the formats on (a new meeting starts with
+  // fewer), so every block of the agenda can be added; the extra integrations off; the icebreaker gets the demo
+  // question bank
   await prisma.moduleInstallation.createMany({
     data: MODULES.map((mod) => ({
       workspaceId,
@@ -662,6 +670,14 @@ async function main() {
     },
   });
   const sessionId = session.id;
+  // What the team raised before the meeting, on the irritants slide
+  await prisma.slideItem.createMany({
+    data: [
+      { workspaceId, sessionId, blockId: "irritants", authorId: ids.m3!, text: "Staging is down every Monday morning" },
+      { workspaceId, sessionId, blockId: "irritants", authorId: ids.m2!, text: "The same ticket is updated in three tools" },
+      { workspaceId, sessionId, blockId: "irritants", authorId: ids.m4!, text: "Design reviews land after the sprint has started" },
+    ],
+  });
   await prisma.icebreakerAnswer.createMany({
     data: [
       { workspaceId, sessionId, byId: ids.m2!, text: "Account owners approved the new screen on the first try" },
