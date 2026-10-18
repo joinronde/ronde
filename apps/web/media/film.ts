@@ -45,6 +45,9 @@ export async function meetingOf(page: Page) {
   return new URL(href!.replace(/\/(control|me)$/, ""), page.url()).href;
 }
 
+/** When each clip's first frame was painted (ms, the browser's clock): clips filmed together are lined up from it */
+export const FIRST_FRAME = new Map<string, number>();
+
 /**
  * Films the page while `act` runs: every frame the browser paints, as a JPEG with its time, then rebuilt at a
  * steady 30 frames per second. Leaves the frames in RAW/<name>/ (for the promo video) and returns the folder.
@@ -71,6 +74,7 @@ export async function film(page: Page, name: string, act: () => Promise<void>) {
   if (frames.length < 2) throw new Error(`No frames for ${name}`);
   // Each frame lasts until the next one; the concat demuxer turns that into a steady rate
   const start = frames[0]!.at;
+  FIRST_FRAME.set(name, start);
   const lines = frames.flatMap((f, i) => {
     const next = frames[i + 1]?.at ?? f.at + 1000 / FPS;
     return [`file '${f.file}'`, `duration ${((next - f.at) / 1000).toFixed(4)}`];

@@ -1,7 +1,7 @@
 import { writeFileSync } from "node:fs";
 import path from "node:path";
 import { type Browser, expect, type Page, test } from "@playwright/test";
-import { DOCS, encodeClip, film, HUGO, loopWebp, meetingOf, RAW, signedIn } from "./film";
+import { DOCS, encodeClip, FIRST_FRAME, film, HUGO, loopWebp, meetingOf, RAW, signedIn } from "./film";
 
 // The clips of the README and of the website, on a fresh demo workspace (pnpm db:seed --force): Hugo fills in
 // his check-in on his phone, then a session runs on the shared screen from start to minutes. Each clip is
@@ -90,7 +90,8 @@ test("clips of the site and the promo video", async ({ browser }) => {
   });
   encodeClip(checkin, "checkin", { width: 780 });
 
-  // The agenda of the meeting, block by block: the host opens the blocks there are and adds a timebox
+  // The agenda of the meeting, block by block: the host opens the blocks there are and adds a timebox (it stays
+  // on the agenda, after the open topics: the session ends before it)
   await host.page.goto(`${meeting}/settings#agenda`);
   await host.page.waitForTimeout(1500);
   await glide(host.page, ".agenda-blocks");
@@ -102,8 +103,10 @@ test("clips of the site and the promo video", async ({ browser }) => {
     await host.page.waitForTimeout(500);
     const topic = host.page.getByLabel("Topic", { exact: true }).last();
     await topic.click({ clickCount: 3 });
+    // Saved a moment after the last key: wait for the save that carries the new title, not the one before it
+    const saved = host.page.waitForResponse((r) => r.url().endsWith("/rpc") && !!r.request().postData()?.includes("Budget 2027"));
     await write(host.page, "Budget 2027");
-    await expect(host.page.getByText("Agenda saved")).toBeVisible();
+    await saved;
     await host.page.waitForTimeout(1800);
   });
 
@@ -118,15 +121,13 @@ test("clips of the site and the promo video", async ({ browser }) => {
   await screen.waitForTimeout(2500);
   await host.page.getByRole("button", { name: "Start the meeting" }).click();
   await screen.waitForTimeout(6000);
-  await film(screen, "irritants", async () => {
-    await host.page.getByRole("button", { name: /^Next: Irritants/ }).click();
-    await screen.waitForTimeout(2800);
-    // The host turns the first one into an action: it says so on the shared screen (and in the minutes)
-    await host.page.getByRole("button", { name: "Make it an action" }).first().click();
-    await screen.waitForTimeout(3200);
-  });
+  await host.page.getByRole("button", { name: /^Next: Irritants/ }).click();
+  await screen.waitForTimeout(2800);
+  // The host turns the first one into an action: it says so on the shared screen, and in the minutes
+  await host.page.getByRole("button", { name: "Make it an action" }).first().click();
+  await screen.waitForTimeout(1500);
 
-  // During: the round table, one person after the other
+  // During: the round table, one person after the other (from the irritants: the first turn steadies at about 3 s)
   const round = await film(screen, "round", async () => {
     await screen.waitForTimeout(400);
     for (let i = 0; i < 3; i++) {
@@ -134,9 +135,9 @@ test("clips of the site and the promo video", async ({ browser }) => {
       await screen.waitForTimeout(4500);
     }
   });
-  encodeClip(round, "round", { width: 1440 });
+  encodeClip(round, "round", { width: 1440, from: 3 });
   // The README's loop: the round table going from one person to the next
-  loopWebp(round, path.join(DOCS, "session"), { width: 960, from: 0.5 });
+  loopWebp(round, path.join(DOCS, "session"), { width: 960, from: 3.3 });
 
   // The host, in the control room: next turn, a decision for the minutes
   const control = await film(host.page, "control", async () => {
@@ -160,11 +161,8 @@ test("clips of the site and the promo video", async ({ browser }) => {
   await phone.getByRole("tab", { name: /Live meeting|Meeting/ }).click();
   await phone.waitForTimeout(800);
   let together = "";
-  let lead = 0;
   await film(phone, "live-phone", async () => {
-    const phoneFrom = Date.now();
     together = await film(screen, "live-screen", async () => {
-      lead = (Date.now() - phoneFrom) / 1000;
       await screen.waitForTimeout(600);
       // On a phone the reactions wait behind their button; each is named for what it says
       await phone.getByRole("button", { name: "Reactions", exact: true }).click();
@@ -201,18 +199,16 @@ test("clips of the site and the promo video", async ({ browser }) => {
       await screen.waitForTimeout(1500);
     });
   });
-  // How long the phone was filmed before the shared screen: the promo lines the two up
+  // How long the phone was filmed before the shared screen, from their first painted frames: the promo lines them up
+  const lead = ((FIRST_FRAME.get("live-screen") ?? 0) - (FIRST_FRAME.get("live-phone") ?? 0)) / 1000;
   writeFileSync(path.join(RAW, "live-lead.json"), JSON.stringify({ lead }));
   // The site's tour keeps its reactions clip: the first seconds of the shared screen above
   encodeClip(together, "reactions", { width: 1440, to: 4.5 });
 
-  // After: the recap on the shared screen, then the host sums the session up and publishes the minutes
-  await film(screen, "recap", async () => {
-    await screen.waitForTimeout(500);
-    await host.page.getByRole("button", { name: /End the meeting/ }).click();
-    await host.page.getByRole("button", { name: "Yes, end it" }).click();
-    await screen.waitForTimeout(7000);
-  });
+  // After: the session ends, then the host sums it up and publishes the minutes
+  await host.page.getByRole("button", { name: /End the meeting/ }).click();
+  await host.page.getByRole("button", { name: "Yes, end it" }).click();
+  await screen.waitForTimeout(2000);
   await host.page.getByRole("button", { name: "Review and publish the minutes" }).click();
   await host.page.waitForTimeout(1200);
   await film(host.page, "studio", async () => {
