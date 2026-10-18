@@ -90,6 +90,23 @@ test("clips of the site and the promo video", async ({ browser }) => {
   });
   encodeClip(checkin, "checkin", { width: 780 });
 
+  // The agenda of the meeting, block by block: the host opens the blocks there are and adds a timebox
+  await host.page.goto(`${meeting}/settings#agenda`);
+  await host.page.waitForTimeout(1500);
+  await glide(host.page, ".agenda-blocks");
+  await film(host.page, "agenda", async () => {
+    await host.page.waitForTimeout(900);
+    await host.page.getByRole("button", { name: "Add a block" }).click();
+    await host.page.waitForTimeout(2200);
+    await host.page.getByRole("button", { name: /^Timebox/ }).click();
+    await host.page.waitForTimeout(500);
+    const topic = host.page.getByLabel("Topic", { exact: true }).last();
+    await topic.click({ clickCount: 3 });
+    await write(host.page, "Budget 2027");
+    await expect(host.page.getByText("Agenda saved")).toBeVisible();
+    await host.page.waitForTimeout(1800);
+  });
+
   // The session starts; the shared screen shows the intro, then the irritants raised before the meeting
   await host.page.goto(`${meeting}/control`);
   await host.page
@@ -104,7 +121,7 @@ test("clips of the site and the promo video", async ({ browser }) => {
   await film(screen, "irritants", async () => {
     await host.page.getByRole("button", { name: /^Next: Irritants/ }).click();
     await screen.waitForTimeout(2800);
-    // The host turns the first one into an action: it says so on the shared screen
+    // The host turns the first one into an action: it says so on the shared screen (and in the minutes)
     await host.page.getByRole("button", { name: "Make it an action" }).first().click();
     await screen.waitForTimeout(3200);
   });
@@ -156,7 +173,10 @@ test("clips of the site and the promo video", async ({ browser }) => {
         await screen.waitForTimeout(450);
       }
       await phone.getByRole("button", { name: "Raise my hand" }).click();
-      await screen.waitForTimeout(1800);
+      await screen.waitForTimeout(1200);
+      // The reactions folded away again: the poll's results stay in view on the phone
+      await phone.getByRole("button", { name: "Reactions", exact: true }).click();
+      await screen.waitForTimeout(600);
       // The host asks, and shows the poll on the shared screen
       await host.page.getByRole("tab", { name: /^Polls/ }).click();
       await host.page.getByLabel("Question").fill("Do we ship the help center on Friday?");
