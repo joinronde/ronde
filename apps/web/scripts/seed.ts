@@ -345,6 +345,13 @@ async function main() {
       icon: "🚀",
       videoUrl: "https://meet.example.com/product-team",
       announcements: ["Welcome to Hugo, who joins the design team", "The mobile app release is planned for October 12"],
+      // The irritants come first, right after the intro: dealt with there, not in the middle of someone's turn
+      agenda: [
+        { id: "intro", type: "intro" },
+        { id: "irritants", type: "slide", kind: "irritants", title: "Irritants" },
+        { id: "round", type: "round" },
+        { id: "topics", type: "topics" },
+      ],
       createdById: user.id,
     },
   });
@@ -662,6 +669,14 @@ async function main() {
     },
   });
   const sessionId = session.id;
+  // What the team raised before the meeting, on the irritants slide
+  await prisma.slideItem.createMany({
+    data: [
+      { workspaceId, sessionId, blockId: "irritants", authorId: ids.m3!, text: "Staging is down every Monday morning" },
+      { workspaceId, sessionId, blockId: "irritants", authorId: ids.m2!, text: "The same ticket is updated in three tools" },
+      { workspaceId, sessionId, blockId: "irritants", authorId: ids.m4!, text: "Design reviews land after the sprint has started" },
+    ],
+  });
   await prisma.icebreakerAnswer.createMany({
     data: [
       { workspaceId, sessionId, byId: ids.m2!, text: "Account owners approved the new screen on the first try" },

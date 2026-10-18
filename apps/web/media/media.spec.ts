@@ -53,7 +53,8 @@ test("pictures of the README and the site", async ({ browser }) => {
   const screen = await context.newPage();
   await screen.goto(`${meeting}/screen`);
   await shot(screen, "screen-intro", { site: false });
-  for (let i = 0; i < 4; i++) {
+  // Past the intro and the irritants slide, to the second turn
+  for (let i = 0; i < 5; i++) {
     await page.getByRole("button", { name: /^Next: / }).click();
     await screen.waitForTimeout(400);
   }
