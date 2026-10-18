@@ -67,7 +67,7 @@ function Wheel({ draw }: { draw: DrawDTO }) {
           <radialGradient id={`hub-${draw.id}`} cx="35%" cy="30%" r="80%">
             <stop offset="0%" stopColor="#fff7e6" />
             <stop offset="60%" stopColor="#f2c14e" />
-            <stop offset="100%" stopColor="#b07a08" />
+            <stop offset="100%" stopColor="#94590a" />
           </radialGradient>
         </defs>
         <circle r="108" className="rim" />

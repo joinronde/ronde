@@ -134,29 +134,29 @@ export function reminderEmail({
     footer,
   ].join("\n");
 
-  const heading = (label: string) => `<h2 style="margin:24px 0 8px;font-size:18px;line-height:1.4;color:#2B1D0E">${esc(label)}</h2>`;
+  const heading = (label: string) => `<h2 style="margin:24px 0 8px;font-size:18px;line-height:1.4;color:#1F1A14">${esc(label)}</h2>`;
   const list = (items: string[]) =>
     `<ul style="margin:8px 0 0;padding-${b.start}:22px">${items.map((item) => `<li style="margin:6px 0;overflow-wrap:anywhere">${item}</li>`).join("")}</ul>`;
   const html = `<!doctype html>
 <html lang="${locale}" dir="${b.dir}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(subject)}</title></head>
-<body dir="${b.dir}" style="margin:0;padding:0;background-color:#FBF6EC;color:#2B1D0E;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;overflow-wrap:anywhere">
+<body dir="${b.dir}" style="margin:0;padding:0;background-color:#FAF8F5;color:#1F1A14;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;overflow-wrap:anywhere">
 <div style="display:none;max-height:0;overflow:hidden;mso-hide:all">${esc(t("email.preheader", { when }))}</div>
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#FBF6EC"><tr><td align="center" style="padding:20px 12px">
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;background-color:#FFFFFF;border:1px solid #E9DCC4;border-top:4px solid #B53B0A;border-radius:14px">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#FAF8F5"><tr><td align="center" style="padding:20px 12px">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;background-color:#FFFFFF;border:1px solid #E5DFD5;border-top:4px solid #B23A0B;border-radius:14px">
 <tr><td style="padding:24px">
-<table role="presentation" cellspacing="0" cellpadding="0"><tr><td style="padding-${b.end}:12px">${brand ? `<img src="${esc(brand.logo)}" alt="" height="48" style="display:block;border:0;height:48px;width:auto;max-width:160px">` : `<img src="${esc(logoSrc)}" alt="" width="48" height="48" style="display:block;border:0">`}</td><td><p style="margin:0;font-size:26px;font-weight:bold;letter-spacing:-1px">${esc(brand?.name ?? "Ronde")}</p><p style="margin:0;color:#76624B;font-size:13px">${esc(s.teamName)} · ${esc(t("email.tagline"))}</p></td></tr></table>
-<h1 style="margin:26px 0 16px;font-size:26px;line-height:1.25;color:#2B1D0E">${esc(t("email.title"))}</h1>
+<table role="presentation" cellspacing="0" cellpadding="0"><tr><td style="padding-${b.end}:12px">${brand ? `<img src="${esc(brand.logo)}" alt="" height="48" style="display:block;border:0;height:48px;width:auto;max-width:160px">` : `<img src="${esc(logoSrc)}" alt="" width="48" height="48" style="display:block;border:0">`}</td><td><p style="margin:0;font-size:26px;font-weight:bold;letter-spacing:-1px">${esc(brand?.name ?? "Ronde")}</p><p style="margin:0;color:#6F665C;font-size:13px">${esc(s.teamName)} · ${esc(t("email.tagline"))}</p></td></tr></table>
+<h1 style="margin:26px 0 16px;font-size:26px;line-height:1.25;color:#1F1A14">${esc(t("email.title"))}</h1>
 <p style="margin:0 0 10px">${esc(greeting)}</p><p style="margin:0 0 20px">${esc(intro)}</p>
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#FEEEE2;border-radius:10px"><tr><td style="padding:16px"><p style="margin:0 0 4px;color:#B53B0A;font-size:12px;font-weight:bold;letter-spacing:1px;text-transform:uppercase">${esc(t("email.appointment"))}</p><p style="margin:0;font-size:17px;font-weight:bold">${esc(when)}</p><p style="margin:6px 0 0;font-size:13px;color:#5E4B35">${esc(timing)}</p></td></tr></table>
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#FEEEE2;border-radius:10px"><tr><td style="padding:16px"><p style="margin:0 0 4px;color:#B23A0B;font-size:12px;font-weight:bold;letter-spacing:1px;text-transform:uppercase">${esc(t("email.appointment"))}</p><p style="margin:0;font-size:17px;font-weight:bold">${esc(when)}</p><p style="margin:6px 0 0;font-size:13px;color:#544B42">${esc(timing)}</p></td></tr></table>
 ${heading(t("email.prepare"))}<p style="margin:0">${esc(preparation)}</p>
-${checkIn ? `<table role="presentation" cellspacing="0" cellpadding="0" style="margin:18px 0"><tr><td bgcolor="#B53B0A" style="border-radius:8px"><a href="${esc(checkIn)}" style="display:inline-block;padding:12px 22px;border:1px solid #B53B0A;border-radius:8px;background-color:#B53B0A;color:#FFFFFF;font-weight:bold;text-decoration:none">${esc(t("email.fillIn"))} ${b.arrow}</a></td></tr></table><p style="margin:0;font-size:12px;color:#76624B;overflow-wrap:anywhere">${esc(t("email.fallbackLink"))} <a href="${esc(checkIn)}" style="color:#B53B0A">${esc(checkIn)}</a></p>` : `<p style="margin:16px 0 0;font-weight:bold">${esc(t("email.openApp"))}</p>`}
-${reply ? `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:22px 0 0;background-color:#FBF6EC;border:1px dashed #E0C9A6;border-radius:10px"><tr><td style="padding:14px 16px"><p style="margin:0 0 4px;font-weight:bold">${esc(t("email.replyTitle"))}</p><p style="margin:0 0 8px;font-size:14px;color:#5E4B35">${esc(t("email.replyHint"))} ${esc(t("email.replyExample"))}</p><p style="margin:0;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.5;color:#2B1D0E">${example.map(esc).join("<br>")}</p></td></tr></table>` : ""}
+${checkIn ? `<table role="presentation" cellspacing="0" cellpadding="0" style="margin:18px 0"><tr><td bgcolor="#B23A0B" style="border-radius:8px"><a href="${esc(checkIn)}" style="display:inline-block;padding:12px 22px;border:1px solid #B23A0B;border-radius:8px;background-color:#B23A0B;color:#FFFFFF;font-weight:bold;text-decoration:none">${esc(t("email.fillIn"))} ${b.arrow}</a></td></tr></table><p style="margin:0;font-size:12px;color:#6F665C;overflow-wrap:anywhere">${esc(t("email.fallbackLink"))} <a href="${esc(checkIn)}" style="color:#B23A0B">${esc(checkIn)}</a></p>` : `<p style="margin:16px 0 0;font-weight:bold">${esc(t("email.openApp"))}</p>`}
+${reply ? `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:22px 0 0;background-color:#FAF8F5;border:1px dashed #E0C9A6;border-radius:10px"><tr><td style="padding:14px 16px"><p style="margin:0 0 4px;font-weight:bold">${esc(t("email.replyTitle"))}</p><p style="margin:0 0 8px;font-size:14px;color:#544B42">${esc(t("email.replyHint"))} ${esc(t("email.replyExample"))}</p><p style="margin:0;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.5;color:#1F1A14">${example.map(esc).join("<br>")}</p></td></tr></table>` : ""}
 ${sheets.length ? `${heading(t("email.sheets"))}${list(sheets.map(esc))}` : ""}
-${previous.length ? `${heading(t("email.planned"))}<p style="margin:0;color:#5E4B35">${esc(t("email.plannedHint"))}</p>${list(previous.map(multiline))}` : ""}
-${todo.length ? `${heading(t("email.actions"))}<p style="margin:0;color:#5E4B35">${esc(t("email.actionsHint"))}</p>${list(todo.map((a) => `${multiline(plainItem(a.text))} <strong style="color:#5E4B35;font-size:13px">(${esc(status(a.status))})</strong>`))}` : ""}
-${video ? `<p style="margin:24px 0 0"><a href="${esc(video)}" style="color:#B53B0A;font-weight:bold">${esc(t("email.joinVideo"))} ${b.arrow}</a></p>` : ""}
+${previous.length ? `${heading(t("email.planned"))}<p style="margin:0;color:#544B42">${esc(t("email.plannedHint"))}</p>${list(previous.map(multiline))}` : ""}
+${todo.length ? `${heading(t("email.actions"))}<p style="margin:0;color:#544B42">${esc(t("email.actionsHint"))}</p>${list(todo.map((a) => `${multiline(plainItem(a.text))} <strong style="color:#544B42;font-size:13px">(${esc(status(a.status))})</strong>`))}` : ""}
+${video ? `<p style="margin:24px 0 0"><a href="${esc(video)}" style="color:#B23A0B;font-weight:bold">${esc(t("email.joinVideo"))} ${b.arrow}</a></p>` : ""}
 <p style="margin:24px 0 0">${esc(t("email.thanks"))}</p>
-</td></tr><tr><td style="padding:16px 24px;border-top:1px solid #E9DCC4;border-radius:0 0 13px 13px;background-color:#FBF6EC;color:#76624B;font-size:12px">${esc(footer)}</td></tr>
+</td></tr><tr><td style="padding:16px 24px;border-top:1px solid #E5DFD5;border-radius:0 0 13px 13px;background-color:#FAF8F5;color:#6F665C;font-size:12px">${esc(footer)}</td></tr>
 </table></td></tr></table></body></html>`;
   return { subject, text, html };
 }
@@ -202,9 +202,9 @@ export function checkInReplyEmail({
   ].join("\n");
   const html = `<!doctype html>
 <html lang="${locale}" dir="${b.dir}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(subject)}</title></head>
-<body dir="${b.dir}" style="margin:0;padding:0;background-color:#FBF6EC;color:#2B1D0E;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;overflow-wrap:anywhere">
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#FBF6EC"><tr><td align="center" style="padding:20px 12px">
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;background-color:#FFFFFF;border:1px solid #E9DCC4;border-top:4px solid #B53B0A;border-radius:14px">
+<body dir="${b.dir}" style="margin:0;padding:0;background-color:#FAF8F5;color:#1F1A14;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;overflow-wrap:anywhere">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#FAF8F5"><tr><td align="center" style="padding:20px 12px">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;background-color:#FFFFFF;border:1px solid #E5DFD5;border-top:4px solid #B23A0B;border-radius:14px">
 <tr><td style="padding:24px">
 <p style="margin:0;font-size:22px;font-weight:bold;letter-spacing:-0.5px">${esc(brand?.name ?? "Ronde")}</p>
 <h1 style="margin:18px 0 12px;font-size:22px;line-height:1.3">${esc(added.length ? t("replied.title") : subject)}</h1>
@@ -215,8 +215,8 @@ ${added
       `<p style="margin:18px 0 4px;font-weight:bold">${esc(s.label)}</p><ul style="margin:0;padding-${b.start}:22px">${s.items.map((i) => `<li style="margin:4px 0">${multiline(plainItem(i))}</li>`).join("")}</ul>`,
   )
   .join("")}
-${link ? `<p style="margin:22px 0 0"><a href="${esc(link)}" style="color:#B53B0A;font-weight:bold">${esc(t("replied.open"))} ${b.arrow}</a></p>` : ""}
-</td></tr><tr><td style="padding:16px 24px;border-top:1px solid #E9DCC4;border-radius:0 0 13px 13px;background-color:#FBF6EC;color:#76624B;font-size:12px">${esc(t("replied.footer"))}</td></tr>
+${link ? `<p style="margin:22px 0 0"><a href="${esc(link)}" style="color:#B23A0B;font-weight:bold">${esc(t("replied.open"))} ${b.arrow}</a></p>` : ""}
+</td></tr><tr><td style="padding:16px 24px;border-top:1px solid #E5DFD5;border-radius:0 0 13px 13px;background-color:#FAF8F5;color:#6F665C;font-size:12px">${esc(t("replied.footer"))}</td></tr>
 </table></td></tr></table></body></html>`;
   return { subject, text, html };
 }
@@ -263,15 +263,15 @@ export function digestEmail({
   ].join("\n");
   const html = `<!doctype html>
 <html lang="${locale}" dir="${b.dir}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(subject)}</title></head>
-<body dir="${b.dir}" style="margin:0;padding:0;background-color:#FBF6EC;color:#2B1D0E;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;overflow-wrap:anywhere">
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#FBF6EC"><tr><td align="center" style="padding:20px 12px">
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;background-color:#FFFFFF;border:1px solid #E9DCC4;border-top:4px solid #B53B0A;border-radius:14px">
+<body dir="${b.dir}" style="margin:0;padding:0;background-color:#FAF8F5;color:#1F1A14;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;overflow-wrap:anywhere">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#FAF8F5"><tr><td align="center" style="padding:20px 12px">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;background-color:#FFFFFF;border:1px solid #E5DFD5;border-top:4px solid #B23A0B;border-radius:14px">
 <tr><td style="padding:24px">
 ${brand ? `<img src="${esc(brand.logo)}" alt="${esc(brand.name)}" height="40" style="display:block;border:0;height:40px;width:auto;max-width:160px;margin:0 0 18px">` : ""}
 <p style="margin:0 0 10px">${esc(greeting)}</p><p style="margin:0 0 20px">${esc(intro)}</p>
 <div>${markdownToHtml(minutes)}</div>
-${link ? `<p style="margin:24px 0 0"><a href="${esc(link)}" style="color:#B53B0A;font-weight:bold">${esc(t(brand ? "openBranded" : "open"))} ${b.arrow}</a></p>` : ""}
-</td></tr><tr><td style="padding:16px 24px;border-top:1px solid #E9DCC4;border-radius:0 0 13px 13px;background-color:#FBF6EC;color:#76624B;font-size:12px">${esc(t(brand ? "footerBranded" : "footer", { team: teamName }))}</td></tr>
+${link ? `<p style="margin:24px 0 0"><a href="${esc(link)}" style="color:#B23A0B;font-weight:bold">${esc(t(brand ? "openBranded" : "open"))} ${b.arrow}</a></p>` : ""}
+</td></tr><tr><td style="padding:16px 24px;border-top:1px solid #E5DFD5;border-radius:0 0 13px 13px;background-color:#FAF8F5;color:#6F665C;font-size:12px">${esc(t(brand ? "footerBranded" : "footer", { team: teamName }))}</td></tr>
 </table></td></tr></table></body></html>`;
   return { subject, text, html };
 }
@@ -351,7 +351,7 @@ export function weeklyEmail({
     ...(out ? [`${t("stop")}: ${out}`] : []),
   ].join("\n");
 
-  const heading = (label: string) => `<h2 style="margin:24px 0 8px;font-size:18px;line-height:1.4;color:#2B1D0E">${esc(label)}</h2>`;
+  const heading = (label: string) => `<h2 style="margin:24px 0 8px;font-size:18px;line-height:1.4;color:#1F1A14">${esc(label)}</h2>`;
   const row = (main: string, aside: string) =>
     `<tr><td style="padding:10px 0;border-top:1px solid #F1E7D6;vertical-align:top">${main}</td><td align="${b.end}" style="padding:10px 0;padding-${b.start}:12px;border-top:1px solid #F1E7D6;vertical-align:top;white-space:nowrap">${aside}</td></tr>`;
   const table = (rows: string[]) =>
@@ -359,35 +359,35 @@ export function weeklyEmail({
   const sessionRows = sessions.map((s) => {
     const link = safeLink(s.url);
     return row(
-      `<strong>${esc(s.meeting)}</strong><br><span style="color:#5E4B35;font-size:13px">${esc(when(s))}${s.moved ? ` · ${esc(t("moved"))}` : ""}</span>`,
-      link ? `<a href="${esc(link)}" style="color:#B53B0A;font-weight:bold;font-size:13px">${esc(t("checkIn"))} ${b.arrow}</a>` : "",
+      `<strong>${esc(s.meeting)}</strong><br><span style="color:#544B42;font-size:13px">${esc(when(s))}${s.moved ? ` · ${esc(t("moved"))}` : ""}</span>`,
+      link ? `<a href="${esc(link)}" style="color:#B23A0B;font-weight:bold;font-size:13px">${esc(t("checkIn"))} ${b.arrow}</a>` : "",
     );
   });
   const actionRows = actions.map((a) =>
     row(
-      `${multiline(plainItem(a.text))}<br><span style="color:#5E4B35;font-size:13px">${esc(a.meeting)}${esc(carried(a))}</span>`,
-      `<span style="display:inline-block;padding:2px 8px;border-radius:99px;background-color:${a.status === "doing" ? "#FEEEE2" : "#F3ECE0"};color:${a.status === "doing" ? "#B53B0A" : "#5E4B35"};font-size:12px;font-weight:bold">${esc(status(a.status))}</span>`,
+      `${multiline(plainItem(a.text))}<br><span style="color:#544B42;font-size:13px">${esc(a.meeting)}${esc(carried(a))}</span>`,
+      `<span style="display:inline-block;padding:2px 8px;border-radius:99px;background-color:${a.status === "doing" ? "#FEEEE2" : "#F3ECE0"};color:${a.status === "doing" ? "#B23A0B" : "#544B42"};font-size:12px;font-weight:bold">${esc(status(a.status))}</span>`,
     ),
   );
   const kudosRows = kudos.map(
     (k) =>
-      `<tr><td style="padding:10px 12px;background-color:#FDF3E7;border-radius:10px"><span dir="auto">“${multiline(k.text)}”</span><br><span style="color:#5E4B35;font-size:13px">${esc(t("from", { name: k.from }))}</span></td></tr><tr><td style="height:8px;line-height:8px;font-size:0">&nbsp;</td></tr>`,
+      `<tr><td style="padding:10px 12px;background-color:#FDF3E7;border-radius:10px"><span dir="auto">“${multiline(k.text)}”</span><br><span style="color:#544B42;font-size:13px">${esc(t("from", { name: k.from }))}</span></td></tr><tr><td style="height:8px;line-height:8px;font-size:0">&nbsp;</td></tr>`,
   );
   const html = `<!doctype html>
 <html lang="${locale}" dir="${b.dir}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(subject)}</title></head>
-<body dir="${b.dir}" style="margin:0;padding:0;background-color:#FBF6EC;color:#2B1D0E;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;overflow-wrap:anywhere">
+<body dir="${b.dir}" style="margin:0;padding:0;background-color:#FAF8F5;color:#1F1A14;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;overflow-wrap:anywhere">
 <div style="display:none;max-height:0;overflow:hidden;mso-hide:all">${esc(preheader)}</div>
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#FBF6EC"><tr><td align="center" style="padding:20px 12px">
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;background-color:#FFFFFF;border:1px solid #E9DCC4;border-top:4px solid #B53B0A;border-radius:14px">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#FAF8F5"><tr><td align="center" style="padding:20px 12px">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;background-color:#FFFFFF;border:1px solid #E5DFD5;border-top:4px solid #B23A0B;border-radius:14px">
 <tr><td style="padding:24px">
-<table role="presentation" cellspacing="0" cellpadding="0"><tr><td style="padding-${b.end}:12px">${brand ? `<img src="${esc(brand.logo)}" alt="" height="48" style="display:block;border:0;height:48px;width:auto;max-width:160px">` : `<img src="${esc(logoSrc)}" alt="" width="48" height="48" style="display:block;border:0">`}</td><td><p style="margin:0;font-size:26px;font-weight:bold;letter-spacing:-1px">${esc(brand?.name ?? "Ronde")}</p><p style="margin:0;color:#76624B;font-size:13px">${esc(workspace)}</p></td></tr></table>
-<h1 style="margin:26px 0 16px;font-size:26px;line-height:1.25;color:#2B1D0E">${esc(t("title"))}</h1>
+<table role="presentation" cellspacing="0" cellpadding="0"><tr><td style="padding-${b.end}:12px">${brand ? `<img src="${esc(brand.logo)}" alt="" height="48" style="display:block;border:0;height:48px;width:auto;max-width:160px">` : `<img src="${esc(logoSrc)}" alt="" width="48" height="48" style="display:block;border:0">`}</td><td><p style="margin:0;font-size:26px;font-weight:bold;letter-spacing:-1px">${esc(brand?.name ?? "Ronde")}</p><p style="margin:0;color:#6F665C;font-size:13px">${esc(workspace)}</p></td></tr></table>
+<h1 style="margin:26px 0 16px;font-size:26px;line-height:1.25;color:#1F1A14">${esc(t("title"))}</h1>
 <p style="margin:0 0 10px">${esc(greeting)}</p><p style="margin:0">${esc(intro)}</p>
 ${sessions.length ? `${heading(t("sessions"))}${table(sessionRows)}` : ""}
-${actions.length ? `${heading(t("actions"))}<p style="margin:0;color:#5E4B35">${esc(t("actionsHint"))}</p>${table(actionRows)}` : ""}
+${actions.length ? `${heading(t("actions"))}<p style="margin:0;color:#544B42">${esc(t("actionsHint"))}</p>${table(actionRows)}` : ""}
 ${kudos.length ? `${heading(t("kudos"))}<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:4px 0 0">${kudosRows.join("")}</table>` : ""}
-${home ? `<table role="presentation" cellspacing="0" cellpadding="0" style="margin:24px 0 0"><tr><td bgcolor="#B53B0A" style="border-radius:8px"><a href="${esc(home)}" style="display:inline-block;padding:12px 22px;border:1px solid #B53B0A;border-radius:8px;background-color:#B53B0A;color:#FFFFFF;font-weight:bold;text-decoration:none">${esc(t("open"))} ${b.arrow}</a></td></tr></table>` : ""}
-</td></tr><tr><td style="padding:16px 24px;border-top:1px solid #E9DCC4;border-radius:0 0 13px 13px;background-color:#FBF6EC;color:#76624B;font-size:12px">${esc(t("footer", { workspace }))}${settings ? ` <a href="${esc(settings)}" style="color:#76624B">${esc(t("settings"))}</a>` : ""}${out ? ` · <a href="${esc(out)}" style="color:#76624B">${esc(t("stop"))}</a>` : ""}</td></tr>
+${home ? `<table role="presentation" cellspacing="0" cellpadding="0" style="margin:24px 0 0"><tr><td bgcolor="#B23A0B" style="border-radius:8px"><a href="${esc(home)}" style="display:inline-block;padding:12px 22px;border:1px solid #B23A0B;border-radius:8px;background-color:#B23A0B;color:#FFFFFF;font-weight:bold;text-decoration:none">${esc(t("open"))} ${b.arrow}</a></td></tr></table>` : ""}
+</td></tr><tr><td style="padding:16px 24px;border-top:1px solid #E5DFD5;border-radius:0 0 13px 13px;background-color:#FAF8F5;color:#6F665C;font-size:12px">${esc(t("footer", { workspace }))}${settings ? ` <a href="${esc(settings)}" style="color:#6F665C">${esc(t("settings"))}</a>` : ""}${out ? ` · <a href="${esc(out)}" style="color:#6F665C">${esc(t("stop"))}</a>` : ""}</td></tr>
 </table></td></tr></table></body></html>`;
   return { subject, text, html };
 }

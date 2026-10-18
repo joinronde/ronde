@@ -6,7 +6,7 @@ import { createAvatar } from "@dicebear/core";
 
 const PEOPLE = [
   { name: "Emma", bg: "ffd2ad", hair: "variant16", mouth: "happy05", eyes: "variant24", eyebrows: "variant02", flower: true },
-  { name: "Lucas", bg: "f4ebda", hair: "variant04", mouth: "happy05", eyes: "variant24", eyebrows: "variant01" },
+  { name: "Lucas", bg: "f2eee8", hair: "variant04", mouth: "happy05", eyes: "variant24", eyebrows: "variant01" },
   { name: "Sarah", bg: "fee2c5", hair: "variant35", mouth: "happy04", eyes: "variant15", eyebrows: "variant09" },
   { name: "Tom", bg: "e7d7c1", hair: "variant08", mouth: "happy05", eyes: "variant19", eyebrows: "variant02", glasses: "variant02" },
   { name: "Sofia", bg: "fde8d7", hair: "variant21", mouth: "happy05", eyes: "variant24", eyebrows: "variant01" },
