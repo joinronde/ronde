@@ -3,18 +3,13 @@ import type { Meeting, ScopedTx, Session } from "@ronde/db";
 import { type Locale, translator } from "@ronde/i18n";
 import { AccessError, defineModule, defineOp, OpError, readConfig } from "@ronde/module-sdk";
 import { z } from "zod";
+import { RETRO_PRESETS } from "./retro-presets";
 import { requireActor, str } from "./shared";
 
 // Retrospective: everyone writes anonymous sticky notes in columns, the host groups them, the team votes,
 // then discusses the most voted groups. A meeting gets one by adding a "retro" block to its agenda.
 
-export const RETRO_PRESETS = {
-  "well-improve-ideas": ["well", "improve", "ideas"],
-  "start-stop-continue": ["start", "stop", "continue"],
-  "4l": ["liked", "learned", "lacked", "longed"],
-  "mad-sad-glad": ["mad", "sad", "glad"],
-} as const;
-export type RetroPreset = keyof typeof RETRO_PRESETS;
+export { RETRO_PRESETS, type RetroPreset } from "./retro-presets";
 
 const schema = z.object({
   preset: z.enum(["well-improve-ideas", "start-stop-continue", "4l", "mad-sad-glad", "custom"]),

@@ -15,6 +15,8 @@ export function ModulesPanel() {
     const name = t(`items.${id}.name` as "items.kudos.name");
     void rpc({ op: "modules.set", moduleId: id, enabled }, enabled ? t("enabled", { name }) : t("disabled", { name }), {
       tone: enabled ? "ok" : "off",
+      // The switch moves as it is clicked
+      optimistic: (snap) => ({ ...snap, modules: { ...snap.modules, [id]: enabled } }),
     });
   };
   return (

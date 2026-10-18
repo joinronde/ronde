@@ -1,6 +1,7 @@
 "use client";
 
 import { type AgendaBlock, BLOCK_MODULE, type BlockType, PROJECT_ROUND_ORDERS, SINGLE_BLOCKS, SLIDE_KINDS } from "@ronde/core/agenda";
+import { RETRO_PRESETS } from "@ronde/modules/retro-presets";
 import { Plus, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
@@ -13,6 +14,17 @@ import { BLOCK_ICON } from "./stage";
 import { Menu } from "./workspace/menu";
 
 const newId = () => Array.from(crypto.getRandomValues(new Uint8Array(4)), (b) => b.toString(16).padStart(2, "0")).join("");
+/** The colour of each block, in the menu that adds them and in the agenda */
+const BLOCK_COLOR: Record<BlockType, string> = {
+  intro: "var(--accent)",
+  slide: "var(--c4)",
+  round: "var(--c2)",
+  projects: "var(--c1)",
+  topics: "var(--c5)",
+  timebox: "var(--c3)",
+  retro: "var(--sun)",
+  poker: "var(--warn)",
+};
 const ADDABLE: BlockType[] = ["intro", "slide", "round", "projects", "topics", "timebox", "retro", "poker"];
 
 /** Blocks of the agenda, in order: core ones and module ones; saved by itself a moment after the last change */
@@ -90,7 +102,12 @@ export function AgendaPanel() {
       <fieldset className="plain agenda-set" disabled={running}>
         <ol className="agenda-blocks">
           {sort.list.map((b, i) => (
-            <li key={b.id} {...sort.row(i)} className={`${sort.row(i).className}${moduleOn(b.type) ? "" : " off"}`}>
+            <li
+              key={b.id}
+              {...sort.row(i)}
+              className={`${sort.row(i).className}${moduleOn(b.type) ? "" : " off"}`}
+              style={{ ...sort.row(i).style, "--tc": BLOCK_COLOR[b.type] } as React.CSSProperties}
+            >
               <SortGrip {...sort.grip(i, t("reorder", { label: labelOf(b) }))} />
               <span className="agenda-icon" aria-hidden="true">
                 {BLOCK_ICON[b.type] && <Icon name={BLOCK_ICON[b.type]} size={16} />}
@@ -261,6 +278,7 @@ export function AgendaPanel() {
                     key={type}
                     type="button"
                     className="menu-item agenda-add-item"
+                    style={{ "--tc": BLOCK_COLOR[type] } as React.CSSProperties}
                     disabled={!!why}
                     onClick={() => {
                       close();
@@ -291,9 +309,17 @@ export function AgendaPanel() {
 /** Retro settings: columns, votes and the time of each phase */
 export function RetroSettings() {
   const t = useTranslations("retro.settings");
+  const tColumns = useTranslations("retro.columns");
   const { s, rpc } = useRonde();
   const [open, setOpen] = useState(false);
-  const [v, setV] = useState({
+  const [v, setV] = useState<{
+    preset: keyof typeof RETRO_PRESETS | "custom";
+    columns: string;
+    votesPerPerson: number;
+    reflectMinutes: number;
+    voteMinutes: number;
+    discussMinutes: number;
+  }>({
     preset: "well-improve-ideas",
     columns: "",
     votesPerPerson: 3,
@@ -318,7 +344,7 @@ export function RetroSettings() {
           await rpc(
             {
               op: "retro.configure",
-              preset: v.preset as (typeof presets)[number],
+              preset: v.preset,
               columns,
               votesPerPerson: v.votesPerPerson,
               reflectMinutes: v.reflectMinutes,
@@ -341,16 +367,39 @@ export function RetroSettings() {
         </div>
       ) : (
         <>
-          <div className="field">
-            <label htmlFor="retroPreset">{t("preset")}</label>
-            <Select id="retroPreset" value={v.preset} onChange={(e) => setV({ ...v, preset: e.target.value })}>
+          {/* Each set of columns drawn as a small board, in its colours, rather than a list of names */}
+          <fieldset className="plain retro-presets">
+            <legend className="lbl-s">{t("preset")}</legend>
+            <div className="preset-cards">
               {presets.map((p) => (
-                <option key={p} value={p}>
-                  {t(`presets.${p}`)}
-                </option>
+                <label key={p} className={`preset-card${v.preset === p ? " on" : ""}`}>
+                  <input
+                    type="radio"
+                    name="retroPreset"
+                    className="sr-only"
+                    checked={v.preset === p}
+                    onChange={() => setV({ ...v, preset: p })}
+                  />
+                  <span className="preset-board" aria-hidden="true">
+                    {p === "custom" ? (
+                      <span className="preset-custom">
+                        <Plus size={18} strokeWidth={2} />
+                      </span>
+                    ) : (
+                      RETRO_PRESETS[p].map((key, i) => (
+                        <span key={key} className="preset-col" style={{ "--c": `var(--c${i % 6})` } as React.CSSProperties}>
+                          <b>{tColumns(key)}</b>
+                          <i />
+                          <i />
+                        </span>
+                      ))
+                    )}
+                  </span>
+                  <strong>{t(`presets.${p}`)}</strong>
+                </label>
               ))}
-            </Select>
-          </div>
+            </div>
+          </fieldset>
           {v.preset === "custom" && (
             <div className="field">
               <label htmlFor="retroColumns">{t("columns")}</label>

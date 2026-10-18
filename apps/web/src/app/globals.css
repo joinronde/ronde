@@ -421,11 +421,13 @@ body.screen-mode .combo p{font-size:32px}
 .subtabs > button[aria-pressed="true"]:not(.tour-launch),.subtabs button[role="tab"][aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
 /* Sound setting: separate pill, aligned right */
 .subtabs .my-sound{margin-inline-start:auto;display:flex;align-items:center;gap:8px;flex-shrink:0;padding:4px 0}
-.subtabs .my-sound > button:first-child{border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-weight:500;color:var(--ink-3);background:var(--surface);white-space:nowrap}
-.subtabs .my-sound > button:first-child:hover{color:var(--ink);border-color:var(--ink-3)}
-.subtabs .my-sound > button[aria-pressed="true"]:first-child{color:var(--accent);background:var(--accent-soft);border-color:transparent}
+/* The same pills in the screen settings popover, which is portalled out of the tab row */
+:is(.subtabs,.my-prefs-pop) .my-sound > button:first-child{border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-weight:500;color:var(--ink-3);background:var(--surface);white-space:nowrap}
+:is(.subtabs,.my-prefs-pop) .my-sound > button:first-child:hover{color:var(--ink);border-color:var(--ink-3)}
+:is(.subtabs,.my-prefs-pop) .my-sound > button[aria-pressed="true"]:first-child{color:var(--accent);background:var(--accent-soft);border-color:transparent}
 .subtabs .my-sound input{width:90px}
-.my-prefs-pop .my-sound{margin-inline-start:0;padding:0;flex-wrap:wrap}
+.my-prefs-pop .my-sound{margin-inline-start:0;padding:0;display:flex;align-items:center;gap:10px;width:100%;flex-wrap:wrap}
+.my-prefs-pop .my-sound input[type="range"]{flex:1;min-width:120px;accent-color:var(--accent)}
 .form{display:grid;gap:14px}
 .field{display:grid;gap:5px}
 .field label,.lbl-s{font-size:13.5px;font-weight:600;color:var(--ink-2)}
@@ -1910,6 +1912,11 @@ svg.ico{flex:none;vertical-align:-.18em}
 .crumbs li + li::before{content:"/";color:var(--line);font-weight:400}
 .crumbs a{color:var(--ink-3);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:24ch}
 .crumbs a:hover{color:var(--ink)}
+/* The workspace: its mark and its name in the display face, as at the top of the sidebar */
+.crumbs a:has(.crumb-ws),.crumbs span:has(> .crumb-ws){display:inline-flex;align-items:center;gap:7px}
+.crumb-mark{width:20px;height:20px;flex:none;border-radius:5px;object-fit:cover}
+.crumb-ws{font-family:var(--display);font-weight:700;font-size:15.5px;letter-spacing:-.01em;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis}
+.crumbs a:hover .crumb-ws{color:var(--ink)}
 .crumbs [aria-current="page"]{color:var(--ink);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* A phone has room for one name: the crumb marked for it, in full, as the page's title */
 @media (max-width:640px){
@@ -3644,8 +3651,18 @@ a[target="_blank"]:not(.btn) > svg.ico:last-of-type{display:inline;margin-inline
 @media (prefers-reduced-motion: reduce){.spot-toggle.on svg{animation:none}}
 
 /* The settings of "My screen", behind a round button at the end of its tabs (components/me.tsx) */
+/* My screen: its tabs with their pictograms, the row outlined and set apart from the content by a rule */
+.me-tabs{padding-bottom:12px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+.me-tabs .subtabs-list{border:1px solid var(--line)}
+.me-tabs .subtabs-list > button{display:inline-flex;align-items:center;gap:7px}
+.me-tabs .subtabs-list > button > svg{flex:none;color:var(--ink-3);transition:color var(--duration-fast)}
+.me-tabs .subtabs-list > button:hover > svg{color:var(--ink-2)}
+.me-tabs .subtabs-list > button[aria-selected="true"] > svg{color:var(--accent)}
+.me-tabs .tab-live{width:8px;height:8px;margin-inline:3.5px}
 .my-prefs-btn{margin-inline-start:auto;flex-shrink:0;align-self:center;display:grid;place-items:center;width:34px;height:34px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-3);transition:color var(--duration-fast),border-color var(--duration-fast)}
 .my-prefs-btn:hover,.my-prefs-btn[data-state="open"]{color:var(--ink);border-color:var(--ink-3)}
+/* Seen on a dark page too: its outline and its pictogram a step above the line colour */
+.my-prefs-btn{color:var(--ink-2);border-color:color-mix(in srgb,var(--ink-3) 55%,var(--line));background:var(--surface-2)}
 .my-prefs-btn svg{transition:transform var(--duration-base) var(--ease-out)}
 .my-prefs-btn[data-state="open"] svg{transform:rotate(60deg)}
 .my-prefs-pop{z-index:96;display:grid;gap:10px;justify-items:start;padding:12px;width:max-content;max-width:min(320px,calc(100vw - 32px));background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);animation:pop-in .14s var(--ease-out)}
@@ -3764,7 +3781,28 @@ a[target="_blank"]:not(.btn) > svg.ico:last-of-type{display:inline;margin-inline
 .agenda-add-item .agenda-icon{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--accent-soft);color:var(--accent);flex:none}
 .agenda-add-item:disabled .agenda-icon{background:var(--surface-2);color:var(--ink-3)}
 .agenda-blocks>li{transition:border-color var(--duration-fast),transform var(--duration-fast)}
-.agenda-blocks>li .agenda-icon{color:var(--accent)}
+.agenda-blocks>li .agenda-icon{color:var(--tc,var(--accent))}
+/* Adding a block: a grid of tiles, each with its colour and what it brings */
+.agenda-add .menu-pop{width:min(600px,calc(100vw - 32px));max-width:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:8px}
+.agenda-add .agenda-add-item{align-items:flex-start;gap:10px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.agenda-add .agenda-add-item:hover:not(:disabled){border-color:color-mix(in srgb,var(--tc) 45%,var(--line));background:color-mix(in srgb,var(--tc) 6%,var(--surface))}
+.agenda-add .agenda-add-item .agenda-icon{width:34px;height:34px;flex:none;display:grid;place-items:center;border-radius:10px;color:var(--tc);background:color-mix(in srgb,var(--tc) 16%,var(--surface))}
+.agenda-add .agenda-add-item:disabled{cursor:not-allowed}
+.agenda-add .agenda-add-item:disabled > *{opacity:.5}
+@media (max-width:560px){.agenda-add .menu-pop{grid-template-columns:1fr}}
+/* The column sets of a retrospective, each drawn as a small board */
+.preset-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.preset-card{display:grid;gap:8px;padding:10px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer;transition:border-color var(--duration-fast),box-shadow var(--duration-fast)}
+.preset-card:hover{border-color:color-mix(in srgb,var(--accent) 40%,var(--line))}
+.preset-card.on{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.preset-card:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.preset-card strong{font-size:14px;line-height:1.3}
+.preset-board{display:flex;gap:5px;height:86px;padding:6px;border-radius:8px;background:var(--surface-2)}
+.preset-col{flex:1;min-width:0;display:grid;align-content:start;gap:4px;padding:5px 4px;border-radius:6px;background:var(--surface);border-top:3px solid var(--c)}
+.preset-col b{font:600 10.5px/1.2 var(--body);color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.preset-col i{display:block;height:9px;border-radius:3px;background:color-mix(in srgb,var(--c) 24%,var(--surface))}
+.preset-col i + i{width:70%}
+.preset-custom{flex:1;display:grid;place-items:center;border:1.5px dashed var(--line);border-radius:6px;color:var(--ink-3)}
 
 /* What each role of a meeting may do (meeting settings, People and roles) */
 .roles-guide{margin:0 0 10px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}

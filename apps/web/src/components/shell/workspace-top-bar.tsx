@@ -24,5 +24,5 @@ export function WorkspaceTopBar({ workspace }: { workspace: { slug: string; name
     ["/settings", t("settings")],
   ];
   const page = pages.find(([p]) => path.startsWith(`${base}${p}`))?.[1] ?? t("home");
-  return <TopBar crumbs={[{ label: workspace.name, href: base }, { label: page }]} />;
+  return <TopBar crumbs={[{ label: workspace.name, href: base, workspace: true }, { label: page }]} />;
 }

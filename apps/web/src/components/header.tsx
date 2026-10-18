@@ -64,7 +64,7 @@ export function MeetingFrame() {
       <h1 className="sr-only">{current ? `${s.settings.teamName} · ${tPages(current.key)}` : s.settings.teamName}</h1>
       <TopBar
         crumbs={[
-          { label: s.context.workspace.name, href: `/w/${s.context.workspace.slug}` },
+          { label: s.context.workspace.name, href: `/w/${s.context.workspace.slug}`, workspace: true },
           // On a phone, the meeting's name alone: the tabs under it already say which page this is
           { label: s.settings.teamName, href: base, phone: true },
           ...(current ? [{ label: tPages(current.key) }] : []),
