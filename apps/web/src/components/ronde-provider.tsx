@@ -297,9 +297,15 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
       const id = Math.random();
       const fn = opts?.optimistic;
       if (fn) setPatches((ps) => [...ps, { id, fn, after: null }]);
-      const settle = (ok: boolean) =>
-        fn &&
-        setPatches((ps) => (ok ? ps.map((p) => (p.id === id ? { ...p, after: loadSeq.current } : p)) : ps.filter((p) => p.id !== id)));
+      const settle = (ok: boolean) => {
+        if (!fn) return;
+        if (!ok) return setPatches((ps) => ps.filter((p) => p.id !== id));
+        // The loads started from now on carry the change: the patch lasts until one of them arrives, and no
+        // longer than a few seconds should none succeed (the page then shows what the server last sent)
+        const after = loadSeq.current;
+        setPatches((ps) => ps.map((p) => (p.id === id ? { ...p, after } : p)));
+        setTimeout(() => setPatches((ps) => ps.filter((p) => p.id !== id)), 10_000);
+      };
       try {
         const res = await fetch(`${api}/rpc`, {
           method: "POST",

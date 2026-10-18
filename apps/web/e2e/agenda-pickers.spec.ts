@@ -35,7 +35,18 @@ test("the blocks to add and the retrospective's columns are pictures, in full vi
   await expect(pop.getByRole("button", { name: /^Intro/ })).toBeInViewport();
   await expect(pop.getByRole("button", { name: /^Planning poker/ })).toBeInViewport();
   await shot(page, "add");
+  // The retrospective goes on the agenda: its settings then start from what the meeting uses
+  await pop.getByRole("button", { name: /^Retrospective/ }).click();
+  await expect(page.getByText("Agenda saved")).toBeVisible();
+
+  // On a phone, the grid stays within the screen sideways too
+  await page.setViewportSize({ width: 375, height: 760 });
+  await page.getByRole("button", { name: "Add a block" }).click();
+  const narrow = (await pop.boundingBox())!;
+  expect(narrow.x).toBeGreaterThanOrEqual(0);
+  expect(narrow.x + narrow.width).toBeLessThanOrEqual(375);
   await page.keyboard.press("Escape");
+  await page.setViewportSize(viewport);
 
   await page.getByRole("button", { name: "Change the columns, votes and times" }).click();
   const sets = page.getByRole("group", { name: "Columns" });
@@ -45,4 +56,9 @@ test("the blocks to add and the retrospective's columns are pictures, in full vi
   await expect(page.locator(".preset-card.on .preset-col")).toHaveText(["Mad", "Sad", "Glad"]);
   await page.locator(".retro-presets").scrollIntoViewIfNeeded();
   await shot(page, "retro");
+  // Saved, then opened again: the form shows the meeting's column set, not the default one
+  await page.getByRole("button", { name: "Save the retro settings" }).click();
+  await expect(page.getByText("Mad · Sad · Glad")).toBeVisible();
+  await page.getByRole("button", { name: "Change the columns, votes and times" }).click();
+  await expect(page.getByRole("group", { name: "Columns" }).getByRole("radio", { name: "Mad, sad, glad" })).toBeChecked();
 });

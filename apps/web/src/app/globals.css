@@ -3650,7 +3650,6 @@ a[target="_blank"]:not(.btn) > svg.ico:last-of-type{display:inline;margin-inline
 @keyframes spot-glow{50%{transform:scale(1.18) rotate(8deg)}}
 @media (prefers-reduced-motion: reduce){.spot-toggle.on svg{animation:none}}
 
-/* The settings of "My screen", behind a round button at the end of its tabs (components/me.tsx) */
 /* My screen: its tabs with their pictograms, the row outlined and set apart from the content by a rule */
 .me-tabs{padding-bottom:12px;margin-bottom:18px;border-bottom:1px solid var(--line)}
 .me-tabs .subtabs-list{border:1px solid var(--line)}
@@ -3659,10 +3658,10 @@ a[target="_blank"]:not(.btn) > svg.ico:last-of-type{display:inline;margin-inline
 .me-tabs .subtabs-list > button:hover > svg{color:var(--ink-2)}
 .me-tabs .subtabs-list > button[aria-selected="true"] > svg{color:var(--accent)}
 .me-tabs .tab-live{width:8px;height:8px;margin-inline:3.5px}
-.my-prefs-btn{margin-inline-start:auto;flex-shrink:0;align-self:center;display:grid;place-items:center;width:34px;height:34px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-3);transition:color var(--duration-fast),border-color var(--duration-fast)}
+/* The settings of "My screen", behind a round button at the end of its tabs (components/me.tsx) */
+/* Its outline and pictogram a step above the line colour: seen on a dark page too */
+.my-prefs-btn{margin-inline-start:auto;flex-shrink:0;align-self:center;display:grid;place-items:center;width:34px;height:34px;border-radius:999px;border:1px solid color-mix(in srgb,var(--ink-3) 55%,var(--line));background:var(--surface-2);color:var(--ink-2);transition:color var(--duration-fast),border-color var(--duration-fast)}
 .my-prefs-btn:hover,.my-prefs-btn[data-state="open"]{color:var(--ink);border-color:var(--ink-3)}
-/* Seen on a dark page too: its outline and its pictogram a step above the line colour */
-.my-prefs-btn{color:var(--ink-2);border-color:color-mix(in srgb,var(--ink-3) 55%,var(--line));background:var(--surface-2)}
 .my-prefs-btn svg{transition:transform var(--duration-base) var(--ease-out)}
 .my-prefs-btn[data-state="open"] svg{transform:rotate(60deg)}
 .my-prefs-pop{z-index:96;display:grid;gap:10px;justify-items:start;padding:12px;width:max-content;max-width:min(320px,calc(100vw - 32px));background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);animation:pop-in .14s var(--ease-out)}

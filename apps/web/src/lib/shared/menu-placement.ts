@@ -1,5 +1,5 @@
 // Where a menu opens: on the side of its button it was asked for when it fits there, on the other side when that
-// one has more room, and never taller than the room it gets (it scrolls then)
+// one has more room, never taller than the room it gets (it scrolls then), and shifted sideways to stay on screen
 
 /** Gap between the button and the menu, and the menu and the edge of the screen */
 const GAP = 6;
@@ -17,7 +17,7 @@ export function menuPlacement({
   top: number;
   bottom: number;
   viewport: number;
-  /** What covers the top of the viewport (a sticky top bar) */
+  /** What covers the top of the viewport above the button (a sticky top bar) */
   topInset?: number;
   /** The menu's natural height */
   height: number;
@@ -27,4 +27,11 @@ export function menuPlacement({
   const below = Math.max(0, viewport - bottom - GAP - EDGE);
   const up = preferUp ? height <= above || above >= below : height > below && above > below;
   return { up, maxHeight: Math.floor(up ? above : below) };
+}
+
+/** How far to move a menu sideways so that it stays on screen (negative: to the left) */
+export function menuShift({ left, right, viewport }: { left: number; right: number; viewport: number }): number {
+  if (right > viewport - EDGE) return Math.max(EDGE - left, viewport - EDGE - right);
+  if (left < EDGE) return EDGE - left;
+  return 0;
 }

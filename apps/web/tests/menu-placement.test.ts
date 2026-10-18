@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { menuPlacement } from "@/lib/shared/menu-placement";
+import { menuPlacement, menuShift } from "@/lib/shared/menu-placement";
 
 describe("menu placement", () => {
   it("opens above as asked when it fits there", () => {
@@ -22,5 +22,14 @@ describe("menu placement", () => {
   it("opens below by default, above only when below is too small and above is larger", () => {
     expect(menuPlacement({ top: 100, bottom: 140, viewport: 900, height: 300, preferUp: false }).up).toBe(false);
     expect(menuPlacement({ top: 800, bottom: 840, viewport: 900, height: 300, preferUp: false }).up).toBe(true);
+  });
+});
+
+describe("menu shift", () => {
+  it("moves a menu that runs past the right edge back on screen, never past the left one", () => {
+    expect(menuShift({ left: 32, right: 375, viewport: 375 })).toBe(-12);
+    expect(menuShift({ left: 20, right: 620, viewport: 375 })).toBe(-8);
+    expect(menuShift({ left: 4, right: 200, viewport: 375 })).toBe(8);
+    expect(menuShift({ left: 40, right: 300, viewport: 375 })).toBe(0);
   });
 });

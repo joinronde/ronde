@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
-import { menuPlacement } from "@/lib/shared/menu-placement";
+import { menuPlacement, menuShift } from "@/lib/shared/menu-placement";
 
 /** Disclosure menu: a button opening a popover; Escape, a click outside or a choice closes it */
 export function Menu({
@@ -28,22 +28,43 @@ export function Menu({
   const trigger = useRef<HTMLButtonElement>(null);
   const id = useId();
   const pop = useRef<HTMLDivElement>(null);
-  // Measured once open: the side it fits on, and how tall it may be (the sticky top bar counted)
-  const [place, setPlace] = useState<{ up: boolean; maxHeight: number } | null>(null);
+  // Measured while open: the side it fits on, how tall it may be, and how far to move it sideways to stay on
+  // screen; again when the window changes size or its content arrives (a list loaded as it opens)
+  const [place, setPlace] = useState<{ up: boolean; maxHeight: number; clamp: boolean; shift: number } | null>(null);
+  const shiftRef = useRef(0);
   useLayoutEffect(() => {
-    if (!open || !trigger.current || !pop.current) return setPlace(null);
-    const r = trigger.current.getBoundingClientRect();
-    const bar = document.querySelector<HTMLElement>(".topbar")?.getBoundingClientRect().bottom ?? 0;
-    setPlace(
-      menuPlacement({
+    if (!open) {
+      shiftRef.current = 0;
+      return setPlace(null);
+    }
+    const measure = () => {
+      const b = trigger.current;
+      const p = pop.current;
+      if (!b || !p) return;
+      const r = b.getBoundingClientRect();
+      // The sticky top bar covers only the page's content, not the sidebar nor a dialog
+      const bar = b.closest("#main") ? (document.querySelector<HTMLElement>(".topbar")?.getBoundingClientRect().bottom ?? 0) : 0;
+      const v = menuPlacement({
         top: r.top,
         bottom: r.bottom,
         viewport: innerHeight,
         topInset: Math.max(0, bar),
-        height: pop.current.scrollHeight,
+        height: p.scrollHeight,
         preferUp: up,
-      }),
-    );
+      });
+      const box = p.getBoundingClientRect();
+      const shift = menuShift({ left: box.left - shiftRef.current, right: box.right - shiftRef.current, viewport: innerWidth });
+      shiftRef.current = shift;
+      setPlace({ ...v, clamp: p.scrollHeight > v.maxHeight, shift });
+    };
+    measure();
+    const content = new ResizeObserver(measure);
+    if (pop.current?.firstElementChild) content.observe(pop.current.firstElementChild);
+    addEventListener("resize", measure);
+    return () => {
+      content.disconnect();
+      removeEventListener("resize", measure);
+    };
   }, [open, up]);
   useEffect(() => {
     if (!open) return;
@@ -82,7 +103,11 @@ export function Menu({
           ref={pop}
           className={`menu-pop ${align}${(place?.up ?? up) ? " up" : ""}`}
           id={id}
-          style={place ? { maxHeight: place.maxHeight, overflowY: "auto" } : undefined}
+          style={{
+            // Capped and scrolling only when it does not fit: a menu's own overflow rules stay otherwise
+            ...(place?.clamp ? { maxHeight: place.maxHeight, overflowY: "auto" } : {}),
+            ...(place?.shift ? { translate: `${place.shift}px 0` } : {}),
+          }}
         >
           {children(() => setOpen(false))}
         </div>

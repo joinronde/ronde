@@ -3,7 +3,7 @@ import type { Meeting, ScopedTx, Session } from "@ronde/db";
 import { type Locale, translator } from "@ronde/i18n";
 import { AccessError, defineModule, defineOp, OpError, readConfig } from "@ronde/module-sdk";
 import { z } from "zod";
-import { RETRO_PRESETS } from "./retro-presets";
+import { RETRO_PRESETS, type RetroPreset } from "./retro-presets";
 import { requireActor, str } from "./shared";
 
 // Retrospective: everyone writes anonymous sticky notes in columns, the host groups them, the team votes,
@@ -12,7 +12,8 @@ import { requireActor, str } from "./shared";
 export { RETRO_PRESETS, type RetroPreset } from "./retro-presets";
 
 const schema = z.object({
-  preset: z.enum(["well-improve-ideas", "start-stop-continue", "4l", "mad-sad-glad", "custom"]),
+  // The column sets, and "custom": one list (retro-presets.ts) for the settings and their check
+  preset: z.enum(["custom", ...(Object.keys(RETRO_PRESETS) as RetroPreset[])]),
   /** Columns of the "custom" preset */
   columns: z.array(z.object({ key: z.string().regex(/^[a-z0-9]{1,20}$/), label: z.string().trim().min(1).max(40) })).max(6),
   votesPerPerson: z.number().int().min(1).max(10),
