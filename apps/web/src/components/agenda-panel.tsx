@@ -1,6 +1,7 @@
 "use client";
 
 import { type AgendaBlock, BLOCK_MODULE, type BlockType, PROJECT_ROUND_ORDERS, SINGLE_BLOCKS, SLIDE_KINDS } from "@ronde/core/agenda";
+import { RETRO_PRESETS } from "@ronde/modules/retro-presets";
 import { Plus, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
@@ -13,6 +14,17 @@ import { BLOCK_ICON } from "./stage";
 import { Menu } from "./workspace/menu";
 
 const newId = () => Array.from(crypto.getRandomValues(new Uint8Array(4)), (b) => b.toString(16).padStart(2, "0")).join("");
+/** The colour of each block, in the menu that adds them and in the agenda */
+const BLOCK_COLOR: Record<BlockType, string> = {
+  intro: "var(--accent)",
+  slide: "var(--c4)",
+  round: "var(--c2)",
+  projects: "var(--c1)",
+  topics: "var(--c5)",
+  timebox: "var(--c3)",
+  retro: "var(--sun)",
+  poker: "var(--warn)",
+};
 const ADDABLE: BlockType[] = ["intro", "slide", "round", "projects", "topics", "timebox", "retro", "poker"];
 
 /** Blocks of the agenda, in order: core ones and module ones; saved by itself a moment after the last change */
@@ -89,145 +101,153 @@ export function AgendaPanel() {
       {/* While a session runs, nothing here can change: every field and button says so by being off */}
       <fieldset className="plain agenda-set" disabled={running}>
         <ol className="agenda-blocks">
-          {sort.list.map((b, i) => (
-            <li key={b.id} {...sort.row(i)} className={`${sort.row(i).className}${moduleOn(b.type) ? "" : " off"}`}>
-              <SortGrip {...sort.grip(i, t("reorder", { label: labelOf(b) }))} />
-              <span className="agenda-icon" aria-hidden="true">
-                {BLOCK_ICON[b.type] && <Icon name={BLOCK_ICON[b.type]} size={16} />}
-              </span>
-              {b.type === "timebox" ? (
-                <span className="agenda-timebox">
-                  <input
-                    aria-label={t("timeboxTitle")}
-                    value={b.title}
-                    maxLength={80}
-                    required
-                    onChange={(e) => patch(i, { title: e.target.value })}
-                  />
-                  <input
-                    type="number"
-                    aria-label={t("minutes")}
-                    min={1}
-                    max={120}
-                    value={b.minutes}
-                    onChange={(e) => patch(i, { minutes: Math.max(1, Math.min(120, Number(e.target.value) || 1)) })}
-                  />
-                  <span className="hint">{t("minutes")}</span>
+          {sort.list.map((b, i) => {
+            const row = sort.row(i);
+            return (
+              <li
+                key={b.id}
+                {...row}
+                className={`${row.className}${moduleOn(b.type) ? "" : " off"}`}
+                style={{ ...row.style, "--tc": BLOCK_COLOR[b.type] } as React.CSSProperties}
+              >
+                <SortGrip {...sort.grip(i, t("reorder", { label: labelOf(b) }))} />
+                <span className="agenda-icon" aria-hidden="true">
+                  {BLOCK_ICON[b.type] && <Icon name={BLOCK_ICON[b.type]} size={16} />}
                 </span>
-              ) : b.type === "slide" ? (
-                <span className="agenda-timebox agenda-slide">
-                  <input
-                    aria-label={t("slideTitle")}
-                    value={b.title}
-                    maxLength={80}
-                    required
-                    onChange={(e) => patchSlide(i, { title: e.target.value })}
-                  />
-                  <Select
-                    aria-label={t("slideKind")}
-                    value={b.kind}
-                    onChange={(e) => patchSlide(i, { kind: e.target.value as (typeof SLIDE_KINDS)[number] })}
-                    style={{ width: "auto" }}
-                  >
-                    {SLIDE_KINDS.map((k) => (
-                      <option key={k} value={k}>
-                        {t(`slideKinds.${k}`)}
-                      </option>
-                    ))}
-                  </Select>
-                  <input
-                    type="number"
-                    aria-label={t("minutes")}
-                    placeholder={t("perProjectAuto")}
-                    min={1}
-                    max={120}
-                    value={b.minutes ?? ""}
-                    onChange={(e) =>
-                      patchSlide(i, { minutes: e.target.value ? Math.max(1, Math.min(120, Number(e.target.value) || 1)) : undefined })
-                    }
-                  />
-                  <span className="hint">{t("minutes")}</span>
-                  {b.kind === "irritants" && (
-                    <label className="check">
-                      <input
-                        type="checkbox"
-                        checked={!!b.anonymous}
-                        onChange={(e) => patchSlide(i, { anonymous: e.target.checked || undefined })}
-                      />
-                      {t("slideAnonymous")}
-                    </label>
-                  )}
-                  <details
-                    className="agenda-slide-body"
-                    open={opened[b.id] ?? !!b.body}
-                    onToggle={(e) => {
-                      const open = e.currentTarget.open;
-                      setOpened((o) => ({ ...o, [b.id]: open }));
-                    }}
-                  >
-                    <summary>{t("slideBody")}</summary>
-                    <textarea
-                      aria-label={t("slideBody")}
-                      maxLength={4000}
-                      rows={3}
-                      value={b.body ?? ""}
-                      placeholder={t("slideBodyHint")}
-                      onChange={(e) => patchSlide(i, { body: e.target.value || undefined })}
+                {b.type === "timebox" ? (
+                  <span className="agenda-timebox">
+                    <input
+                      aria-label={t("timeboxTitle")}
+                      value={b.title}
+                      maxLength={80}
+                      required
+                      onChange={(e) => patch(i, { title: e.target.value })}
                     />
-                  </details>
-                </span>
-              ) : b.type === "projects" ? (
-                <span className="agenda-timebox agenda-projects">
+                    <input
+                      type="number"
+                      aria-label={t("minutes")}
+                      min={1}
+                      max={120}
+                      value={b.minutes}
+                      onChange={(e) => patch(i, { minutes: Math.max(1, Math.min(120, Number(e.target.value) || 1)) })}
+                    />
+                    <span className="hint">{t("minutes")}</span>
+                  </span>
+                ) : b.type === "slide" ? (
+                  <span className="agenda-timebox agenda-slide">
+                    <input
+                      aria-label={t("slideTitle")}
+                      value={b.title}
+                      maxLength={80}
+                      required
+                      onChange={(e) => patchSlide(i, { title: e.target.value })}
+                    />
+                    <Select
+                      aria-label={t("slideKind")}
+                      value={b.kind}
+                      onChange={(e) => patchSlide(i, { kind: e.target.value as (typeof SLIDE_KINDS)[number] })}
+                      style={{ width: "auto" }}
+                    >
+                      {SLIDE_KINDS.map((k) => (
+                        <option key={k} value={k}>
+                          {t(`slideKinds.${k}`)}
+                        </option>
+                      ))}
+                    </Select>
+                    <input
+                      type="number"
+                      aria-label={t("minutes")}
+                      placeholder={t("perProjectAuto")}
+                      min={1}
+                      max={120}
+                      value={b.minutes ?? ""}
+                      onChange={(e) =>
+                        patchSlide(i, { minutes: e.target.value ? Math.max(1, Math.min(120, Number(e.target.value) || 1)) : undefined })
+                      }
+                    />
+                    <span className="hint">{t("minutes")}</span>
+                    {b.kind === "irritants" && (
+                      <label className="check">
+                        <input
+                          type="checkbox"
+                          checked={!!b.anonymous}
+                          onChange={(e) => patchSlide(i, { anonymous: e.target.checked || undefined })}
+                        />
+                        {t("slideAnonymous")}
+                      </label>
+                    )}
+                    <details
+                      className="agenda-slide-body"
+                      open={opened[b.id] ?? !!b.body}
+                      onToggle={(e) => {
+                        const open = e.currentTarget.open;
+                        setOpened((o) => ({ ...o, [b.id]: open }));
+                      }}
+                    >
+                      <summary>{t("slideBody")}</summary>
+                      <textarea
+                        aria-label={t("slideBody")}
+                        maxLength={4000}
+                        rows={3}
+                        value={b.body ?? ""}
+                        placeholder={t("slideBodyHint")}
+                        onChange={(e) => patchSlide(i, { body: e.target.value || undefined })}
+                      />
+                    </details>
+                  </span>
+                ) : b.type === "projects" ? (
+                  <span className="agenda-timebox agenda-projects">
+                    <span className="agenda-label">
+                      {labelOf(b)}
+                      {!s.projects.length && <span className="hint"> · {t("noProjects")}</span>}
+                    </span>
+                    <Select
+                      aria-label={t("projectOrder")}
+                      value={b.order}
+                      onChange={(e) => patchProjects(i, { order: e.target.value as (typeof PROJECT_ROUND_ORDERS)[number] })}
+                      style={{ width: "auto" }}
+                    >
+                      {PROJECT_ROUND_ORDERS.map((o) => (
+                        <option key={o} value={o}>
+                          {t(`projectOrders.${o}`)}
+                        </option>
+                      ))}
+                    </Select>
+                    <input
+                      type="number"
+                      aria-label={t("perProject")}
+                      placeholder={t("perProjectAuto")}
+                      min={1}
+                      max={60}
+                      value={b.perProjectSec ? Math.round(b.perProjectSec / 60) : ""}
+                      onChange={(e) =>
+                        patchProjects(i, {
+                          perProjectSec: e.target.value ? Math.max(1, Math.min(60, Number(e.target.value) || 1)) * 60 : undefined,
+                        })
+                      }
+                    />
+                    <span className="hint">{t("perProject")}</span>
+                  </span>
+                ) : (
                   <span className="agenda-label">
                     {labelOf(b)}
-                    {!s.projects.length && <span className="hint"> · {t("noProjects")}</span>}
+                    {!moduleOn(b.type) && <span className="hint"> · {t("turnOn")}</span>}
                   </span>
-                  <Select
-                    aria-label={t("projectOrder")}
-                    value={b.order}
-                    onChange={(e) => patchProjects(i, { order: e.target.value as (typeof PROJECT_ROUND_ORDERS)[number] })}
-                    style={{ width: "auto" }}
+                )}
+                <span className="controls">
+                  <button
+                    type="button"
+                    className="icon-btn danger"
+                    disabled={blocks.length === 1}
+                    aria-label={t("remove", { label: labelOf(b) })}
+                    onClick={() => setBlocks((list) => list.filter((_, j) => j !== i))}
                   >
-                    {PROJECT_ROUND_ORDERS.map((o) => (
-                      <option key={o} value={o}>
-                        {t(`projectOrders.${o}`)}
-                      </option>
-                    ))}
-                  </Select>
-                  <input
-                    type="number"
-                    aria-label={t("perProject")}
-                    placeholder={t("perProjectAuto")}
-                    min={1}
-                    max={60}
-                    value={b.perProjectSec ? Math.round(b.perProjectSec / 60) : ""}
-                    onChange={(e) =>
-                      patchProjects(i, {
-                        perProjectSec: e.target.value ? Math.max(1, Math.min(60, Number(e.target.value) || 1)) * 60 : undefined,
-                      })
-                    }
-                  />
-                  <span className="hint">{t("perProject")}</span>
+                    <Trash2 size={15} strokeWidth={2} aria-hidden="true" />
+                  </button>
                 </span>
-              ) : (
-                <span className="agenda-label">
-                  {labelOf(b)}
-                  {!moduleOn(b.type) && <span className="hint"> · {t("turnOn")}</span>}
-                </span>
-              )}
-              <span className="controls">
-                <button
-                  type="button"
-                  className="icon-btn danger"
-                  disabled={blocks.length === 1}
-                  aria-label={t("remove", { label: labelOf(b) })}
-                  onClick={() => setBlocks((list) => list.filter((_, j) => j !== i))}
-                >
-                  <Trash2 size={15} strokeWidth={2} aria-hidden="true" />
-                </button>
-              </span>
-            </li>
-          ))}
+              </li>
+            );
+          })}
           {/* The wrap-up always ends the meeting: shown in its place, neither moved nor removed */}
           <li className="agenda-fixed">
             <span className="sort-grip-space" aria-hidden="true" />
@@ -261,6 +281,7 @@ export function AgendaPanel() {
                     key={type}
                     type="button"
                     className="menu-item agenda-add-item"
+                    style={{ "--tc": BLOCK_COLOR[type] } as React.CSSProperties}
                     disabled={!!why}
                     onClick={() => {
                       close();
@@ -291,9 +312,17 @@ export function AgendaPanel() {
 /** Retro settings: columns, votes and the time of each phase */
 export function RetroSettings() {
   const t = useTranslations("retro.settings");
+  const tColumns = useTranslations("retro.columns");
   const { s, rpc } = useRonde();
   const [open, setOpen] = useState(false);
-  const [v, setV] = useState({
+  const [v, setV] = useState<{
+    preset: keyof typeof RETRO_PRESETS | "custom";
+    columns: string;
+    votesPerPerson: number;
+    reflectMinutes: number;
+    voteMinutes: number;
+    discussMinutes: number;
+  }>({
     preset: "well-improve-ideas",
     columns: "",
     votesPerPerson: 3,
@@ -302,7 +331,23 @@ export function RetroSettings() {
     discussMinutes: 5,
   });
   if (!s.modules.retro) return null;
-  const presets = ["well-improve-ideas", "start-stop-continue", "4l", "mad-sad-glad", "custom"] as const;
+  const presets = [...(Object.keys(RETRO_PRESETS) as (keyof typeof RETRO_PRESETS)[]), "custom" as const];
+  // The form starts from what the meeting uses: its column set (found from its columns), votes and times
+  const current = (): typeof v => {
+    const r = s.retro;
+    const d = s.blockData.retro;
+    const keys = r?.columns.map((c) => c.key).join() ?? "";
+    const found = presets.find((p) => p !== "custom" && RETRO_PRESETS[p].join() === keys);
+    const preset = found ?? (r?.columns.length ? "custom" : "well-improve-ideas");
+    return {
+      preset,
+      columns: preset === "custom" && r ? r.columns.map((c) => c.label).join("\n") : "",
+      votesPerPerson: r?.votesPerPerson ?? 3,
+      reflectMinutes: d?.reflectMin ?? 7,
+      voteMinutes: d?.voteMin ?? 3,
+      discussMinutes: d?.discussMin ?? 5,
+    };
+  };
   return (
     <form
       className="panel form"
@@ -318,7 +363,7 @@ export function RetroSettings() {
           await rpc(
             {
               op: "retro.configure",
-              preset: v.preset as (typeof presets)[number],
+              preset: v.preset,
               columns,
               votesPerPerson: v.votesPerPerson,
               reflectMinutes: v.reflectMinutes,
@@ -335,22 +380,52 @@ export function RetroSettings() {
       {s.retro && <p className="hint">{s.retro.columns.map((c) => c.label).join(" · ")}</p>}
       {!open ? (
         <div>
-          <button type="button" className="btn" onClick={() => setOpen(true)}>
+          <button
+            type="button"
+            className="btn"
+            onClick={() => {
+              setV(current());
+              setOpen(true);
+            }}
+          >
             {t("change")}
           </button>
         </div>
       ) : (
         <>
-          <div className="field">
-            <label htmlFor="retroPreset">{t("preset")}</label>
-            <Select id="retroPreset" value={v.preset} onChange={(e) => setV({ ...v, preset: e.target.value })}>
+          {/* Each set of columns drawn as a small board, in its colours, rather than a list of names */}
+          <fieldset className="plain retro-presets">
+            <legend className="lbl-s">{t("preset")}</legend>
+            <div className="preset-cards">
               {presets.map((p) => (
-                <option key={p} value={p}>
-                  {t(`presets.${p}`)}
-                </option>
+                <label key={p} className={`preset-card${v.preset === p ? " on" : ""}`}>
+                  <input
+                    type="radio"
+                    name="retroPreset"
+                    className="sr-only"
+                    checked={v.preset === p}
+                    onChange={() => setV({ ...v, preset: p })}
+                  />
+                  <span className="preset-board" aria-hidden="true">
+                    {p === "custom" ? (
+                      <span className="preset-custom">
+                        <Plus size={18} strokeWidth={2} />
+                      </span>
+                    ) : (
+                      RETRO_PRESETS[p].map((key, i) => (
+                        <span key={key} className="preset-col" style={{ "--c": `var(--c${i % 6})` } as React.CSSProperties}>
+                          <b>{tColumns(key)}</b>
+                          <i />
+                          <i />
+                        </span>
+                      ))
+                    )}
+                  </span>
+                  <strong>{t(`presets.${p}`)}</strong>
+                </label>
               ))}
-            </Select>
-          </div>
+            </div>
+          </fieldset>
           {v.preset === "custom" && (
             <div className="field">
               <label htmlFor="retroColumns">{t("columns")}</label>

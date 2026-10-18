@@ -108,7 +108,12 @@ export function MeetingProjectsPanel() {
                   name="projectsBy"
                   className="sr-only"
                   checked={by === x}
-                  onChange={() => void rpc({ op: "meeting.projectsBy", by: x }, t("bySaved"))}
+                  onChange={() =>
+                    void rpc({ op: "meeting.projectsBy", by: x }, t("bySaved"), {
+                      // The card is picked as it is clicked
+                      optimistic: (snap) => ({ ...snap, settings: { ...snap.settings, projectsBy: x } }),
+                    })
+                  }
                 />
                 <ByIcon size={18} strokeWidth={2} aria-hidden="true" />
                 <span>

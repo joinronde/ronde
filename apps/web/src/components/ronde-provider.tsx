@@ -33,7 +33,15 @@ interface RondeCtx {
   now: () => number;
   /** `silent`: a background call (a renewal), which neither reloads the state nor reports a failure; `tone`: the
    * colour of the confirmation (something turned on, or off) */
-  rpc: (op: Op, okMessage?: string, opts?: { silent?: boolean; tone?: ToastTone }) => Promise<boolean>;
+  /**
+   * Sends an operation. `optimistic` shows its effect at once (a choice ticked as it is clicked); the state the
+   * server sends next replaces it, and a refusal takes it back
+   */
+  rpc: (
+    op: Op,
+    okMessage?: string,
+    opts?: { silent?: boolean; tone?: ToastTone; optimistic?: (s: Snapshot) => Snapshot },
+  ) => Promise<boolean>;
   toast: (msg: string, tone?: ToastTone) => void;
   /** Changes when a session is archived or its summary edited: history and stats load again */
   historyRev: number;
@@ -121,7 +129,21 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
   const t = useTranslations("app");
   const tSignals = useTranslations("signals");
   const locale = useLocale();
-  const [s, setS] = useState<Snapshot>(initial);
+  const [server, setS] = useState<Snapshot>(initial);
+  // Effects of operations shown before the server confirms them: each one lasts until a state loaded after its
+  // answer arrives (a load started before could still carry the old value), or is dropped if it was refused
+  const [patches, setPatches] = useState<{ id: number; fn: (s: Snapshot) => Snapshot; after: number | null }[]>([]);
+  const loadSeq = useRef(0);
+  const [loaded, setLoaded] = useState(0);
+  const s = useMemo(
+    () => patches.filter((p) => p.after === null || loaded <= p.after).reduce((acc, p) => p.fn(acc), server),
+    [server, patches, loaded],
+  );
+  useEffect(() => {
+    setPatches((ps) =>
+      ps.some((p) => p.after !== null && loaded > p.after) ? ps.filter((p) => p.after === null || loaded <= p.after) : ps,
+    );
+  }, [loaded]);
   const [offset, setOffset] = useState(initial.serverNow - Date.now());
   const [historyRev, setHistoryRev] = useState(0);
   const [connected, setConnected] = useState(false);
@@ -201,6 +223,7 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
     inFlight.current = true;
     try {
       const t0 = Date.now();
+      const seq = ++loadSeq.current;
       const res = await fetch(`${api}/state`, { cache: "no-store" });
       // Signed out (session expired or revoked): a banner offers to sign in again without leaving the page
       if (res.status === 401) {
@@ -217,6 +240,7 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
       const rtt = Date.now() - t0;
       setOffset(snap.serverNow + rtt / 2 - Date.now());
       setS(snap);
+      setLoaded(seq);
       // Session back (reconnection from the banner): banner removed, reload re-armed
       setExpired(false);
     } catch {
@@ -269,7 +293,19 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
   }, [refetch]);
 
   const rpc = useCallback(
-    async (op: Op, okMessage?: string, opts?: { silent?: boolean; tone?: ToastTone }) => {
+    async (op: Op, okMessage?: string, opts?: { silent?: boolean; tone?: ToastTone; optimistic?: (s: Snapshot) => Snapshot }) => {
+      const id = Math.random();
+      const fn = opts?.optimistic;
+      if (fn) setPatches((ps) => [...ps, { id, fn, after: null }]);
+      const settle = (ok: boolean) => {
+        if (!fn) return;
+        if (!ok) return setPatches((ps) => ps.filter((p) => p.id !== id));
+        // The loads started from now on carry the change: the patch lasts until one of them arrives, and no
+        // longer than a few seconds should none succeed (the page then shows what the server last sent)
+        const after = loadSeq.current;
+        setPatches((ps) => ps.map((p) => (p.id === id ? { ...p, after } : p)));
+        setTimeout(() => setPatches((ps) => ps.filter((p) => p.id !== id)), 10_000);
+      };
       try {
         const res = await fetch(`${api}/rpc`, {
           method: "POST",
@@ -277,10 +313,12 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
           body: JSON.stringify(op),
         });
         if (res.status === 401) {
+          settle(false);
           setExpired(true);
           return false;
         }
         if (!res.ok) {
+          settle(false);
           const body = (await res.json().catch(() => null)) as { error?: string } | null;
           if (!opts?.silent) {
             toast(body?.error ?? t("actionFailed"), "error");
@@ -289,10 +327,12 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
           }
           return false;
         }
-        if (!opts?.silent) scheduleRefetch();
+        settle(true);
+        if (!opts?.silent || fn) scheduleRefetch();
         if (okMessage) toast(okMessage, opts?.tone ?? "ok");
         return true;
       } catch {
+        settle(false);
         if (!opts?.silent) toast(t("serverUnreachable"), "error");
         return false;
       }

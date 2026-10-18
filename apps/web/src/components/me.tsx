@@ -102,28 +102,33 @@ export function MeView() {
   return (
     <>
       <RecordingBanner withOptOut />
-      <div className="subtabs">
+      {/* Each tab with its pictogram, the row set apart from the content under it */}
+      <div className="subtabs me-tabs">
         <SwipeRow role="tablist" aria-label={t("tabsLabel")} className="subtabs-list" selected={tab}>
           <button role="tab" aria-selected={tab === "checkIn"} onClick={() => setTab("checkIn")}>
+            <Icon name="note" size={15} />
             {t("tabs.checkIn")}
           </button>
           <button role="tab" aria-selected={tab === "follow"} onClick={() => setTab("follow")}>
-            {started && live.state !== "ended" && <span className="tab-live" aria-hidden="true" />}
+            {started && live.state !== "ended" ? <span className="tab-live" aria-hidden="true" /> : <Icon name="monitor" size={15} />}
             {started ? t("tabs.live") : t("tabs.meeting")}
           </button>
           {/* Without turns (a retrospective on its board), there are no check-ins to read */}
           {hasTurns(s.settings.agenda) && (
             <button role="tab" aria-selected={tab === "team"} onClick={() => setTab("team")}>
+              <Icon name="people" size={15} />
               {t("tabs.team")}
             </button>
           )}
           {hasCheckIn && hasTurns(s.settings.agenda) && (
             <button role="tab" aria-selected={tab === "past"} onClick={() => setTab("past")}>
+              <Icon name="clock" size={15} />
               {t("tabs.past")}
             </button>
           )}
           {s.modules.decisions && !s.viewer.isHost && (
             <button role="tab" aria-selected={tab === "decisions"} onClick={() => setTab("decisions")}>
+              <Icon name="flag" size={15} />
               {t("tabs.decisions")}
             </button>
           )}

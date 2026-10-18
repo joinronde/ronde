@@ -48,11 +48,14 @@ const ShellContext = createContext<{
   openSearch: (() => void) | null;
   openFeedback: (() => void) | null;
   slug: string | null;
+  /** The workspace's own logo, when it has one (the breadcrumb shows it before its name, as the sidebar does) */
+  wsLogo: string | null;
 }>({
   openSidebar: () => {},
   openSearch: null,
   openFeedback: null,
   slug: null,
+  wsLogo: null,
 });
 
 // The pages that show faces still import it from here
@@ -111,6 +114,7 @@ export function AppShell({ data: fromServer, children }: { data: ShellData; chil
         openSearch: data.workspace ? openSearch : null,
         openFeedback: data.feedback ? openFeedback : null,
         slug: data.workspace?.slug ?? null,
+        wsLogo: data.workspace?.logo ?? null,
       }}
     >
       <a className="skip-link" href="#main">
@@ -375,13 +379,24 @@ export interface Crumb {
   href?: string;
   /** The one crumb a phone shows (the last one when none is marked): there is room for a single name */
   phone?: boolean;
+  /** The workspace: its mark before its name (its logo, or Ronde's), in the display face */
+  workspace?: boolean;
 }
 
 /** Top of the page: where you are, and the actions of the page */
 export function TopBar({ crumbs, children }: { crumbs: Crumb[]; children?: React.ReactNode }) {
   const t = useTranslations("shell");
   const tSearch = useTranslations("search");
-  const { openSidebar, openSearch, openFeedback, slug } = useContext(ShellContext);
+  const { openSidebar, openSearch, openFeedback, slug, wsLogo } = useContext(ShellContext);
+  const label = (c: Crumb) =>
+    c.workspace ? (
+      <>
+        {wsLogo ? <img className="crumb-mark" src={withBasePath(wsLogo)} alt="" /> : <Logo className="crumb-mark" />}
+        <span className="crumb-ws">{c.label}</span>
+      </>
+    ) : (
+      c.label
+    );
   return (
     <header className={openSearch ? "topbar with-search" : "topbar"}>
       <button type="button" className="side-btn topbar-menu" onClick={openSidebar} aria-label={t("openMenu")}>
@@ -392,9 +407,9 @@ export function TopBar({ crumbs, children }: { crumbs: Crumb[]; children?: React
           {crumbs.map((c, i) => (
             <li key={`${i}-${c.label}`} data-phone={c.phone || (!crumbs.some((x) => x.phone) && i === crumbs.length - 1) ? "" : undefined}>
               {c.href && i < crumbs.length - 1 ? (
-                <Link href={c.href}>{c.label}</Link>
+                <Link href={c.href}>{label(c)}</Link>
               ) : (
-                <span aria-current={i === crumbs.length - 1 ? "page" : undefined}>{c.label}</span>
+                <span aria-current={i === crumbs.length - 1 ? "page" : undefined}>{label(c)}</span>
               )}
             </li>
           ))}

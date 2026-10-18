@@ -772,8 +772,17 @@ function SoundPanel() {
   const tSounds = useTranslations("sounds");
   const { s, rpc, now } = useRonde();
   const c = s.settings.sound;
+  // Each setting shows its new value as it is clicked, before the server has it
   const set = (patch: Omit<Extract<Parameters<typeof rpc>[0], { op: "sounds.settings" }>, "op">) =>
-    void rpc({ op: "sounds.settings", ...patch });
+    void rpc({ op: "sounds.settings", ...patch }, undefined, {
+      optimistic: (snap) => {
+        const sound = snap.settings.sound;
+        return {
+          ...snap,
+          settings: { ...snap.settings, sound: { ...sound, ...patch, cues: { ...sound.cues, ...patch.cues } } as typeof sound },
+        };
+      },
+    });
   // Volume saved when the slider stops, not at every notch
   const [vol, setVol] = useState(c.volume);
   useEffect(() => setVol(c.volume), [c.volume]);
