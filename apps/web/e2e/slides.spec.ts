@@ -11,7 +11,11 @@ const shot = async (p: Page, name: string) => {
 
 test("irritants raised before the meeting, dealt with right after the intro", async ({ page, browser }) => {
   test.setTimeout(240_000);
-  const workspace = await hostWithWorkspace(page, { name: "Sam Slide", email: `sam-${run}@example.com`, password: "slide-password-123" }, `Slides ${run}`);
+  const workspace = await hostWithWorkspace(
+    page,
+    { name: "Sam Slide", email: `sam-${run}@example.com`, password: "slide-password-123" },
+    `Slides ${run}`,
+  );
   const link = await invite(page, workspace, `max-${run}@example.com`, "Max", "Mind");
   const meeting = await createMeeting(page, workspace, "Project review");
 
