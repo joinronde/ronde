@@ -1738,6 +1738,27 @@ a.userbox:hover{color:var(--ink)}
 .retro-panel{margin-bottom:12px}
 .timebox-stage{display:grid;justify-items:center;gap:12px;padding:2em 0;text-align:center}
 .timebox-stage h2{font-family:var(--display);font-size:2.2em;margin:0}
+/* Slides of the agenda: on the shared screen, on My screen and in the control room */
+.slide-stage{display:grid;gap:16px;padding:1.2em 0;max-width:62em;margin-inline:auto;width:100%}
+.slide-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.slide-head h2{font-family:var(--display);font-size:2.2em;margin:0;text-wrap:balance}
+.slide-body{font-size:1.15em;line-height:1.55}
+.slide-items{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(15em,1fr));gap:10px}
+.slide-items li{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px;padding:10px 12px;border:1px solid var(--line);border-inline-start:4px solid var(--accent);border-radius:10px;background:var(--surface);box-shadow:var(--shadow);line-height:1.4}
+.slide-items li.tracked{border-inline-start-color:var(--ok);opacity:.85}
+.slide-item-text{flex:1 1 8em;min-width:0;overflow-wrap:break-word}
+.slide-items .pill{margin-inline-start:auto}
+.slide-empty{text-align:center;padding:1.5em 0}
+.slide-decided{border-top:1px solid var(--line);padding-top:10px}
+.slide-panel{margin-bottom:12px;display:grid;gap:8px}
+.slide-panel h2{margin:0}
+.slide-mine,.slide-host-list{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.slide-mine li,.slide-host-list li{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.slide-mine li>span:first-child{flex:1;min-width:0;overflow-wrap:anywhere}
+.slide-host{display:grid;gap:8px;margin-top:10px}
+.agenda-slide-body{flex-basis:100%}
+.agenda-slide-body summary{cursor:pointer;color:var(--ink-2);font-size:.92em}
+.agenda-slide-body textarea{width:100%;margin-top:6px}
 @keyframes retro-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes retro-pop{from{transform:scale(.85)}to{transform:scale(1)}}
 @media (prefers-reduced-motion: reduce){.retro-stage .retro-card,.retro-stage .retro-group,.retro-count{animation:none}}

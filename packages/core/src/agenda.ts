@@ -1,9 +1,9 @@
-// Agenda of a meeting, as a list of blocks: the core ones (intro, round table, project round, open topics) and
-// the ones of modules (retrospective, timebox, planning poker). Each block expands into one or more steps.
+// Agenda of a meeting, as a list of blocks: the core ones (intro, round table, project round, open topics, slides)
+// and the ones of modules (retrospective, timebox, planning poker). Each block expands into one or more steps.
 
 import { z } from "zod";
 
-export const BLOCK_TYPES = ["intro", "round", "projects", "topics", "retro", "timebox", "poker"] as const;
+export const BLOCK_TYPES = ["intro", "round", "projects", "topics", "retro", "timebox", "poker", "slide"] as const;
 export type BlockType = (typeof BLOCK_TYPES)[number];
 /** Blocks a meeting may hold once at most */
 export const SINGLE_BLOCKS: readonly BlockType[] = ["intro", "round", "projects", "topics", "retro"];
@@ -13,6 +13,13 @@ export const BLOCK_MODULE: Partial<Record<BlockType, string>> = { retro: "retro"
 /** Order of the project round: the meeting's, by theme, or the projects in trouble first */
 export const PROJECT_ROUND_ORDERS = ["manual", "theme", "health"] as const;
 export type ProjectRoundOrder = (typeof PROJECT_ROUND_ORDERS)[number];
+
+/**
+ * What a slide holds: free content, the irritants people raise (best right after the intro, before they surface
+ * at the wrong moment and stir impatience), or a review of the open actions
+ */
+export const SLIDE_KINDS = ["free", "irritants", "actions"] as const;
+export type SlideKind = (typeof SLIDE_KINDS)[number];
 
 export const agendaBlock = z.discriminatedUnion("type", [
   z.object({ id: z.string().regex(/^[a-z0-9]{1,20}$/), type: z.enum(["intro", "round", "topics", "retro", "poker"]) }),
@@ -28,6 +35,18 @@ export const agendaBlock = z.discriminatedUnion("type", [
     type: z.literal("timebox"),
     title: z.string().trim().min(1).max(80),
     minutes: z.number().int().min(1).max(120),
+  }),
+  z.object({
+    id: z.string().regex(/^[a-z0-9]{1,20}$/),
+    type: z.literal("slide"),
+    kind: z.enum(SLIDE_KINDS).default("free"),
+    title: z.string().trim().min(1).max(80),
+    /** Markdown shown on the shared screen */
+    body: z.string().max(4000).optional(),
+    /** Time planned; none: the time spent is counted up */
+    minutes: z.number().int().min(1).max(120).optional(),
+    /** What people post on it is shown without their names (irritants can be touchy) */
+    anonymous: z.boolean().optional(),
   }),
 ]);
 export type AgendaBlock = z.infer<typeof agendaBlock>;

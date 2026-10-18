@@ -1,0 +1,26 @@
+{
+  "stage": {
+    "items": "Vom Team genannt",
+    "tracked": "Aufgabe",
+    "emptyIrritants": "Noch nichts genannt: Alle können ihre Punkte unter „Mein Bildschirm“ ergänzen.",
+    "anonymous": "Ohne Namen gepostet.",
+    "review": "Offene Aufgaben ({count})",
+    "noActions": "Keine offene Aufgabe: alles erledigt.",
+    "decided": "Hier beschlossen ({count})"
+  },
+  "me": {
+    "hint": "Sag jetzt, was stört: Es wird hier besprochen, nicht mitten in der Runde von jemand anderem.",
+    "anonymous": "Dein Name wird nicht angezeigt.",
+    "placeholder": "Was mich stört…",
+    "add": "Hinzufügen",
+    "mine": "Was du genannt hast",
+    "remove": "„{text}“ entfernen"
+  },
+  "host": {
+    "count": "Genannt: {count}",
+    "empty": "Noch nichts genannt. Alle ergänzen ihre Punkte unter „Mein Bildschirm“, auch vor dem Meeting.",
+    "owner": "Verantwortlich",
+    "toAction": "Zur Aufgabe machen",
+    "created": "Aufgabe erstellt"
+  }
+}

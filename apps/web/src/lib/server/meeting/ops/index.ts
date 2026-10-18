@@ -20,12 +20,23 @@ import { liveOps } from "./live";
 import { notifyOps } from "./notify";
 import { projectOps } from "./projects";
 import { scheduleOps } from "./schedule";
+import { slideOps } from "./slides";
 import { transcriptOps } from "./transcript";
 
 /** Operations kept in the audit log unless they say otherwise: they change how a meeting is set up */
 const AUDITED = new Set<Permission>(["meeting.configure", "participants.manage", "minutes.edit", "meeting.delete"]);
 
-const CORE = [...controlOps, ...forgeOps, ...liveOps, ...configOps, ...projectOps, ...scheduleOps, ...notifyOps, ...transcriptOps];
+const CORE = [
+  ...controlOps,
+  ...forgeOps,
+  ...liveOps,
+  ...configOps,
+  ...projectOps,
+  ...scheduleOps,
+  ...notifyOps,
+  ...transcriptOps,
+  ...slideOps,
+];
 
 // Every operation by name, with the module it belongs to (null for the core)
 const REGISTRY = new Map<string, { def: OpDef; moduleId: string | null }>();

@@ -89,7 +89,7 @@ export function baseKeyOf(k: string): string {
 
 /**
  * Meeting agenda: its blocks expanded into steps (intro, one step per present person, one per project, open
- * topics, module blocks), then the wrap-up. A "Questions" step follows any step that received a raised hand or a question.
+ * topics, slides, module blocks), then the wrap-up. A "Questions" step follows any step that received a raised hand or a question.
  */
 export function buildAgenda(
   meeting: MeetingDTO | null,
@@ -112,6 +112,15 @@ export function buildAgenda(
     else if (b.type === "topics") base.push({ type: "misc", key: "misc", label: t("topics") });
     else if (b.type === "timebox")
       base.push({ type: "block", block: "timebox", blockId: b.id, key: b.id, label: b.title, limitMs: b.minutes * 60_000 });
+    else if (b.type === "slide")
+      base.push({
+        type: "block",
+        block: "slide",
+        blockId: b.id,
+        key: b.id,
+        label: b.title,
+        ...(b.minutes ? { limitMs: b.minutes * 60_000 } : {}),
+      });
     else if (b.type === "poker") base.push({ type: "block", block: "poker", blockId: b.id, key: b.id, label: t("poker") });
     else if (b.type === "retro" && data.retro)
       base.push(

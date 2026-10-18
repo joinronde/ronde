@@ -176,5 +176,9 @@
   "tokenInvalid": "此令牌包含令牌中不应出现的字符（空格、换行）。请从工具中重新复制。",
   "feedbackTooMany": "你在短时间内发送了多条消息。请几分钟后再试。",
   "feedbackTooLarge": "消息太大，无法发送。请换一张更小的截图。",
-  "feedbackImageFormat": "截图必须是 PNG、JPEG 或 WebP 图片。"
+  "feedbackImageFormat": "截图必须是 PNG、JPEG 或 WebP 图片。",
+  "slideClosed": "本次会议已结束：其幻灯片不能再添加内容。",
+  "slideTooManyItems": "你在这张幻灯片上发布的内容已达上限。",
+  "ownSlideItemsOnly": "你只能删除自己发布的内容。",
+  "slideItemTracked": "这一项已经是行动项。"
 }

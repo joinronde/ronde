@@ -10,7 +10,8 @@
     "retro": "Retrospective",
     "timebox": "Timebox",
     "poker": "Planning poker",
-    "projects": "Project round"
+    "projects": "Project round",
+    "slide": "Slide"
   },
   "blockHints": {
     "intro": "Welcome, announcements and the icebreaker, before the first turn",
@@ -19,7 +20,8 @@
     "topics": "The open topics the team brought and voted for",
     "timebox": "A topic of its own, with its own duration",
     "retro": "Anonymous notes in columns, grouped, voted, then discussed",
-    "poker": "The team estimates items with hidden cards"
+    "poker": "The team estimates items with hidden cards",
+    "slide": "A screen of its own: free text, the team's irritants, or a review of the open actions"
   },
   "timeboxTitle": "Topic",
   "minutes": "Minutes",
@@ -39,5 +41,16 @@
     "health": "Projects in trouble first"
   },
   "perProject": "min per project",
-  "perProjectAuto": "auto"
+  "perProjectAuto": "auto",
+  "newSlide": "Irritants",
+  "slideTitle": "Slide title",
+  "slideKind": "What the slide is for",
+  "slideKinds": {
+    "free": "Free content",
+    "irritants": "Irritants",
+    "actions": "Open actions review"
+  },
+  "slideAnonymous": "Without names",
+  "slideBody": "Text on screen",
+  "slideBodyHint": "Markdown: context, figures, a reminder of the rules…"
 }

@@ -40,6 +40,7 @@ import { RetroStage } from "./retro";
 import { useRonde, useTick } from "./ronde-provider";
 import { RoundTable } from "./roundtable";
 import { Icon, type IconName } from "./shell/icons";
+import { SlideStage } from "./slide";
 import { SwipeRow } from "./swipe-row";
 
 export function Avatar({ id, sm }: { id: string | null | undefined; sm?: boolean }) {
@@ -92,6 +93,7 @@ export const BLOCK_ICON: Record<string, IconName> = {
   retro: "search",
   timebox: "hourglass",
   poker: "cards",
+  slide: "screen",
 };
 
 export function Timer({ stepKey, live }: { stepKey: string; live: boolean }) {
@@ -1131,6 +1133,7 @@ export function Stage({
       {step.type === "end" && <EndBody celebrate={celebrate} />}
       {step.type === "block" && step.block === "retro" && <RetroStage step={step} live={live} />}
       {step.type === "block" && step.block === "poker" && <PokerStage />}
+      {step.type === "block" && step.block === "slide" && <SlideStage step={step} live={live} />}
       {step.type === "block" && step.block === "timebox" && (
         <div className="timebox-stage">
           <h2>{step.label}</h2>

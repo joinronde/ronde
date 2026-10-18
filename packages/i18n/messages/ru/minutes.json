@@ -49,5 +49,9 @@
   "aboutProject": "О проекте «{project}»",
   "rating": "Польза",
   "ratingAverage": "{avg}/5 · {count, plural, one {# оценка} few {# оценки} other {# оценок}}",
-  "progress": "Ход работы"
+  "progress": "Ход работы",
+  "slide": "Слайд",
+  "slideItems": "Подняла команда",
+  "slideTracked": "задача создана",
+  "slideActions": "Принятые задачи"
 }

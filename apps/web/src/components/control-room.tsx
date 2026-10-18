@@ -96,6 +96,7 @@ import { SharePreview, ShareScreenButton } from "./screen-share";
 import { Icon } from "./shell/icons";
 import { ModKey } from "./shell/mod-key";
 import { NewTab } from "./shell/new-tab";
+import { SlideHost } from "./slide";
 import { SortGrip, useSortable } from "./sortable";
 import { controlMonitorOn, SoundPlayer } from "./sound-player";
 import { Avatar, BLOCK_ICON, projectEntries, projectsWithTurn, Stage, sectionsHave, Timer, UpCount } from "./stage";
@@ -467,6 +468,7 @@ export function ControlRoomView() {
                   {!m.endedAt && <ProjectOrder />}
                   {step.type === "block" && step.block === "retro" && <RetroHost />}
                   {step.type === "block" && step.block === "poker" && <PokerHost />}
+                  {step.type === "block" && step.block === "slide" && <SlideHost step={step} />}
                   {!!m.startedAt && (
                     <div className="deck-foot">
                       <StopControls />

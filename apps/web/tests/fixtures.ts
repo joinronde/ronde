@@ -27,6 +27,8 @@ export interface Fixture {
   retroGroupId: string;
   pokerItemId: string;
   pollId: string;
+  /** An irritant posted on a slide of the current session */
+  slideItemId: string;
   /** A project of the workspace the meeting follows, with its sheet and an item about it */
   projectId: string;
   ctx: MeetingCtx;
@@ -134,6 +136,9 @@ export async function meeting(w: Awaited<ReturnType<typeof workspace>>, name: st
     data: { workspaceId, sessionId, column: "well", authorId: other.id, text: "note", groupId: retroGroup.id },
   });
   await prisma.retroVote.create({ data: { workspaceId, groupId: retroGroup.id, personId: other.id } });
+  const slideItem = await prisma.slideItem.create({
+    data: { workspaceId, sessionId, blockId: "irritants", authorId: other.id, text: "irritant" },
+  });
   const pokerItem = await prisma.pokerItem.create({ data: { workspaceId, sessionId, title: "story" } });
   await prisma.pokerVote.create({ data: { workspaceId, itemId: pokerItem.id, personId: other.id, value: "3" } });
   const poll = await prisma.poll.create({ data: { workspaceId, sessionId, question: "poll", kind: "single", options: ["a", "b"] } });
@@ -175,6 +180,7 @@ export async function meeting(w: Awaited<ReturnType<typeof workspace>>, name: st
     retroGroupId: retroGroup.id,
     pokerItemId: pokerItem.id,
     pollId: poll.id,
+    slideItemId: slideItem.id,
     projectId: project.id,
     ctx,
   };

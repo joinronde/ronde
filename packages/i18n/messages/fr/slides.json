@@ -1,0 +1,26 @@
+{
+  "stage": {
+    "items": "Remontés par l'équipe",
+    "tracked": "Action",
+    "emptyIrritants": "Rien pour l'instant : chacun peut ajouter les siens depuis « Mon écran ».",
+    "anonymous": "Ajoutés sans les noms.",
+    "review": "Actions ouvertes ({count})",
+    "noActions": "Aucune action ouverte : tout est à jour.",
+    "decided": "Décidé ici ({count})"
+  },
+  "me": {
+    "hint": "Dites maintenant ce qui vous gêne : on en parle ici, pas au milieu du tour de quelqu'un.",
+    "anonymous": "Votre nom n'est pas affiché.",
+    "placeholder": "Ce qui me gêne…",
+    "add": "Ajouter",
+    "mine": "Ce que vous avez remonté",
+    "remove": "Retirer « {text} »"
+  },
+  "host": {
+    "count": "Remontés : {count}",
+    "empty": "Rien pour l'instant. Chacun ajoute les siens depuis « Mon écran », avant la réunion aussi.",
+    "owner": "Responsable",
+    "toAction": "En faire une action",
+    "created": "Action créée"
+  }
+}

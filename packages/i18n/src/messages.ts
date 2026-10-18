@@ -89,6 +89,7 @@ import ar_settings from "../messages/ar/settings.json";
 import ar_shell from "../messages/ar/shell.json";
 import ar_signals from "../messages/ar/signals.json";
 import ar_slack from "../messages/ar/slack.json";
+import ar_slides from "../messages/ar/slides.json";
 import ar_soundPlayer from "../messages/ar/soundPlayer.json";
 import ar_sounds from "../messages/ar/sounds.json";
 import ar_stage from "../messages/ar/stage.json";
@@ -194,6 +195,7 @@ import de_settings from "../messages/de/settings.json";
 import de_shell from "../messages/de/shell.json";
 import de_signals from "../messages/de/signals.json";
 import de_slack from "../messages/de/slack.json";
+import de_slides from "../messages/de/slides.json";
 import de_soundPlayer from "../messages/de/soundPlayer.json";
 import de_sounds from "../messages/de/sounds.json";
 import de_stage from "../messages/de/stage.json";
@@ -299,6 +301,7 @@ import en_settings from "../messages/en/settings.json";
 import en_shell from "../messages/en/shell.json";
 import en_signals from "../messages/en/signals.json";
 import en_slack from "../messages/en/slack.json";
+import en_slides from "../messages/en/slides.json";
 import en_soundPlayer from "../messages/en/soundPlayer.json";
 import en_sounds from "../messages/en/sounds.json";
 import en_stage from "../messages/en/stage.json";
@@ -404,6 +407,7 @@ import es_settings from "../messages/es/settings.json";
 import es_shell from "../messages/es/shell.json";
 import es_signals from "../messages/es/signals.json";
 import es_slack from "../messages/es/slack.json";
+import es_slides from "../messages/es/slides.json";
 import es_soundPlayer from "../messages/es/soundPlayer.json";
 import es_sounds from "../messages/es/sounds.json";
 import es_stage from "../messages/es/stage.json";
@@ -509,6 +513,7 @@ import fr_settings from "../messages/fr/settings.json";
 import fr_shell from "../messages/fr/shell.json";
 import fr_signals from "../messages/fr/signals.json";
 import fr_slack from "../messages/fr/slack.json";
+import fr_slides from "../messages/fr/slides.json";
 import fr_soundPlayer from "../messages/fr/soundPlayer.json";
 import fr_sounds from "../messages/fr/sounds.json";
 import fr_stage from "../messages/fr/stage.json";
@@ -614,6 +619,7 @@ import hi_settings from "../messages/hi/settings.json";
 import hi_shell from "../messages/hi/shell.json";
 import hi_signals from "../messages/hi/signals.json";
 import hi_slack from "../messages/hi/slack.json";
+import hi_slides from "../messages/hi/slides.json";
 import hi_soundPlayer from "../messages/hi/soundPlayer.json";
 import hi_sounds from "../messages/hi/sounds.json";
 import hi_stage from "../messages/hi/stage.json";
@@ -719,6 +725,7 @@ import it_settings from "../messages/it/settings.json";
 import it_shell from "../messages/it/shell.json";
 import it_signals from "../messages/it/signals.json";
 import it_slack from "../messages/it/slack.json";
+import it_slides from "../messages/it/slides.json";
 import it_soundPlayer from "../messages/it/soundPlayer.json";
 import it_sounds from "../messages/it/sounds.json";
 import it_stage from "../messages/it/stage.json";
@@ -824,6 +831,7 @@ import pt_settings from "../messages/pt/settings.json";
 import pt_shell from "../messages/pt/shell.json";
 import pt_signals from "../messages/pt/signals.json";
 import pt_slack from "../messages/pt/slack.json";
+import pt_slides from "../messages/pt/slides.json";
 import pt_soundPlayer from "../messages/pt/soundPlayer.json";
 import pt_sounds from "../messages/pt/sounds.json";
 import pt_stage from "../messages/pt/stage.json";
@@ -929,6 +937,7 @@ import ru_settings from "../messages/ru/settings.json";
 import ru_shell from "../messages/ru/shell.json";
 import ru_signals from "../messages/ru/signals.json";
 import ru_slack from "../messages/ru/slack.json";
+import ru_slides from "../messages/ru/slides.json";
 import ru_soundPlayer from "../messages/ru/soundPlayer.json";
 import ru_sounds from "../messages/ru/sounds.json";
 import ru_stage from "../messages/ru/stage.json";
@@ -1034,6 +1043,7 @@ import zh_settings from "../messages/zh/settings.json";
 import zh_shell from "../messages/zh/shell.json";
 import zh_signals from "../messages/zh/signals.json";
 import zh_slack from "../messages/zh/slack.json";
+import zh_slides from "../messages/zh/slides.json";
 import zh_soundPlayer from "../messages/zh/soundPlayer.json";
 import zh_sounds from "../messages/zh/sounds.json";
 import zh_stage from "../messages/zh/stage.json";
@@ -1141,6 +1151,7 @@ const ar = {
   shell: ar_shell,
   signals: ar_signals,
   slack: ar_slack,
+  slides: ar_slides,
   soundPlayer: ar_soundPlayer,
   sounds: ar_sounds,
   stage: ar_stage,
@@ -1248,6 +1259,7 @@ const de = {
   shell: de_shell,
   signals: de_signals,
   slack: de_slack,
+  slides: de_slides,
   soundPlayer: de_soundPlayer,
   sounds: de_sounds,
   stage: de_stage,
@@ -1355,6 +1367,7 @@ const en = {
   shell: en_shell,
   signals: en_signals,
   slack: en_slack,
+  slides: en_slides,
   soundPlayer: en_soundPlayer,
   sounds: en_sounds,
   stage: en_stage,
@@ -1462,6 +1475,7 @@ const es = {
   shell: es_shell,
   signals: es_signals,
   slack: es_slack,
+  slides: es_slides,
   soundPlayer: es_soundPlayer,
   sounds: es_sounds,
   stage: es_stage,
@@ -1569,6 +1583,7 @@ const fr = {
   shell: fr_shell,
   signals: fr_signals,
   slack: fr_slack,
+  slides: fr_slides,
   soundPlayer: fr_soundPlayer,
   sounds: fr_sounds,
   stage: fr_stage,
@@ -1676,6 +1691,7 @@ const hi = {
   shell: hi_shell,
   signals: hi_signals,
   slack: hi_slack,
+  slides: hi_slides,
   soundPlayer: hi_soundPlayer,
   sounds: hi_sounds,
   stage: hi_stage,
@@ -1783,6 +1799,7 @@ const it = {
   shell: it_shell,
   signals: it_signals,
   slack: it_slack,
+  slides: it_slides,
   soundPlayer: it_soundPlayer,
   sounds: it_sounds,
   stage: it_stage,
@@ -1890,6 +1907,7 @@ const pt = {
   shell: pt_shell,
   signals: pt_signals,
   slack: pt_slack,
+  slides: pt_slides,
   soundPlayer: pt_soundPlayer,
   sounds: pt_sounds,
   stage: pt_stage,
@@ -1997,6 +2015,7 @@ const ru = {
   shell: ru_shell,
   signals: ru_signals,
   slack: ru_slack,
+  slides: ru_slides,
   soundPlayer: ru_soundPlayer,
   sounds: ru_sounds,
   stage: ru_stage,
@@ -2104,6 +2123,7 @@ const zh = {
   shell: zh_shell,
   signals: zh_signals,
   slack: zh_slack,
+  slides: zh_slides,
   soundPlayer: zh_soundPlayer,
   sounds: zh_sounds,
   stage: zh_stage,
@@ -2227,6 +2247,7 @@ export const namespaces = [
   "shell",
   "signals",
   "slack",
+  "slides",
   "soundPlayer",
   "sounds",
   "stage",

@@ -243,7 +243,8 @@ model Session {
   rev              Int                 @default(0)
   createdAt        DateTime            @default(now())
   notes            Note[]
-  interactions     Interaction[]
+  slideItems       SlideItem[]
+  interactions    Interaction[]
   reactions        Reaction[]
   answers          IcebreakerAnswer[]
   kudos            Kudo[]
@@ -330,6 +331,29 @@ model Note {
   updatedAt   DateTime @updatedAt
 
   @@id([sessionId, key])
+  @@index([workspaceId])
+}
+
+/// What people post on a slide of the agenda (an irritant…), during its session; the host can turn it into an action
+model SlideItem {
+  id          String   @id @default(uuid(7))
+  workspaceId String
+  sessionId   String
+  session     Session  @relation(fields: [sessionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  /// Id of the slide in the agenda
+  blockId     String
+  authorId    String
+  /// Posted on a slide without names: its author is never shown, even if the slide later shows them
+  anonymous   Boolean  @default(false)
+  text        String
+  /// Action it became
+  actionId    String?
+  action      Action?  @relation(fields: [actionId], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+
+  @@unique([id, workspaceId])
+  @@index([sessionId, blockId])
+  @@index([actionId])
   @@index([workspaceId])
 }
 
@@ -504,6 +528,10 @@ model Action {
   /// Date of the session it came from, and the item it came from
   originDate  String?
   originText  String?
+  /// Step of the session it was decided at (a slide's id, a person's turn…): the minutes list it there
+  originStep  String?
+  /// Items of a slide it came from
+  slideItems  SlideItem[]
   /// Ticket created from it in an issue tracker (Team): { trackerId, key, url, closed }
   externalRef Json?
   /// Project it moves forward (taken from the item it came from)

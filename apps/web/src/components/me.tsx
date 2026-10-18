@@ -66,6 +66,7 @@ import { RetroPanel } from "./retro";
 import { useRonde, useTick } from "./ronde-provider";
 import { Icon } from "./shell/icons";
 import { NewTab } from "./shell/new-tab";
+import { SlidePanel } from "./slide";
 import { SoundPlayer } from "./sound-player";
 import { Avatar, Faces, joinedOf, Stage, Star, Strip, WaitPill } from "./stage";
 import { SwipeRow } from "./swipe-row";
@@ -265,6 +266,8 @@ function MyCheckIn({ tab, memberId, onBack }: { tab: MeTab; memberId: string; on
     <>
       {/* The check-in stays mounted: switching tabs (or the automatic switch to live) loses nothing being typed */}
       <div hidden={tab !== "checkIn"}>
+        {/* Irritants can be raised along with the check-in, ahead of the meeting (the live tab has its own panel) */}
+        {tab === "checkIn" && <SlidePanel />}
         <CheckInBoard memberId={memberId} draft={draft} />
       </div>
       {tab === "past" && <PastCheckIns onPick={draft.append} dirty={draft.dirty} onBack={onBack} />}
@@ -329,6 +332,7 @@ function Follow() {
       )}
       {(m.stepKey === "intro" || !m.startedAt) && <Warmup key={m.icebreaker ?? ""} />}
       <RetroPanel />
+      <SlidePanel />
       <PokerPanel />
       <PollsPanel />
       {/* Kept in view while scrolling down the stage: where the meeting is, and the people and projects to come */}

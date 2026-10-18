@@ -49,5 +49,9 @@
   "aboutProject": "关于{project}",
   "rating": "会议价值",
   "ratingAverage": "{avg}/5 · {count, plural, other {# 个评分}}",
-  "progress": "进展"
+  "progress": "进展",
+  "slide": "幻灯片",
+  "slideItems": "团队提出的",
+  "slideTracked": "已创建行动项",
+  "slideActions": "决定的行动项"
 }

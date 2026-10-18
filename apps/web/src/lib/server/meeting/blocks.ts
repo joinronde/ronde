@@ -1,7 +1,7 @@
 import "server-only";
 import { type AgendaBlock, agendaOf, type BlockData } from "@ronde/core/agenda";
 import type { Step } from "@ronde/core/meeting";
-import type { PokerDTO, PollDTO, RetroDTO } from "@ronde/core/types";
+import type { PokerDTO, PollDTO, RetroDTO, SlideItemDTO } from "@ronde/core/types";
 import { HOST_ID } from "@ronde/core/util";
 import type { Meeting, ScopedClient, ScopedTx, Session } from "@ronde/db";
 import type { Locale } from "@ronde/i18n";
@@ -115,6 +115,30 @@ export async function retroView(
 export async function onBlockStep(db: ScopedTx, workspaceId: string, session: Session, step: Step) {
   // The vote starts: every note left alone becomes a group of its own, so it can be voted on
   if (step.block === "retro" && step.sub === "vote") await groupLoneCards(db, workspaceId, session.id);
+}
+
+/** What people posted on the slides of the agenda; posted on an anonymous slide, or shown on one, no author leaves the server */
+export async function slideItemsView(
+  db: Db,
+  blocks: AgendaBlock[],
+  session: Session | null,
+  viewer: { memberId: string | null; isHost: boolean },
+): Promise<SlideItemDTO[]> {
+  const slides = new Map(blocks.flatMap((b) => (b.type === "slide" && b.kind === "irritants" ? [[b.id, b] as const] : [])));
+  if (!session || !slides.size) return [];
+  const me = viewer.memberId ?? (viewer.isHost ? HOST_ID : null);
+  const items = await db.slideItem.findMany({
+    where: { sessionId: session.id, blockId: { in: [...slides.keys()] } },
+    orderBy: { createdAt: "asc" },
+  });
+  return items.map((i) => ({
+    id: i.id,
+    blockId: i.blockId,
+    text: i.text,
+    authorId: i.anonymous || slides.get(i.blockId)?.anonymous ? null : i.authorId,
+    mine: i.authorId === me,
+    actionId: i.actionId,
+  }));
 }
 
 /** Planning poker as one viewer sees it: the cards of others only once revealed */

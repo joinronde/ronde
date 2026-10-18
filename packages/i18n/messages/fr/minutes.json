@@ -49,5 +49,9 @@
   "aboutProject": "À propos de {project}",
   "rating": "Utilité",
   "ratingAverage": "{avg}/5 · {count, plural, one {# note} other {# notes}}",
-  "progress": "Avancement"
+  "progress": "Avancement",
+  "slide": "Slide",
+  "slideItems": "Remontés par l'équipe",
+  "slideTracked": "action créée",
+  "slideActions": "Actions décidées"
 }

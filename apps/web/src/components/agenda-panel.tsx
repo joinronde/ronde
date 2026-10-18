@@ -1,6 +1,6 @@
 "use client";
 
-import { type AgendaBlock, BLOCK_MODULE, type BlockType, PROJECT_ROUND_ORDERS, SINGLE_BLOCKS } from "@ronde/core/agenda";
+import { type AgendaBlock, BLOCK_MODULE, type BlockType, PROJECT_ROUND_ORDERS, SINGLE_BLOCKS, SLIDE_KINDS } from "@ronde/core/agenda";
 import { Plus, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
@@ -13,7 +13,7 @@ import { BLOCK_ICON } from "./stage";
 import { Menu } from "./workspace/menu";
 
 const newId = () => Array.from(crypto.getRandomValues(new Uint8Array(4)), (b) => b.toString(16).padStart(2, "0")).join("");
-const ADDABLE: BlockType[] = ["intro", "round", "projects", "topics", "timebox", "retro", "poker"];
+const ADDABLE: BlockType[] = ["intro", "slide", "round", "projects", "topics", "timebox", "retro", "poker"];
 
 /** Blocks of the agenda, in order: core ones and module ones; saved by itself a moment after the last change */
 export function AgendaPanel() {
@@ -40,7 +40,7 @@ export function AgendaPanel() {
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(blocks), dirty, running]);
-  const labelOf = (b: AgendaBlock) => (b.type === "timebox" ? b.title : t(`blocks.${b.type}`));
+  const labelOf = (b: AgendaBlock) => (b.type === "timebox" || b.type === "slide" ? b.title : t(`blocks.${b.type}`));
   const moduleOn = (type: BlockType) => !BLOCK_MODULE[type] || !!s.modules[BLOCK_MODULE[type]!];
   const canAdd = (type: BlockType) => moduleOn(type) && !(SINGLE_BLOCKS.includes(type) && blocks.some((b) => b.type === type));
   const sort = useSortable({
@@ -51,17 +51,28 @@ export function AgendaPanel() {
   });
   const patch = (i: number, p: Partial<Extract<AgendaBlock, { type: "timebox" }>>) =>
     setBlocks((list) => list.map((b, j) => (j === i && b.type === "timebox" ? { ...b, ...p } : b)));
+  // Text sections of slides opened by the host; one with a text starts open
+  const [opened, setOpened] = useState<Record<string, boolean>>({});
+  const patchSlide = (i: number, p: Partial<Extract<AgendaBlock, { type: "slide" }>>) =>
+    setBlocks((list) => list.map((b, j) => (j === i && b.type === "slide" ? { ...b, ...p } : b)));
   const patchProjects = (i: number, p: Partial<Extract<AgendaBlock, { type: "projects" }>>) =>
     setBlocks((list) => list.map((b, j) => (j === i && b.type === "projects" ? { ...b, ...p } : b)));
   const add = (type: BlockType) =>
-    setBlocks((list): AgendaBlock[] => [
-      ...list,
-      type === "timebox"
-        ? { id: newId(), type, title: t("newTimebox"), minutes: 10 }
-        : type === "projects"
-          ? { id: "projects", type, order: "manual" }
-          : { id: type === "retro" ? "retro" : newId(), type: type as Exclude<BlockType, "timebox" | "projects"> },
-    ]);
+    setBlocks((list): AgendaBlock[] => {
+      if (type !== "slide")
+        return [
+          ...list,
+          type === "timebox"
+            ? { id: newId(), type, title: t("newTimebox"), minutes: 10 }
+            : type === "projects"
+              ? { id: "projects", type, order: "manual" }
+              : { id: type === "retro" ? "retro" : newId(), type: type as Exclude<BlockType, "timebox" | "projects" | "slide"> },
+        ];
+      // A slide goes right after the intro, where irritants are best raised; the host moves it elsewhere if need be
+      const at = list.findIndex((b) => b.type === "intro") + 1;
+      const slide: AgendaBlock = { id: newId(), type, kind: "irritants", title: t("newSlide") };
+      return [...list.slice(0, at), slide, ...list.slice(at)];
+    });
   return (
     <form
       className="panel form"
@@ -102,6 +113,68 @@ export function AgendaPanel() {
                     onChange={(e) => patch(i, { minutes: Math.max(1, Math.min(120, Number(e.target.value) || 1)) })}
                   />
                   <span className="hint">{t("minutes")}</span>
+                </span>
+              ) : b.type === "slide" ? (
+                <span className="agenda-timebox agenda-slide">
+                  <input
+                    aria-label={t("slideTitle")}
+                    value={b.title}
+                    maxLength={80}
+                    required
+                    onChange={(e) => patchSlide(i, { title: e.target.value })}
+                  />
+                  <Select
+                    aria-label={t("slideKind")}
+                    value={b.kind}
+                    onChange={(e) => patchSlide(i, { kind: e.target.value as (typeof SLIDE_KINDS)[number] })}
+                    style={{ width: "auto" }}
+                  >
+                    {SLIDE_KINDS.map((k) => (
+                      <option key={k} value={k}>
+                        {t(`slideKinds.${k}`)}
+                      </option>
+                    ))}
+                  </Select>
+                  <input
+                    type="number"
+                    aria-label={t("minutes")}
+                    placeholder={t("perProjectAuto")}
+                    min={1}
+                    max={120}
+                    value={b.minutes ?? ""}
+                    onChange={(e) =>
+                      patchSlide(i, { minutes: e.target.value ? Math.max(1, Math.min(120, Number(e.target.value) || 1)) : undefined })
+                    }
+                  />
+                  <span className="hint">{t("minutes")}</span>
+                  {b.kind === "irritants" && (
+                    <label className="check">
+                      <input
+                        type="checkbox"
+                        checked={!!b.anonymous}
+                        onChange={(e) => patchSlide(i, { anonymous: e.target.checked || undefined })}
+                      />
+                      {t("slideAnonymous")}
+                    </label>
+                  )}
+                  <details
+                    className="agenda-slide-body"
+                    open={opened[b.id] ?? !!b.body}
+                    onToggle={(e) => {
+                      const open = e.currentTarget.open;
+                      setOpened((o) => ({ ...o, [b.id]: open }));
+                    }}
+                  >
+                    <summary>{t("slideBody")}</summary>
+                    <textarea
+                      aria-label={t("slideBody")}
+                      maxLength={4000}
+                      rows={3}
+                      value={b.body ?? ""}
+                      placeholder={t("slideBodyHint")}
+                      onChange={(e) => patchSlide(i, { body: e.target.value || undefined })}
+                    />
+                  </details>
                 </span>
               ) : b.type === "projects" ? (
                 <span className="agenda-timebox agenda-projects">
