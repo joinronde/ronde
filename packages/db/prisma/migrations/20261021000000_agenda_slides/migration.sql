@@ -9,6 +9,7 @@ CREATE TABLE "SlideItem" (
     "sessionId" TEXT NOT NULL,
     "blockId" TEXT NOT NULL,
     "authorId" TEXT NOT NULL,
+    "anonymous" BOOLEAN NOT NULL DEFAULT false,
     "text" TEXT NOT NULL,
     "actionId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

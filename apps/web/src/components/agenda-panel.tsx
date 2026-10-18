@@ -51,6 +51,8 @@ export function AgendaPanel() {
   });
   const patch = (i: number, p: Partial<Extract<AgendaBlock, { type: "timebox" }>>) =>
     setBlocks((list) => list.map((b, j) => (j === i && b.type === "timebox" ? { ...b, ...p } : b)));
+  // Text sections of slides opened by the host; one with a text starts open
+  const [opened, setOpened] = useState<Record<string, boolean>>({});
   const patchSlide = (i: number, p: Partial<Extract<AgendaBlock, { type: "slide" }>>) =>
     setBlocks((list) => list.map((b, j) => (j === i && b.type === "slide" ? { ...b, ...p } : b)));
   const patchProjects = (i: number, p: Partial<Extract<AgendaBlock, { type: "projects" }>>) =>
@@ -155,7 +157,14 @@ export function AgendaPanel() {
                       {t("slideAnonymous")}
                     </label>
                   )}
-                  <details className="agenda-slide-body" open={!!b.body}>
+                  <details
+                    className="agenda-slide-body"
+                    open={opened[b.id] ?? !!b.body}
+                    onToggle={(e) => {
+                      const open = e.currentTarget.open;
+                      setOpened((o) => ({ ...o, [b.id]: open }));
+                    }}
+                  >
                     <summary>{t("slideBody")}</summary>
                     <textarea
                       aria-label={t("slideBody")}

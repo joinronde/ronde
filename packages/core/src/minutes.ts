@@ -241,10 +241,13 @@ export function buildMinutes(r: RecordV1, locale: Locale, options: MinutesOption
         : []),
     ]);
   };
-  // Slides placed before the turns read right after the intro, as they were run; the others after the turns
-  const firstTurn = r.agenda.findIndex((b) => b.type === "round" || b.type === "projects");
-  const slides = r.agenda.map((b, i) => ({ b, early: firstTurn < 0 || i < firstTurn })).filter((x) => x.b.type === "slide");
-  for (const x of slides.filter((y) => y.early)) slidePart(x.b);
+  // Slides read where they were run: those before every other block right after the intro, those after every
+  // other block before the actions, the ones in between after the turns and the timeboxes
+  const others = r.agenda.flatMap((b, i) => (b.type === "intro" || b.type === "slide" ? [] : [i]));
+  const slides = r.agenda
+    .map((b, i) => ({ b, at: !others.length || i < others[0]! ? "early" : i > others.at(-1)! ? "late" : "middle" }))
+    .filter((x) => x.b.type === "slide");
+  for (const x of slides.filter((y) => y.at === "early")) slidePart(x.b);
 
   if (on("mood") && r.mood?.counts.some(Boolean)) {
     const avg = r.mood.avg;
@@ -394,7 +397,7 @@ export function buildMinutes(r: RecordV1, locale: Locale, options: MinutesOption
         : []),
     ]);
 
-  for (const x of slides.filter((y) => !y.early)) slidePart(x.b);
+  for (const x of slides.filter((y) => y.at === "middle")) slidePart(x.b);
 
   // Retro: per column, the groups most voted first, their notes and the host notes of their discussion
   if (r.retro && on("retro")) {
@@ -495,6 +498,8 @@ export function buildMinutes(r: RecordV1, locale: Locale, options: MinutesOption
     part("parking", t("parking"), [
       { type: "list", items: r.parking.map((x) => ({ text: x.text, meta: x.byId ? ` (${nm(x.byId)})` : "" })) },
     ]);
+
+  for (const x of slides.filter((y) => y.at === "late")) slidePart(x.b);
 
   if (r.actions.length) {
     const status = translator(locale, "actionStatus");

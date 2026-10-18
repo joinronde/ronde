@@ -23,35 +23,40 @@ export const slideOps = [
   defineOp({
     name: "slide.item.add",
     permission: "session.participate",
-    session: "read",
+    // Locked: the cap per person holds against submits sent together
+    session: "lock",
     input: z.object({ blockId: str(20), text: str(300).min(1) }),
     run: async ({ db, m, workspaceId, requireSession }, o) => {
       const s = requireSession();
       if (s.endedAt) throw new OpError("slideClosed");
-      postableSlide(m.meeting, o.blockId);
+      const slide = postableSlide(m.meeting, o.blockId);
       const authorId = requireActor(m.viewer);
       if ((await db.slideItem.count({ where: { sessionId: s.id, blockId: o.blockId, authorId } })) >= SLIDE_ITEMS_PER_PERSON)
         throw new OpError("slideTooManyItems");
-      await db.slideItem.create({ data: { workspaceId, sessionId: s.id, blockId: o.blockId, authorId, text: o.text } });
+      await db.slideItem.create({
+        data: { workspaceId, sessionId: s.id, blockId: o.blockId, authorId, anonymous: !!slide.anonymous, text: o.text },
+      });
     },
   }),
   defineOp({
     name: "slide.item.delete",
-    // Its author takes it back; the host removes any
+    // Its author takes it back until it becomes an action; the host removes any
     permission: "session.participate",
     session: "read",
     input: z.object({ id: str(50) }),
     run: async ({ db, m, requireSession }, o) => {
       const s = requireSession();
-      const mine = m.viewer.isHost ? {} : { authorId: requireActor(m.viewer) };
+      const mine = m.viewer.isHost ? {} : { authorId: requireActor(m.viewer), actionId: null };
       const { count } = await db.slideItem.deleteMany({ where: { id: o.id, sessionId: s.id, ...mine } });
+      if (!count && m.viewer.isHost) throw new OpError("notFound");
       if (!count) throw new AccessError(403, "ownSlideItemsOnly");
     },
   }),
   defineOp({
     name: "slide.item.toAction",
     permission: "session.run",
-    session: "read",
+    // Locked: two clicks (or two hosts) never make two actions of one item
+    session: "lock",
     input: z.object({ id: str(50), ownerId: str(50), text: str(300).min(1).optional() }),
     run: async ({ db, m, meetingId, workspaceId, requireSession }, o) => {
       const s = requireSession();

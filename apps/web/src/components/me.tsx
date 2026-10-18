@@ -266,8 +266,8 @@ function MyCheckIn({ tab, memberId, onBack }: { tab: MeTab; memberId: string; on
     <>
       {/* The check-in stays mounted: switching tabs (or the automatic switch to live) loses nothing being typed */}
       <div hidden={tab !== "checkIn"}>
-        {/* Irritants can be raised along with the check-in, ahead of the meeting */}
-        <SlidePanel />
+        {/* Irritants can be raised along with the check-in, ahead of the meeting (the live tab has its own panel) */}
+        {tab === "checkIn" && <SlidePanel />}
         <CheckInBoard memberId={memberId} draft={draft} />
       </div>
       {tab === "past" && <PastCheckIns onPick={draft.append} dirty={draft.dirty} onBack={onBack} />}

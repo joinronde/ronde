@@ -328,7 +328,7 @@ async function slidesRecord(
     body: b.body ?? "",
     items: items
       .filter((i) => i.blockId === b.id)
-      .map((i) => ({ text: i.text, byId: b.anonymous ? null : i.authorId, tracked: !!i.actionId })),
+      .map((i) => ({ text: i.text, byId: i.anonymous || b.anonymous ? null : i.authorId, tracked: !!i.actionId })),
     actions: actions.filter((a) => a.originDate === s.date && a.originStep === b.id).map((a) => ({ text: a.text, ownerId: a.ownerId })),
   }));
 }

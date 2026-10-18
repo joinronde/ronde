@@ -343,6 +343,8 @@ model SlideItem {
   /// Id of the slide in the agenda
   blockId     String
   authorId    String
+  /// Posted on a slide without names: its author is never shown, even if the slide later shows them
+  anonymous   Boolean  @default(false)
   text        String
   /// Action it became
   actionId    String?

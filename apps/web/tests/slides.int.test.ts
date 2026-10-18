@@ -99,6 +99,25 @@ describe("irritants slide", () => {
     expect(forHost.slideItems.find((i) => i.text === "Too many meetings")).toMatchObject({ authorId: brunoId, mine: false });
   });
 
+  it("keeps an item posted without names anonymous when the slide shows names again", async () => {
+    const agenda = f.ctx.meeting.agenda as { id: string; anonymous?: boolean }[];
+    const named = agenda.map((b) => (b.id === "anon" ? { ...b, anonymous: false } : b));
+    f.ctx.meeting = await prisma.meeting.update({ where: { id: f.meetingId }, data: { agenda: named } });
+    expect((await loadSnapshot(f.ctx)).slideItems.find((i) => i.blockId === "anon")).toMatchObject({ authorId: null });
+    f.ctx.meeting = await prisma.meeting.update({ where: { id: f.meetingId }, data: { agenda } });
+  });
+
+  it("makes one action of an item clicked twice at once, and keeps it from its author once tracked", async () => {
+    await runOp(bruno, { op: "slide.item.add", blockId: "irr", text: "Flaky tests" });
+    const flaky = (await items("irr")).find((i) => i.text === "Flaky tests")!;
+    const both = await Promise.allSettled([1, 2].map(() => runOp(f.ctx, { op: "slide.item.toAction", id: flaky.id, ownerId: brunoId })));
+    expect(both.filter((r) => r.status === "fulfilled")).toHaveLength(1);
+    expect(await prisma.action.count({ where: { meetingId: f.meetingId, text: "Flaky tests" } })).toBe(1);
+    await expect(runOp(bruno, { op: "slide.item.delete", id: flaky.id })).rejects.toMatchObject({ key: "ownSlideItemsOnly" });
+    await expect(runOp(f.ctx, { op: "slide.item.delete", id: "gone" })).rejects.toMatchObject({ key: "notFound" });
+    await runOp(f.ctx, { op: "slide.item.delete", id: flaky.id });
+  });
+
   it("is turned into an action by the host, once, at the slide it came from", async () => {
     const [builds] = await items("irr");
     await expect(runOp(alice, { op: "slide.item.toAction", id: builds!.id, ownerId: f.memberId })).rejects.toMatchObject({

@@ -134,6 +134,26 @@ describe("slides in the minutes", () => {
     expect(recordDecisions(r, "en").map((d) => `${d.text} ${d.context}`)).toContain("no deploy on Fridays (Irritants)");
   });
 
+  it("reads a closing slide after the open topics, before the actions", () => {
+    const closing = parseRecord({
+      ...parseRecord({
+        ...base,
+        topics: [{ text: "On-call rota", byId: null, done: true }],
+        actions: [{ text: "Book the room", ownerId: "a", status: "open" }],
+      })!,
+      agenda: [
+        { id: "intro", type: "intro" },
+        { id: "round", type: "round" },
+        { id: "topics", type: "topics" },
+        { id: "s3", type: "slide", title: "Next steps", kind: "free" },
+      ],
+      slides: [{ blockId: "s3", body: "See you on Monday" }],
+    })!;
+    const text = minutesMarkdown(closing, "en");
+    expect(text.indexOf("On-call rota")).toBeLessThan(text.indexOf("## Next steps"));
+    expect(text.indexOf("## Next steps")).toBeLessThan(text.indexOf("Book the room"));
+  });
+
   it("reads an older record without slides", () => {
     expect(parseRecord({ ...parseRecord(base)!, slides: undefined })!.slides).toEqual([]);
   });

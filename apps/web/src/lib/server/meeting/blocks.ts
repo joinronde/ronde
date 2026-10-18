@@ -117,7 +117,7 @@ export async function onBlockStep(db: ScopedTx, workspaceId: string, session: Se
   if (step.block === "retro" && step.sub === "vote") await groupLoneCards(db, workspaceId, session.id);
 }
 
-/** What people posted on the slides of the agenda; on an anonymous slide, no author leaves the server */
+/** What people posted on the slides of the agenda; posted on an anonymous slide, or shown on one, no author leaves the server */
 export async function slideItemsView(
   db: Db,
   blocks: AgendaBlock[],
@@ -135,7 +135,7 @@ export async function slideItemsView(
     id: i.id,
     blockId: i.blockId,
     text: i.text,
-    authorId: slides.get(i.blockId)?.anonymous ? null : i.authorId,
+    authorId: i.anonymous || slides.get(i.blockId)?.anonymous ? null : i.authorId,
     mine: i.authorId === me,
     actionId: i.actionId,
   }));
