@@ -148,6 +148,6 @@ test("two-step verification: turned on with an authenticator code, then asked at
   await page.getByLabel("Email", { exact: true }).fill(who.email);
   await page.getByRole("button", { name: "Email me a sign-in link" }).click();
   await expect(page.locator(".form-alert")).toHaveText(
-    "This account is protected by two-factor authentication: sign in with your password, then your code.",
+    "This account is protected by two-step verification: sign in with your password, then your code.",
   );
 });

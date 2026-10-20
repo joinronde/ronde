@@ -84,7 +84,7 @@
   "cancel": "Cancel",
   "save": "Save",
   "create": "Create the project",
-  "themesHint": "Themes group the projects of the portfolio: a programme, a product line, a department. Deleting a theme keeps its projects.",
+  "themesHint": "Themes group the projects of the portfolio: a program, a product line, a department. Deleting a theme keeps its projects.",
   "themeName": "Name of the theme",
   "themeDelete": "Delete {name}",
   "themeDeleteConfirm": "Delete the theme {name}? Its projects stay, without a theme.",
@@ -98,7 +98,7 @@
   "deleteConfirm": "Delete the project {name}? Its sheets are deleted; the items and actions about it stay, without a project.",
   "noDescription": "No description yet.",
   "timeline": "What the meetings said",
-  "noTimeline": "Nothing yet: once a meeting that follows the project archives a session, what was said about it shows here.",
+  "noTimeline": "Nothing yet: once a meeting that follows the project publishes its minutes, what was said about it shows here.",
   "roles": {
     "achievement": "Done",
     "plan": "Planned",
@@ -142,10 +142,10 @@
     },
     "bySaved": "Saved"
   },
-  "programme": "Programme",
-  "programmeHint": "The project it belongs to: a project holding others is a programme.",
-  "noProgramme": "Not part of a programme",
-  "byProgramme": "By programme",
+  "programme": "Program",
+  "programmeHint": "The project it belongs to: a project holding others is a program.",
+  "noProgramme": "Not part of a program",
+  "byProgramme": "By program",
   "sortBy": "Sort by",
   "sorts": {
     "health": "Needing attention first",
@@ -177,7 +177,7 @@
   "visibilityWorkspace": "Everyone in the workspace",
   "visibilityMembers": "Its members only (and the people managing every project)",
   "membersEdit": "Its members can edit it, not only its lead",
-  "subProjects": "Projects of this programme",
+  "subProjects": "Projects of this program",
   "rolledHealth": "Worst health among them:",
   "csv": {
     "lastNews": "Last news",

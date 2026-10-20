@@ -7,8 +7,8 @@
     "magicLink": "Sign-in links by email",
     "social": "Sign-in with Google, GitHub or Microsoft",
     "oidc": "Single sign-on with one OpenID Connect provider",
-    "twoFactor": "Two-factor authentication",
-    "saml": "SAML single sign-on and several identity providers",
+    "twoFactor": "Two-step verification",
+    "saml": "SAML single sign-on and multiple identity providers",
     "ldap": "LDAP and Active Directory sign-in",
     "scim": "User provisioning with SCIM",
     "enforcedSso": "Single sign-on required",
@@ -20,7 +20,7 @@
   },
   "meetings": {
     "unlimited": "Unlimited meetings and sessions",
-    "sectionRoles": "Check-in sections with configurable behaviour",
+    "sectionRoles": "Check-in sections with configurable behavior",
     "templates": "Built-in and workspace templates"
   },
   "scheduling": {
@@ -29,19 +29,19 @@
     "calendarSync": "Two-way sync with Google, Microsoft 365 and CalDAV calendars"
   },
   "modules": {
-    "facilitation": "Every facilitation module",
+    "facilitation": "All facilitation modules",
     "notifications": "Notifications to email, chat and webhooks",
     "formats": "Retrospectives, planning poker, async meetings",
     "workflows": "Notification workflows: conditions and your own messages",
     "aiAssistant": "AI assistant: summaries and actions",
-    "transcription": "Transcript of the sessions, sorted by round-table turn"
+    "transcription": "Session transcripts, sorted by round-table turn"
   },
   "integrations": {
     "gitlab": "GitLab import",
     "github": "GitHub import",
     "video": "Video calls: any link, Jitsi, BigBlueButton",
     "api": "REST API and outgoing webhooks",
-    "writeBack": "Tickets in Jira, Linear, GitLab and GitHub from actions",
+    "writeBack": "Jira, Linear, GitLab and GitHub issues created from actions",
     "videoLinks": "Zoom, Google Meet and Teams rooms created in one click",
     "sms": "SMS and WhatsApp reminders (Twilio)",
     "slack": "Slack app: check-ins filled in from Slack, minutes in the channel, /ronde",
@@ -68,7 +68,7 @@
   "projects": {
     "portfolio": "Project portfolio: description, theme, health, lead, team, dates and the history of every meeting",
     "round": "Project round: one turn per project, where its people speak together",
-    "programs": "Programmes: projects grouped into nested programmes",
+    "programs": "Programs: projects grouped into nested programs",
     "permissions": "Permissions per project",
     "import": "Projects imported from GitHub, GitLab, Jira and Linear"
   }

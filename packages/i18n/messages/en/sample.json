@@ -54,13 +54,13 @@
   "blockers": {
     "staging": "No access to the test database yet, ticket open with IT",
     "crm": "The CRM export stops at 2,000 rows",
-    "licence": "The icon set we picked needs a paid licence"
+    "licence": "The icon set we picked needs a paid license"
   },
   "dayOff": "Off on Thursday afternoon (training)",
   "actions": {
     "staging": "Get access to the test database (follow up with IT)",
     "crm": "Find a way around the CRM export limit",
-    "licence": "Order the icon set licence"
+    "licence": "Order the icon set license"
   },
   "kudos": {
     "checklist": "The release checklist saved my Friday",

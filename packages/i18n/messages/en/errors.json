@@ -164,7 +164,7 @@
   "sessionHeldToday": "A session of this meeting was already held today.",
   "guestLinkInvalid": "This guest link is invalid, has expired or was revoked. Ask the host for a new one.",
   "projectMembersOnly": "Only the people working on this project can change its sheet.",
-  "projectProgramme": "A project cannot belong to itself or to one of its own projects, and programmes go three levels deep at most.",
+  "projectProgramme": "A project cannot belong to itself or to one of its own projects, and programs go three levels deep at most.",
   "projectSheetHeld": "{name} is writing this project sheet right now. Wait until they are done.",
   "checkInChanged": "The check-in was changed elsewhere meanwhile. Its changes are now in your draft: check it, then save again.",
   "joinParticipantsOnly": "Only the people taking part in the meeting can join a line.",

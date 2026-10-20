@@ -56,7 +56,7 @@
       },
       "custom": {
         "label": "Custom",
-        "hint": "A free section, with no special behaviour."
+        "hint": "A free section, with no special behavior."
       }
     },
     "taken": "already used",
@@ -233,7 +233,7 @@
     "agenda": "The order of the meeting, block by block.",
     "projects": "The projects followed, each with its round.",
     "modules": "Facilitation, formats and tools, turned on as needed.",
-    "appearance": "Colour of the meeting on every screen.",
+    "appearance": "Color of the meeting on every screen.",
     "notifications": "Reminders and messages sent around the meeting.",
     "integrations": "Video call, issue trackers and wiki.",
     "template": "Save this meeting as a template of the workspace.",
@@ -248,7 +248,7 @@
     "undo": "Undo"
   },
   "appearance": {
-    "accent": "Accent colour",
+    "accent": "Accent color",
     "accentHint": "Used for the buttons, the timer and the shared screen of this meeting, in light and dark themes.",
     "accents": {
       "ember": "Ember",
