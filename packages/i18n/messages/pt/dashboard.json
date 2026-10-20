@@ -11,15 +11,15 @@
   "liveNow": "Ao vivo agora",
   "liveShort": "ao vivo",
   "liveStep": {
-    "intro": "Introdução",
+    "intro": "Abertura",
     "turn": "Vez de {name} · {n}/{total}",
-    "projects": "Ronda de projetos",
-    "topics": "Assuntos diversos",
+    "projects": "Rodada por projeto",
+    "topics": "Assuntos em aberto",
     "end": "Encerramento",
-    "block": "A decorrer"
+    "block": "Em andamento"
   },
   "liveSince": "Começou às {time}",
-  "liveSinceDay": "Começou a {day} às {time}",
+  "liveSinceDay": "Começou em {day} às {time}",
   "turnsDone": "{done}/{total} vezes feitas",
   "yourTurnNow": "É a sua vez!",
   "yourTurnIn": "{count, plural, one {A sua vez depois de # pessoa} other {A sua vez depois de # pessoas}}",
@@ -35,10 +35,10 @@
   "fillCheckIn": "Preencher minha ficha",
   "editCheckIn": "Editar minha ficha",
   "controlRoom": "Conduzir a reunião",
-  "noNext": "Nenhuma sessão por vir",
+  "noNext": "Nenhuma sessão prevista",
   "noNextMember": "Quando você for adicionado a uma reunião, a próxima sessão aparecerá aqui.",
   "firstAll": "Ver todos os modelos",
-  "firstIntro": "Escolha a que se parece com a sua: depois define o dia, a hora e as pessoas, e tudo pode ser alterado.",
+  "firstIntro": "Escolha a que se parece com a sua: depois você define o dia, a hora e as pessoas, e tudo pode ser alterado.",
   "firstTitle": "Crie a sua primeira reunião",
   "pulse": "Últimos 30 dias",
   "pulseSessions": "sessões realizadas",
@@ -58,12 +58,12 @@
   "nextOn": "Próxima em {date}",
   "people": "{count, plural, one {# pessoa} other {# pessoas}}",
   "gettingStarted": "Primeiros passos",
-  "skipSteps": "Saltar",
+  "skipSteps": "Pular",
   "progress": "{done} de {total} feitos",
   "stepsDone": "Etapas feitas",
   "sheetReady": "Ficha de {project} escrita",
   "sheetEmpty": "Ficha de {project} a escrever",
   "readyCount": "{ready}/{total} fichas preenchidas",
   "seatReady": "ficha preenchida",
-  "seatToFill": "ficha por preencher"
+  "seatToFill": "ficha a preencher"
 }

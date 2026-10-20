@@ -63,7 +63,7 @@
     "emailAttribute": "Atributo de correo",
     "nameAttribute": "Atributo de nombre",
     "profileTitle": "También copiado a la ficha de cada persona",
-    "profileHint": "Se leen en cada inicio de sesión. El equipo es el del directorio con ese nombre (se crea si falta); un cumpleaños que la persona introdujo se mantiene. Deje un campo vacío para no leerlo.",
+    "profileHint": "Se leen en cada inicio de sesión. El equipo es el del directorio con ese nombre (se crea si falta); un cumpleaños que la persona introdujo se mantiene. Deja un campo vacío para no leerlo.",
     "phoneAttribute": "Atributo del teléfono",
     "teamAttribute": "Atributo del equipo",
     "birthdayAttribute": "Atributo del cumpleaños",

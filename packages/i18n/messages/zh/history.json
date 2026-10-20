@@ -1,6 +1,6 @@
 {
   "loading": "正在加载历史记录…",
-  "empty": "还没有已归档的会议。在控制台的总结环节使用“归档会议”。",
+  "empty": "还没有纪要。在控制台的总结环节使用“发布纪要”。",
   "searchPlaceholder": "搜索会议纪要（项目、人员、阻碍…）",
   "searchLabel": "搜索会议纪要",
   "meetings": "{count, plural, other {# 次会议}}",

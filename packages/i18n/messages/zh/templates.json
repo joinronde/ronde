@@ -23,9 +23,9 @@
   },
   "oneOnOne": {
     "name": "一对一",
-    "description": "两人之间的每周对话：成绩、优先事项、挑战和反馈。",
+    "description": "两人之间的每周对话：成果、优先事项、挑战和反馈。",
     "sections": {
-      "wins": "成绩",
+      "wins": "成果",
       "priorities": "优先事项",
       "challenges": "挑战",
       "feedback": "反馈"
@@ -43,41 +43,41 @@
   },
   "steering": {
     "name": "指导委员会",
-    "description": "每月一次：进展、待做的决定、风险和下一步。",
+    "description": "每月一次：进展、待决事项、风险和下一步。",
     "sections": {
       "progress": "进展",
-      "decisions": "待做的决定",
+      "decisions": "待决事项",
       "risks": "风险",
       "next": "下一步"
     }
   },
   "allHands": {
     "name": "全员大会",
-    "description": "全体团队每月一次：亮点、新闻和需求。",
+    "description": "全员每月一次：亮点、动态和请求。",
     "sections": {
       "highlights": "亮点",
-      "news": "新闻",
-      "asks": "需求"
+      "news": "动态",
+      "asks": "请求"
     }
   },
   "leadership": {
     "name": "管理层会议",
-    "description": "管理层周会：关键数据、成绩、优先事项和需要上报的问题。",
+    "description": "管理层周会：关键数据、成果、优先事项和需要上报的问题。",
     "sections": {
       "figures": "关键数据",
-      "wins": "成绩",
+      "wins": "成果",
       "priorities": "优先事项",
       "escalations": "上报事项"
     }
   },
   "salesPipeline": {
     "name": "销售管道评审",
-    "description": "每周一：赢得的交易、管道变化、下一步和有风险的交易。",
+    "description": "每周一：已签订单、管道变化、下一步和风险商机。",
     "sections": {
-      "won": "赢得的交易",
+      "won": "已签订单",
       "pipeline": "管道变化",
       "next": "下一步",
-      "atrisk": "有风险的交易"
+      "atrisk": "风险商机"
     }
   },
   "editorial": {
@@ -122,7 +122,7 @@
   },
   "volunteers": {
     "name": "志愿者协调",
-    "description": "周六上午与志愿者一起：已完成的工作、接下来的任务和缺少的东西。",
+    "description": "周六上午与志愿者一起：已完成的工作、接下来的任务和还缺什么。",
     "sections": {
       "done": "我们做了什么",
       "missions": "接下来的任务",
@@ -150,12 +150,12 @@
   },
   "portfolio": {
     "name": "项目组合评审",
-    "description": "每两周一次，每个项目轮流发言：参与者介绍项目状态、进展、下一个里程碑和风险；遇到困难的项目先发言。",
+    "description": "每两周一次，每个项目轮流发言：参与者介绍项目健康度、进展、下一个里程碑和风险；遇到困难的项目先发言。",
     "sections": {
       "progress": "进展",
       "milestones": "下一个里程碑",
       "risks": "风险与需求",
-      "decisions": "待做的决定"
+      "decisions": "待决事项"
     }
   },
   "teamProjects": {
@@ -222,7 +222,7 @@
   },
   "serviceBriefing": {
     "name": "营业前简会",
-    "description": "每天开门前十分钟：预订情况、今日特供、注意事项和需要留意的地方。",
+    "description": "每天开门前十分钟：预订情况、今日特供、工作安排和注意事项。",
     "sections": {
       "bookings": "预订与客流",
       "specials": "今日特供",
@@ -235,18 +235,18 @@
     "description": "新成员入职的头几个月，每周一次：学到了什么、目标、需要什么和有哪些问题。",
     "sections": {
       "learned": "我学到了什么",
-      "goals": "本周目标",
+      "goals": "下周目标",
       "needs": "我需要什么",
       "questions": "我的问题"
     }
   },
   "hiringReview": {
     "name": "招聘回顾",
-    "description": "每周一次：已完成的面试、进行中的候选人、待做的决定和待开放的职位。",
+    "description": "每周一次：已完成的面试、进行中的候选人、待决事项和待开放的职位。",
     "sections": {
       "interviews": "已完成的面试",
       "candidates": "进行中的候选人",
-      "decisions": "待做的决定",
+      "decisions": "待决事项",
       "openings": "待开放的职位"
     }
   },

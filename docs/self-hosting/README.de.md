@@ -6,7 +6,7 @@ Grenze bei Meetings oder Personen. Ein Lizenzschlüssel schaltet die Funktionen 
 
 ## Starten
 
-1. Hol dir die Dateien eines Releases:
+1. Hol dir die Dateien:
 
    ```sh
    mkdir ronde && cd ronde
@@ -26,7 +26,7 @@ Grenze bei Meetings oder Personen. Ein Lizenzschlüssel schaltet die Funktionen 
    docker compose up -d
    ```
 
-4. Öffne `RONDE_URL` und lege das erste Konto an: Es wird zur Administration der Instanz.
+4. Öffne `RONDE_URL` und lege das erste Konto an: Es wird zum Administratorkonto der Instanz.
 
 ## HTTPS
 
@@ -53,7 +53,7 @@ echo "SMTP_URL=smtp://mail:1025" >> .env
 docker compose --profile mail up -d   # emails at http://localhost:8025
 ```
 
-Damit alle ihren Check-in per Antwort auf die Erinnerung ausfüllen können, gib Ronde ein Postfach zum Lesen: `INBOUND_IMAP_URL=imaps://user:password@imap.example.com:993/INBOX`, dazu `INBOUND_ADDRESS`, wenn der Login nicht die E-Mail-Adresse ist. Antworten gehen dorthin; jede Minute liest Ronde die Antworten auf eine Erinnerung, fügt ihre Zeilen dem Check-in hinzu, bestätigt per E-Mail und verschiebt sie in einen Ordner `Ronde`. Alle anderen Nachrichten bleiben unberührt, es kann also deine übliche Kontaktadresse sein.
+Damit alle ihren Check-in per Antwort auf die Erinnerung ausfüllen können, gib Ronde ein Postfach zum Lesen: `INBOUND_IMAP_URL=imaps://user:password@imap.example.com:993/INBOX`, dazu `INBOUND_ADDRESS`, wenn der Login nicht die E-Mail-Adresse ist. Antworten gehen dorthin; jede Minute liest Ronde die Antworten auf eine Erinnerung, fügt ihre Zeilen dem Check-in hinzu, bestätigt per E-Mail und verschiebt sie in einen Ordner `Ronde`. Alle anderen Nachrichten bleiben unberührt, das Postfach kann also deine übliche Kontaktadresse sein.
 
 Push-Benachrichtigungen (wenn man bald dran ist, Erinnerungen an den Check-in, die Glocke) brauchen ein Schlüsselpaar für die Instanz: `npx web-push generate-vapid-keys`, dann `WEB_PUSH_PUBLIC_KEY` und `WEB_PUSH_PRIVATE_KEY`. Bewahre sie auf: Die Geräte mit aktivierten Benachrichtigungen hängen davon ab. Ronde muss über HTTPS laufen; auf dem iPhone fügt man es zuerst zum Home-Bildschirm hinzu.
 
@@ -91,11 +91,11 @@ Kanal und der Befehl `/ronde`. Die Instanz braucht ihre eigene Slack-App, einmal
    curl -fsSLO https://raw.githubusercontent.com/joinronde/ronde/main/docker/slack-manifest.yml
    ```
 
-2. Auf [api.slack.com/apps](https://api.slack.com/apps): **Create New App › From a manifest**, deinen
-   Slack-Workspace wählen und die Datei einfügen.
-3. Die Schlüssel unter **Basic Information › App Credentials** in `.env` kopieren (`SLACK_CLIENT_ID`,
-   `SLACK_CLIENT_SECRET`, `SLACK_SIGNING_SECRET`), dann `docker compose up -d` ausführen.
-4. In Ronde öffnet ein Owner oder Admin jedes Arbeitsbereichs **Einstellungen › Slack › Zu Slack hinzufügen**.
+2. Auf [api.slack.com/apps](https://api.slack.com/apps): **Create New App › From a manifest**, wähle deinen
+   Slack-Workspace und füge die Datei ein.
+3. Kopiere die Schlüssel unter **Basic Information › App Credentials** in `.env` (`SLACK_CLIENT_ID`,
+   `SLACK_CLIENT_SECRET`, `SLACK_SIGNING_SECRET`) und führe dann `docker compose up -d` aus.
+4. In Ronde öffnet ein Inhaber oder Admin jedes Arbeitsbereichs **Einstellungen › Slack › Zu Slack hinzufügen**.
 
 Um die App mehreren Slack-Workspaces hinzuzufügen, aktiviere **Manage Distribution** in den Einstellungen der App.
 
@@ -108,16 +108,16 @@ deiner Microsoft-Organisation registriert wird. Microsoft muss `RONDE_URL` per H
 
 1. Im [Azure-Portal](https://portal.azure.com): **Create a resource › Azure Bot**, mit einem Handle (`ronde`),
    dem kostenlosen Tarif **F0**, **Type of App: Single Tenant** und **Create new Microsoft App ID**.
-2. Im Bot unter **Settings › Configuration**: den **Messaging endpoint** auf
-   `https://ronde.example.com/api/teams/messages` (deine `RONDE_URL`) setzen, speichern und die **Microsoft App
-   ID** und die **App Tenant ID** kopieren.
+2. Im Bot unter **Settings › Configuration**: Setze den **Messaging endpoint** auf
+   `https://ronde.example.com/api/teams/messages` (deine `RONDE_URL`), speichere und kopiere die **Microsoft App
+   ID** und die **App Tenant ID**.
 3. **Manage Password** auf derselben Seite öffnet die App-Registrierung: **Certificates & secrets › New client
-   secret**, dann seinen **Value** kopieren (wird nur einmal angezeigt).
-4. Im Bot unter **Settings › Channels**: **Microsoft Teams** hinzufügen und die Bedingungen annehmen.
-5. Die drei Werte in `.env` eintragen (`TEAMS_APP_ID`, `TEAMS_TENANT_ID`, `TEAMS_APP_PASSWORD`), dann
-   `docker compose up -d` ausführen.
-6. In Ronde öffnet ein Owner oder Admin eines Arbeitsbereichs **Einstellungen › Microsoft Teams** und lädt die
-   App herunter. Eine Teams-Administration lädt sie hoch (Teams Admin Center › Teams-Apps › Apps verwalten ›
+   secret**, dann kopiere seinen **Value** (wird nur einmal angezeigt).
+4. Im Bot unter **Settings › Channels**: Füge **Microsoft Teams** hinzu und nimm die Bedingungen an.
+5. Trag die drei Werte in `.env` ein (`TEAMS_APP_ID`, `TEAMS_TENANT_ID`, `TEAMS_APP_PASSWORD`) und führe dann
+   `docker compose up -d` aus.
+6. In Ronde öffnet ein Inhaber oder Admin eines Arbeitsbereichs **Einstellungen › Microsoft Teams** und lädt die
+   App herunter. Ein Teams-Admin lädt sie hoch (Teams Admin Center › Teams-Apps › Apps verwalten ›
    Neue App hochladen) und fügt sie einem Team hinzu: Ronde veröffentlicht eine Karte in dessen Kanal, und
    **Mit Ronde verknüpfen** wählt den Arbeitsbereich.
 

@@ -54,7 +54,7 @@
   "beepHint": "Un pitido en este navegador cuando se acaba el tiempo",
   "reviewMinutes": "Revisar y publicar el acta",
   "endedTitle": "La reunión ha terminado: un último paso",
-  "endedNext": "Relea el acta y complete sus notas si hace falta, luego publíquela: llega a todos y la próxima sesión se prepara.",
+  "endedNext": "Relee el acta y completa tus notas si hace falta, luego publícala: llega a todos y la próxima sesión se prepara.",
   "pendingRequests": "{count, plural, one {# mano levantada o pregunta pendiente} other {# manos levantadas o preguntas pendientes}}",
   "panes": {
     "run": "Orden del día",
@@ -150,7 +150,7 @@
     "checkInStale": "Ficha de antes de su ausencia, sin actualizar",
     "checkInEmpty": "Ficha vacía",
     "topics": "Temas abiertos",
-    "end": "Cierre y actas",
+    "end": "Cierre y acta",
     "legend": "Marca: ficha rellenada. <note></note>: notas tomadas para las actas. «Ficha» permite corregirla si hace falta. Se añade sola una etapa «Preguntas» en cuanto alguien levanta la mano."
   },
   "unsavedCheckIn": "Los cambios de la ficha no están guardados.",
@@ -168,7 +168,7 @@
     "pending": "Pendientes ({count})",
     "noHands": "Nadie ha levantado la mano.",
     "handled": "Atendidas",
-    "kudos": "Kudos ({count})",
+    "kudos": "Agradecimientos ({count})",
     "reactions": "Reacciones en el paso actual: {list}",
     "none": "ninguna"
   },
@@ -199,8 +199,8 @@
   "stop": {
     "confirmation": "Confirmación",
     "endAsk": "¿Saltar directamente al cierre? Se omiten los pasos restantes.",
-    "resetAsk": "¿Volver a la pantalla de espera? Se borran el cronómetro, las manos levantadas, las preguntas, las reacciones y los kudos de esta sesión. Las fichas y tus notas se conservan.",
-    "ended": "Reunión terminada: revisa las actas y luego archívalas.",
+    "resetAsk": "¿Volver a la pantalla de espera? Se borran el cronómetro, las manos levantadas, las preguntas, las reacciones y los agradecimientos de esta sesión. Las fichas y tus notas se conservan.",
+    "ended": "Reunión terminada: revisa el acta y luego publícala.",
     "reset": "Inicio cancelado: de vuelta a la pantalla de espera.",
     "endYes": "Sí, terminar",
     "resetYes": "Sí, volver a la espera",
@@ -232,8 +232,8 @@
     "alwaysIncluded": "Tus notas y las acciones de seguimiento siempre se incluyen. Esta elección se guarda para las próximas reuniones.",
     "review": "Revisar y editar",
     "reviewTitle": "El acta, antes de publicarla",
-    "reviewHint": "Cambie el resumen y las notas de cada paso: el acta de la derecha se actualiza mientras escribe.",
-    "reviewEdit": "Lo que escribió",
+    "reviewHint": "Cambia el resumen y las notas de cada paso: el acta de la derecha se actualiza mientras escribes.",
+    "reviewEdit": "Lo que escribiste",
     "reviewPreview": "El acta tal como se leerá",
     "archiveAtEnd": "El acta se publica al cierre de la reunión.",
     "archiveAsk": "¿Publicar el acta, cerrar la sesión y vaciar las fichas de los presentes?",
@@ -273,10 +273,10 @@
   },
   "async": {
     "title": "Reunión sin sesión en directo",
-    "hint": "Cada persona rellena su ficha y comenta las de los demás hasta {when}. Después la sesión se archiva sola y el resumen se envía por correo.",
+    "hint": "Cada persona rellena su ficha y comenta las de los demás hasta {when}. Después la sesión se cierra sola y el resumen se envía por correo.",
     "hintNoTime": "Cada persona rellena su ficha y comenta las de los demás. Publica el resumen cuando el equipo esté listo.",
     "publish": "Publicar el resumen ahora",
-    "confirm": "¿Archivar esta sesión y enviar ahora el resumen al equipo por correo?",
+    "confirm": "¿Cerrar esta sesión y enviar ahora el resumen al equipo por correo?",
     "yes": "Sí, publicar",
     "published": "Resumen publicado",
     "orLive": "Aún puedes empezar una reunión en directo en su lugar."

@@ -7,7 +7,7 @@
   "name": "नाम",
   "token": "API टोकन",
   "connection": "कनेक्शन",
-  "noConnection": "कार्यक्षेत्र में अभी कोई {kind} कनेक्शन नहीं है।",
+  "noConnection": "वर्कस्पेस में अभी कोई {kind} कनेक्शन नहीं है।",
   "toConnections": "“GitLab और GitHub” में एक जोड़ें।",
   "tokenKept": "एक टोकन सहेजा गया है। बदलने के लिए नया लिखें।",
   "save": "सहेजें",

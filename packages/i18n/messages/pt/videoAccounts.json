@@ -1,6 +1,6 @@
 {
   "title": "Contas de vídeo",
-  "intro": "As contas de vídeo do espaço: um servidor BigBlueButton onde as suas reuniões abrem a sala, ou uma conta Zoom, Google Meet ou Teams que cria uma sala duradoura para cada reunião. Ninguém precisa de iniciar sessão.",
+  "intro": "As contas de vídeo do espaço: um servidor BigBlueButton onde as suas reuniões abrem a sala, ou uma conta Zoom, Google Meet ou Teams que cria uma sala duradoura para cada reunião. Ninguém precisa fazer login.",
   "empty": "Ainda não há contas de vídeo.",
   "add": "Adicionar uma conta de vídeo",
   "kind": "Provedor",
@@ -32,14 +32,14 @@
     "zoom": "Segredo do cliente",
     "meet": "Chave privada da conta de serviço",
     "teams": "Segredo do cliente",
-    "bbb": "Segredo partilhado do servidor"
+    "bbb": "Segredo compartilhado do servidor"
   },
   "hints": {
     "zoom": "No Zoom App Marketplace, crie um app “Server-to-Server OAuth” com o escopo meeting:write:meeting:admin e copie o ID da conta, o ID do cliente e o segredo.",
     "meet": "No Google Cloud, crie uma conta de serviço, conceda a ela delegação em todo o domínio para o escopo meetings.space.created no console de administração do Google Workspace e cole o private_key da chave JSON.",
     "teams": "No Microsoft Entra, registre um aplicativo com a permissão de aplicativo OnlineMeetings.ReadWrite.All (consentimento do administrador) e uma política de acesso de aplicativo para o organizador.",
-    "bbb": "O endereço do servidor (https://…/bigbluebutton) e o seu segredo partilhado, dado por bbb-conf --secret no servidor."
+    "bbb": "O endereço do servidor (https://…/bigbluebutton) e o seu segredo compartilhado, dado por bbb-conf --secret no servidor."
   },
   "useIt": "Depois, nas configurações de uma reunião, Geral → Videochamada: “Criar uma sala permanente”.",
-  "useItBbb": "Um servidor BigBlueButton passa a ser proposto nas definições de cada reunião, Geral → Videochamada."
+  "useItBbb": "Um servidor BigBlueButton passa a ser proposto nas configurações de cada reunião, Geral → Videochamada."
 }

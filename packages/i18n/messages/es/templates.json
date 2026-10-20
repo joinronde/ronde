@@ -14,10 +14,10 @@
   },
   "retro": {
     "name": "Retrospectiva mensual",
-    "description": "Repasad juntos el mes: lo que fue bien, lo que mejorar, ideas que probar.",
+    "description": "Repasar juntos el mes: lo que fue bien, lo que hay que mejorar, ideas que probar.",
     "sections": {
       "well": "Lo que fue bien",
-      "improve": "Lo que mejorar",
+      "improve": "Qué mejorar",
       "ideas": "Ideas que probar"
     }
   },
@@ -43,10 +43,10 @@
   },
   "steering": {
     "name": "Comité de dirección",
-    "description": "Una vez al mes: avance, decisiones que tomar, riesgos y próximos pasos.",
+    "description": "Una vez al mes: avance, decisiones por tomar, riesgos y próximos pasos.",
     "sections": {
       "progress": "Avance",
-      "decisions": "Decisiones que tomar",
+      "decisions": "Decisiones por tomar",
       "risks": "Riesgos",
       "next": "Próximos pasos"
     }
@@ -224,7 +224,7 @@
     "name": "Briefing antes del servicio",
     "description": "Diez minutos antes de abrir, cada día: reservas, platos del día, consignas y puntos de atención.",
     "sections": {
-      "bookings": "Reservas y afluencia",
+      "bookings": "Reservas y afluencia prevista",
       "specials": "Platos del día",
       "instructions": "Consignas",
       "watch": "Puntos de atención"
@@ -235,7 +235,7 @@
     "description": "Los primeros meses de una nueva persona, cada semana: lo que ha aprendido, sus objetivos, lo que necesita y sus preguntas.",
     "sections": {
       "learned": "Lo que he aprendido",
-      "goals": "Mis objetivos de la semana",
+      "goals": "Mis objetivos para la próxima semana",
       "needs": "Lo que necesito",
       "questions": "Mis preguntas"
     }
@@ -257,7 +257,7 @@
       "report": "Informe de actividad",
       "finances": "Finanzas",
       "resolutions": "Acuerdos por votar",
-      "risks": "Riesgos y puntos de vigilancia"
+      "risks": "Riesgos y puntos de atención"
     }
   },
   "supportReview": {

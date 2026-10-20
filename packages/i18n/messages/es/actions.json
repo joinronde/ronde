@@ -13,7 +13,7 @@
   "layoutList": "Lista",
   "layoutBoard": "Kanban",
   "stuck": "Esperan demasiado",
-  "dropHere": "Suelte una acción aquí",
+  "dropHere": "Suelta una acción aquí",
   "moveTo": "Mover «{text}» a {column}",
   "group": {
     "open": "Pendientes",

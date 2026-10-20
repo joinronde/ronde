@@ -7,7 +7,7 @@ Thanks for helping. Bug reports, ideas and pull requests are welcome.
 Open an issue with the version of Ronde (the image tag, or the commit), whether it runs in the cloud or on your
 own server, what you did, what you expected and what happened. Screenshots help.
 
-Security issues are not reported in public: see [SECURITY.md](SECURITY.md).
+Please do not report security issues in public: see [SECURITY.md](SECURITY.md).
 
 ## Working on the code
 
@@ -15,7 +15,7 @@ Requirements: Node.js 22, pnpm 10 and Docker. `make dev` installs everything, st
 app on http://localhost:3000 with a demo workspace (sign in as `host@example.com`, password
 `ronde-demo-password`). The [README](README.md#local-development) has the details.
 
-Before opening a pull request, run the checks it touches:
+Before opening a pull request, run the checks relevant to your change:
 
 ```bash
 make lint typecheck test
@@ -30,7 +30,7 @@ make e2e                # browser flows
 - Every text shown to people goes through the catalogs in `packages/i18n/messages/<locale>/`, in the ten
   languages; `pnpm --filter @ronde/i18n generate` updates their index. If you cannot translate a language,
   say so in the pull request.
-- A change of behaviour comes with a test: unit tests next to the code, integration tests in
+- A change in behavior comes with a test: unit tests next to the code, integration tests in
   `apps/web/tests`, browser flows in `apps/web/e2e`.
 - The paid editions' code lives in `ee/`; nothing outside `apps/web/src/ee-bridge.ts` imports it
   (`node scripts/check-ee-boundary.mjs` checks it).

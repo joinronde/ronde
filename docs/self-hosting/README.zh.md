@@ -1,10 +1,10 @@
 # 自托管 Ronde
 
-Ronde 可以运行在任何装有 Docker 的机器上：应用本体、一个 PostgreSQL 数据库，以及一个在每个版本应用数据库迁移的一次性容器。社区版的全部功能都免费，会议和人数不受限制。许可证密钥可开启 Team 或 Enterprise 功能。
+Ronde 可以运行在任何装有 Docker 的机器上：应用本体、一个 PostgreSQL 数据库，以及一个负责应用每个版本数据库迁移的一次性容器。社区版的全部功能都免费，会议和人数不受限制。许可证密钥可开启 Team 或 Enterprise 功能。
 
 ## 开始
 
-1. 获取某个发布版本的文件：
+1. 获取文件：
 
    ```sh
    mkdir ronde && cd ronde
@@ -47,15 +47,15 @@ docker compose --profile mail up -d   # emails at http://localhost:8025
 
 要让成员通过回复提醒邮件来填写进展卡，请给 Ronde 一个可读取的邮箱：`INBOUND_IMAP_URL=imaps://user:password@imap.example.com:993/INBOX`；登录名不是邮箱地址时，再设置 `INBOUND_ADDRESS`。回复会发送到这个邮箱；Ronde 每分钟读取回复提醒的邮件，把其中的条目加入进展卡，发邮件确认，并将其移到 `Ronde` 文件夹。邮箱中的其他邮件保持原样，因此它可以就是你平时的联系地址。
 
-推送通知（快轮到你、进展卡提醒、铃铛消息）需要为实例准备一对密钥：`npx web-push generate-vapid-keys`，然后设置 `WEB_PUSH_PUBLIC_KEY` 和 `WEB_PUSH_PRIVATE_KEY`。请妥善保存：已开启通知的设备依赖这对密钥。Ronde 必须通过 HTTPS 提供服务；在 iPhone 上需先将其添加到主屏幕。
+推送通知（快轮到你时、进展卡提醒、铃铛中的消息）需要为实例准备一对密钥：`npx web-push generate-vapid-keys`，然后设置 `WEB_PUSH_PUBLIC_KEY` 和 `WEB_PUSH_PRIVATE_KEY`。请妥善保存：已开启通知的设备依赖这对密钥。Ronde 必须通过 HTTPS 提供服务；在 iPhone 上需先将其添加到主屏幕。
 
 ## 登录
 
-本地账户和魔法链接开箱即用。`SIGNUP_POLICY` 决定谁可以创建账户：`invite-only`（默认）、`open`，或配合 `SIGNUP_ALLOWED_DOMAINS` 使用 `domains`。一个 OpenID Connect 提供方（Keycloak、Authentik、Entra ID、Okta……）通过 `OIDC_*` 变量配置；Google、GitHub 和 Microsoft 则通过各自的 `<PROVIDER>_CLIENT_ID` 和 `<PROVIDER>_CLIENT_SECRET` 配置。重定向 URI：`<RONDE_URL>/api/auth/callback/<provider>`。
+本地账户和邮件登录链接开箱即用。`SIGNUP_POLICY` 决定谁可以创建账户：`invite-only`（默认）、`open`，或配合 `SIGNUP_ALLOWED_DOMAINS` 使用 `domains`。一个 OpenID Connect 提供方（Keycloak、Authentik、Entra ID、Okta……）通过 `OIDC_*` 变量配置；Google、GitHub 和 Microsoft 则通过各自的 `<PROVIDER>_CLIENT_ID` 和 `<PROVIDER>_CLIENT_SECRET` 配置。重定向 URI：`<RONDE_URL>/api/auth/callback/<provider>`。
 
-## 不把声音发到外部的转写
+## 不外传音频的转写
 
-转写（Team）使用兼容 OpenAI API 的语音转文字服务。若要让声音留在你的服务器上，请启动 `whisper` 配置文件并让 Ronde 指向它：
+转写（Team）使用兼容 OpenAI API 的语音转文字服务。若要让音频留在你的服务器上，请启动 `whisper` 配置文件并让 Ronde 指向它：
 
 ```sh
 cat >> .env <<'ENV'
@@ -67,9 +67,7 @@ docker compose --profile whisper up -d
 
 ## Slack
 
-拥有 Team 或 Enterprise 许可证后，工作空间可以将 Ronde 添加到 Slack：私信发送进展卡提醒、在 Slack 表单中
-填写进展卡、在频道中接收通知，以及 `/ronde` 命令。实例需要自己的 Slack 应用，只需创建一次。Slack 必须能通过
-HTTPS 访问 `RONDE_URL`。
+拥有 Team 或 Enterprise 许可证后，工作空间可以将 Ronde 添加到 Slack：私信发送进展卡提醒、在 Slack 表单中填写进展卡、在频道中接收通知，以及 `/ronde` 命令。实例需要自己的 Slack 应用，只需创建一次。Slack 必须能通过 HTTPS 访问 `RONDE_URL`。
 
 1. 获取应用清单，并将其中每个 `https://ronde.example.com` 替换为你的 `RONDE_URL`：
 
@@ -77,10 +75,8 @@ HTTPS 访问 `RONDE_URL`。
    curl -fsSLO https://raw.githubusercontent.com/joinronde/ronde/main/docker/slack-manifest.yml
    ```
 
-2. 在 [api.slack.com/apps](https://api.slack.com/apps)：**Create New App › From a manifest**，选择你的
-   Slack 工作区并粘贴该文件。
-3. 将 **Basic Information › App Credentials** 中的密钥复制到 `.env`（`SLACK_CLIENT_ID`、
-   `SLACK_CLIENT_SECRET`、`SLACK_SIGNING_SECRET`），然后运行 `docker compose up -d`。
+2. 在 [api.slack.com/apps](https://api.slack.com/apps)：**Create New App › From a manifest**，选择你的 Slack 工作区并粘贴该文件。
+3. 将 **Basic Information › App Credentials** 中的密钥复制到 `.env`（`SLACK_CLIENT_ID`、`SLACK_CLIENT_SECRET`、`SLACK_SIGNING_SECRET`），然后运行 `docker compose up -d`。
 4. 在 Ronde 中，每个工作空间的所有者或管理员打开**设置 › Slack › 添加到 Slack**。
 
 如需将应用添加到多个 Slack 工作区，请在应用设置中开启 **Manage Distribution**。
@@ -94,7 +90,7 @@ HTTPS 访问 `RONDE_URL`。
 3. 同一页面的 **Manage Password** 会打开应用注册：**Certificates & secrets › New client secret**，然后复制其 **Value**（只显示一次）。
 4. 在机器人的 **Settings › Channels** 中：添加 **Microsoft Teams** 并接受其条款。
 5. 将这三个值写入 `.env`（`TEAMS_APP_ID`、`TEAMS_TENANT_ID`、`TEAMS_APP_PASSWORD`），然后运行 `docker compose up -d`。
-6. 在 Ronde 中，工作空间的所有者或管理员打开 **设置 › Microsoft Teams** 并下载应用。Teams 管理员上传它（Teams 管理中心 › Teams 应用 › 管理应用 › 上传新应用）并将其添加到团队：Ronde 会在该团队的频道中发布一张卡片，点击 **关联到 Ronde** 即可选择工作空间。
+6. 在 Ronde 中，工作空间的所有者或管理员打开**设置 › Microsoft Teams** 并下载应用。Teams 管理员上传它（Teams 管理中心 › Teams 应用 › 管理应用 › 上传新应用）并将其添加到团队：Ronde 会在该团队的频道中发布一张卡片，点击**关联到 Ronde**即可选择工作空间。
 
 客户端密钥会在 6 到 24 个月后过期：请提前创建新的密钥并替换 `TEAMS_APP_PASSWORD`。单租户机器人为你自己 Microsoft 组织中的成员服务；若要向其他组织提供该应用，需要将其发布到 Teams 应用商店。
 

@@ -7,7 +7,7 @@
   "name": "名称",
   "token": "API 令牌",
   "connection": "连接",
-  "noConnection": "工作区还没有 {kind} 连接。",
+  "noConnection": "工作空间还没有 {kind} 连接。",
   "toConnections": "请在“GitLab 和 GitHub”中添加。",
   "tokenKept": "已保存令牌。输入新令牌即可替换。",
   "save": "保存",

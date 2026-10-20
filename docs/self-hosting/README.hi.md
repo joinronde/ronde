@@ -6,7 +6,7 @@ Ronde Docker वाली किसी भी मशीन पर चलता �
 
 ## शुरू करें
 
-1. किसी रिलीज़ की फ़ाइलें लें:
+1. फ़ाइलें लें:
 
    ```sh
    mkdir ronde && cd ronde
@@ -14,7 +14,7 @@ Ronde Docker वाली किसी भी मशीन पर चलता �
    curl -fsSL https://raw.githubusercontent.com/joinronde/ronde/main/docker/.env.example -o .env
    ```
 
-2. `.env` भरें: वह पता जो लोग खोलेंगे (`RONDE_URL`) और तीन सीक्रेट।
+2. `.env` भरें: वह पता सेट करें जो लोग खोलेंगे (`RONDE_URL`), फिर तीनों सीक्रेट बनाएँ:
 
    ```sh
    for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env; done
@@ -38,8 +38,8 @@ Ronde Docker वाली किसी भी मशीन पर चलता �
 docker compose --profile https up -d
 ```
 
-अपने ख़ुद के रिवर्स प्रॉक्सी के पीछे, इसके बजाय पोर्ट `RONDE_PORT` (डिफ़ॉल्ट 3000) पर भेजें और `X-Forwarded-*`
-हेडर बनाए रखें। Server-Sent Events बफ़र नहीं होने चाहिए (nginx में `proxy_buffering off`)।
+अगर आप इसके बजाय अपना रिवर्स प्रॉक्सी इस्तेमाल करते हैं, तो पोर्ट `RONDE_PORT` (डिफ़ॉल्ट 3000) पर फ़ॉरवर्ड करें और
+`X-Forwarded-*` हेडर बनाए रखें। Server-Sent Events बफ़र नहीं होने चाहिए (nginx में `proxy_buffering off`)।
 
 ## ईमेल
 
@@ -52,9 +52,9 @@ echo "SMTP_URL=smtp://mail:1025" >> .env
 docker compose --profile mail up -d   # emails at http://localhost:8025
 ```
 
-रिमाइंडर का जवाब देकर हर किसी को अपना कार्ड भरने देने के लिए, Ronde को पढ़ने के लिए एक मेलबॉक्स दें: `INBOUND_IMAP_URL=imaps://user:password@imap.example.com:993/INBOX`, और जब लॉगिन ईमेल पता न हो तो `INBOUND_ADDRESS`। जवाब वहीं भेजे जाते हैं; हर मिनट Ronde रिमाइंडर के जवाब पढ़ता है, उनकी पंक्तियाँ कार्ड में जोड़ता है, ईमेल से पुष्टि करता है और उन्हें `Ronde` फ़ोल्डर में रख देता है। मेलबॉक्स के बाकी संदेश जैसे हैं वैसे रहते हैं, इसलिए यह आपका सामान्य संपर्क पता भी हो सकता है।
+लोग रिमाइंडर का जवाब देकर अपना चेक-इन भर सकें, इसके लिए Ronde को पढ़ने के लिए एक मेलबॉक्स दें: `INBOUND_IMAP_URL=imaps://user:password@imap.example.com:993/INBOX`, और जब लॉगिन ईमेल पता न हो तो `INBOUND_ADDRESS`। जवाब वहीं भेजे जाते हैं; हर मिनट Ronde रिमाइंडर के जवाब पढ़ता है, उनकी पंक्तियाँ चेक-इन में जोड़ता है, ईमेल से पुष्टि करता है और उन्हें `Ronde` फ़ोल्डर में रख देता है। मेलबॉक्स के बाक़ी संदेश जैसे हैं वैसे रहते हैं, इसलिए यह आपका सामान्य संपर्क पता भी हो सकता है।
 
-पुश सूचनाओं (आपकी बारी नज़दीक, कार्ड के रिमाइंडर, घंटी) के लिए इंस्टेंस को कुंजियों की एक जोड़ी चाहिए: `npx web-push generate-vapid-keys`, फिर `WEB_PUSH_PUBLIC_KEY` और `WEB_PUSH_PRIVATE_KEY`। इन्हें संभालकर रखें: जिन डिवाइस पर सूचनाएँ चालू हैं वे इन्हीं पर निर्भर हैं। Ronde को HTTPS पर चलना चाहिए; iPhone पर पहले उसे होम स्क्रीन पर जोड़ना होता है।
+पुश सूचनाओं (आपकी बारी नज़दीक, चेक-इन के रिमाइंडर, घंटी) के लिए इंस्टेंस को कुंजियों की एक जोड़ी चाहिए: इन्हें `npx web-push generate-vapid-keys` से बनाएँ, फिर `WEB_PUSH_PUBLIC_KEY` और `WEB_PUSH_PRIVATE_KEY` सेट करें। इन्हें संभालकर रखें: जिन डिवाइस पर सूचनाएँ चालू हैं वे इन्हीं पर निर्भर हैं। Ronde को HTTPS पर चलना चाहिए; iPhone पर लोगों को पहले उसे होम स्क्रीन पर जोड़ना होता है।
 
 ## साइन-इन
 
@@ -64,9 +64,9 @@ docker compose --profile mail up -d   # emails at http://localhost:8025
 `<PROVIDER>_CLIENT_ID` और `<PROVIDER>_CLIENT_SECRET` से। रीडायरेक्ट URI:
 `<RONDE_URL>/api/auth/callback/<provider>`।
 
-## आवाज़ बाहर भेजे बिना ट्रांसक्रिप्ट
+## ऑडियो बाहर भेजे बिना ट्रांसक्रिप्ट
 
-ट्रांसक्रिप्ट (Team) OpenAI API वाली स्पीच-टू-टेक्स्ट सेवा का उपयोग करते हैं। आवाज़ को अपने सर्वर पर रखने के
+ट्रांसक्रिप्ट (Team) OpenAI-संगत API वाली स्पीच-टू-टेक्स्ट सेवा का उपयोग करते हैं। ऑडियो को अपने सर्वर पर रखने के
 लिए `whisper` प्रोफ़ाइल चालू करें और Ronde को उसकी ओर इंगित करें:
 
 ```sh
@@ -93,7 +93,7 @@ Team या Enterprise लाइसेंस के साथ, वर्कस�
    वर्कस्पेस चुनें और फ़ाइल चिपकाएँ।
 3. **Basic Information › App Credentials** की कुंजियाँ `.env` में कॉपी करें (`SLACK_CLIENT_ID`,
    `SLACK_CLIENT_SECRET`, `SLACK_SIGNING_SECRET`), फिर `docker compose up -d` चलाएँ।
-4. Ronde में, हर वर्कस्पेस का मालिक या व्यवस्थापक **सेटिंग › Slack › Slack में जोड़ें** खोलता है।
+4. Ronde में, हर वर्कस्पेस का मालिक या एडमिन **सेटिंग › Slack › Slack में जोड़ें** खोलता है।
 
 ऐप को कई Slack वर्कस्पेस में जोड़ने के लिए, ऐप की सेटिंग में **Manage Distribution** चालू करें।
 
@@ -113,11 +113,11 @@ Azure Bot। Microsoft को HTTPS पर `RONDE_URL` तक पहुँचन
 5. तीनों मान `.env` में डालें (`TEAMS_APP_ID`, `TEAMS_TENANT_ID`, `TEAMS_APP_PASSWORD`), फिर `docker compose up -d`
    चलाएँ।
 6. Ronde में, किसी वर्कस्पेस का मालिक या एडमिन **सेटिंग › Microsoft Teams** खोलकर ऐप डाउनलोड करता है। Teams एडमिन उसे अपलोड करता
-   है (Teams एडमिन सेंटर › Teams ऐप › ऐप प्रबंधित करें › नया ऐप अपलोड करें) और किसी टीम में जोड़ता है: Ronde उसके चैनल में एक कार्ड
+   है (Teams admin center › Teams apps › Manage apps › Upload new app) और किसी टीम में जोड़ता है: Ronde उसके चैनल में एक कार्ड
    पोस्ट करता है, और **Ronde से जोड़ें** वर्कस्पेस चुनता है।
 
-क्लाइंट सीक्रेट 6 से 24 महीने में समाप्त हो जाता है: उससे पहले अगला बनाएँ और `TEAMS_APP_PASSWORD` बदलें। सिंगल-टेनेंट बॉट आपके अपने
-Microsoft संगठन के लोगों की सेवा करता है; ऐप को दूसरे संगठनों को देने के लिए उसे Teams Store में प्रकाशित किया जाता है।
+क्लाइंट सीक्रेट 6 से 24 महीने में समाप्त हो जाता है: समाप्त होने से पहले नया बनाएँ और `TEAMS_APP_PASSWORD` बदलें। सिंगल-टेनेंट बॉट आपके अपने
+Microsoft संगठन के लोगों की सेवा करता है; ऐप को दूसरे संगठनों को देने के लिए उसे Teams Store में प्रकाशित करना होगा।
 
 ## अपग्रेड
 
@@ -125,8 +125,8 @@ Microsoft संगठन के लोगों की सेवा करत�
 docker compose pull && docker compose up -d
 ```
 
-`migrate` कंटेनर ऐप के शुरू होने से पहले नए संस्करण के माइग्रेशन लागू करता है। कब अपग्रेड करना है यह तय करने के
-लिए `.env` में `RONDE_VERSION=1.0.0-beta.3` से संस्करण तय करें।
+`migrate` कंटेनर ऐप के शुरू होने से पहले नए संस्करण के माइग्रेशन लागू करता है। कब अपग्रेड करना है, यह ख़ुद चुनने के
+लिए `.env` में `RONDE_VERSION=1.0.0-beta.3` से संस्करण पिन करें।
 
 ## बैकअप
 
@@ -145,4 +145,4 @@ docker compose exec db pg_dump -U ronde ronde | gzip > ronde-$(date +%F).sql.gz
 | `ghcr.io/joinronde/ronde-migrate` | उसी संस्करण के डेटाबेस माइग्रेशन |
 
 हर सीक्रेट वेरिएबल `<NAME>_FILE` (Docker secrets) भी स्वीकार करता है। शिक्षा: स्कूलों और विश्वविद्यालयों को पेड
-प्लान मुफ़्त मिलते हैं, https://joinronde.com/hi/education पर अनुरोध करें।
+प्लान मुफ़्त मिलते हैं; https://joinronde.com/hi/education पर अनुरोध करें।

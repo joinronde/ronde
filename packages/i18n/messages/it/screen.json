@@ -11,7 +11,7 @@
   "previewTheme": "Anteprima di un tema",
   "replayIntro": "Rivedi l'introduzione",
   "fullscreen": "Schermo intero",
-  "drivenFromControl": "Questa scheda è comandata dalla regia.",
+  "drivenFromControl": "Questa pagina è comandata dalla regia.",
   "yourTurn": "Tocca a te, <span>{name}</span>!",
   "poweredBy": "Realizzato con Ronde"
 }

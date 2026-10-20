@@ -6,7 +6,7 @@ limite de reuniões ou de pessoas. Uma chave de licença ativa os recursos do Te
 
 ## Começar
 
-1. Baixe os arquivos de uma versão:
+1. Baixe os arquivos:
 
    ```sh
    mkdir ronde && cd ronde
@@ -14,7 +14,7 @@ limite de reuniões ou de pessoas. Uma chave de licença ativa os recursos do Te
    curl -fsSL https://raw.githubusercontent.com/joinronde/ronde/main/docker/.env.example -o .env
    ```
 
-2. Preencha o `.env`: o endereço que as pessoas vão abrir (`RONDE_URL`) e três segredos.
+2. Preencha o `.env`: defina o endereço que as pessoas vão abrir (`RONDE_URL`) e depois gere os três segredos:
 
    ```sh
    for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env; done
@@ -55,7 +55,7 @@ docker compose --profile mail up -d   # emails at http://localhost:8025
 
 Para que cada pessoa possa preencher a ficha respondendo ao lembrete, dê ao Ronde uma caixa de correio para ler: `INBOUND_IMAP_URL=imaps://user:password@imap.example.com:993/INBOX`, e `INBOUND_ADDRESS` quando o login não for o endereço de e-mail. As respostas vão para lá; a cada minuto o Ronde lê as que respondem a um lembrete, acrescenta suas linhas à ficha, confirma por e-mail e as move para uma pasta `Ronde`. As outras mensagens da caixa ficam como estão, então pode ser o seu endereço de contato habitual.
 
-As notificações push (sua vez se aproximando, os lembretes de ficha, o sino) precisam de um par de chaves para a instância: `npx web-push generate-vapid-keys`, depois `WEB_PUSH_PUBLIC_KEY` e `WEB_PUSH_PRIVATE_KEY`. Guarde-as: os dispositivos que ativaram as notificações dependem delas. O Ronde precisa ser servido por HTTPS; no iPhone, primeiro adiciona-se à Tela de Início.
+As notificações push (sua vez se aproximando, os lembretes de ficha, o sino) precisam de um par de chaves para a instância: gere-as com `npx web-push generate-vapid-keys` e depois defina `WEB_PUSH_PUBLIC_KEY` e `WEB_PUSH_PRIVATE_KEY`. Guarde-as: os dispositivos que ativaram as notificações dependem delas. O Ronde precisa ser servido por HTTPS; no iPhone, as pessoas precisam primeiro adicioná-lo à Tela de Início.
 
 ## Login
 
@@ -83,7 +83,7 @@ docker compose --profile whisper up -d
 Com uma licença Team ou Enterprise, os espaços de trabalho podem adicionar o Ronde ao Slack: lembretes de
 ficha por mensagem direta, fichas preenchidas em um formulário do Slack, notificações em um canal e o
 comando `/ronde`. A instância precisa do próprio app do Slack, criado uma única vez. O Slack precisa
-acessar a `RONDE_URL` por HTTPS.
+conseguir acessar a `RONDE_URL` por HTTPS.
 
 1. Baixe o manifesto do app e troque nele cada `https://ronde.example.com` pela sua `RONDE_URL`:
 
@@ -94,7 +94,7 @@ acessar a `RONDE_URL` por HTTPS.
 2. Em [api.slack.com/apps](https://api.slack.com/apps): **Create New App › From a manifest**, escolha seu
    espaço do Slack e cole o arquivo.
 3. Copie as chaves de **Basic Information › App Credentials** para o `.env` (`SLACK_CLIENT_ID`,
-   `SLACK_CLIENT_SECRET`, `SLACK_SIGNING_SECRET`) e rode `docker compose up -d`.
+   `SLACK_CLIENT_SECRET`, `SLACK_SIGNING_SECRET`) e execute `docker compose up -d`.
 4. No Ronde, um proprietário ou administrador de cada espaço abre **Configurações › Slack › Adicionar ao Slack**.
 
 Para adicionar o app a vários espaços do Slack, ative **Manage Distribution** nas configurações do app.
@@ -104,7 +104,7 @@ Para adicionar o app a vários espaços do Slack, ative **Manage Distribution** 
 Com uma licença Team ou Enterprise, os espaços de trabalho podem adicionar o Ronde ao Microsoft Teams:
 lembretes de ficha por mensagem pessoal, fichas preenchidas a partir de um cartão, notificações em um canal e o
 comando `ronde`. A instância precisa do seu próprio app do Teams, um Azure Bot registrado uma vez na sua
-organização Microsoft. A Microsoft precisa acessar `RONDE_URL` por HTTPS.
+organização Microsoft. A Microsoft precisa conseguir acessar a `RONDE_URL` por HTTPS.
 
 1. No [portal do Azure](https://portal.azure.com): **Create a resource › Azure Bot**, com um identificador
    (`ronde`), o plano gratuito **F0**, **Type of App: Single Tenant** e **Create new Microsoft App ID**.
@@ -116,14 +116,14 @@ organização Microsoft. A Microsoft precisa acessar `RONDE_URL` por HTTPS.
 4. No bot, **Settings › Channels**: adicione **Microsoft Teams** e aceite os termos.
 5. Coloque os três valores no `.env` (`TEAMS_APP_ID`, `TEAMS_TENANT_ID`, `TEAMS_APP_PASSWORD`) e execute
    `docker compose up -d`.
-6. No Ronde, uma pessoa proprietária ou administradora de um espaço abre **Configurações › Microsoft Teams** e
+6. No Ronde, um proprietário ou administrador de um espaço abre **Configurações › Microsoft Teams** e
    baixa o app. Um administrador do Teams o carrega (Centro de administração do Teams › Aplicativos do Teams ›
    Gerenciar aplicativos › Carregar novo aplicativo) e o adiciona a uma equipe: o Ronde publica um cartão no
    canal, e **Vincular ao Ronde** escolhe o espaço.
 
-O segredo do cliente expira em 6 a 24 meses: crie o próximo antes e substitua `TEAMS_APP_PASSWORD`. Um bot
+O segredo do cliente expira em 6 a 24 meses: crie um novo antes que ele expire e substitua `TEAMS_APP_PASSWORD`. Um bot
 single-tenant atende as pessoas da sua própria organização Microsoft; para oferecer o app a outras
-organizações, ele é publicado na Teams Store.
+organizações, ele precisa ser publicado na Teams Store.
 
 ## Atualizar
 

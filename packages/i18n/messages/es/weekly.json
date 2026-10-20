@@ -11,7 +11,7 @@
   "actions": "Tus acciones abiertas",
   "actionsHint": "Márcalas en Ronde en cuanto estén hechas.",
   "carried": "{count, plural, one {abierta desde hace # sesión} other {abierta desde hace # sesiones}}",
-  "kudos": "Los reconocimientos recibidos",
+  "kudos": "Los agradecimientos recibidos",
   "from": "de {name}",
   "open": "Abrir Ronde",
   "footer": "Recibes este resumen los lunes como miembro de {workspace}.",
@@ -19,7 +19,7 @@
   "stop": "Dejar de recibir el resumen",
   "page": {
     "title": "¿Dejar de recibir el resumen semanal?",
-    "body": "Ya no recibirás el resumen del lunes con tus sesiones, acciones y reconocimientos. Puedes volver a activarlo en tu cuenta.",
+    "body": "Ya no recibirás el resumen del lunes con tus sesiones, acciones y agradecimientos. Puedes volver a activarlo en tu cuenta.",
     "button": "Dejar de recibirlo",
     "done": "Listo: ya no recibirás el resumen semanal.",
     "invalid": "Este enlace no es válido.",

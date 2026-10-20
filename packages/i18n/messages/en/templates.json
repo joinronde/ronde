@@ -1,7 +1,7 @@
 {
   "weekly": {
     "name": "Weekly sync",
-    "description": "A round table of what was done, what is planned and what blocks, with open topics and follow-up actions.",
+    "description": "A round table of what was done, what is planned and what is blocking, with open topics and follow-up actions.",
     "sections": {}
   },
   "standup": {
@@ -43,10 +43,10 @@
   },
   "steering": {
     "name": "Steering committee",
-    "description": "Once a month: progress, decisions to take, risks and next steps.",
+    "description": "Once a month: progress, decisions to make, risks and next steps.",
     "sections": {
       "progress": "Progress",
-      "decisions": "Decisions to take",
+      "decisions": "Decisions to make",
       "risks": "Risks",
       "next": "Next steps"
     }
@@ -62,7 +62,7 @@
   },
   "leadership": {
     "name": "Leadership team",
-    "description": "The weekly of the leaders: key figures, wins, priorities and what needs escalating.",
+    "description": "The leadership team's weekly meeting: key figures, wins, priorities and what needs escalating.",
     "sections": {
       "figures": "Key figures",
       "wins": "Wins",
@@ -102,7 +102,7 @@
   },
   "teachingTeam": {
     "name": "Teaching team",
-    "description": "The weekly of a teaching team: last week in class, what is coming, students to watch and resources to share.",
+    "description": "A teaching team's weekly meeting: last week in class, what is coming, students to watch and resources to share.",
     "sections": {
       "coming": "Coming up",
       "students": "Students to watch",
@@ -112,7 +112,7 @@
   },
   "board": {
     "name": "Non-profit board",
-    "description": "The monthly board of an association: news from the committees, votes, treasury and upcoming events.",
+    "description": "The monthly board meeting of a non-profit: news from the committees, votes, treasury and upcoming events.",
     "sections": {
       "news": "News from the committees",
       "votes": "Votes to hold",
@@ -131,7 +131,7 @@
   },
   "siteMeeting": {
     "name": "Site meeting",
-    "description": "The weekly meeting of a building site: work done, work planned, safety and the punch list.",
+    "description": "The weekly meeting of a construction site: work done, work planned, safety and the punch list.",
     "sections": {
       "done": "Work done",
       "planned": "Work planned",
@@ -150,12 +150,12 @@
   },
   "portfolio": {
     "name": "Portfolio review",
-    "description": "Every other week, one turn per project: the people working on it give its health, what moved, the next milestones and the risks; the ones in trouble go first.",
+    "description": "Every other week, one turn per project: the people working on it report its health, what moved, the next milestones and the risks; the ones in trouble go first.",
     "sections": {
       "progress": "Progress",
       "milestones": "Next milestones",
       "risks": "Risks and needs",
-      "decisions": "Decisions to take"
+      "decisions": "Decisions to make"
     }
   },
   "teamProjects": {
@@ -202,7 +202,7 @@
   },
   "studentProjects": {
     "name": "Student projects",
-    "description": "Every other week with the tutor: progress, deliverables, difficulties and questions of each group.",
+    "description": "Every other week with the tutor: each group's progress, deliverables, difficulties and questions.",
     "sections": {
       "progress": "Progress",
       "deliverables": "Deliverables",
@@ -242,22 +242,22 @@
   },
   "hiringReview": {
     "name": "Hiring review",
-    "description": "Every week: interviews held, candidates in progress, decisions to take and roles to open.",
+    "description": "Every week: interviews held, candidates in progress, decisions to make and roles to open.",
     "sections": {
       "interviews": "Interviews held",
       "candidates": "Candidates in progress",
-      "decisions": "Decisions to take",
+      "decisions": "Decisions to make",
       "openings": "Roles to open"
     }
   },
   "boardOfDirectors": {
     "name": "Board of directors",
-    "description": "Once a term: the activity report, the finances, the resolutions to vote on and the risks.",
+    "description": "Once a quarter: the activity report, the finances, the resolutions to vote on and the risks.",
     "sections": {
       "report": "Activity report",
       "finances": "Finances",
       "resolutions": "Resolutions to vote on",
-      "risks": "Risks and points of vigilance"
+      "risks": "Risks and points to watch"
     }
   },
   "supportReview": {

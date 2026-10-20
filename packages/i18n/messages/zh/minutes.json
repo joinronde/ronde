@@ -25,7 +25,7 @@
   "blockers": "提出的阻碍",
   "nextMeeting": "下次会议：{date}",
   "parts": {
-    "checkIns": "进展卡（项目、板块、阻碍）",
+    "checkIns": "进展卡（项目、栏目、阻碍）",
     "comments": "进展卡上的 👍 和评论",
     "questions": "提出的问题",
     "topics": "开放议题",

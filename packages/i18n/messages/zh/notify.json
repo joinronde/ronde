@@ -39,7 +39,7 @@
     "none": "本场无需进展卡。",
     "allReady": "所有进展卡都已准备好，谢谢大家！",
     "remaining": "{count, plural, other {还有 # 张进展卡需要准备或更新。}}",
-    "prepare": "更新你的项目和板块（{sections}），并回顾你的后续行动项。",
+    "prepare": "更新你的项目和栏目（{sections}），并回顾你的后续行动项。",
     "fillIn": "📝 填写我的进展卡"
   },
   "overdue": {

@@ -9,7 +9,7 @@
   "wordFirst": "Uma palavra e Enter",
   "wordMore": "Outra palavra?",
   "wordsLeft": "{count} de {max} palavras",
-  "removeWord": "Remover «{word}»",
+  "removeWord": "Remover “{word}”",
   "sent": "Resposta enviada",
   "change": "Mudar minha resposta",
   "send": "Responder",
@@ -40,6 +40,6 @@
   "yes": "Sim",
   "no": "Não",
   "yesNo": "Sim ou não, já",
-  "yesNoHint": "A pergunta digitada abaixo, ou «Você concorda?», na tela na hora, com quem respondeu o quê.",
+  "yesNoHint": "A pergunta digitada abaixo, ou “Você concorda?”, na tela na hora, com quem respondeu o quê.",
   "yesNoQuestion": "Você concorda?"
 }

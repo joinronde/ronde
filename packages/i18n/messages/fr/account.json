@@ -3,7 +3,7 @@
   "back": "Retour",
   "profile": "Profil",
   "birthday": "Anniversaire",
-  "birthdayHint": "Jour et mois uniquement, jamais l'année : les réunions qui fêtent les anniversaires l'affichent sur l'écran d'attente. Il est repris sur votre fiche dans chaque espace.",
+  "birthdayHint": "Jour et mois uniquement, jamais l'année : les réunions qui fêtent les anniversaires l'affichent sur l'écran d'attente. Il est repris sur votre fiche dans chaque espace.",
   "photoNoWorkspace": "Rejoignez ou créez un espace pour ajouter une photo : elle s'affiche sur votre fiche.",
   "photoHint": "Affichée à côté de votre nom dans tous vos espaces : réunions, annuaire, comptes rendus. Une image carrée convient le mieux ; elle est recadrée au centre.",
   "photo": "Photo",
@@ -97,7 +97,7 @@
     "export": "Télécharger mes données",
     "exportHint": "Votre compte, vos moyens de connexion et appareils, et dans chaque espace votre profil, vos check-ins, actions, réponses et absences, dans un fichier JSON.",
     "delete": "Supprimer mon compte",
-    "deleteHint": "Votre compte, vos connexions et vos appareils sont supprimés aussitôt. Dans chaque espace, votre profil est effacé ; ce que vous avez dit en réunion reste à l'équipe, signé par un ancien membre. C'est définitif.",
+    "deleteHint": "Votre compte, vos connexions et vos appareils sont supprimés aussitôt. Dans chaque espace, votre profil est effacé ; ce que vous avez dit en réunion reste à l'équipe, signé par un ancien membre. C'est définitif.",
     "deleteConfirm": "Saisissez <strong>{email}</strong> pour confirmer",
     "deleteForGood": "Supprimer définitivement",
     "cancel": "Annuler"

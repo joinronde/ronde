@@ -91,7 +91,7 @@
     "turnOn": "No hay ninguna integración activada en esta reunión. Activa GitLab o GitHub en «Módulos» para importar las incidencias y merge o pull requests de cada persona."
   },
   "hub": {
-    "intro": "Las herramientas con las que trabaja esta reunión y en qué punto está cada una. Abra una tarjeta para configurarla.",
+    "intro": "Las herramientas con las que trabaja esta reunión y en qué punto está cada una. Abre una tarjeta para configurarla.",
     "configure": "Configurar",
     "close": "Cerrar",
     "off": "Desactivada",

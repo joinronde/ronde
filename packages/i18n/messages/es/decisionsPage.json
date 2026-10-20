@@ -19,7 +19,7 @@
   "noMatch": "Ninguna decisión menciona «{query}».",
   "noneInPeriod": "Ninguna decisión en este periodo.",
   "empty": "Todavía no hay decisiones.",
-  "emptyHint": "Durante una sesión, escribe una nota que empiece por «Decisión:»: se guarda aquí cuando se archiva la sesión.",
+  "emptyHint": "Durante una sesión, escribe una nota que empiece por «Decisión:»: se guarda aquí cuando se publica el acta.",
   "csv": {
     "date": "Fecha",
     "meeting": "Reunión",

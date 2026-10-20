@@ -33,7 +33,7 @@
     "stepCheckIn": "Füll deinen Check-in aus",
     "stepCheckInHint": "Was du erledigt hast, was du planst, was blockiert: ein paar Zeilen vor dem Meeting.",
     "stepSession": "Leite eine erste Sitzung",
-    "stepSessionHint": "Öffne die Regie, starte das Meeting und archiviere es dann mit seinem Protokoll."
+    "stepSessionHint": "Öffne die Regie, starte das Meeting und veröffentliche dann sein Protokoll."
   },
   "settings": {
     "title": "Einstellungen des Arbeitsbereichs",

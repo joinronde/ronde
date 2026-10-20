@@ -9,10 +9,10 @@
   "nextQuestions": "Domande ({count})",
   "setup": {
     "openScreen": "Apri lo schermo condiviso",
-    "tabOpen": "Scheda aperta",
+    "tabOpen": "Pagina aperta",
     "notOpen": "Non ancora aperta",
-    "shareTab": "Nella videochiamata, condividi <strong>la scheda</strong> «Schermo condiviso» invece dell'intero schermo.",
-    "keys": "Guida da questa scheda: <kbd>→</kbd> avanti, <kbd>←</kbd> indietro, <kbd>Spazio</kbd> timer.",
+    "shareTab": "Nella videochiamata, condividi <strong>la pagina</strong> «Schermo condiviso» invece dell'intero schermo.",
+    "keys": "Guida da questa pagina: <kbd>→</kbd> avanti, <kbd>←</kbd> indietro, <kbd>Spazio</kbd> timer.",
     "remote": "Oppure guida dal telefono."
   },
   "blocks": {
@@ -105,7 +105,7 @@
       "screen": "Schermo condiviso"
     },
     "participantsHint": "Sono attivi su «Il mio schermo» di tutti, e ognuno può disattivarli o regolarne il volume. Non condividere l'audio nella videochiamata.",
-    "screenHint": "Clicca una volta sullo schermo condiviso per consentire l'audio, e condividi l'audio della scheda nella videochiamata.",
+    "screenHint": "Clicca una volta sullo schermo condiviso per consentire l'audio, e condividi l'audio della pagina nella videochiamata.",
     "board": "Soundboard",
     "birthdayOf": "Compleanno {names}",
     "music": "Musica d'attesa",
@@ -168,7 +168,7 @@
     "pending": "In attesa ({count})",
     "noHands": "Nessuno ha alzato la mano.",
     "handled": "Gestite",
-    "kudos": "Kudos ({count})",
+    "kudos": "Ringraziamenti ({count})",
     "reactions": "Reazioni alla fase attuale: {list}",
     "none": "nessuna"
   },
@@ -199,8 +199,8 @@
   "stop": {
     "confirmation": "Conferma",
     "endAsk": "Passare direttamente alla chiusura? Le fasi rimanenti vengono saltate.",
-    "resetAsk": "Tornare alla schermata di attesa? Timer, mani alzate, domande, reazioni e kudos di questa sessione vengono cancellati. Schede e note restano.",
-    "ended": "Riunione terminata: rivedi il verbale, poi archivialo.",
+    "resetAsk": "Tornare alla schermata di attesa? Timer, mani alzate, domande, reazioni e ringraziamenti di questa sessione vengono cancellati. Schede e note restano.",
+    "ended": "Riunione terminata: rivedi il verbale, poi pubblicalo.",
     "reset": "Avvio annullato: di nuovo alla schermata di attesa.",
     "endYes": "Sì, termina",
     "resetYes": "Sì, torna all'attesa",
@@ -273,10 +273,10 @@
   },
   "async": {
     "title": "Riunione senza sessione in diretta",
-    "hint": "Ognuno compila la propria scheda e commenta quelle degli altri fino a {when}. Poi la sessione si archivia da sola e il riepilogo parte via email.",
+    "hint": "Ognuno compila la propria scheda e commenta quelle degli altri fino a {when}. Poi la sessione si chiude da sola e il riepilogo parte via email.",
     "hintNoTime": "Ognuno compila la propria scheda e commenta quelle degli altri. Pubblica il riepilogo quando il team è pronto.",
     "publish": "Pubblica ora il riepilogo",
-    "confirm": "Archiviare questa sessione e inviare ora il riepilogo al team via email?",
+    "confirm": "Chiudere questa sessione e inviare ora il riepilogo al team via email?",
     "yes": "Sì, pubblica",
     "published": "Riepilogo pubblicato",
     "orLive": "Puoi ancora avviare invece una riunione in diretta."

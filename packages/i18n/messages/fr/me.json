@@ -20,7 +20,7 @@
   "handRaised": "Main levée. Une étape « Questions » est ajoutée après ce passage.",
   "followMeeting": "Suivre la réunion",
   "following": "Vous suivez l'écran de la personne qui anime ({host}). Cliquez sur une étape pour revoir un passage sans gêner la réunion.",
-  "endedFollow": "La réunion est terminée. Cliquez sur une étape pour revoir un passage ; le compte rendu rejoindra l'historique dès que la personne qui anime ({host}) le publiera.",
+  "endedFollow": "La réunion est terminée. Cliquez sur une étape pour revoir un passage ; le compte rendu rejoindra l'historique dès que la personne qui anime ({host}) le publiera.",
   "notStartedFollow": "La réunion n'a pas encore commencé : l'écran de la personne qui anime ({host}) s'affichera ici dès le démarrage.",
   "browsing": "Vous consultez <strong>{view}</strong>. Le direct est sur <strong>{live}</strong>.",
   "backToLive": "Revenir au direct",
@@ -31,7 +31,7 @@
   "signal": "Signal : {label}",
   "thanks": "Merci",
   "writeKind": "Ce que vous envoyez",
-  "reactWait": "Doucement ! Réactions de retour dans {seconds} s",
+  "reactWait": "Doucement ! Réactions de retour dans {seconds} s",
   "kudoSent": "Merci envoyé : il s'affiche sur l'écran partagé.",
   "kudoWho": "Qui remercier",
   "kudoWhoPlaceholder": "Qui remercier ?",
@@ -103,7 +103,7 @@
   "actionStatusChanged": "Action : {status}",
   "historyUnavailable": "Historique indisponible.",
   "loadingPast": "Chargement de vos fiches…",
-  "noPast": "Aucune fiche passée pour l'instant : elles apparaissent ici après chaque réunion où vous avez présenté la vôtre.",
+  "noPast": "Aucune fiche passée pour l'instant : elles apparaissent ici après chaque réunion où vous avez présenté la vôtre.",
   "search": "Rechercher",
   "searchPast": "Rechercher dans vos {count} fiches (projet, mot-clé…)",
   "backToCheckIn": "Retour à ma fiche (non enregistrée)",
@@ -190,7 +190,7 @@
   "rating": {
     "title": "Cette réunion vous a-t-elle été utile ?",
     "hint": "Anonyme : l'équipe ne voit que la moyenne, dès que {min} personnes ont noté.",
-    "thanks": "Merci ! Vous pouvez changer votre note jusqu'à la publication du compte rendu.",
+    "thanks": "Merci ! Vous pouvez changer votre note jusqu'à la publication du compte rendu.",
     "levels": {
       "1": "Du temps perdu",
       "2": "Pas vraiment",
@@ -206,7 +206,7 @@
     "think": "J'ai une question"
   },
   "focus": "Concentration",
-  "focusOn": "Concentration : masquer les réactions et animations sur cet écran",
+  "focusOn": "Concentration : masquer les réactions et animations sur cet écran",
   "focusOff": "Réafficher les réactions et animations (toujours masquées pendant votre tour)",
-  "focusTurn": "C'est votre tour : réactions et animations sont masquées jusqu'à la fin"
+  "focusTurn": "C'est votre tour : réactions et animations sont masquées jusqu'à la fin"
 }

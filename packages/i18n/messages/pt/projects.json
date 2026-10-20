@@ -98,7 +98,7 @@
   "deleteConfirm": "Excluir o projeto {name}? As fichas dele são excluídas; os itens e ações sobre ele continuam, sem projeto.",
   "noDescription": "Ainda sem descrição.",
   "timeline": "O que as reuniões disseram",
-  "noTimeline": "Nada ainda: quando uma reunião que acompanha o projeto arquivar uma sessão, o que foi dito sobre ele aparecerá aqui.",
+  "noTimeline": "Nada ainda: quando uma reunião que acompanha o projeto publicar a ata, o que foi dito sobre ele aparecerá aqui.",
   "roles": {
     "achievement": "Feito",
     "plan": "Previsto",
@@ -129,18 +129,18 @@
     "added": "{name} acompanhado",
     "emptyPortfolio": "O portfólio está vazio.",
     "create": "Criar um projeto",
-    "allFollowed": "Todos os projetos do portefólio já são seguidos.",
-    "createInPortfolio": "Novo projeto no portefólio",
-    "noneHint": "Escolha os projetos de que esta equipa fala: cada um terá o seu separador na ficha e a sua vez na reunião.",
+    "allFollowed": "Todos os projetos do portfólio já são acompanhados.",
+    "createInPortfolio": "Novo projeto no portfólio",
+    "noneHint": "Escolha os projetos de que esta equipe fala: cada um terá a sua aba na ficha e a sua vez na reunião.",
     "whoAdds": "Quem pode adicionar projetos?",
-    "whoAddsHint": "Os projetos vêm sempre do portefólio do espaço. Reordená-los ou remover um continua reservado aos anfitriões.",
+    "whoAddsHint": "Os projetos vêm sempre do portfólio do espaço. Reordená-los ou remover um continua reservado aos anfitriões.",
     "by": {
       "hosts": "Os anfitriões",
       "hostsHint": "Só quem configura a reunião escolhe os seus projetos.",
       "participants": "Todos os participantes",
       "participantsHint": "Qualquer participante pode adicionar um projeto a partir da sua ficha."
     },
-    "bySaved": "Guardado"
+    "bySaved": "Salvo"
   },
   "programme": "Programa",
   "programmeHint": "O projeto de que ele faz parte: um projeto que contém outros é um programa.",
@@ -162,7 +162,7 @@
   "columns": {
     "project": "Projeto",
     "health": "Saúde",
-    "status": "Estado",
+    "status": "Status",
     "due": "Prazo",
     "progress": "Progresso",
     "updated": "Última novidade"
@@ -222,10 +222,10 @@
     "archived": "Não é atualizado enquanto estiver arquivado: restaure-o para mantê-lo sincronizado com o {tool}."
   },
   "logo": {
-    "add": "Adicionar um logo",
-    "change": "Trocar o logo",
-    "remove": "Remover o logo",
-    "notSaved": "Não foi possível salvar o logo.",
+    "add": "Adicionar um logotipo",
+    "change": "Trocar o logotipo",
+    "remove": "Remover o logotipo",
+    "notSaved": "Não foi possível salvar o logotipo.",
     "unreadable": "Não é possível ler esta imagem. Use um arquivo PNG, JPEG ou WebP."
   }
 }

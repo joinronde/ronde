@@ -1,13 +1,13 @@
 {
   "workspaces": {
-    "unlimited": "Unbegrenzt Arbeitsbereiche, Meetings und Personen"
+    "unlimited": "Unbegrenzt viele Arbeitsbereiche, Meetings und Personen"
   },
   "identity": {
     "local": "Konten mit E-Mail und Passwort",
     "magicLink": "Anmeldelinks per E-Mail",
     "social": "Anmeldung mit Google, GitHub oder Microsoft",
     "oidc": "Single Sign-on mit einem OpenID-Connect-Anbieter",
-    "twoFactor": "Zwei-Faktor-Authentifizierung",
+    "twoFactor": "Zweistufige Verifizierung",
     "saml": "SAML-Single-Sign-on und mehrere Identitätsanbieter",
     "ldap": "Anmeldung über LDAP und Active Directory",
     "scim": "Benutzerbereitstellung per SCIM",
@@ -19,7 +19,7 @@
     "customRoles": "Eigene Rollen und feine Berechtigungen"
   },
   "meetings": {
-    "unlimited": "Unbegrenzt Meetings und Sitzungen",
+    "unlimited": "Unbegrenzt viele Meetings und Sitzungen",
     "sectionRoles": "Check-in-Abschnitte mit einstellbarem Verhalten",
     "templates": "Eingebaute Vorlagen und Vorlagen des Arbeitsbereichs"
   },
@@ -39,7 +39,7 @@
   "integrations": {
     "gitlab": "Import aus GitLab",
     "github": "Import aus GitHub",
-    "video": "Videocalls: jeder Link, Jitsi, BigBlueButton",
+    "video": "Videoanrufe: jeder Link, Jitsi, BigBlueButton",
     "api": "REST-API und ausgehende Webhooks",
     "writeBack": "Tickets in Jira, Linear, GitLab und GitHub aus Aufgaben",
     "videoLinks": "Zoom-, Google-Meet- und Teams-Räume mit einem Klick erstellt",
@@ -70,6 +70,6 @@
     "round": "Projektrunde: eine Runde pro Projekt, in der sein Team gemeinsam spricht",
     "programs": "Programme: Projekte in verschachtelten Programmen",
     "permissions": "Berechtigungen pro Projekt",
-    "import": "Projekte aus GitHub, GitLab, Jira und Linear importieren"
+    "import": "Import von Projekten aus GitHub, GitLab, Jira und Linear"
   }
 }

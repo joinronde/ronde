@@ -44,7 +44,7 @@
   "notEstimated": "غير مقدَّر",
   "polls": "الاستطلاعات",
   "answers": "{count, plural, zero {لا إجابات} one {إجابة واحدة} two {إجابتان} few {# إجابات} many {# إجابة} other {# إجابة}}",
-  "parking": "الموقف",
+  "parking": "المواضيع المؤجلة",
   "projectRound": "المشاريع",
   "aboutProject": "عن {project}",
   "rating": "الفائدة",

@@ -68,7 +68,7 @@
     },
     "workflows": {
       "name": "Workflows de notification",
-      "description": "N'envoyez une notification que si ses conditions sont remplies, avec vos propres mots, vers Slack, Teams, Matrix ou l'e-mail."
+      "description": "N'envoyer une notification que si ses conditions sont remplies, avec vos propres mots, vers Slack, Teams, Matrix ou l'e-mail."
     },
     "aiAssistant": {
       "name": "Assistant IA",
@@ -96,7 +96,7 @@
     },
     "retro": {
       "name": "Rétrospective",
-      "description": "Des notes anonymes en colonnes, regroupées par la régie, votées par l'équipe, puis discutées ; à ajouter à l'ordre du jour."
+      "description": "Des notes anonymes en colonnes, regroupées par le régisseur, votées par l'équipe, puis discutées ; à ajouter à l'ordre du jour."
     },
     "timebox": {
       "name": "Timebox",
@@ -108,15 +108,15 @@
     },
     "polls": {
       "name": "Sondages",
-      "description": "Posez une question à l'équipe pendant la séance : choix, échelle ou nuage de mots, anonyme ou non."
+      "description": "Poser une question à l'équipe pendant la séance : choix, échelle ou nuage de mots, anonyme ou non."
     },
     "random": {
       "name": "Outils aléatoires",
-      "description": "Une roue pour choisir qui passe ensuite, un ordre de passage tiré au sort, des équipes ou pile ou face, joués sur tous les écrans à la fois."
+      "description": "Une roue pour choisir qui passe ensuite, un ordre de passage tiré au sort, des équipes tirées au sort ou pile ou face, joués sur tous les écrans à la fois."
     },
     "parking": {
       "name": "Parking",
-      "description": "Mettez de côté en un clic ce qui sort du sujet ; il devient un point divers de la prochaine séance."
+      "description": "Mettre de côté en un clic ce qui sort du sujet ; cela devient un point divers de la prochaine séance."
     },
     "decisions": {
       "name": "Journal des décisions",
@@ -136,7 +136,7 @@
     }
   },
   "upgrade": {
-    "comesWith": "{feature} est inclus dans Ronde {edition}.",
+    "comesWith": "{feature} fait partie de Ronde {edition}.",
     "plans": "Voir les offres"
   }
 }

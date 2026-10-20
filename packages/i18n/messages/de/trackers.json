@@ -8,7 +8,7 @@
   "token": "API-Token",
   "connection": "Verbindung",
   "noConnection": "Noch keine {kind}-Verbindung im Arbeitsbereich.",
-  "toConnections": "Fügen Sie eine unter „GitLab und GitHub“ hinzu.",
+  "toConnections": "Füge eine unter „GitLab und GitHub“ hinzu.",
   "tokenKept": "Ein Token ist gespeichert. Gib ein neues ein, um es zu ersetzen.",
   "save": "Speichern",
   "cancel": "Abbrechen",

@@ -8,7 +8,7 @@
   "view": "Ansicht",
   "viewMonth": "Monat",
   "viewAgenda": "Agenda",
-  "legend": "Angezeigte Besprechungen",
+  "legend": "Angezeigte Meetings",
   "hideMeeting": "{name} ausblenden",
   "showMeeting": "{name} einblenden",
   "more": "+{count} weitere",

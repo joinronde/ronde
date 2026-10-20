@@ -6,9 +6,9 @@
   "kind": "Ferramenta",
   "name": "Nome",
   "token": "Token de API",
-  "connection": "Ligação",
-  "noConnection": "Ainda não há nenhuma ligação {kind} no espaço.",
-  "toConnections": "Adicione uma em «GitLab e GitHub».",
+  "connection": "Conexão",
+  "noConnection": "Ainda não há nenhuma conexão {kind} no espaço.",
+  "toConnections": "Adicione uma em “GitLab e GitHub”.",
   "tokenKept": "Há um token salvo. Digite um novo para substituí-lo.",
   "save": "Salvar",
   "cancel": "Cancelar",
@@ -32,8 +32,8 @@
   "hints": {
     "jira": "Um token de API criado em id.atlassian.com, para a conta cujo e-mail está acima.",
     "linear": "Uma chave de API pessoal das configurações do Linear → API. A chave da equipe (ENG em ENG-12) vem antes de cada número de issue.",
-    "gitlab": "Projeto: o seu caminho (grupo/projeto) ou o seu número. Os tickets são abertos com o token da ligação, que precisa do âmbito api.",
-    "github": "Repositório: dono/nome. Os tickets são abertos com o token da ligação, que precisa de «Issues: leitura e escrita» nele."
+    "gitlab": "Projeto: o caminho dele (grupo/projeto) ou o número dele. Os tickets são abertos com o token da conexão, que precisa do escopo api.",
+    "github": "Repositório: dono/nome. Os tickets são abertos com o token da conexão, que precisa de “Issues: leitura e escrita” nele."
   },
   "assignee": "Os responsáveis são atribuídos no GitLab e no GitHub quando o usuário consta no perfil do diretório.",
   "edit": "Editar"

@@ -40,10 +40,10 @@
   "openInRonde": "In Ronde öffnen",
   "meeting": {
     "title": "Protokoll veröffentlichen",
-    "intro": "Bei jeder Archivierung wird das Protokoll zu einer Wiki-Seite, benannt nach dem Datum der Sitzung. Wird die Zusammenfassung bearbeitet, zieht die Seite nach.",
+    "intro": "Jedes veröffentlichte Protokoll wird zu einer Wiki-Seite, benannt nach dem Datum der Sitzung. Wird die Zusammenfassung bearbeitet, zieht die Seite nach.",
     "wiki": "Wiki",
     "none": "Nirgends",
-    "hint": "Bereits archivierte Sitzungen werden aus dem Verlauf veröffentlicht.",
+    "hint": "Vergangene Sitzungen werden aus dem Verlauf veröffentlicht.",
     "noWiki": "In diesem Arbeitsbereich gibt es noch kein Wiki.",
     "addWiki": "In den Einstellungen des Arbeitsbereichs hinzufügen",
     "on": "Das Protokoll wird in {name} veröffentlicht.",

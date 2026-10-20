@@ -1,6 +1,6 @@
 {
   "title": "Teams",
-  "intro": "Gliedern Sie das Verzeichnis in Teams: Ein Team kann zu einem anderen gehören (eine Abteilung, ihre Teams, deren Squads). In einer Besprechung wählt ein Team auch seine Unterteams.",
+  "intro": "Gliedere das Verzeichnis in Teams: Ein Team kann zu einem anderen gehören (eine Abteilung, ihre Teams, deren Squads). In einem Meeting wählt ein Team auch seine Unterteams.",
   "add": "Neues Team",
   "namePlaceholder": "Name des Teams, z. B. Design",
   "parent": "Gehört zu",
@@ -8,7 +8,7 @@
   "create": "Erstellen",
   "cancel": "Abbrechen",
   "empty": "Noch keine Teams",
-  "emptyHint": "Erstellen Sie ein erstes Team und ordnen Sie Personen über ihre Karte im Verzeichnis zu.",
+  "emptyHint": "Erstelle ein erstes Team und ordne Personen über ihre Karte im Verzeichnis zu.",
   "readOnly": "Nur die Administratoren des Arbeitsbereichs ändern die Teams.",
   "members": "{count, plural, =0 {Niemand} one {# Person} other {# Personen}}",
   "subTeams": "{count, plural, one {# Unterteam} other {# Unterteams}}",

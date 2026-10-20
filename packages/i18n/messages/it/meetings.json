@@ -89,7 +89,7 @@
     "modulesLater": "Altri si aggiungono in qualsiasi momento dalle impostazioni della riunione.",
     "order": {
       "title": "Ordine dei turni",
-      "team": "Prima la squadra",
+      "team": "Prima il team",
       "teamHint": "Un breve turno a testa, poi i progetti insieme.",
       "projects": "Prima i progetti",
       "projectsHint": "Progetto per progetto, poi un turno a testa per il resto.",

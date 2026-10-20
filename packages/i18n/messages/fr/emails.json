@@ -19,8 +19,8 @@
     "footer": "Si vous n'avez rien demandé, vous pouvez ignorer ce message : votre mot de passe ne change pas."
   },
   "invitation": {
-    "subject": "{inviter} t'invite dans {workspace} sur Ronde",
-    "intro": "{inviter} t'invite à rejoindre l'espace {workspace} sur Ronde, pour préparer et animer vos réunions d'équipe ensemble.",
+    "subject": "{inviter} vous invite dans {workspace} sur Ronde",
+    "intro": "{inviter} vous invite à rejoindre l'espace {workspace} sur Ronde, pour préparer et animer vos réunions d'équipe ensemble.",
     "action": "Rejoindre {workspace}",
     "footer": "Cette invitation expire dans 7 jours. Si vous ne l'attendiez pas, vous pouvez ignorer ce message."
   }

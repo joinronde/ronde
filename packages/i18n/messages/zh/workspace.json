@@ -33,7 +33,7 @@
     "stepCheckIn": "填写你的进展卡",
     "stepCheckInHint": "你做了什么、计划做什么、什么卡住了：会前写几行。",
     "stepSession": "主持第一场会议",
-    "stepSessionHint": "打开控制台，开始会议，然后连同会议纪要一起归档。"
+    "stepSessionHint": "打开控制台，开始会议，然后发布会议纪要。"
   },
   "settings": {
     "title": "工作空间设置",
@@ -49,7 +49,7 @@
     "saved": "已保存",
     "categories": "团队",
     "manageTeams": "管理团队",
-    "categoriesHint": "显示在签到表上，并用于统计分组。团队可以嵌套：在通讯录中管理。",
+    "categoriesHint": "显示在进展卡上，并用于统计分组。团队可以嵌套：在通讯录中管理。",
     "categoryPlaceholder": "例如 工程",
     "add": "添加",
     "rename": "重命名 {name}",

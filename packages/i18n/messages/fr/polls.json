@@ -7,9 +7,9 @@
   "anonymous": "anonyme",
   "word": "Mot {n}",
   "wordFirst": "Un mot, puis Entrée",
-  "wordMore": "Un autre mot ?",
+  "wordMore": "Un autre mot ?",
   "wordsLeft": "{count} mot(s) sur {max}",
-  "removeWord": "Retirer « {word} »",
+  "removeWord": "Retirer « {word} »",
   "sent": "Réponse envoyée",
   "change": "Modifier ma réponse",
   "send": "Répondre",
@@ -40,6 +40,6 @@
   "yes": "Oui",
   "no": "Non",
   "yesNo": "Oui ou non, tout de suite",
-  "yesNoHint": "La question saisie ci-dessous, ou « Êtes-vous d'accord ? », aussitôt à l'écran, avec qui a répondu quoi.",
-  "yesNoQuestion": "Êtes-vous d'accord ?"
+  "yesNoHint": "La question saisie ci-dessous, ou « Êtes-vous d'accord ? », aussitôt à l'écran, avec qui a répondu quoi.",
+  "yesNoQuestion": "Êtes-vous d'accord ?"
 }

@@ -1,6 +1,6 @@
 {
   "loading": "Caricamento della cronologia…",
-  "empty": "Ancora nessuna riunione archiviata. Usa «Archivia la riunione» in regia, alla chiusura.",
+  "empty": "Ancora nessun verbale. Usa «Pubblica il verbale» in regia, alla chiusura.",
   "searchPlaceholder": "Cerca nei verbali (progetto, persona, blocco…)",
   "searchLabel": "Cerca nei verbali",
   "meetings": "{count, plural, one {# riunione} other {# riunioni}}",

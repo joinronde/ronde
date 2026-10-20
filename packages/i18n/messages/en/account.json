@@ -5,7 +5,7 @@
   "birthday": "Birthday",
   "birthdayHint": "Day and month only, never the year: your meetings that celebrate birthdays show it on the waiting screen. It goes on your card in every workspace.",
   "photoNoWorkspace": "Join or create a workspace to add a photo: it is shown on your card there.",
-  "photoHint": "Shown next to your name in every workspace: meetings, directory, minutes. A square picture works best; it is cropped to its centre.",
+  "photoHint": "Shown next to your name in every workspace: meetings, directory, minutes. A square picture works best; it is cropped to its center.",
   "photo": "Photo",
   "name": "Name",
   "email": "Email",

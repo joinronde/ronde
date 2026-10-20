@@ -24,7 +24,7 @@
   "items": {
     "icebreaker": {
       "name": "Eisbrecher",
-      "description": "Eine Frage aus einem Fragenpool zum Aufwärmen; alle antworten in einer Zeile, die während der Einführung angezeigt wird."
+      "description": "Eine Frage aus einem Fragenpool zum Aufwärmen; alle antworten in einer Zeile, die beim Einstieg angezeigt wird."
     },
     "mood": {
       "name": "Stimmung im Team",
@@ -59,7 +59,7 @@
       "description": "Wartemusik, Signaltöne und ein Soundboard, auf den Bildschirmen aller oder auf dem geteilten Bildschirm."
     },
     "ambience": {
-      "name": "Jahreszeitliche Stimmung",
+      "name": "Saisonale Dekoration",
       "description": "Dekorationen zu Feiertagen und Jahreszeiten auf dem Wartebildschirm."
     },
     "gitlab": {
@@ -72,7 +72,7 @@
     },
     "aiAssistant": {
       "name": "KI-Assistent",
-      "description": "Zusammenfassung des Meetings und Extraktion von Aufgaben; selbst gehostet mit eigenem Schlüssel."
+      "description": "Zusammenfassung des Meetings und automatisch erkannte Aufgaben; selbst gehostet mit eigenem Schlüssel."
     },
     "writeBack": {
       "name": "Tickets anlegen",
@@ -80,7 +80,7 @@
     },
     "calendarSync": {
       "name": "Kalendersynchronisierung",
-      "description": "Zweiwege-Sync mit Google, Microsoft 365 und CalDAV, mit Konflikterkennung."
+      "description": "Zwei-Wege-Synchronisierung mit Google, Microsoft 365 und CalDAV, mit Konflikterkennung."
     },
     "analytics": {
       "name": "Auswertungen des Arbeitsbereichs",
@@ -104,7 +104,7 @@
     },
     "poker": {
       "name": "Planning Poker",
-      "description": "Das Team schätzt Punkte mit verdeckten Karten bis zur Aufdeckung; füge es der Agenda hinzu."
+      "description": "Das Team schätzt Einträge mit Karten, die bis zum Aufdecken verdeckt bleiben; füge es der Agenda hinzu."
     },
     "polls": {
       "name": "Umfragen",

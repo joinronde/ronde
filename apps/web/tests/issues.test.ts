@@ -12,7 +12,7 @@ const issuesOf = (schema: z.ZodType, value: unknown) => {
 
 describe("issuesText", () => {
   it("says the limits in French", () => {
-    expect(issuesText(issuesOf(z.object({ teamSize: z.number().min(2) }), { teamSize: 1 }), "fr")).toBe("teamSize : 2 au minimum");
+    expect(issuesText(issuesOf(z.object({ teamSize: z.number().min(2) }), { teamSize: 1 }), "fr")).toBe("teamSize\u00a0: 2 au minimum");
     expect(issuesText(issuesOf(z.number().max(10), 11), "fr")).toBe("10 au maximum");
     expect(issuesText(issuesOf(z.string().min(3), "a"), "fr")).toBe("au moins 3 caractères");
     expect(issuesText(issuesOf(z.string().max(1), "ab"), "fr")).toBe("1 caractère au maximum");

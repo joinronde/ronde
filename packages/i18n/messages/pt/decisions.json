@@ -2,7 +2,7 @@
   "off": "O registro de decisões está desativado nesta reunião.",
   "loading": "Carregando as decisões…",
   "empty": "Nenhuma decisão anotada ainda.",
-  "howTo": "Comece uma linha das notas com “Decisão:” durante uma sessão: quando a sessão for arquivada, ela aparece aqui.",
+  "howTo": "Comece uma linha das notas com “Decisão:” durante uma sessão: quando a ata for publicada, ela aparece aqui.",
   "searchPlaceholder": "Buscar nas decisões",
   "searchLabel": "Buscar nas decisões",
   "count": "{count, plural, one {# decisão} other {# decisões}}",

@@ -36,9 +36,15 @@ A mesma escolha pode ser feita com `SIGNUP_POLICY` (`invite-only`, `domains`, `o
 Os recursos do Team e do Enterprise são ativados com uma chave de licença, informada em Administração do
 servidor ou na variável `RONDE_LICENSE` (a variável prevalece e bloqueia o campo). A chave é verificada no
 servidor, offline: nada é enviado a lugar nenhum. A página mostra o plano, o cliente, a data de expiração e
-quantas vagas estão em uso.
+quantas licenças estão em uso.
 
-- **Mais pessoas do que vagas**: nada é bloqueado; a página pede que você atualize a licença.
+- **Uma licença** corresponde a uma pessoa que participou de uma reunião nos últimos 30 dias, como na nuvem do
+  Ronde. Quem foi convidado e nunca veio, ou ficou ausente o mês todo, não ocupa nenhuma, e uma pessoa em vários
+  espaços de trabalho (com a mesma conta ou o mesmo endereço) conta uma única vez.
+- **O máximo** de cada licença fica registrado enquanto ela é válida (ativa ou no período de carência), contado
+  toda noite e a cada vez que a página é aberta. É nele que a renovação se baseia. Uma nova chave começa a sua
+  própria contagem, e a página continua mostrando o máximo da licença anterior, para acertá-lo.
+- **Mais pessoas do que licenças**: nada é bloqueado. A página avisa, e a diferença é acertada na renovação.
 - **Expirada**: um período de carência de 14 dias mantém tudo funcionando. Depois dele, os recursos pagos
   passam a ser somente leitura: o que contêm continua legível, mas nada novo pode ser adicionado. Os
   recursos do Community nunca são afetados.
@@ -60,7 +66,7 @@ uma ideia, com uma captura de tela se quiserem. Junto com a mensagem vão o ende
 navegador, o tamanho da janela, o idioma e a versão do Ronde. Os administradores leem as mensagens em
 **Administração do servidor**, respondem por e-mail a quem pediu e podem abrir uma issue pré-preenchida no projeto
 Ronde para um problema do próprio Ronde. Com `SENTRY_DSN` definido, as mensagens também chegam a esse projeto do
-Sentry como feedback de usuários. As mensagens são apagadas após um ano; numa instância auto-alojada o botão está desativado por omissão: `RONDE_FEEDBACK=on` mostra-o.
+Sentry como feedback de usuários. As mensagens são apagadas após um ano; numa instância auto-hospedada, o botão fica desativado por padrão: `RONDE_FEEDBACK=on` o exibe.
 
 ## Espaços de trabalho
 
@@ -86,7 +92,7 @@ Cada membro tem um papel no espaço de trabalho:
 | Proprietário | Tudo, incluindo a cobrança e a exclusão do espaço de trabalho |
 | Administrador | Tudo, exceto cobrança e exclusão; atua como anfitrião de todas as reuniões |
 | Cobrança | O plano, as faturas e a forma de pagamento, nada mais (na nuvem) |
-| Organizador | O que um membro pode, mais criar reuniões quando são reservadas aos administradores, e convidar pessoas |
+| Organizador | O que um membro pode fazer, mais criar reuniões quando a criação é reservada aos administradores, e convidar pessoas |
 | Membro | Ver o diretório, criar reuniões (a menos que sejam reservadas a organizadores e administradores), salvar modelos |
 | Convidado | Somente as reuniões para as quais foi convidado |
 
@@ -128,8 +134,8 @@ as datas que ficam perto demais de outra reunião das mesmas pessoas.
 
 ## Login e login único
 
-A edição Community oferece contas com e-mail e senha, links de login por e-mail, autenticação em dois
-fatores, contas Google, GitHub e Microsoft, e um provedor OpenID Connect para a instância (variáveis
+A edição Community oferece contas com e-mail e senha, links de login por e-mail, verificação em duas
+etapas, contas Google, GitHub e Microsoft, e um provedor OpenID Connect para a instância (variáveis
 `OIDC_*`, veja o [guia de auto-hospedagem](../self-hosting/README.pt.md)).
 
 Cada pessoa gerencia como entra a partir da sua conta, em **Login e segurança**: senha, chaves de acesso (Face ID, Windows Hello, um gerenciador de senhas ou uma chave de segurança), verificação em duas etapas e saída de todos os dispositivos. As chaves de acesso ficam ligadas ao domínio de `APP_URL`, que deve usar HTTPS: depois de uma mudança de domínio, cada pessoa as adiciona de novo. Um endereço que precisa usar login único não pode adicionar nem usar chaves de acesso.
@@ -173,7 +179,7 @@ dia tem o mesmo efeito.
 
 ### Reunião de exemplo
 
-Antes da primeira reunião, o início de um espaço oferece uma reunião de exemplo: uma reunião semanal com uma equipe fictícia de cinco pessoas, um mês de sessões arquivadas com atas, estatísticas e ações, e uma sessão pronta para começar, tudo no idioma do espaço. Ela serve para experimentar tudo: não envia nada (nem lembretes, nem e-mails, nem eventos de agenda, nem notificações), não conta como assento, não marca nenhum dos primeiros passos e fica fora das análises e relatórios do espaço. Um aviso nas suas páginas indica isso, e **Excluir o exemplo** a apaga de vez com sua equipe fictícia (uma pessoa dessa equipe adicionada a outra reunião é mantida). Suas pessoas aparecem como Exemplo no diretório e não podem ser convidadas.
+Antes da primeira reunião, o início de um espaço oferece uma reunião de exemplo: uma reunião semanal com uma equipe fictícia de cinco pessoas, um mês de sessões arquivadas com atas, estatísticas e ações, e uma sessão pronta para começar, tudo no idioma do espaço. Ela serve para experimentar tudo: não envia nada (nem lembretes, nem e-mails, nem eventos de agenda, nem notificações), não ocupa nenhuma licença, não marca nenhum dos primeiros passos e fica fora das análises e relatórios do espaço. Um aviso nas suas páginas indica isso, e **Excluir o exemplo** a apaga de vez com sua equipe fictícia (uma pessoa dessa equipe adicionada a outra reunião é mantida). Suas pessoas aparecem como Exemplo no diretório e não podem ser convidadas.
 
 ### Feriados
 
@@ -220,7 +226,7 @@ agradecimentos, destaque, roleta e sorteios, aniversários, sons, timebox, enque
 de decisões, retrospectiva, planning poker e reuniões assíncronas. Um módulo desativado em uma reunião some
 da sala de controle, da tela compartilhada e das fichas; as configurações dele são mantidas.
 
-A avaliação de utilidade pergunta a todos, no encerramento, se a reunião foi útil (de 1 a 5 estrelas, pela própria tela ou celular). A média aparece a partir de 3 avaliações, para que ninguém consiga adivinhar a nota de outra pessoa; ela vai para a ata e para as estatísticas. Os modelos de reuniões diárias curtas, de reuniões individuais e de órgãos formais (comitê diretivo, conselhos, conselho de classe, reunião de obra, discussão de casos, revisão de incidentes) a deixam desativada.
+A avaliação de utilidade pergunta a todos, no encerramento, se a reunião foi útil (de 1 a 5 estrelas, pela própria tela ou celular). A média aparece a partir de 3 avaliações, para que ninguém consiga adivinhar a nota de outra pessoa; ela vai para a ata e para as estatísticas. Os modelos de reuniões diárias curtas, de reuniões individuais e de órgãos formais (comitê de direção, conselhos, conselho de classe, reunião de obra, discussão de casos, revisão de incidentes) a deixam desativada.
 
 ### Exportações
 
@@ -241,7 +247,7 @@ eventos vão para qual conector: uma sessão prestes a começar, iniciada ou enc
 de ficha, ação atrasada, aniversário.
 
 Toda segunda a partir das 8h (fuso do espaço), cada membro recebe um **resumo semanal** por e-mail: suas
-sessões da semana com um link para cada ficha, suas ações de acompanhamento em aberto e os reconhecimentos
+sessões da semana com um link para cada ficha, suas ações de acompanhamento em aberto e os agradecimentos
 recebidos. Ele só é enviado quando há algo nele; cada pessoa o desativa na sua conta ou pelo link no rodapé do
 e-mail. Numa instância auto-hospedada, precisa de `SMTP_URL`; `RONDE_WEEKLY_PER_RUN` (150 por padrão) limita
 os envios por hora, e o restante sai na hora seguinte.

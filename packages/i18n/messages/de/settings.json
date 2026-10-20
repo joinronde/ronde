@@ -60,7 +60,7 @@
       }
     },
     "taken": "bereits vergeben",
-    "carryPlansSwitch": "Die Rubrik wird zur Checkliste.",
+    "carryPlansSwitch": "Der Abschnitt wird zur Checkliste.",
     "carryPlansHint": "Alle finden ihre Pläne als Kästchen wieder und haken sie nach und nach ab. Ein leeres Kästchen zählt nicht als erledigt.",
     "carryPlans": "Übernehmen, was beim letzten Mal in „{plan}“ stand",
     "removeOf": "„{label}“ entfernen",
@@ -91,7 +91,7 @@
     "turnOn": "Für dieses Meeting ist keine Integration eingeschaltet. Schalte GitLab oder GitHub unter „Module“ ein, um Issues und Merge- bzw. Pull-Requests jeder Person zu importieren."
   },
   "hub": {
-    "intro": "Die Werkzeuge dieser Besprechung und ihr Stand. Öffnen Sie eine Karte, um sie einzurichten.",
+    "intro": "Die Werkzeuge dieses Meetings und ihr Stand. Öffne eine Karte, um sie einzurichten.",
     "configure": "Einrichten",
     "close": "Schließen",
     "off": "Aus",
@@ -113,7 +113,7 @@
     "calendarName": "Kalender",
     "calendar": "Die Sitzungen in den Kalendern aller, synchronisiert",
     "notificationsName": "Benachrichtigungen",
-    "notifications": "Chat, E-Mail und SMS rund um die Besprechung",
+    "notifications": "Chat, E-Mail und SMS rund um das Meeting",
     "goGeneral": "Unter Allgemein",
     "goSchedule": "Unter Planung",
     "goNotifications": "Unter Benachrichtigungen",
@@ -226,17 +226,17 @@
     "projects": "Projekte"
   },
   "navHints": {
-    "general": "Name, Symbol, Format und Timer der Besprechung.",
+    "general": "Name, Symbol, Format und Timer des Meetings.",
     "schedule": "Wann die Sitzungen stattfinden, und ihre Ausnahmen.",
     "people": "Wer teilnimmt und was jede Person darf.",
-    "sections": "Was alle vor der Besprechung ausfüllen.",
-    "agenda": "Der Ablauf der Besprechung, Block für Block.",
+    "sections": "Was alle vor dem Meeting ausfüllen.",
+    "agenda": "Der Ablauf des Meetings, Block für Block.",
     "projects": "Die verfolgten Projekte, jedes mit seiner Runde.",
     "modules": "Moderation, Formate und Werkzeuge, nach Bedarf aktiviert.",
-    "appearance": "Die Farbe der Besprechung auf allen Bildschirmen.",
-    "notifications": "Erinnerungen und Nachrichten rund um die Besprechung.",
+    "appearance": "Die Farbe des Meetings auf allen Bildschirmen.",
+    "notifications": "Erinnerungen und Nachrichten rund um das Meeting.",
     "integrations": "Videokonferenz, Ticket-Tools und Wiki.",
-    "template": "Diese Besprechung als Vorlage des Arbeitsbereichs speichern.",
+    "template": "Dieses Meeting als Vorlage des Arbeitsbereichs speichern.",
     "danger": "Was sich nicht rückgängig machen lässt: verlassen, beenden oder löschen."
   },
   "status": {

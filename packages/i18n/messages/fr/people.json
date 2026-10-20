@@ -55,7 +55,7 @@
   "inviteAgain": "Envoyer une invitation",
   "revoke": "Révoquer l'invitation",
   "remove": "Retirer",
-  "removeConfirm": "Retirer {name} de {workspace} ? Son profil et ses accès sont supprimés ; ce qu'il ou elle a dit en réunion reste, signé par un ancien membre.",
+  "removeConfirm": "Retirer {name} de {workspace} ? Son profil et ses accès sont supprimés ; ce qu'il ou elle a dit en réunion reste, signé par un ancien membre.",
   "removed": "{name} ne fait plus partie de l'espace.",
   "changeRole": "Rôle de {name}",
   "saved": "Enregistré",

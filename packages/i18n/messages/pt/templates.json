@@ -6,7 +6,7 @@
   },
   "standup": {
     "name": "Daily stand-up",
-    "description": "Quinze minutos nos dias úteis: ontem, hoje, bloqueios. Vezes curtas, nada mais.",
+    "description": "Quinze minutos nos dias úteis: ontem, hoje, bloqueios. Falas curtas, nada mais.",
     "sections": {
       "yesterday": "Ontem",
       "today": "Hoje"
@@ -14,7 +14,7 @@
   },
   "retro": {
     "name": "Retrospectiva mensal",
-    "description": "Olhem juntos para o mês: o que foi bem, o que melhorar, ideias para testar.",
+    "description": "Um balanço do mês em equipe: o que foi bem, o que melhorar, ideias para testar.",
     "sections": {
       "well": "O que foi bem",
       "improve": "O que melhorar",
@@ -92,7 +92,7 @@
   },
   "classCouncil": {
     "name": "Conselho de classe",
-    "description": "Uma vez por bimestre: como a turma está, os alunos que precisam de apoio e as ações combinadas.",
+    "description": "Uma vez por trimestre: como a turma está, os alunos que precisam de apoio e as ações combinadas.",
     "sections": {
       "progress": "Como a turma está",
       "support": "Alunos que precisam de apoio",
@@ -150,7 +150,7 @@
   },
   "portfolio": {
     "name": "Revisão de portfólio",
-    "description": "A cada duas semanas, uma vez por projeto: quem trabalha nele conta como ele está, o que avançou, os próximos marcos e os riscos; os projetos em dificuldade vêm primeiro.",
+    "description": "A cada duas semanas, cada projeto tem a sua vez: quem trabalha nele conta como ele está, o que avançou, os próximos marcos e os riscos; os projetos em dificuldade vêm primeiro.",
     "sections": {
       "progress": "Avanço",
       "milestones": "Próximos marcos",
@@ -160,7 +160,7 @@
   },
   "teamProjects": {
     "name": "Equipe e projetos",
-    "description": "Uma vez rápida para as novidades de cada um e depois uma vez por projeto em comum, em que seus membros falam juntos.",
+    "description": "Primeiro, uma vez curta para as novidades de cada pessoa; depois, cada projeto em comum tem a sua vez, em que seus membros falam juntos.",
     "sections": {}
   },
   "rhythm": {

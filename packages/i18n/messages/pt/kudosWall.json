@@ -1,12 +1,12 @@
 {
-  "title": "Kudos",
+  "title": "Agradecimentos",
   "intro": "Os agradecimentos dados durante as sessões, à vista de todos.",
-  "given": "{count, plural, =0 {Nenhum kudos nos últimos 30 dias} one {# kudos nos últimos 30 dias} other {# kudos nos últimos 30 dias}}",
+  "given": "{count, plural, =0 {Nenhum agradecimento nos últimos 30 dias} one {# agradecimento nos últimos 30 dias} other {# agradecimentos nos últimos 30 dias}}",
   "people": "{count, plural, =0 {} one {para # pessoa} other {para # pessoas}}",
   "birthdays": "Aniversários deste mês",
   "today": "Hoje! 🎉",
-  "wall": "Kudos dados",
+  "wall": "Agradecimentos dados",
   "fromTo": "<strong>{from}</strong> para <strong>{to}</strong>",
-  "empty": "Nenhum kudos ainda.",
-  "emptyHint": "Durante uma sessão, o módulo de kudos permite que qualquer pessoa agradeça a um colega: cada agradecimento vem parar neste mural."
+  "empty": "Nenhum agradecimento ainda.",
+  "emptyHint": "Durante uma sessão, o módulo Agradecimentos permite que qualquer pessoa agradeça a um colega: cada agradecimento vem parar neste mural."
 }

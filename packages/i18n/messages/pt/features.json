@@ -7,7 +7,7 @@
     "magicLink": "Links de login por e-mail",
     "social": "Login com Google, GitHub ou Microsoft",
     "oidc": "Login único com um provedor OpenID Connect",
-    "twoFactor": "Autenticação em dois fatores",
+    "twoFactor": "Verificação em duas etapas",
     "saml": "Login único SAML e vários provedores de identidade",
     "ldap": "Login com LDAP e Active Directory",
     "scim": "Provisionamento de usuários com SCIM",
@@ -57,17 +57,17 @@
     "portfolio": "Painel do portfólio: situação ao longo do tempo, prazos, projetos sem notícias, exportação CSV e relatório programado"
   },
   "branding": {
-    "customLogo": "Seu logo nas telas, nos e-mails e nas atas",
+    "customLogo": "Seu logotipo nas telas, nos e-mails e nas atas",
     "whiteLabel": "Marca própria e domínio personalizado"
   },
   "compliance": {
-    "auditLog": "Log de auditoria dos últimos 90 dias, com exportação CSV",
-    "auditStream": "Histórico de auditoria completo, e novas entradas enviadas para o seu SIEM",
+    "auditLog": "Registro de auditoria dos últimos 90 dias, com exportação CSV",
+    "auditStream": "Histórico de auditoria completo, com as novas entradas enviadas ao seu SIEM",
     "retention": "Regras de retenção de dados"
   },
   "projects": {
     "portfolio": "Portfólio de projetos: descrição, tema, situação, responsável, equipe, datas e o histórico de cada reunião",
-    "round": "Rodada por projeto: uma vez por projeto, em que seus membros falam juntos",
+    "round": "Rodada por projeto: cada projeto tem a sua vez, em que seus membros falam juntos",
     "programs": "Programas: projetos agrupados em programas aninhados",
     "permissions": "Permissões por projeto",
     "import": "Projetos importados do GitHub, GitLab, Jira e Linear"

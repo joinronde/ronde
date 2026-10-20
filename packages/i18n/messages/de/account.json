@@ -3,7 +3,7 @@
   "back": "Zurück",
   "profile": "Profil",
   "birthday": "Geburtstag",
-  "birthdayHint": "Nur Tag und Monat, nie das Jahr: Besprechungen, die Geburtstage feiern, zeigen ihn auf dem Wartebildschirm. Er steht auf Ihrer Karte in jedem Arbeitsbereich.",
+  "birthdayHint": "Nur Tag und Monat, nie das Jahr: Deine Meetings, die Geburtstage feiern, zeigen ihn auf dem Wartebildschirm. Er steht auf deiner Karte in jedem Arbeitsbereich.",
   "photoNoWorkspace": "Tritt einem Arbeitsbereich bei oder lege einen an, um ein Foto hinzuzufügen: Es erscheint auf deiner Karte.",
   "photoHint": "Erscheint neben deinem Namen in allen deinen Arbeitsbereichen: Meetings, Verzeichnis, Protokolle. Ein quadratisches Bild passt am besten; es wird mittig zugeschnitten.",
   "photo": "Foto",
@@ -95,9 +95,9 @@
   "data": {
     "title": "Deine Daten",
     "export": "Meine Daten herunterladen",
-    "exportHint": "Dein Konto, deine Anmeldemethoden und Geräte, und in jedem Workspace dein Profil, deine Check-ins, Aufgaben, Antworten und Abwesenheiten, in einer JSON-Datei.",
+    "exportHint": "Dein Konto, deine Anmeldemethoden und Geräte, und in jedem Arbeitsbereich dein Profil, deine Check-ins, Aufgaben, Antworten und Abwesenheiten, in einer JSON-Datei.",
     "delete": "Mein Konto löschen",
-    "deleteHint": "Dein Konto, deine Anmeldungen und Geräte werden sofort gelöscht. In jedem Workspace wird dein Profil gelöscht; was du in Meetings gesagt hast, bleibt beim Team, gezeichnet von einem ehemaligen Mitglied. Das lässt sich nicht rückgängig machen.",
+    "deleteHint": "Dein Konto, deine Anmeldungen und Geräte werden sofort gelöscht. In jedem Arbeitsbereich wird dein Profil gelöscht; was du in Meetings gesagt hast, bleibt beim Team, gezeichnet von einem ehemaligen Mitglied. Das lässt sich nicht rückgängig machen.",
     "deleteConfirm": "Gib <strong>{email}</strong> zur Bestätigung ein",
     "deleteForGood": "Endgültig löschen",
     "cancel": "Abbrechen"

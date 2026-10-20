@@ -5,14 +5,14 @@
     "today": "Heute",
     "previous": "Vorheriger Monat",
     "next": "Nächster Monat",
-    "required": "Wählen Sie ein Datum.",
-    "tooEarly": "Wählen Sie den {date} oder später.",
-    "tooLate": "Wählen Sie den {date} oder früher."
+    "required": "Wähle ein Datum.",
+    "tooEarly": "Wähle den {date} oder später.",
+    "tooLate": "Wähle den {date} oder früher."
   },
   "time": {
     "placeholder": "Uhrzeit wählen",
     "list": "Uhrzeiten",
-    "invalid": "Geben Sie eine Uhrzeit wie 9:30 ein"
+    "invalid": "Gib eine Uhrzeit wie 9:30 ein"
   },
   "duration": {
     "less": "Kürzer",

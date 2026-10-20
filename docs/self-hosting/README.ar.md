@@ -6,7 +6,7 @@
 
 ## البدء
 
-1. احصل على ملفات أحد الإصدارات:
+1. احصل على الملفات:
 
    ```sh
    mkdir ronde && cd ronde
@@ -14,7 +14,7 @@
    curl -fsSL https://raw.githubusercontent.com/joinronde/ronde/main/docker/.env.example -o .env
    ```
 
-2. املأ ملف `.env`: العنوان الذي سيفتحه الناس (`RONDE_URL`) وثلاثة أسرار.
+2. املأ ملف `.env`: اضبط العنوان الذي سيفتحه الناس (`RONDE_URL`)، ثم أنشئ الأسرار الثلاثة:
 
    ```sh
    for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env; done
@@ -52,7 +52,7 @@ docker compose --profile mail up -d   # emails at http://localhost:8025
 
 ليتمكن كل شخص من ملء بطاقته بالرد على التذكير، امنح Ronde صندوق بريد ليقرأه: `INBOUND_IMAP_URL=imaps://user:password@imap.example.com:993/INBOX`، و`INBOUND_ADDRESS` إن لم يكن اسم الدخول هو عنوان البريد. تُرسَل الردود إليه؛ وفي كل دقيقة يقرأ Ronde الردود على التذكيرات، ويضيف أسطرها إلى البطاقة، ويؤكد ذلك بالبريد، وينقلها إلى مجلد `Ronde`. تبقى بقية رسائل الصندوق على حالها، فيمكن أن يكون عنوان التواصل المعتاد لديك.
 
-تحتاج الإشعارات الفورية (اقتراب دورك، تذكيرات البطاقة، الجرس) إلى زوج مفاتيح للنسخة: `npx web-push generate-vapid-keys`، ثم `WEB_PUSH_PUBLIC_KEY` و`WEB_PUSH_PRIVATE_KEY`. احتفظ بهما: الأجهزة التي فعّلت الإشعارات تعتمد عليهما. يجب أن يعمل Ronde عبر HTTPS؛ وعلى iPhone يُضاف أولًا إلى الشاشة الرئيسية.
+تحتاج الإشعارات الفورية (اقتراب دورك، تذكيرات البطاقة، الجرس) إلى زوج مفاتيح للنسخة: أنشئهما بالأمر `npx web-push generate-vapid-keys`، ثم اضبط `WEB_PUSH_PUBLIC_KEY` و`WEB_PUSH_PRIVATE_KEY`. احتفظ بهما: الأجهزة التي فعّلت الإشعارات تعتمد عليهما. يجب أن يُقدَّم Ronde عبر HTTPS؛ وعلى iPhone يضيفه الأشخاص أولًا إلى الشاشة الرئيسية.
 
 ## تسجيل الدخول
 
@@ -97,7 +97,7 @@ docker compose --profile whisper up -d
 ## Microsoft Teams
 
 مع ترخيص Team أو Enterprise، يمكن لمساحات العمل إضافة Ronde إلى Microsoft Teams: تذكيرات البطاقة برسالة
-شخصية، وبطاقات تُملأ من بطاقة تفاعلية، وإشعارات في قناة، والأمر `ronde`. يحتاج الخادم إلى تطبيق Teams خاص به،
+شخصية، وبطاقات تُملأ من بطاقة تفاعلية، وإشعارات في قناة، والأمر `ronde`. تحتاج النسخة إلى تطبيق Teams خاص بها،
 أي Azure Bot يُسجَّل مرة واحدة في مؤسستك على Microsoft. يجب أن تصل Microsoft إلى `RONDE_URL` عبر HTTPS.
 
 1. في [بوابة Azure](https://portal.azure.com): **Create a resource › Azure Bot**، مع معرّف (`ronde`)، والخطة
@@ -112,10 +112,10 @@ docker compose --profile whisper up -d
    `docker compose up -d`.
 6. في Ronde، يفتح مالك مساحة العمل أو مسؤولها **الإعدادات › Microsoft Teams** وينزّل التطبيق. يحمّله مسؤول
    Teams (مركز إدارة Teams › تطبيقات Teams › إدارة التطبيقات › تحميل تطبيق جديد) ويضيفه إلى فريق: ينشر Ronde
-   بطاقة في قناته، و**الربط بـ Ronde** يختار مساحة العمل.
+   بطاقة في قناته، ويتيح زر **الربط بـ Ronde** اختيار مساحة العمل.
 
-تنتهي صلاحية سر العميل بعد 6 إلى 24 شهرًا: أنشئ السر التالي قبل ذلك واستبدل `TEAMS_APP_PASSWORD`. يخدم البوت
-أحادي المستأجر أشخاص مؤسستك على Microsoft؛ ولتقديم التطبيق لمؤسسات أخرى، يُنشر في Teams Store.
+تنتهي صلاحية سر العميل بعد 6 إلى 24 شهرًا: أنشئ سرًا جديدًا قبل انتهاء صلاحيته واستبدل به قيمة `TEAMS_APP_PASSWORD`. يخدم البوت
+أحادي المستأجر أشخاص مؤسستك على Microsoft؛ ولتقديم التطبيق لمؤسسات أخرى، يجب نشره في Teams Store.
 
 ## الترقية
 
@@ -124,7 +124,7 @@ docker compose pull && docker compose up -d
 ```
 
 تطبّق الحاوية `migrate` عمليات ترحيل الإصدار الجديد قبل بدء التطبيق. ثبّت إصدارًا بـ `RONDE_VERSION=1.0.0-beta.3` في
-ملف `.env` لتختار متى تُرقّي.
+ملف `.env` لتختار موعد الترقية بنفسك.
 
 ## النسخ الاحتياطية
 
@@ -134,7 +134,7 @@ docker compose pull && docker compose up -d
 docker compose exec db pg_dump -U ronde ronde | gzip > ronde-$(date +%F).sql.gz
 ```
 
-## الصور
+## صور Docker
 
 | الصورة | ما هي |
 |---|---|

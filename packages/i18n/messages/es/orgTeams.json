@@ -1,6 +1,6 @@
 {
   "title": "Equipos",
-  "intro": "Organice el directorio en equipos: un equipo puede pertenecer a otro (un área, sus equipos, sus células). En una reunión, elegir un equipo elige también sus subequipos.",
+  "intro": "Organiza el directorio en equipos: un equipo puede pertenecer a otro (un área, sus equipos, sus células). En una reunión, elegir un equipo elige también sus subequipos.",
   "add": "Nuevo equipo",
   "namePlaceholder": "Nombre del equipo, p. ej. Diseño",
   "parent": "Pertenece a",
@@ -8,7 +8,7 @@
   "create": "Crear",
   "cancel": "Cancelar",
   "empty": "Aún no hay equipos",
-  "emptyHint": "Cree un primer equipo y añada personas desde su ficha en el directorio.",
+  "emptyHint": "Crea un primer equipo y añade personas desde su ficha en el directorio.",
   "readOnly": "Solo los administradores del espacio modifican los equipos.",
   "members": "{count, plural, =0 {Nadie} one {# persona} other {# personas}}",
   "subTeams": "{count, plural, one {# subequipo} other {# subequipos}}",

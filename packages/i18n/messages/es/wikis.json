@@ -40,10 +40,10 @@
   "openInRonde": "Abrir en Ronde",
   "meeting": {
     "title": "Publicar el acta",
-    "intro": "En cada archivado, el acta se convierte en una página del wiki, con la fecha de la sesión como nombre. Cuando se edita el resumen, la página se actualiza.",
+    "intro": "Cada vez que se publica un acta, se convierte en una página del wiki, con la fecha de la sesión como nombre. Cuando se edita el resumen, la página se actualiza.",
     "wiki": "Wiki",
     "none": "En ningún sitio",
-    "hint": "Las sesiones ya archivadas se publican desde el historial.",
+    "hint": "Las sesiones pasadas se publican desde el historial.",
     "noWiki": "Todavía no hay ningún wiki en este espacio.",
     "addWiki": "Añade uno en los ajustes del espacio",
     "on": "El acta se publicará en {name}.",

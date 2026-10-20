@@ -8,7 +8,7 @@
   "disabled": "{name} turned off",
   "categories": {
     "facilitation": "Facilitation",
-    "organisation": "Organisation",
+    "organisation": "Organization",
     "formats": "Formats",
     "integrations": "Integrations",
     "notifications": "Notifications",
@@ -48,7 +48,7 @@
     },
     "spotlight": {
       "name": "Spotlight",
-      "description": "Show a check-in item, a question or a free message big on the shared screen."
+      "description": "Show a check-in item, a question or a message of your own in large type on the shared screen."
     },
     "birthdays": {
       "name": "Birthdays",
@@ -60,11 +60,11 @@
     },
     "ambience": {
       "name": "Seasonal ambience",
-      "description": "Holiday and season decorations on the waiting screen."
+      "description": "Holiday and seasonal decorations on the waiting screen."
     },
     "gitlab": {
       "name": "GitLab",
-      "description": "Recent issues and merge requests of each person, to import into their check-in."
+      "description": "Each person's recent issues and merge requests, to import into their check-in."
     },
     "workflows": {
       "name": "Notification workflows",
@@ -112,11 +112,11 @@
     },
     "random": {
       "name": "Random tools",
-      "description": "A wheel to pick who goes next, a random speaking order, teams or heads or tails, played on every screen at once."
+      "description": "A wheel to pick who goes next, a random speaking order, random teams, or heads or tails, played on every screen at once."
     },
     "parking": {
       "name": "Parking lot",
-      "description": "Set aside what comes up off-topic in one click; it becomes an open topic of the next session."
+      "description": "Set aside anything off-topic in one click; it becomes an open topic for the next session."
     },
     "decisions": {
       "name": "Decision log",
@@ -124,7 +124,7 @@
     },
     "github": {
       "name": "GitHub",
-      "description": "Each person's recent issues and pull requests, imported into their check-in in a click."
+      "description": "Each person's recent issues and pull requests, imported into their check-in in one click."
     },
     "video": {
       "name": "Video call",

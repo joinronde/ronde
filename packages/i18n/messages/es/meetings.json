@@ -28,8 +28,8 @@
     },
     "blank": {
       "name": "Empezar de cero",
-      "description": "Una reunión en blanco: elija usted mismo sus secciones y módulos.",
-      "meta": "El ritmo que quiera",
+      "description": "Una reunión en blanco: tú eliges sus secciones y módulos.",
+      "meta": "El ritmo que quieras",
       "use": "Empezar de cero"
     },
     "search": "Buscar una plantilla…",
@@ -69,20 +69,20 @@
     "edit": "Editar",
     "content": {
       "sectionsTitle": "Secciones de la ficha",
-      "sectionsHint": "Lo que cada persona rellena antes de la reunión. Cámbieles el nombre o el formato, o añada las suyas.",
+      "sectionsHint": "Lo que cada persona rellena antes de la reunión. Cámbiales el nombre o el formato, o añade las tuyas.",
       "addSection": "Añadir una sección",
       "custom": "Sección personalizada",
       "sectionLabel": "Nombre de la sección",
       "sectionType": "Formato",
       "removeSection": "Quitar la sección {name}",
       "modulesOn": "{count, plural, =0 {Ninguno activado} one {# activado} other {# activados}}",
-      "modulesHint": "Active lo que necesita su reunión: todo se puede activar y desactivar en cualquier momento.",
+      "modulesHint": "Activa lo que necesita tu reunión: todo se puede activar y desactivar en cualquier momento.",
       "roleHint": {
         "achievement": "Lo hecho desde la última vez",
         "plan": "Lo previsto a continuación",
         "blocker": "Lo que bloquea o frena",
         "note": "Cualquier otra cosa que compartir",
-        "custom": "Una lista propia, con el nombre que quiera"
+        "custom": "Una lista propia, con el nombre que quieras"
       }
     },
     "cancel": "Cancelar",

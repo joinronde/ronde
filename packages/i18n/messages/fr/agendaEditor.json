@@ -21,12 +21,12 @@
     "timebox": "Un sujet à part, avec sa propre durée",
     "retro": "Des notes anonymes en colonnes, regroupées, votées puis discutées",
     "poker": "L'équipe estime des éléments avec des cartes cachées",
-    "slide": "Un écran à part entière : contenu libre, irritants de l'équipe ou revue des actions ouvertes"
+    "slide": "Un écran à part entière : contenu libre, irritants de l'équipe ou revue des actions ouvertes"
   },
   "timeboxTitle": "Sujet",
   "minutes": "Minutes",
   "remove": "Retirer « {label} »",
-  "reorder": "Déplacer « {label} »",
+  "reorder": "Déplacer « {label} »",
   "add": "Ajouter un bloc",
   "alreadyThere": "Déjà dans l'ordre du jour",
   "newTimebox": "Nouveau sujet",
@@ -52,5 +52,5 @@
   },
   "slideAnonymous": "Sans les noms",
   "slideBody": "Texte à l'écran",
-  "slideBodyHint": "Markdown : contexte, chiffres, rappel des règles…"
+  "slideBodyHint": "Markdown : contexte, chiffres, rappel des règles…"
 }

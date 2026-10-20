@@ -10,7 +10,7 @@
   "reminderBody": "La réunion a lieu {when}. Quelques lignes courtes suffisent.",
   "ui": {
     "title": "Notifications sur cet appareil",
-    "intro": "Votre tour qui approche, les relances de fiche et ce qui arrive dans la cloche, directement sur ce téléphone ou cet ordinateur, même Ronde fermé.",
+    "intro": "Votre tour qui approche, les rappels de fiche et ce qui arrive dans la cloche, directement sur ce téléphone ou cet ordinateur, même Ronde fermé.",
     "turnOn": "Activer sur cet appareil",
     "turnOff": "Désactiver sur cet appareil",
     "on": "Activées sur cet appareil",
@@ -21,7 +21,7 @@
     "kinds": "Ce que vous recevez",
     "turn": "Quand mon tour approche",
     "turnHint": "Pendant une séance en direct : quand vous passez juste après, puis quand c'est à vous.",
-    "reminder": "Relances de fiche",
+    "reminder": "Rappels de fiche",
     "reminderHint": "Avant une réunion, quand votre fiche est encore vide.",
     "inbox": "Actions, remerciements et comptes rendus",
     "inboxHint": "Ce qui arrive dans la cloche : une action qui vous est confiée, un remerciement, un compte rendu publié.",

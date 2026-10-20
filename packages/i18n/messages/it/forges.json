@@ -1,6 +1,6 @@
 {
   "title": "GitLab e GitHub",
-  "intro": "Le connessioni alle vostre forge di codice, fatte una volta per tutto lo spazio: ogni riunione può leggervi le issue di ciascuno, e i tracker vi aprono i ticket.",
+  "intro": "Le connessioni alle tue forge di codice, fatte una volta per tutto lo spazio: ogni riunione può leggervi le issue di ciascuno, e i tracker vi aprono i ticket.",
   "empty": "Ancora nessuna connessione.",
   "kinds": {
     "gitlab": "GitLab",

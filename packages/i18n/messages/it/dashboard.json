@@ -13,8 +13,8 @@
   "liveStep": {
     "intro": "Introduzione",
     "turn": "Turno di {name} · {n}/{total}",
-    "projects": "Giro dei progetti",
-    "topics": "Varie",
+    "projects": "Giro per progetto",
+    "topics": "Argomenti aperti",
     "end": "Chiusura",
     "block": "In corso"
   },
@@ -64,6 +64,6 @@
   "sheetReady": "Scheda di {project} scritta",
   "sheetEmpty": "Scheda di {project} da scrivere",
   "readyCount": "{ready}/{total} schede compilate",
-  "seatReady": "check-in compilato",
-  "seatToFill": "check-in da compilare"
+  "seatReady": "scheda compilata",
+  "seatToFill": "scheda da compilare"
 }

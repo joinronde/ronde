@@ -39,7 +39,14 @@ del server o con la variabile `RONDE_LICENSE` (la variabile prevale e blocca il 
 verificata sul server, offline: non viene inviato nulla da nessuna parte. La pagina mostra il piano, il
 cliente, la data di scadenza e quanti posti sono usati.
 
-- **Più persone che posti**: non si blocca nulla; la pagina ti chiede di aggiornare la licenza.
+- **Un posto** è una persona che ha partecipato a una riunione negli ultimi 30 giorni, come nel cloud di Ronde. Chi è
+  stato invitato e non è mai venuto, o è stato assente tutto il mese, non ne occupa nessuno, e una persona presente in più
+  spazi di lavoro (con lo stesso account o lo stesso indirizzo) conta una sola volta.
+- **Il conteggio più alto** di ogni licenza viene conservato finché la licenza è valida (attiva o nel periodo di
+  tolleranza), con un conteggio ogni notte e a ogni visita della pagina. È questo il numero su cui si basa il rinnovo.
+  Una nuova chiave avvia un conteggio proprio, e la pagina mostra ancora il conteggio più alto della licenza
+  precedente, per regolarla.
+- **Più persone che posti**: non si blocca nulla. La pagina lo segnala, e la differenza si regola al rinnovo.
 - **Scaduta**: un periodo di tolleranza di 14 giorni mantiene tutto funzionante. Dopo, le funzioni a
   pagamento passano in sola lettura: ciò che contengono resta leggibile, ma non si può aggiungere nulla di
   nuovo. Le funzioni Community non sono mai toccate.
@@ -110,7 +117,7 @@ La **rubrica** è condivisa da tutte le riunioni dello spazio di lavoro: nome, c
 mese), categoria professionale e account GitLab o GitHub di una persona si inseriscono una volta sola. Si
 possono aggiungere persone senza account, per una riunione in cui non accedono; invitarle invia un'email
 con un link valido 14 giorni. Rimuovere un membro chiude il suo accesso; le sue schede e la sua cronologia
-restano nello spazio di lavoro. Con SCIM, le persone disattivate nella vostra rubrica aziendale perdono
+restano nello spazio di lavoro. Con SCIM, le persone disattivate nella tua rubrica aziendale perdono
 l'accesso allo stesso modo.
 
 ### Assenze
@@ -124,16 +131,16 @@ riunioni come conduttore, solo in quei giorni.
 ### Margine tra le riunioni
 
 Nella scheda Generale, il **Margine tra due riunioni** (nessuno, 5, 10, 15 o 30 minuti) resta libero prima e
-dopo ogni riunione di una persona. «Trova uno slot» lo rispetta, e il calendario di una riunione segnala le
+dopo ogni riunione di una persona. «Trova uno slot» lo rispetta, e la pianificazione di una riunione segnala le
 date troppo vicine a un'altra riunione delle stesse persone.
 
 ## Accesso e accesso unico
 
-L'edizione Community offre account con email e password, link di accesso via email, autenticazione a due
-fattori, account Google, GitHub e Microsoft, e un provider OpenID Connect per l'istanza (variabili `OIDC_*`,
+L'edizione Community offre account con email e password, link di accesso via email, verifica in due
+passaggi, account Google, GitHub e Microsoft, e un provider OpenID Connect per l'istanza (variabili `OIDC_*`,
 vedi la [guida al self-hosting](../self-hosting/README.it.md)).
 
-Ogni persona gestisce il proprio modo di accedere dal suo account, in **Accesso e sicurezza**: password, passkey (Face ID, Windows Hello, un gestore di password o una chiave di sicurezza), verifica in due passaggi e disconnessione ovunque. Le passkey sono legate al dominio di `APP_URL`, che deve usare HTTPS: dopo un cambio di dominio, ognuno le aggiunge di nuovo. Un indirizzo che deve usare il single sign-on non può né aggiungere né usare passkey.
+Ogni persona gestisce il proprio modo di accedere dal suo account, in **Accesso e sicurezza**: password, passkey (Face ID, Windows Hello, un gestore di password o una chiave di sicurezza), verifica in due passaggi e disconnessione ovunque. Le passkey sono legate al dominio di `APP_URL`, che deve usare HTTPS: dopo un cambio di dominio, ognuno le aggiunge di nuovo. Un indirizzo che deve usare l'accesso unico non può né aggiungere né usare passkey.
 
 Con Enterprise, la scheda **Sicurezza** di uno spazio di lavoro aggiunge:
 
@@ -158,7 +165,7 @@ un'intestazione (`AUTH_TRUSTED_EMAIL_HEADER`); fallo solo se nient'altro può ra
 ## Riunioni
 
 Proprietari e amministratori possono riservare la creazione di riunioni a organizzatori e amministratori nella scheda
-Generale. Ogni riunione ha poi le proprie impostazioni, aperte ai suoi conduttori: calendario, persone e
+Generale. Ogni riunione ha poi le proprie impostazioni, aperte ai suoi conduttori: pianificazione, persone e
 ruoli, sezioni della scheda, ordine del giorno, moduli, aspetto, notifiche, videochiamata e integrazioni.
 Una riunione può essere salvata come modello dello spazio di lavoro, senza le sue persone, la sua
 cronologia o i suoi token.
@@ -169,7 +176,7 @@ Una riunione parte con l'emoji del suo modello, mostrato accanto al nome nei men
 
 **Inizia ora**, sulla scheda di una riunione, tiene subito una sessione, fuori calendario: il team viene
 avvisato (campanella e regole di notifica «sessione iniziata») e si apre la regia. La sessione porta la
-data di oggi; la data prevista resta nel calendario. Avviare dalla regia una sessione preparata per un
+data di oggi; la data prevista resta nella pianificazione. Avviare dalla regia una sessione preparata per un
 altro giorno fa lo stesso.
 
 ### Riunione di esempio
@@ -195,15 +202,15 @@ difficoltà), un responsabile, le persone che ci lavorano, date e link. I membri
 responsabile e gli amministratori li modificano. La pagina di un progetto raccoglie quello che ogni
 riunione ne ha detto, sessione dopo sessione, per le persone che possono leggere quelle riunioni.
 
-Ogni progetto può avere un logo, accanto al nome e nel suo passaggio delle riunioni: clicca sul suo segno, nella pagina del progetto, per scegliere un'immagine; senza logo, compaiono le sue iniziali sul suo colore. Un'importazione riprende l'immagine dello strumento: l'avatar di un'organizzazione GitHub, quello di un progetto GitLab o di un progetto Jira. Chi può modificare il progetto lo cambia o lo rimuove.
+Ogni progetto può avere un logo, accanto al nome e nella sua fase delle riunioni: clicca sul suo segno, nella pagina del progetto, per scegliere un'immagine; senza logo, compaiono le sue iniziali sul suo colore. Un'importazione riprende l'immagine dello strumento: l'avatar di un'organizzazione GitHub, quello di un progetto GitLab o di un progetto Jira. Chi può modificare il progetto lo cambia o lo rimuove.
 
 Una riunione segue dei progetti in **Impostazioni › Progetti**. Ogni progetto seguito ha una sezione propria
 nella scheda di ciascuno, con una scheda condivisa: lo stato e il messaggio del giorno, scritti da chi ci
-lavora. Aggiungete il blocco **Giro per progetto** all'ordine del giorno per dare a ogni progetto il suo
+lavora. Aggiungi il blocco **Giro per progetto** all'ordine del giorno per dare a ogni progetto il suo
 turno, in cui i suoi membri parlano insieme; senza, gli elementi su un progetto sono presentati nel turno di
-ciascuno. I modelli **Revisione del portafoglio** e **Squadra e progetti** lo includono già. Con Team, un
-cruscotto mostra lo stato di ogni progetto settimana dopo settimana, le scadenze e i progetti senza
-notizie, lo esporta in CSV e aggiunge i progetti da tenere d'occhio al rapporto via e-mail. Con Enterprise, un progetto può far parte di un altro, che diventa un programma (al massimo tre livelli), essere visibile solo ai suoi membri e modificabile dai suoi membri, non solo dal responsabile.
+ciascuno. I modelli **Revisione del portafoglio** e **Team e progetti** lo includono già. Con Team, una
+dashboard mostra lo stato di ogni progetto settimana dopo settimana, le scadenze e i progetti senza
+notizie, lo esporta in CSV e aggiunge i progetti da tenere d'occhio al report via email. Con Enterprise, un progetto può far parte di un altro, che diventa un programma (al massimo tre livelli), essere visibile solo ai suoi membri e modificabile dai suoi membri, non solo dal responsabile.
 
 **Importa**, nella stessa pagina, porta progetti dai tuoi strumenti: i repository di un'organizzazione GitHub o i progetti di un gruppo GitLab, le milestone di un repository GitHub o di un progetto GitLab (ognuna chiamata «repository · milestone»), le epic di un progetto Jira o i progetti di Linear. Spunta quelli da portare; quelli già nel portafoglio vengono riconosciuti, e ogni elemento entra una sola volta. Il token inserito lì serve solo a quell'importazione e non viene conservato:
 
@@ -221,14 +228,14 @@ ringraziamenti, in evidenza, ruota ed estrazioni, compleanni, suoni, timebox, so
 delle decisioni, retrospettiva, planning poker e riunioni asincrone. Un modulo disattivato in una riunione
 scompare dalla sua regia, dal suo schermo condiviso e dalle schede; le sue impostazioni restano salvate.
 
-Il voto di utilità chiede a tutti, in chiusura, quanto è stata utile la riunione (da 1 a 5 stelle, dal proprio schermo o telefono). La media compare da 3 voti in su, così nessuno può indovinare il voto di un altro; finisce nel verbale e nelle statistiche. I modelli delle riunioni quotidiane brevi, dei colloqui individuali e degli organi formali (comitato di pilotaggio, consigli, consiglio di classe, riunione di cantiere, discussione dei casi, revisione degli incidenti) lo lasciano disattivato.
+Il voto di utilità chiede a tutti, in chiusura, quanto è stata utile la riunione (da 1 a 5 stelle, dal proprio schermo o telefono). La media compare da 3 voti in su, così nessuno può indovinare il voto di un altro; finisce nel verbale e nelle statistiche. I modelli delle riunioni quotidiane brevi, dei colloqui individuali e degli organi formali (comitato di indirizzo, consigli, consiglio di classe, riunione di cantiere, riunione multidisciplinare, revisione degli incidenti) lo lasciano disattivato.
 
 ### Esportazioni
 
 Le pagine che elencano qualcosa lo esportano per un foglio di calcolo: **Esporta in CSV** nella pagina
 Azioni (tutte le azioni della vista, anche quelle fatte più di due settimane fa), nella pagina Decisioni
 (con la ricerca e il filtro per riunione), nelle Statistiche di una riunione (una riga per sessione) e,
-con Team, nella tabella delle Analisi e nel Cruscotto del portafoglio. I verbali si scaricano in Markdown
+con Team, nella tabella delle Analisi e nella dashboard del portafoglio. I verbali si scaricano in Markdown
 o PDF dalla Cronologia. I file si aprono subito in colonne in Excel, LibreOffice o Numbers, nella lingua
 della persona («;» e virgola decimale in francese, tedesco, spagnolo, italiano, portoghese e russo), e un
 testo che sembra una formula resta testo.
@@ -242,9 +249,9 @@ notifiche, quali eventi vanno a quale connettore: una sessione che sta per inizi
 verbale pubblicato, un promemoria della scheda, un'azione in ritardo, un compleanno.
 
 Ogni lunedì dalle 8:00 (fuso orario dello spazio), ogni membro riceve un **riepilogo settimanale** via email:
-le sue sedute della settimana con un link a ogni scheda, le azioni di follow-up aperte e i complimenti
+le sue sessioni della settimana con un link a ogni scheda, le azioni di follow-up aperte e i ringraziamenti
 ricevuti. Viene inviato solo se contiene qualcosa; ognuno lo disattiva nel proprio account o con il link in
-fondo all'email. Su un'istanza self-hosted serve `SMTP_URL`; `RONDE_WEEKLY_PER_RUN` (150 di default) limita
+fondo all'email. Su un'istanza self-hosted serve `SMTP_URL`; `RONDE_WEEKLY_PER_RUN` (150 per impostazione predefinita) limita
 gli invii per ora, gli altri partono l'ora successiva.
 
 Con Team, i workflow di notifica aggiungono condizioni e le tue parole a ogni messaggio, e altri due
@@ -265,7 +272,7 @@ riunione dice perché.
 Token e segreti inseriti in Ronde vengono cifrati con `SECRET_KEY` prima di essere salvati, e non vengono
 più mostrati. Custodisci bene questa chiave: senza di essa non si possono più rileggere.
 
-Anche i token degli account che accedono con Google, GitHub, Microsoft o il single sign-on vengono cifrati, con `AUTH_SECRET`.
+Anche i token degli account che accedono con Google, GitHub, Microsoft o l'accesso unico vengono cifrati, con `AUTH_SECRET`.
 
 | Integrazione | Dove | Piano |
 | --- | --- | --- |

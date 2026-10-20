@@ -7,7 +7,7 @@
   "count": "{count, plural, one {# pessoa} other {# pessoas}}",
   "columns": {
     "name": "Nome",
-    "category": "Equipa",
+    "category": "Equipe",
     "role": "Papel",
     "status": "Status",
     "actions": "Ações"
@@ -32,8 +32,8 @@
   "lastName": "Sobrenome",
   "email": "E-mail",
   "emailLocked": "Vinculado à conta: a própria pessoa o altera.",
-  "category": "Equipa",
-  "noCategory": "Sem equipa",
+  "category": "Equipe",
+  "noCategory": "Sem equipe",
   "birthday": "Aniversário",
   "birthdayHint": "Só dia e mês, nunca o ano.",
   "month": "Mês",
@@ -64,6 +64,6 @@
   "phone": "Número de celular",
   "phoneHint": "Para lembretes por SMS e WhatsApp, no formato internacional (+55…). Opcional.",
   "formerMember": "Ex-membro",
-  "teamFilter": "Equipa",
-  "allTeams": "Todas as equipas"
+  "teamFilter": "Equipe",
+  "allTeams": "Todas as equipes"
 }

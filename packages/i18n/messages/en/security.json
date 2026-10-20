@@ -1,6 +1,6 @@
 {
   "title": "Security",
-  "intro": "Verify the email domains of your organisation. A verified domain can bring new accounts into this workspace by themselves, and require single sign-on for its addresses.",
+  "intro": "Verify the email domains of your organization. A verified domain can bring new accounts into this workspace by themselves, and require single sign-on for its addresses.",
   "domain": "Email domain",
   "add": "Add the domain",
   "verified": "Verified",

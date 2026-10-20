@@ -42,7 +42,7 @@
   "byTheme": "Per tema",
   "byStatus": "Per situazione",
   "mine": "I miei progetti",
-  "empty": "Ancora nessun progetto. Descrivete i progetti della squadra, poi seguiteli in una riunione per dare a ciascuno il suo turno.",
+  "empty": "Ancora nessun progetto. Descrivi i progetti del team, poi seguili in una riunione per dare a ciascuno il suo turno.",
   "noMatch": "Nessun progetto corrisponde a questi filtri.",
   "noTheme": "Senza tema",
   "archived": "Archiviato",
@@ -98,7 +98,7 @@
   "deleteConfirm": "Eliminare il progetto {name}? Le sue schede vengono eliminate; gli elementi e le azioni che lo riguardano restano, senza progetto.",
   "noDescription": "Ancora nessuna descrizione.",
   "timeline": "Cosa hanno detto le riunioni",
-  "noTimeline": "Ancora niente: quando una riunione che segue il progetto archivia una sessione, quello che se ne è detto appare qui.",
+  "noTimeline": "Ancora niente: quando una riunione che segue il progetto pubblica il suo verbale, quello che se ne è detto appare qui.",
   "roles": {
     "achievement": "Fatto",
     "plan": "Previsto",
@@ -119,7 +119,7 @@
     "title": "Progetti seguiti",
     "intro": "Ogni progetto seguito ha una sezione propria nella scheda di ciascuno e, con un giro per progetto nell'ordine del giorno, un turno tutto suo in cui i suoi membri parlano insieme.",
     "portfolio": "Vedi il portafoglio",
-    "noRound": "L'ordine del giorno non ha ancora un giro per progetto: gli elementi su questi progetti sono presentati nel turno di ciascuno. Aggiungete il blocco «Giro per progetto» in Ordine del giorno per dare a ogni progetto il suo turno.",
+    "noRound": "L'ordine del giorno non ha ancora un giro per progetto: gli elementi su questi progetti sono presentati nel turno di ciascuno. Aggiungi il blocco «Giro per progetto» in Ordine del giorno per dare a ogni progetto il suo turno.",
     "notActive": "non attivo: niente turno",
     "reorder": "Sposta {name}",
     "remove": "Smetti di seguire {name}",
@@ -131,14 +131,14 @@
     "create": "Crea un progetto",
     "allFollowed": "Tutti i progetti del portafoglio sono già seguiti.",
     "createInPortfolio": "Nuovo progetto nel portafoglio",
-    "noneHint": "Scegli i progetti di cui parla questo team: ognuno avrà la sua scheda nel check-in e il suo turno in riunione.",
+    "noneHint": "Scegli i progetti di cui parla questo team: ognuno avrà la sua sezione nella scheda e il suo turno in riunione.",
     "whoAdds": "Chi può aggiungere progetti?",
     "whoAddsHint": "I progetti vengono sempre dal portafoglio dello spazio. Riordinarli o toglierne uno resta riservato ai conduttori.",
     "by": {
       "hosts": "I conduttori",
       "hostsHint": "Solo chi configura la riunione sceglie i suoi progetti.",
       "participants": "Tutti i partecipanti",
-      "participantsHint": "Ogni partecipante può aggiungere un progetto dal proprio check-in."
+      "participantsHint": "Ogni partecipante può aggiungere un progetto dalla propria scheda."
     },
     "bySaved": "Salvato"
   },

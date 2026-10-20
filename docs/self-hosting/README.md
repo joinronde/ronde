@@ -6,7 +6,7 @@ meetings or people. A license key turns on the Team or Enterprise features.
 
 ## Start
 
-1. Get the files of a release:
+1. Get the files:
 
    ```sh
    mkdir ronde && cd ronde
@@ -14,7 +14,7 @@ meetings or people. A license key turns on the Team or Enterprise features.
    curl -fsSL https://raw.githubusercontent.com/joinronde/ronde/main/docker/.env.example -o .env
    ```
 
-2. Fill in `.env`: the address people will open (`RONDE_URL`) and three secrets.
+2. Fill in `.env`: set the address people will open (`RONDE_URL`), then generate the three secrets:
 
    ```sh
    for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env; done
@@ -31,13 +31,13 @@ meetings or people. A license key turns on the Team or Enterprise features.
 ## HTTPS
 
 Point a domain at the machine, set `RONDE_DOMAIN=ronde.example.com` and `RONDE_URL=https://ronde.example.com`
-in `.env`, then start with the `https` profile. Caddy gets and renews the certificate.
+in `.env`, then start with the `https` profile. Caddy obtains and renews the certificate.
 
 ```sh
 docker compose --profile https up -d
 ```
 
-Behind your own reverse proxy instead, forward to port `RONDE_PORT` (3000 by default) and keep the
+If you use your own reverse proxy instead, forward to port `RONDE_PORT` (3000 by default) and keep the
 `X-Forwarded-*` headers. Server-Sent Events must not be buffered (`proxy_buffering off` with nginx).
 
 ## Email
@@ -50,9 +50,9 @@ echo "SMTP_URL=smtp://mail:1025" >> .env
 docker compose --profile mail up -d   # emails at http://localhost:8025
 ```
 
-To let people fill in their check-in by replying to the reminder, give Ronde a mailbox to read: `INBOUND_IMAP_URL=imaps://user:password@imap.example.com:993/INBOX`, and `INBOUND_ADDRESS` when the login is not the email address. Replies are sent there; every minute Ronde reads the ones that answer a reminder, adds their lines to the check-in, confirms by email and moves them to a `Ronde` folder. Every other message of the mailbox is left as it is, so it can be your usual contact address.
+To let people fill in their check-in by replying to the reminder, give Ronde a mailbox to read: `INBOUND_IMAP_URL=imaps://user:password@imap.example.com:993/INBOX`, and `INBOUND_ADDRESS` when the login is not the email address. Replies are sent there; every minute Ronde reads the ones that answer a reminder, adds their lines to the check-in, confirms by email and moves them to a `Ronde` folder. All other messages in the mailbox are left untouched, so it can be your usual contact address.
 
-Push notifications (your turn coming up, check-in reminders, the bell) need a pair of keys for the instance: `npx web-push generate-vapid-keys`, then `WEB_PUSH_PUBLIC_KEY` and `WEB_PUSH_PRIVATE_KEY`. Keep them: the devices that turned notifications on depend on them. Ronde must be served over HTTPS; on an iPhone, people add it to the home screen first.
+Push notifications (your turn coming up, check-in reminders, the bell) need a pair of keys for the instance: generate them with `npx web-push generate-vapid-keys`, then set `WEB_PUSH_PUBLIC_KEY` and `WEB_PUSH_PRIVATE_KEY`. Keep them: the devices that turned on notifications depend on them. Ronde must be served over HTTPS; on an iPhone, people add it to the home screen first.
 
 ## Sign-in
 
@@ -63,7 +63,7 @@ their `<PROVIDER>_CLIENT_ID` and `<PROVIDER>_CLIENT_SECRET`. Redirect URI: `<RON
 
 ## Transcripts without sending sound away
 
-Transcripts (Team) use a speech-to-text service with the OpenAI API. To keep the sound on your servers,
+Transcripts (Team) use a speech-to-text service with an OpenAI-compatible API. To keep the audio on your servers,
 start the `whisper` profile and point Ronde at it:
 
 ```sh
@@ -78,7 +78,7 @@ docker compose --profile whisper up -d
 
 With a Team or Enterprise license, workspaces can add Ronde to Slack: check-in reminders by direct
 message, check-ins filled in from a Slack form, notifications in a channel, and the `/ronde` command. The
-instance needs its own Slack app, created once. Slack must reach `RONDE_URL` over HTTPS.
+instance needs its own Slack app, created once. Slack must be able to reach `RONDE_URL` over HTTPS.
 
 1. Get the app's manifest and replace every `https://ronde.example.com` in it with your `RONDE_URL`:
 
@@ -88,7 +88,7 @@ instance needs its own Slack app, created once. Slack must reach `RONDE_URL` ove
 
 2. At [api.slack.com/apps](https://api.slack.com/apps): **Create New App › From a manifest**, pick your
    Slack workspace and paste the file.
-3. Copy the keys of **Basic Information › App Credentials** into `.env` (`SLACK_CLIENT_ID`,
+3. Copy the keys from **Basic Information › App Credentials** into `.env` (`SLACK_CLIENT_ID`,
    `SLACK_CLIENT_SECRET`, `SLACK_SIGNING_SECRET`), then run `docker compose up -d`.
 4. In Ronde, an owner or admin of each workspace opens **Settings › Slack › Add to Slack**.
 
@@ -99,7 +99,7 @@ To add the app to several Slack workspaces, turn on **Manage Distribution** in t
 With a Team or Enterprise license, workspaces can add Ronde to Microsoft Teams: check-in reminders by
 personal message, check-ins filled in from a card, notifications in a channel, and the `ronde` command. The
 instance needs its own Teams app, an Azure Bot registered once in your Microsoft organization. Microsoft must
-reach `RONDE_URL` over HTTPS.
+be able to reach `RONDE_URL` over HTTPS.
 
 1. In the [Azure portal](https://portal.azure.com): **Create a resource › Azure Bot**, with a handle
    (`ronde`), the free **F0** plan, **Type of App: Single Tenant** and **Create new Microsoft App ID**.
@@ -115,9 +115,9 @@ reach `RONDE_URL` over HTTPS.
    administrator uploads it (Teams admin center › Teams apps › Manage apps › Upload new app) and adds it to a
    team: Ronde posts a card in its channel, and **Link to Ronde** picks the workspace.
 
-The client secret expires after 6 to 24 months: create the next one before, and replace `TEAMS_APP_PASSWORD`. A
+The client secret expires after 6 to 24 months: create a new one before it expires, and replace `TEAMS_APP_PASSWORD`. A
 single-tenant bot serves the people of your own Microsoft organization; to offer the app to other
-organizations, it is published in the Teams Store.
+organizations, it must be published in the Teams Store.
 
 ## Upgrade
 
@@ -145,4 +145,4 @@ docker compose exec db pg_dump -U ronde ronde | gzip > ronde-$(date +%F).sql.gz
 | `ghcr.io/joinronde/ronde-migrate` | The database migrations of the same version |
 
 Every secret variable also accepts `<NAME>_FILE` (Docker secrets). Education: schools and universities get the
-paid plans for free, ask at https://joinronde.com/education.
+paid plans for free; ask at https://joinronde.com/education.

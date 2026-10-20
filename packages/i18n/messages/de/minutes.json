@@ -3,7 +3,7 @@
   "defaultTeam": "Team-Meeting",
   "summary": "**{date}** · Dauer {duration} · {count, plural, one {# teilnehmende Person} other {# Teilnehmende}}",
   "absent": "abwesend: {names}",
-  "introduction": "Einführung",
+  "introduction": "Einstieg",
   "questionsAbout": "Fragen · {what}",
   "topics": "Offene Themen",
   "decisions": "Entscheidungen",

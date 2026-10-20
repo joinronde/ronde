@@ -1,6 +1,6 @@
 {
   "loading": "Verlauf wird geladen…",
-  "empty": "Noch kein archiviertes Meeting. Nutze „Meeting archivieren“ in der Regie, beim Abschluss.",
+  "empty": "Noch kein Protokoll. Nutze „Protokoll veröffentlichen“ in der Regie, beim Abschluss.",
   "searchPlaceholder": "Protokolle durchsuchen (Projekt, Person, Blocker…)",
   "searchLabel": "Protokolle durchsuchen",
   "meetings": "{count, plural, one {# Meeting} other {# Meetings}}",

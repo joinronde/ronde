@@ -30,9 +30,9 @@
   "eduTitle": "Kostenlos für Bildung",
   "eduText": "Schulen, Hochschulen und Lehrkräfte erhalten die bezahlten Tarife von Ronde kostenlos. Erzähl uns von deiner Einrichtung, und wir richten es ein.",
   "eduCta": "Bildungstarif anfragen",
-  "granted": "Diesem Workspace vom Ronde-Team geschenkt: nichts zu bezahlen.",
+  "granted": "Diesem Arbeitsbereich vom Ronde-Team geschenkt: nichts zu bezahlen.",
   "grantedEducation": "Kostenlos für Bildung: alle bezahlten Funktionen, nichts zu bezahlen.",
   "grantEnds": "Bis {date}: Schließ vorher ein Abo ab, um es zu behalten.",
-  "paymentFailed": "Die letzte Zahlung ist fehlgeschlagen: Stripe versucht es ein paar Tage lang erneut, dann wechselt der Workspace zurück zu Community.",
+  "paymentFailed": "Die letzte Zahlung ist fehlgeschlagen: Stripe versucht es ein paar Tage lang erneut, dann wechselt der Arbeitsbereich zurück zu Community.",
   "paymentFix": "Zahlungsmethode aktualisieren"
 }
