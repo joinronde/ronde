@@ -1,6 +1,6 @@
 # Administering Ronde
 
-This guide is for the people who run Ronde for an organisation: the administrator of a self-hosted
+This guide is for the people who run Ronde for an organization: the administrator of a self-hosted
 instance, and the owners and admins of a workspace (in the cloud or on your own server). To install
 Ronde, start with the [self-hosting guide](../self-hosting/README.md).
 
@@ -10,7 +10,7 @@ The first account created on a new instance becomes its **administrator**. The a
 **Server administration** from the workspace menu, top left (`/admin`), where they can:
 
 - see how many accounts, workspaces and meetings the instance holds;
-- pick the default language, used when neither the person nor their browser asks for one Ronde speaks;
+- pick the default language, used when neither the person nor their browser asks for a language Ronde supports;
 - decide who may create an account;
 - enter or remove the license key.
 
@@ -34,15 +34,15 @@ The same choice can be made with `SIGNUP_POLICY` (`invite-only`, `domains`, `ope
 ### License key
 
 Team and Enterprise features turn on with a license key, set in Server administration or with the
-`RONDE_LICENSE` variable (the variable wins and locks the field). The key is checked on the server,
+`RONDE_LICENSE` variable (the variable takes precedence and locks the field). The key is checked on the server,
 offline: nothing is sent anywhere. The page shows the plan, the customer, the expiry date and how many
 seats are used.
 
-- **A seat** is a person who took part in a meeting in the last 30 days, as on Ronde's cloud. Someone invited
-  who never came, or away for the month, uses none, and a person in several workspaces (with the same account,
+- **A seat** is a person who took part in a meeting in the last 30 days, as on Ronde's cloud. Someone who was
+  invited but never came, or who is away for the month, uses none, and a person in several workspaces (with the same account,
   or the same address) counts once.
-- **The highest count** of each license is kept while it works (active, or in its grace period), counted every
-  night and on each visit of the page. It is what the renewal counts. A new key starts its own count, and the
+- **The highest count** of each license is recorded while it is valid (active, or in its grace period), counted every
+  night and each time the page is opened. The renewal is based on it. A new key starts its own count, and the
   page still shows the previous license's highest count, to settle it.
 - **More people than seats**: nothing is blocked. The page says so, and the difference is settled at the renewal.
 - **Expired**: a grace period of 14 days keeps everything working. After it, the paid features become
@@ -62,10 +62,10 @@ Admins see discreet hints about the paid features in the settings (never during 
 ### Feedback from users
 
 The speech-bubble button at the top of the pages (in the account menu on phones) lets people report a problem or
-share an idea, with a screenshot if they want. With the message go the page's address (without its query), the
+share an idea, with a screenshot if they want. The message comes with the page's address (without its query string), the
 browser, the window size, the language and Ronde's version. The administrators read the messages in **Server
-administration**, answer by email the people who asked for it, and can open a pre-filled issue on the Ronde project
-for a problem of Ronde itself. When `SENTRY_DSN` is set, the messages also reach that Sentry project as user
+administration**, reply by email to the people who asked for an answer, and can open a pre-filled issue on the Ronde project
+for a problem with Ronde itself. When `SENTRY_DSN` is set, the messages also reach that Sentry project as user
 feedback. Messages are deleted after a year; on a self-hosted instance the button is off by default: `RONDE_FEEDBACK=on` shows it.
 
 ## Workspaces
@@ -91,8 +91,8 @@ Each member has one workspace role:
 | Owner | Everything, including billing and deleting the workspace |
 | Admin | Everything but billing and deletion; acts as host of every meeting |
 | Billing | The plan, the invoices and the payment method, nothing else (in the cloud) |
-| Organizer | What a member can, plus creating meetings when they are kept to admins, and inviting people |
-| Member | See the directory, create meetings (unless kept to organizers and admins), save templates |
+| Organizer | What a member can do, plus creating meetings when creation is restricted to admins, and inviting people |
+| Member | See the directory, create meetings (unless restricted to organizers and admins), save templates |
 | Guest | Only the meetings they are invited to |
 
 Each person in a meeting also has a meeting role:
@@ -118,23 +118,23 @@ SCIM, people deactivated in your directory lose their access the same way.
 ### Absences
 
 Each person can add their absences on their profile (people managers can do it for anyone): a first and a
-last day, a note, and who runs the meetings they host meanwhile. During an absence the person is marked
+last day, a note, and who runs the meetings they host in the meantime. During an absence the person is marked
 absent from the sessions of those days, gets no reminders, and their profile shows when they are back. The
 person named as a stand-in gets a notification and runs the meetings as their host, for those days only.
 
 ### Margin between meetings
 
 In the General tab, **Margin between two meetings** (none, 5, 10, 15 or 30 minutes) is kept free before and
-after each meeting of a person. "Find a slot" respects it, and the schedule of a meeting flags the dates
+after each of a person's meetings. "Find a slot" respects it, and the schedule of a meeting flags the dates
 that come too close to another meeting of the same people.
 
 ## Sign-in and single sign-on
 
-The Community edition offers email and password accounts, sign-in links by email, two-factor
-authentication, Google, GitHub and Microsoft accounts, and one OpenID Connect provider for the instance
+The Community edition offers email and password accounts, sign-in links by email, two-step
+verification, Google, GitHub and Microsoft accounts, and one OpenID Connect provider for the instance
 (`OIDC_*` variables, see the [self-hosting guide](../self-hosting/README.md)).
 
-Each person manages how they sign in from their account, under **Sign-in and security**: password, passkeys (Face ID, Windows Hello, a password manager or a security key), two-step verification, and signing out everywhere. Passkeys are tied to the domain of `APP_URL`, which must use HTTPS: after a change of domain, people add them again. An address that must use single sign-on can neither add nor use a passkey.
+Each person manages how they sign in from their account, under **Sign-in and security**: password, passkeys (Face ID, Windows Hello, a password manager or a security key), two-step verification, and signing out everywhere. Passkeys are tied to the domain of `APP_URL`, which must use HTTPS: after a domain change, people must add them again. An address that must use single sign-on can neither add nor use a passkey.
 
 With Enterprise, the **Security** tab of a workspace adds:
 
@@ -158,7 +158,7 @@ An instance behind an authenticating reverse proxy can trust the address it pass
 
 ## Meetings
 
-Owners and admins can keep meeting creation to organizers and admins in the General tab. Each meeting then has its
+Owners and admins can restrict meeting creation to organizers and admins in the General tab. Each meeting then has its
 own settings, open to its hosts: schedule, people and roles, check-in sections, agenda, modules,
 appearance, notifications, video call and integrations. A meeting can be saved as a workspace template,
 without its people, history or tokens.
@@ -167,14 +167,14 @@ A meeting starts with its template's emoji, shown next to its name in the menus;
 
 ### Sessions on the spot
 
-**Start now**, on a meeting's card, holds a session right away, outside the schedule: the team is told
+**Start now**, on a meeting's card, starts a session right away, outside the schedule: the team is told
 (bell, and the "session started" notification rules), and the control room opens. The session is dated
-today; the date it was planned for stays in the schedule. Starting from the control room a session prepared
-for another day does the same.
+today; the date it was planned for stays in the schedule. Starting a session prepared for another day from the
+control room does the same.
 
 ### Sample meeting
 
-Before its first meeting, a workspace's home offers a sample one: a weekly sync with a fictitious team of five, a month of archived sessions with their minutes, stats and actions, and a session ready to run, all in the workspace's language. It is there to try everything: it sends nothing (no reminder, email, calendar entry or notification), costs no seat, ticks none of the first steps and stays out of the workspace's insights and reports. A banner on its pages says so, and **Delete the sample** removes it for good with its fictitious team (someone of that team added to another meeting stays). Its people show as Sample in the directory and cannot be invited.
+Before its first meeting, a workspace's home offers a sample one: a weekly sync with a fictitious team of five, a month of archived sessions with their minutes, stats and actions, and a session ready to run, all in the workspace's language. It is there to try everything: it sends nothing (no reminder, email, calendar entry or notification), uses no seat, does not tick off any getting-started step and stays out of the workspace's insights and reports. A banner on its pages says so, and **Delete the sample** removes it for good with its fictitious team (anyone from that team who was added to another meeting stays). Its people show as Sample in the directory and cannot be invited.
 
 ### Public holidays
 
@@ -194,7 +194,7 @@ people working on it, dates and links. Members can create projects; their lead a
 A project's page gathers what every meeting said about it, session by session, for the people who can read
 those meetings.
 
-Each project can have a logo, beside its name and on its step in meetings: click its mark on the project's page to pick an image; without one, its initials stand on its colour. An import brings the tool's own image: a GitHub organization's avatar, a GitLab project's or a Jira project's. Those who can edit the project change or remove it.
+Each project can have a logo, beside its name and on its step in meetings: click its mark on the project's page to pick an image; without one, its initials appear on its color. An import brings the tool's own image: a GitHub organization's avatar, a GitLab project's or a Jira project's. Those who can edit the project change or remove it.
 
 A meeting follows projects in **Settings › Projects**. Each project followed gets a tab in everyone's
 check-in, with a shared sheet: the health and the message of the day, written by the people working on it.
@@ -202,30 +202,30 @@ Add the **Project round** block to the agenda to give each project its own turn,
 together; without it, the items about a project are presented in each person's turn. The **Portfolio
 review** and **Team and projects** templates start with it. With Team, a dashboard shows the health of
 every project week by week, the due dates and the projects gone quiet, exports it as CSV and adds the
-projects to watch to the email report. With Enterprise, a project can belong to another one, which becomes a programme (three levels at most), be seen by its members only, and let its members edit it, not only its lead.
+projects to watch to the email report. With Enterprise, a project can belong to another one, which becomes a program (three levels at most), be seen by its members only, and let its members edit it, not only its lead.
 
-**Import**, on the same page, brings projects from your tools: the repositories of a GitHub organization or the projects of a GitLab group, the milestones of a GitHub repository or a GitLab project (each named "repository · milestone"), the epics of a Jira project, or Linear's projects. Pick the ones to bring in; those already in the portfolio are recognised, and an item comes in once. The token typed there serves that import only and is not kept:
+**Import**, on the same page, brings projects from your tools: the repositories of a GitHub organization or the projects of a GitLab group, the milestones of a GitHub repository or a GitLab project (each named "repository · milestone"), the epics of a Jira project, or Linear's projects. Pick the ones to bring in; those already in the portfolio are recognized, and an item is only imported once. The token typed there serves that import only and is not kept:
 
 - GitHub: none for public repositories; for private ones, a fine-grained token that can read them (Metadata, and Issues for milestones).
 - GitLab: none for public groups and projects; otherwise a personal, group or project access token with the `read_api` scope.
 - Jira: an API token of the account whose email is given (id.atlassian.com › Security › API tokens).
 - Linear: a personal API key.
 
-Members import from github.com, gitlab.com, Atlassian Cloud and Linear; importing from another server (GitHub Enterprise, a self-managed GitLab, Jira Data Center) and through the issue trackers saved in the workspace settings is for the workspace's administrators. With Team, importing through such a tracker keeps the projects in sync every hour: their name, status, dates and progress follow the tool, what the tool does not give stays as set in Ronde (a repository gives its name, and is marked done once archived), and their progress shows on the cards and in meetings while it is current. The project's page offers **Update now** and **Stop syncing**. Sync stops for good with **Stop syncing**, when the tracker is removed or points to another server, and pauses while the workspace is not on Team. An item the tool no longer finds (deleted, or out of the token's reach) is tried again once a day. Archived projects are not updated until they are restored.
+Members import from github.com, gitlab.com, Atlassian Cloud and Linear; importing from another server (GitHub Enterprise, a self-managed GitLab, Jira Data Center) and through the issue trackers saved in the workspace settings is for the workspace's administrators. With Team, importing through such a tracker keeps the projects in sync every hour: their name, status, dates and progress follow the tool, what the tool does not provide stays as set in Ronde (a repository gives its name, and is marked done once archived), and their progress shows on the cards and in meetings while it is current. The project's page offers **Update now** and **Stop syncing**. Sync stops for good with **Stop syncing**, when the tracker is removed or points to another server, and pauses while the workspace is not on Team. An item the tool no longer finds (deleted, or out of the token's reach) is tried again once a day. Archived projects are not updated until they are restored.
 
 ### Modules
 
-Every facilitation module is free: icebreaker, team mood, usefulness vote, reactions, raised hands, kudos, spotlight,
+All facilitation modules are free: icebreaker, team mood, usefulness vote, reactions, raised hands, kudos, spotlight,
 wheel and random draws, birthdays, sounds, timebox, polls, parking lot, decision log, retrospective,
 planning poker and async meetings. A module turned off in a meeting disappears from its control room,
 shared screen and check-ins; its settings are kept.
 
-The usefulness vote asks everyone, at the wrap-up, how useful the meeting was (1 to 5 stars, from their screen or phone). The average shows from 3 ratings, so that no one's rating can be guessed; it goes into the minutes and the stats. The templates of short daily meetings, one-on-ones and formal bodies (steering committee, boards, class council, site meeting, case review, incident review) leave it off.
+The usefulness vote asks everyone, at the wrap-up, how useful the meeting was (1 to 5 stars, from their screen or phone). The average shows once there are 3 ratings, so that no one's rating can be guessed; it goes into the minutes and the stats. The templates of short daily meetings, one-on-ones and formal bodies (steering committee, boards, class council, site meeting, case review, incident review) leave it off.
 
 ### Exports
 
 Pages that list things export them for a spreadsheet: **Export as CSV** on the Actions page (every action
-of the view, also those done more than two weeks ago), the Decisions page (with its search and meeting
+of the view, including those done more than two weeks ago), the Decisions page (with its search and meeting
 filter), a meeting's Stats (one line per session) and, with Team, the Insights table and the portfolio
 dashboard. Minutes download as Markdown or PDF from the History. The files open straight into columns in
 Excel, LibreOffice or Numbers, in the person's language (";" and a decimal comma in French, German,
@@ -240,19 +240,19 @@ a session soon, started or ended, minutes published, a check-in reminder, an ove
 
 Every Monday from 08:00 (workspace time zone), each member gets a **weekly summary** by email: their sessions
 of the week with a link to each check-in, their open follow-up actions and the kudos they received. It is sent
-only when there is something in it; each person turns it off in their account or with the link at the bottom
+only when there is something in it; each person can turn it off in their account or with the link at the bottom
 of the email. On a self-hosted instance it needs `SMTP_URL`; `RONDE_WEEKLY_PER_RUN` (150 by default) caps the
-emails sent per hour, the others go the next hour.
+emails sent per hour; the rest go out the next hour.
 
 With Team, notification workflows add conditions and your own wording to each message, and two more connectors
 send **SMS** and **WhatsApp** messages through Twilio: enter the Account SID, the sender number and the auth
-token. Messages go to the mobile numbers people enter on their profile (international form, +33…), and never
+token. Messages go to the mobile numbers people enter on their profile (international format, +33…), and never
 to people who are away. For WhatsApp, the sender must be approved in Twilio, and WhatsApp only lets a business
-write first with a template Meta approved: create one in Twilio's Content Template Builder with two variables
+write first with a template approved by Meta: create one in Twilio's Content Template Builder with two variables
 (the message, then the link) and enter its Content SID in the connector. When a workspace leaves Team, these
 messages stop and the log of each meeting says why.
 
-**Check-in by email**: when the instance reads a mailbox (`INBOUND_IMAP_URL`, see the self-hosting guide), the reminder says that a reply works. Each section's name on a line, the items under it: the lines are added to the person's check-in (never replacing anything), and an email confirms what went in. Only replies from the address the reminder went to (or the person's account) count, for 14 days; observers and the sample meeting are left out.
+**Check-in by email**: when the instance reads a mailbox (`INBOUND_IMAP_URL`, see the self-hosting guide), the reminder says that a reply works. Put each section's name on a line and its items under it: the lines are added to the person's check-in (never replacing anything), and an email confirms what went in. Only replies from the address the reminder went to (or the person's account) count, for 14 days; observers and the sample meeting are left out.
 
 **Push notifications**: once the instance has its keys (see the self-hosting guide), everyone can install Ronde from their browser (or add it to an iPhone's home screen) and, in their account, turn notifications on for each device: their turn coming up during a live session, check-in reminders, and what lands in the bell. Each kind can be turned off, and the devices are listed there.
 
@@ -269,7 +269,7 @@ The tokens of accounts signing in with Google, GitHub, Microsoft or single sign-
 | Video call: any link, Jitsi, BigBlueButton | Meeting settings | Community |
 | Zoom, Google Meet and Teams rooms created for each meeting | Workspace, General | Team |
 | Google, Outlook and CalDAV calendars (iCloud, Fastmail, Nextcloud…), both ways: sessions written into the participants' calendars, moves, deletions and answers made there brought back, availability read | Workspace, General | Team |
-| Jira, Linear, GitLab and GitHub tickets from follow-up actions, closed in step | Workspace, General | Team |
+| Jira, Linear, GitLab and GitHub issues created from follow-up actions, closed in sync | Workspace, General | Team |
 | GitHub, GitLab, Jira and Linear: repositories, milestones, epics and projects imported into the portfolio | Projects › Import | Community |
 | Imported projects kept in sync with their tool: name, status, dates and progress | Projects › Import, through an issue tracker | Team |
 | Your logo on the shared screen, in emails and minutes | Workspace, General | Team |
@@ -309,7 +309,7 @@ Owners and admins add a wiki in the General tab: a **Notion** page shared with a
 (created at notion.so/profile/integrations; share the page with it from ••• › Connections), or a
 **Confluence** space, in the cloud (site, space key, the account's email and an API token from
 id.atlassian.com) or on a Data Center or Server (a personal access token). An optional parent page keeps the
-minutes together. Each meeting then picks its wiki under Settings › Integrations: at each archive, the
+minutes together. Each meeting then picks its wiki under Settings › Integrations: each time a session is archived, its
 minutes become a page named by the session's date and the meeting's name, with a link back to the history.
 Editing the summary updates the page; earlier sessions are published from the history, where a failed
 publication says why and can be tried again. Sample meetings publish nothing.
@@ -323,7 +323,7 @@ or the workspace's own.
 **Transcripts** turn what is said during a session into text, filed under each round-table turn (what is said outside the round table stays unattributed). They need a speech-to-text
 service: OpenAI, or a Whisper server of your own (the `whisper` profile of the Compose file runs one on
 the same machine). Each meeting must allow them in its settings, everyone sees a banner while a session
-is recorded, and each person can leave their turns out. The sound is deleted as soon as it is
+is recorded, and each person can leave their own turns out. The audio is deleted as soon as it is
 transcribed.
 
 ## Audit log

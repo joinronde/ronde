@@ -29,16 +29,16 @@
   <a href="https://joinronde.com/en#video"><img src="docs/media/video.webp" width="860" alt="Watch Ronde in one minute: a whole weekly meeting, from the check-ins to the minutes" /></a>
 </p>
 
-Ronde runs a team's recurring meetings: the weekly sync, the stand-up, the project review. The host drives the meeting from the **control room** and shares the **shared screen** tab in the video call. Everyone follows on **My screen**: they fill in their check-in beforehand, follow the live meeting, raise their hand, ask questions and react.
+Ronde runs a team's recurring meetings: the weekly sync, the stand-up, the project review. The host runs the meeting from the **Control room** and shares the **Shared screen** tab in the video call. Everyone else uses **My screen**: they fill in their check-in beforehand, then follow the live meeting, raise a hand, ask questions and react.
 
-> Ronde is open-core: a free self-hosted Community Edition (AGPL-3.0), and Team and Enterprise plans in the cloud or with a license key. Schools and universities get the paid plans for free.
+> Ronde is open-core: a free Community Edition (AGPL-3.0), in the cloud or on your own server, and Team and Enterprise plans, in the cloud or on your server with a license key. Schools and universities get the paid plans for free.
 
 ## Why Ronde
 
 - **The weekly meeting drags on**: each person gets a timed turn on the shared screen, and the host moves on with one key.
 - **Nobody prepared their update**: everyone fills in a two-minute check-in beforehand, from a phone or a computer, and last week's plan is there to tick off.
 - **Nobody writes the minutes**: decisions and actions are noted as the meeting goes, and the minutes are ready when it ends. Actions come back every week until they are done.
-- **It still feels like a team meeting**: reactions, raised hands, kudos, a wheel to pick who goes next, the team's mood.
+- **It still feels like a team meeting**: reactions, raised hands, kudos, live polls, a wheel to pick who goes next, the team's mood.
 
 <p align="center">
   <img src="docs/media/session.webp" width="860" alt="The shared screen of a Ronde meeting, moving from one person's turn to the next" />
@@ -104,7 +104,7 @@ curl -fsSL https://raw.githubusercontent.com/joinronde/ronde/main/docker/.env.ex
 docker compose up -d
 ```
 
-HTTPS, email, single sign-on, local transcripts, upgrades and backups: see the [self-hosting guide](docs/self-hosting/README.md). Ronde is in beta: `RONDE_VERSION=beta` follows the latest one, `RONDE_VERSION=1.0.0-beta.N` holds a version.
+HTTPS, email, single sign-on, local transcripts, upgrades and backups: see the [self-hosting guide](docs/self-hosting/README.md). Ronde is in beta: `RONDE_VERSION=beta` follows the latest beta, and `RONDE_VERSION=1.0.0-beta.N` pins one version.
 
 ## Editions
 
@@ -114,10 +114,10 @@ HTTPS, email, single sign-on, local transcripts, upgrades and backups: see the [
 | Projects, portfolio and project round, import from GitHub, GitLab, Jira and Linear | ✓ | ✓ | ✓ |
 | Modules: icebreaker, mood, usefulness vote, kudos, polls, retro, planning poker, random draws, sounds, GitLab and GitHub | ✓ | ✓ | ✓ |
 | Workspace and portfolio dashboards, scheduled reports | | ✓ | ✓ |
-| Workflows, AI assistant, transcription, calendar sync and video rooms, Slack app, tickets from actions, minutes in Notion and Confluence, imported projects kept in sync, custom logo, audit log of 90 days | | ✓ | ✓ |
-| SAML, LDAP, SCIM, enforced SSO, domain capture, custom roles, programmes and per-project rights, full audit history streamed to a SIEM | | | ✓ |
+| Workflows, AI assistant, transcription, calendar sync and video rooms, Slack app, tickets from actions, minutes in Notion and Confluence, imported projects kept in sync, custom logo, 90-day audit log | | ✓ | ✓ |
+| SAML, LDAP, SCIM, enforced SSO, domain capture, custom roles, programs and per-project rights, full audit history streamed to a SIEM | | | ✓ |
 
-The Community Edition is the whole product for a team, free and self-hosted. Team and Enterprise run in the cloud or on your servers with a license key; schools and universities get them for free. Prices are on [joinronde.com](https://joinronde.com/pricing).
+The Community Edition is the whole product for a team, free in the cloud or on your own server. Team and Enterprise run in the cloud or on your servers with a license key; schools and universities get them for free. Prices are on [joinronde.com](https://joinronde.com/pricing).
 
 ## Features
 
@@ -135,7 +135,7 @@ The Community Edition is the whole product for a team, free and self-hosted. Tea
 #### Check-ins, minutes and follow-up
 
 - **Check-ins with sections**: done, planned, blockers, other or custom, each a list, a checklist or free text. What was planned last time comes back to be ticked off. A reply to the reminder email can fill it in.
-- **Minutes**, written from the check-ins, the notes and the decisions, with a summary on top; searched across every session, exported as Markdown, PDF or published to Notion and Confluence.
+- **Minutes**, written from the check-ins, the notes and the decisions, with a summary on top; searchable across every session, exported as Markdown or PDF, or published to Notion and Confluence.
 - **Follow-up actions**: a blocker becomes an action with an owner; it comes back every week until it is done, and can open a ticket in Jira, Linear, GitLab or GitHub.
 - **Stats**: planned against done, attendance, turns on time, speaking time, recurring blockers, action resolution time; CSV exports.
 
@@ -254,18 +254,18 @@ The Ronde core is licensed under the [GNU AGPL v3](LICENSE). The code in `ee/`, 
 
 ## Sound credits
 
-Recorded soundboard sounds are in `apps/web/public/sounds/`, trimmed and loudness-matched. None requires attribution; here it is anyway.
+Recorded soundboard sounds are in `apps/web/public/sounds/`, trimmed and loudness-matched. None requires attribution, but here it is anyway.
 
-| File | Source | Licence |
+| File | Source | License |
 |---|---|---|
 | `drumroll.mp3` | “Drum Roll Intro”, Wikimedia Commons | CC0 |
 | `ba-dum-tss.mp3` | “Sting”, Wikimedia Commons | Public domain |
 | `tada.mp3` | “Music Jingles” (`jingles_PIZZI10`), Kenney.nl | CC0 |
 | `applause.mp3` | “Applause #1” (s2363), Joseph Sardin, BigSoundBank.com | CC0 |
 
-Recorded waiting music is in `apps/web/public/music/`, brought to -16 LUFS with fades at both ends. Works and recordings are free. *Traveling in your mind* is also the music of the site's promo videos.
+Recorded waiting music is in `apps/web/public/music/`, brought to -16 LUFS with fades at both ends. Both the works and the recordings are free to use. *Traveling in your mind* is also the music of the site's promo videos.
 
-| File | Work and recording (Wikimedia Commons) | Licence |
+| File | Work and recording (Wikimedia Commons) | License |
 |---|---|---|
 | `satie-gymnopedie-1.mp3` | Erik Satie, *Gymnopédie No. 1*, piano, clicks and hiss removed | CC0 |
 | `satie-gymnopedie-1-guitar.mp3` | Erik Satie, *Gymnopédie No. 1*, guitar, Michael Laucke | Public domain |
@@ -277,4 +277,4 @@ Recorded waiting music is in `apps/web/public/music/`, brought to -16 LUFS with 
 
 ## Data credits
 
-Public holidays come from [date-holidays](https://github.com/commenthol/date-holidays) (code under the ISC licence); its holiday data, drawn from Wikipedia, is available under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) and is used unchanged. The settings that use it say so next to the choice of holidays.
+Public holidays come from [date-holidays](https://github.com/commenthol/date-holidays) (code under the ISC license); its holiday data, drawn from Wikipedia, is available under [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) and is used unchanged. The settings that use it say so next to the choice of holidays.

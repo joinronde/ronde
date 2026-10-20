@@ -5,7 +5,7 @@
 Please report vulnerabilities privately, by email to **security@joinronde.com**, rather than in a public
 issue or discussion. If you can, include:
 
-- the version of Ronde (the image tag, or the commit) and whether it is self-hosted or the cloud;
+- the version of Ronde (the image tag, or the commit) and whether it is self-hosted or in the cloud;
 - the steps to reproduce, and what an attacker gains;
 - any proof of concept, logs or screenshots.
 
