@@ -8,7 +8,7 @@
   "token": "Token de API",
   "connection": "Conexión",
   "noConnection": "Todavía no hay ninguna conexión de {kind} en el espacio.",
-  "toConnections": "Añada una en «GitLab y GitHub».",
+  "toConnections": "Añade una en «GitLab y GitHub».",
   "tokenKept": "Hay un token guardado. Escribe uno nuevo para sustituirlo.",
   "save": "Guardar",
   "cancel": "Cancelar",

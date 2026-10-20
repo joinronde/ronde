@@ -24,7 +24,7 @@
   "items": {
     "icebreaker": {
       "name": "Quebra-gelo",
-      "description": "Uma pergunta tirada de um banco para aquecer; cada pessoa responde em uma linha, exibida durante a introdução."
+      "description": "Uma pergunta tirada de um banco para aquecer; cada pessoa responde em uma linha, exibida durante a abertura."
     },
     "mood": {
       "name": "Humor da equipe",
@@ -40,7 +40,7 @@
     },
     "hands": {
       "name": "Mãos levantadas e perguntas",
-      "description": "Levante a mão ou faça uma pergunta durante uma vez: uma etapa de perguntas vem depois dessa vez."
+      "description": "Levante a mão ou faça uma pergunta durante a vez de alguém: uma etapa de perguntas vem logo depois dessa vez."
     },
     "kudos": {
       "name": "Agradecimentos",
@@ -48,7 +48,7 @@
     },
     "spotlight": {
       "name": "Destaque",
-      "description": "Mostre em grande na tela compartilhada um item de ficha, uma pergunta ou uma mensagem livre."
+      "description": "Mostre em destaque na tela compartilhada um item de ficha, uma pergunta ou uma mensagem livre."
     },
     "birthdays": {
       "name": "Aniversários",
@@ -84,7 +84,7 @@
     },
     "analytics": {
       "name": "Análises do espaço de trabalho",
-      "description": "Painéis de todas as reuniões: participação, engajamento, bloqueios recorrentes."
+      "description": "Painéis que reúnem todas as reuniões: participação, engajamento, bloqueios recorrentes."
     },
     "scheduledReports": {
       "name": "Relatórios programados",

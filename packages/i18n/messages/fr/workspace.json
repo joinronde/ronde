@@ -49,7 +49,7 @@
     "saved": "Enregistré",
     "categories": "Équipes",
     "manageTeams": "Gérer les équipes",
-    "categoriesHint": "Affichées sur les fiches et utilisées pour regrouper les statistiques. Les équipes peuvent s'imbriquer : elles se gèrent dans l'annuaire.",
+    "categoriesHint": "Affichées sur les fiches et utilisées pour regrouper les statistiques. Les équipes peuvent s'imbriquer : elles se gèrent dans l'annuaire.",
     "categoryPlaceholder": "ex. Développement",
     "add": "Ajouter",
     "rename": "Renommer {name}",

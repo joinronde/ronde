@@ -64,6 +64,6 @@
   "sheetReady": "Карточка проекта «{project}» готова",
   "sheetEmpty": "Нужно заполнить карточку проекта «{project}»",
   "readyCount": "Заполнено карточек: {ready}/{total}",
-  "seatReady": "отчёт заполнен",
-  "seatToFill": "отчёт не заполнен"
+  "seatReady": "карточка заполнена",
+  "seatToFill": "карточка не заполнена"
 }

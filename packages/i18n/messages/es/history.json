@@ -1,6 +1,6 @@
 {
   "loading": "Cargando el historial…",
-  "empty": "Todavía no hay reuniones archivadas. Usa «Archivar la reunión» en la sala de control, en el cierre.",
+  "empty": "Todavía no hay actas. Usa «Publicar el acta» en la sala de control, en el cierre.",
   "searchPlaceholder": "Buscar en las actas (proyecto, persona, bloqueo…)",
   "searchLabel": "Buscar en las actas",
   "meetings": "{count, plural, one {# reunión} other {# reuniones}}",

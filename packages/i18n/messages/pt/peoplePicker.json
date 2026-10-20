@@ -1,13 +1,13 @@
 {
-  "search": "Pesquisar uma pessoa ou equipa…",
+  "search": "Pesquisar uma pessoa ou equipe…",
   "selected": "{count} de {total} selecionadas",
   "all": "Todos",
   "none": "Ninguém",
-  "teams": "Equipas",
-  "pickTeam": "{name}: {count, plural, one {# pessoa} other {# pessoas}}, subequipas incluídas",
+  "teams": "Equipes",
+  "pickTeam": "{name}: {count, plural, one {# pessoa} other {# pessoas}}, subequipes incluídas",
   "noMatch": "Ninguém corresponde.",
-  "noTeam": "Sem equipa",
-  "withSubTeams": "subequipas incluídas",
+  "noTeam": "Sem equipe",
+  "withSubTeams": "subequipes incluídas",
   "fold": "Recolher {name}",
   "unfold": "Expandir {name}"
 }

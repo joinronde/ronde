@@ -3,7 +3,7 @@
   "defaultTeam": "Reunião de equipe",
   "summary": "**{date}** · duração {duration} · {count, plural, one {# participante} other {# participantes}}",
   "absent": "ausentes: {names}",
-  "introduction": "Introdução",
+  "introduction": "Abertura",
   "questionsAbout": "Perguntas · {what}",
   "topics": "Assuntos em aberto",
   "decisions": "Decisões",

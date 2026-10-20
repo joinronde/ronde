@@ -33,7 +33,7 @@
     "stepCheckIn": "Preencha sua ficha",
     "stepCheckInHint": "O que você fez, o que prevê, o que bloqueia: algumas linhas antes da reunião.",
     "stepSession": "Conduza uma primeira sessão",
-    "stepSessionHint": "Abra a sala de controle, comece a reunião e arquive-a com a ata."
+    "stepSessionHint": "Abra a sala de controle, comece a reunião e depois publique a ata."
   },
   "settings": {
     "title": "Configurações do espaço de trabalho",
@@ -47,14 +47,14 @@
     "meetingCreationMembers": "Todos os membros",
     "meetingCreationAdmins": "Organizadores e administradores",
     "saved": "Salvo",
-    "categories": "Equipas",
-    "manageTeams": "Gerir as equipas",
-    "categoriesHint": "Mostradas nas fichas e usadas para agrupar as estatísticas. As equipas podem encaixar-se: geram-se no diretório.",
+    "categories": "Equipes",
+    "manageTeams": "Gerenciar as equipes",
+    "categoriesHint": "Mostradas nas fichas e usadas para agrupar as estatísticas. As equipes podem ser aninhadas: são gerenciadas no diretório.",
     "categoryPlaceholder": "ex.: Engenharia",
     "add": "Adicionar",
     "rename": "Renomear {name}",
     "delete": "Excluir {name}",
-    "noCategories": "Ainda não há equipas.",
+    "noCategories": "Ainda não há equipes.",
     "danger": "Zona de perigo",
     "leave": "Sair do espaço de trabalho",
     "leaveHint": "Você perde o acesso às reuniões. Seu perfil continua no diretório.",

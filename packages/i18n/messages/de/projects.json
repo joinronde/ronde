@@ -27,7 +27,7 @@
     "dueDates": "Fälligkeiten"
   },
   "title": "Projekte",
-  "intro": "Das Portfolio des Workspace: jedes Projekt, Thema oder Vorhaben, sein Stand und die Menschen, die daran arbeiten. Meetings folgen den Projekten, über die sie sprechen.",
+  "intro": "Das Portfolio des Arbeitsbereichs: jedes Projekt, Thema oder Vorhaben, sein Stand und die Menschen, die daran arbeiten. Meetings folgen den Projekten, über die sie sprechen.",
   "themes": "Themen",
   "new": "Neues Projekt",
   "views": "Ansichten",
@@ -63,7 +63,7 @@
   "lead": "Verantwortlich",
   "leadLocked": "Nur wer alle Projekte verwaltet, kann die Verantwortung übertragen.",
   "noLead": "Niemand verantwortlich",
-  "leadIsMe": "{name} (Sie)",
+  "leadIsMe": "{name} (du)",
   "members": "{count, plural, =0 {Wer daran arbeitet} one {# Person arbeitet daran} other {# Personen arbeiten daran}}",
   "findPeople": "Jemanden suchen",
   "links": "Links",
@@ -98,7 +98,7 @@
   "deleteConfirm": "Das Projekt {name} löschen? Seine Projektblätter werden gelöscht; die Einträge und Aufgaben dazu bleiben erhalten, ohne Projekt.",
   "noDescription": "Noch keine Beschreibung.",
   "timeline": "Was die Meetings gesagt haben",
-  "noTimeline": "Noch nichts: Sobald ein Meeting, das dem Projekt folgt, eine Sitzung archiviert, erscheint hier, was darüber gesagt wurde.",
+  "noTimeline": "Noch nichts: Sobald ein Meeting, das dem Projekt folgt, sein Protokoll veröffentlicht, erscheint hier, was darüber gesagt wurde.",
   "roles": {
     "achievement": "Erledigt",
     "plan": "Geplant",
@@ -117,7 +117,7 @@
   "noActions": "Keine offene Aufgabe.",
   "followed": {
     "title": "Verfolgte Projekte",
-    "intro": "Jedes verfolgte Projekt bekommt einen Reiter im Check-in aller und, mit einer Projektrunde auf der Agenda, eine eigene Runde, in der sein Team gemeinsam spricht.",
+    "intro": "Jedes verfolgte Projekt bekommt einen Tab im Check-in aller und, mit einer Projektrunde auf der Agenda, eine eigene Runde, in der sein Team gemeinsam spricht.",
     "portfolio": "Zum Portfolio",
     "noRound": "Die Agenda hat noch keine Projektrunde: Die Einträge zu diesen Projekten werden in der Runde jeder Person vorgestellt. Füge unter Agenda den Block „Projektrunde“ hinzu, damit jedes Projekt seine Runde bekommt.",
     "notActive": "nicht aktiv: keine Runde",
@@ -131,12 +131,12 @@
     "create": "Projekt anlegen",
     "allFollowed": "Alle Projekte des Portfolios werden bereits verfolgt.",
     "createInPortfolio": "Neues Projekt im Portfolio",
-    "noneHint": "Wählen Sie die Projekte, über die dieses Team spricht: Jedes bekommt einen Tab im Check-in und seine Runde in der Besprechung.",
+    "noneHint": "Wähle die Projekte, über die dieses Team spricht: Jedes bekommt einen Tab im Check-in und seine Runde im Meeting.",
     "whoAdds": "Wer darf Projekte hinzufügen?",
     "whoAddsHint": "Projekte stammen immer aus dem Portfolio des Arbeitsbereichs. Sortieren und Entfernen bleiben der Moderation vorbehalten.",
     "by": {
       "hosts": "Die Moderation",
-      "hostsHint": "Nur wer die Besprechung konfiguriert, wählt ihre Projekte.",
+      "hostsHint": "Nur wer das Meeting konfiguriert, wählt seine Projekte.",
       "participants": "Alle Teilnehmenden",
       "participantsHint": "Alle Teilnehmenden können aus ihrem Check-in ein Projekt hinzufügen."
     },
@@ -161,7 +161,7 @@
   },
   "columns": {
     "project": "Projekt",
-    "health": "Zustand",
+    "health": "Stand",
     "status": "Status",
     "due": "Fällig",
     "progress": "Fortschritt",
@@ -174,7 +174,7 @@
   "partOfLink": "Gehört zu <link>{name}</link>",
   "private": "Nur Mitglieder",
   "visibility": "Wer es sieht",
-  "visibilityWorkspace": "Der ganze Workspace",
+  "visibilityWorkspace": "Der ganze Arbeitsbereich",
   "visibilityMembers": "Nur sein Team (und wer alle Projekte verwaltet)",
   "membersEdit": "Sein Team darf es bearbeiten, nicht nur die verantwortliche Person",
   "subProjects": "Projekte dieses Programms",

@@ -13,7 +13,7 @@
   "liveStep": {
     "intro": "Introducción",
     "turn": "Turno de {name} · {n}/{total}",
-    "projects": "Ronda de proyectos",
+    "projects": "Ronda por proyecto",
     "topics": "Varios",
     "end": "Cierre",
     "block": "En curso"
@@ -21,8 +21,8 @@
   "liveSince": "Empezó a las {time}",
   "liveSinceDay": "Empezó el {day} a las {time}",
   "turnsDone": "{done}/{total} turnos hechos",
-  "yourTurnNow": "¡Es su turno!",
-  "yourTurnIn": "{count, plural, one {Su turno después de # persona} other {Su turno después de # personas}}",
+  "yourTurnNow": "¡Es tu turno!",
+  "yourTurnIn": "{count, plural, one {Tu turno después de # persona} other {Tu turno después de # personas}}",
   "today": "Hoy",
   "tomorrow": "Mañana",
   "inDays": "{count, plural, one {En # día} other {En # días}}",

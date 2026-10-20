@@ -1,7 +1,7 @@
 {
   "title": "GitLab e GitHub",
-  "intro": "As ligações às suas forjas de código, feitas uma vez para todo o espaço: cada reunião pode ler por elas as issues de cada pessoa, e os trackers abrem tickets com elas.",
-  "empty": "Ainda não há nenhuma ligação.",
+  "intro": "As conexões com suas forjas de código, feitas uma vez para todo o espaço: cada reunião pode ler por elas as issues de cada pessoa, e os gerenciadores de tickets abrem tickets com elas.",
+  "empty": "Ainda não há nenhuma conexão.",
   "kinds": {
     "gitlab": "GitLab",
     "github": "GitHub"
@@ -14,55 +14,55 @@
   "instanceName": "{kind} do servidor",
   "instanceHint": "Definida pelas variáveis do servidor (GITLAB_TOKEN, GITHUB_TOKEN); sem token, o GitHub lê os repositórios públicos.",
   "as": "como @{account}",
-  "oauth": "ligada com o GitLab",
-  "add": "Adicionar uma ligação",
-  "addOwn": "Adicionar uma ligação só para esta reunião",
+  "oauth": "conectada com o GitLab",
+  "add": "Adicionar uma conexão",
+  "addOwn": "Adicionar uma conexão só para esta reunião",
   "addOwnHint": "Vista apenas por esta reunião, para um servidor ou uma conta que o espaço não tem.",
-  "connect": "Ligar com o GitLab",
-  "connectHint": "A sua conta GitLab, só de leitura, renovada sozinha: nenhum token para copiar nem para substituir quando expira.",
-  "reconnect": "Voltar a ligar",
+  "connect": "Conectar com o GitLab",
+  "connectHint": "Sua conta do GitLab, somente leitura, renovada sozinha: nenhum token para copiar nem para substituir quando expirar.",
+  "reconnect": "Conectar de novo",
   "orToken": "ou com um token pessoal",
   "kind": "Ferramenta",
   "name": "Nome",
   "url": "Servidor",
   "urlHint": "Vazio: {url}",
   "token": "Token",
-  "tokenKept": "Deixe o token vazio para manter o guardado.",
+  "tokenKept": "Deixe o token vazio para manter o salvo.",
   "tokenHints": {
-    "gitlab": "Um token pessoal com o âmbito <code>read_api</code> (<code>api</code> para um tracker que abre tickets).",
-    "github": "Um token de granularidade fina que lê issues e pull requests (e os escreve, para um tracker que abre tickets)."
+    "gitlab": "Um token pessoal com o escopo <code>read_api</code> (<code>api</code> para um gerenciador de tickets que abre tickets).",
+    "github": "Um token de granularidade fina que lê issues e pull requests (e os escreve, para um gerenciador de tickets que abre tickets)."
   },
-  "encrypted": "Os tokens são cifrados antes de serem guardados e nunca mais são mostrados.",
-  "noSecretKey": "A cifra dos tokens não está configurada no servidor: peça aos operadores que definam a chave SECRET_KEY.",
-  "save": "Guardar",
-  "saved": "Guardado.",
+  "encrypted": "Os tokens são criptografados antes de serem salvos e nunca mais são mostrados.",
+  "noSecretKey": "A criptografia dos tokens não está configurada no servidor: peça aos operadores que definam a chave SECRET_KEY.",
+  "save": "Salvar",
+  "saved": "Salvo.",
   "cancel": "Cancelar",
   "edit": "Editar",
   "test": "Testar",
   "works": "Funciona",
   "remove": "Remover",
-  "removeConfirm": "Remover a ligação {name}? As reuniões que a usam deixam de ler por ela, e os trackers que abrem tickets com ela são removidos.",
-  "removeOwnConfirm": "Remover a ligação {name} desta reunião?",
+  "removeConfirm": "Remover a conexão {name}? As reuniões que a usam deixam de ler por ela, e os gerenciadores de tickets que abrem tickets com ela são removidos.",
+  "removeOwnConfirm": "Remover a conexão {name} desta reunião?",
   "back": {
-    "connected": "GitLab ligado.",
-    "failed": "A ligação com o GitLab falhou: tente de novo ou use um token pessoal.",
-    "denied": "Não tem permissão para ligar o GitLab aqui.",
-    "cancelled": "A ligação com o GitLab foi cancelada."
+    "connected": "GitLab conectado.",
+    "failed": "A conexão com o GitLab falhou: tente de novo ou use um token pessoal.",
+    "denied": "Você não tem permissão para conectar o GitLab aqui.",
+    "cancelled": "A conexão com o GitLab foi cancelada."
   },
   "meeting": {
-    "title": "Ligações {kind}",
-    "inherited": "Enquanto não escolher, esta reunião usa as ligações do espaço.",
-    "picked": "Esta reunião usa as ligações assinaladas abaixo.",
+    "title": "Conexões {kind}",
+    "inherited": "Enquanto você não escolher, esta reunião usa as conexões do espaço.",
+    "picked": "Esta reunião usa as conexões marcadas abaixo.",
     "use": "Usar",
-    "none": "Nenhuma ligação {kind}: um administrador pode adicionar uma ao espaço, ou adicione abaixo uma só para esta reunião.",
-    "save": "Guardar o acesso {kind}",
+    "none": "Nenhuma conexão {kind}: um administrador pode adicionar uma ao espaço, ou adicione abaixo uma só para esta reunião.",
+    "save": "Salvar o acesso {kind}",
     "repos": "Repositórios seguidos",
-    "reposHint": "«dono/repositório» ou todo um «dono», um por linha; vazio: todos os repositórios. Indique também o utilizador GitHub de cada pessoa em «Pessoas e funções».",
+    "reposHint": "“dono/repositório” ou todo um “dono”, um por linha; vazio: todos os repositórios. Informe também o usuário do GitHub de cada pessoa em “Pessoas e papéis”.",
     "groups": "Grupos",
     "projects": "Projetos seguidos",
-    "projectsHint": "Só as issues destes projetos são propostas para importação. Indique também o utilizador GitLab de cada pessoa em «Pessoas e funções»."
+    "projectsHint": "Só as issues destes projetos são propostas para importação. Informe também o usuário do GitLab de cada pessoa em “Pessoas e papéis”."
   },
   "hub": {
-    "count": "{count, plural, one {# ligação} other {# ligações}}"
+    "count": "{count, plural, one {# conexão} other {# conexões}}"
   }
 }

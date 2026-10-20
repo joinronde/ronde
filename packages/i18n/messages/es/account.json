@@ -3,7 +3,7 @@
   "back": "Volver",
   "profile": "Perfil",
   "birthday": "Cumpleaños",
-  "birthdayHint": "Solo día y mes, nunca el año: las reuniones que celebran cumpleaños lo muestran en la pantalla de espera. Se copia en su ficha de cada espacio.",
+  "birthdayHint": "Solo día y mes, nunca el año: las reuniones que celebran cumpleaños lo muestran en la pantalla de espera. Se copia en tu ficha de cada espacio.",
   "photoNoWorkspace": "Únete a un espacio o crea uno para añadir una foto: se muestra en tu ficha.",
   "photoHint": "Se muestra junto a tu nombre en todos tus espacios: reuniones, directorio, actas. Una imagen cuadrada es lo mejor; se recorta por el centro.",
   "photo": "Foto",
@@ -72,7 +72,7 @@
   "upgradeHintsHint": "Solo las ven los administradores del espacio y quien gestiona su facturación, y nunca durante una reunión.",
   "weeklyTitle": "Resumen semanal",
   "weeklyLabel": "Enviarme un resumen de mi semana cada lunes",
-  "weeklyHint": "Mis sesiones, mis acciones abiertas y los reconocimientos recibidos, por correo, solo cuando hay algo que contar.",
+  "weeklyHint": "Mis sesiones, mis acciones abiertas y los agradecimientos recibidos, por correo, solo cuando hay algo que contar.",
   "tabs": {
     "label": "Páginas de tu cuenta",
     "profile": "Perfil",

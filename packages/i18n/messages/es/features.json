@@ -7,7 +7,7 @@
     "magicLink": "Enlaces de inicio de sesión por correo",
     "social": "Inicio de sesión con Google, GitHub o Microsoft",
     "oidc": "Inicio de sesión único con un proveedor OpenID Connect",
-    "twoFactor": "Autenticación en dos pasos",
+    "twoFactor": "Verificación en dos pasos",
     "saml": "Inicio de sesión único SAML y varios proveedores de identidad",
     "ldap": "Inicio de sesión con LDAP y Active Directory",
     "scim": "Aprovisionamiento de usuarios con SCIM",

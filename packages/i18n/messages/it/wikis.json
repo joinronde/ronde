@@ -40,10 +40,10 @@
   "openInRonde": "Apri in Ronde",
   "meeting": {
     "title": "Pubblica il verbale",
-    "intro": "A ogni archiviazione, il verbale diventa una pagina del wiki, con la data della sessione come nome. Quando il riepilogo viene modificato, la pagina si aggiorna.",
+    "intro": "A ogni pubblicazione, il verbale diventa una pagina del wiki, con la data della sessione come nome. Quando il riepilogo viene modificato, la pagina si aggiorna.",
     "wiki": "Wiki",
     "none": "Da nessuna parte",
-    "hint": "Le sessioni già archiviate si pubblicano dalla cronologia.",
+    "hint": "Le sessioni passate si pubblicano dalla cronologia.",
     "noWiki": "Ancora nessun wiki in questo spazio.",
     "addWiki": "Aggiungine uno nelle impostazioni dello spazio",
     "on": "Il verbale sarà pubblicato in {name}.",

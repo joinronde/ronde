@@ -26,7 +26,7 @@
     "target": "Duração alvo",
     "timer": "Cronômetro",
     "autoStart": "Inicia a cada vez",
-    "announcements": "Avisos da introdução",
+    "announcements": "Avisos da abertura",
     "localeWorkspace": "Idioma do espaço de trabalho ({language})"
   },
   "sections": {
@@ -64,7 +64,7 @@
     "carryPlansHint": "Cada pessoa encontra o que tinha previsto como caixas para marcar à medida que avança. Uma caixa não marcada não conta como feita.",
     "carryPlans": "Retomar o que estava em “{plan}” da última vez",
     "removeOf": "Remover “{label}”",
-    "reorder": "Mover «{label}»",
+    "reorder": "Mover “{label}”",
     "customPlaceholder": "Ex.: Pesquisa, Demo para mostrar, Preciso de ajuda",
     "add": "Adicionar uma seção",
     "hint": "Cada papel (feito, previsto, bloqueio, outros) vai para no máximo uma seção. Uma seção mantém o que foi escrito quando seu nome, papel ou entrada muda."
@@ -91,31 +91,31 @@
     "turnOn": "Nenhuma integração está ativada nesta reunião. Ative GitLab ou GitHub em “Módulos” para importar as issues e merge ou pull requests de cada pessoa."
   },
   "hub": {
-    "intro": "As ferramentas com que esta reunião trabalha e em que ponto está cada uma. Abra um cartão para a configurar.",
+    "intro": "As ferramentas com que esta reunião trabalha e em que ponto está cada uma. Abra um cartão para configurá-la.",
     "configure": "Configurar",
     "close": "Fechar",
     "off": "Desativada",
     "turnOn": "Ativar em Módulos",
-    "connected": "Ligada",
-    "toConnect": "Por ligar",
+    "connected": "Conectada",
+    "toConnect": "A conectar",
     "configured": "Configurada",
-    "toSetUp": "Por configurar",
-    "ready": "Ligação pronta",
+    "toSetUp": "A configurar",
+    "ready": "Link pronto",
     "synced": "Sincronizado",
     "noneInWorkspace": "Nenhum no espaço",
     "rulesOn": "{count, plural, one {# regra ativa} other {# regras ativas}}",
     "gitlab": "Tickets e merge requests de cada um na sua ficha",
     "github": "Issues e pull requests dos repositórios seguidos",
     "wikiName": "Wiki",
-    "wiki": "Atas publicadas na wiki da equipa",
+    "wiki": "Atas publicadas no wiki da equipe",
     "videoName": "Videochamada",
-    "video": "A ligação pela qual todos entram",
+    "video": "O link pelo qual todos entram",
     "calendarName": "Calendário",
     "calendar": "As sessões nos calendários de todos, sincronizadas",
     "notificationsName": "Notificações",
-    "notifications": "Chat, email e SMS à volta da reunião",
+    "notifications": "Chat, e-mail e SMS em torno da reunião",
     "goGeneral": "Em Geral",
-    "goSchedule": "Em Planeamento",
+    "goSchedule": "Em Agenda",
     "goNotifications": "Em Notificações",
     "origin": {
       "inherited": "Herdado do espaço",
@@ -148,7 +148,7 @@
   "people": {
     "title": "Pessoas ({count})",
     "colPerson": "Pessoa",
-    "colRole": "Função",
+    "colRole": "Papel",
     "intro": "Os perfis vêm do diretório do espaço de trabalho. O papel define o que cada pessoa pode fazer nesta reunião.",
     "rolesGuide": "Quem pode fazer o quê?",
     "roles": {
@@ -181,7 +181,7 @@
     "add": "Adicionar",
     "nobodyLeft": "Todos do diretório já participam.",
     "directory": "Gerenciar o diretório",
-    "categoriesHint": "As equipas, aniversários e nomes editam-se no diretório do espaço.",
+    "categoriesHint": "As equipes, os aniversários e os nomes são editados no diretório do espaço.",
     "github": "Usuário do GitHub"
   },
   "template": {
@@ -190,16 +190,16 @@
     "carries": "Vai para o modelo",
     "stays": "Fica nesta reunião",
     "items": {
-      "sections": "Secções da ficha",
-      "agenda": "Ordem do dia",
+      "sections": "Seções da ficha",
+      "agenda": "Pauta",
       "modules": "Módulos",
       "schedule": "Horário",
-      "people": "{count, plural, one {# pessoa e a sua função} other {# pessoas e as suas funções}}",
+      "people": "{count, plural, one {# pessoa e o seu papel} other {# pessoas e os seus papéis}}",
       "history": "Histórico e atas",
       "tokens": "Tokens de acesso e integrações"
     },
     "counts": {
-      "sections": "{count, plural, one {# secção} other {# secções}}",
+      "sections": "{count, plural, one {# seção} other {# seções}}",
       "agenda": "{count, plural, one {# bloco} other {# blocos}}",
       "modules": "{count, plural, one {# módulo ativo} other {# módulos ativos}}"
     },
@@ -226,18 +226,18 @@
     "projects": "Projetos"
   },
   "navHints": {
-    "general": "Nome, ícone, formato e cronómetro da reunião.",
-    "schedule": "Quando decorrem as sessões, e as suas exceções.",
+    "general": "Nome, ícone, formato e cronômetro da reunião.",
+    "schedule": "Quando as sessões acontecem, e as suas exceções.",
     "people": "Quem participa e o que cada um pode fazer.",
     "sections": "O que cada um preenche antes da reunião.",
     "agenda": "O desenrolar da reunião, bloco a bloco.",
-    "projects": "Os projetos acompanhados, cada um com a sua volta.",
+    "projects": "Os projetos acompanhados, cada um com a sua vez.",
     "modules": "Animação, formatos e ferramentas, ativados conforme necessário.",
-    "appearance": "A cor da reunião em todos os ecrãs.",
+    "appearance": "A cor da reunião em todas as telas.",
     "notifications": "Lembretes e mensagens enviados em torno da reunião.",
     "integrations": "Videochamada, ferramentas de tickets e wiki.",
-    "template": "Guardar esta reunião como modelo do espaço.",
-    "danger": "O que não se desfaz: sair, parar ou eliminar."
+    "template": "Salvar esta reunião como modelo do espaço.",
+    "danger": "O que não pode ser desfeito: sair, parar ou excluir."
   },
   "status": {
     "auto": "As alterações são salvas automaticamente.",
@@ -281,7 +281,7 @@
     "bbbUrl": "Servidor BigBlueButton",
     "server": "Servidor",
     "ownServer": "Um servidor próprio desta reunião",
-    "serverHint": "Os servidores do espaço são adicionados pelos seus administradores, nas definições do espaço.",
+    "serverHint": "Os servidores do espaço são adicionados pelos seus administradores, nas configurações do espaço.",
     "bbbSecret": "Segredo compartilhado do servidor",
     "bbbHint": "O Ronde abre a sala quando alguém entra e faz cada pessoa entrar com seu nome; os anfitriões entram como moderadores. O segredo é criptografado e nunca mostrado de novo.",
     "current": "As pessoas entram com:",

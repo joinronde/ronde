@@ -12,7 +12,7 @@
     "done": "已完成",
     "cancelled": "已取消"
   },
-  "healthLabel": "状态",
+  "healthLabel": "健康度",
   "dashboard": {
     "overdue": "已过截止日期",
     "quiet": "三周没有消息",
@@ -21,13 +21,13 @@
     "weeks": "{count, plural, other {最近 # 周}}",
     "watch": "需要关注的项目",
     "allGood": "没有遇到困难、逾期或没有消息的项目。",
-    "healthOverTime": "每周的状态",
+    "healthOverTime": "每周的健康度",
     "project": "项目",
     "done": "已完成",
     "dueDates": "截止日期"
   },
   "title": "项目",
-  "intro": "空间的项目组合：每个项目、主题或工作方向，它的状态以及参与的人。会议跟进它们讨论的项目。",
+  "intro": "空间的项目组合：每个项目、主题或工作方向，它的健康度以及参与的人。会议跟进它们讨论的项目。",
   "themes": "主题",
   "new": "新建项目",
   "views": "视图",
@@ -36,8 +36,8 @@
   "statusFilter": "阶段",
   "statusOpen": "进行中的",
   "statusAll": "全部，包括已归档",
-  "healthFilter": "状态",
-  "healthAll": "任意状态",
+  "healthFilter": "健康度",
+  "healthAll": "任意健康度",
   "groupBy": "分组",
   "byTheme": "按主题",
   "byStatus": "按阶段",
@@ -98,7 +98,7 @@
   "deleteConfirm": "删除项目“{name}”？它的项目卡会被删除；与它有关的条目和行动项会保留，但不再属于任何项目。",
   "noDescription": "还没有描述。",
   "timeline": "会议中的讨论",
-  "noTimeline": "暂无内容：跟进此项目的会议归档一次会话后，关于它的讨论会显示在这里。",
+  "noTimeline": "暂无内容：跟进此项目的会议发布纪要后，关于它的讨论会显示在这里。",
   "roles": {
     "achievement": "已完成",
     "plan": "计划",
@@ -117,9 +117,9 @@
   "noActions": "没有未完成的行动项。",
   "followed": {
     "title": "跟进的项目",
-    "intro": "每个跟进的项目在每个人的进展卡里都有一个标签页；如果议程中有按项目轮流环节，项目还有自己的轮次，由成员一起发言。",
+    "intro": "每个跟进的项目在每个人的进展卡里都有一个标签页；如果议程中有项目轮环节，项目还有自己的轮次，由成员一起发言。",
     "portfolio": "查看项目组合",
-    "noRound": "议程中还没有按项目轮流环节：这些项目的条目会在每个人的轮次中介绍。在“议程”中添加“按项目轮流”环节，让每个项目都有自己的轮次。",
+    "noRound": "议程中还没有项目轮环节：这些项目的条目会在每个人的轮次中介绍。在“议程”中添加“项目轮”环节，让每个项目都有自己的轮次。",
     "notActive": "未进行：没有轮次",
     "reorder": "移动 {name}",
     "remove": "停止跟进{name}",
@@ -131,14 +131,14 @@
     "create": "创建项目",
     "allFollowed": "项目组合中的所有项目都已在关注。",
     "createInPortfolio": "在项目组合中新建项目",
-    "noneHint": "选择这个团队讨论的项目：每个项目在签到中都有自己的标签页，并在会议中有自己的轮次。",
+    "noneHint": "选择这个团队讨论的项目：每个项目在进展卡中都有自己的标签页，并在会议中有自己的轮次。",
     "whoAdds": "谁可以添加项目？",
-    "whoAddsHint": "项目始终来自工作区的项目组合。调整顺序和移除项目仍由主持人负责。",
+    "whoAddsHint": "项目始终来自工作空间的项目组合。调整顺序和移除项目仍由主持人负责。",
     "by": {
       "hosts": "主持人",
       "hostsHint": "只有配置会议的人可以选择其项目。",
       "participants": "所有参与者",
-      "participantsHint": "任何参与者都可以从自己的签到中添加项目。"
+      "participantsHint": "任何参与者都可以从自己的进展卡中添加项目。"
     },
     "bySaved": "已保存"
   },
@@ -178,13 +178,13 @@
   "visibilityMembers": "仅项目成员（以及管理所有项目的人）",
   "membersEdit": "项目成员都可以编辑，不只是负责人",
   "subProjects": "此计划的项目",
-  "rolledHealth": "其中最差的状态：",
+  "rolledHealth": "其中最差的健康度：",
   "csv": {
     "lastNews": "最近消息",
     "quiet": "三周没有消息",
     "overdue": "已过截止日期",
     "done": "期间完成",
-    "healthOf": "状态 {week}",
+    "healthOf": "健康度 {week}",
     "yes": "是",
     "fileName": "xiangmu-zuhe"
   },

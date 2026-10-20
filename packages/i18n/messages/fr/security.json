@@ -63,7 +63,7 @@
     "emailAttribute": "Attribut de l'e-mail",
     "nameAttribute": "Attribut du nom",
     "profileTitle": "Repris aussi sur la fiche de chacun",
-    "profileHint": "Lus à chaque connexion. L'équipe est celle de l'annuaire qui porte ce nom (créée si besoin) ; un anniversaire saisi par la personne reste le sien. Laissez un champ vide pour ne pas le lire.",
+    "profileHint": "Lus à chaque connexion. L'équipe est celle de l'annuaire qui porte ce nom (créée si besoin) ; un anniversaire saisi par la personne reste le sien. Laissez un champ vide pour ne pas le lire.",
     "phoneAttribute": "Attribut du téléphone",
     "teamAttribute": "Attribut de l'équipe",
     "birthdayAttribute": "Attribut de l'anniversaire",

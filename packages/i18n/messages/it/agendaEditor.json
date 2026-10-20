@@ -33,7 +33,7 @@
   "saved": "Ordine del giorno salvato",
   "turnOn": "Attiva il modulo in «Moduli» per aggiungere questo blocco.",
   "locked": "È in corso una sessione: l'ordine del giorno potrà cambiare quando sarà finita.",
-  "noProjects": "scegliete in «Progetti» i progetti seguiti dalla riunione.",
+  "noProjects": "scegli in «Progetti» i progetti seguiti dalla riunione.",
   "projectOrder": "Ordine dei progetti",
   "projectOrders": {
     "manual": "Nell'ordine della riunione",

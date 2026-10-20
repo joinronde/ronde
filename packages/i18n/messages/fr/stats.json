@@ -45,7 +45,7 @@
     "exchanges": "Échanges pendant la réunion",
     "exchangesLabel": "Questions, mains levées et remerciements par réunion",
     "noExchanges": "Aucune question, main levée ni remerciement dans les séances passées.",
-    "exchangesHint": "Questions, mains levées et remerciements. Survole une colonne pour le détail, brise-glace compris.",
+    "exchangesHint": "Questions, mains levées et remerciements. Survolez une colonne pour le détail, brise-glace compris.",
     "blockers": "Difficultés signalées par réunion",
     "blockersLabel": "Nombre de difficultés signalées par réunion",
     "mood": "Météo de l'équipe (moyenne sur 5)",

@@ -1,6 +1,6 @@
 {
   "title": "GitLab y GitHub",
-  "intro": "Las conexiones a sus forjas de código, hechas una vez para todo el espacio: cada reunión puede leer por ellas las incidencias de cada persona, y los trackers abren tickets con ellas.",
+  "intro": "Las conexiones a tus forjas de código, hechas una vez para todo el espacio: cada reunión puede leer por ellas las incidencias de cada persona, y los trackers abren tickets con ellas.",
   "empty": "Todavía no hay ninguna conexión.",
   "kinds": {
     "gitlab": "GitLab",
@@ -19,7 +19,7 @@
   "addOwn": "Añadir una conexión solo para esta reunión",
   "addOwnHint": "Solo la ve esta reunión, para un servidor o una cuenta que el espacio no tiene.",
   "connect": "Conectar con GitLab",
-  "connectHint": "Su cuenta de GitLab, de solo lectura, renovada sola: ningún token que copiar ni que reemplazar cuando caduque.",
+  "connectHint": "Tu cuenta de GitLab, de solo lectura, renovada sola: ningún token que copiar ni que reemplazar cuando caduque.",
   "reconnect": "Volver a conectar",
   "orToken": "o con un token personal",
   "kind": "Herramienta",
@@ -27,13 +27,13 @@
   "url": "Servidor",
   "urlHint": "Vacío: {url}",
   "token": "Token",
-  "tokenKept": "Deje el token vacío para conservar el guardado.",
+  "tokenKept": "Deja el token vacío para conservar el guardado.",
   "tokenHints": {
     "gitlab": "Un token personal con el alcance <code>read_api</code> (<code>api</code> para un tracker que abre tickets).",
     "github": "Un token de granularidad fina que lee issues y pull requests (y los escribe, para un tracker que abre tickets)."
   },
   "encrypted": "Los tokens se cifran antes de guardarse y nunca se vuelven a mostrar.",
-  "noSecretKey": "El cifrado de tokens no está configurado en el servidor: pida a los operadores que definan la clave SECRET_KEY.",
+  "noSecretKey": "El cifrado de tokens no está configurado en el servidor: pide a los operadores que definan la clave SECRET_KEY.",
   "save": "Guardar",
   "saved": "Guardado.",
   "cancel": "Cancelar",
@@ -45,22 +45,22 @@
   "removeOwnConfirm": "¿Quitar la conexión {name} de esta reunión?",
   "back": {
     "connected": "GitLab conectado.",
-    "failed": "La conexión con GitLab ha fallado: vuelva a intentarlo o use un token personal.",
-    "denied": "No tiene permiso para conectar GitLab aquí.",
+    "failed": "La conexión con GitLab ha fallado: vuelve a intentarlo o usa un token personal.",
+    "denied": "No tienes permiso para conectar GitLab aquí.",
     "cancelled": "Se canceló la conexión con GitLab."
   },
   "meeting": {
     "title": "Conexiones de {kind}",
-    "inherited": "Mientras no elija ninguna, esta reunión usa las conexiones del espacio.",
+    "inherited": "Mientras no elijas ninguna, esta reunión usa las conexiones del espacio.",
     "picked": "Esta reunión usa las conexiones marcadas abajo.",
     "use": "Usar",
-    "none": "Ninguna conexión de {kind}: un administrador puede añadir una al espacio, o añada abajo una solo para esta reunión.",
+    "none": "Ninguna conexión de {kind}: un administrador puede añadir una al espacio, o añade abajo una solo para esta reunión.",
     "save": "Guardar el acceso a {kind}",
     "repos": "Repositorios seguidos",
-    "reposHint": "«propietario/repositorio» o todo un «propietario», uno por línea; vacío: todos los repositorios. Indique también el usuario de GitHub de cada persona en «Personas y roles».",
+    "reposHint": "«propietario/repositorio» o todo un «propietario», uno por línea; vacío: todos los repositorios. Indica también el usuario de GitHub de cada persona en «Personas y roles».",
     "groups": "Grupos",
     "projects": "Proyectos seguidos",
-    "projectsHint": "Solo se ofrecen para importar las incidencias de estos proyectos. Indique también el usuario de GitLab de cada persona en «Personas y roles»."
+    "projectsHint": "Solo se ofrecen para importar las incidencias de estos proyectos. Indica también el usuario de GitLab de cada persona en «Personas y roles»."
   },
   "hub": {
     "count": "{count, plural, one {# conexión} other {# conexiones}}"

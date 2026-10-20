@@ -4,7 +4,7 @@
     "settings": "Réglages",
     "tour": "Visite guidée",
     "commands": "Commandes",
-    "commandsHint": "Palette de commandes (⌘K ou Ctrl+K) ; « ? » liste les raccourcis"
+    "commandsHint": "Palette de commandes (⌘K ou Ctrl+K) ; « ? » liste les raccourcis"
   },
   "nextQuestions": "Questions ({count})",
   "setup": {
@@ -31,7 +31,7 @@
   "projectOf": "projet {n}/{total}",
   "progress": "Avancement de la réunion",
   "elapsed": "depuis le début",
-  "shortcut": "Raccourci : {key}",
+  "shortcut": "Raccourci : {key}",
   "spaceKey": "Espace",
   "timerTools": "Chrono",
   "bonusHint": "30 secondes de plus pour ce tour",
@@ -39,7 +39,7 @@
   "then": "Ensuite : {next}",
   "endOfMeeting": "fin de la réunion",
   "nudgeSent": "Rappel des fiches envoyé",
-  "nudge": "Relancer l'équipe",
+  "nudge": "Envoyer un rappel",
   "previous": "Précédent",
   "startFirst": "Démarrez d'abord la réunion",
   "next": "Suivant : {label}",
@@ -53,8 +53,8 @@
   "beep": "Bip à 0:00",
   "beepHint": "Un bip dans ce navigateur quand le temps est écoulé",
   "reviewMinutes": "Relire et publier le compte rendu",
-  "endedTitle": "La réunion est terminée : une dernière étape",
-  "endedNext": "Relisez le compte rendu et complétez vos notes si besoin, puis publiez-le : il part à chacun et la prochaine séance se prépare.",
+  "endedTitle": "La réunion est terminée : une dernière étape",
+  "endedNext": "Relisez le compte rendu et complétez vos notes si besoin, puis publiez-le : il part à chacun et la prochaine séance se prépare.",
   "pendingRequests": "{count, plural, one {# main levée ou question en attente} other {# mains levées ou questions en attente}}",
   "panes": {
     "run": "Déroulé",
@@ -190,7 +190,7 @@
     "showBig": "Mettre en avant",
     "featured": "Mis en avant",
     "unfeature": "Retirer de l'écran partagé",
-    "removeNamed": "Retirer « {text} »",
+    "removeNamed": "Retirer « {text} »",
     "none": "Aucun sujet proposé.",
     "added": "Sujet ajouté aux points divers",
     "new": "Nouveau sujet",
@@ -200,7 +200,7 @@
     "confirmation": "Confirmation",
     "endAsk": "Passer directement à la clôture ? Les étapes restantes sont sautées.",
     "resetAsk": "Revenir à l'écran d'attente ? Le chrono, les mains levées, questions, réactions et remerciements de cette séance sont effacés. Les fiches et vos notes sont gardées.",
-    "ended": "Réunion terminée : relisez le compte rendu, puis publiez-le.",
+    "ended": "Réunion terminée : relisez le compte rendu, puis publiez-le.",
     "reset": "Démarrage annulé : retour à l'écran d'attente.",
     "endYes": "Oui, terminer",
     "resetYes": "Oui, revenir à l'attente",
@@ -232,11 +232,11 @@
     "alwaysIncluded": "Vos notes et les actions de suivi figurent toujours. Ce choix est gardé pour les prochaines réunions.",
     "review": "Relire et modifier",
     "reviewTitle": "Le compte rendu, avant publication",
-    "reviewHint": "Modifiez la synthèse et les notes de chaque étape : le compte rendu à droite suit au fil de la frappe.",
+    "reviewHint": "Modifiez la synthèse et les notes de chaque étape : le compte rendu à droite suit au fil de la frappe.",
     "reviewEdit": "Ce que vous avez écrit",
     "reviewPreview": "Le compte rendu tel qu'il sera lu",
     "archiveAtEnd": "Le compte rendu se publie à la clôture de la réunion.",
-    "archiveAsk": "Publier le compte rendu, clore la séance et vider les fiches des présents ?",
+    "archiveAsk": "Publier le compte rendu, clore la séance et vider les fiches des présents ?",
     "archived": "Compte rendu publié, séance close. La suivante est prête.",
     "archiveYes": "Oui, publier",
     "archive": "Publier le compte rendu",
@@ -276,7 +276,7 @@
     "hint": "Chacun remplit sa fiche et commente celles des autres jusqu'au {when}. La séance se clôt ensuite d'elle-même et le récapitulatif part par e-mail.",
     "hintNoTime": "Chacun remplit sa fiche et commente celles des autres. Publiez le récapitulatif quand l'équipe est prête.",
     "publish": "Publier le récapitulatif maintenant",
-    "confirm": "Clore cette séance et envoyer le récapitulatif à l'équipe maintenant ?",
+    "confirm": "Clore cette séance et envoyer le récapitulatif à l'équipe maintenant ?",
     "yes": "Oui, publier",
     "published": "Récapitulatif publié",
     "orLive": "Vous pouvez toujours lancer une réunion en direct à la place."
@@ -305,8 +305,8 @@
     "showAll": "Afficher aussi les complètes ({count} en tout)",
     "search": "Chercher un projet",
     "complete": "Complète",
-    "missing": "Manque : {what}",
+    "missing": "Manque : {what}",
     "noMatch": "Aucun projet de ce nom à compléter.",
-    "allDoneHint": "Toutes les fiches sont complètes : santé, message du jour et une ligne de chacune de leurs personnes."
+    "allDoneHint": "Toutes les fiches sont complètes : santé, message du jour et une ligne de chacune de leurs personnes."
   }
 }

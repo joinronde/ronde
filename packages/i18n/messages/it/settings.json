@@ -104,7 +104,7 @@
     "synced": "Sincronizzato",
     "noneInWorkspace": "Nessuno nello spazio",
     "rulesOn": "{count, plural, one {# regola attiva} other {# regole attive}}",
-    "gitlab": "Ticket e merge request di ognuno nel suo check-in",
+    "gitlab": "Ticket e merge request di ognuno nella sua scheda",
     "github": "Issue e pull request dei repository seguiti",
     "wikiName": "Wiki",
     "wiki": "Verbali pubblicati nel wiki del team",

@@ -24,7 +24,7 @@
     },
     "minutes": {
       "title": "Las actas",
-      "body": "<p>Se escriben solas a partir de las fichas, tus notas, las decisiones y las acciones.</p><p>Al final, <strong>Archivar la reunión</strong>: las actas pasan al historial y la próxima sesión queda lista.</p>"
+      "body": "<p>Se escriben solas a partir de las fichas, tus notas, las decisiones y las acciones.</p><p>Al final, <strong>Publicar el acta</strong>: pasa al historial y la próxima sesión queda lista.</p>"
     },
     "finish": {
       "title": "¡Te toca!",

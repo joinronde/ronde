@@ -56,7 +56,7 @@
     "misc": "开放议题",
     "end": "总结",
     "block": "议程项",
-    "project": "按项目轮流"
+    "project": "项目轮"
   },
   "browsing": "浏览中",
   "ended": "已结束",
@@ -65,8 +65,8 @@
   "spotlight": "聚光灯",
   "agenda": "议程",
   "parking": "停车场，留待下次",
-  "projectPosition": "按项目轮流 · {n} / {total}",
-  "alsoInProjects": "也在按项目轮流中：",
+  "projectPosition": "项目轮 · {n} / {total}",
+  "alsoInProjects": "也在项目轮中：",
   "targetDate": "截止日期：{date}",
   "projectProgressDone": "已完成 {percent}",
   "projectSpeakers": "介绍项目的人",

@@ -7,7 +7,7 @@
     "magicLink": "Link di accesso via email",
     "social": "Accesso con Google, GitHub o Microsoft",
     "oidc": "Accesso unico con un provider OpenID Connect",
-    "twoFactor": "Autenticazione a due fattori",
+    "twoFactor": "Verifica in due passaggi",
     "saml": "Accesso unico SAML e più provider di identità",
     "ldap": "Accesso con LDAP e Active Directory",
     "scim": "Provisioning degli utenti con SCIM",
@@ -32,8 +32,8 @@
     "facilitation": "Tutti i moduli di facilitazione",
     "notifications": "Notifiche via email, chat e webhook",
     "formats": "Retrospettive, planning poker, riunioni asincrone",
-    "workflows": "Workflow di notifica: condizioni e messaggi tuoi",
-    "aiAssistant": "Assistente IA: riepiloghi e azioni",
+    "workflows": "Workflow di notifica: condizioni e i tuoi messaggi",
+    "aiAssistant": "Assistente IA: sintesi e azioni",
     "transcription": "Trascrizione delle sessioni, ordinata per turno del giro di tavolo"
   },
   "integrations": {
@@ -54,7 +54,7 @@
     "export": "Esportazione in Markdown, PDF e CSV",
     "workspace": "Dashboard dello spazio su tutte le riunioni",
     "scheduled": "Report inviati via email periodicamente",
-    "portfolio": "Cruscotto del portafoglio: stato nel tempo, scadenze, progetti senza notizie, esportazione CSV e rapporto programmato"
+    "portfolio": "Dashboard del portafoglio: stato nel tempo, scadenze, progetti senza notizie, esportazione CSV e report programmato"
   },
   "branding": {
     "customLogo": "Il tuo logo su schermi, email e verbali",
@@ -66,7 +66,7 @@
     "retention": "Regole di conservazione dei dati"
   },
   "projects": {
-    "portfolio": "Portafoglio di progetti: descrizione, tema, stato, responsabile, squadra, date e lo storico di ogni riunione",
+    "portfolio": "Portafoglio di progetti: descrizione, tema, stato, responsabile, team, date e lo storico di ogni riunione",
     "round": "Giro per progetto: un turno per progetto, in cui i suoi membri parlano insieme",
     "programs": "Programmi: progetti raggruppati in programmi annidati",
     "permissions": "Permessi per progetto",

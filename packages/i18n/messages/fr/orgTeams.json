@@ -1,6 +1,6 @@
 {
   "title": "Équipes",
-  "intro": "Organisez l'annuaire en équipes : une équipe peut appartenir à une autre (un pôle, ses équipes, leurs escouades). Dans une réunion, choisir une équipe choisit aussi ses sous-équipes.",
+  "intro": "Organisez l'annuaire en équipes : une équipe peut appartenir à une autre (un pôle, ses équipes, leurs escouades). Dans une réunion, choisir une équipe choisit aussi ses sous-équipes.",
   "add": "Nouvelle équipe",
   "namePlaceholder": "Nom de l'équipe, ex. Design",
   "parent": "Rattachée à",
@@ -24,7 +24,7 @@
   "addSub": "Ajouter une sous-équipe à {name}",
   "delete": "Supprimer l'équipe {name}",
   "deleteShort": "Supprimer",
-  "deleteConfirm": "Supprimer l'équipe « {name} » ? Ses membres restent dans l'annuaire, sans équipe ; ses sous-équipes remontent d'un niveau.",
+  "deleteConfirm": "Supprimer l'équipe « {name} » ? Ses membres restent dans l'annuaire, sans équipe ; ses sous-équipes remontent d'un niveau.",
   "noTeam": "Sans équipe",
   "noTeamHint": "Leur équipe se choisit depuis leur fiche dans l'annuaire."
 }

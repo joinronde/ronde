@@ -65,7 +65,7 @@
     "back": "Voltar",
     "next": "Avançar",
     "create": "Criar a reunião",
-    "fromTemplate": "A partir do modelo «{name}»",
+    "fromTemplate": "A partir do modelo “{name}”",
     "edit": "Editar",
     "content": {
       "sectionsTitle": "Seções da ficha",
@@ -81,12 +81,12 @@
         "achievement": "O que foi feito desde a última vez",
         "plan": "O que vem a seguir",
         "blocker": "O que bloqueia ou atrasa",
-        "note": "Qualquer outra coisa a partilhar",
+        "note": "Qualquer outra coisa a compartilhar",
         "custom": "Uma lista sua, com o nome que quiser"
       }
     },
     "cancel": "Cancelar",
-    "modulesLater": "Pode adicionar outros a qualquer momento nas definições da reunião.",
+    "modulesLater": "Você pode adicionar outros a qualquer momento nas configurações da reunião.",
     "order": {
       "title": "Ordem das falas",
       "team": "A equipe primeiro",

@@ -40,7 +40,14 @@ Serververwaltung oder über die Variable `RONDE_LICENSE` (die Variable hat Vorra
 Der Schlüssel wird auf dem Server offline geprüft: Nichts wird irgendwohin gesendet. Die Seite zeigt den
 Tarif, den Kunden, das Ablaufdatum und wie viele Plätze belegt sind.
 
-- **Mehr Personen als Plätze**: Nichts wird gesperrt; die Seite bittet dich, die Lizenz zu aktualisieren.
+- **Ein Platz** ist eine Person, die in den letzten 30 Tagen an einem Meeting teilgenommen hat, wie in der Cloud
+  von Ronde. Wer eingeladen wurde und nie kam oder den ganzen Monat abwesend war, belegt keinen, und eine Person in
+  mehreren Arbeitsbereichen (mit demselben Konto oder derselben Adresse) zählt einmal.
+- **Der Höchststand** jeder Lizenz wird festgehalten, solange sie gilt (aktiv oder in ihrer Schonfrist), gezählt
+  jede Nacht und bei jedem Aufruf der Seite. Nach ihm richtet sich die Verlängerung. Ein neuer Schlüssel beginnt
+  seine eigene Zählung, und die Seite zeigt weiterhin den Höchststand der vorigen Lizenz, um sie abzurechnen.
+- **Mehr Personen als Plätze**: Nichts wird gesperrt. Die Seite weist darauf hin, und die Differenz wird bei der
+  Verlängerung abgerechnet.
 - **Abgelaufen**: Eine Schonfrist von 14 Tagen hält alles am Laufen. Danach werden die kostenpflichtigen
   Funktionen schreibgeschützt: Ihre Inhalte bleiben lesbar, Neues kann nicht hinzugefügt werden.
   Community-Funktionen sind nie betroffen.
@@ -55,12 +62,12 @@ Adresse deiner Einrichtung.
 Admins sehen in den Einstellungen dezente Hinweise auf kostenpflichtige Funktionen (nie während eines
 Meetings). Setze `RONDE_HIDE_UPGRADE_HINTS=1`, um sie für die ganze Instanz zu entfernen.
 
-### Feedback der Nutzer
+### Feedback der Nutzenden
 
 Über den Sprechblasen-Button oben auf den Seiten (auf dem Handy im Kontomenü) können Leute ein Problem melden oder
 eine Idee teilen, auf Wunsch mit Screenshot. Mit der Nachricht gehen die Adresse der Seite (ohne Parameter), der
-Browser, die Fenstergröße, die Sprache und die Ronde-Version mit. Die Admins lesen die Nachrichten unter
-**Serververwaltung**, antworten per E-Mail, wenn die Person es wünscht, und können für ein Problem von Ronde selbst
+Browser, die Fenstergröße, die Sprache und die Ronde-Version mit. Die Administration der Instanz liest die Nachrichten unter
+**Serververwaltung**, antwortet per E-Mail, wenn die Person es wünscht, und kann für ein Problem von Ronde selbst
 ein vorausgefülltes Issue im Ronde-Projekt öffnen. Ist `SENTRY_DSN` gesetzt, landen die Nachrichten auch als User
 Feedback in diesem Sentry-Projekt. Nachrichten werden nach einem Jahr gelöscht; auf einer selbst gehosteten Instanz ist der
 Button standardmäßig aus: `RONDE_FEEDBACK=on` zeigt ihn an.
@@ -71,7 +78,7 @@ Ein Arbeitsbereich bündelt die Personen, Meetings, Vorlagen und Connectors eine
 registrieren dürfen, können einen anlegen; eine Person kann zu mehreren gehören. Seine Einstellungen findest
 du unter **Einstellungen** in der Seitenleiste:
 
-| Reiter | Was er enthält | Wer ihn sieht |
+| Tab | Was er enthält | Wer ihn sieht |
 | --- | --- | --- |
 | Allgemein | Name, Link, Sprache, Berufsgruppen, wer Meetings anlegen darf, Connectors und Integrationen | Alle; Inhaber und Admins ändern ihn |
 | Sicherheit | Verifizierte Domains, Identitätsanbieter, LDAP, SCIM | Inhaber und Admins (Enterprise) |
@@ -112,7 +119,7 @@ Monat), Berufsgruppe und Konten bei GitLab oder GitHub einer Person werden nur e
 können ohne Konto hinzugefügt werden, für ein Meeting, bei dem sie sich nicht anmelden; eine Einladung
 verschickt eine E-Mail mit einem Link, der 14 Tage gültig ist. Wird ein Mitglied entfernt, endet sein
 Zugang; seine Check-ins und sein Verlauf bleiben im Arbeitsbereich. Mit SCIM verlieren Personen, die in
-eurem Verzeichnis deaktiviert werden, ihren Zugang auf dieselbe Weise.
+deinem Verzeichnis deaktiviert werden, ihren Zugang auf dieselbe Weise.
 
 ### Abwesenheiten
 
@@ -124,19 +131,19 @@ Person wird benachrichtigt und leitet diese Meetings als Moderation, nur an dies
 
 ### Puffer zwischen Meetings
 
-Im Reiter Allgemein bleibt der **Puffer zwischen zwei Meetings** (keiner, 5, 10, 15 oder 30 Minuten) vor und
+Im Tab Allgemein bleibt der **Puffer zwischen zwei Meetings** (keiner, 5, 10, 15 oder 30 Minuten) vor und
 nach jedem Meeting einer Person frei. „Termin finden“ berücksichtigt ihn, und der Terminplan eines Meetings
 markiert die Termine, die einem anderen Meeting derselben Personen zu nahe kommen.
 
 ## Anmeldung und Single Sign-on
 
 Die Community-Edition bietet Konten mit E-Mail und Passwort, Anmeldelinks per E-Mail,
-Zwei-Faktor-Authentifizierung, Konten von Google, GitHub und Microsoft sowie einen OpenID-Connect-Anbieter
+zweistufige Verifizierung, Konten von Google, GitHub und Microsoft sowie einen OpenID-Connect-Anbieter
 für die Instanz (Variablen `OIDC_*`, siehe [Anleitung zum Selbsthosten](../self-hosting/README.de.md)).
 
-Jede Person verwaltet ihre Anmeldung in ihrem Konto unter **Anmeldung und Sicherheit**: Passwort, Passkeys (Face ID, Windows Hello, ein Passwortmanager oder ein Sicherheitsschlüssel), Bestätigung in zwei Schritten und überall abmelden. Passkeys sind an die Domain von `APP_URL` gebunden, die HTTPS nutzen muss: Nach einem Domainwechsel fügt jede Person sie erneut hinzu. Eine Adresse mit Pflicht zum Single Sign-on kann Passkeys weder hinzufügen noch nutzen.
+Jede Person verwaltet ihre Anmeldung in ihrem Konto unter **Anmeldung und Sicherheit**: Passwort, Passkeys (Face ID, Windows Hello, ein Passwortmanager oder ein Sicherheitsschlüssel), zweistufige Verifizierung und überall abmelden. Passkeys sind an die Domain von `APP_URL` gebunden, die HTTPS nutzen muss: Nach einem Domainwechsel fügt jede Person sie erneut hinzu. Eine Adresse mit Pflicht zum Single Sign-on kann Passkeys weder hinzufügen noch nutzen.
 
-Mit Enterprise kommt im Reiter **Sicherheit** eines Arbeitsbereichs hinzu:
+Mit Enterprise kommt im Tab **Sicherheit** eines Arbeitsbereichs hinzu:
 
 1. **Verifizierte Domains.** Füge deine E-Mail-Domain und den angezeigten DNS-Eintrag hinzu und verifiziere
    sie. Eine verifizierte Domain kann:
@@ -151,19 +158,19 @@ Mit Enterprise kommt im Reiter **Sicherheit** eines Arbeitsbereichs hinzu:
    Verzeichnispasswort an. Ronde sucht sie mit einem Dienstkonto und prüft ihr Passwort, ohne es zu
    speichern. Nutze `ldaps://` oder `ldap://` mit StartTLS.
 4. **Bereitstellung (SCIM).** Dein Verzeichnis (Okta, Entra ID, JumpCloud…) legt Personen an, hält Name und
-   Adresse aktuell und entfernt sie beim Austritt. Der Reiter nennt den SCIM-Endpunkt und ein Token.
+   Adresse aktuell und entfernt sie beim Austritt. Der Tab nennt den SCIM-Endpunkt und ein Token.
 
 Eine Instanz hinter einem authentifizierenden Reverse Proxy kann stattdessen der Adresse vertrauen, die er
 in einem Header mitgibt (`AUTH_TRUSTED_EMAIL_HEADER`); tu das nur, wenn nichts anderes Ronde erreichen kann.
 
 ## Meetings
 
-Inhaber und Admins können das Anlegen von Meetings im Reiter Allgemein auf Organisatoren und Admins beschränken. Jedes Meeting
+Inhaber und Admins können das Anlegen von Meetings im Tab Allgemein auf Organisatoren und Admins beschränken. Jedes Meeting
 hat dann eigene Einstellungen, offen für seine Moderation: Termine, Personen und Rollen, Abschnitte des
 Check-ins, Agenda, Module, Aussehen, Benachrichtigungen, Videoanruf und Integrationen. Ein Meeting lässt
 sich als Vorlage des Arbeitsbereichs speichern, ohne seine Personen, seinen Verlauf oder seine Tokens.
 
-Ein Meeting beginnt mit dem Emoji seiner Vorlage, das neben seinem Namen in den Menüs erscheint; unter Einstellungen › Darstellung wählt die Moderation ein anderes Emoji oder lädt ein Bild hoch (ein Logo, ein Teamfoto).
+Ein Meeting beginnt mit dem Emoji seiner Vorlage, das neben seinem Namen in den Menüs erscheint; unter Einstellungen › Aussehen wählt die Moderation ein anderes Emoji oder lädt ein Bild hoch (ein Logo, ein Teamfoto).
 
 ### Spontane Sitzungen
 
@@ -174,11 +181,11 @@ für einen anderen Tag vorbereitete Sitzung gestartet, passiert dasselbe.
 
 ### Beispiel-Meeting
 
-Vor dem ersten Meeting bietet die Startseite eines Workspaces ein Beispiel-Meeting an: eine Wochenrunde mit einem fiktiven Team aus fünf Personen, einem Monat archivierter Sitzungen mit Protokollen, Statistiken und Aktionen und einer startbereiten Sitzung, alles in der Sprache des Workspaces. Es dient zum Ausprobieren: Es sendet nichts (keine Erinnerung, keine E-Mail, keinen Kalendereintrag, keine Benachrichtigung), kostet keinen Platz, hakt keinen der ersten Schritte ab und bleibt aus den Auswertungen und Berichten des Workspaces heraus. Ein Banner auf seinen Seiten weist darauf hin, und **Beispiel löschen** entfernt es endgültig mit seinem fiktiven Team (eine Person dieses Teams, die einem anderen Meeting hinzugefügt wurde, bleibt erhalten). Seine Personen erscheinen im Verzeichnis als Beispiel und können nicht eingeladen werden.
+Vor dem ersten Meeting bietet die Startseite eines Arbeitsbereichs ein Beispiel-Meeting an: eine Wochenrunde mit einem fiktiven Team aus fünf Personen, einem Monat archivierter Sitzungen mit Protokollen, Statistiken und Aufgaben und einer startbereiten Sitzung, alles in der Sprache des Arbeitsbereichs. Es dient zum Ausprobieren: Es sendet nichts (keine Erinnerung, keine E-Mail, keinen Kalendereintrag, keine Benachrichtigung), kostet keinen Platz, hakt keinen der ersten Schritte ab und bleibt aus den Auswertungen und Berichten des Arbeitsbereichs heraus. Ein Banner auf seinen Seiten weist darauf hin, und **Beispiel löschen** entfernt es endgültig mit seinem fiktiven Team (eine Person dieses Teams, die einem anderen Meeting hinzugefügt wurde, bleibt erhalten). Seine Personen erscheinen im Verzeichnis als Beispiel und können nicht eingeladen werden.
 
 ### Feiertage
 
-Im Tab Allgemein wählt ein Workspace die Feiertage eines Landes und, wo sie abweichen, einer Region (ein Bundesland, eine spanische Autonome Gemeinschaft…); ein neuer Workspace beginnt mit denen des Landes seiner Zeitzone. Eine Sitzung an einem dieser Tage entfällt: Der nächste Termin wird vorbereitet, Erinnerungen und Kalender folgen, und der Zeitplan nennt den Feiertag. In seinem Zeitplan kann ein Meeting anderen Feiertagen oder keinen folgen, und die Moderation kann jede ausgelassene Sitzung trotzdem abhalten oder verschieben. Die Feiertage stammen aus dem Projekt date-holidays, nach Wikipedia (CC BY-SA 3.0).
+Im Tab Allgemein wählt ein Arbeitsbereich die Feiertage eines Landes und, wo sie abweichen, einer Region (ein Bundesland, eine spanische Autonome Gemeinschaft…); ein neuer Arbeitsbereich beginnt mit denen des Landes seiner Zeitzone. Eine Sitzung an einem dieser Tage entfällt: Der nächste Termin wird vorbereitet, Erinnerungen und Kalender folgen, und der Terminplan nennt den Feiertag. In seinem Terminplan kann ein Meeting anderen Feiertagen oder keinen folgen, und die Moderation kann jede ausgelassene Sitzung trotzdem abhalten oder verschieben. Die Feiertage stammen aus dem Projekt date-holidays, nach Wikipedia (CC BY-SA 3.0).
 
 ### Gastlinks
 
@@ -189,7 +196,7 @@ Erstellen; Ronde speichert nur seinen Hash.
 
 ### Projekte und Portfolio
 
-Die Seite **Projekte** eines Workspace enthält sein Portfolio: jedes Projekt, Thema oder Vorhaben mit einer
+Die Seite **Projekte** eines Arbeitsbereichs enthält sein Portfolio: jedes Projekt, Thema oder Vorhaben mit einer
 Zusammenfassung in einem Satz, einer Beschreibung, einem Thema, einem Status, einem Stand (im Plan,
 gefährdet, in Schwierigkeiten), einer verantwortlichen Person, dem Team, Terminen und Links. Mitglieder
 können Projekte anlegen; die verantwortliche Person und die Admins bearbeiten sie. Die Seite eines Projekts
@@ -199,7 +206,7 @@ dürfen.
 Jedes Projekt kann ein Logo haben, neben seinem Namen und auf seinem Schritt in Meetings: Klicke auf der Projektseite auf sein Zeichen, um ein Bild zu wählen; ohne Logo stehen seine Initialen auf seiner Farbe. Ein Import übernimmt das Bild des Tools: den Avatar einer GitHub-Organisation, eines GitLab- oder eines Jira-Projekts. Wer das Projekt bearbeiten darf, ändert oder entfernt es.
 
 Ein Meeting folgt Projekten unter **Einstellungen › Projekte**. Jedes verfolgte Projekt bekommt einen
-Reiter im Check-in aller, mit einem gemeinsamen Projektblatt: Stand und Botschaft des Tages, geschrieben
+Tab im Check-in aller, mit einem gemeinsamen Projektblatt: Stand und Botschaft des Tages, geschrieben
 vom Projektteam. Mit dem Block **Projektrunde** in der Agenda bekommt jedes Projekt seine eigene Runde, in
 der sein Team gemeinsam spricht; ohne ihn werden die Einträge zu einem Projekt in der Runde jeder Person
 vorgestellt. Die Vorlagen **Portfolio-Review** und **Team und Projekte** enthalten ihn bereits. Mit Team
@@ -213,7 +220,7 @@ Neuigkeiten, exportiert ihn als CSV und nimmt die Projekte im Blick in den E-Mai
 - Jira: ein API-Token des Kontos, dessen E-Mail angegeben ist (id.atlassian.com › Sicherheit › API-Token).
 - Linear: ein persönlicher API-Schlüssel.
 
-Mitglieder importieren von github.com, gitlab.com, Atlassian Cloud und Linear; der Import von einem anderen Server (GitHub Enterprise, ein selbst verwaltetes GitLab, Jira Data Center) und über die in den Workspace-Einstellungen gespeicherten Ticketsysteme ist den Admins des Workspace vorbehalten. Mit Team hält ein Import über ein solches Ticketsystem die Projekte stündlich synchron: Name, Status, Termine und Fortschritt folgen dem Tool, was das Tool nicht liefert, bleibt so, wie es in Ronde eingestellt ist (ein Repository liefert seinen Namen und wird nach der Archivierung auf „Abgeschlossen“ gesetzt), und der Fortschritt erscheint auf den Karten und in den Meetings, solange er aktuell ist. Die Projektseite bietet **Jetzt aktualisieren** und **Nicht mehr synchronisieren**. Die Synchronisierung endet endgültig mit **Nicht mehr synchronisieren** oder wenn das Ticketsystem entfernt wird oder auf einen anderen Server zeigt, und pausiert, solange der Workspace nicht im Tarif Team ist. Ein Element, das das Tool nicht mehr findet (gelöscht oder außerhalb der Reichweite des Tokens), wird einmal am Tag erneut versucht. Archivierte Projekte werden erst nach ihrer Wiederherstellung wieder aktualisiert.
+Mitglieder importieren von github.com, gitlab.com, Atlassian Cloud und Linear; der Import von einem anderen Server (GitHub Enterprise, ein selbst verwaltetes GitLab, Jira Data Center) und über die in den Einstellungen des Arbeitsbereichs gespeicherten Ticketsysteme ist den Admins des Arbeitsbereichs vorbehalten. Mit Team hält ein Import über ein solches Ticketsystem die Projekte stündlich synchron: Name, Status, Termine und Fortschritt folgen dem Tool, was das Tool nicht liefert, bleibt so, wie es in Ronde eingestellt ist (ein Repository liefert seinen Namen und wird nach der Archivierung auf „Abgeschlossen“ gesetzt), und der Fortschritt erscheint auf den Karten und in den Meetings, solange er aktuell ist. Die Projektseite bietet **Jetzt aktualisieren** und **Nicht mehr synchronisieren**. Die Synchronisierung endet endgültig mit **Nicht mehr synchronisieren** oder wenn das Ticketsystem entfernt wird oder auf einen anderen Server zeigt, und pausiert, solange der Arbeitsbereich nicht im Tarif Team ist. Ein Element, das das Tool nicht mehr findet (gelöscht oder außerhalb der Reichweite des Tokens), wird einmal am Tag erneut versucht. Archivierte Projekte werden erst nach ihrer Wiederherstellung wieder aktualisiert.
 
 ### Module
 
@@ -223,7 +230,7 @@ Retrospektive, Planning Poker und asynchrone Meetings. Ein in einem Meeting ausg
 verschwindet aus seiner Regie, seinem geteilten Bildschirm und den Check-ins; seine Einstellungen bleiben
 erhalten.
 
-Die Nützlichkeitsbewertung fragt zum Abschluss alle, wie nützlich das Meeting war (1 bis 5 Sterne, am eigenen Bildschirm oder Handy). Der Durchschnitt erscheint ab 3 Bewertungen, damit niemand die Bewertung anderer erraten kann; er geht ins Protokoll und in die Statistiken ein. Die Vorlagen für kurze tägliche Meetings, Einzelgespräche und formelle Gremien (Lenkungsausschuss, Vorstände, Klassenkonferenz, Baubesprechung, Fallbesprechung, Incident-Review) lassen sie ausgeschaltet.
+Die Nützlichkeitsbewertung fragt zum Abschluss alle, wie nützlich das Meeting war (1 bis 5 Sterne, am eigenen Bildschirm oder Handy). Der Durchschnitt erscheint ab 3 Bewertungen, damit niemand die Bewertung anderer erraten kann; er geht ins Protokoll und in die Statistiken ein. Die Vorlagen für kurze tägliche Meetings, Einzelgespräche und formelle Gremien (Lenkungsausschuss, Vorstände, Klassenkonferenz, Baubesprechung, Fallkonferenz, Incident-Review) lassen sie ausgeschaltet.
 
 ### Exporte
 
@@ -238,7 +245,7 @@ Italienisch, Portugiesisch und Russisch), und ein Text, der wie eine Formel auss
 ## Benachrichtigungen
 
 **Connectors** sind die Kanäle, in die Meetings posten können: E-Mail, Matrix (Tchap), Slack, Microsoft
-Teams, Discord, Mattermost oder ein mit HMAC signierter Webhook. Inhaber und Admins fügen sie im Reiter
+Teams, Discord, Mattermost oder ein mit HMAC signierter Webhook. Inhaber und Admins fügen sie im Tab
 Allgemein des Arbeitsbereichs hinzu. Jedes Meeting wählt dann in seinen Benachrichtigungseinstellungen,
 welche Ereignisse an welchen Connector gehen: eine Sitzung beginnt bald, ist gestartet oder beendet, ein
 Protokoll ist veröffentlicht, eine Check-in-Erinnerung, eine überfällige Aufgabe, ein Geburtstag.
@@ -257,9 +264,9 @@ angeben (internationales Format, +49…), nie an abwesende Personen. Für WhatsA
 genehmigt sein, und WhatsApp lässt ein Unternehmen nur mit einer von Meta genehmigten Vorlage zuerst
 schreiben: Leg im Content Template Builder von Twilio eine mit zwei Variablen an (die Nachricht, dann der
 Link) und trag ihre Content SID im Connector ein. Verlässt ein Arbeitsbereich Team, hören diese Nachrichten
-auf, und das Protokoll jedes Meetings sagt warum.
+auf, und das Benachrichtigungsprotokoll jedes Meetings nennt den Grund.
 
-**Check-in per E-Mail**: Wenn die Instanz ein Postfach liest (`INBOUND_IMAP_URL`, siehe die Anleitung zum Selbsthosten), sagt die Erinnerung, dass eine Antwort genügt. Der Name jedes Abschnitts in einer Zeile, die Punkte darunter: Die Zeilen werden dem Check-in der Person hinzugefügt (ohne etwas zu ersetzen), und eine E-Mail bestätigt, was hinzukam. Es zählen nur Antworten von der Adresse der Erinnerung (oder der des Kontos der Person), 14 Tage lang; Beobachter und das Beispiel-Meeting sind ausgenommen.
+**Check-in per E-Mail**: Wenn die Instanz ein Postfach liest (`INBOUND_IMAP_URL`, siehe die Anleitung zum Selbsthosten), sagt die Erinnerung, dass eine Antwort genügt. Der Name jedes Abschnitts in einer Zeile, die Punkte darunter: Die Zeilen werden dem Check-in der Person hinzugefügt (ohne etwas zu ersetzen), und eine E-Mail bestätigt, was hinzukam. Es zählen nur Antworten von der Adresse der Erinnerung (oder der des Kontos der Person), 14 Tage lang; Beobachtende und das Beispiel-Meeting sind ausgenommen.
 
 **Push-Benachrichtigungen**: Sobald die Instanz ihre Schlüssel hat (siehe die Anleitung zum Selbsthosten), kann jede Person Ronde aus dem Browser installieren (oder auf dem iPhone zum Home-Bildschirm hinzufügen) und in ihrem Konto die Benachrichtigungen pro Gerät aktivieren: wenn man in einer Live-Sitzung bald dran ist, Erinnerungen an den Check-in und was in der Glocke landet. Jede Art lässt sich abschalten, die Geräte werden dort aufgelistet.
 
@@ -276,7 +283,7 @@ Auch die Tokens von Konten, die sich mit Google, GitHub, Microsoft oder Single S
 | Videoanruf: beliebiger Link, Jitsi, BigBlueButton | Einstellungen des Meetings | Community |
 | Räume in Zoom, Google Meet und Teams für jedes Meeting angelegt | Arbeitsbereich, Allgemein | Team |
 | Google-, Outlook- und CalDAV-Kalender (iCloud, Fastmail, Nextcloud…), in beide Richtungen: Sitzungen in die Kalender der Teilnehmenden geschrieben, dort gemachte Verschiebungen, Löschungen und Antworten übernommen, Verfügbarkeit gelesen | Arbeitsbereich, Allgemein | Team |
-| Tickets in Jira, Linear, GitLab und GitHub aus Folgeaufgaben, gemeinsam geschlossen | Arbeitsbereich, Allgemein | Team |
+| Tickets in Jira, Linear, GitLab und GitHub aus Folgeaufgaben, synchron geschlossen | Arbeitsbereich, Allgemein | Team |
 | GitHub, GitLab, Jira und Linear: Repositorys, Meilensteine, Epics und Projekte ins Portfolio importiert | Projekte › Importieren | Community |
 | Importierte Projekte bleiben mit ihrem Tool synchron: Name, Status, Termine und Fortschritt | Projekte › Importieren, über ein Ticketsystem | Team |
 | Dein Logo auf dem geteilten Bildschirm, in E-Mails und Protokollen | Arbeitsbereich, Allgemein | Team |
@@ -286,24 +293,24 @@ Auch die Tokens von Konten, die sich mit Google, GitHub, Microsoft oder Single S
 
 ### Slack
 
-Mit Team klicken Owner und Admins im Tab Allgemein auf **Zu Slack hinzufügen** und wählen den Kanal für
+Mit Team klicken Inhaber und Admins im Tab Allgemein auf **Zu Slack hinzufügen** und wählen den Kanal für
 Benachrichtigungen. Danach:
 
 - Check-in-Erinnerungen kommen per Direktnachricht, mit einer Schaltfläche **Meinen Check-in ausfüllen**,
   die die Abschnitte des Meetings in einem Slack-Formular öffnet; die Antworten werden in Ronde
   gespeichert, als wären sie auf der Seite eingegeben worden;
 - der gewählte Kanal wird zu einem Connector, bereit für die Benachrichtigungsregeln der Meetings
-  (Protokoll veröffentlicht, Sitzung beginnt bald …);
-- `/ronde` zeigt allen ihre nächsten Sitzungen und offenen Folgeaktionen, nur für sie sichtbar.
+  (Protokoll veröffentlicht, Sitzung beginnt bald…);
+- `/ronde` zeigt allen ihre nächsten Sitzungen und offenen Folgeaufgaben, nur für sie sichtbar.
 
 Personen werden an ihrer E-Mail erkannt: Ihr Slack-Konto und ihr Ronde-Profil müssen dieselbe haben. Wer
 in Slack nicht gefunden wird, erhält die Erinnerung weiter per E-Mail. **Trennen** entfernt die App aus
 Slack und löscht die Benachrichtigungsregeln, die in ihren Kanal posten. Auf einer selbst gehosteten
-Instanz legt die Administration zuerst die Slack-App der Instanz an (siehe die Anleitung zum Selbst-Hosting).
+Instanz legt die Administration zuerst die Slack-App der Instanz an (siehe die Anleitung zum Selbsthosten).
 
 ### Microsoft Teams
 
-Ein Owner oder Admin lädt die Ronde-App für Teams im Tab Allgemein herunter; eine Teams-Administration lädt sie
+Ein Inhaber oder Admin lädt die Ronde-App für Teams im Tab Allgemein herunter; ein Teams-Admin lädt sie
 in die Apps der Organisation hoch und fügt sie einem Team hinzu. In dessen Kanal veröffentlicht Ronde eine
 Karte: **Mit Ronde verknüpfen** öffnet Ronde, wo der Arbeitsbereich gewählt wird. Danach gehen die
 Check-in-Erinnerungen per persönlicher Nachricht an die Personen, die im Team gefunden werden (erkannt an ihrer
@@ -314,7 +321,7 @@ Ronde beendet alles, und die Erinnerungen kommen wieder per E-Mail.
 
 ### Notion und Confluence
 
-Owner und Admins fügen im Tab Allgemein ein Wiki hinzu: eine **Notion**-Seite, die mit einer internen
+Inhaber und Admins fügen im Tab Allgemein ein Wiki hinzu: eine **Notion**-Seite, die mit einer internen
 Integration geteilt ist (angelegt unter notion.so/profile/integrations; teile die Seite über
 ••• › Verbindungen mit ihr), oder einen **Confluence**-Bereich, in der Cloud (Site, Bereichsschlüssel,
 E-Mail des Kontos und ein API-Token von id.atlassian.com) oder auf einem Data Center oder Server (ein
@@ -339,7 +346,7 @@ ausnehmen. Der Ton wird gelöscht, sobald er transkribiert ist.
 
 ## Audit-Log
 
-Mit Team listet der Reiter **Audit-Log** auf, wer in den letzten 90 Tagen was im Arbeitsbereich geändert hat:
+Mit Team listet der Tab **Audit-Log** auf, wer in den letzten 90 Tagen was im Arbeitsbereich geändert hat:
 Einstellungen, Personen, Rollen und Meetings, mit CSV-Export. Enterprise behält den gesamten Verlauf und kann
 jeden Eintrag signiert an einen Webhook-Connector für dein SIEM oder deine Log-Plattform senden.
 

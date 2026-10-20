@@ -37,7 +37,7 @@
     "preview": {
       "title": "预览",
       "rhythm": "节奏",
-      "sections": "签到栏目",
+      "sections": "进展卡栏目",
       "modules": "已启用的模块",
       "noModules": "无模块"
     },
@@ -58,7 +58,7 @@
     "nobody": "目录中还没有其他人。",
     "invite": "邀请成员",
     "creatorSpeaks": "我也参与轮流发言",
-    "sections": "板块",
+    "sections": "栏目",
     "recapSchedule": "{schedule} · {duration} · 首场会议：{date}",
     "recapPeople": "{count, plural, =0 {轮流发言中还没有人} other {轮流发言共 # 人}}",
     "modules": "模块",
@@ -68,7 +68,7 @@
     "fromTemplate": "基于“{name}”模板",
     "edit": "修改",
     "content": {
-      "sectionsTitle": "签到栏目",
+      "sectionsTitle": "进展卡栏目",
       "sectionsHint": "每个人在会前填写的内容。可以改名、换格式或添加自己的栏目。",
       "addSection": "添加栏目",
       "custom": "自定义栏目",

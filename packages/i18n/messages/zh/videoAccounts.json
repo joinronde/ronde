@@ -1,6 +1,6 @@
 {
   "title": "视频账户",
-  "intro": "工作区的视频账号：会议在其上开启房间的 BigBlueButton 服务器，或为每个会议创建长期房间的 Zoom、Google Meet 或 Teams 账号。无需任何人登录。",
+  "intro": "工作空间的视频账号：会议在其上开启房间的 BigBlueButton 服务器，或为每个会议创建长期房间的 Zoom、Google Meet 或 Teams 账号。无需任何人登录。",
   "empty": "还没有视频账户。",
   "add": "添加视频账户",
   "kind": "提供方",

@@ -18,18 +18,18 @@
   },
   "wizard": {
     "title": "Neues Meeting",
-    "subtitle": "Vier kurze Schritte. Alles lässt sich später in den Einstellungen der Besprechung ändern.",
+    "subtitle": "Vier kurze Schritte. Alles lässt sich später in den Einstellungen des Meetings ändern.",
     "stepOf": "Schritt {n} von {total}",
     "steps": {
       "details": "Termin und Personen",
       "review": "Überblick",
       "start": "Ausgangspunkt",
-      "content": "Rubriken und Module"
+      "content": "Abschnitte und Module"
     },
     "blank": {
       "name": "Bei null anfangen",
-      "description": "Eine leere Besprechung: Rubriken und Module wählen Sie selbst.",
-      "meta": "Ihr eigener Rhythmus",
+      "description": "Ein leeres Meeting: Abschnitte und Module wählst du selbst.",
+      "meta": "Dein eigener Rhythmus",
       "use": "Bei null anfangen"
     },
     "search": "Vorlage suchen…",
@@ -37,7 +37,7 @@
     "preview": {
       "title": "Vorschau",
       "rhythm": "Rhythmus",
-      "sections": "Rubriken des Check-ins",
+      "sections": "Abschnitte des Check-ins",
       "modules": "Aktive Module",
       "noModules": "Kein Modul"
     },
@@ -46,7 +46,7 @@
     "deleteTemplateConfirm": "Vorlage „{name}“ löschen? Daraus erstellte Meetings sind nicht betroffen.",
     "name": "Name",
     "schedule": "Termine",
-    "scheduleLater": "Weitere Rhythmen, Ausnahmen und Feiertage stellen Sie später in den Einstellungen der Besprechung ein.",
+    "scheduleLater": "Weitere Rhythmen, Ausnahmen und Feiertage stellst du später in den Einstellungen des Meetings ein.",
     "startDate": "Ab",
     "weekday": "Tag",
     "time": "Uhrzeit",
@@ -68,15 +68,15 @@
     "fromTemplate": "Aus der Vorlage „{name}“",
     "edit": "Ändern",
     "content": {
-      "sectionsTitle": "Rubriken des Check-ins",
-      "sectionsHint": "Was jede Person vor der Besprechung ausfüllt. Benennen Sie sie um, ändern Sie das Format oder fügen Sie eigene hinzu.",
-      "addSection": "Rubrik hinzufügen",
-      "custom": "Eigene Rubrik",
-      "sectionLabel": "Name der Rubrik",
+      "sectionsTitle": "Abschnitte des Check-ins",
+      "sectionsHint": "Was jede Person vor dem Meeting ausfüllt. Benenne sie um, ändere das Format oder füge eigene hinzu.",
+      "addSection": "Abschnitt hinzufügen",
+      "custom": "Eigener Abschnitt",
+      "sectionLabel": "Name des Abschnitts",
       "sectionType": "Format",
-      "removeSection": "Rubrik {name} entfernen",
+      "removeSection": "Abschnitt {name} entfernen",
       "modulesOn": "{count, plural, =0 {Keines aktiv} one {# aktiv} other {# aktiv}}",
-      "modulesHint": "Aktivieren Sie, was Ihre Besprechung braucht: Alles lässt sich jederzeit ein- und ausschalten.",
+      "modulesHint": "Aktiviere, was dein Meeting braucht: Alles lässt sich jederzeit ein- und ausschalten.",
       "roleHint": {
         "achievement": "Was seit dem letzten Mal erledigt wurde",
         "plan": "Was als Nächstes ansteht",

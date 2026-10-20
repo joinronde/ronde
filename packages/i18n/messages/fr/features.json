@@ -7,7 +7,7 @@
     "magicLink": "Liens de connexion par e-mail",
     "social": "Connexion avec Google, GitHub ou Microsoft",
     "oidc": "Authentification unique avec un fournisseur OpenID Connect",
-    "twoFactor": "Authentification à deux facteurs",
+    "twoFactor": "Validation en deux étapes",
     "saml": "Authentification unique SAML et plusieurs fournisseurs d'identité",
     "ldap": "Connexion LDAP et Active Directory",
     "scim": "Provisionnement des utilisateurs par SCIM",
@@ -16,7 +16,7 @@
   },
   "permissions": {
     "builtInRoles": "Rôles intégrés pour les espaces et les réunions",
-    "customRoles": "Rôles personnalisés et permissions fines"
+    "customRoles": "Rôles personnalisés et droits détaillés"
   },
   "meetings": {
     "unlimited": "Réunions et séances illimitées",
@@ -32,7 +32,7 @@
     "facilitation": "Tous les modules d'animation",
     "notifications": "Notifications par e-mail, messagerie et webhooks",
     "formats": "Rétrospectives, planning poker, réunions asynchrones",
-    "workflows": "Workflows de notification : conditions et messages à vous",
+    "workflows": "Workflows de notification : conditions et messages personnalisés",
     "aiAssistant": "Assistant IA : synthèses et actions",
     "transcription": "Transcription des séances, classée par tour de table"
   },

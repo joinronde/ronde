@@ -34,7 +34,7 @@
     "meeting": {
       "create": "会议场次已准备",
       "reset": "会议场次已重置",
-      "archive": "会议场次已归档",
+      "archive": "纪要已发布",
       "publish": "摘要已发布",
       "remove": "会议已删除",
       "new": "会议已创建",
@@ -99,7 +99,7 @@
       "auditStream": "审计推送已修改",
       "logo": "Logo 已更换",
       "logoRemoved": "Logo 已移除",
-      "delete": "已删除工作区"
+      "delete": "已删除工作空间"
     },
     "connectors": {
       "save": "连接器已保存",

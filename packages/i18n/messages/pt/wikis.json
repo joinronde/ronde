@@ -40,10 +40,10 @@
   "openInRonde": "Abrir no Ronde",
   "meeting": {
     "title": "Publicar a ata",
-    "intro": "A cada arquivamento, a ata vira uma página do wiki, com a data da sessão como nome. Quando o resumo é editado, a página acompanha.",
+    "intro": "A cada publicação, a ata vira uma página do wiki, com a data da sessão como nome. Quando o resumo é editado, a página acompanha.",
     "wiki": "Wiki",
     "none": "Em nenhum lugar",
-    "hint": "As sessões já arquivadas são publicadas pelo histórico.",
+    "hint": "As sessões anteriores são publicadas pelo histórico.",
     "noWiki": "Ainda não há nenhum wiki neste espaço.",
     "addWiki": "Adicione um nas configurações do espaço",
     "on": "A ata será publicada em {name}.",

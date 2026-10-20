@@ -1,13 +1,13 @@
 {
-  "title": "Logo",
-  "intro": "Seu logo substitui o do Ronde: na barra lateral, na tela compartilhada, nos e-mails e nas atas.",
-  "drop": "Solte seu logo aqui",
+  "title": "Logotipo",
+  "intro": "Seu logotipo substitui o do Ronde: na barra lateral, na tela compartilhada, nos e-mails e nas atas.",
+  "drop": "Solte seu logotipo aqui",
   "formats": "PNG, JPEG ou WebP. Um PNG transparente fica melhor.",
-  "current": "Logo atual",
-  "upload": "Enviar um logo",
+  "current": "Logotipo atual",
+  "upload": "Enviar um logotipo",
   "replace": "Substituir",
   "remove": "Remover",
   "where": "Exibido sobre fundos claros e escuros: confira se fica legível nos dois.",
-  "failed": "Não foi possível salvar o logo.",
+  "failed": "Não foi possível salvar o logotipo.",
   "unreadable": "Não foi possível ler esta imagem."
 }

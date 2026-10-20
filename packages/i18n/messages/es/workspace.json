@@ -33,7 +33,7 @@
     "stepCheckIn": "Rellena tu ficha",
     "stepCheckInHint": "Lo que hiciste, lo que tienes previsto, lo que te bloquea: unas líneas antes de la reunión.",
     "stepSession": "Dirige una primera sesión",
-    "stepSessionHint": "Abre la sala de control, empieza la reunión y archívala con sus actas."
+    "stepSessionHint": "Abre la sala de control, empieza la reunión y luego publica su acta."
   },
   "settings": {
     "title": "Ajustes del espacio de trabajo",

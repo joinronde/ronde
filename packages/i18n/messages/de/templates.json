@@ -92,7 +92,7 @@
   },
   "classCouncil": {
     "name": "Klassenkonferenz",
-    "description": "Einmal pro Halbjahr: wie es der Klasse geht, welche Schülerinnen und Schüler Unterstützung brauchen und die vereinbarten Maßnahmen.",
+    "description": "Einmal im Quartal: wie es der Klasse geht, welche Schülerinnen und Schüler Unterstützung brauchen und die vereinbarten Maßnahmen.",
     "sections": {
       "progress": "Wie es der Klasse geht",
       "support": "Wer Unterstützung braucht",
@@ -235,7 +235,7 @@
     "description": "Die ersten Monate neuer Kolleginnen und Kollegen, jede Woche: was sie gelernt haben, ihre Ziele, was sie brauchen und ihre Fragen.",
     "sections": {
       "learned": "Was ich gelernt habe",
-      "goals": "Meine Ziele für die Woche",
+      "goals": "Meine Ziele für nächste Woche",
       "needs": "Was ich brauche",
       "questions": "Meine Fragen"
     }
@@ -252,7 +252,7 @@
   },
   "boardOfDirectors": {
     "name": "Aufsichtsrat",
-    "description": "Einmal pro Quartal: Tätigkeitsbericht, Finanzen, Beschlüsse zur Abstimmung und Risiken.",
+    "description": "Einmal im Quartal: Tätigkeitsbericht, Finanzen, Beschlüsse zur Abstimmung und Risiken.",
     "sections": {
       "report": "Tätigkeitsbericht",
       "finances": "Finanzen",

@@ -7,7 +7,7 @@ Team o Enterprise.
 
 ## Empezar
 
-1. Descarga los archivos de una versión:
+1. Descarga los archivos:
 
    ```sh
    mkdir ronde && cd ronde
@@ -15,7 +15,7 @@ Team o Enterprise.
    curl -fsSL https://raw.githubusercontent.com/joinronde/ronde/main/docker/.env.example -o .env
    ```
 
-2. Rellena `.env`: la dirección que abrirán las personas (`RONDE_URL`) y tres secretos.
+2. Rellena `.env`: indica la dirección que abrirán las personas (`RONDE_URL`) y luego genera los tres secretos:
 
    ```sh
    for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env; done
@@ -53,9 +53,9 @@ echo "SMTP_URL=smtp://mail:1025" >> .env
 docker compose --profile mail up -d   # emails at http://localhost:8025
 ```
 
-Para que cada persona pueda rellenar su ficha respondiendo al recordatorio, da a Ronde un buzón que leer: `INBOUND_IMAP_URL=imaps://user:password@imap.example.com:993/INBOX`, y `INBOUND_ADDRESS` cuando el usuario no sea la dirección de correo. Las respuestas llegan ahí; cada minuto Ronde lee las que responden a un recordatorio, añade sus líneas a la ficha, lo confirma por correo y las mueve a una carpeta `Ronde`. El resto de mensajes del buzón no se toca, así que puede ser tu dirección de contacto habitual.
+Para que cada persona pueda rellenar su ficha respondiendo al recordatorio, da a Ronde un buzón que leer: `INBOUND_IMAP_URL=imaps://user:password@imap.example.com:993/INBOX`, y `INBOUND_ADDRESS` cuando el usuario no sea la dirección de correo. Las respuestas llegan ahí; cada minuto Ronde lee las que responden a un recordatorio, añade sus líneas a la ficha, lo confirma por correo y las mueve a una carpeta `Ronde`. Los demás mensajes del buzón no se tocan, así que puede ser tu dirección de contacto habitual.
 
-Las notificaciones push (tu turno que se acerca, los recordatorios de ficha, la campana) necesitan un par de claves para la instancia: `npx web-push generate-vapid-keys`, luego `WEB_PUSH_PUBLIC_KEY` y `WEB_PUSH_PRIVATE_KEY`. Consérvalas: los dispositivos que activaron las notificaciones dependen de ellas. Ronde debe servirse por HTTPS; en iPhone, primero se añade a la pantalla de inicio.
+Las notificaciones push (tu turno que se acerca, los recordatorios de ficha, la campana) necesitan un par de claves para la instancia: genéralas con `npx web-push generate-vapid-keys` y define `WEB_PUSH_PUBLIC_KEY` y `WEB_PUSH_PRIVATE_KEY`. Consérvalas: los dispositivos que activaron las notificaciones dependen de ellas. Ronde debe servirse por HTTPS; en iPhone, cada persona tiene que añadirlo antes a la pantalla de inicio.
 
 ## Inicio de sesión
 
@@ -121,9 +121,9 @@ Microsoft. Microsoft debe poder acceder a `RONDE_URL` por HTTPS.
    Teams › Administrar aplicaciones › Cargar nueva aplicación) y la añade a un equipo: Ronde publica una tarjeta
    en su canal, y **Vincular a Ronde** elige el espacio.
 
-El secreto de cliente caduca a los 6 a 24 meses: crea el siguiente antes y sustituye `TEAMS_APP_PASSWORD`. Un
+El secreto de cliente caduca al cabo de 6 a 24 meses: crea uno nuevo antes de que caduque y sustituye `TEAMS_APP_PASSWORD`. Un
 bot single-tenant sirve a las personas de tu propia organización de Microsoft; para ofrecer la app a otras
-organizaciones, se publica en la Teams Store.
+organizaciones, hay que publicarla en la Teams Store.
 
 ## Actualizar
 

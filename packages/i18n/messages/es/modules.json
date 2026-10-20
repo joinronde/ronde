@@ -28,7 +28,7 @@
     },
     "mood": {
       "name": "Ánimo del equipo",
-      "description": "Cada persona comparte su ánimo (⛈️ a ☀️), mostrado de forma anónima y seguido en las estadísticas."
+      "description": "Cada persona comparte su ánimo (de ⛈️ a ☀️), mostrado de forma anónima y seguido en las estadísticas."
     },
     "rating": {
       "name": "Utilidad de la reunión",
@@ -64,7 +64,7 @@
     },
     "gitlab": {
       "name": "GitLab",
-      "description": "Las incidencias y merge requests recientes de cada persona, para importarlas en su ficha."
+      "description": "Los tickets y merge requests recientes de cada persona, para importarlos en su ficha."
     },
     "workflows": {
       "name": "Flujos de notificación",
@@ -99,7 +99,7 @@
       "description": "Notas anónimas en columnas, agrupadas por el anfitrión, votadas por el equipo y luego comentadas; añádela al orden del día."
     },
     "timebox": {
-      "name": "Timebox",
+      "name": "Tiempo acotado",
       "description": "Un tema propio en el orden del día, con su duración y sus notas en las actas."
     },
     "poker": {
@@ -112,7 +112,7 @@
     },
     "random": {
       "name": "Herramientas de azar",
-      "description": "Una ruleta para elegir quién sigue, un orden de palabra al azar, equipos o cara o cruz, en todas las pantallas a la vez."
+      "description": "Una ruleta para elegir quién sigue, un orden de intervención al azar, equipos al azar o cara o cruz, en todas las pantallas a la vez."
     },
     "parking": {
       "name": "Aparcamiento",
@@ -124,7 +124,7 @@
     },
     "github": {
       "name": "GitHub",
-      "description": "Las incidencias y pull requests recientes de cada persona, importadas en su ficha con un clic."
+      "description": "Los tickets y pull requests recientes de cada persona, importados en su ficha con un clic."
     },
     "video": {
       "name": "Videollamada",
@@ -132,7 +132,7 @@
     },
     "async": {
       "name": "Modo asíncrono",
-      "description": "Sin sesión en directo: cada persona rellena su ficha y comenta, y el resumen sale por correo a la hora prevista."
+      "description": "Sin sesión en directo: cada persona rellena su ficha y comenta, y el resumen se envía por correo a la hora prevista."
     }
   },
   "upgrade": {

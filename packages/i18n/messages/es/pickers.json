@@ -12,12 +12,12 @@
   "time": {
     "placeholder": "Elegir una hora",
     "list": "Horas",
-    "invalid": "Escriba una hora como 9:30"
+    "invalid": "Escribe una hora como 9:30"
   },
   "duration": {
     "less": "Más corto",
     "more": "Más largo",
     "suggestions": "Duraciones habituales",
-    "typeHint": "Escriba cualquier duración: 25, 1h15, 1:30…"
+    "typeHint": "Escribe cualquier duración: 25, 1h15, 1:30…"
   }
 }

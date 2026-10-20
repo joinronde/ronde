@@ -34,7 +34,7 @@
     "meeting": {
       "create": "Sitzung vorbereitet",
       "reset": "Sitzung zurückgesetzt",
-      "archive": "Sitzung archiviert",
+      "archive": "Protokoll veröffentlicht",
       "publish": "Zusammenfassung veröffentlicht",
       "remove": "Meeting gelöscht",
       "new": "Meeting erstellt",
@@ -99,7 +99,7 @@
       "auditStream": "Audit-Versand geändert",
       "logo": "Logo geändert",
       "logoRemoved": "Logo entfernt",
-      "delete": "Workspace gelöscht"
+      "delete": "Arbeitsbereich gelöscht"
     },
     "connectors": {
       "save": "Connector gespeichert",

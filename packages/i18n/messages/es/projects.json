@@ -63,7 +63,7 @@
   "lead": "Responsable",
   "leadLocked": "Solo quienes gestionan todos los proyectos pueden cambiar su responsable.",
   "noLead": "Sin responsable",
-  "leadIsMe": "{name} (usted)",
+  "leadIsMe": "{name} (tú)",
   "members": "{count, plural, =0 {Personas que trabajan en él} one {# persona trabaja en él} other {# personas trabajan en él}}",
   "findPeople": "Buscar a alguien",
   "links": "Enlaces",
@@ -98,7 +98,7 @@
   "deleteConfirm": "¿Borrar el proyecto {name}? Sus fichas se borran; los elementos y acciones que lo mencionan se conservan, sin proyecto.",
   "noDescription": "Todavía sin descripción.",
   "timeline": "Lo que dijeron las reuniones",
-  "noTimeline": "Nada todavía: cuando una reunión que sigue el proyecto archive una sesión, lo que se dijo de él aparecerá aquí.",
+  "noTimeline": "Nada todavía: cuando una reunión que sigue el proyecto publique su acta, lo que se dijo de él aparecerá aquí.",
   "roles": {
     "achievement": "Hecho",
     "plan": "Previsto",
@@ -131,7 +131,7 @@
     "create": "Crear un proyecto",
     "allFollowed": "Todos los proyectos de la cartera ya se siguen.",
     "createInPortfolio": "Nuevo proyecto en la cartera",
-    "noneHint": "Elija los proyectos de los que habla este equipo: cada uno tendrá su pestaña en la ficha y su turno en la reunión.",
+    "noneHint": "Elige los proyectos de los que habla este equipo: cada uno tendrá su pestaña en la ficha y su turno en la reunión.",
     "whoAdds": "¿Quién puede añadir proyectos?",
     "whoAddsHint": "Los proyectos siempre vienen de la cartera del espacio. Reordenarlos o quitar uno sigue reservado a los anfitriones.",
     "by": {

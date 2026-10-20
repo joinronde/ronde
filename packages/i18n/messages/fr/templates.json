@@ -172,7 +172,7 @@
   },
   "okrReview": {
     "name": "Revue des OKR",
-    "description": "Une fois par mois : l’avancement de chaque objectif, les résultats clés, les risques et les décisions à prendre.",
+    "description": "Une fois par mois : l'avancement de chaque objectif, les résultats clés, les risques et les décisions à prendre.",
     "sections": {
       "progress": "Avancement des objectifs",
       "results": "Résultats clés",
@@ -181,10 +181,10 @@
     }
   },
   "incidentReview": {
-    "name": "Revue d’incidents",
-    "description": "Les incidents de la semaine, sans chercher de coupable : ce qui s’est passé, l’impact, les causes et les actions correctives.",
+    "name": "Revue d'incidents",
+    "description": "Les incidents de la semaine, sans chercher de coupable : ce qui s'est passé, l'impact, les causes et les actions correctives.",
     "sections": {
-      "timeline": "Ce qui s’est passé",
+      "timeline": "Ce qui s'est passé",
       "impact": "Impact",
       "causes": "Causes profondes",
       "actions": "Actions correctives"
@@ -192,7 +192,7 @@
   },
   "researchLab": {
     "name": "Réunion de labo",
-    "description": "La réunion hebdomadaire d’une équipe de recherche : résultats, prochaines étapes, points bloquants et articles à partager.",
+    "description": "La réunion hebdomadaire d'une équipe de recherche : résultats, prochaines étapes, points bloquants et articles à partager.",
     "sections": {
       "results": "Expériences et résultats",
       "next": "Prochaines étapes",
@@ -222,39 +222,39 @@
   },
   "serviceBriefing": {
     "name": "Briefing avant service",
-    "description": "Dix minutes avant l’ouverture, chaque jour : réservations, produits du jour, consignes et points d’attention.",
+    "description": "Dix minutes avant l'ouverture, chaque jour : réservations, produits du jour, consignes et points d'attention.",
     "sections": {
       "bookings": "Réservations et affluence",
       "specials": "Produits du jour",
       "instructions": "Consignes",
-      "watch": "Points d’attention"
+      "watch": "Points d'attention"
     }
   },
   "onboarding": {
-    "name": "Suivi d’intégration",
-    "description": "Les premiers mois d’une nouvelle recrue, chaque semaine : ce qu’elle a appris, ses objectifs, ses besoins et ses questions.",
+    "name": "Suivi d'intégration",
+    "description": "Les premiers mois d'une nouvelle recrue, chaque semaine : ce qu'elle a appris, ses objectifs, ses besoins et ses questions.",
     "sections": {
-      "learned": "Ce que j’ai appris",
-      "goals": "Mes objectifs de la semaine",
-      "needs": "Ce dont j’ai besoin",
+      "learned": "Ce que j'ai appris",
+      "goals": "Mes objectifs pour la semaine prochaine",
+      "needs": "Ce dont j'ai besoin",
       "questions": "Mes questions"
     }
   },
   "hiringReview": {
     "name": "Revue de recrutement",
-    "description": "Chaque semaine : entretiens passés, candidats en cours, décisions à prendre et postes à ouvrir.",
+    "description": "Chaque semaine : entretiens menés, candidats en cours, décisions à prendre et postes à ouvrir.",
     "sections": {
-      "interviews": "Entretiens passés",
+      "interviews": "Entretiens menés",
       "candidates": "Candidats en cours",
       "decisions": "Décisions à prendre",
       "openings": "Postes à ouvrir"
     }
   },
   "boardOfDirectors": {
-    "name": "Conseil d’administration",
-    "description": "Une fois par trimestre : le rapport d’activité, les finances, les résolutions à voter et les risques.",
+    "name": "Conseil d'administration",
+    "description": "Une fois par trimestre : le rapport d'activité, les finances, les résolutions à voter et les risques.",
     "sections": {
-      "report": "Rapport d’activité",
+      "report": "Rapport d'activité",
       "finances": "Finances",
       "resolutions": "Résolutions à voter",
       "risks": "Risques et points de vigilance"

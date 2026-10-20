@@ -1,6 +1,6 @@
 {
   "loading": "Carregando o histórico…",
-  "empty": "Nenhuma reunião arquivada ainda. Use “Arquivar a reunião” na sala de controle, no encerramento.",
+  "empty": "Nenhuma ata ainda. Use “Publicar a ata” na sala de controle, no encerramento.",
   "searchPlaceholder": "Buscar nas atas (projeto, pessoa, bloqueio…)",
   "searchLabel": "Buscar nas atas",
   "meetings": "{count, plural, one {# reunião} other {# reuniões}}",

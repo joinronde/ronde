@@ -38,7 +38,7 @@
     "title": "Vorschau der Benachrichtigungen",
     "channels": "Kanäle",
     "reminder": "Erinnerungs-E-Mail",
-    "none": "Von dieser Besprechung wird noch nichts verschickt: Aktivieren Sie die Erinnerungs-E-Mail (Planung) oder eine Regel oben und sehen Sie hier, was alle erhalten.",
+    "none": "Von diesem Meeting wird noch nichts verschickt: Aktiviere die Erinnerungs-E-Mail (Planung) oder eine Regel oben und sieh hier, was alle erhalten.",
     "onLabel": "Wann:",
     "app": "App",
     "sampleDecision": "Wir wechseln zur neuen Deployment-Pipeline",

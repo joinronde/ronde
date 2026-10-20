@@ -8,7 +8,7 @@
   "steps": {
     "welcome": {
       "title": "Benvenuto in regia 👋",
-      "body": "<p>Da questa scheda conduci la riunione; le tue note restano qui, solo per te.</p><ul><li><strong>Apri lo schermo condiviso</strong>: una scheda senza menu, pensata per la proiezione.</li><li><strong>Condividi quella scheda</strong> nella videochiamata, non tutto lo schermo: è ciò che vede il team.</li><li><strong>Torna qui</strong> per guidare: tutto appare in diretta sullo schermo condiviso.</li></ul><tip>Naviga con <kbd>→</kbd> e <kbd>←</kbd>, esci con <kbd>Esc</kbd>.</tip>"
+      "body": "<p>Da questa pagina conduci la riunione; le tue note restano qui, solo per te.</p><ul><li><strong>Apri lo schermo condiviso</strong>: una pagina senza menu, pensata per la proiezione.</li><li><strong>Condividi quella pagina</strong> nella videochiamata, non tutto lo schermo: è ciò che vede il team.</li><li><strong>Torna qui</strong> per guidare: tutto appare in diretta sullo schermo condiviso.</li></ul><tip>Naviga con <kbd>→</kbd> e <kbd>←</kbd>, esci con <kbd>Esc</kbd>.</tip>"
     },
     "runOrder": {
       "title": "L'ordine del giorno e l'ordine degli interventi",
@@ -24,7 +24,7 @@
     },
     "minutes": {
       "title": "Il verbale",
-      "body": "<p>Si scrive da solo a partire dalle schede, dalle tue note, dalle decisioni e dalle azioni.</p><p>Alla fine, <strong>Archivia la riunione</strong>: il verbale va nella cronologia e la sessione successiva è pronta.</p>"
+      "body": "<p>Si scrive da solo a partire dalle schede, dalle tue note, dalle decisioni e dalle azioni.</p><p>Alla fine, <strong>Pubblica il verbale</strong>: va nella cronologia e la sessione successiva è pronta.</p>"
     },
     "finish": {
       "title": "Tocca a te!",

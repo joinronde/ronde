@@ -7,12 +7,12 @@
     "magicLink": "邮件登录链接",
     "social": "使用 Google、GitHub 或 Microsoft 登录",
     "oidc": "通过一个 OpenID Connect 服务商单点登录",
-    "twoFactor": "双因素认证",
+    "twoFactor": "两步验证",
     "saml": "SAML 单点登录和多个身份提供方",
     "ldap": "LDAP 和 Active Directory 登录",
     "scim": "通过 SCIM 自动开通用户",
     "enforcedSso": "强制单点登录",
-    "domainCapture": "域名接管"
+    "domainCapture": "按邮箱域名自动加入"
   },
   "permissions": {
     "builtInRoles": "工作空间和会议的内置角色",
@@ -33,7 +33,7 @@
     "notifications": "邮件、聊天和 Webhook 通知",
     "formats": "回顾会、计划扑克、异步会议",
     "workflows": "通知工作流：条件与自定义消息",
-    "aiAssistant": "AI 助手：总结与行动项",
+    "aiAssistant": "AI 助手：摘要与行动项",
     "transcription": "会议转写，按轮流发言排列"
   },
   "integrations": {
@@ -52,9 +52,9 @@
   "reporting": {
     "meeting": "单个会议统计",
     "export": "导出为 Markdown、PDF 和 CSV",
-    "workspace": "跨会议的工作空间仪表盘",
+    "workspace": "跨会议的工作空间仪表板",
     "scheduled": "定期发送的邮件报告",
-    "portfolio": "项目组合仪表板：状态随时间变化、截止日期、没有消息的项目、CSV 导出和定期报告"
+    "portfolio": "项目组合仪表板：健康度随时间的变化、截止日期、没有消息的项目、CSV 导出和定期报告"
   },
   "branding": {
     "customLogo": "在屏幕、邮件和纪要中使用你的 Logo",
@@ -66,8 +66,8 @@
     "retention": "数据保留规则"
   },
   "projects": {
-    "portfolio": "项目组合：描述、主题、状态、负责人、团队、日期以及每次会议的记录",
-    "round": "按项目轮流：每个项目一个轮次，由项目成员一起发言",
+    "portfolio": "项目组合：描述、主题、健康度、负责人、团队、日期以及每次会议的记录",
+    "round": "项目轮：每个项目一个轮次，由项目成员一起发言",
     "programs": "计划：将项目归入多层嵌套的计划",
     "permissions": "按项目设置权限",
     "import": "从 GitHub、GitLab、Jira 和 Linear 导入项目"

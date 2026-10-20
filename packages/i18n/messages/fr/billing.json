@@ -30,9 +30,9 @@
   "eduTitle": "Gratuit pour l'éducation",
   "eduText": "Les écoles, universités et enseignants ont les offres payantes de Ronde gratuitement. Présentez-nous votre établissement et nous l'activons.",
   "eduCta": "Demander l'offre éducation",
-  "granted": "Offert à cet espace par l'équipe Ronde : rien à payer.",
-  "grantedEducation": "Gratuit pour l'éducation : toutes les fonctionnalités payantes, rien à payer.",
-  "grantEnds": "Jusqu'au {date} : abonnez-vous avant pour le garder.",
-  "paymentFailed": "Le dernier paiement a échoué : Stripe réessaie pendant quelques jours, puis l'espace repasse en Community.",
+  "granted": "Offert à cet espace par l'équipe Ronde : rien à payer.",
+  "grantedEducation": "Gratuit pour l'éducation : toutes les fonctionnalités payantes, rien à payer.",
+  "grantEnds": "Jusqu'au {date} : abonnez-vous avant pour le garder.",
+  "paymentFailed": "Le dernier paiement a échoué : Stripe réessaie pendant quelques jours, puis l'espace repasse en Community.",
   "paymentFix": "Mettre à jour le moyen de paiement"
 }

@@ -1,13 +1,13 @@
 {
   "title": "GitLab 和 GitHub",
-  "intro": "与代码托管平台的连接，为整个工作区设置一次：每个会议都可以通过它们读取每个人的事项，事项跟踪器也用它们创建工单。",
+  "intro": "与代码托管平台的连接，为整个工作空间设置一次：每个会议都可以通过它们读取每个人的事项，事项跟踪器也用它们创建工单。",
   "empty": "还没有连接。",
   "kinds": {
     "gitlab": "GitLab",
     "github": "GitHub"
   },
   "scopes": {
-    "workspace": "工作区",
+    "workspace": "工作空间",
     "meeting": "仅此会议",
     "instance": "服务器"
   },
@@ -17,9 +17,9 @@
   "oauth": "已通过 GitLab 连接",
   "add": "添加连接",
   "addOwn": "添加仅用于此会议的连接",
-  "addOwnHint": "只有此会议可见，用于工作区没有的服务器或账号。",
+  "addOwnHint": "只有此会议可见，用于工作空间没有的服务器或账号。",
   "connect": "使用 GitLab 连接",
-  "connectHint": "您的 GitLab 账号，只读，自动续期：无需复制令牌，也无需在过期时更换。",
+  "connectHint": "你的 GitLab 账号，只读，自动续期：无需复制令牌，也无需在过期时更换。",
   "reconnect": "重新连接",
   "orToken": "或使用个人令牌",
   "kind": "工具",
@@ -46,15 +46,15 @@
   "back": {
     "connected": "GitLab 已连接。",
     "failed": "GitLab 连接失败：请重试，或使用个人令牌。",
-    "denied": "您无权在此连接 GitLab。",
+    "denied": "你无权在此连接 GitLab。",
     "cancelled": "已取消 GitLab 连接。"
   },
   "meeting": {
     "title": "{kind} 连接",
-    "inherited": "在您选择之前，此会议使用工作区的连接。",
+    "inherited": "在你选择之前，此会议使用工作空间的连接。",
     "picked": "此会议使用下方勾选的连接。",
     "use": "使用",
-    "none": "没有 {kind} 连接：管理员可以为工作区添加一个，或在下方添加仅用于此会议的连接。",
+    "none": "没有 {kind} 连接：管理员可以为工作空间添加一个，或在下方添加仅用于此会议的连接。",
     "save": "保存 {kind} 访问",
     "repos": "关注的仓库",
     "reposHint": "“所有者/仓库”或整个“所有者”，每行一个；留空：所有仓库。还请在“人员与角色”中填写每个人的 GitHub 用户名。",

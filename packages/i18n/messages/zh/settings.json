@@ -1,6 +1,6 @@
 {
   "hostOnlyTitle": "仅主持人可用的设置（{host}）",
-  "hostOnlyBody": "主持人负责设置会议、人员和板块。如需修改，请联系其中一位，或联系工作空间管理员。",
+  "hostOnlyBody": "主持人负责设置会议、人员和栏目。如需修改，请联系其中一位，或联系工作空间管理员。",
   "saved": "设置已保存",
   "onePerLine": "每行一个",
   "remove": "移除",
@@ -30,9 +30,9 @@
     "localeWorkspace": "工作空间语言（{language}）"
   },
   "sections": {
-    "title": "进展卡板块",
-    "name": "板块名称",
-    "nameOf": "板块 {n} 的名称",
+    "title": "进展卡栏目",
+    "name": "栏目名称",
+    "nameOf": "栏目 {n} 的名称",
     "input": "输入方式",
     "inputOf": "“{label}”的输入方式",
     "role": "作用",
@@ -56,7 +56,7 @@
       },
       "custom": {
         "label": "自定义",
-        "hint": "自由板块，没有特殊行为。"
+        "hint": "自由栏目，没有特殊行为。"
       }
     },
     "taken": "已被使用",
@@ -66,8 +66,8 @@
     "removeOf": "移除“{label}”",
     "reorder": "移动“{label}”",
     "customPlaceholder": "例如：调研、要展示的演示、需要帮助",
-    "add": "添加板块",
-    "hint": "每种作用（已完成、计划、阻碍、其他）最多对应一个板块。修改板块的名称、作用或输入方式时，已填写的内容会保留。"
+    "add": "添加栏目",
+    "hint": "每种作用（已完成、计划、阻碍、其他）最多对应一个栏目。修改栏目的名称、作用或输入方式时，已填写的内容会保留。"
   },
   "reminder": {
     "title": "进展卡提醒",
@@ -102,9 +102,9 @@
     "toSetUp": "待配置",
     "ready": "链接已就绪",
     "synced": "已同步",
-    "noneInWorkspace": "工作区中没有",
+    "noneInWorkspace": "工作空间中没有",
     "rulesOn": "{count} 条规则已启用",
-    "gitlab": "每个人的工单和合并请求显示在其签到中",
+    "gitlab": "每个人的工单和合并请求显示在其进展卡中",
     "github": "所关注仓库的 issue 和 pull request",
     "wikiName": "Wiki",
     "wiki": "会议纪要发布到团队 Wiki",
@@ -118,8 +118,8 @@
     "goSchedule": "在“日程”中",
     "goNotifications": "在“通知”中",
     "origin": {
-      "inherited": "继承自工作区",
-      "workspace": "来自工作区",
+      "inherited": "继承自工作空间",
+      "workspace": "来自工作空间",
       "meeting": "此会议专用",
       "instance": "来自服务器"
     }
@@ -186,11 +186,11 @@
   },
   "template": {
     "title": "复用此形式",
-    "intro": "以此会议为基础创建其他会议：在工作区中创建会议时会提供该模板。",
+    "intro": "以此会议为基础创建其他会议：在工作空间中创建会议时会提供该模板。",
     "carries": "纳入模板",
     "stays": "保留在本会议中",
     "items": {
-      "sections": "签到栏目",
+      "sections": "进展卡栏目",
       "agenda": "议程",
       "modules": "模块",
       "schedule": "时间安排",
@@ -215,7 +215,7 @@
     "general": "常规",
     "schedule": "日程",
     "people": "人员与角色",
-    "sections": "板块",
+    "sections": "栏目",
     "modules": "模块",
     "appearance": "外观",
     "notifications": "通知",
@@ -281,7 +281,7 @@
     "bbbUrl": "BigBlueButton 服务器",
     "server": "服务器",
     "ownServer": "此会议自己的服务器",
-    "serverHint": "工作区的服务器由其管理员在工作区设置中添加。",
+    "serverHint": "工作空间的服务器由其管理员在工作空间设置中添加。",
     "bbbSecret": "服务器共享密钥",
     "bbbHint": "有人加入时 Ronde 会打开房间，并以各自的姓名让每个人进入；主持人以主持者身份加入。密钥会被加密且不再显示。",
     "current": "大家通过以下方式加入：",

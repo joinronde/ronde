@@ -14,7 +14,7 @@
   },
   "retro": {
     "name": "Retrospettiva mensile",
-    "description": "Riguardate insieme il mese: cosa è andato bene, cosa migliorare, idee da provare.",
+    "description": "Uno sguardo insieme al mese passato: cosa è andato bene, cosa migliorare, idee da provare.",
     "sections": {
       "well": "Cosa è andato bene",
       "improve": "Cosa migliorare",
@@ -62,7 +62,7 @@
   },
   "leadership": {
     "name": "Team di direzione",
-    "description": "La settimanale della direzione: numeri chiave, successi, priorità e cosa va portato più in alto.",
+    "description": "La riunione settimanale della direzione: numeri chiave, successi, priorità e cosa va portato più in alto.",
     "sections": {
       "figures": "Numeri chiave",
       "wins": "Successi",
@@ -92,7 +92,7 @@
   },
   "classCouncil": {
     "name": "Consiglio di classe",
-    "description": "Una volta a quadrimestre: come va la classe, gli studenti che hanno bisogno di supporto e le azioni concordate.",
+    "description": "Una volta a trimestre: come va la classe, gli studenti che hanno bisogno di supporto e le azioni concordate.",
     "sections": {
       "progress": "Come va la classe",
       "support": "Studenti da sostenere",
@@ -102,7 +102,7 @@
   },
   "teachingTeam": {
     "name": "Team docenti",
-    "description": "La settimanale di un team di docenti: la settimana scorsa in classe, cosa arriva, studenti da seguire e risorse da condividere.",
+    "description": "La riunione settimanale di un team di docenti: la settimana scorsa in classe, cosa arriva, studenti da seguire e risorse da condividere.",
     "sections": {
       "coming": "In arrivo",
       "students": "Studenti da seguire",
@@ -112,7 +112,7 @@
   },
   "board": {
     "name": "Consiglio direttivo dell'associazione",
-    "description": "Il consiglio mensile di un'associazione: notizie dalle commissioni, votazioni, tesoreria e prossimi eventi.",
+    "description": "La riunione mensile del direttivo di un'associazione: notizie dalle commissioni, votazioni, tesoreria e prossimi eventi.",
     "sections": {
       "news": "Notizie dalle commissioni",
       "votes": "Votazioni da fare",
@@ -159,7 +159,7 @@
     }
   },
   "teamProjects": {
-    "name": "Squadra e progetti",
+    "name": "Team e progetti",
     "description": "Un turno breve per le novità di ciascuno, poi un turno per ogni progetto comune in cui i suoi membri parlano insieme.",
     "sections": {}
   },
@@ -172,7 +172,7 @@
   },
   "okrReview": {
     "name": "Revisione degli OKR",
-    "description": "Una volta al mese: l’avanzamento di ogni obiettivo, i risultati chiave, i rischi e le decisioni da prendere.",
+    "description": "Una volta al mese: l'avanzamento di ogni obiettivo, i risultati chiave, i rischi e le decisioni da prendere.",
     "sections": {
       "progress": "Avanzamento degli obiettivi",
       "results": "Risultati chiave",
@@ -182,7 +182,7 @@
   },
   "incidentReview": {
     "name": "Revisione degli incidenti",
-    "description": "Gli incidenti della settimana, senza cercare colpevoli: cosa è successo, l’impatto, le cause e le azioni correttive.",
+    "description": "Gli incidenti della settimana, senza cercare colpevoli: cosa è successo, l'impatto, le cause e le azioni correttive.",
     "sections": {
       "timeline": "Cosa è successo",
       "impact": "Impatto",
@@ -222,7 +222,7 @@
   },
   "serviceBriefing": {
     "name": "Briefing prima del servizio",
-    "description": "Dieci minuti prima dell’apertura, ogni giorno: prenotazioni, piatti del giorno, istruzioni e punti di attenzione.",
+    "description": "Dieci minuti prima dell'apertura, ogni giorno: prenotazioni, piatti del giorno, istruzioni e punti di attenzione.",
     "sections": {
       "bookings": "Prenotazioni e affluenza",
       "specials": "Piatti del giorno",

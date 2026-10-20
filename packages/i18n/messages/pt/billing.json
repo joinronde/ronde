@@ -6,13 +6,13 @@
     "team": "Team",
     "enterprise": "Enterprise"
   },
-  "communityIntro": "Grátis: reuniões e pessoas ilimitadas, todos os módulos de facilitação. O Team adiciona o assistente de IA, as transcrições, os fluxos de trabalho, os tickets, as agendas, os links de vídeo, seu logo e relatórios por e-mail.",
+  "communityIntro": "Grátis: reuniões e pessoas ilimitadas, todos os módulos de facilitação. O Team adiciona o assistente de IA, as transcrições, os fluxos de trabalho, os tickets, as agendas, os links de vídeo, seu logotipo e relatórios por e-mail.",
   "teamIntro": "Todos os recursos do Team para todo o espaço. Você paga pelas pessoas que participaram de uma reunião nos últimos 30 dias; as licenças as acompanham todos os dias.",
   "status": "Status",
   "statuses": {
     "active": "Ativa",
     "trialing": "Teste",
-    "past_due": "Pagamento a tentar de novo",
+    "past_due": "Nova tentativa de pagamento",
     "canceled": "Cancelada",
     "other": "Pendente"
   },

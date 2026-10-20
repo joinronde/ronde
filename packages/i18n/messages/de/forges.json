@@ -1,6 +1,6 @@
 {
   "title": "GitLab und GitHub",
-  "intro": "Verbindungen zu Ihren Code-Plattformen, einmal für den ganzen Arbeitsbereich eingerichtet: Jedes Meeting kann darüber die Tickets jeder Person lesen, und Tracker eröffnen damit Tickets.",
+  "intro": "Verbindungen zu deinen Code-Plattformen, einmal für den ganzen Arbeitsbereich eingerichtet: Jedes Meeting kann darüber die Tickets jeder Person lesen, und Tracker eröffnen damit Tickets.",
   "empty": "Noch keine Verbindung.",
   "kinds": {
     "gitlab": "GitLab",
@@ -19,7 +19,7 @@
   "addOwn": "Verbindung nur für dieses Meeting hinzufügen",
   "addOwnHint": "Nur für dieses Meeting sichtbar, für einen Server oder ein Konto, das der Arbeitsbereich nicht hat.",
   "connect": "Mit GitLab verbinden",
-  "connectHint": "Ihr GitLab-Konto, nur lesend, erneuert sich selbst: kein Token zum Kopieren oder Ersetzen, wenn es abläuft.",
+  "connectHint": "Dein GitLab-Konto, nur lesend, erneuert sich selbst: kein Token zum Kopieren oder Ersetzen, wenn es abläuft.",
   "reconnect": "Erneut verbinden",
   "orToken": "oder mit einem persönlichen Token",
   "kind": "Werkzeug",
@@ -27,13 +27,13 @@
   "url": "Server",
   "urlHint": "Leer: {url}",
   "token": "Token",
-  "tokenKept": "Lassen Sie das Token leer, um das gespeicherte zu behalten.",
+  "tokenKept": "Lass das Token leer, um das gespeicherte zu behalten.",
   "tokenHints": {
     "gitlab": "Ein persönliches Token mit dem Bereich <code>read_api</code> (<code>api</code> für einen Tracker, der Tickets eröffnet).",
     "github": "Ein Fine-grained-Token, das Issues und Pull Requests liest (und schreibt, für einen Tracker, der Tickets eröffnet)."
   },
   "encrypted": "Tokens werden vor dem Speichern verschlüsselt und nie wieder angezeigt.",
-  "noSecretKey": "Die Token-Verschlüsselung ist auf dem Server nicht eingerichtet: Bitten Sie den Betrieb, den Schlüssel SECRET_KEY zu setzen.",
+  "noSecretKey": "Die Token-Verschlüsselung ist auf dem Server nicht eingerichtet: Bitte den Betrieb, den Schlüssel SECRET_KEY zu setzen.",
   "save": "Speichern",
   "saved": "Gespeichert.",
   "cancel": "Abbrechen",
@@ -45,22 +45,22 @@
   "removeOwnConfirm": "Verbindung {name} dieses Meetings entfernen?",
   "back": {
     "connected": "GitLab verbunden.",
-    "failed": "Die Verbindung mit GitLab ist fehlgeschlagen: Versuchen Sie es erneut oder verwenden Sie ein persönliches Token.",
-    "denied": "Sie dürfen GitLab hier nicht verbinden.",
+    "failed": "Die Verbindung mit GitLab ist fehlgeschlagen: Versuch es erneut oder verwende ein persönliches Token.",
+    "denied": "Du darfst GitLab hier nicht verbinden.",
     "cancelled": "Die Verbindung mit GitLab wurde abgebrochen."
   },
   "meeting": {
     "title": "{kind}-Verbindungen",
-    "inherited": "Solange Sie keine auswählen, nutzt dieses Meeting die Verbindungen des Arbeitsbereichs.",
+    "inherited": "Solange du keine auswählst, nutzt dieses Meeting die Verbindungen des Arbeitsbereichs.",
     "picked": "Dieses Meeting nutzt die unten angehakten Verbindungen.",
     "use": "Verwenden",
-    "none": "Keine {kind}-Verbindung: Eine Administratorin oder ein Administrator kann eine zum Arbeitsbereich hinzufügen, oder fügen Sie unten eine nur für dieses Meeting hinzu.",
+    "none": "Keine {kind}-Verbindung: Eine Administratorin oder ein Administrator kann eine zum Arbeitsbereich hinzufügen, oder füge unten eine nur für dieses Meeting hinzu.",
     "save": "{kind}-Zugang speichern",
     "repos": "Verfolgte Repositories",
-    "reposHint": "„Besitzer/Repository“ oder ein ganzer „Besitzer“, eines pro Zeile; leer: alle Repositories. Tragen Sie auch den GitHub-Benutzernamen jeder Person unter „Personen und Rollen“ ein.",
+    "reposHint": "„Besitzer/Repository“ oder ein ganzer „Besitzer“, eines pro Zeile; leer: alle Repositories. Trag auch den GitHub-Benutzernamen jeder Person unter „Personen und Rollen“ ein.",
     "groups": "Gruppen",
     "projects": "Verfolgte Projekte",
-    "projectsHint": "Nur Tickets dieser Projekte werden zum Import angeboten. Tragen Sie auch den GitLab-Benutzernamen jeder Person unter „Personen und Rollen“ ein."
+    "projectsHint": "Nur Tickets dieser Projekte werden zum Import angeboten. Trag auch den GitLab-Benutzernamen jeder Person unter „Personen und Rollen“ ein."
   },
   "hub": {
     "count": "{count, plural, one {# Verbindung} other {# Verbindungen}}"

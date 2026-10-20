@@ -28,7 +28,7 @@
     },
     "blank": {
       "name": "Partir de zéro",
-      "description": "Une réunion vierge : choisissez vous-même ses rubriques et ses modules.",
+      "description": "Une réunion vierge : choisissez vous-même ses rubriques et ses modules.",
       "meta": "Le rythme de votre choix",
       "use": "Partir de zéro"
     },
@@ -65,7 +65,7 @@
     "back": "Retour",
     "next": "Suivant",
     "create": "Créer la réunion",
-    "fromTemplate": "À partir du modèle « {name} »",
+    "fromTemplate": "À partir du modèle « {name} »",
     "edit": "Modifier",
     "content": {
       "sectionsTitle": "Rubriques de la fiche",
@@ -76,7 +76,7 @@
       "sectionType": "Format",
       "removeSection": "Retirer la rubrique {name}",
       "modulesOn": "{count, plural, =0 {Aucun activé} one {# activé} other {# activés}}",
-      "modulesHint": "Activez ce dont votre réunion a besoin : tout s'active et se désactive à tout moment.",
+      "modulesHint": "Activez ce dont votre réunion a besoin : tout s'active et se désactive à tout moment.",
       "roleHint": {
         "achievement": "Ce qui a été fait depuis la dernière fois",
         "plan": "Ce qui est prévu ensuite",

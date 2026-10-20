@@ -1,7 +1,7 @@
 {
   "title": "Administração do servidor",
   "back": "Voltar",
-  "intro": "Configurações deste servidor Ronde, comuns a todos os seus espaços de trabalho. As de cada espaço (membros, funções, segurança) ficam nas Configurações dele. Os valores salvos aqui prevalecem sobre as variáveis de ambiente.",
+  "intro": "Configurações deste servidor Ronde, comuns a todos os seus espaços de trabalho. As de cada espaço (membros, papéis, segurança) ficam nas Configurações dele. Os valores salvos aqui prevalecem sobre as variáveis de ambiente.",
   "counts": {
     "users": "Contas",
     "workspaces": "Espaços de trabalho",

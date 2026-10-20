@@ -33,7 +33,7 @@
     "stepCheckIn": "Compila la tua scheda",
     "stepCheckInHint": "Cosa hai fatto, cosa prevedi, cosa ti blocca: qualche riga prima della riunione.",
     "stepSession": "Conduci una prima sessione",
-    "stepSessionHint": "Apri la regia, inizia la riunione, poi archiviala con il suo verbale."
+    "stepSessionHint": "Apri la regia, inizia la riunione, poi pubblicane il verbale."
   },
   "settings": {
     "title": "Impostazioni dello spazio di lavoro",

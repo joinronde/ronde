@@ -6,7 +6,7 @@ senza limiti di riunioni o persone. Una chiave di licenza attiva le funzioni di 
 
 ## Avvio
 
-1. Scarica i file di una release:
+1. Scarica i file:
 
    ```sh
    mkdir ronde && cd ronde
@@ -53,7 +53,7 @@ echo "SMTP_URL=smtp://mail:1025" >> .env
 docker compose --profile mail up -d   # emails at http://localhost:8025
 ```
 
-Per permettere a tutti di compilare la scheda rispondendo al promemoria, dai a Ronde una casella da leggere: `INBOUND_IMAP_URL=imaps://user:password@imap.example.com:993/INBOX`, e `INBOUND_ADDRESS` quando l'utente non è l'indirizzo email. Le risposte arrivano lì; ogni minuto Ronde legge quelle che rispondono a un promemoria, aggiunge le loro righe alla scheda, conferma via email e le sposta in una cartella `Ronde`. Gli altri messaggi della casella restano come sono, quindi può essere il tuo indirizzo di contatto abituale.
+Per permettere a tutti di compilare la scheda rispondendo al promemoria, dai a Ronde una casella da leggere: `INBOUND_IMAP_URL=imaps://user:password@imap.example.com:993/INBOX`, e `INBOUND_ADDRESS` quando il nome utente non è l'indirizzo email. Le risposte arrivano lì; ogni minuto Ronde legge quelle che rispondono a un promemoria, aggiunge le loro righe alla scheda, conferma via email e le sposta in una cartella `Ronde`. Gli altri messaggi della casella restano come sono, quindi può essere il tuo indirizzo di contatto abituale.
 
 Le notifiche push (il tuo turno che si avvicina, i promemoria della scheda, la campanella) richiedono una coppia di chiavi per l'istanza: `npx web-push generate-vapid-keys`, poi `WEB_PUSH_PUBLIC_KEY` e `WEB_PUSH_PRIVATE_KEY`. Conservale: i dispositivi che hanno attivato le notifiche ne dipendono. Ronde deve essere servito in HTTPS; su iPhone, prima lo si aggiunge alla schermata Home.
 
@@ -121,9 +121,9 @@ organizzazione Microsoft. Microsoft deve raggiungere `RONDE_URL` in HTTPS.
    Gestisci app › Carica nuova app) e la aggiunge a un team: Ronde pubblica una card nel suo canale, e
    **Collega a Ronde** sceglie lo spazio.
 
-Il segreto client scade dopo 6-24 mesi: crea il successivo prima e sostituisci `TEAMS_APP_PASSWORD`. Un bot
+Il segreto client scade dopo 6-24 mesi: crea il nuovo prima della scadenza e sostituisci `TEAMS_APP_PASSWORD`. Un bot
 single-tenant serve le persone della tua organizzazione Microsoft; per offrire l'app ad altre organizzazioni,
-viene pubblicata nel Teams Store.
+va pubblicata nel Teams Store.
 
 ## Aggiornare
 
@@ -151,4 +151,4 @@ docker compose exec db pg_dump -U ronde ronde | gzip > ronde-$(date +%F).sql.gz
 | `ghcr.io/joinronde/ronde-migrate` | Le migrazioni del database della stessa versione |
 
 Ogni variabile segreta accetta anche `<NAME>_FILE` (Docker secrets). Istruzione: scuole e università ricevono
-gratuitamente i piani a pagamento, la richiesta si fa su https://joinronde.com/it/education.
+gratuitamente i piani a pagamento; la richiesta si fa su https://joinronde.com/it/education.

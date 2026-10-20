@@ -30,9 +30,9 @@
   "eduTitle": "教育免费",
   "eduText": "学校、大学和教师可免费使用 Ronde 的付费方案。告诉我们你的机构信息，我们来为你开通。",
   "eduCta": "申请教育方案",
-  "granted": "由 Ronde 团队赠予此工作区：无需付费。",
+  "granted": "由 Ronde 团队赠予此工作空间：无需付费。",
   "grantedEducation": "教育免费：所有付费功能，无需付费。",
   "grantEnds": "截至 {date}：请在此之前订阅以继续使用。",
-  "paymentFailed": "上一次付款失败：Stripe 会在几天内重试，之后工作区将恢复为 Community。",
+  "paymentFailed": "上一次付款失败：Stripe 会在几天内重试，之后工作空间将恢复为 Community。",
   "paymentFix": "更新付款方式"
 }

@@ -8,7 +8,7 @@
   "steps": {
     "welcome": {
       "title": "Willkommen in der Regie 👋",
-      "body": "<p>Von diesem Tab aus leitest du das Meeting; deine Notizen bleiben hier, nur für dich.</p><ul><li><strong>Öffne den geteilten Bildschirm</strong>: ein Tab ohne Menüs, gemacht für die Projektion.</li><li><strong>Teile diesen Tab</strong> im Videocall, nicht deinen ganzen Bildschirm: Das sieht das Team.</li><li><strong>Komm hierher zurück</strong>, um zu steuern: Alles erscheint live auf dem geteilten Bildschirm.</li></ul><tip>Navigiere mit <kbd>→</kbd> und <kbd>←</kbd>, beende mit <kbd>Esc</kbd>.</tip>"
+      "body": "<p>Von diesem Tab aus leitest du das Meeting; deine Notizen bleiben hier, nur für dich.</p><ul><li><strong>Öffne den geteilten Bildschirm</strong>: ein Tab ohne Menüs, gemacht für die Projektion.</li><li><strong>Teile diesen Tab</strong> im Videoanruf, nicht deinen ganzen Bildschirm: Das sieht das Team.</li><li><strong>Komm hierher zurück</strong>, um zu steuern: Alles erscheint live auf dem geteilten Bildschirm.</li></ul><tip>Navigiere mit <kbd>→</kbd> und <kbd>←</kbd>, beende mit <kbd>Esc</kbd>.</tip>"
     },
     "runOrder": {
       "title": "Tagesordnung und Reihenfolge",
@@ -24,7 +24,7 @@
     },
     "minutes": {
       "title": "Das Protokoll",
-      "body": "<p>Es schreibt sich von selbst aus den Check-ins, deinen Notizen, den Entscheidungen und den Aufgaben.</p><p>Am Ende <strong>Meeting archivieren</strong>: Das Protokoll kommt in den Verlauf und die nächste Sitzung ist bereit.</p>"
+      "body": "<p>Es schreibt sich von selbst aus den Check-ins, deinen Notizen, den Entscheidungen und den Aufgaben.</p><p>Am Ende <strong>Protokoll veröffentlichen</strong>: Es kommt in den Verlauf und die nächste Sitzung ist bereit.</p>"
     },
     "finish": {
       "title": "Jetzt bist du dran!",

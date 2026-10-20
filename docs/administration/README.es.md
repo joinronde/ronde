@@ -11,7 +11,7 @@ La primera cuenta creada en una instancia nueva se convierte en su **administrad
 
 - ver cuántas cuentas, espacios de trabajo y reuniones contiene la instancia;
 - elegir el idioma por defecto, que se usa cuando ni la persona ni su navegador piden un idioma que Ronde
-  habla;
+  admite;
 - decidir quién puede crear una cuenta;
 - introducir o quitar la clave de licencia.
 
@@ -39,7 +39,14 @@ servidor o con la variable `RONDE_LICENSE` (la variable tiene prioridad y bloque
 comprueba en el servidor, sin conexión: no se envía nada a ninguna parte. La página muestra el plan, el
 cliente, la fecha de caducidad y cuántas plazas se usan.
 
-- **Más personas que plazas**: no se bloquea nada; la página te pide que actualices la licencia.
+- **Una plaza** es una persona que participó en una reunión en los últimos 30 días, como en la nube de Ronde.
+  Quien fue invitado pero nunca vino, o está ausente todo el mes, no ocupa ninguna, y una persona presente en
+  varios espacios de trabajo (con la misma cuenta o la misma dirección) cuenta una sola vez.
+- **El recuento más alto** de cada licencia se registra mientras es válida (activa o en su periodo de gracia);
+  se calcula cada noche y cada vez que se abre la página. La renovación se basa en él. Una clave nueva empieza
+  su propio recuento, y la página sigue mostrando el recuento más alto de la licencia anterior, para liquidarlo.
+- **Más personas que plazas**: no se bloquea nada. La página lo indica, y la diferencia se regulariza en la
+  renovación.
 - **Caducada**: un periodo de gracia de 14 días lo mantiene todo en marcha. Después, las funciones de pago
   pasan a solo lectura: lo que contienen sigue siendo legible, pero no se puede añadir nada nuevo. Las
   funciones de Community nunca se ven afectadas.
@@ -59,8 +66,8 @@ reunión). Define `RONDE_HIDE_UPGRADE_HINTS=1` para quitarlas de toda la instanc
 El botón con forma de bocadillo en la parte superior de las páginas (en el menú de la cuenta en el móvil) permite
 informar de un problema o proponer una idea, con una captura de pantalla si se quiere. Con el mensaje se envían la
 dirección de la página (sin sus parámetros), el navegador, el tamaño de la ventana, el idioma y la versión de Ronde.
-Los administradores leen los mensajes en **Administración del servidor**, responden por correo a quien lo pidió y
-pueden abrir un issue prerrellenado en el proyecto Ronde para un problema del propio Ronde. Si `SENTRY_DSN` está
+Los administradores leen los mensajes en **Administración del servidor**, responden por correo a quienes pidieron una respuesta y
+pueden abrir una incidencia prerrellenada en el proyecto Ronde para un problema del propio Ronde. Si `SENTRY_DSN` está
 definido, los mensajes también llegan a ese proyecto de Sentry como comentarios de usuarios. Los mensajes se
 eliminan al cabo de un año; en una instancia autoalojada el botón está desactivado por defecto: `RONDE_FEEDBACK=on` lo muestra.
 
@@ -130,10 +137,10 @@ señala las fechas que quedan demasiado cerca de otra reunión de las mismas per
 ## Inicio de sesión e inicio de sesión único
 
 La edición Community ofrece cuentas con correo y contraseña, enlaces de inicio de sesión por correo,
-autenticación en dos pasos, cuentas de Google, GitHub y Microsoft, y un proveedor OpenID Connect para la
+verificación en dos pasos, cuentas de Google, GitHub y Microsoft, y un proveedor OpenID Connect para la
 instancia (variables `OIDC_*`, consulta la [guía de autoalojamiento](../self-hosting/README.es.md)).
 
-Cada persona gestiona cómo inicia sesión desde su cuenta, en **Inicio de sesión y seguridad**: contraseña, llaves de acceso (Face ID, Windows Hello, un gestor de contraseñas o una llave de seguridad), verificación en dos pasos y cierre de sesión en todas partes. Las llaves de acceso están ligadas al dominio de `APP_URL`, que debe usar HTTPS: tras un cambio de dominio, cada uno vuelve a añadirlas. Una dirección que debe usar el inicio de sesión único no puede añadir ni usar llaves de acceso.
+Cada persona gestiona cómo inicia sesión desde su cuenta, en **Inicio de sesión y seguridad**: contraseña, llaves de acceso (Face ID, Windows Hello, un gestor de contraseñas o una llave de seguridad), verificación en dos pasos y cierre de sesión en todas partes. Las llaves de acceso están ligadas al dominio de `APP_URL`, que debe usar HTTPS: tras un cambio de dominio, cada persona debe volver a añadirlas. Una dirección que debe usar el inicio de sesión único no puede añadir ni usar llaves de acceso.
 
 Con Enterprise, la pestaña **Seguridad** de un espacio de trabajo añade:
 
@@ -195,7 +202,7 @@ dificultades), un responsable, las personas que trabajan en él, fechas y enlace
 proyectos; su responsable y los administradores los editan. La página de un proyecto reúne lo que cada
 reunión dijo de él, sesión tras sesión, para las personas que pueden leer esas reuniones.
 
-Cada proyecto puede tener un logo, junto a su nombre y en su paso de las reuniones: haz clic en su marca, en la página del proyecto, para elegir una imagen; sin logo, se muestran sus iniciales sobre su color. Una importación trae la imagen de la herramienta: el avatar de una organización de GitHub, el de un proyecto de GitLab o el de un proyecto de Jira. Quienes pueden editar el proyecto lo cambian o lo quitan.
+Cada proyecto puede tener un logotipo, junto a su nombre y en su paso de las reuniones: haz clic en su marca, en la página del proyecto, para elegir una imagen; sin logotipo, se muestran sus iniciales sobre su color. Una importación trae la imagen de la herramienta: el avatar de una organización de GitHub, el de un proyecto de GitLab o el de un proyecto de Jira. Quienes pueden editar el proyecto lo cambian o lo quitan.
 
 Una reunión sigue proyectos en **Ajustes › Proyectos**. Cada proyecto seguido tiene una pestaña en la ficha
 de cada persona, con una ficha compartida: el estado y el mensaje del día, redactados por quienes trabajan
@@ -203,7 +210,7 @@ en él. Añade el bloque **Ronda por proyecto** al orden del día para dar a cad
 donde sus miembros hablan juntos; sin él, los elementos sobre un proyecto se presentan en el turno de cada
 persona. Las plantillas **Revisión de cartera** y **Equipo y proyectos** lo incluyen desde el principio.
 Con Team, un panel muestra el estado de cada proyecto semana tras semana, las fechas límite y los proyectos
-sin noticias, lo exporta en CSV y añade los proyectos a vigilar al informe por correo. Con Enterprise, un proyecto puede formar parte de otro, que pasa a ser un programa (tres niveles como máximo), ser visible solo para sus miembros y poder ser editado por sus miembros, no solo por su responsable.
+sin noticias, lo exporta en CSV y añade los proyectos a vigilar al informe por correo. Con Enterprise, un proyecto puede formar parte de otro, que pasa a ser un programa (tres niveles como máximo); también puede ser visible solo para sus miembros y dejar que sus miembros lo editen, no solo su responsable.
 
 **Importar**, en la misma página, trae proyectos de tus herramientas: los repositorios de una organización de GitHub o los proyectos de un grupo de GitLab, los hitos de un repositorio de GitHub o de un proyecto de GitLab (cada uno llamado «repositorio · hito»), las épicas de un proyecto de Jira o los proyectos de Linear. Marca los que quieras traer; los que ya están en la cartera se reconocen, y cada elemento entra una sola vez. El token escrito ahí solo sirve para esa importación y no se guarda:
 
@@ -217,18 +224,18 @@ Los miembros importan desde github.com, gitlab.com, Atlassian Cloud y Linear; im
 ### Módulos
 
 Todos los módulos de dinamización son gratis: rompehielos, ánimo del equipo, valoración de utilidad, reacciones, manos levantadas,
-agradecimientos, foco, ruleta y sorteos, cumpleaños, sonidos, timebox, encuestas, aparcamiento, registro de
+agradecimientos, foco, ruleta y sorteos, cumpleaños, sonidos, tiempo acotado, encuestas, aparcamiento, registro de
 decisiones, retrospectiva, planning poker y reuniones asíncronas. Un módulo desactivado en una reunión
 desaparece de su sala de control, de su pantalla compartida y de las fichas; sus ajustes se conservan.
 
-La valoración de utilidad pregunta a todos, en el cierre, si la reunión fue útil (de 1 a 5 estrellas, desde su pantalla o su móvil). La media aparece a partir de 3 valoraciones, para que nadie pueda adivinar la de otra persona; pasa al acta y a las estadísticas. Las plantillas de reuniones diarias cortas, reuniones uno a uno y órganos formales (comité de dirección, juntas, junta de evaluación, reunión de obra, sesión clínica, revisión de incidentes) la dejan desactivada.
+La valoración de utilidad pregunta a todos, en el cierre, si la reunión fue útil (de 1 a 5 estrellas, desde su pantalla o su móvil). La media aparece a partir de 3 valoraciones, para que nadie pueda adivinar la de otra persona; pasa al acta y a las estadísticas. Las plantillas de reuniones diarias cortas, reuniones uno a uno y órganos formales (comité de dirección, juntas directivas y consejos, junta de evaluación, reunión de obra, comité de casos, revisión de incidentes) la dejan desactivada.
 
 ### Exportaciones
 
 Las páginas que listan algo lo exportan para una hoja de cálculo: **Exportar en CSV** en la página
 Acciones (todas las acciones de la vista, también las hechas hace más de dos semanas), la página Decisiones
 (con su búsqueda y su filtro por reunión), las Estadísticas de una reunión (una línea por sesión) y, con
-Team, la tabla de Análisis y el Panel del portafolio. Las actas se descargan en Markdown o PDF desde el
+Team, la tabla de Análisis y el panel de la cartera. Las actas se descargan en Markdown o PDF desde el
 Historial. Los archivos se abren directamente en columnas en Excel, LibreOffice o Numbers, en el idioma de
 la persona («;» y coma decimal en francés, alemán, español, italiano, portugués y ruso), y un texto que
 parece una fórmula sigue siendo texto.
@@ -269,7 +276,7 @@ Los tokens de las cuentas que inician sesión con Google, GitHub, Microsoft o el
 
 | Integración | Dónde | Plan |
 | --- | --- | --- |
-| GitLab y GitHub: importar incidencias y merge requests en las fichas | Ajustes de la reunión | Community |
+| GitLab y GitHub: importar tickets y merge requests en las fichas | Ajustes de la reunión | Community |
 | Videollamada: cualquier enlace, Jitsi, BigBlueButton | Ajustes de la reunión | Community |
 | Salas de Zoom, Google Meet y Teams creadas para cada reunión | Espacio de trabajo, General | Team |
 | Calendarios de Google, Outlook y CalDAV (iCloud, Fastmail, Nextcloud…), en ambos sentidos: sesiones escritas en los calendarios de los participantes, cambios de hora, eliminaciones y respuestas hechos allí recuperados, disponibilidad leída | Espacio de trabajo, General | Team |

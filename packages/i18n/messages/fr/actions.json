@@ -14,7 +14,7 @@
   "layoutBoard": "Kanban",
   "stuck": "En attente depuis trop longtemps",
   "dropHere": "Déposez une action ici",
-  "moveTo": "Déplacer « {text} » vers {column}",
+  "moveTo": "Déplacer « {text} » vers {column}",
   "group": {
     "open": "À faire",
     "doing": "En cours",
@@ -60,7 +60,7 @@
   "added": "Action ajoutée à votre liste",
   "cancel": "Annuler",
   "progress": "Noter l'avancement",
-  "progressFor": "Avancement de « {text} »",
+  "progressFor": "Avancement de « {text} »",
   "progressPlaceholder": "Ce que vous avez tenté, ce qui reste…",
   "progressOn": "noté le {date}",
   "progressEdit": "Modifier",

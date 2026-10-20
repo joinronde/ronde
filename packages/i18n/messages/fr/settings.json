@@ -64,7 +64,7 @@
     "carryPlansHint": "Chacun retrouve ce qu'il avait prévu en cases à cocher, à cocher au fil de l'avancement. Une case non cochée ne compte pas comme fait.",
     "carryPlans": "Reprendre ce qui était dans « {plan} » la dernière fois",
     "removeOf": "Retirer « {label} »",
-    "reorder": "Déplacer « {label} »",
+    "reorder": "Déplacer « {label} »",
     "customPlaceholder": "Ex. Veille, Démo à montrer, Besoin d'aide",
     "add": "Ajouter une rubrique",
     "hint": "Chaque rôle (réalisé, prévu, difficulté, autre) va à une rubrique au plus. Une rubrique garde ce qui a été saisi quand son nom, son rôle ou sa saisie change."
@@ -150,7 +150,7 @@
     "colPerson": "Personne",
     "colRole": "Rôle",
     "intro": "Les profils viennent de l'annuaire de l'espace. Le rôle fixe ce que chacun peut faire dans cette réunion.",
-    "rolesGuide": "Qui peut faire quoi ?",
+    "rolesGuide": "Qui peut faire quoi ?",
     "roles": {
       "host": "Régisseur",
       "cohost": "Co-régisseur",
@@ -186,7 +186,7 @@
   },
   "template": {
     "title": "Réutiliser ce format",
-    "intro": "Créez d'autres réunions à partir de celle-ci : le modèle est proposé à la création d'une réunion dans l'espace.",
+    "intro": "Créez d'autres réunions à partir de celle-ci : le modèle est proposé à la création d'une réunion dans l'espace.",
     "carries": "Part dans le modèle",
     "stays": "Reste dans cette réunion",
     "items": {
@@ -237,7 +237,7 @@
     "notifications": "Rappels et messages envoyés autour de la réunion.",
     "integrations": "Visio, outils de tickets et wiki.",
     "template": "Enregistrer cette réunion comme modèle de l'espace.",
-    "danger": "Ce qui ne s'annule pas : quitter, arrêter ou supprimer."
+    "danger": "Ce qui ne s'annule pas : quitter, arrêter ou supprimer."
   },
   "status": {
     "auto": "Les modifications sont enregistrées automatiquement.",

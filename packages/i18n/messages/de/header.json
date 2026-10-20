@@ -1,9 +1,9 @@
 {
   "skipToContent": "Zum Inhalt springen",
   "navigation": "Ansichten",
-  "screenHint": "Öffnet sich in einem neuen Tab, zum Teilen im Videocall",
-  "videoHint": "Öffnet den Videocall in einem neuen Tab",
-  "joinVideo": "Am Videocall teilnehmen",
+  "screenHint": "Öffnet sich in einem neuen Tab, zum Teilen im Videoanruf",
+  "videoHint": "Öffnet den Videoanruf in einem neuen Tab",
+  "joinVideo": "Am Videoanruf teilnehmen",
   "reconnecting": "Verbinde neu…",
   "host": "Moderation",
   "cohost": "Co-Moderation",

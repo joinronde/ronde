@@ -98,7 +98,7 @@
   "deleteConfirm": "Supprimer le projet {name} ? Ses fiches sont supprimées ; les éléments et actions qui le concernent restent, sans projet.",
   "noDescription": "Pas encore de description.",
   "timeline": "Ce qu'en ont dit les réunions",
-  "noTimeline": "Rien pour l'instant : dès qu'une réunion qui suit le projet archive une séance, ce qui en a été dit s'affiche ici.",
+  "noTimeline": "Rien pour l'instant : dès qu'une réunion qui suit le projet publie son compte rendu, ce qui en a été dit s'affiche ici.",
   "roles": {
     "achievement": "Réalisé",
     "plan": "Prévu",
@@ -131,8 +131,8 @@
     "create": "Créer un projet",
     "allFollowed": "Tous les projets du portefeuille sont déjà suivis.",
     "createInPortfolio": "Nouveau projet dans le portefeuille",
-    "noneHint": "Choisissez les projets dont parle cette équipe : chacun aura son onglet dans la fiche et son tour en réunion.",
-    "whoAdds": "Qui peut ajouter des projets ?",
+    "noneHint": "Choisissez les projets dont parle cette équipe : chacun aura son onglet dans la fiche et son tour en réunion.",
+    "whoAdds": "Qui peut ajouter des projets ?",
     "whoAddsHint": "Les projets viennent toujours du portefeuille de l'espace. Les réordonner ou en retirer un reste réservé aux régisseurs.",
     "by": {
       "hosts": "Les régisseurs",

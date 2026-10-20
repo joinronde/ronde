@@ -1,5 +1,5 @@
 {
-  "title": "Log de auditoria",
+  "title": "Registro de auditoria",
   "intro": "Quem mudou o quê neste espaço de trabalho: configurações, pessoas, papéis, reuniões. As interações ao vivo não são guardadas.",
   "window": "Mostra os últimos {days} dias.",
   "filters": {
@@ -34,7 +34,7 @@
     "meeting": {
       "create": "Sessão preparada",
       "reset": "Sessão reiniciada",
-      "archive": "Sessão arquivada",
+      "archive": "Ata publicada",
       "publish": "Resumo publicado",
       "remove": "Reunião excluída",
       "new": "Reunião criada",
@@ -92,13 +92,13 @@
     },
     "workspace": {
       "update": "Configurações do espaço alteradas",
-      "categoryAdd": "Equipa adicionada",
-      "categoryRename": "Equipa renomeada",
-      "categoryDelete": "Equipa eliminada",
-      "categoryMove": "Equipa movida",
+      "categoryAdd": "Equipe adicionada",
+      "categoryRename": "Equipe renomeada",
+      "categoryDelete": "Equipe excluída",
+      "categoryMove": "Equipe movida",
       "auditStream": "Envio da auditoria alterado",
-      "logo": "Logo alterado",
-      "logoRemoved": "Logo removido",
+      "logo": "Logotipo alterado",
+      "logoRemoved": "Logotipo removido",
       "delete": "Espaço excluído"
     },
     "connectors": {
