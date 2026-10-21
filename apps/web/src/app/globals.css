@@ -958,7 +958,10 @@ body.calm *,body.calm *::before,body.calm *::after{animation:none!important;tran
 .list-ed li.dragging{opacity:.4}
 .list-ed li.over-before{box-shadow:inset 0 3px 0 var(--accent)}
 .list-ed li.over-after{box-shadow:inset 0 -3px 0 var(--accent)}
-.list-ed textarea{flex:1;min-width:0;min-height:calc(1.4em + 12px);border:0;background:transparent;padding:5px 2px;resize:none;overflow:hidden;line-height:1.4;border-radius:6px}
+.list-ed .list-body{flex:1;min-width:0;display:flex;flex-direction:column}
+.list-ed .list-aside{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;padding:0 2px 4px}
+.list-ed .list-aside:empty{display:none}
+.list-ed textarea{flex:none;min-width:0;width:100%;min-height:calc(1.4em + 12px);border:0;background:transparent;padding:5px 2px;resize:none;overflow:hidden;line-height:1.4;border-radius:6px}
 .list-ed textarea:focus{outline:none}
 .list-ed textarea.ticked{text-decoration:line-through;color:var(--ink-3)}
 .list-ed .grip{cursor:grab;color:var(--ink-3);opacity:0;padding:5px 2px;font-size:15px;line-height:1.4;user-select:none;touch-action:none}
@@ -972,7 +975,7 @@ body.calm *,body.calm *::before,body.calm *::after{animation:none!important;tran
 .list-new textarea::placeholder{color:var(--ink-3)}
 .list-ed:not(.checklist) li::before{content:"•";color:var(--ink-3);padding-block:5px 0;padding-inline:2px 0;line-height:1.4;order:1}
 .list-ed:not(.checklist) li .grip{order:0}
-.list-ed:not(.checklist) li textarea,.list-ed:not(.checklist) li .del{order:2}
+.list-ed:not(.checklist) li .list-body,.list-ed:not(.checklist) li .del{order:2}
 @media (hover:none){.list-ed .grip,.list-ed .del{opacity:1}}
 textarea.free-text{min-height:44px;max-height:calc(3lh + 22px);overflow-y:auto;resize:none}
 
@@ -2948,7 +2951,11 @@ a[target="_blank"]:not(.btn) > svg.ico:last-of-type{display:inline;margin-inline
 .others-lines li{display:flex;align-items:flex-start;gap:8px;padding:5px 8px;border-radius:8px;background:var(--surface-2);color:var(--ink-2);min-width:0;overflow-wrap:anywhere;animation:popIn .35s ease-out both;transition:background .2s,box-shadow .2s}
 .others-lines li.joined{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
 [dir="rtl"] .others-lines li.joined{box-shadow:inset -3px 0 0 var(--accent)}
-.others-lines .txt{flex:1;min-width:0;padding-top:2px}
+/* Who wrote it and "me too" on top, the text under them on the whole width: readable in a narrow column too */
+.others-lines li{flex-wrap:wrap;row-gap:2px}
+.others-lines li .faces{flex:1;min-width:0}
+.others-lines li .join-btn{flex:none}
+.others-lines .txt{order:1;flex:1 0 100%;min-width:0}
 .others-lines .av{font-size:.72em}
 .join-btn{flex:none;border:1px solid var(--line);background:var(--surface);color:var(--ink-3);border-radius:999px;padding:2px 10px;font-size:12.5px;font-weight:600;white-space:nowrap;cursor:pointer;transition:color .15s,border-color .15s,background .15s,transform .1s}
 .join-btn:hover{color:var(--accent);border-color:var(--accent)}
@@ -2960,7 +2967,7 @@ a[target="_blank"]:not(.btn) > svg.ico:last-of-type{display:inline;margin-inline
 .faces .av{box-shadow:0 0 0 2px var(--surface);animation:popIn .3s cubic-bezier(.3,1.4,.5,1) both}
 .faces .av+.av{margin-inline-start:-.3em}
 .faces-names{margin-inline-start:.4em;font-size:.82em;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-.list-ed li .faces{align-self:center;font-size:.8em}
+.list-ed li .faces{font-size:.8em}
 .card .faces,.item .faces{margin-inline-end:.35em}
 .item-author .faces .av{font-size:1em}
 .others-lines .free{white-space:pre-wrap}
