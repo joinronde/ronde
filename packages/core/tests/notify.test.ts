@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { type NotifyInput, notifyMessage, toDiscord, toHtml, toMarkdown, toSlack, toTeams, toText } from "../src/notify";
+import { type NotifyInput, notifyMessage, toDiscord, toEmailHtml, toHtml, toMarkdown, toSlack, toTeams, toText } from "../src/notify";
 import { DEFAULT_SECTIONS } from "../src/util";
 
 const settings = {
@@ -69,6 +69,20 @@ describe("renderers", () => {
   it("escapes HTML (Matrix, email)", () => {
     expect(toHtml(m)).toContain("<strong>⏰ Tools &lt;team&gt; starts in 5 minutes</strong>");
     expect(toHtml(m)).not.toContain("<team>");
+  });
+
+  it("lays out the email: escaped title, first link as the button, Ronde's logo or the workspace's, right to left in Arabic", () => {
+    const html = toEmailHtml(m, { locale: "en", team: "Tools <team>" });
+    expect(html).toContain("<h1");
+    expect(html).toContain("⏰ Tools &lt;team&gt; starts in 5 minutes");
+    expect(html).not.toContain("<team>");
+    expect(html).toContain('src="cid:ronde-logo"');
+    expect(html.indexOf("🎥 Join the video call")).toBeLessThan(html.indexOf("🙋 Follow the meeting in Ronde"));
+    expect(html).toContain("Tools &lt;team&gt;” sends its notifications by email");
+    const branded = toEmailHtml(m, { locale: "ar", team: "Tools", brand: { name: "Acme", logo: "https://example.com/logo.png" } });
+    expect(branded).toContain('dir="rtl"');
+    expect(branded).toContain('src="https://example.com/logo.png"');
+    expect(branded).not.toContain("cid:ronde-logo");
   });
 
   it("writes Slack mrkdwn with escaped text and <url|label> links", () => {
