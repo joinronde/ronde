@@ -2,7 +2,18 @@
 // call goes through the `fetch` it is given, so drivers are tested without any network.
 
 import { createHmac, randomBytes } from "node:crypto";
-import { type RichMessage, toDiscord, toHtml, toMarkdown, toSlack, toTeams, toText } from "@ronde/core/notify";
+import type { EmailBrand } from "@ronde/core/notifications";
+import {
+  type NotifyInput,
+  type RichMessage,
+  toDiscord,
+  toEmailHtml,
+  toHtml,
+  toMarkdown,
+  toSlack,
+  toTeams,
+  toText,
+} from "@ronde/core/notify";
 import { IntegrationError } from "@ronde/module-sdk";
 import { z } from "zod";
 
@@ -18,6 +29,10 @@ export interface Outgoing {
   /** Raw data of the event, for webhooks */
   data: object;
   meeting: { id: string; name: string; url: string };
+  /** Language of the email layout (English when not given) */
+  locale?: NotifyInput["locale"];
+  /** The workspace's logo and name in the email, in place of Ronde's (Team) */
+  brand?: EmailBrand | null;
 }
 
 export interface DriverContext {
@@ -94,7 +109,12 @@ const email: Driver = {
     const to = (target.to as string[] | undefined) ?? [];
     if (!to.length) return;
     if (!ctx.sendMail) throw new IntegrationError("connectorUnreachable", { host: "SMTP" });
-    await ctx.sendMail({ to, subject: out.message.summary, text: toText(out.message), html: toHtml(out.message) });
+    await ctx.sendMail({
+      to,
+      subject: out.message.summary,
+      text: toText(out.message),
+      html: toEmailHtml(out.message, { locale: out.locale ?? "en", team: out.meeting.name, brand: out.brand }),
+    });
   },
 };
 

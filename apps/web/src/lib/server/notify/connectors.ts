@@ -5,6 +5,7 @@ import type { Prisma } from "@ronde/db";
 import { resolveLocale } from "@ronde/i18n";
 import { z } from "zod";
 import type { WorkspaceContext } from "../authz";
+import { emailBrand } from "../branding";
 import { env } from "../env";
 import { OpError } from "../errors";
 import { featureOn } from "../license";
@@ -134,5 +135,7 @@ export async function testConnector(ctx: WorkspaceContext, id: string, room?: st
     message,
     data: {},
     meeting: { id: "", name: ctx.workspace.name, url: appUrl },
+    locale,
+    brand: connector.kind === "email" ? await emailBrand(ctx.workspace.id) : null,
   });
 }

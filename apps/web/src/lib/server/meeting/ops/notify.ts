@@ -3,6 +3,7 @@ import { isPhoneKind } from "@ronde/connectors/kinds";
 import { notifyMessage } from "@ronde/core/notify";
 import { Prisma } from "@ronde/db";
 import { z } from "zod";
+import { emailBrand } from "../../branding";
 import { AccessError, OpError } from "../../errors";
 import { featureOn, type PlanScope } from "../../license";
 import { notifiedMeeting } from "../../notified-meeting";
@@ -97,6 +98,8 @@ export const notifyOps = [
           message: notifyMessage({ event: "test", settings: n.settings, locale: n.locale, meetingUrl: n.appUrl }),
           data: {},
           meeting: { id: meetingId, name: n.meeting.name, url: n.appUrl },
+          locale: n.locale,
+          brand: connector.kind === "email" ? await emailBrand(n.meeting.workspaceId) : null,
         },
         undefined,
         only,
