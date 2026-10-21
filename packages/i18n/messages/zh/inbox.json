@@ -14,6 +14,7 @@
     "kudo_received": "<strong>{actor}</strong> 在 <strong>{meeting}</strong> 中感谢了你",
     "meeting_joined": "<strong>{actor}</strong> 将你加入了 <strong>{meeting}</strong>",
     "absence_delegated": "<strong>{actor}</strong> 将要离开：期间由你主持其负责的会议",
-    "minutes_draft": "<strong>{meeting}</strong> 的纪要等待发布"
+    "minutes_draft": "<strong>{meeting}</strong> 的纪要等待发布",
+    "line_assigned": "<strong>{actor}</strong> 在 <strong>{meeting}</strong> 中把你加到了一条内容上"
   }
 }

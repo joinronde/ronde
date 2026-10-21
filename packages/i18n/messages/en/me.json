@@ -208,5 +208,8 @@
   "focus": "Focus",
   "focusOn": "Focus: hide the reactions and animations on this screen",
   "focusOff": "Show the reactions and animations again (still hidden during your turn)",
-  "focusTurn": "Your turn: reactions and animations are hidden until it ends"
+  "focusTurn": "Your turn: reactions and animations are hidden until it ends",
+  "assign": "Assign…",
+  "assignLine": "Put someone on “{text}”",
+  "assignHint": "Add the people who took part in this line: their face shows on it, as with “Me too”."
 }

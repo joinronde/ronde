@@ -208,5 +208,8 @@
   "focus": "Concentración",
   "focusOn": "Concentración: ocultar las reacciones y animaciones en esta pantalla",
   "focusOff": "Volver a mostrar reacciones y animaciones (siguen ocultas durante tu turno)",
-  "focusTurn": "Es tu turno: las reacciones y animaciones se ocultan hasta que termine"
+  "focusTurn": "Es tu turno: las reacciones y animaciones se ocultan hasta que termine",
+  "assign": "Asignar…",
+  "assignLine": "Asignar «{text}» a alguien",
+  "assignHint": "Añade a las personas que participaron en esta línea: su cara aparece en ella, como con «Yo también»."
 }

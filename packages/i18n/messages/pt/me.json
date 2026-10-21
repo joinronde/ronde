@@ -208,5 +208,8 @@
   "focus": "Foco",
   "focusOn": "Foco: ocultar as reações e animações nesta tela",
   "focusOff": "Mostrar de novo as reações e animações (continuam ocultas na sua vez)",
-  "focusTurn": "É a sua vez: reações e animações ficam ocultas até o fim"
+  "focusTurn": "É a sua vez: reações e animações ficam ocultas até o fim",
+  "assign": "Atribuir…",
+  "assignLine": "Atribuir “{text}” a alguém",
+  "assignHint": "Adicione as pessoas que participaram desta linha: o rosto delas aparece nela, como em “Eu também”."
 }

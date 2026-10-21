@@ -14,6 +14,7 @@
     "kudo_received": "<strong>{actor}</strong> vous a remercié·e dans <strong>{meeting}</strong>",
     "meeting_joined": "<strong>{actor}</strong> vous a ajouté·e à <strong>{meeting}</strong>",
     "absence_delegated": "<strong>{actor}</strong> s'absente : vous animez ses réunions pendant ce temps",
-    "minutes_draft": "Le compte rendu de <strong>{meeting}</strong> attend d'être publié"
+    "minutes_draft": "Le compte rendu de <strong>{meeting}</strong> attend d'être publié",
+    "line_assigned": "<strong>{actor}</strong> vous a associé·e à une ligne dans <strong>{meeting}</strong>"
   }
 }

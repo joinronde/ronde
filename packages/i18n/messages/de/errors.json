@@ -181,5 +181,6 @@
   "slideTooManyItems": "Du hast so viel gepostet, wie eine Folie aufnimmt.",
   "ownSlideItemsOnly": "Du kannst nur entfernen, was du selbst gepostet hast.",
   "slideItemTracked": "Dieser Punkt ist bereits eine Aufgabe.",
-  "minutesPublished": "Dieses Protokoll ist bereits veröffentlicht."
+  "minutesPublished": "Dieses Protokoll ist bereits veröffentlicht.",
+  "assignNotAllowed": "Nur die Moderation oder, bei einem Projekt, die Personen, die daran arbeiten, können jemand anderen einer Zeile zuordnen."
 }

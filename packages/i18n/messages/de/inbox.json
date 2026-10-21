@@ -14,6 +14,7 @@
     "kudo_received": "<strong>{actor}</strong> hat dir in <strong>{meeting}</strong> gedankt",
     "meeting_joined": "<strong>{actor}</strong> hat dich zu <strong>{meeting}</strong> hinzugefügt",
     "absence_delegated": "<strong>{actor}</strong> ist abwesend: Du leitest in der Zeit die Meetings, die diese Person moderiert",
-    "minutes_draft": "Das Protokoll von <strong>{meeting}</strong> wartet auf die Veröffentlichung"
+    "minutes_draft": "Das Protokoll von <strong>{meeting}</strong> wartet auf die Veröffentlichung",
+    "line_assigned": "<strong>{actor}</strong> hat dich in <strong>{meeting}</strong> einer Zeile zugeordnet"
   }
 }

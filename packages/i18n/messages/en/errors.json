@@ -181,5 +181,6 @@
   "slideTooManyItems": "You have posted as much as one slide takes.",
   "ownSlideItemsOnly": "You can only remove what you posted.",
   "slideItemTracked": "This item is already an action.",
-  "minutesPublished": "These minutes are already published."
+  "minutesPublished": "These minutes are already published.",
+  "assignNotAllowed": "Only the hosts, or on a project the people working on it, can put someone else on a line."
 }

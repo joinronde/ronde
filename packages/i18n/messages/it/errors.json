@@ -181,5 +181,6 @@
   "slideTooManyItems": "Hai pubblicato tutto quello che una slide può contenere.",
   "ownSlideItemsOnly": "Puoi togliere solo ciò che hai pubblicato.",
   "slideItemTracked": "Questo punto è già un'azione.",
-  "minutesPublished": "Questo verbale è già pubblicato."
+  "minutesPublished": "Questo verbale è già pubblicato.",
+  "assignNotAllowed": "Solo i conduttori, o in un progetto le persone che ci lavorano, possono associare qualcun altro a una riga."
 }

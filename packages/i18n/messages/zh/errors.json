@@ -181,5 +181,6 @@
   "slideTooManyItems": "你在这张幻灯片上发布的内容已达上限。",
   "ownSlideItemsOnly": "你只能删除自己发布的内容。",
   "slideItemTracked": "这一项已经是行动项。",
-  "minutesPublished": "这份纪要已经发布。"
+  "minutesPublished": "这份纪要已经发布。",
+  "assignNotAllowed": "只有主持人，或在项目中参与该项目的人，才能把其他人加到一条内容上。"
 }

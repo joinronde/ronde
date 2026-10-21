@@ -6,6 +6,7 @@ import type { WorkspaceContext } from "./authz";
 
 export type InboxKind =
   | "action.assigned"
+  | "line.assigned"
   | "session.started"
   | "minutes.published"
   | "minutes.draft"

@@ -181,5 +181,6 @@
   "slideTooManyItems": "Você já publicou o máximo que um slide aceita.",
   "ownSlideItemsOnly": "Você só pode remover o que publicou.",
   "slideItemTracked": "Este ponto já é uma ação.",
-  "minutesPublished": "Esta ata já está publicada."
+  "minutesPublished": "Esta ata já está publicada.",
+  "assignNotAllowed": "Só os anfitriões, ou num projeto as pessoas que trabalham nele, podem associar outra pessoa a uma linha."
 }

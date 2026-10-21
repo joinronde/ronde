@@ -181,5 +181,6 @@
   "slideTooManyItems": "Has publicado todo lo que admite una diapositiva.",
   "ownSlideItemsOnly": "Solo puedes quitar lo que publicaste.",
   "slideItemTracked": "Este punto ya es una acción.",
-  "minutesPublished": "Esta acta ya está publicada."
+  "minutesPublished": "Esta acta ya está publicada.",
+  "assignNotAllowed": "Solo los anfitriones, o en un proyecto las personas que trabajan en él, pueden asociar a otra persona a una línea."
 }

@@ -1,8 +1,10 @@
 import "server-only";
 import { PROJECT_HEALTHS, PROJECTS_BY, type ProjectHealth } from "@ronde/core/types";
+import { plainItem } from "@ronde/core/util";
 import { str } from "@ronde/modules/shared";
 import { z } from "zod";
 import { AccessError, OpError } from "../../errors";
+import { deliver } from "../../inbox";
 import { visibleWhere } from "../../projects";
 import { holdProjectSheet, saveProjectSheet } from "../projects";
 import { defineOp, type OpContext } from "./define";
@@ -12,8 +14,8 @@ import { commentedItem } from "./live";
 
 const health = z.enum(PROJECT_HEALTHS as [ProjectHealth, ...ProjectHealth[]]);
 
-/** The people working on the project keep its sheet; the host can fix it */
-async function mayWriteSheet(db: OpContext["db"], m: OpContext["m"], meetingId: string, projectId: string) {
+/** Whether the viewer works on a project the meeting follows (its lead or a member); throws when it does not follow it */
+async function worksOn(db: OpContext["db"], m: OpContext["m"], meetingId: string, projectId: string) {
   const followed = await db.meetingProject.findFirst({
     where: { meetingId, projectId, project: { archivedAt: null } },
     include: {
@@ -21,8 +23,12 @@ async function mayWriteSheet(db: OpContext["db"], m: OpContext["m"], meetingId: 
     },
   });
   if (!followed) throw new OpError("notFound");
-  const member = followed.project.leadId === m.ws.member.personId || followed.project.members.length > 0;
-  if (!member && !m.can("checkin.write.any")) throw new AccessError(403, "projectMembersOnly");
+  return followed.project.leadId === m.ws.member.personId || followed.project.members.length > 0;
+}
+
+/** The people working on the project keep its sheet; the host can fix it */
+async function mayWriteSheet(db: OpContext["db"], m: OpContext["m"], meetingId: string, projectId: string) {
+  if (!(await worksOn(db, m, meetingId, projectId)) && !m.can("checkin.write.any")) throw new AccessError(403, "projectMembersOnly");
 }
 
 export const projectOps = [
@@ -83,7 +89,8 @@ export const projectOps = [
     permission: "checkin.write.own",
     /**
      * Joins a line someone else wrote (`on`), about a project or their own, or leaves it: the person took part in
-     * it, their face shows on it too. Its author, or the host, may also take someone off it (`personId`).
+     * it, their face shows on it too. With `personId`, someone else is put on it or taken off: by the hosts on any
+     * line, by the people working on the project on its lines; its author may also take someone off.
      */
     input: z.object({
       ownerId: str(50),
@@ -99,16 +106,32 @@ export const projectOps = [
       const personId = o.personId ?? me;
       if (!personId) throw new AccessError(403, "joinParticipantsOnly");
       const item = await commentedItem(db, meetingId, o);
-      if (personId !== me && (o.on || (item.personId !== me && !m.can("checkin.write.any")))) throw new AccessError(403, "ownCheckInOnly");
+      // Someone else: the hosts, or on a project's line the people working on it (a personal line: the hosts only)
+      const others =
+        m.can("checkin.write.any") || (!!o.projectId && !!m.ws.member.personId && (await worksOn(db, m, meetingId, o.projectId)));
+      if (personId !== me && !others && (o.on || item.personId !== me)) throw new AccessError(403, "assignNotAllowed");
       // Its author wrote it: nothing to join
       if (personId === item.personId) return;
       if (!o.on) {
         await db.checkInItemContributor.deleteMany({ where: { itemId: item.id, personId } });
         return;
       }
-      if (!(await db.meetingParticipant.findFirst({ where: { meetingId, personId }, select: { id: true } })))
+      if (!(await db.meetingParticipant.findFirst({ where: { meetingId, personId, role: { not: "observer" } }, select: { id: true } })))
         throw new AccessError(403, "joinParticipantsOnly");
-      await db.checkInItemContributor.createMany({ data: [{ workspaceId, itemId: item.id, personId }], skipDuplicates: true });
+      const { count } = await db.checkInItemContributor.createMany({
+        data: [{ workspaceId, itemId: item.id, personId }],
+        skipDuplicates: true,
+      });
+      // Put on it by someone else: told under the bell, with the line
+      if (count && personId !== me)
+        await deliver(db, workspaceId, {
+          to: [personId],
+          kind: "line.assigned",
+          actorId: m.ws.member.personId,
+          meetingId,
+          data: { text: plainItem(o.itemText).slice(0, 200) },
+          href: `/m/${meetingId}/me`,
+        });
     },
   }),
   defineOp({
