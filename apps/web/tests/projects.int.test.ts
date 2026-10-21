@@ -218,7 +218,9 @@ describe("lines written together", () => {
     await runOp(t.ctx, { op: "item.with", ...own, on: true, personId: mate });
     expect((await loadSnapshot(t.ctx)).contributors).toContainEqual({ ...own, personId: mate });
     // An observer takes no part in it
-    const watcher = await prisma.person.create({ data: { workspaceId: t.workspaceId, email: `watch-${t.meetingId}@x.test`, firstName: "W" } });
+    const watcher = await prisma.person.create({
+      data: { workspaceId: t.workspaceId, email: `watch-${t.meetingId}@x.test`, firstName: "W" },
+    });
     await prisma.meetingParticipant.create({
       data: { workspaceId: t.workspaceId, meetingId: t.meetingId, personId: watcher.id, position: 3, role: "observer" },
     });
