@@ -13,6 +13,7 @@
     "minutes_published": "صدر محضر <strong>{meeting}</strong>",
     "kudo_received": "شكرك <strong>{actor}</strong> في <strong>{meeting}</strong>",
     "meeting_joined": "أضافك <strong>{actor}</strong> إلى <strong>{meeting}</strong>",
-    "absence_delegated": "سيغيب <strong>{actor}</strong>: تدير في هذه الأثناء الاجتماعات التي يستضيفها"
+    "absence_delegated": "سيغيب <strong>{actor}</strong>: تدير في هذه الأثناء الاجتماعات التي يستضيفها",
+    "minutes_draft": "محضر <strong>{meeting}</strong> بانتظار النشر"
   }
 }

@@ -243,6 +243,7 @@ export async function createSample(ctx: WorkspaceContext): Promise<{ id: string 
         startedAt: new Date(startedAt),
         endedAt: new Date(startedAt + durationMs),
         archivedAt: new Date(startedAt + durationMs),
+        minutesPublishedAt: new Date(startedAt + durationMs),
       },
     });
     if (kudos.length) await ctx.db.kudo.createMany({ data: kudos.map((k) => ({ ...k, workspaceId, sessionId })) });

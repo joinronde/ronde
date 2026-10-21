@@ -1,6 +1,6 @@
 "use client";
 
-import { buildMinutes, type MinutesDoc, minutesToMarkdown } from "@ronde/core/minutes";
+import { buildMinutes, type MinutesDoc, minutesToMarkdown, notePlaces } from "@ronde/core/minutes";
 import type { HistoryItem } from "@ronde/core/types";
 import { ago, MOODS, mmssPlain } from "@ronde/core/util";
 import { formatters } from "@ronde/i18n";
@@ -43,6 +43,7 @@ export function HistoryView() {
   const [copyBox, setCopyBox] = useState<string | null>(null);
   const [editing, setEditing] = useState<HistoryItem | null>(null);
   const [suggesting, setSuggesting] = useState<HistoryItem | null>(null);
+  const [noting, setNoting] = useState<HistoryItem | null>(null);
   const [retry, setRetry] = useState(0);
 
   // The search waits for a pause in typing
@@ -126,6 +127,7 @@ export function HistoryView() {
           onToggle={() => setOpen(open === h.date ? "" : h.date)}
           onEdit={s.viewer.isHost ? () => setEditing(h) : undefined}
           onSuggest={s.ai ? () => setSuggesting(h) : undefined}
+          onNotes={() => setNoting(h)}
           onCopy={async () => {
             const md = minutesToMarkdown(docs.get(h.date)!);
             if (await copyText(md)) toast(t("copied"), "ok");
@@ -165,6 +167,7 @@ export function HistoryView() {
       )}
       {editing && <SummaryEditor item={editing} onClose={() => setEditing(null)} />}
       {suggesting && <ActionSuggestions item={suggesting} onClose={() => setSuggesting(null)} />}
+      {noting && <DraftNotes item={noting} onClose={() => setNoting(null)} />}
     </div>
   );
 }
@@ -177,6 +180,7 @@ function HistCard({
   onToggle,
   onEdit,
   onSuggest,
+  onNotes,
   onCopy,
   onPdf,
 }: {
@@ -188,6 +192,8 @@ function HistCard({
   onEdit?: () => void;
   /** The AI assistant suggests follow-up actions from these minutes */
   onSuggest?: () => void;
+  /** The notes of each step, while the minutes are a draft */
+  onNotes: () => void;
   onCopy: () => void;
   onPdf: () => void;
 }) {
@@ -212,6 +218,12 @@ function HistCard({
           </span>
         </span>
         <span className="hchips">
+          {h.draft && (
+            <span className="hchip draft" title={t("draftHint")}>
+              <Icon name="note" size={14} />
+              {t("draft")}
+            </span>
+          )}
           <span className="hchip" title={t("duration")}>
             <Icon name="clock" size={14} />
             {mmssPlain(r.durationMs)}
@@ -252,6 +264,7 @@ function HistCard({
       </button>
       {open && (
         <div className="hbody">
+          {h.draft && <DraftBar h={h} onNotes={onNotes} />}
           <div className="minutes-tools">
             {onEdit && (
               <button type="button" className="btn sm" onClick={onEdit}>
@@ -278,13 +291,110 @@ function HistCard({
             <button type="button" className="btn sm primary" onClick={onPdf} title={t("pdfHint")}>
               PDF
             </button>
-            <WikiTools h={h} />
+            {!h.draft && <WikiTools h={h} />}
           </div>
           <MinutesView doc={doc} id={h.date} query={query} />
           <TranscriptView date={h.date} />
         </div>
       )}
     </div>
+  );
+}
+
+/** Minutes still a draft: only the hosts see them, until one publishes them to the team */
+function DraftBar({ h, onNotes }: { h: HistoryItem; onNotes: () => void }) {
+  const t = useTranslations("history");
+  const { rpc } = useRonde();
+  const [confirm, setConfirm] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const publish = async () => {
+    setBusy(true);
+    if (await rpc({ op: "history.publish", date: h.date }, t("draftPublished"))) setConfirm(false);
+    setBusy(false);
+  };
+  return (
+    <div className="draft-bar" role="note">
+      <div className="draft-bar-text">
+        <strong>{t("draftTitle")}</strong>
+        <span className="hint">{t("draftIntro")}</span>
+      </div>
+      <div className="draft-bar-tools">
+        {confirm ? (
+          <>
+            <span className="publish-ask">{t("draftAsk")}</span>
+            <button type="button" className="btn primary sm" disabled={busy} aria-busy={busy} onClick={() => void publish()}>
+              {t("draftYes")}
+            </button>
+            <button type="button" className="btn sm" onClick={() => setConfirm(false)}>
+              {t("cancel")}
+            </button>
+          </>
+        ) : (
+          <>
+            <button type="button" className="btn sm" onClick={onNotes}>
+              {t("draftNotes")}
+            </button>
+            <button type="button" className="btn primary sm" onClick={() => setConfirm(true)}>
+              {t("draftPublish")}
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/** The notes of each step of a draft, one at a time: the minutes follow once saved */
+function DraftNotes({ item, onClose }: { item: HistoryItem; onClose: () => void }) {
+  const t = useTranslations("history");
+  const locale = useLocale();
+  const fmt = formatters(locale);
+  const { rpc } = useRonde();
+  const places = useMemo(() => notePlaces(item.record, locale), [item.record, locale]);
+  // Saved here as they go: the list marks the steps written without waiting for the history to reload
+  const [notes, setNotes] = useState<Record<string, string>>(item.record.notes);
+  const [key, setKey] = useState(() => places.find(([k]) => notes[k]?.trim())?.[0] ?? places[0]?.[0] ?? "intro");
+  const [text, setText] = useState(notes[key] ?? "");
+  const [busy, setBusy] = useState(false);
+  const dirty = text !== (notes[key] ?? "");
+  const save = async () => {
+    setBusy(true);
+    const ok = await rpc({ op: "history.note", date: item.date, key, text }, t("notesSaved"));
+    if (ok) setNotes((n) => ({ ...n, [key]: text }));
+    setBusy(false);
+    return ok;
+  };
+  const pick = async (next: string) => {
+    // What was typed for the step left is kept
+    if (dirty && !(await save())) return;
+    setKey(next);
+    setText(notes[next] ?? "");
+  };
+  return (
+    <Modal onClose={onClose} labelledBy="draftNotesTitle">
+      <h3 id="draftNotesTitle">{t("notesOf", { date: fmt.dateShort(item.date) })}</h3>
+      <p className="hint">{t("notesHint")}</p>
+      <label className="lbl-s" htmlFor="draftNotesStep">
+        {t("notesStep")}
+      </label>
+      <Select id="draftNotesStep" value={key} onChange={(e) => void pick(e.target.value)}>
+        {places.map(([k, label]) => (
+          <option key={k} value={k}>
+            {notes[k]?.trim() ? `✓ ${label}` : label}
+          </option>
+        ))}
+      </Select>
+      <MdEditor id="draftNotesText" label={t("notesLabel")} className="minutes-area" value={text} onChange={setText} />
+      <div className="controls">
+        <span className="sep" />
+        <button type="button" className="btn" onClick={onClose}>
+          {t("close")}
+        </button>
+        <button type="button" className="btn primary" disabled={busy || !dirty} aria-busy={busy} onClick={() => void save()}>
+          {t("notesSave")}
+        </button>
+      </div>
+    </Modal>
   );
 }
 

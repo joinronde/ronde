@@ -7,7 +7,7 @@ import { archiveSession } from "./session";
 
 // Sessions closed by a job rather than by a host (an async meeting at its planned time, a live one forgotten
 // open): each taken once, archived with its minutes, the screens told. What differs from one job to the other is
-// passed in: which sessions may be taken, what else is done with the archive, and what follows the publication
+// passed in: which sessions may be taken, whether the minutes go out or wait for a host, and what follows
 
 /** A session due, with its meeting and workspace, as the jobs find them */
 export type DueSession = Session & {
@@ -23,8 +23,10 @@ export async function closeDueSessions(
     data?: (session: Session) => Prisma.SessionUpdateManyMutationInput;
     /** Done with the archive, in the same transaction */
     inside?: (db: ScopedTx, meetingId: string) => Promise<void>;
-    /** Once published: notifications, digests, wikis */
-    after: (meetingId: string, session: Session, record: RecordV1) => Promise<void>;
+    /** The minutes stay a draft for the hosts to write and publish (a live session forgotten open) */
+    draft?: boolean;
+    /** Once archived: notifications, digests, wikis */
+    after?: (meetingId: string, session: Session, record: RecordV1) => Promise<void>;
     /** For the logs: "async session", "forgotten session" */
     what: string;
   },
@@ -43,7 +45,7 @@ export async function closeDueSessions(
           if (!count) return null;
           const fresh = await db.session.findFirstOrThrow({ where: { id: session.id } });
           const workspace = { ...meeting.workspace, settings: (meeting.workspace.settings ?? {}) as WorkspaceSettings };
-          const archived = await archiveSession(db, { meeting, ws: { workspace } }, fresh, { summary: null, omit: [] });
+          const archived = await archiveSession(db, { meeting, ws: { workspace } }, fresh, { summary: null, omit: [], draft: o.draft });
           await o.inside?.(db, meeting.id);
           return archived;
         },
@@ -53,7 +55,7 @@ export async function closeDueSessions(
       closed++;
       await publish(meeting.id, { kind: "history" });
       await publish(meeting.id, { kind: "state" });
-      await o.after(meeting.id, session, record);
+      await o.after?.(meeting.id, session, record);
     } catch (e) {
       console.error(`[jobs] closing the ${o.what} ${row.id} failed`, e);
     }

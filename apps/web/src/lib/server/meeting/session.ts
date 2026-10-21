@@ -75,22 +75,25 @@ export type RecordCtx = Pick<MeetingCtx, "meeting"> & { ws: Pick<MeetingCtx["ws"
 
 /**
  * Archives the session: its record and summary, the check-ins presented, the topics handled, the parking lot
- * carried over; then prepares the next session. Returns the record.
+ * carried over; then prepares the next session. Returns the record. With `draft`, the minutes stay with the hosts
+ * until one publishes them (publishMinutes), while the team moves on to the next session right away.
  */
 export async function archiveSession(
   db: ScopedTx,
   m: RecordCtx,
   s: Session,
-  o: { summary: string | null; omit: MinutesPart[] },
+  o: { summary: string | null; omit: MinutesPart[]; draft?: boolean },
 ): Promise<RecordV1> {
   const record = await buildRecord(db, m, s, o.omit);
+  const now = new Date();
   await db.session.update({
     where: { id: s.id },
     data: {
       status: "archived",
       record: record as unknown as Prisma.InputJsonValue,
       summary: o.summary?.trim() || null,
-      archivedAt: new Date(),
+      archivedAt: now,
+      minutesPublishedAt: o.draft ? null : now,
       timerRunning: false,
     },
   });

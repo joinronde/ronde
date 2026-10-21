@@ -34,7 +34,7 @@
     "meeting": {
       "create": "会议场次已准备",
       "reset": "会议场次已重置",
-      "archive": "纪要已发布",
+      "archive": "会议已结束",
       "publish": "摘要已发布",
       "remove": "会议已删除",
       "new": "会议已创建",
@@ -72,7 +72,8 @@
       "test": "已发送通知测试"
     },
     "history": {
-      "summary": "纪要摘要已编辑"
+      "summary": "纪要摘要已编辑",
+      "publish": "纪要已发布"
     },
     "people": {
       "invite": "已邀请人员",

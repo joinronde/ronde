@@ -309,8 +309,8 @@ Owners and admins add a wiki in the General tab: a **Notion** page shared with a
 (created at notion.so/profile/integrations; share the page with it from ••• › Connections), or a
 **Confluence** space, in the cloud (site, space key, the account's email and an API token from
 id.atlassian.com) or on a Data Center or Server (a personal access token). An optional parent page keeps the
-minutes together. Each meeting then picks its wiki under Settings › Integrations: each time a session is archived, its
-minutes become a page named by the session's date and the meeting's name, with a link back to the history.
+minutes together. Each meeting then picks its wiki under Settings › Integrations: each time a session's minutes are
+published, they become a page named by the session's date and the meeting's name, with a link back to the history.
 Editing the summary updates the page; earlier sessions are published from the history, where a failed
 publication says why and can be tried again. Sample meetings publish nothing.
 

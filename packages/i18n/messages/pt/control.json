@@ -54,7 +54,7 @@
   "beepHint": "Um bipe neste navegador quando o tempo acaba",
   "reviewMinutes": "Rever e publicar a ata",
   "endedTitle": "A reunião terminou: um último passo",
-  "endedNext": "Releia a ata e complete suas notas se necessário, depois publique-a: ela chega a todos e a próxima sessão é preparada.",
+  "endedNext": "Revise a ata e complete suas notas se precisar, depois publique-a: ela vai para todos e a próxima reunião é preparada. Sem tempo agora? Encerre a reunião e escreva-a depois pelo histórico.",
   "pendingRequests": "{count, plural, one {# mão levantada ou pergunta pendente} other {# mãos levantadas ou perguntas pendentes}}",
   "panes": {
     "run": "Pauta",
@@ -241,7 +241,12 @@
     "archiveYes": "Sim, publicar",
     "archive": "Publicar a ata",
     "summaryHint": "Opcional: algumas linhas exibidas no topo da ata. Ainda podem ser editadas pelo histórico.",
-    "summaryPlaceholder": "Em poucas linhas: o que lembrar desta reunião (opcional)"
+    "summaryPlaceholder": "Em poucas linhas: o que lembrar desta reunião (opcional)",
+    "draft": "Encerrar, escrever depois",
+    "draftHint": "A equipe já pode preparar a próxima reunião. A ata espera por você como rascunho no histórico.",
+    "draftAsk": "Encerrar a reunião e esvaziar os check-ins dos presentes? A ata vai esperar por você como rascunho no histórico.",
+    "draftYes": "Sim, encerrar",
+    "drafted": "Reunião encerrada, a próxima está pronta. Complete a ata pelo histórico e depois publique-a."
   },
   "studio": {
     "back": "Voltar à sala de controle",

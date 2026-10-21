@@ -50,5 +50,20 @@
   "aiPickOwner": "Wer übernimmt das?",
   "aiAdd": "Aufgabe hinzufügen",
   "aiAddedShort": "Hinzugefügt",
-  "aiAdded": "Aufgabe hinzugefügt."
+  "aiAdded": "Aufgabe hinzugefügt.",
+  "draft": "Entwurf",
+  "draftHint": "Protokoll noch nicht veröffentlicht: nur die Moderation sieht es",
+  "draftTitle": "Protokoll noch nicht veröffentlicht",
+  "draftIntro": "Nur die Moderation sieht es. Vervollständige die Zusammenfassung und die Notizen jedes Schritts und veröffentliche es dann für das Team.",
+  "draftNotes": "Notizen der Schritte",
+  "draftPublish": "Protokoll veröffentlichen",
+  "draftAsk": "Das Protokoll jetzt an das Team senden?",
+  "draftYes": "Ja, veröffentlichen",
+  "draftPublished": "Protokoll veröffentlicht, das Team ist informiert.",
+  "notesOf": "Notizen des Meetings vom {date}",
+  "notesHint": "Das Protokoll wird aus diesen Notizen neu erstellt. Zeilen, die mit „Entscheidung:“ beginnen, erscheinen bei den Entscheidungen.",
+  "notesStep": "Schritt",
+  "notesLabel": "Notizen dieses Schritts",
+  "notesSave": "Speichern",
+  "notesSaved": "Notizen gespeichert"
 }

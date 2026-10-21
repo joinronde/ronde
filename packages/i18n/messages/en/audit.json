@@ -34,7 +34,7 @@
     "meeting": {
       "create": "Session prepared",
       "reset": "Session reset",
-      "archive": "Minutes published",
+      "archive": "Meeting ended",
       "publish": "Digest published",
       "remove": "Meeting deleted",
       "new": "Meeting created",
@@ -72,7 +72,8 @@
       "test": "Notification test sent"
     },
     "history": {
-      "summary": "Minutes summary edited"
+      "summary": "Minutes summary edited",
+      "publish": "Minutes published"
     },
     "people": {
       "invite": "Person invited",

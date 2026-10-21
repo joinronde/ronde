@@ -180,5 +180,6 @@
   "slideClosed": "La sesión ha terminado: ya no se puede añadir nada a sus diapositivas.",
   "slideTooManyItems": "Has publicado todo lo que admite una diapositiva.",
   "ownSlideItemsOnly": "Solo puedes quitar lo que publicaste.",
-  "slideItemTracked": "Este punto ya es una acción."
+  "slideItemTracked": "Este punto ya es una acción.",
+  "minutesPublished": "Esta acta ya está publicada."
 }

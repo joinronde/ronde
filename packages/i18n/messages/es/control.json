@@ -54,7 +54,7 @@
   "beepHint": "Un pitido en este navegador cuando se acaba el tiempo",
   "reviewMinutes": "Revisar y publicar el acta",
   "endedTitle": "La reunión ha terminado: un último paso",
-  "endedNext": "Relee el acta y completa tus notas si hace falta, luego publícala: llega a todos y la próxima sesión se prepara.",
+  "endedNext": "Revisa el acta y completa tus notas si hace falta, luego publícala: llega a todos y se prepara la próxima reunión. ¿Sin tiempo ahora? Termina la reunión y redáctala más tarde desde el historial.",
   "pendingRequests": "{count, plural, one {# mano levantada o pregunta pendiente} other {# manos levantadas o preguntas pendientes}}",
   "panes": {
     "run": "Orden del día",
@@ -241,7 +241,12 @@
     "archiveYes": "Sí, publicar",
     "archive": "Publicar el acta",
     "summaryHint": "Opcional: unas líneas que aparecen al principio de las actas. Se pueden editar después desde el historial.",
-    "summaryPlaceholder": "En unas líneas: qué recordar de esta reunión (opcional)"
+    "summaryPlaceholder": "En unas líneas: qué recordar de esta reunión (opcional)",
+    "draft": "Terminar, redactar después",
+    "draftHint": "El equipo puede preparar la próxima reunión ya. El acta te espera como borrador en el historial.",
+    "draftAsk": "¿Terminar la reunión y vaciar los check-ins de los presentes? El acta te esperará como borrador en el historial.",
+    "draftYes": "Sí, terminar",
+    "drafted": "Reunión terminada, la siguiente está lista. Completa el acta desde el historial y luego publícala."
   },
   "studio": {
     "back": "Volver a la sala de control",
