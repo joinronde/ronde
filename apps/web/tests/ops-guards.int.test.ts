@@ -664,10 +664,10 @@ describe("module gates", () => {
     // Someone whose membership was lost meanwhile
     const left = as(f, (await person(f, "Left")).id, "participant");
     await expect(runOp(left, { op: "item.with", ...line, on: true })).rejects.toMatchObject({ status: 403, key: "joinParticipantsOnly" });
-    // Nobody adds someone else
+    // A participant adds nobody else (the hosts do, and on a project those working on it)
     await expect(runOp(ana, { op: "item.with", ...line, on: true, personId: brunoId })).rejects.toMatchObject({
       status: 403,
-      key: "ownCheckInOnly",
+      key: "assignNotAllowed",
     });
 
     await runOp(bruno, { op: "item.with", ...line, on: true });
@@ -678,7 +678,7 @@ describe("module gates", () => {
     await join(f, carla.viewer.personId);
     await expect(runOp(carla, { op: "item.with", ...line, on: false, personId: brunoId })).rejects.toMatchObject({
       status: 403,
-      key: "ownCheckInOnly",
+      key: "assignNotAllowed",
     });
     // Its author does, and so does the host
     await runOp(ana, { op: "item.with", ...line, on: false, personId: brunoId });

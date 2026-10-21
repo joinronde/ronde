@@ -167,7 +167,7 @@ describe("lines written together", () => {
     expect(snap.blockData.projects?.list[0]?.authorIds).toEqual(expect.arrayContaining([t.memberId, mate]));
     // Nobody joins someone else in their name
     await expect(runOp(them, { op: "item.with", ...line, on: true, personId: t.memberId })).rejects.toMatchObject({
-      key: "ownCheckInOnly",
+      key: "assignNotAllowed",
     });
     // The line reworded in place keeps them; moved elsewhere or removed, it does not
     await runOp(asParticipant(t, t.memberId), {
@@ -195,6 +195,36 @@ describe("lines written together", () => {
       byProject: { [t.projectId]: { ...empty, done: ["Export to CSV"] } },
     });
     expect((await loadSnapshot(t.ctx)).contributors).toEqual([]);
+  });
+
+  it("let the hosts put anyone on a line, and the people working on the project put others on its lines", async () => {
+    const { t, mate, them, line } = await pair();
+    const lead = asParticipant(t, t.memberId);
+    // The project's lead (its author here) puts a colleague on it; the colleague is told under the bell
+    await runOp(lead, { op: "item.with", ...line, on: true, personId: mate });
+    expect((await loadSnapshot(t.ctx)).contributors).toEqual([{ ...line, personId: mate }]);
+    expect(await prisma.inboxItem.findFirst({ where: { personId: mate, kind: "line.assigned" } })).toMatchObject({
+      actorId: t.memberId,
+      data: { text: "Login page" },
+    });
+    // Someone not working on the project puts nobody on it, nor takes anyone off
+    await expect(runOp(them, { op: "item.with", ...line, itemText: "Export", on: true, personId: t.hostPersonId })).rejects.toMatchObject({
+      key: "assignNotAllowed",
+    });
+    // A line of one's own round: the hosts only
+    await runOp(lead, { op: "checkIn.save", memberId: t.memberId, ...empty, done: ["Reviewed the release"] });
+    const own = { ownerId: t.memberId, section: "done", itemText: "Reviewed the release", projectId: null };
+    await expect(runOp(lead, { op: "item.with", ...own, on: true, personId: mate })).rejects.toMatchObject({ key: "assignNotAllowed" });
+    await runOp(t.ctx, { op: "item.with", ...own, on: true, personId: mate });
+    expect((await loadSnapshot(t.ctx)).contributors).toContainEqual({ ...own, personId: mate });
+    // An observer takes no part in it
+    const watcher = await prisma.person.create({ data: { workspaceId: t.workspaceId, email: `watch-${t.meetingId}@x.test`, firstName: "W" } });
+    await prisma.meetingParticipant.create({
+      data: { workspaceId: t.workspaceId, meetingId: t.meetingId, personId: watcher.id, position: 3, role: "observer" },
+    });
+    await expect(runOp(t.ctx, { op: "item.with", ...own, on: true, personId: watcher.id })).rejects.toMatchObject({
+      key: "joinParticipantsOnly",
+    });
   });
 
   it("let them leave, and let the author take someone off", async () => {

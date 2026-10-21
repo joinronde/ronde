@@ -13,6 +13,7 @@
     "minutes_published": "Протокол встречи <strong>{meeting}</strong> готов",
     "kudo_received": "<strong>{actor}</strong> поблагодарил(а) вас во встрече <strong>{meeting}</strong>",
     "meeting_joined": "<strong>{actor}</strong> добавил(а) вас во встречу <strong>{meeting}</strong>",
-    "absence_delegated": "<strong>{actor}</strong> будет отсутствовать: в это время вы ведёте встречи, которые ведёт этот человек"
+    "absence_delegated": "<strong>{actor}</strong> будет отсутствовать: в это время вы ведёте встречи, которые ведёт этот человек",
+    "line_assigned": "<strong>{actor}</strong> добавил(а) вас к пункту во встрече <strong>{meeting}</strong>"
   }
 }

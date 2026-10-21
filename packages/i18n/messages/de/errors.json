@@ -180,5 +180,6 @@
   "slideClosed": "Die Sitzung ist vorbei: Auf ihren Folien kann nichts mehr ergänzt werden.",
   "slideTooManyItems": "Du hast so viel gepostet, wie eine Folie aufnimmt.",
   "ownSlideItemsOnly": "Du kannst nur entfernen, was du selbst gepostet hast.",
-  "slideItemTracked": "Dieser Punkt ist bereits eine Aufgabe."
+  "slideItemTracked": "Dieser Punkt ist bereits eine Aufgabe.",
+  "assignNotAllowed": "Nur die Moderation oder, bei einem Projekt, die Personen, die daran arbeiten, können jemand anderen einer Zeile zuordnen."
 }

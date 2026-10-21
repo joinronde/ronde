@@ -180,5 +180,6 @@
   "slideClosed": "La session est terminée : plus rien ne peut être ajouté à ses slides.",
   "slideTooManyItems": "Vous avez atteint le maximum pour cette slide.",
   "ownSlideItemsOnly": "Vous ne pouvez retirer que ce que vous avez ajouté.",
-  "slideItemTracked": "Ce point est déjà une action."
+  "slideItemTracked": "Ce point est déjà une action.",
+  "assignNotAllowed": "Seuls les régisseurs, ou sur un projet les personnes qui y travaillent, peuvent associer quelqu'un d'autre à une ligne."
 }

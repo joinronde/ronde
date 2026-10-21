@@ -208,5 +208,8 @@
   "focus": "Concentration",
   "focusOn": "Concentration : masquer les réactions et animations sur cet écran",
   "focusOff": "Réafficher les réactions et animations (toujours masquées pendant votre tour)",
-  "focusTurn": "C'est votre tour : réactions et animations sont masquées jusqu'à la fin"
+  "focusTurn": "C'est votre tour : réactions et animations sont masquées jusqu'à la fin",
+  "assign": "Attribuer…",
+  "assignLine": "Attribuer « {text} » à quelqu'un",
+  "assignHint": "Ajoutez les personnes qui ont participé à cette ligne : leur visage s'y affiche, comme avec « Moi aussi »."
 }

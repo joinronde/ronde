@@ -208,5 +208,8 @@
   "focus": "Fokus",
   "focusOn": "Fokus: Reaktionen und Animationen auf diesem Bildschirm ausblenden",
   "focusOff": "Reaktionen und Animationen wieder zeigen (während deines Beitrags bleiben sie aus)",
-  "focusTurn": "Du bist dran: Reaktionen und Animationen sind bis zum Ende ausgeblendet"
+  "focusTurn": "Du bist dran: Reaktionen und Animationen sind bis zum Ende ausgeblendet",
+  "assign": "Zuordnen…",
+  "assignLine": "Jemanden „{text}“ zuordnen",
+  "assignHint": "Füge die Personen hinzu, die an dieser Zeile mitgewirkt haben: Ihr Gesicht erscheint darauf, wie bei „Ich auch“."
 }

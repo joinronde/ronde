@@ -180,5 +180,6 @@
   "slideClosed": "本次会议已结束：其幻灯片不能再添加内容。",
   "slideTooManyItems": "你在这张幻灯片上发布的内容已达上限。",
   "ownSlideItemsOnly": "你只能删除自己发布的内容。",
-  "slideItemTracked": "这一项已经是行动项。"
+  "slideItemTracked": "这一项已经是行动项。",
+  "assignNotAllowed": "只有主持人，或在项目中参与该项目的人，才能把其他人加到一条内容上。"
 }

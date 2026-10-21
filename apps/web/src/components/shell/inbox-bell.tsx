@@ -11,7 +11,7 @@ import { Icon, type IconName } from "./icons";
 
 // The bell of the top bar: an action given to me, a session starting, minutes published, thanks received
 
-type KindKey = "action_assigned" | "session_started" | "minutes_published" | "kudo_received" | "meeting_joined";
+type KindKey = "action_assigned" | "line_assigned" | "session_started" | "minutes_published" | "kudo_received" | "meeting_joined";
 
 interface Inbox {
   unread: number;
@@ -23,6 +23,7 @@ const POLL_MS = 60_000;
 
 const ICON: Record<InboxView["kind"], IconName> = {
   "action.assigned": "todo",
+  "line.assigned": "people",
   "session.started": "video",
   "minutes.published": "check",
   "kudo.received": "heart",

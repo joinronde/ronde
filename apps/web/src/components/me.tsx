@@ -55,6 +55,7 @@ import { FreeText, ItemText, ListEditor } from "./check-in-fields";
 import { NoMeeting } from "./common";
 import { DecisionLog } from "./decision-log";
 import { EmptyHero } from "./illustration";
+import { LineAssign } from "./line-assign";
 import { LineReactions } from "./line-reactions";
 import { MotionToggle } from "./motion-toggle";
 import { PokerPanel } from "./poker";
@@ -997,12 +998,13 @@ export function CheckInForm({
                   sec={sec}
                   items={items}
                   onChange={(v) => setItems(sec.k, v)}
-                  // On a project's lines, the people who joined them
-                  aside={
-                    project
-                      ? (item) => <Faces ids={joinedOf(s, { ownerId: memberId, projectId: project.id, section: sec.k, text: item })} />
-                      : undefined
-                  }
+                  // The people who joined each line, and putting someone on it (the hosts; on a project, those working on it)
+                  aside={(item) => (
+                    <>
+                      <Faces ids={joinedOf(s, { ownerId: memberId, projectId: project?.id ?? null, section: sec.k, text: item })} />
+                      <LineAssign ownerId={memberId} projectId={project?.id ?? null} section={sec.k} text={item} />
+                    </>
+                  )}
                 />
               )}
             </div>
@@ -1367,6 +1369,7 @@ function OthersLines({ projectId, sec, memberId, canJoin }: { projectId: string;
                   {mine ? "✓" : "+"} {t("joined")}
                 </button>
               )}
+              {sec.type !== "text" && <LineAssign ownerId={l.id} projectId={projectId} section={sec.k} text={l.text} />}
             </li>
           );
         })}

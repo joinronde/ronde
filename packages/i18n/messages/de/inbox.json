@@ -13,6 +13,7 @@
     "minutes_published": "Das Protokoll von <strong>{meeting}</strong> ist da",
     "kudo_received": "<strong>{actor}</strong> hat dir in <strong>{meeting}</strong> gedankt",
     "meeting_joined": "<strong>{actor}</strong> hat dich zu <strong>{meeting}</strong> hinzugefügt",
-    "absence_delegated": "<strong>{actor}</strong> ist abwesend: Du leitest in der Zeit die Meetings, die diese Person moderiert"
+    "absence_delegated": "<strong>{actor}</strong> ist abwesend: Du leitest in der Zeit die Meetings, die diese Person moderiert",
+    "line_assigned": "<strong>{actor}</strong> hat dich in <strong>{meeting}</strong> einer Zeile zugeordnet"
   }
 }

@@ -180,5 +180,6 @@
   "slideClosed": "La sessione è finita: sulle sue slide non si può più aggiungere nulla.",
   "slideTooManyItems": "Hai pubblicato tutto quello che una slide può contenere.",
   "ownSlideItemsOnly": "Puoi togliere solo ciò che hai pubblicato.",
-  "slideItemTracked": "Questo punto è già un'azione."
+  "slideItemTracked": "Questo punto è già un'azione.",
+  "assignNotAllowed": "Solo i conduttori, o in un progetto le persone che ci lavorano, possono associare qualcun altro a una riga."
 }
