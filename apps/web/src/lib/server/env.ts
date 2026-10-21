@@ -109,6 +109,11 @@ export const env = {
     const raw = Number(process.env.RONDE_AUTO_CLOSE_HOURS ?? 12);
     return Number.isFinite(raw) && raw >= 0 ? raw : 12;
   },
+  /** Days a draft of the minutes may wait before its hosts are reminded of it (0: never) */
+  draftRemindDays: () => {
+    const raw = Number(process.env.RONDE_DRAFT_REMIND_DAYS ?? 2);
+    return Number.isFinite(raw) && raw >= 0 ? raw : 2;
+  },
   /** Fallback when no token is entered in the settings */
   gitlabToken: () => process.env.GITLAB_TOKEN ?? "",
   /** Key of the AI assistant for every workspace of the instance (cloud); a workspace may bring its own */

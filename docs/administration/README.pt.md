@@ -320,7 +320,7 @@ uma integração interna (criada em notion.so/profile/integrations; compartilhe 
 ••• › Conexões), ou um espaço do **Confluence**, na nuvem (site, chave do espaço, e-mail da conta e um token
 de API de id.atlassian.com) ou em um Data Center ou Server (um token de acesso pessoal). Uma página
 principal opcional reúne as atas. Depois cada reunião escolhe o seu wiki em Configurações › Integrações: a
-cada arquivamento, a ata vira uma página com a data da sessão e o nome da reunião, com um link para o
+cada publicação, a ata vira uma página com a data da sessão e o nome da reunião, com um link para o
 histórico. Editar o resumo atualiza a página; as sessões anteriores são publicadas pelo histórico, onde
 uma publicação que falhou explica o motivo e pode ser refeita. Reuniões de exemplo não publicam nada.
 

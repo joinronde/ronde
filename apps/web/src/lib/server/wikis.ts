@@ -164,7 +164,8 @@ export async function setMeetingWiki(m: MeetingCtx, wikiId: string | null): Prom
  */
 export async function publishSession(sessionId: string, { onlyUpdate = false } = {}): Promise<WikiPageView | null> {
   const s = await prisma.session.findFirst({
-    where: { id: sessionId, status: "archived" },
+    // A draft of the minutes goes nowhere until it is published
+    where: { id: sessionId, status: "archived", minutesPublishedAt: { not: null } },
     select: {
       id: true,
       date: true,

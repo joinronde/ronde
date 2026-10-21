@@ -542,6 +542,11 @@ details.dt summary{cursor:pointer;font-size:14.5px;color:var(--ink-3);margin-top
 .hchips{display:flex;flex-wrap:wrap;gap:6px;flex:1}
 .hchip{display:inline-flex;align-items:center;gap:4px;font-size:13.5px;font-variant-numeric:tabular-nums;background:var(--surface-2);color:var(--ink-2);border-radius:99px;padding:2px 10px;white-space:nowrap}
 .hchip.warn{background:var(--warn-soft);color:var(--warn)}
+/* Minutes still written by the hosts */
+.hchip.draft{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.draft-bar{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;margin:0 0 12px;padding:12px 14px;border:1px dashed var(--accent);border-radius:12px;background:var(--accent-soft)}
+.draft-bar-text{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1 1 260px}
+.draft-bar-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .hchev{margin-inline-start:auto;font-size:22px;line-height:1;color:var(--ink-3);transition:transform .2s}
 .hcard.open .hchev{transform:rotate(90deg)}
 .hbody{padding:0 16px 20px;display:grid;grid-template-columns:minmax(0,1fr);gap:10px;border-top:1px solid var(--line)}

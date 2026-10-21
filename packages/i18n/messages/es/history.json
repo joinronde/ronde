@@ -50,5 +50,20 @@
   "aiPickOwner": "¿Quién lo hace?",
   "aiAdd": "Añadir la acción",
   "aiAddedShort": "Añadida",
-  "aiAdded": "Acción añadida."
+  "aiAdded": "Acción añadida.",
+  "draft": "Borrador",
+  "draftHint": "Acta aún no publicada: solo los anfitriones la ven",
+  "draftTitle": "Acta aún no publicada",
+  "draftIntro": "Solo los anfitriones la ven. Completa el resumen y las notas de cada paso y luego publícala para el equipo.",
+  "draftNotes": "Notas de los pasos",
+  "draftPublish": "Publicar el acta",
+  "draftAsk": "¿Enviar el acta al equipo ahora?",
+  "draftYes": "Sí, publicar",
+  "draftPublished": "Acta publicada, el equipo está avisado.",
+  "notesOf": "Notas de la reunión del {date}",
+  "notesHint": "El acta se rehace a partir de estas notas. Las líneas que empiezan por «Decisión:» aparecen entre las decisiones.",
+  "notesStep": "Paso",
+  "notesLabel": "Notas de este paso",
+  "notesSave": "Guardar",
+  "notesSaved": "Notas guardadas"
 }

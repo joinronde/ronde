@@ -9,6 +9,7 @@ import { purgeFeedback } from "./feedback";
 import { checkInbound } from "./inbound";
 import { isCloud, recordSeatPeak } from "./license";
 import { closeAsyncSessions } from "./meeting/async";
+import { remindDrafts } from "./meeting/drafts";
 import { resyncSession } from "./meeting/schedule";
 import { closeStaleSessions } from "./meeting/stale";
 import { deliver } from "./notify/dispatch";
@@ -61,8 +62,10 @@ export const JOBS = [
   }),
   // Async meetings: their sessions close at the planned time, then the digest goes out
   defineJob({ name: "sessions.closeAsync", cron: "*/5 * * * *", policy: "singleton", retryLimit: 0, handler: () => closeAsyncSessions() }),
-  // Live sessions forgotten open (RONDE_AUTO_CLOSE_HOURS, 12 h by default): their minutes are published
+  // Live sessions forgotten open (RONDE_AUTO_CLOSE_HOURS, 12 h by default): archived, their minutes as drafts
   defineJob({ name: "sessions.closeStale", cron: "*/10 * * * *", policy: "singleton", retryLimit: 0, handler: () => closeStaleSessions() }),
+  // Minutes left as drafts (RONDE_DRAFT_REMIND_DAYS, 2 days by default): their hosts are reminded once
+  defineJob({ name: "minutes.remindDrafts", cron: "41 * * * *", policy: "singleton", retryLimit: 0, handler: () => remindDrafts() }),
   // Audit entries sent to the workspace's SIEM, retried a few times
   defineJob<{ workspaceId: string; auditId: string }>({
     name: "audit.stream",

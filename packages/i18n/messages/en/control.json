@@ -54,7 +54,7 @@
   "beepHint": "A beep in this browser when the time runs out",
   "reviewMinutes": "Review and publish the minutes",
   "endedTitle": "The meeting is over: one step left",
-  "endedNext": "Read the minutes over and complete your notes if needed, then publish them: they go to everyone and the next session gets ready.",
+  "endedNext": "Review the minutes and complete your notes if needed, then publish them: they go out to everyone and the next meeting gets ready. No time now? End the meeting and write them later from the history.",
   "pendingRequests": "{count, plural, one {# raised hand or question pending} other {# raised hands or questions pending}}",
   "panes": {
     "run": "Agenda",
@@ -241,7 +241,12 @@
     "archiveYes": "Yes, publish",
     "archive": "Publish the minutes",
     "summaryHint": "Optional: a few lines shown at the top of the minutes. They can still be edited from the history.",
-    "summaryPlaceholder": "In a few lines: what to remember from this meeting (optional)"
+    "summaryPlaceholder": "In a few lines: what to remember from this meeting (optional)",
+    "draft": "End, write later",
+    "draftHint": "The team can prepare the next meeting now. The minutes wait for you as a draft in the history.",
+    "draftAsk": "End the meeting and clear the check-ins of those present? The minutes will wait for you as a draft in the history.",
+    "draftYes": "Yes, end the meeting",
+    "drafted": "Meeting ended, the next one is ready. Finish the minutes from the history, then publish them."
   },
   "studio": {
     "back": "Back to the control room",

@@ -13,6 +13,7 @@
     "minutes_published": "A ata de <strong>{meeting}</strong> saiu",
     "kudo_received": "<strong>{actor}</strong> agradeceu a você em <strong>{meeting}</strong>",
     "meeting_joined": "<strong>{actor}</strong> adicionou você a <strong>{meeting}</strong>",
-    "absence_delegated": "<strong>{actor}</strong> vai se ausentar: você conduz nesse período as reuniões que essa pessoa organiza"
+    "absence_delegated": "<strong>{actor}</strong> vai se ausentar: você conduz nesse período as reuniões que essa pessoa organiza",
+    "minutes_draft": "A ata de <strong>{meeting}</strong> está esperando para ser publicada"
   }
 }

@@ -50,5 +50,20 @@
   "aiPickOwner": "Who does it?",
   "aiAdd": "Add the action",
   "aiAddedShort": "Added",
-  "aiAdded": "Action added."
+  "aiAdded": "Action added.",
+  "draft": "Draft",
+  "draftHint": "Minutes not published yet: only the hosts see them",
+  "draftTitle": "Minutes not published yet",
+  "draftIntro": "Only the hosts see them. Finish the summary and the notes of each step, then publish them to the team.",
+  "draftNotes": "Notes of each step",
+  "draftPublish": "Publish the minutes",
+  "draftAsk": "Send the minutes to the team now?",
+  "draftYes": "Yes, publish",
+  "draftPublished": "Minutes published, the team is notified.",
+  "notesOf": "Notes of the meeting of {date}",
+  "notesHint": "The minutes are rebuilt from these notes. Lines starting with “Decision:” appear among the decisions.",
+  "notesStep": "Step",
+  "notesLabel": "Notes of this step",
+  "notesSave": "Save",
+  "notesSaved": "Notes saved"
 }

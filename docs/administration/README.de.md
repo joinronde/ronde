@@ -326,7 +326,7 @@ Integration geteilt ist (angelegt unter notion.so/profile/integrations; teile di
 ••• › Verbindungen mit ihr), oder einen **Confluence**-Bereich, in der Cloud (Site, Bereichsschlüssel,
 E-Mail des Kontos und ein API-Token von id.atlassian.com) oder auf einem Data Center oder Server (ein
 persönliches Zugriffstoken). Eine optionale übergeordnete Seite hält die Protokolle zusammen. Jedes Meeting
-wählt dann sein Wiki unter Einstellungen › Integrationen: Bei jeder Archivierung wird das Protokoll zu einer
+wählt dann sein Wiki unter Einstellungen › Integrationen: Bei jeder Veröffentlichung wird das Protokoll zu einer
 Seite mit dem Datum der Sitzung und dem Namen des Meetings, mit einem Link zum Verlauf. Eine bearbeitete
 Zusammenfassung aktualisiert die Seite; frühere Sitzungen werden aus dem Verlauf veröffentlicht, wo eine
 fehlgeschlagene Veröffentlichung ihren Grund nennt und wiederholt werden kann. Beispiel-Meetings

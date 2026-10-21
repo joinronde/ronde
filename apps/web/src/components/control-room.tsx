@@ -30,6 +30,7 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  Clock,
   FileText,
   Flag,
   FolderKanban,
@@ -1959,7 +1960,8 @@ function PaneMinutes({ draft: saved, setDraft: setSaved }: { draft: MinutesDraft
   const { s, rpc, toast, api, mod, agenda } = useRonde();
   // Only what the meeting's modules can bring: a part of a module turned off has nothing to choose
   const parts = minutesPartsOf(mod);
-  const [confirm, setConfirm] = useState(false);
+  // Publishing now, or closing the session and writing the minutes later from the history
+  const [confirm, setConfirm] = useState<"publish" | "draft" | null>(null);
   const [preview, setPreview] = useState(false);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -1996,31 +1998,44 @@ function PaneMinutes({ draft: saved, setDraft: setSaved }: { draft: MinutesDraft
   const userOnly = parts.every((p) => omit.includes(p));
   const kept = parts.filter((p) => !omit.includes(p)).length;
 
-  const publish = async () => {
+  const publish = async (draft: boolean) => {
     setBusy(true);
-    const ok = await rpc({ op: "meeting.archive", summary: summary.trim() || null, omit }, t("minutesPane.archived"));
-    if (ok) track("session_archived");
+    const ok = await rpc(
+      { op: "meeting.archive", summary: summary.trim() || null, omit, draft },
+      t(draft ? "minutesPane.drafted" : "minutesPane.archived"),
+    );
+    if (ok) track("session_archived", { minutes: draft ? "later" : "now" });
     setBusy(false);
     if (ok) {
-      setConfirm(false);
+      setConfirm(null);
       setPreview(false);
       setSaved(null);
     }
   };
   const publishControls = confirm ? (
     <span className="publish-confirm">
-      <span className="publish-ask">{t("minutesPane.archiveAsk")}</span>
-      <button type="button" className="btn primary" disabled={busy} aria-busy={busy} onClick={() => void publish()}>
-        <Send size={15} strokeWidth={2.2} aria-hidden="true" className="flip-rtl" /> {t("minutesPane.archiveYes")}
+      <span className="publish-ask">{t(confirm === "draft" ? "minutesPane.draftAsk" : "minutesPane.archiveAsk")}</span>
+      <button type="button" className="btn primary" disabled={busy} aria-busy={busy} onClick={() => void publish(confirm === "draft")}>
+        {confirm === "draft" ? (
+          <Clock size={15} strokeWidth={2.2} aria-hidden="true" />
+        ) : (
+          <Send size={15} strokeWidth={2.2} aria-hidden="true" className="flip-rtl" />
+        )}{" "}
+        {t(confirm === "draft" ? "minutesPane.draftYes" : "minutesPane.archiveYes")}
       </button>
-      <button type="button" className="btn" onClick={() => setConfirm(false)}>
+      <button type="button" className="btn" onClick={() => setConfirm(null)}>
         {t("cancel")}
       </button>
     </span>
   ) : (
-    <button type="button" className="btn primary" onClick={() => setConfirm(true)}>
-      <Send size={15} strokeWidth={2.2} aria-hidden="true" className="flip-rtl" /> {t("minutesPane.archive")}
-    </button>
+    <>
+      <button type="button" className="btn" onClick={() => setConfirm("draft")} title={t("minutesPane.draftHint")}>
+        <Clock size={15} strokeWidth={2.2} aria-hidden="true" /> {t("minutesPane.draft")}
+      </button>
+      <button type="button" className="btn primary" onClick={() => setConfirm("publish")}>
+        <Send size={15} strokeWidth={2.2} aria-hidden="true" className="flip-rtl" /> {t("minutesPane.archive")}
+      </button>
+    </>
   );
 
   // What the minutes keep of the team's inputs: in the pane, and in the studio's head bar

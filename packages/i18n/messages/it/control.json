@@ -54,7 +54,7 @@
   "beepHint": "Un bip in questo browser quando il tempo è scaduto",
   "reviewMinutes": "Rileggi e pubblica il verbale",
   "endedTitle": "La riunione è finita: un ultimo passo",
-  "endedNext": "Rileggi il verbale e completa le tue note se serve, poi pubblicalo: arriva a tutti e la prossima sessione si prepara.",
+  "endedNext": "Rileggi il verbale e completa le note se serve, poi pubblicalo: arriva a tutti e si prepara la prossima riunione. Non hai tempo ora? Termina la riunione e scrivilo più tardi dalla cronologia.",
   "pendingRequests": "{count, plural, one {# mano alzata o domanda in attesa} other {# mani alzate o domande in attesa}}",
   "panes": {
     "run": "Ordine del giorno",
@@ -241,7 +241,12 @@
     "archiveYes": "Sì, pubblica",
     "archive": "Pubblica il verbale",
     "summaryHint": "Facoltativo: qualche riga in cima al verbale. Si può ancora modificare dalla cronologia.",
-    "summaryPlaceholder": "In poche righe: cosa ricordare di questa riunione (facoltativo)"
+    "summaryPlaceholder": "In poche righe: cosa ricordare di questa riunione (facoltativo)",
+    "draft": "Termina, scrivi dopo",
+    "draftHint": "Il team può preparare subito la prossima riunione. Il verbale ti aspetta come bozza nella cronologia.",
+    "draftAsk": "Terminare la riunione e svuotare i check-in dei presenti? Il verbale ti aspetterà come bozza nella cronologia.",
+    "draftYes": "Sì, termina",
+    "drafted": "Riunione terminata, la prossima è pronta. Completa il verbale dalla cronologia, poi pubblicalo."
   },
   "studio": {
     "back": "Torna alla regia",

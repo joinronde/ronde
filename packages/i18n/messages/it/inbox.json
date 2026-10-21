@@ -13,6 +13,7 @@
     "minutes_published": "Il verbale di <strong>{meeting}</strong> è disponibile",
     "kudo_received": "<strong>{actor}</strong> ti ha ringraziato in <strong>{meeting}</strong>",
     "meeting_joined": "<strong>{actor}</strong> ti ha aggiunto a <strong>{meeting}</strong>",
-    "absence_delegated": "<strong>{actor}</strong> sarà assente: nel frattempo conduci tu le riunioni che organizza"
+    "absence_delegated": "<strong>{actor}</strong> sarà assente: nel frattempo conduci tu le riunioni che organizza",
+    "minutes_draft": "Il verbale di <strong>{meeting}</strong> aspetta di essere pubblicato"
   }
 }

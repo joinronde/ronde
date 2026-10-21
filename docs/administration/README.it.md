@@ -322,7 +322,7 @@ un'integrazione interna (creata su notion.so/profile/integrations; condividi la 
 ••• › Connessioni), oppure uno spazio **Confluence**, nel cloud (sito, chiave dello spazio, email
 dell'account e un token API di id.atlassian.com) o su un Data Center o Server (un token di accesso
 personale). Una pagina principale facoltativa raccoglie i verbali. Poi ogni riunione sceglie il suo wiki in
-Impostazioni › Integrazioni: a ogni archiviazione, il verbale diventa una pagina con la data della sessione
+Impostazioni › Integrazioni: a ogni pubblicazione, il verbale diventa una pagina con la data della sessione
 e il nome della riunione, con un link alla cronologia. Modificare il riepilogo aggiorna la pagina; le
 sessioni precedenti si pubblicano dalla cronologia, dove una pubblicazione non riuscita spiega il motivo e
 può essere ripetuta. Le riunioni di esempio non pubblicano nulla.

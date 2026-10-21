@@ -12,7 +12,8 @@ const fold = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,
 export async function decisionLog(db: ScopedClient, meetingId: string, locale: Locale, query = ""): Promise<DecisionDTO[]> {
   const q = fold(query.trim());
   const rows = await db.session.findMany({
-    where: { meetingId, status: "archived" },
+    // Those of the minutes published: a draft's notes are still being written
+    where: { meetingId, status: "archived", minutesPublishedAt: { not: null } },
     orderBy: { date: "desc" },
     // A few years of weekly sessions at most
     take: 520,

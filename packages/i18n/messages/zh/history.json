@@ -50,5 +50,20 @@
   "aiPickOwner": "由谁负责？",
   "aiAdd": "添加行动项",
   "aiAddedShort": "已添加",
-  "aiAdded": "行动项已添加。"
+  "aiAdded": "行动项已添加。",
+  "draft": "草稿",
+  "draftHint": "纪要尚未发布：只有主持人能看到",
+  "draftTitle": "纪要尚未发布",
+  "draftIntro": "只有主持人能看到。补充摘要和每个环节的笔记，然后发布给团队。",
+  "draftNotes": "各环节笔记",
+  "draftPublish": "发布纪要",
+  "draftAsk": "现在把纪要发送给团队吗？",
+  "draftYes": "是，发布",
+  "draftPublished": "纪要已发布，团队已收到通知。",
+  "notesOf": "{date} 会议的笔记",
+  "notesHint": "纪要会根据这些笔记重新生成。以“决定：”开头的行会列入决定。",
+  "notesStep": "环节",
+  "notesLabel": "本环节笔记",
+  "notesSave": "保存",
+  "notesSaved": "笔记已保存"
 }

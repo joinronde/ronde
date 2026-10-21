@@ -54,7 +54,7 @@
   "beepHint": "Ein Piepton in diesem Browser, wenn die Zeit abläuft",
   "reviewMinutes": "Protokoll prüfen und veröffentlichen",
   "endedTitle": "Das Meeting ist vorbei: ein letzter Schritt",
-  "endedNext": "Lies das Protokoll, ergänze bei Bedarf deine Notizen und veröffentliche es: Es geht an alle, und die nächste Sitzung wird vorbereitet.",
+  "endedNext": "Lies das Protokoll und ergänze bei Bedarf deine Notizen, dann veröffentliche es: Es geht an alle und das nächste Meeting wird vorbereitet. Gerade keine Zeit? Beende das Meeting und schreib es später im Verlauf.",
   "pendingRequests": "{count, plural, one {# Meldung oder Frage offen} other {# Meldungen oder Fragen offen}}",
   "panes": {
     "run": "Tagesordnung",
@@ -241,7 +241,12 @@
     "archiveYes": "Ja, veröffentlichen",
     "archive": "Protokoll veröffentlichen",
     "summaryHint": "Optional: ein paar Zeilen oben im Protokoll. Sie lassen sich später im Verlauf bearbeiten.",
-    "summaryPlaceholder": "In ein paar Zeilen: was von diesem Meeting bleiben soll (optional)"
+    "summaryPlaceholder": "In ein paar Zeilen: was von diesem Meeting bleiben soll (optional)",
+    "draft": "Beenden, später schreiben",
+    "draftHint": "Das Team kann das nächste Meeting sofort vorbereiten. Das Protokoll wartet als Entwurf im Verlauf auf dich.",
+    "draftAsk": "Meeting beenden und die Check-ins der Anwesenden leeren? Das Protokoll wartet als Entwurf im Verlauf auf dich.",
+    "draftYes": "Ja, beenden",
+    "drafted": "Meeting beendet, das nächste ist bereit. Vervollständige das Protokoll im Verlauf und veröffentliche es dann."
   },
   "studio": {
     "back": "Zurück zur Regie",

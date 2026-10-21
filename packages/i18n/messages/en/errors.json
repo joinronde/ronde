@@ -180,5 +180,6 @@
   "slideClosed": "The session is over: nothing more can be posted on its slides.",
   "slideTooManyItems": "You have posted as much as one slide takes.",
   "ownSlideItemsOnly": "You can only remove what you posted.",
-  "slideItemTracked": "This item is already an action."
+  "slideItemTracked": "This item is already an action.",
+  "minutesPublished": "These minutes are already published."
 }

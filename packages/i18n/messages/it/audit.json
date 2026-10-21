@@ -34,7 +34,7 @@
     "meeting": {
       "create": "Sessione preparata",
       "reset": "Sessione azzerata",
-      "archive": "Verbale pubblicato",
+      "archive": "Riunione terminata",
       "publish": "Riepilogo pubblicato",
       "remove": "Riunione eliminata",
       "new": "Riunione creata",
@@ -72,7 +72,8 @@
       "test": "Prova di notifica inviata"
     },
     "history": {
-      "summary": "Riepilogo del verbale modificato"
+      "summary": "Riepilogo del verbale modificato",
+      "publish": "Verbale pubblicato"
     },
     "people": {
       "invite": "Persona invitata",

@@ -13,7 +13,8 @@ const PAGE = 20;
 const fold = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 
 // Archived sessions of the meeting, newest first, a page at a time (?before=<date>). With ?q=, the sessions
-// whose minutes (in ?locale=, otherwise the meeting's language) or summary contain the words.
+// whose minutes (in ?locale=, otherwise the meeting's language) or summary contain the words. Drafts of the
+// minutes are shown to those who may edit them only.
 export const GET = meetingRoute("history.read", async (ctx, req) => {
   const params = new URL(req.url).searchParams;
   const before = params.get("before");
@@ -21,11 +22,16 @@ export const GET = meetingRoute("history.read", async (ctx, req) => {
   const asked = params.get("locale");
   const locale = isLocale(asked) ? asked : resolveLocale(ctx.meeting.locale, ctx.ws.workspace.locale);
   const rows = await ctx.ws.db.session.findMany({
-    where: { meetingId: ctx.meeting.id, status: "archived", ...(before ? { date: { lt: before } } : {}) },
+    where: {
+      meetingId: ctx.meeting.id,
+      status: "archived",
+      ...(ctx.can("minutes.edit") ? {} : { minutesPublishedAt: { not: null } }),
+      ...(before ? { date: { lt: before } } : {}),
+    },
     orderBy: { date: "desc" },
     // A search reads every session (a few years of weekly sessions at most)
     take: q ? 520 : PAGE + 1,
-    select: { id: true, date: true, record: true, summary: true, archivedAt: true },
+    select: { id: true, date: true, record: true, summary: true, archivedAt: true, minutesPublishedAt: true },
   });
   // Where each session's minutes went in the meeting's wiki (Team)
   const pages = wikisOn(ctx.ws.workspace)
@@ -45,6 +51,7 @@ export const GET = meetingRoute("history.read", async (ctx, req) => {
       record,
       summary: r.summary,
       archivedAt: r.archivedAt?.getTime() ?? null,
+      ...(r.minutesPublishedAt ? {} : { draft: true }),
       wiki: page ? { url: page.url, error: page.error, publishedAt: page.publishedAt } : null,
     };
     if (q && !fold(minutesToMarkdown(buildMinutes(record, locale, { summary: r.summary }))).includes(q)) continue;
