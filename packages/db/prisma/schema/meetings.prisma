@@ -229,6 +229,10 @@ model Session {
   /// Summary written by the host on top of the generated minutes (Markdown)
   summary          String?
   archivedAt       DateTime?
+  /// When the minutes went out to the team (null on an archived session: a draft the hosts are still writing)
+  minutesPublishedAt DateTime?
+  /// When the hosts were reminded of a draft left unpublished
+  draftRemindedAt  DateTime?
   icebreaker       String?
   /// Item highlighted on the shared screen: { label, text }
   spotlight        Json?

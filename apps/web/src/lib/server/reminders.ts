@@ -1,8 +1,7 @@
 import { followedProjects, sheetWritten, toProjectDTO } from "./meeting/projects";
 import "server-only";
-import path from "node:path";
 import { agendaOf, hasTurns } from "@ronde/core/agenda";
-import { notificationCheckInUrl, REMINDER_LOGO_CID, reminderEmail } from "@ronde/core/notifications";
+import { notificationCheckInUrl, reminderEmail } from "@ronde/core/notifications";
 import { isCheckInReady, reminderDate } from "@ronde/core/util";
 import { prisma, type Session, scoped } from "@ronde/db";
 import { formatters, translator } from "@ronde/i18n";
@@ -10,7 +9,7 @@ import nodemailer from "nodemailer";
 import { emailBrand } from "./branding";
 import { env } from "./env";
 import { inboundAddress, inboundOn, replyMessageId } from "./inbound";
-import { isSampleAddress } from "./mailer";
+import { isSampleAddress, rondeLogo } from "./mailer";
 import { lastPlans, loadCheckIns } from "./meeting/checkins";
 import { personName } from "./meeting/dto";
 import { type NotifiedMeeting, notifiedMeeting } from "./notified-meeting";
@@ -216,17 +215,7 @@ async function sendReminders(
         to: p.person.email,
         ...(messageId ? { messageId, replyTo: inboundAddress()! } : {}),
         ...message,
-        attachments: brand
-          ? []
-          : [
-              {
-                filename: "ronde.png",
-                path: path.join(process.cwd(), "public", "icon.png"),
-                cid: REMINDER_LOGO_CID,
-                contentType: "image/png",
-                contentDisposition: "inline",
-              },
-            ],
+        attachments: brand ? [] : [rondeLogo()],
       });
       sent++;
     } catch (e) {

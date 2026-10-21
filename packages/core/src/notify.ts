@@ -2,7 +2,8 @@
 // Each event gives a structured message, rendered for each platform: plain text, HTML, Markdown, Slack
 // mrkdwn, Teams Adaptive Card, Discord embed.
 
-import { formatters, type Locale, translator } from "@ronde/i18n";
+import { dirOf, formatters, type Locale, translator } from "@ronde/i18n";
+import { type EmailBrand, REMINDER_LOGO_CID } from "./notifications";
 import type { SettingsDTO } from "./types";
 import { fmtMinutes, resolveSections } from "./util";
 
@@ -205,6 +206,67 @@ export function toHtml(m: RichMessage): string {
       return `<p><a href="${esc(b.url)}">${esc(b.label)}</a></p>`;
     })
     .join("");
+}
+
+/**
+ * The whole email of a notification, in the layout of the reminder: logo, card, the first link as a button,
+ * the others under it. A text right before a list is that list's heading.
+ */
+export function toEmailHtml(
+  m: RichMessage,
+  {
+    locale,
+    team,
+    brand = null,
+    logoSrc = `cid:${REMINDER_LOGO_CID}`,
+  }: { locale: Locale; team: string; brand?: EmailBrand | null; logoSrc?: string },
+): string {
+  const t = translator(locale, "notifications");
+  const rtl = dirOf(locale) === "rtl";
+  const dir = rtl ? "rtl" : "ltr";
+  const arrow = rtl ? "←" : "→";
+  const start = rtl ? "right" : "left";
+  const end = rtl ? "left" : "right";
+  const links = m.blocks.filter((b) => b.kind === "link");
+  const body = m.blocks
+    .map((b, i) => {
+      if (b.kind === "title") return `<h1 style="margin:26px 0 16px;font-size:24px;line-height:1.3;color:#1F1A14">${esc(b.text)}</h1>`;
+      if (b.kind === "text") {
+        if (m.blocks[i + 1]?.kind === "list")
+          return `<h2 style="margin:24px 0 8px;font-size:18px;line-height:1.4;color:#1F1A14">${esc(b.text)}</h2>`;
+        return `<p style="margin:0 0 16px">${esc(b.text).replace(/\n/g, "<br>")}</p>`;
+      }
+      if (b.kind === "facts")
+        return `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:0 0 18px;background-color:#FEEEE2;border-radius:10px"><tr><td style="padding:14px 16px">${b.items
+          .map(
+            (x, j) =>
+              `<p style="margin:${j ? "10px" : "0"} 0 0;color:#B23A0B;font-size:12px;font-weight:bold;letter-spacing:1px;text-transform:uppercase">${esc(x.label)}</p><p style="margin:2px 0 0;font-size:16px;font-weight:bold">${esc(x.value)}</p>`,
+          )
+          .join("")}</td></tr></table>`;
+      if (b.kind === "list")
+        return `<ul style="margin:0 0 16px;padding-${start}:22px">${b.items.map((x) => `<li style="margin:6px 0;overflow-wrap:anywhere">${esc(x)}</li>`).join("")}</ul>`;
+      return "";
+    })
+    .join("\n");
+  const [main, ...others] = links;
+  const button = main
+    ? `<table role="presentation" cellspacing="0" cellpadding="0" style="margin:22px 0 14px"><tr><td bgcolor="#B23A0B" style="border-radius:8px"><a href="${esc(main.url)}" style="display:inline-block;padding:12px 22px;border:1px solid #B23A0B;border-radius:8px;background-color:#B23A0B;color:#FFFFFF;font-weight:bold;text-decoration:none">${esc(main.label)} ${arrow}</a></td></tr></table>
+${others.map((l) => `<p style="margin:0 0 10px"><a href="${esc(l.url)}" style="color:#B23A0B;font-weight:bold">${esc(l.label)} ${arrow}</a></p>`).join("")}
+<p style="margin:14px 0 0;font-size:12px;color:#6F665C;overflow-wrap:anywhere">${esc(t("email.fallbackLink"))} <a href="${esc(main.url)}" style="color:#B23A0B">${esc(main.url)}</a></p>`
+    : "";
+  const footer = translator(locale, "notify")("emailFooter", { team });
+  return `<!doctype html>
+<html lang="${locale}" dir="${dir}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(m.summary)}</title></head>
+<body dir="${dir}" style="margin:0;padding:0;background-color:#FAF8F5;color:#1F1A14;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;overflow-wrap:anywhere">
+<div style="display:none;max-height:0;overflow:hidden;mso-hide:all">${esc(m.summary)}</div>
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#FAF8F5"><tr><td align="center" style="padding:20px 12px">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;background-color:#FFFFFF;border:1px solid #E5DFD5;border-top:4px solid #B23A0B;border-radius:14px">
+<tr><td style="padding:24px">
+<table role="presentation" cellspacing="0" cellpadding="0"><tr><td style="padding-${end}:12px">${brand ? `<img src="${esc(brand.logo)}" alt="" height="48" style="display:block;border:0;height:48px;width:auto;max-width:160px">` : `<img src="${esc(logoSrc)}" alt="" width="48" height="48" style="display:block;border:0">`}</td><td><p style="margin:0;font-size:26px;font-weight:bold;letter-spacing:-1px">${esc(brand?.name ?? "Ronde")}</p><p style="margin:0;color:#6F665C;font-size:13px">${esc(team)} · ${esc(t("email.tagline"))}</p></td></tr></table>
+${body}
+${button}
+</td></tr><tr><td style="padding:16px 24px;border-top:1px solid #E5DFD5;border-radius:0 0 13px 13px;background-color:#FAF8F5;color:#6F665C;font-size:12px">${esc(footer)}</td></tr>
+</table></td></tr></table></body></html>`;
 }
 
 /** Markdown for Discord and Mattermost; characters that would format user text are escaped */

@@ -28,6 +28,8 @@ function attacks(t: Fixture): Record<string, Record<string, unknown>> {
     "meeting.publish": {},
     "meeting.archive": { summary: "hijacked", omit: [] },
     "history.summary": { date: "2026-01-05", summary: "hijacked" },
+    "history.publish": { date: "2026-01-05" },
+    "history.note": { date: "2026-01-05", key: "intro", text: "overwritten" },
     "note.set": { key: "intro", text: "overwritten" },
     "icebreaker.set": { question: "Hijacked?" },
     "icebreaker.configure": { bank: ["Hijacked?"] },

@@ -34,7 +34,7 @@
     "meeting": {
       "create": "Sitzung vorbereitet",
       "reset": "Sitzung zurückgesetzt",
-      "archive": "Protokoll veröffentlicht",
+      "archive": "Meeting beendet",
       "publish": "Zusammenfassung veröffentlicht",
       "remove": "Meeting gelöscht",
       "new": "Meeting erstellt",
@@ -72,7 +72,8 @@
       "test": "Testbenachrichtigung gesendet"
     },
     "history": {
-      "summary": "Zusammenfassung des Protokolls bearbeitet"
+      "summary": "Zusammenfassung des Protokolls bearbeitet",
+      "publish": "Protokoll veröffentlicht"
     },
     "people": {
       "invite": "Person eingeladen",

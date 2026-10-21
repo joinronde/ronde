@@ -536,6 +536,8 @@ export interface HistoryItem {
   /** Summary written by the host on top of the generated minutes (Markdown) */
   summary: string | null;
   archivedAt: number | null;
+  /** Minutes still written by the hosts, not yet published to the team (only the hosts see them) */
+  draft?: boolean;
   /** Its page in the meeting's wiki (Team): where, or why the last publication failed */
   wiki?: { url: string; error: string; publishedAt: number } | null;
 }

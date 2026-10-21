@@ -50,5 +50,20 @@
   "aiPickOwner": "Quem faz?",
   "aiAdd": "Adicionar a ação",
   "aiAddedShort": "Adicionada",
-  "aiAdded": "Ação adicionada."
+  "aiAdded": "Ação adicionada.",
+  "draft": "Rascunho",
+  "draftHint": "Ata ainda não publicada: só os anfitriões a veem",
+  "draftTitle": "Ata ainda não publicada",
+  "draftIntro": "Só os anfitriões a veem. Complete o resumo e as notas de cada etapa e depois publique-a para a equipe.",
+  "draftNotes": "Notas das etapas",
+  "draftPublish": "Publicar a ata",
+  "draftAsk": "Enviar a ata para a equipe agora?",
+  "draftYes": "Sim, publicar",
+  "draftPublished": "Ata publicada, a equipe foi avisada.",
+  "notesOf": "Notas da reunião de {date}",
+  "notesHint": "A ata é refeita a partir destas notas. As linhas que começam com “Decisão:” aparecem entre as decisões.",
+  "notesStep": "Etapa",
+  "notesLabel": "Notas desta etapa",
+  "notesSave": "Salvar",
+  "notesSaved": "Notas salvas"
 }

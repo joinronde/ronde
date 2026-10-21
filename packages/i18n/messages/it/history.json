@@ -50,5 +50,20 @@
   "aiPickOwner": "Chi se ne occupa?",
   "aiAdd": "Aggiungi l'azione",
   "aiAddedShort": "Aggiunta",
-  "aiAdded": "Azione aggiunta."
+  "aiAdded": "Azione aggiunta.",
+  "draft": "Bozza",
+  "draftHint": "Verbale non ancora pubblicato: lo vedono solo i conduttori",
+  "draftTitle": "Verbale non ancora pubblicato",
+  "draftIntro": "Lo vedono solo i conduttori. Completa il riepilogo e le note di ogni passaggio, poi pubblicalo per il team.",
+  "draftNotes": "Note dei passaggi",
+  "draftPublish": "Pubblica il verbale",
+  "draftAsk": "Inviare ora il verbale al team?",
+  "draftYes": "Sì, pubblica",
+  "draftPublished": "Verbale pubblicato, il team è avvisato.",
+  "notesOf": "Note della riunione del {date}",
+  "notesHint": "Il verbale viene ricostruito da queste note. Le righe che iniziano con «Decisione:» compaiono tra le decisioni.",
+  "notesStep": "Passaggio",
+  "notesLabel": "Note di questo passaggio",
+  "notesSave": "Salva",
+  "notesSaved": "Note salvate"
 }

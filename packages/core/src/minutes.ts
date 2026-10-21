@@ -134,8 +134,8 @@ const itemOf = (text: string): MinutesItem => {
   return t.done === null ? { text } : { text: t.text, checked: t.done };
 };
 
-/** Decisions noted during a session ("Decision: …" lines of the notes), with where they were taken, in agenda order */
-export function recordDecisions(r: RecordV1, locale: Locale): MinutesItem[] {
+/** Where the host could take notes in a session, in agenda order: [note key, name of the step] */
+export function notePlaces(r: RecordV1, locale: Locale): [string, string][] {
   const t = translator(locale, "minutes");
   const blockName = (b: RecordV1["agenda"][number]) =>
     b.type === "timebox" || b.type === "slide"
@@ -172,7 +172,12 @@ export function recordDecisions(r: RecordV1, locale: Locale): MinutesItem[] {
     ["misc", t("topics")],
     ["qa:misc", t("questionsAbout", { what: t("topics") })],
   ];
-  return places.flatMap(([k, where]) => decisionsOf(r.notes[k]).map((text) => ({ text, context: `(${where})` })));
+  return places;
+}
+
+/** Decisions noted during a session ("Decision: …" lines of the notes), with where they were taken, in agenda order */
+export function recordDecisions(r: RecordV1, locale: Locale): MinutesItem[] {
+  return notePlaces(r, locale).flatMap(([k, where]) => decisionsOf(r.notes[k]).map((text) => ({ text, context: `(${where})` })));
 }
 
 export interface MinutesOptions {

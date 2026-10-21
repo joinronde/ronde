@@ -34,7 +34,7 @@
     "meeting": {
       "create": "Sesión preparada",
       "reset": "Sesión reiniciada",
-      "archive": "Acta publicada",
+      "archive": "Reunión terminada",
       "publish": "Resumen publicado",
       "remove": "Reunión eliminada",
       "new": "Reunión creada",
@@ -72,7 +72,8 @@
       "test": "Prueba de notificación enviada"
     },
     "history": {
-      "summary": "Resumen de las actas editado"
+      "summary": "Resumen de las actas editado",
+      "publish": "Acta publicada"
     },
     "people": {
       "invite": "Persona invitada",

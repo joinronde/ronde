@@ -14,6 +14,7 @@
     "kudo_received": "<strong>{actor}</strong> ने <strong>{meeting}</strong> में आपको धन्यवाद दिया",
     "meeting_joined": "<strong>{actor}</strong> ने आपको <strong>{meeting}</strong> में जोड़ा",
     "absence_delegated": "<strong>{actor}</strong> अनुपस्थित रहेंगे: इस बीच उनकी होस्ट की गई मीटिंग आप चलाएँगे",
+    "minutes_draft": "<strong>{meeting}</strong> का कार्यवृत्त प्रकाशित होने का इंतज़ार कर रहा है",
     "line_assigned": "<strong>{actor}</strong> ने <strong>{meeting}</strong> में आपको एक पंक्ति से जोड़ा"
   }
 }

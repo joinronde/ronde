@@ -34,7 +34,7 @@
     "meeting": {
       "create": "Séance préparée",
       "reset": "Séance réinitialisée",
-      "archive": "Compte rendu publié",
+      "archive": "Réunion terminée",
       "publish": "Récapitulatif publié",
       "remove": "Réunion supprimée",
       "new": "Réunion créée",
@@ -72,7 +72,8 @@
       "test": "Test de notification envoyé"
     },
     "history": {
-      "summary": "Synthèse du compte rendu modifiée"
+      "summary": "Synthèse du compte rendu modifiée",
+      "publish": "Compte rendu publié"
     },
     "people": {
       "invite": "Personne invitée",

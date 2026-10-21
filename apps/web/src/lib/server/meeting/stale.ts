@@ -1,15 +1,13 @@
 import "server-only";
 import { prisma } from "@ronde/db";
 import { env } from "../env";
-import { deliver, meetingPeople } from "../inbox";
-import { minutesPayload, notifyEvent } from "../notify/dispatch";
-import { publishSession } from "../wikis";
 import { closeDueSessions } from "./close-due";
 
 // A live session nobody closed (a host who left the tab open, a meeting that ran over and was forgotten): after a
-// while it closes by itself, its minutes published as the host would have, so the next session can be prepared
+// while it closes by itself so the team can prepare the next session. Its minutes wait as a draft in the history,
+// for the hosts to finish and publish (they are reminded of it: drafts.ts)
 
-/** Job: publishes the minutes of the live sessions started more than the allowed hours ago */
+/** Job: archives the live sessions started more than the allowed hours ago, their minutes as drafts */
 export async function closeStaleSessions(now = new Date(), hours = env.autoCloseHours()): Promise<number> {
   if (!hours) return 0;
   const before = new Date(now.getTime() - hours * 3_600_000);
@@ -24,18 +22,7 @@ export async function closeStaleSessions(now = new Date(), hours = env.autoClose
   return closeDueSessions(due, {
     still: { startedAt: { lte: before } },
     data: (session) => ({ endedAt: session.endedAt ?? now }),
-    inside: async (db, meetingId) => {
-      await deliver(db, due.find((d) => d.meetingId === meetingId)!.workspaceId, {
-        to: await meetingPeople(db, meetingId),
-        kind: "minutes.published",
-        meetingId,
-        href: `/m/${meetingId}/history`,
-      });
-    },
-    after: async (meetingId, session, record) => {
-      await notifyEvent(meetingId, "minutes.published", session.id, minutesPayload(record, session));
-      await publishSession(session.id);
-    },
+    draft: true,
     what: "forgotten session",
   });
 }

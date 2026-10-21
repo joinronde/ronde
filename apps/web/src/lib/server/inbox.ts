@@ -9,6 +9,7 @@ export type InboxKind =
   | "line.assigned"
   | "session.started"
   | "minutes.published"
+  | "minutes.draft"
   | "kudo.received"
   | "meeting.joined"
   | "absence.delegated";

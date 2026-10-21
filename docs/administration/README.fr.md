@@ -328,7 +328,7 @@ avec une intégration interne (créée sur notion.so/profile/integrations ; pa
 ••• › Connexions), ou un espace **Confluence**, dans le cloud (site, clé de l'espace, e-mail du compte et
 jeton d'API créé sur id.atlassian.com) ou sur un Data Center ou un Server (jeton d'accès personnel). Une page
 parente facultative regroupe les comptes rendus. Chaque réunion choisit ensuite son wiki dans Réglages ›
-Intégrations : à chaque archivage, le compte rendu devient une page nommée par la date de la séance et le
+Intégrations : à chaque publication, le compte rendu devient une page nommée par la date de la séance et le
 nom de la réunion, avec un lien vers l'historique. Modifier le résumé met la page à jour ; les séances plus
 anciennes se publient depuis l'historique, où une publication qui a échoué dit pourquoi et peut être
 relancée. Les réunions d'exemple ne publient rien.

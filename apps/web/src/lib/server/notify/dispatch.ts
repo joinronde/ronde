@@ -1,6 +1,7 @@
 import "server-only";
 import { DRIVERS, isPhoneKind, type Outgoing } from "@ronde/connectors";
 import { decisionsOf } from "@ronde/core/minutes";
+import { REMINDER_LOGO_CID } from "@ronde/core/notifications";
 import { type NotifyEvent, type NotifyInput, notifyMessage, type RichMessage, safeUrl } from "@ronde/core/notify";
 import { localDate } from "@ronde/core/schedule";
 import type { MeetingRecord } from "@ronde/core/types";
@@ -10,9 +11,10 @@ import { Prisma, prisma, scoped } from "@ronde/db";
 import { currentJobs } from "@ronde/jobs";
 import { enterprise } from "@/ee-bridge";
 import { awayPeople } from "../absences";
+import { emailBrand } from "../branding";
 import { AppError } from "../errors";
 import { featureOn, loadLicense } from "../license";
-import { sendEmail } from "../mailer";
+import { rondeLogo, sendEmail } from "../mailer";
 import { loadCheckIns } from "../meeting/checkins";
 import { personName } from "../meeting/dto";
 import { type NotifiedMeeting, notifiedMeeting } from "../notified-meeting";
@@ -208,6 +210,8 @@ export async function deliver(deliveryId: string, fetchImpl: typeof fetch = outb
         message,
         data: payload,
         meeting: { id: n.meeting.id, name: n.meeting.name, url: n.appUrl },
+        locale: n.locale,
+        brand: d.connector.kind === "email" ? await emailBrand(n.meeting.workspaceId) : null,
       },
       fetchImpl,
       undefined,
@@ -271,7 +275,11 @@ export async function sendThrough(
       fetch: fetchImpl,
       // Every address is tried; the first failure is reported once the others went
       sendMail: async ({ to, ...mail }) => {
-        const results = await Promise.allSettled(to.map((address) => sendEmail({ to: address, ...mail }).then(() => track?.sent(address))));
+        // Ronde's logo, embedded when the layout shows it (a workspace logo is a link)
+        const logo = mail.html.includes(`cid:${REMINDER_LOGO_CID}`) ? [rondeLogo()] : [];
+        const results = await Promise.allSettled(
+          to.map((address) => sendEmail({ to: address, ...mail, attachments: logo }).then(() => track?.sent(address))),
+        );
         const failed = results.find((r) => r.status === "rejected");
         if (failed) throw failed.reason;
       },

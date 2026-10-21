@@ -323,7 +323,7 @@ con una integración interna (creada en notion.so/profile/integrations; comparte
 ••• › Conexiones), o un espacio de **Confluence**, en la nube (sitio, clave del espacio, correo de la cuenta
 y un token de API de id.atlassian.com) o en un Data Center o Server (un token de acceso personal). Una
 página principal opcional agrupa las actas. Después cada reunión elige su wiki en Ajustes › Integraciones:
-en cada archivado, el acta se convierte en una página con la fecha de la sesión y el nombre de la reunión,
+en cada publicación, el acta se convierte en una página con la fecha de la sesión y el nombre de la reunión,
 con un enlace al historial. Editar el resumen actualiza la página; las sesiones anteriores se publican
 desde el historial, donde una publicación fallida explica por qué y puede reintentarse. Las reuniones de
 ejemplo no publican nada.

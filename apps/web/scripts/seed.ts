@@ -587,6 +587,7 @@ async function main() {
         status: "archived",
         record: record as unknown as Prisma.InputJsonValue,
         archivedAt: new Date(startedAt + total),
+        minutesPublishedAt: new Date(startedAt + total),
         startedAt: new Date(startedAt),
         endedAt: new Date(startedAt + total),
       },

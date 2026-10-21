@@ -50,5 +50,6 @@
   "birthday": {
     "title": "🎂 Joyeux anniversaire {names} !",
     "body": "Toute l'équipe {team} vous souhaite une belle journée."
-  }
+  },
+  "emailFooter": "Vous recevez cet e-mail car « {team} » envoie ses notifications par e-mail. Les régisseurs peuvent les modifier dans les réglages de la réunion."
 }

@@ -54,7 +54,7 @@
   "beepHint": "Un bip dans ce navigateur quand le temps est écoulé",
   "reviewMinutes": "Relire et publier le compte rendu",
   "endedTitle": "La réunion est terminée : une dernière étape",
-  "endedNext": "Relisez le compte rendu et complétez vos notes si besoin, puis publiez-le : il part à chacun et la prochaine séance se prépare.",
+  "endedNext": "Relisez le compte rendu et complétez vos notes si besoin, puis publiez-le : il part à chacun et la prochaine séance se prépare. Pas le temps maintenant ? Terminez la réunion et rédigez-le plus tard depuis l'historique.",
   "pendingRequests": "{count, plural, one {# main levée ou question en attente} other {# mains levées ou questions en attente}}",
   "panes": {
     "run": "Déroulé",
@@ -241,7 +241,12 @@
     "archiveYes": "Oui, publier",
     "archive": "Publier le compte rendu",
     "summaryHint": "Facultatif : quelques lignes affichées en tête du compte rendu. Elles restent modifiables depuis l'historique.",
-    "summaryPlaceholder": "En quelques lignes : ce qu'il faut retenir de cette réunion (facultatif)"
+    "summaryPlaceholder": "En quelques lignes : ce qu'il faut retenir de cette réunion (facultatif)",
+    "draft": "Terminer, rédiger plus tard",
+    "draftHint": "L'équipe peut préparer la prochaine réunion tout de suite. Le compte rendu vous attend en brouillon dans l'historique.",
+    "draftAsk": "Terminer la réunion et vider les fiches des présents ? Le compte rendu vous attendra en brouillon dans l'historique.",
+    "draftYes": "Oui, terminer",
+    "drafted": "Réunion terminée, la suivante est prête. Finissez le compte rendu depuis l'historique, puis publiez-le."
   },
   "studio": {
     "back": "Retour à la régie",

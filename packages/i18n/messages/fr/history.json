@@ -50,5 +50,20 @@
   "aiPickOwner": "Qui s'en charge ?",
   "aiAdd": "Ajouter l'action",
   "aiAddedShort": "Ajoutée",
-  "aiAdded": "Action ajoutée."
+  "aiAdded": "Action ajoutée.",
+  "draft": "Brouillon",
+  "draftHint": "Compte rendu pas encore publié : seuls les régisseurs le voient",
+  "draftTitle": "Compte rendu pas encore publié",
+  "draftIntro": "Seuls les régisseurs le voient. Complétez la synthèse et les notes de chaque étape, puis publiez-le pour l'équipe.",
+  "draftNotes": "Notes des étapes",
+  "draftPublish": "Publier le compte rendu",
+  "draftAsk": "Envoyer le compte rendu à l'équipe maintenant ?",
+  "draftYes": "Oui, publier",
+  "draftPublished": "Compte rendu publié, l'équipe est prévenue.",
+  "notesOf": "Notes de la réunion du {date}",
+  "notesHint": "Le compte rendu est recalculé à partir de ces notes. Les lignes qui commencent par « Décision : » figurent parmi les décisions.",
+  "notesStep": "Étape",
+  "notesLabel": "Notes de cette étape",
+  "notesSave": "Enregistrer",
+  "notesSaved": "Notes enregistrées"
 }

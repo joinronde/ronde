@@ -1,6 +1,6 @@
 import "server-only";
 import { elapsedOf } from "@ronde/core/meeting";
-import { MINUTES_PARTS } from "@ronde/core/record";
+import { MINUTES_PARTS, parseRecord, type RecordV1 } from "@ronde/core/record";
 import { isRealDate, localDate, localTime, zonedInstant } from "@ronde/core/schedule";
 import type { MeetingDTO } from "@ronde/core/types";
 import { Prisma } from "@ronde/db";
@@ -23,6 +23,31 @@ import { defineOp, type OpContext } from "./define";
 const str = (max = 500) => z.string().trim().max(max);
 const isoDate = z.string().refine(isRealDate, "Invalid date");
 const qaKeyOf = (k: string) => `qa:${k}`;
+
+/** The minutes go out to the team: the bell, then the notification rules and the meeting's wiki (Team) */
+async function publishMinutes(
+  { db, after, m, meetingId, workspaceId }: Pick<OpContext, "db" | "after" | "m" | "meetingId" | "workspaceId">,
+  s: { id: string; date: string; time: string },
+  record: RecordV1,
+) {
+  await deliver(db, workspaceId, {
+    to: await meetingPeople(db, meetingId),
+    kind: "minutes.published",
+    actorId: m.ws.member.personId,
+    meetingId,
+    href: `/m/${meetingId}/history`,
+  });
+  after(() => notifyEvent(m.meeting.id, "minutes.published", s.id, minutesPayload(record, s)));
+  after(() => publishSession(s.id));
+}
+
+/** A draft of the minutes, by its session's date: what a host still writes after the session */
+async function draftOf(db: OpContext["db"], meetingId: string, date: string) {
+  const s = await db.session.findFirst({ where: { meetingId, date, status: "archived" } });
+  if (!s) throw new OpError("notFound");
+  if (s.minutesPublishedAt) throw new OpError("minutesPublished");
+  return s;
+}
 
 /** A session starts: the team is told through the notification rules and the bell */
 async function announceStart(
@@ -300,22 +325,58 @@ export const controlOps = [
     permission: "session.run",
     audit: true,
     session: "lock",
-    input: z.object({ summary: z.string().max(50_000).nullable().default(null), omit: z.array(z.enum(MINUTES_PARTS)).default([]) }),
-    run: async ({ db, requireSession, m, emit, after, meetingId, workspaceId }, o) => {
+    input: z.object({
+      summary: z.string().max(50_000).nullable().default(null),
+      omit: z.array(z.enum(MINUTES_PARTS)).default([]),
+      // The team moves on now, the minutes are written later and published from the history
+      draft: z.boolean().default(false),
+    }),
+    run: async (ctx, o) => {
+      const { db, requireSession, m, emit } = ctx;
       const s = requireSession();
       if (s.stepKey !== "end") throw new OpError("endBeforeArchive");
       const record = await archiveSession(db, m, s, o);
-      await deliver(db, workspaceId, {
-        to: await meetingPeople(db, meetingId),
-        kind: "minutes.published",
-        actorId: m.ws.member.personId,
-        meetingId,
-        href: `/m/${meetingId}/history`,
-      });
       emit({ kind: "history" });
-      after(() => notifyEvent(m.meeting.id, "minutes.published", s.id, minutesPayload(record, s)));
-      // Its wiki gets the minutes as a page (Team)
-      after(() => publishSession(s.id));
+      if (!o.draft) await publishMinutes(ctx, s, record);
+    },
+  }),
+  defineOp({
+    name: "history.publish",
+    permission: "minutes.edit",
+    audit: true,
+    input: z.object({ date: isoDate }),
+    run: async (ctx, o) => {
+      const s = await draftOf(ctx.db, ctx.meetingId, o.date);
+      const record = parseRecord(s.record);
+      if (!record) throw new OpError("notFound");
+      // Taken once: two hosts publishing together send it a single time
+      const { count } = await ctx.db.session.updateMany({
+        where: { id: s.id, minutesPublishedAt: null },
+        data: { minutesPublishedAt: new Date() },
+      });
+      if (!count) throw new OpError("minutesPublished");
+      ctx.emit({ kind: "history" });
+      await publishMinutes(ctx, s, record);
+    },
+  }),
+  defineOp({
+    name: "history.note",
+    permission: "minutes.edit",
+    input: z.object({ date: isoDate, key: str(100), text: z.string().max(20_000) }),
+    run: async ({ db, meetingId, workspaceId, emit }, o) => {
+      const s = await draftOf(db, meetingId, o.date);
+      const record = parseRecord(s.record);
+      if (!record) throw new OpError("notFound");
+      // The notes of the step, and the minutes built from them
+      await db.note.upsert({
+        where: { sessionId_key: { sessionId: s.id, key: o.key } },
+        create: { workspaceId, sessionId: s.id, key: o.key, text: o.text },
+        update: { text: o.text },
+      });
+      const notes = { ...record.notes, [o.key]: o.text };
+      if (!o.text.trim()) delete notes[o.key];
+      await db.session.update({ where: { id: s.id }, data: { record: { ...record, notes } as unknown as Prisma.InputJsonValue } });
+      emit({ kind: "history" });
     },
   }),
   defineOp({

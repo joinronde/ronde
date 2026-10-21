@@ -1,10 +1,11 @@
 import { prisma } from "@ronde/db";
 import { beforeAll, describe, expect, it } from "vitest";
+import { remindDrafts } from "@/lib/server/meeting/drafts";
 import { closeStaleSessions } from "@/lib/server/meeting/stale";
 import { type Fixture, meeting, workspace } from "./fixtures";
 
-// A live session forgotten open closes by itself after a while, its minutes published once; one still within the
-// hours allowed stays live, and 0 hours turns the closing off
+// A live session forgotten open closes by itself after a while, once, its minutes kept as a draft for the hosts
+// (reminded of it a few days later); one still within the hours allowed stays live, and 0 hours turns the closing off
 
 let f: Fixture;
 
@@ -24,7 +25,7 @@ describe("forgotten live sessions", () => {
     expect((await prisma.session.findUniqueOrThrow({ where: { id: f.sessionId } })).status).toBe("current");
   });
 
-  it("publish the minutes of a session left open too long, once", async () => {
+  it("archive a session left open too long, once, its minutes as a draft", async () => {
     await startAgo(13);
     const [a, b] = await Promise.all([closeStaleSessions(new Date(), 12), closeStaleSessions(new Date(), 12)]);
     expect(a + b).toBe(1);
@@ -32,7 +33,22 @@ describe("forgotten live sessions", () => {
     expect(s.status).toBe("archived");
     expect(s.record).not.toBeNull();
     expect(s.endedAt).not.toBeNull();
-    // Its people are told the minutes are out
-    expect(await prisma.inboxItem.count({ where: { meetingId: f.meetingId, kind: "minutes.published" } })).toBeGreaterThan(0);
+    // The team moves on; nothing is published until a host does it
+    expect(s.minutesPublishedAt).toBeNull();
+    expect(await prisma.session.count({ where: { meetingId: f.meetingId, status: "current" } })).toBe(1);
+    expect(await prisma.inboxItem.count({ where: { meetingId: f.meetingId, kind: "minutes.published" } })).toBe(0);
+  });
+
+  it("remind the hosts of a draft once, after the days allowed", async () => {
+    const s = await prisma.session.findFirstOrThrow({ where: { meetingId: f.meetingId, status: "archived" } });
+    expect(await remindDrafts(new Date(), 2)).toBe(0);
+    const later = new Date(s.archivedAt!.getTime() + 3 * 86_400_000);
+    expect(await remindDrafts(later, 0)).toBe(0);
+    const [a, b] = await Promise.all([remindDrafts(later, 2), remindDrafts(later, 2)]);
+    expect(a + b).toBe(1);
+    expect(await remindDrafts(later, 2)).toBe(0);
+    const hosts = await prisma.meetingParticipant.findMany({ where: { meetingId: f.meetingId, role: { in: ["host", "cohost"] } } });
+    const items = await prisma.inboxItem.findMany({ where: { meetingId: f.meetingId, kind: "minutes.draft" } });
+    expect(items.map((i) => i.personId).sort()).toEqual(hosts.map((h) => h.personId).sort());
   });
 });
