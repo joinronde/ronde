@@ -200,48 +200,51 @@ export function ListEditor({
               {checklist && (
                 <input type="checkbox" checked={!!r.done} onChange={() => toggle(i)} aria-label={r.done ? t("markToDo") : t("markDone")} />
               )}
-              <AutoText
-                inputRef={(el) => (inputs.current[i] = el)}
-                aria-label={t("itemLabel", { section: sec.label, n: i + 1 })}
-                className={r.done ? "ticked" : undefined}
-                value={r.text}
-                maxLength={2000}
-                onChange={(e) => setText(i, e.target.value.replace(/\n/g, " "))}
-                onPaste={(e) => {
-                  if (!r.text.trim()) pasted(e, i, true);
-                  else pasted(e, i + 1, false);
-                }}
-                onKeyDown={(e) => {
-                  const el = e.currentTarget;
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    // Enter: the rest of the text goes into a new item
-                    const head = r.text.slice(0, el.selectionStart);
-                    const tail = r.text.slice(el.selectionEnd);
-                    if (!r.text.trim()) return refocus(i + 1);
-                    onChange([
-                      ...items.slice(0, i),
-                      encode(head.trimEnd(), r.done),
-                      encode(tail.trimStart(), false),
-                      ...items.slice(i + 1),
-                    ]);
-                    focusAt.current = { i: i + 1, caret: 0 };
-                  } else if (e.key === "Backspace" && !r.text && el.selectionStart === 0) {
-                    e.preventDefault();
-                    remove(i, i > 0 ? i - 1 : items.length > 1 ? 0 : items.length - 1);
-                  } else if (e.altKey && (e.key === "ArrowUp" || e.key === "ArrowDown")) {
-                    e.preventDefault();
-                    move(i, i + (e.key === "ArrowUp" ? -1 : 1));
-                  } else if (e.key === "ArrowUp" && el.selectionStart === 0 && i > 0) {
-                    e.preventDefault();
-                    refocus(i - 1);
-                  } else if (e.key === "ArrowDown" && el.selectionEnd === el.value.length) {
-                    e.preventDefault();
-                    refocus(i + 1);
-                  }
-                }}
-              />
-              {aside?.(items[i]!)}
+              {/* The text keeps the whole width; what goes with the line (who joined it) sits under it */}
+              <span className="list-body">
+                <AutoText
+                  inputRef={(el) => (inputs.current[i] = el)}
+                  aria-label={t("itemLabel", { section: sec.label, n: i + 1 })}
+                  className={r.done ? "ticked" : undefined}
+                  value={r.text}
+                  maxLength={2000}
+                  onChange={(e) => setText(i, e.target.value.replace(/\n/g, " "))}
+                  onPaste={(e) => {
+                    if (!r.text.trim()) pasted(e, i, true);
+                    else pasted(e, i + 1, false);
+                  }}
+                  onKeyDown={(e) => {
+                    const el = e.currentTarget;
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      // Enter: the rest of the text goes into a new item
+                      const head = r.text.slice(0, el.selectionStart);
+                      const tail = r.text.slice(el.selectionEnd);
+                      if (!r.text.trim()) return refocus(i + 1);
+                      onChange([
+                        ...items.slice(0, i),
+                        encode(head.trimEnd(), r.done),
+                        encode(tail.trimStart(), false),
+                        ...items.slice(i + 1),
+                      ]);
+                      focusAt.current = { i: i + 1, caret: 0 };
+                    } else if (e.key === "Backspace" && !r.text && el.selectionStart === 0) {
+                      e.preventDefault();
+                      remove(i, i > 0 ? i - 1 : items.length > 1 ? 0 : items.length - 1);
+                    } else if (e.altKey && (e.key === "ArrowUp" || e.key === "ArrowDown")) {
+                      e.preventDefault();
+                      move(i, i + (e.key === "ArrowUp" ? -1 : 1));
+                    } else if (e.key === "ArrowUp" && el.selectionStart === 0 && i > 0) {
+                      e.preventDefault();
+                      refocus(i - 1);
+                    } else if (e.key === "ArrowDown" && el.selectionEnd === el.value.length) {
+                      e.preventDefault();
+                      refocus(i + 1);
+                    }
+                  }}
+                />
+                {aside && <span className="list-aside">{aside(items[i]!)}</span>}
+              </span>
               <button
                 type="button"
                 className="del danger"
