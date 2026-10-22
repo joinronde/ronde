@@ -5,7 +5,7 @@
 # The paid features stay off without a license; RONDE_PURE_CE=1 leaves their code out of the image entirely:
 #   docker build -f docker/Dockerfile --target web --build-arg RONDE_PURE_CE=1 -t ghcr.io/joinronde/ronde:web-ce .
 
-ARG NODE_IMAGE=node:22-alpine
+ARG NODE_IMAGE=node:24.22.1-alpine3.23
 
 ############################
 # Dependencies             #
