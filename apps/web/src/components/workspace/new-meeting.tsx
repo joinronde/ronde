@@ -413,7 +413,7 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
               </Field>
               <div className="grid2">
                 <Field label={t("startDate")}>
-                  {(p) => <DateInput {...p} required min={today} value={startDate} onChange={setStartDate} />}
+                  {(p) => <DateInput {...p} required compact min={today} value={startDate} onChange={setStartDate} />}
                 </Field>
                 {weeklyOneDay && (
                   <Field label={t("weekday")}>

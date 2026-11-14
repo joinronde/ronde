@@ -214,9 +214,12 @@ export function Dashboard({ slug, moment, firstName, today, data, meetings, step
                         href={`${base}/m/${e.meetingId}`}
                         className={`wk-event ${e.status}`}
                         style={tint(e.color)}
+                        title={e.meeting}
                       >
                         <span className="wk-time">{e.time}</span>
-                        <span className="wk-name-m">{e.meeting}</span>
+                        <bdi dir="auto" className="wk-name-m">
+                          {e.meeting}
+                        </bdi>
                       </Link>
                     ))}
                   </li>
@@ -513,7 +516,7 @@ function MyActions({ slug, actions, open }: { slug: string; actions: DashboardDa
     <section className="dash-card dash-actions" style={order(3)} aria-labelledby="dash-actions">
       <div className="dash-card-head">
         <h2 id="dash-actions">
-          {t("myActions")} {open > 0 && <span className="side-count">{open}</span>}
+          {t("myActions")} {open > 0 && <span className="side-count dash-count">{open}</span>}
         </h2>
         <Link href={`/w/${slug}/actions`} className="link">
           {t("seeAll")}
@@ -543,7 +546,7 @@ function MyActions({ slug, actions, open }: { slug: string; actions: DashboardDa
                 </svg>
               </button>
               <span className="dash-act-text">
-                <span>{a.text}</span>
+                <span dir="auto">{a.text}</span>
                 <span className="hint">
                   <span className="act-dot" aria-hidden="true" /> {a.meeting}
                   {a.status === "doing" && <> · {ta("inProgress")}</>}
