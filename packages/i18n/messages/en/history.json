@@ -65,5 +65,8 @@
   "notesStep": "Step",
   "notesLabel": "Notes of this step",
   "notesSave": "Save",
-  "notesSaved": "Notes saved"
+  "notesSaved": "Notes saved",
+  "discardAsk": "Discard what you wrote?",
+  "discardYes": "Discard",
+  "discardNo": "Keep writing"
 }

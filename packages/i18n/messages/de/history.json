@@ -65,5 +65,8 @@
   "notesStep": "Schritt",
   "notesLabel": "Notizen dieses Schritts",
   "notesSave": "Speichern",
-  "notesSaved": "Notizen gespeichert"
+  "notesSaved": "Notizen gespeichert",
+  "discardAsk": "Das Geschriebene verwerfen?",
+  "discardYes": "Verwerfen",
+  "discardNo": "Weiterschreiben"
 }

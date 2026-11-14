@@ -44,4 +44,19 @@ test("my screen's tabs and its sound and animations settings", async ({ page, br
   await shot(max, "light");
   await max.emulateMedia({ colorScheme: "dark" });
   await shot(max, "dark");
+
+  // On a phone, the selected tab shows whole once the row has settled (its first peek and its fonts)
+  // A new visit: the row peeks at its end then comes back
+  const phone = await (
+    await browser.newContext({ locale: "en-US", viewport: { width: 390, height: 800 }, storageState: await max.context().storageState() })
+  ).newPage();
+  await phone.goto(`${meeting}/me`);
+  const row = phone.getByRole("tablist", { name: "My screen" });
+  const selected = row.getByRole("tab", { selected: true });
+  await expect(selected).toBeVisible();
+  await expect(async () => {
+    const [box, at] = [(await row.boundingBox())!, (await selected.boundingBox())!];
+    expect(at.x).toBeGreaterThanOrEqual(box.x);
+    expect(at.x + at.width).toBeLessThanOrEqual(box.x + box.width);
+  }).toPass({ timeout: 5000 });
 });

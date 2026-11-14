@@ -1,6 +1,7 @@
 import type { CheckInDTO, ProjectDTO, Section } from "@ronde/core/types";
 import { describe, expect, it } from "vitest";
 import {
+  allPlansSorted,
   appendLine,
   asTask,
   type CarryContext,
@@ -9,10 +10,12 @@ import {
   draftOf,
   fieldsOf,
   normDraft,
+  pastTabs,
   pendingPlans,
   planStatus,
   rebaseDraft,
   sameDraft,
+  savedThisSession,
   sheetHolder,
   tabOf,
 } from "@/lib/shared/check-in-draft";
@@ -340,5 +343,63 @@ describe("sorting last time's plans", () => {
   // A free-text "Done" or "Planned" holds every line in one block: a plan is found among them
   it("finds a plan in a free-text section of several lines", () => {
     expect(planStatus(draft({ done: ["Invoices\nRefunds"] }), [], "Refunds")).toBe("done");
+  });
+});
+
+describe("a past check-in, tab by tab", () => {
+  const secs: Section[] = [
+    { k: "done", label: "Done", kind: "done" },
+    { k: "next", label: "Next", kind: "next" },
+  ] as Section[];
+  const fields = (done: string[], next: string[] = []) => ({ done, next, blockers: [], other: [], extra: {} });
+
+  it("shows what was written in the tabs of projects, each under its project, with its sections", () => {
+    const past = {
+      date: "2026-11-09",
+      spent: 0,
+      sections: secs,
+      projects: [{ id: "billing", name: "Billing API" }],
+      checkIn: { ...fields([]), byProject: { billing: fields(["/payments v2 endpoint"], ["Pagination"]) } },
+    };
+    expect(pastTabs(past)).toEqual([
+      {
+        project: { id: "billing", name: "Billing API" },
+        sections: [
+          { sec: secs[0], items: ["/payments v2 endpoint"] },
+          { sec: secs[1], items: ["Pagination"] },
+        ],
+      },
+    ]);
+  });
+
+  it("puts the person's own tab first, and leaves out the empty tabs: none at all for an empty check-in", () => {
+    const past = {
+      date: "2026-11-09",
+      spent: 0,
+      sections: secs,
+      projects: [
+        { id: "billing", name: "Billing API" },
+        { id: "mobile", name: "Mobile" },
+      ],
+      checkIn: { ...fields(["Off on Thursday"]), byProject: { billing: fields(["Login"]), mobile: fields([]) } },
+    };
+    expect(pastTabs(past).map((x) => x.project?.id ?? null)).toEqual([null, "billing"]);
+    expect(pastTabs({ ...past, checkIn: { ...fields([]), byProject: {} } })).toEqual([]);
+  });
+});
+
+describe("a new session's check-in", () => {
+  it("is not said saved, nor last updated, from what was written before the last session ended", () => {
+    expect(savedThisSession(1000, 2000)).toBe(false);
+    expect(savedThisSession(3000, 2000)).toBe(true);
+    expect(savedThisSession(1000, null)).toBe(true);
+    expect(savedThisSession(null, 2000)).toBe(false);
+  });
+
+  it("has last time's plans all sorted only once each one got an answer, a plan brought back unticked not being one", () => {
+    const d = draft({ done: ["[x] Invoices", "[ ] Refunds"], next: ["Exports"] });
+    expect(allPlansSorted(["Invoices", "Refunds"], d, [])).toBe(false);
+    expect(allPlansSorted(["Invoices", "Exports", "Audit"], d, ["audit"])).toBe(true);
+    expect(allPlansSorted(["Invoices", "Other"], d, [])).toBe(false);
   });
 });

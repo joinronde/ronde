@@ -9,6 +9,7 @@
     "decisions": "Entscheidungen"
   },
   "notAMember": "Deine Adresse passt zu keinem Teammitglied: Du hast keinen Check-in auszufüllen.",
+  "observerNote": "Du folgst diesem Meeting als beobachtende Person: kein Check-in auszufüllen. Lies die Check-ins des Teams oder folge dem Meeting live.",
   "yourTurnTitle": "Du bist dran!",
   "youreNext": "du bist als Nächstes dran",
   "yourTurn": "Du bist an der Reihe!",
@@ -25,6 +26,7 @@
   "browsing": "Du siehst dir <strong>{view}</strong> an. Live läuft <strong>{live}</strong>.",
   "backToLive": "Zurück zu live",
   "followOnly": "Deine Adresse passt zu keinem Teammitglied: Du kannst dem Meeting folgen, ohne mitzumachen.",
+  "observerDock": "Du folgst dem Meeting als beobachtende Person.",
   "reactions": "Reaktionen",
   "react": "Reagieren",
   "signals": "Signale an die sprechende Person",

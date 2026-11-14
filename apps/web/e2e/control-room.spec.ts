@@ -88,6 +88,12 @@ test("the host runs a session from the control room, from the order of the turns
 
   await start(page);
   await expect(now(page)).toHaveText("Introduction");
+  // An arrow on a focused tab moves between the tabs, not the meeting
+  const firstTab = page.getByRole("tab", { name: /^Actions/ });
+  await firstTab.focus();
+  await page.keyboard.press("ArrowRight");
+  await page.waitForTimeout(1500);
+  await expect(now(page)).toHaveText("Introduction");
   const turns: string[] = [];
   const next = page.getByRole("button", { name: /^Next: / });
   for (let i = 0; i < 2; i++) {
@@ -124,6 +130,18 @@ test("the host runs a session from the control room, from the order of the turns
   await expect(page.getByRole("button", { name: "Timer", exact: true })).toBeVisible();
   await key(page, "Space");
   await expect(page.getByRole("button", { name: "Pause", exact: true })).toBeVisible();
+  // Next keeps the focus once clicked: there, Space toggles the timer rather than moving on, and the arrows move
+  await next.focus();
+  await page.keyboard.press("Space");
+  await expect(page.getByRole("button", { name: "Timer", exact: true })).toBeVisible();
+  await expect(now(page)).toHaveText("Dan Dorsey");
+  await page.keyboard.press("Space");
+  await expect(page.getByRole("button", { name: "Pause", exact: true })).toBeVisible();
+  await page.keyboard.press("ArrowLeft");
+  await expect(now(page)).not.toHaveText("Dan Dorsey");
+  await next.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(now(page)).toHaveText("Dan Dorsey");
   await page.getByRole("button", { name: "+30 s" }).click();
   await expect(page.getByText("30 more seconds for Dan")).toBeVisible();
 
@@ -243,6 +261,10 @@ test("the host runs a session from the control room, from the order of the turns
   await page.getByRole("button", { name: "Add a summary" }).click();
   const summary = page.getByRole("dialog");
   await summary.getByRole("textbox", { name: "Summary" }).fill("The invoices rollout went well.");
+  // Escape on a summary not saved asks first: kept writing, the text is still there
+  await summary.getByRole("textbox", { name: "Summary" }).press("Escape");
+  await summary.getByRole("button", { name: "Keep writing" }).click();
+  await expect(summary.getByRole("textbox", { name: "Summary" })).toContainText("The invoices rollout went well.");
   await summary.getByRole("button", { name: "Save" }).click();
   await expect(page.getByText("Summary saved")).toBeVisible();
   await page.reload();

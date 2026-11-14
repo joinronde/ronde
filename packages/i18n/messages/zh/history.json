@@ -65,5 +65,8 @@
   "notesStep": "环节",
   "notesLabel": "本环节笔记",
   "notesSave": "保存",
-  "notesSaved": "笔记已保存"
+  "notesSaved": "笔记已保存",
+  "discardAsk": "放弃已写的内容？",
+  "discardYes": "放弃",
+  "discardNo": "继续编辑"
 }

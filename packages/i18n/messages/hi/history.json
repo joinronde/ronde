@@ -65,5 +65,8 @@
   "notesStep": "चरण",
   "notesLabel": "इस चरण के नोट्स",
   "notesSave": "सहेजें",
-  "notesSaved": "नोट्स सहेजे गए"
+  "notesSaved": "नोट्स सहेजे गए",
+  "discardAsk": "आपने जो लिखा है उसे छोड़ दें?",
+  "discardYes": "छोड़ दें",
+  "discardNo": "लिखना जारी रखें"
 }

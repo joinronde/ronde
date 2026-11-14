@@ -95,13 +95,15 @@ test("a host creates a meeting, a participant fills in their check-in and raises
   await expect(page.getByRole("tab", { name: /^Live/ })).toHaveAttribute("aria-selected", "true");
   await page.keyboard.press("?");
   await expect(page.getByRole("dialog", { name: "Keyboard shortcuts" })).toBeVisible();
-  await page.keyboard.press("Escape");
+  // "?" again closes it
+  await page.keyboard.press("?");
+  await expect(page.getByRole("dialog", { name: "Keyboard shortcuts" })).toHaveCount(0);
 
   // Phone remote: the host moves on from it, the control room follows
   const remote = await page.context().newPage();
   await remote.goto(`${meeting}/remote`);
   await expect(remote.getByRole("heading", { level: 1 })).toHaveText("Introduction");
-  await remote.getByRole("button", { name: "Next →" }).click();
+  await remote.getByRole("button", { name: "Next", exact: true }).click();
   await expect(remote.getByRole("heading", { level: 1 })).toHaveText("Questions and discussion");
   await expect(page.getByRole("heading", { name: "Questions and discussion", level: 2 }).first()).toBeVisible();
   await remote.close();

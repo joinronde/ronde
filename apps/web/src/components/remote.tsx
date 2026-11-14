@@ -1,6 +1,7 @@
 "use client";
 
 import { first } from "@ronde/core/util";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
@@ -93,7 +94,7 @@ export function RemoteView() {
             disabled={cur <= 0}
             onClick={() => press({ op: "meeting.step", delta: -1, from: m?.stepKey })}
           >
-            ← {t("previous")}
+            <ArrowLeft size={18} strokeWidth={2.4} aria-hidden="true" className="flip-rtl" /> {t("previous")}
           </button>
           <button
             type="button"
@@ -101,7 +102,7 @@ export function RemoteView() {
             disabled={!next}
             onClick={() => press({ op: "meeting.step", delta: 1, from: m?.stepKey })}
           >
-            {t("next")} →
+            {t("next")} <ArrowRight size={18} strokeWidth={2.4} aria-hidden="true" className="flip-rtl" />
           </button>
           <button type="button" className="btn remote-mid" onClick={() => press({ op: "meeting.togglePlay" })}>
             {m.timer.running ? `⏸ ${t("pause")}` : `▶ ${t("resume")}`}

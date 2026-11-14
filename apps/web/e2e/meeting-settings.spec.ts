@@ -39,6 +39,10 @@ test("people, sections, schedule, template and deletion of a meeting; leaving an
   // An observer follows the sessions without a check-in of his own
   await rui.goto(`${meeting}/me`);
   await expect(rui.locator(".checkin-status")).toHaveCount(0);
+  // …told so, on the meeting's tab, without the check-in tab nor a word about an unknown address
+  await expect(rui.getByText("You follow this meeting as an observer: no check-in to fill in.", { exact: false })).toBeVisible();
+  await expect(rui.getByRole("tab", { name: "My check-in" })).toHaveCount(0);
+  await expect(rui.getByText("Your address does not match")).toHaveCount(0);
   // Back as a participant, so the section added below shows on his check-in
   await choose(page, page.getByRole("combobox", { name: "Role of Rui Rocha" }), "participant");
   await expect(page.getByRole("combobox", { name: "Role of Rui Rocha" })).toContainText("Participant");

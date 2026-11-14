@@ -9,6 +9,7 @@
     "decisions": "Decisões"
   },
   "notAMember": "Seu endereço não corresponde a nenhum membro da equipe: você não tem ficha para preencher.",
+  "observerNote": "Você acompanha esta reunião como observador: não há ficha a preencher. Leia as fichas da equipe ou acompanhe a reunião ao vivo.",
   "yourTurnTitle": "Sua vez!",
   "youreNext": "você é o próximo",
   "yourTurn": "É a sua vez!",
@@ -25,6 +26,7 @@
   "browsing": "Você está vendo <strong>{view}</strong>. Ao vivo está em <strong>{live}</strong>.",
   "backToLive": "Voltar ao vivo",
   "followOnly": "Seu endereço não corresponde a nenhum membro da equipe: você pode acompanhar a reunião sem interagir.",
+  "observerDock": "Você acompanha a reunião como observador.",
   "reactions": "Reações",
   "react": "Reagir",
   "signals": "Sinais para quem fala",
