@@ -17,5 +17,7 @@
   },
   "minutes": "{count} min",
   "use": "Usar esta plantilla",
+  "healthNotice": "Nada de datos identificables de pacientes en la nube de Ronde: escribe «Paciente A» o iniciales, nunca un nombre. Para datos de salud, aloja Ronde en tus propios servidores.",
+  "healthGuide": "Guía de autoalojamiento",
   "saveHint": "Cualquier reunión puede convertirse en una plantilla del espacio de trabajo: abre sus ajustes y luego «Guardar como plantilla»."
 }

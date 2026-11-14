@@ -60,6 +60,7 @@ export const BUILTIN_TEMPLATES = [
   "retro",
   "oneOnOne",
   "onboarding",
+  "sprintPlanning",
   "sprintReview",
   "steering",
   "portfolio",
@@ -93,6 +94,7 @@ export const TEMPLATE_ICONS: Record<BuiltinTemplateId, string> = {
   standup: "☀️",
   retro: "🔍",
   oneOnOne: "🤝",
+  sprintPlanning: "🃏",
   sprintReview: "🚀",
   steering: "🧭",
   portfolio: "🗂️",
@@ -128,6 +130,7 @@ export const TEMPLATE_CATEGORY: Record<BuiltinTemplateId, TemplateCategory> = {
   retro: "team",
   oneOnOne: "team",
   allHands: "team",
+  sprintPlanning: "product",
   sprintReview: "product",
   teamProjects: "product",
   portfolio: "leadership",
@@ -224,6 +227,25 @@ const SPECS: Record<BuiltinTemplateId, Spec> = {
     ],
     modules: { icebreaker: false, kudos: false, reactions: false, hands: false, birthdays: false, ambience: false, rating: false },
     schedule: [weekly(4, "11:00", 30)],
+  },
+  // The sprint starts here: each person brings the goal they see, what is ready to estimate and when they are away
+  sprintPlanning: {
+    settings: { targetMin: 60, speakSec: 180 },
+    sections: [
+      { key: "goal", role: "note", input: "text", named: true },
+      { key: "ready", role: "custom", input: "list", named: true },
+      // A second note: a role is held by one section, so this one is a section of its own
+      { key: "capacity", role: "custom", input: "text", named: true },
+      { key: "risks", role: "blocker", input: "list", named: true },
+    ],
+    modules: { poker: true },
+    schedule: [weekly(1, "10:00", 60, 2)],
+    // The round table gives way to the estimates
+    agenda: [
+      { id: "intro", type: "intro" },
+      { id: "poker", type: "poker" },
+      { id: "topics", type: "topics" },
+    ],
   },
   sprintReview: {
     settings: { targetMin: 45, speakSec: 300 },
@@ -588,6 +610,23 @@ export const DEFAULT_TEMPLATE_SETTINGS: TemplateData["settings"] = {
   reminderWhen: "dayBefore",
   reminderTime: "15:00",
 };
+
+/** Up to this many active people, a workspace starts a new meeting with everyone in it */
+const PRESELECT_ALL_MAX = 12;
+/** Meetings of two: the other person is picked, never the whole directory */
+const PAIR_TEMPLATES: readonly string[] = ["oneOnOne", "onboarding"] satisfies BuiltinTemplateId[];
+
+/**
+ * Whether the creation wizard starts with everyone picked: in a small workspace, where the whole team usually
+ * comes; never in a larger one (unticking forty people to keep five is the slow way round, and the teams are one
+ * click away), nor for a meeting of two. `template` is a built-in id; anything else (a workspace's own template,
+ * a blank meeting) follows the size of the workspace.
+ */
+export const preselectsEveryone = (template: string, activePeople: number): boolean =>
+  !PAIR_TEMPLATES.includes(template) && activePeople <= PRESELECT_ALL_MAX;
+
+/** Minutes a round table takes: each speaker's time, rounded up to the minute */
+export const roundTableMinutes = (speakers: number, speakSec: number): number => Math.ceil((speakers * speakSec) / 60);
 
 /** A meeting started from nothing rather than from a template: "blank" in the creation wizard */
 export const BLANK_TEMPLATE = "blank";

@@ -17,5 +17,7 @@
   },
   "minutes": "{count} Min.",
   "use": "Diese Vorlage verwenden",
+  "healthNotice": "Keine identifizierbaren Patientendaten in der Ronde-Cloud: Schreib „Patient A“ oder Initialen, nie einen Namen. Für Gesundheitsdaten hostest du Ronde auf deinen eigenen Servern.",
+  "healthGuide": "Anleitung zum Selbsthosten",
   "saveHint": "Jedes Meeting kann zur Vorlage des Arbeitsbereichs werden: Öffne seine Einstellungen und wähle „Als Vorlage speichern“."
 }

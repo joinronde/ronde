@@ -61,6 +61,8 @@
     "sections": "Разделы",
     "recapSchedule": "{schedule} · {duration} · первая сессия {date}",
     "recapPeople": "{count, plural, =0 {В круге пока никого} one {# человек в круге} few {# человека в круге} many {# человек в круге} other {# человека в круге}}",
+    "recapRound": "Круг займёт около {duration} ({each} на выступление); встреча рассчитана на {meeting}.",
+    "recapRoundOver": "Круг займёт около {duration} ({each} на выступление): больше, чем отведено на встречу ({meeting}).",
     "modules": "Модули",
     "back": "Назад",
     "next": "Далее",

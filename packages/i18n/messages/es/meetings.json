@@ -61,6 +61,8 @@
     "sections": "Secciones",
     "recapSchedule": "{schedule} · {duration} · primera sesión el {date}",
     "recapPeople": "{count, plural, =0 {Todavía nadie en la ronda} one {# persona en la ronda} other {# personas en la ronda}}",
+    "recapRound": "Unos {duration} de ronda, con {each} de palabra por persona, en una reunión de {meeting}.",
+    "recapRoundOver": "Unos {duration} de ronda, con {each} de palabra por persona: más que los {meeting} previstos.",
     "modules": "Módulos",
     "back": "Atrás",
     "next": "Siguiente",

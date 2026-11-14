@@ -2,8 +2,9 @@
 
 import { roundsOrder } from "@ronde/core/agenda";
 import { describeSchedule, occurrences, type ScheduleRule } from "@ronde/core/schedule";
+import { preselectsEveryone, roundTableMinutes } from "@ronde/core/templates";
 import type { SectionDef, SectionRole, SectionType } from "@ronde/core/types";
-import { ROLE_KIND, SECTION_TYPES } from "@ronde/core/util";
+import { mmssPlain, ROLE_KIND, SECTION_TYPES } from "@ronde/core/util";
 import { formatters, type Locale } from "@ronde/i18n";
 import { CATALOG } from "@ronde/modules/catalog";
 import {
@@ -49,6 +50,7 @@ import type { TemplateSummary } from "@/lib/server/templates";
 import { fold } from "@/lib/shared/search";
 import { track } from "@/lib/shared/track";
 import { useConfirm } from "./confirm";
+import { HealthDataNotice } from "./health-notice";
 import { browserTimeZone } from "./inputs";
 import { Menu } from "./menu";
 
@@ -119,7 +121,11 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
   const [time, setTime] = useState(first.time);
   const [durationMin, setDurationMin] = useState(first.durationMin);
   const [weekday, setWeekday] = useState<number>(first.byDay[0] ?? 1);
-  const [picked, setPicked] = useState<Set<string>>(() => new Set(people.map((p) => p.id)));
+  // Who takes part: what the template suggests (everyone in a small workspace, nobody in a larger one or for a
+  // meeting of two) until the person picks; the creator counts among the workspace's people
+  const [ownPick, setOwnPick] = useState<Set<string> | null>(null);
+  const everyone = preselectsEveryone(template.ref.startsWith("builtin:") ? template.ref.slice(8) : "", people.length + 1);
+  const picked = ownPick ?? new Set(everyone ? people.map((p) => p.id) : []);
   const [creatorSpeaks, setCreatorSpeaks] = useState(true);
   const modulesOf = (x: TemplateSummary) =>
     Object.fromEntries(
@@ -217,6 +223,11 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
     router.push(`/w/${slug}/m/${res.data.id}/control`);
   };
   const valid = (s: Step) => s !== 2 || sections.length > 0;
+  // What the round table costs: each speaker's time, next to the time the meeting has (no round table, nothing to tell)
+  const speakers = picked.size + (creatorSpeaks ? 1 : 0);
+  const hasRound = !template.data.agenda || template.data.agenda.some((b) => b.type === "round");
+  const roundMin = hasRound ? roundTableMinutes(speakers, template.data.settings.speakSec) : 0;
+  const roundOver = roundMin > durationMin;
 
   // Step 0: where to start from
   const builtins = list.filter((x) => x.builtin);
@@ -258,6 +269,8 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
     </li>
   );
 
+  // A template for care teams, in Ronde's cloud: said next to the template while browsing, then above each step
+  const healthNotice = template.healthGuide ? <HealthDataNotice guide={template.healthGuide} /> : null;
   const preview = (
     // Scrolls on its own when long: it takes the focus so the keyboard can scroll it too
     <aside className="nm-preview" aria-label={t("preview.title")} tabIndex={0}>
@@ -266,6 +279,7 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
       </span>
       <h3>{template.name}</h3>
       {template.description && <p className="hint">{template.description}</p>}
+      {healthNotice}
       <dl className="nm-facts">
         <div>
           <dt>
@@ -350,6 +364,7 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
         <h2 ref={heading} tabIndex={-1} className="sr-only">
           {t(`steps.${STEPS[step]}`)}
         </h2>
+        {step > 0 && healthNotice}
 
         {step === 0 && (
           <div className="nm-browse">
@@ -493,7 +508,7 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
                   )}
                 </p>
               ) : (
-                <PeoplePicker slug={slug} people={people} teams={teams} picked={picked} onChange={setPicked} />
+                <PeoplePicker slug={slug} people={people} teams={teams} picked={picked} onChange={setOwnPick} />
               )}
               <label className="check nm-me">
                 <input type="checkbox" checked={creatorSpeaks} onChange={(e) => setCreatorSpeaks(e.target.checked)} /> {t("creatorSpeaks")}
@@ -661,7 +676,20 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
                   icon: Users,
                   label: t("people"),
                   step: 1 as Step,
-                  value: t("recapPeople", { count: picked.size + (creatorSpeaks ? 1 : 0) }),
+                  value: (
+                    <>
+                      {t("recapPeople", { count: speakers })}
+                      {roundMin > 0 && (
+                        <span className={`hint nm-round${roundOver ? " warn" : ""}`}>
+                          {t(roundOver ? "recapRoundOver" : "recapRound", {
+                            duration: t("minutes", { m: roundMin }),
+                            each: mmssPlain(template.data.settings.speakSec * 1000),
+                            meeting: t("minutes", { m: durationMin }),
+                          })}
+                        </span>
+                      )}
+                    </>
+                  ),
                 },
                 ...(firstRound ? [{ icon: ArrowRight, label: t("order.title"), step: 1 as Step, value: t(`order.${firstRound}`) }] : []),
                 { icon: ListChecks, label: t("sections"), step: 2 as Step, value: sections.map(sectionLabel).join(" · ") },

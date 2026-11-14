@@ -31,6 +31,16 @@
       "feedback": "Feedback"
     }
   },
+  "sprintPlanning": {
+    "name": "Sprint planning",
+    "description": "Ogni due settimane: l'obiettivo dello sprint, gli elementi pronti da stimare con il planning poker, la capacità del team e i rischi.",
+    "sections": {
+      "goal": "Obiettivo dello sprint",
+      "ready": "Elementi pronti",
+      "capacity": "Capacità e assenze",
+      "risks": "Rischi"
+    }
+  },
   "sprintReview": {
     "name": "Sprint review",
     "description": "Ogni due settimane: cosa è stato consegnato, le demo, il prossimo sprint e i rischi.",

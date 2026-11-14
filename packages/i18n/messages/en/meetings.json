@@ -61,6 +61,8 @@
     "sections": "Sections",
     "recapSchedule": "{schedule} · {duration} · first session on {date}",
     "recapPeople": "{count, plural, =0 {Nobody in the round table yet} one {# person in the round table} other {# people in the round table}}",
+    "recapRound": "About {duration} of round table, at {each} of speaking each, in a {meeting} meeting.",
+    "recapRoundOver": "About {duration} of round table, at {each} of speaking each: more than the {meeting} planned.",
     "modules": "Modules",
     "back": "Back",
     "next": "Next",

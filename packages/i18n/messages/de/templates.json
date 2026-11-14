@@ -31,6 +31,16 @@
       "feedback": "Feedback"
     }
   },
+  "sprintPlanning": {
+    "name": "Sprint Planning",
+    "description": "Alle zwei Wochen: das Sprint-Ziel, die Einträge, die bereit zum Schätzen im Planning Poker sind, die Kapazität des Teams und die Risiken.",
+    "sections": {
+      "goal": "Sprint-Ziel",
+      "ready": "Bereite Einträge",
+      "capacity": "Kapazität und Abwesenheiten",
+      "risks": "Risiken"
+    }
+  },
   "sprintReview": {
     "name": "Sprint Review",
     "description": "Alle zwei Wochen: was geliefert wurde, die Demos, der nächste Sprint und die Risiken.",

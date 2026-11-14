@@ -22,7 +22,9 @@ import { readConfig } from "@ronde/module-sdk";
 import { newRoom } from "@ronde/modules";
 import { CATALOG } from "@ronde/modules/catalog";
 import type { WorkspaceContext } from "./authz";
+import { env } from "./env";
 import { AccessError, OpError } from "./errors";
+import { isCloud } from "./license";
 import { toSection } from "./meeting/dto";
 import { ALL_MODULES, moduleAllowed } from "./meeting/modules";
 
@@ -45,6 +47,11 @@ export interface TemplateSummary {
   schedule: string;
   /** The viewer may delete it (workspace templates) */
   canDelete: boolean;
+  /**
+   * In Ronde's cloud, on the templates for care teams: the guide to host Ronde oneself, linked from a notice
+   * under the template (the cloud is not built for health data, as its data processing agreement says)
+   */
+  healthGuide?: string;
 }
 
 /** Rules of a schedule pattern, from a first date */
@@ -146,6 +153,8 @@ export function blankSummary(locale: Locale): TemplateSummary {
 export async function listTemplates(ctx: WorkspaceContext, locale: Locale): Promise<TemplateSummary[]> {
   const t = translator(locale, "templates");
   const summary = (data: TemplateData) => summaryOf(data, locale);
+  // A self-hosted instance keeps its data: nothing to say there
+  const healthGuide = isCloud() ? `${env.siteUrl()}/${locale}/docs/self-hosting` : null;
   const builtins = BUILTIN_TEMPLATES.map((id): TemplateSummary => {
     const data = builtinTemplate(id, locale);
     return {
@@ -158,6 +167,7 @@ export async function listTemplates(ctx: WorkspaceContext, locale: Locale): Prom
       data,
       ...summary(data),
       canDelete: false,
+      ...(healthGuide && TEMPLATE_CATEGORY[id] === "health" ? { healthGuide } : {}),
     };
   });
   const rows = await ctx.db.template.findMany({ orderBy: { createdAt: "asc" } });

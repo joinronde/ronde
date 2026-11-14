@@ -61,6 +61,8 @@
     "sections": "सेक्शन",
     "recapSchedule": "{schedule} · {duration} · पहला सत्र {date} को",
     "recapPeople": "{count, plural, =0 {राउंड में अभी कोई नहीं} one {राउंड में # व्यक्ति} other {राउंड में # लोग}}",
+    "recapRound": "राउंड में लगभग {duration} लगेंगे, हर व्यक्ति को बोलने के लिए {each}; मीटिंग {meeting} की है।",
+    "recapRoundOver": "राउंड में लगभग {duration} लगेंगे, हर व्यक्ति को बोलने के लिए {each}: यह मीटिंग के तय {meeting} से ज़्यादा है।",
     "modules": "मॉड्यूल",
     "back": "पीछे",
     "next": "आगे",

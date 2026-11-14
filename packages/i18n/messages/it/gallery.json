@@ -17,5 +17,7 @@
   },
   "minutes": "{count} min",
   "use": "Usa questo modello",
+  "healthNotice": "Niente dati identificabili dei pazienti nel cloud di Ronde: scrivi «Paziente A» o le iniziali, mai un nome. Per i dati sanitari, ospita Ronde sui tuoi server.",
+  "healthGuide": "Guida al self-hosting",
   "saveHint": "Ogni riunione può diventare un modello dello spazio: apri le sue impostazioni, poi «Salva come modello»."
 }

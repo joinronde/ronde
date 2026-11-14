@@ -3545,6 +3545,7 @@ a[target="_blank"]:not(.btn) > svg.ico:last-of-type{display:inline;margin-inline
 .nm-review-row dt{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--ink-2)}
 .nm-review-row dt svg{color:var(--accent)}
 .nm-review-row dd{margin:0}
+.nm-round{display:block;margin-top:2px}
 /* The buttons stay in sight, whatever the step's length */
 .nm-foot{position:sticky;bottom:0;z-index:5;display:flex;align-items:center;gap:10px;margin:4px -20px -20px;padding:12px 20px;border-top:1px solid var(--line);border-radius:0 0 18px 18px;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(8px)}
 .nm-foot-summary{display:flex;align-items:center;gap:10px;min-width:0;margin-inline-end:auto}

@@ -61,6 +61,8 @@
     "sections": "Sezioni",
     "recapSchedule": "{schedule} · {duration} · prima sessione il {date}",
     "recapPeople": "{count, plural, =0 {Ancora nessuno nel giro di tavolo} one {# persona nel giro di tavolo} other {# persone nel giro di tavolo}}",
+    "recapRound": "Circa {duration} di giro di tavolo, con {each} di parola a testa, in una riunione di {meeting}.",
+    "recapRoundOver": "Circa {duration} di giro di tavolo, con {each} di parola a testa: più dei {meeting} previsti.",
     "modules": "Moduli",
     "back": "Indietro",
     "next": "Avanti",
