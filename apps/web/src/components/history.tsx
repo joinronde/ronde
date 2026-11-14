@@ -344,6 +344,29 @@ function DraftBar({ h, onNotes }: { h: HistoryItem; onNotes: () => void }) {
   );
 }
 
+/** Closing on a text not saved (Escape, a click beside, Cancel): asked first, so a reflex loses nothing */
+function useCloseGuard(dirty: boolean, onClose: () => void) {
+  const t = useTranslations("history");
+  const [asking, setAsking] = useState(false);
+  const close = () => (dirty ? setAsking(true) : onClose());
+  const ask =
+    asking && dirty ? (
+      <div className="controls discard-ask" role="group" aria-label={t("discardAsk")}>
+        <span className="publish-ask" role="alert">
+          {t("discardAsk")}
+        </span>
+        <span className="sep" />
+        <button type="button" className="btn danger" onClick={onClose}>
+          {t("discardYes")}
+        </button>
+        <button type="button" className="btn primary" onClick={() => setAsking(false)}>
+          {t("discardNo")}
+        </button>
+      </div>
+    ) : null;
+  return { close, ask };
+}
+
 /** The notes of each step of a draft, one at a time: the minutes follow once saved */
 function DraftNotes({ item, onClose }: { item: HistoryItem; onClose: () => void }) {
   const t = useTranslations("history");
@@ -370,8 +393,9 @@ function DraftNotes({ item, onClose }: { item: HistoryItem; onClose: () => void 
     setKey(next);
     setText(notes[next] ?? "");
   };
+  const { close, ask } = useCloseGuard(dirty, onClose);
   return (
-    <Modal onClose={onClose} labelledBy="draftNotesTitle">
+    <Modal onClose={close} labelledBy="draftNotesTitle">
       <h3 id="draftNotesTitle">{t("notesOf", { date: fmt.dateShort(item.date) })}</h3>
       <p className="hint">{t("notesHint")}</p>
       <label className="lbl-s" htmlFor="draftNotesStep">
@@ -385,9 +409,10 @@ function DraftNotes({ item, onClose }: { item: HistoryItem; onClose: () => void 
         ))}
       </Select>
       <MdEditor id="draftNotesText" label={t("notesLabel")} className="minutes-area" value={text} onChange={setText} />
+      {ask}
       <div className="controls">
         <span className="sep" />
-        <button type="button" className="btn" onClick={onClose}>
+        <button type="button" className="btn" onClick={close}>
           {t("close")}
         </button>
         <button type="button" className="btn primary" disabled={busy || !dirty} aria-busy={busy} onClick={() => void save()}>
@@ -457,8 +482,9 @@ function SummaryEditor({ item, onClose }: { item: HistoryItem; onClose: () => vo
     // What was already written is kept, the draft comes after it
     setText((current) => (current.trim() ? `${current.trim()}\n\n${res.summary}` : (res.summary ?? "")));
   };
+  const { close, ask } = useCloseGuard(text !== (item.summary ?? ""), onClose);
   return (
-    <Modal onClose={onClose} labelledBy="summaryTitle">
+    <Modal onClose={close} labelledBy="summaryTitle">
       <h3 id="summaryTitle">{t("summaryOf", { date: fmt.dateShort(item.date) })}</h3>
       <p className="hint">{t("summaryHint")}</p>
       {s.ai && (
@@ -471,9 +497,10 @@ function SummaryEditor({ item, onClose }: { item: HistoryItem; onClose: () => vo
       )}
       <FormAlert>{aiError}</FormAlert>
       <MdEditor id="historySummary" label={t("summary")} className="minutes-area" value={text} onChange={setText} />
+      {ask}
       <div className="controls">
         <span className="sep" />
-        <button type="button" className="btn" onClick={onClose}>
+        <button type="button" className="btn" onClick={close}>
           {t("cancel")}
         </button>
         <button

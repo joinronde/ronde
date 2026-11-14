@@ -162,7 +162,7 @@
   "absencePeriod": "Elige un primer y un último día, en orden, con un año de diferencia como máximo.",
   "phoneMissing": "Añade antes tu número de teléfono móvil a tu perfil: la prueba se envía ahí.",
   "phoneInvalid": "Escribe el número de teléfono móvil en formato internacional, como +34612345678.",
-  "sessionHeldToday": "Hoy ya se ha celebrado una sesión de esta reunión.",
+  "sessionHeldToday": "Hoy ya se ha celebrado una sesión de esta reunión: esta se celebrará en su fecha. Para una segunda sesión el mismo día, crea otra reunión.",
   "guestLinkInvalid": "Este enlace de invitado no es válido, ha caducado o se ha revocado. Pide uno nuevo al anfitrión.",
   "projectMembersOnly": "Solo las personas que trabajan en este proyecto pueden cambiar su ficha.",
   "projectProgramme": "Un proyecto no puede formar parte de sí mismo ni de uno de sus propios proyectos, y los programas tienen como máximo tres niveles.",

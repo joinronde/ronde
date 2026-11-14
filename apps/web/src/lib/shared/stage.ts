@@ -70,3 +70,16 @@ export function waitLabel(
 
 /** Class of the pre-meeting pill: late once the start has come, soon in the last five minutes */
 export const waitTone = (ms: number) => (ms <= -30 * MINUTE ? "" : ms <= 0 ? " late" : ms <= 5 * MINUTE ? " soon" : "");
+
+/**
+ * Where a step of the agenda stands. A step left behind had its turn when its time was recorded as it was left
+ * (a few milliseconds count); one never recorded was jumped over ("Go" to a later step): it is not ticked
+ */
+export const stepStatus = (m: { stepKey: string; spent: Record<string, number> }, key: string, i: number, cur: number) =>
+  key === m.stepKey ? "current" : i > cur ? "upcoming" : key in m.spent ? "done" : "skipped";
+
+/** Raised hands and questions still waiting after a step: two different asks, counted apart */
+export function pendingAsks(interactions: { type: string; stepKey: string; resolved: boolean }[], stepKey: string) {
+  const waiting = interactions.filter((i) => i.stepKey === stepKey && !i.resolved);
+  return { hands: waiting.filter((i) => i.type === "hand").length, questions: waiting.filter((i) => i.type === "question").length };
+}

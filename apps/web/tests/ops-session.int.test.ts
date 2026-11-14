@@ -177,6 +177,21 @@ describe("holding the session now", () => {
     expect(await session()).toMatchObject({ date: today(), occurrenceKey: null, timerRunning: true, startedAt: expect.any(Date) });
   });
 
+  it("starts a session prepared for another day on today's date from the timer too (Space, the remote)", async () => {
+    await setSession({ startedAt: null, timerRunning: false });
+    await runOp(f.ctx, { op: "meeting.togglePlay" });
+    expect(await session()).toMatchObject({ date: today(), occurrenceKey: null, timerRunning: true, startedAt: expect.any(Date) });
+  });
+
+  it("refuses the timer's start too when the meeting was already held today", async () => {
+    await setSession({ startedAt: null, timerRunning: false });
+    await prisma.session.create({
+      data: { workspaceId: f.workspaceId, meetingId: f.meetingId, date: today(), status: "archived", archivedAt: new Date() },
+    });
+    await expect(runOp(f.ctx, { op: "meeting.togglePlay" })).rejects.toMatchObject({ key: "sessionHeldToday" });
+    expect(await session()).toMatchObject({ date: "2030-01-07", startedAt: null, timerRunning: false });
+  });
+
   it("opens a session today when none is prepared", async () => {
     await archiveCurrent();
     await runOp(f.ctx, { op: "session.now" });

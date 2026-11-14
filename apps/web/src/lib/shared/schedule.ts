@@ -35,3 +35,12 @@ export const newRule = (from: string, time = "10:00"): ScheduleRule => ({
   time,
   durationMin: 30,
 });
+
+/**
+ * Another pattern added to a schedule: no day and no time yet. It is saved, and moves the prepared session, only
+ * once the host picked both (a day of today's weekday at the last pattern's time would be saved at once)
+ */
+export const draftRule = (from: string): ScheduleRule => ({ ...newRule(from), byDay: [], time: "" });
+
+/** Whether a pattern says when it meets: a time, and its days when it is weekly */
+export const ruleReady = (r: ScheduleRule) => !!r.time && (r.freq !== "weekly" || r.byDay.length > 0);

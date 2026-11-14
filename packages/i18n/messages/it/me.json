@@ -9,6 +9,7 @@
     "decisions": "Decisioni"
   },
   "notAMember": "Il tuo indirizzo non corrisponde a nessun membro del team: non hai una scheda da compilare.",
+  "observerNote": "Segui questa riunione come osservatore: nessuna scheda da compilare. Leggi le schede del team o segui la riunione in diretta.",
   "yourTurnTitle": "Tocca a te!",
   "youreNext": "tocca a te dopo",
   "yourTurn": "È il tuo turno!",
@@ -25,6 +26,7 @@
   "browsing": "Stai guardando <strong>{view}</strong>. In diretta c'è <strong>{live}</strong>.",
   "backToLive": "Torna alla diretta",
   "followOnly": "Il tuo indirizzo non corrisponde a nessun membro del team: puoi seguire la riunione senza interagire.",
+  "observerDock": "Segui la riunione come osservatore.",
   "reactions": "Reazioni",
   "react": "Reagisci",
   "signals": "Segnali a chi parla",

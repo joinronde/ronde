@@ -39,6 +39,10 @@ test("people, sections, schedule, template and deletion of a meeting; leaving an
   // An observer follows the sessions without a check-in of his own
   await rui.goto(`${meeting}/me`);
   await expect(rui.locator(".checkin-status")).toHaveCount(0);
+  // …told so, on the meeting's tab, without the check-in tab nor a word about an unknown address
+  await expect(rui.getByText("You follow this meeting as an observer: no check-in to fill in.", { exact: false })).toBeVisible();
+  await expect(rui.getByRole("tab", { name: "My check-in" })).toHaveCount(0);
+  await expect(rui.getByText("Your address does not match")).toHaveCount(0);
   // Back as a participant, so the section added below shows on his check-in
   await choose(page, page.getByRole("combobox", { name: "Role of Rui Rocha" }), "participant");
   await expect(page.getByRole("combobox", { name: "Role of Rui Rocha" })).toContainText("Participant");
@@ -60,6 +64,16 @@ test("people, sections, schedule, template and deletion of a meeting; leaving an
   await rui.reload();
   await expect(rui.getByRole("group", { name: "Demo to show" })).toContainText("The new login page");
 
+  // Left right after a keystroke, from the breadcrumb: the change is saved all the same
+  await page.goto(`${meeting}/settings`);
+  await page.getByLabel("Name shown for the host").fill("Captain");
+  const sent = page.waitForResponse((r) => r.url().endsWith("/rpc") && (r.request().postData() ?? "").includes('"settings.save"'));
+  await page.getByRole("navigation", { name: "Location" }).getByRole("link").first().click();
+  await page.waitForURL(workspace);
+  await sent;
+  await page.goto(`${meeting}/settings`);
+  await expect(page.getByLabel("Name shown for the host")).toHaveValue("Captain");
+
   // Schedule: Thursday instead of Monday; the summary and the next dates follow once saved (by itself)
   await page.goto(`${meeting}/settings#schedule`);
   await expect(page.locator(".schedule-summary")).toHaveText(/^Every Monday at 10:00/);
@@ -73,6 +87,31 @@ test("people, sections, schedule, template and deletion of a meeting; leaving an
   const dates = page.getByRole("region", { name: "Next dates" }).getByRole("listitem");
   await expect(dates.first()).toContainText("Thursday");
   await expect(dates.filter({ hasText: "Monday" })).toHaveCount(0);
+  // Another pattern waits for its day and its time: nothing is saved meanwhile, the prepared session stays put
+  await page.getByRole("button", { name: /Add another pattern/ }).click();
+  await expect(page.locator(".schedule-status")).toHaveText("Pick the days and the time: the pattern is saved then.");
+  // Meanwhile the other patterns still save: the first one moved to 11:00
+  const ruleSaved = page.waitForResponse((r) => r.url().endsWith("/rpc") && (r.request().postData() ?? "").includes('"schedule.save"'));
+  await page.locator("#rule0-time").fill("11:00");
+  await ruleSaved;
+  await page.waitForTimeout(2500);
+  await page.reload();
+  await expect(page.locator(".rule-list > li")).toHaveCount(1);
+  await expect(page.locator(".schedule-summary")).toHaveText(/^Every Thursday at 11:00/);
+  // Two patterns on the same day are refused once: the reason stays under them, the save is not sent again
+  const saves: string[] = [];
+  page.on("request", (r) => {
+    if (r.url().endsWith("/rpc") && r.postData()?.includes('"schedule.save"')) saves.push(r.url());
+  });
+  await page.getByRole("button", { name: /Add another pattern/ }).click();
+  await choose(page, page.locator("#rule1-freq"), "monthly");
+  await page.locator("#rule1-time").fill("15:00");
+  await expect(page.locator(".schedule-status")).toContainText("Not saved: Two of these rules meet on the same day");
+  await page.waitForTimeout(4000);
+  expect(saves).toHaveLength(1);
+  await expect(page.locator("#rule1-time")).toHaveValue("15:00");
+  await page.reload();
+  await expect(page.locator(".rule-list > li")).toHaveCount(1);
   // A long list is searched rather than scrolled: the time zone, by part of a city's name
   await page.getByRole("combobox", { name: "Time zone", exact: true }).click();
   const search = page.getByRole("combobox", { name: "Search…" });

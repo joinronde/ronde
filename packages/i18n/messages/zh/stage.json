@@ -62,6 +62,7 @@
   "ended": "已结束",
   "live": "进行中",
   "questionsNext": "接下来：{count, plural, other {# 个提问}}",
+  "handsNext": "接下来 {count, plural, other {# 人举手}}",
   "spotlight": "聚光灯",
   "agenda": "议程",
   "parking": "暂存区：留待下次",

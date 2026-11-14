@@ -162,7 +162,7 @@
   "absencePeriod": "Scegli un primo e un ultimo giorno, in ordine, a distanza di un anno al massimo.",
   "phoneMissing": "Aggiungi prima il tuo numero di cellulare al profilo: la prova arriva lì.",
   "phoneInvalid": "Inserisci il numero di cellulare in formato internazionale, come +393123456789.",
-  "sessionHeldToday": "Oggi si è già tenuta una sessione di questa riunione.",
+  "sessionHeldToday": "Oggi si è già tenuta una sessione di questa riunione: questa si terrà alla sua data. Per una seconda sessione nello stesso giorno, crea un'altra riunione.",
   "guestLinkInvalid": "Questo link ospite non è valido, è scaduto o è stato revocato. Chiedine uno nuovo a chi conduce la riunione.",
   "projectMembersOnly": "Solo le persone che lavorano a questo progetto possono modificarne la scheda.",
   "projectProgramme": "Un progetto non può far parte di sé stesso né di uno dei suoi progetti, e i programmi hanno al massimo tre livelli.",

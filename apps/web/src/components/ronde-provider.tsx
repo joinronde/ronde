@@ -40,7 +40,13 @@ interface RondeCtx {
   rpc: (
     op: Op,
     okMessage?: string,
-    opts?: { silent?: boolean; tone?: ToastTone; optimistic?: (s: Snapshot) => Snapshot },
+    opts?: {
+      silent?: boolean;
+      tone?: ToastTone;
+      optimistic?: (s: Snapshot) => Snapshot;
+      /** Shows a refusal where it happened, instead of a toast */
+      onError?: (message: string) => void;
+    },
   ) => Promise<boolean>;
   toast: (msg: string, tone?: ToastTone) => void;
   /** Changes when a session is archived or its summary edited: history and stats load again */
@@ -293,7 +299,11 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
   }, [refetch]);
 
   const rpc = useCallback(
-    async (op: Op, okMessage?: string, opts?: { silent?: boolean; tone?: ToastTone; optimistic?: (s: Snapshot) => Snapshot }) => {
+    async (
+      op: Op,
+      okMessage?: string,
+      opts?: { silent?: boolean; tone?: ToastTone; optimistic?: (s: Snapshot) => Snapshot; onError?: (message: string) => void },
+    ) => {
       const id = Math.random();
       const fn = opts?.optimistic;
       if (fn) setPatches((ps) => [...ps, { id, fn, after: null }]);
@@ -321,7 +331,8 @@ export function RondeProvider({ initial, children }: { initial: Snapshot; childr
           settle(false);
           const body = (await res.json().catch(() => null)) as { error?: string } | null;
           if (!opts?.silent) {
-            toast(body?.error ?? t("actionFailed"), "error");
+            if (opts?.onError) opts.onError(body?.error ?? t("actionFailed"));
+            else toast(body?.error ?? t("actionFailed"), "error");
             // Refused, often because the page was behind (a check-in saved elsewhere): catch up
             scheduleRefetch();
           }

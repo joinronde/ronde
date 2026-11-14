@@ -27,7 +27,17 @@ import { confetti, motionAllowed } from "@ronde/ui/effects";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { writersOf } from "@/lib/shared/sheets";
-import { joinedOf, plannedStart, projectEntries, projectsWithTurn, sectionsHave, waitLabel, waitTone } from "@/lib/shared/stage";
+import {
+  joinedOf,
+  pendingAsks,
+  plannedStart,
+  projectEntries,
+  projectsWithTurn,
+  sectionsHave,
+  stepStatus,
+  waitLabel,
+  waitTone,
+} from "@/lib/shared/stage";
 import { AmbienceLayer, useAmbience } from "./ambience";
 import { ItemText } from "./check-in-fields";
 import { LineReactions } from "./line-reactions";
@@ -942,7 +952,8 @@ function EndBody({ celebrate }: { celebrate?: boolean }) {
   // Next session planned after this one, by the schedule
   const nextDate = s.settings.schedule.upcoming.find((o) => !o.cancelled && o.date > (s.meeting?.date ?? ""))?.date;
   const m = s.meeting!;
-  const sp = agenda.filter((x) => x.type === "speaker");
+  // The people who had their turn: those jumped over did not speak
+  const sp = agenda.filter((x) => x.type === "speaker" && x.key in m.spent);
   const lim = s.settings.speakSec * 1000;
   const end = m.endedAt ?? now();
   const max = Math.max(lim * 1.5, ...sp.map((x) => spentOf(m, x.key, end)));
@@ -1088,7 +1099,7 @@ export function Stage({
     const who = nameOf(r.byId) || host;
     if (!(rxBy[r.emoji] ??= []).includes(who)) rxBy[r.emoji]!.push(who);
   }
-  const pend = step.type !== "qa" ? s.interactions.filter((i) => i.stepKey === step.key && !i.resolved).length : 0;
+  const pend = step.type !== "qa" ? pendingAsks(s.interactions, step.key) : { hands: 0, questions: 0 };
   // Spotlight: an item of the shown check-in is highlighted in place; anything else (message, question…) shows as a banner
   const spot = live ? m.spotlight : null;
   const inCheckIn =
@@ -1120,7 +1131,8 @@ export function Stage({
             ))}
           </span>
         )}
-        {pend > 0 && <span className="pill q">✋ {t("questionsNext", { count: pend })}</span>}
+        {pend.hands > 0 && <span className="pill q">✋ {t("handsNext", { count: pend.hands })}</span>}
+        {pend.questions > 0 && <span className="pill q">❓ {t("questionsNext", { count: pend.questions })}</span>}
         {live && step.type !== "speaker" && step.type !== "project" && step.type !== "end" && !step.limitMs ? (
           <UpCount className="pos" />
         ) : (
@@ -1166,9 +1178,11 @@ export function Strip({ viewKey, onPick }: { viewKey?: string; onPick?: (key: st
   return (
     <SwipeRow nav className="strip" aria-label={t("agenda")} selected={m.stepKey}>
       {agenda.map((x, i) => {
+        // Jumped over ("Go" to a later step): neither ticked nor timed
+        const status = stepStatus(m, x.key, i, cur);
         const cls = [
           "step",
-          i < cur ? "done" : "",
+          status === "done" || status === "skipped" ? status : "",
           x.key === m.stepKey ? "cur" : "",
           onPick && viewKey === x.key && x.key !== m.stepKey ? "view" : "",
           x.type === "qa" ? "qa" : "",
@@ -1196,7 +1210,7 @@ export function Strip({ viewKey, onPick }: { viewKey?: string; onPick?: (key: st
             </span>
           );
         const tm =
-          (x.type === "speaker" || x.type === "project") && i <= cur
+          (x.type === "speaker" || x.type === "project") && (status === "done" || status === "current")
             ? mmssPlain(spentOf(m, x.key, at))
             : x.type === "qa" && x.pending
               ? String(x.pending)
@@ -1206,7 +1220,7 @@ export function Strip({ viewKey, onPick }: { viewKey?: string; onPick?: (key: st
             {icon}
             <span className="lab">
               {x.type === "speaker" ? first(x.label) : x.label}
-              {i < cur ? " ✓" : ""}
+              {status === "done" ? " ✓" : ""}
             </span>
             {tm && <span className="tm">{tm}</span>}
           </>

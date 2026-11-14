@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { HistoryView } from "@/components/history";
-import { type MeetingPageParams, pageMeeting, requireHostPage } from "@/lib/server/meeting/page";
+import { type MeetingPageParams, pageMeeting, requirePagePermission } from "@/lib/server/meeting/page";
 
 export async function generateMetadata() {
   const t = await getTranslations("pages");
@@ -8,6 +8,7 @@ export async function generateMetadata() {
 }
 
 export default async function Page(props: MeetingPageParams) {
-  requireHostPage(await pageMeeting(props));
+  // Read by everyone of the meeting: the drafts, editing and publishing stay with the hosts (the server filters)
+  requirePagePermission(await pageMeeting(props), "history.read");
   return <HistoryView />;
 }

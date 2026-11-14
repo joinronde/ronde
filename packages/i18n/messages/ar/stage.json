@@ -62,6 +62,7 @@
   "ended": "انتهى",
   "live": "مباشر",
   "questionsNext": "التالي: {count, plural, zero {لا أسئلة} one {سؤال واحد} two {سؤالان} few {# أسئلة} many {# سؤالًا} other {# سؤال}}",
+  "handsNext": "التالي: {count, plural, zero {لا أيادٍ مرفوعة} one {يد مرفوعة واحدة} two {يدان مرفوعتان} few {# أيادٍ مرفوعة} many {# يدًا مرفوعة} other {# يد مرفوعة}}",
   "spotlight": "تسليط الضوء",
   "agenda": "جدول الأعمال",
   "parking": "المواضيع المؤجلة، للمرة القادمة",

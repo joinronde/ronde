@@ -141,7 +141,7 @@
   },
   "shiftHandover": {
     "name": "Shift handover",
-    "description": "Fifteen minutes between two shifts: what happened, what to watch and what the next shift must do.",
+    "description": "Fifteen minutes between two shifts: what happened, what to watch and what the next shift must do. One meeting per handover: a meeting holds one session a day.",
     "sections": {
       "events": "What happened",
       "watch": "To watch",

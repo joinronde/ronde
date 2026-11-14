@@ -10,7 +10,7 @@ import { AccessError, OpError } from "../../errors";
 import { deliver } from "../../inbox";
 import { toSection } from "../dto";
 import { timeZoneOf } from "../schedule";
-import { defineOp } from "./define";
+import { defineOp, type OpContext } from "./define";
 
 // What everyone does around a session: open topics and votes, comments on check-ins, follow-up actions.
 // Raised hands, reactions, kudos, mood and the icebreaker are modules (@ronde/modules).
@@ -49,6 +49,12 @@ function decidedOn(session: { date: string; startedAt: Date | null } | null, tim
   if (!session) return today;
   if (session.startedAt) return session.date;
   return session.date < today ? session.date : today;
+}
+
+/** An action's owner: one of the meeting's people, still in the workspace (one who left would never close it) */
+async function requireOwner(ctx: Pick<OpContext, "db" | "meetingId">, personId: string) {
+  await requireParticipant(ctx, personId, "unknownOwner");
+  if (!(await ctx.db.person.findFirst({ where: { id: personId, active: true }, select: { id: true } }))) throw new OpError("unknownOwner");
 }
 
 export const liveOps = [
@@ -185,7 +191,7 @@ export const liveOps = [
     }),
     run: async ({ db, session, meetingId, workspaceId, m }, o) => {
       if (!m.viewer.isHost && o.ownerId !== m.viewer.personId) throw new AccessError(403, "ownActionsOnly");
-      await requireParticipant({ db, meetingId }, o.ownerId, "unknownOwner");
+      await requireOwner({ db, meetingId }, o.ownerId);
       const projectId = o.projectId === undefined ? projectOfKey(session?.stepKey ?? "") : o.projectId;
       if (projectId && !(await db.meetingProject.findFirst({ where: { meetingId, projectId }, select: { projectId: true } })))
         throw new OpError("notFound");
@@ -229,7 +235,7 @@ export const liveOps = [
       // A participant only moves their own actions forward; reassigning them is up to the host
       if (!m.viewer.isHost && (a.ownerId !== m.viewer.personId || o.ownerId)) throw new AccessError(403, "ownActionsOnly");
       const progress = o.progress === undefined ? undefined : o.progress.replace(/\s+/g, " ").trim() || null;
-      if (o.ownerId) await requireParticipant({ db, meetingId }, o.ownerId, "unknownOwner");
+      if (o.ownerId) await requireOwner({ db, meetingId }, o.ownerId);
       if (o.ownerId && o.ownerId !== a.ownerId)
         await deliver(db, workspaceId, {
           to: [o.ownerId],

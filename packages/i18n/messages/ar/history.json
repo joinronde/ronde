@@ -65,5 +65,8 @@
   "notesStep": "الخطوة",
   "notesLabel": "ملاحظات هذه الخطوة",
   "notesSave": "حفظ",
-  "notesSaved": "حُفظت الملاحظات"
+  "notesSaved": "حُفظت الملاحظات",
+  "discardAsk": "هل تريد تجاهل ما كتبته؟",
+  "discardYes": "تجاهل",
+  "discardNo": "متابعة الكتابة"
 }

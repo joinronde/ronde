@@ -8,7 +8,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { DurationField } from "@/components/duration-field";
 import { Select } from "@/components/select";
-import { isoDow, newRule, sameDays, withFreq } from "@/lib/shared/schedule";
+import { draftRule, isoDow, ruleReady, sameDays, withFreq } from "@/lib/shared/schedule";
 import { DateInput } from "./date-input";
 import { HolidayPicker } from "./holiday-picker";
 import { useRonde } from "./ronde-provider";
@@ -35,23 +35,30 @@ export function SchedulePanel() {
   // Changed here and not saved yet
   const [edited, setEdited] = useState(false);
   const [busy, setBusy] = useState(false);
+  // A change made while the saved schedule comes back is kept: the saved one no longer replaces what is on screen
   const setRules = (next: Draft[] | ((list: Draft[]) => Draft[])) => {
     setRulesState(next);
     setEdited(true);
+    setSyncing(false);
   };
   const setTimeZone = (tz: string) => {
     setTimeZoneState(tz);
     setEdited(true);
+    setSyncing(false);
   };
   // Saved here, waiting for the saved schedule (with the ids of new rules) to come back from the server
   const [syncing, setSyncing] = useState(false);
   // The saved schedule changed (saved here, or by another host): follow it, unless something is being
   // edited here. After a save, the edited values stay on screen until the saved ones arrive.
   const savedKey = JSON.stringify([saved.rules, saved.meetingTimeZone]);
+  // A pattern just added, without its day or its time yet: kept here, out of the save, until both are picked
+  const pending = rules.filter((r) => !r.id && !ruleReady(r));
+  const pendingRef = useRef(pending);
+  pendingRef.current = pending;
   useEffect(() => {
     if (edited && !syncing) return;
     const [savedRules, savedZone] = JSON.parse(savedKey) as [Draft[], string | null];
-    setRulesState(savedRules);
+    setRulesState([...savedRules, ...pendingRef.current]);
     setTimeZoneState(savedZone ?? "");
     setEdited(false);
     setSyncing(false);
@@ -65,34 +72,68 @@ export function SchedulePanel() {
     }, 3000);
     return () => clearTimeout(timer);
   }, [syncing]);
-  const dirty = edited && !syncing && JSON.stringify([rules, timeZone || null]) !== savedKey;
+  // What is saved: every pattern but those just added and still incomplete
+  const toSave = rules.filter((r) => r.id || ruleReady(r));
+  const dirty = edited && !syncing && JSON.stringify([toSave, timeZone || null]) !== savedKey;
 
   const effectiveZone = timeZone || saved.timeZone;
   const today = localDate(Date.now(), effectiveZone);
-  const summary = useMemo(() => describeSchedule(rules, effectiveZone, locale), [rules, effectiveZone, locale]);
+  // A pattern without its day or time: left out of the summary and the dates; a saved one emptied blocks the save
+  const ready = rules.filter(ruleReady);
+  const complete = !pending.length;
+  const blocked = toSave.some((r) => !ruleReady(r));
+  const summary = useMemo(() => describeSchedule(rules.filter(ruleReady), effectiveZone, locale), [rules, effectiveZone, locale]);
   const patch = (i: number, p: Partial<Draft>) => setRules((list) => list.map((r, j) => (j === i ? { ...r, ...p } : r)));
 
-  const save = async () => {
-    setBusy(true);
-    const ok = await rpc({ op: "schedule.save", timeZone, rules: rules.map(({ id, ...r }) => ({ ...(id ? { id } : {}), ...r })) });
-    setBusy(false);
-    if (ok) {
-      setSyncing(true);
-      setSavedAt(Date.now());
-    }
-  };
-  // Saved by itself, like the other settings: a moment after the last change, once every field reads well
+  // Saved by itself, like the other settings: a moment after the last change, once every field reads well (the
+  // fields of a pattern still incomplete aside)
   const panel = useRef<HTMLDivElement>(null);
+  const invalid = () => [...(panel.current?.querySelectorAll(":invalid") ?? [])].some((el) => !el.closest("[data-pending]"));
   const [savedAt, setSavedAt] = useState(0);
   const draftKey = JSON.stringify([rules, timeZone]);
+  const latestKey = useRef(draftKey);
+  latestKey.current = draftKey;
+  // Refused (two patterns on the same day…): said under the patterns, and not sent again until the draft changes
+  const [failed, setFailed] = useState<{ key: string; message: string } | null>(null);
+  const refused = failed?.key === draftKey ? failed.message : null;
+  const save = async () => {
+    const sent = draftKey;
+    setBusy(true);
+    const ok = await rpc(
+      { op: "schedule.save", timeZone, rules: toSave.map(({ id, ...r }) => ({ ...(id ? { id } : {}), ...r })) },
+      undefined,
+      { onError: (message) => setFailed({ key: sent, message }) },
+    );
+    setBusy(false);
+    if (ok) {
+      setFailed(null);
+      setSavedAt(Date.now());
+      // Changed again while it was saved: the newer draft stays on screen, and saves in its turn
+      if (latestKey.current === sent) setSyncing(true);
+    }
+  };
   // Runs again on each change of the draft, so the save sends the draft as it stands when the delay ends
   useEffect(() => {
-    if (!dirty || busy) return;
+    if (!dirty || busy || blocked || refused) return;
     const timer = setTimeout(() => {
-      if (!panel.current?.querySelector(":invalid")) void save();
+      if (!invalid()) void save();
     }, SCHEDULE_AUTOSAVE_MS);
     return () => clearTimeout(timer);
   }, [draftKey, dirty, busy]);
+
+  // Left before the delay ran out (another page from the sidebar, a tab put aside): saved at once
+  const flush = useRef(() => {});
+  flush.current = () => {
+    if (dirty && !busy && !blocked && !refused && !invalid()) void save();
+  };
+  useEffect(() => {
+    const onHide = () => document.visibilityState === "hidden" && flush.current();
+    document.addEventListener("visibilitychange", onHide);
+    return () => {
+      document.removeEventListener("visibilitychange", onHide);
+      flush.current();
+    };
+  }, []);
 
   // One weekly rule: offer to alternate two times, one week apart
   const one = rules.length === 1 && rules[0]!.freq === "weekly" ? rules[0]! : null;
@@ -124,12 +165,7 @@ export function SchedulePanel() {
         ))}
       </ol>
       <div className="controls">
-        <button
-          type="button"
-          className="btn"
-          onClick={() => setRules([...rules, newRule(today, rules.at(-1)?.time)])}
-          disabled={rules.length >= 8}
-        >
+        <button type="button" className="btn" onClick={() => setRules([...rules, draftRule(today)])} disabled={rules.length >= 8}>
           + {t("addPattern")}
         </button>
         {one && (
@@ -147,11 +183,19 @@ export function SchedulePanel() {
           onChange={setTimeZone}
         />
       </div>
-      <p className={`schedule-status${dirty || busy ? " is-saving" : ""}`} role="status" aria-live="polite">
-        {dirty || busy ? t("saving") : savedAt ? t("saved") : ""}
+      <p className={`schedule-status${refused ? " is-failed" : dirty || busy ? " is-saving" : ""}`} role="status" aria-live="polite">
+        {refused
+          ? t("notSaved", { error: refused })
+          : dirty || busy
+            ? t("saving")
+            : !complete
+              ? t("draftPattern")
+              : savedAt
+                ? t("saved")
+                : ""}
       </p>
       <Holidays />
-      <Upcoming rules={rules} timeZone={effectiveZone} editable={!dirty} />
+      <Upcoming rules={ready} timeZone={effectiveZone} editable={!dirty} />
     </div>
   );
 }
@@ -215,10 +259,10 @@ function RuleEditor({
     onChange({ byDay: r.freq === "daily" && next.length === 7 ? [] : next });
   };
   return (
-    <li className="rule">
+    <li className="rule" data-pending={!r.id && !ruleReady(r) ? "" : undefined}>
       <div className="rule-head">
         <span className="eyebrow">{t("pattern", { n: index + 1 })}</span>
-        <span className="rule-says">{describeSchedule([r], "UTC", locale, "UTC")}</span>
+        <span className="rule-says">{ruleReady(r) ? describeSchedule([r], "UTC", locale, "UTC") : t("draftPattern")}</span>
         {onRemove && (
           <button type="button" className="icon-btn danger" onClick={onRemove} aria-label={t("removePattern", { n: index + 1 })}>
             <Trash2 size={14} strokeWidth={2.2} aria-hidden="true" />

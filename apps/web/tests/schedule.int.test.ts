@@ -81,6 +81,46 @@ describe("sessions follow the schedule", () => {
     ).rejects.toMatchObject({ key: "meetingDateTaken" });
   });
 
+  it("never moves the prepared session to an hour already past", async () => {
+    // A pattern added for today at midnight, an hour gone: the session stays on Monday
+    const dow = ((new Date(`${today}T12:00:00Z`).getUTCDay() + 6) % 7) + 1;
+    const once = { ...weekly(today, "00:00"), byDay: [dow], until: today };
+    await runOp(f.ctx, { op: "schedule.save", timeZone: "", rules: [weekly(monday), once] });
+    expect((await current()).date).toBe(monday);
+  });
+
+  it("never opens a session at an hour already past either, when there was none", async () => {
+    await prisma.session.deleteMany({ where: { meetingId: f.meetingId } });
+    const dow = ((new Date(`${today}T12:00:00Z`).getUTCDay() + 6) % 7) + 1;
+    const once = { ...weekly(today, "00:00"), byDay: [dow], until: today };
+    await runOp(f.ctx, { op: "schedule.save", timeZone: "", rules: [weekly(monday), once] });
+    expect((await current()).date).toBe(monday);
+  });
+
+  it("refuses to bring back a date another session took meanwhile", async () => {
+    const s = await current();
+    const ruleId = s.occurrenceKey!.split(":")[0]!;
+    const following = `${ruleId}:${addDays(monday, 7)}`;
+    await runOp(f.ctx, { op: "schedule.move", key: s.occurrenceKey!, date: addDays(monday, 1), time: null, durationMin: null });
+    // The next week's session comes to the Monday left free
+    await runOp(f.ctx, { op: "schedule.move", key: following, date: monday, time: null, durationMin: null });
+    await expect(runOp(f.ctx, { op: "schedule.restore", key: s.occurrenceKey! })).rejects.toMatchObject({ key: "meetingDateTaken" });
+  });
+
+  it("refuses to hold on a public holiday a date another session took meanwhile", async () => {
+    const s = await current();
+    const ruleId = s.occurrenceKey!.split(":")[0]!;
+    // Skipped as a holiday skips it
+    await runOp(f.ctx, { op: "schedule.skip", key: s.occurrenceKey! });
+    await runOp(f.ctx, { op: "schedule.move", key: `${ruleId}:${addDays(monday, 7)}`, date: monday, time: null, durationMin: null });
+    await expect(runOp(f.ctx, { op: "schedule.keep", key: `${ruleId}:${monday}` })).rejects.toMatchObject({ key: "meetingDateTaken" });
+  });
+
+  it("refuses to date the session prepared on another occurrence's day", async () => {
+    await expect(runOp(f.ctx, { op: "meeting.setDate", date: addDays(monday, 7) })).rejects.toMatchObject({ key: "meetingDateTaken" });
+    expect((await current()).date).toBe(monday);
+  });
+
   it("alternates two times, every other week", async () => {
     await runOp(f.ctx, { op: "schedule.save", timeZone: "", rules: [weekly(monday, "10:00", 2), weekly(addDays(monday, 7), "15:00", 2)] });
     const snap = await loadSnapshot(f.ctx, "en");

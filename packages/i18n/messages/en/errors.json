@@ -162,7 +162,7 @@
   "absencePeriod": "Pick a first and a last day, in order, a year apart at most.",
   "phoneMissing": "Add your mobile number to your profile first: the test goes there.",
   "phoneInvalid": "Enter the mobile number in international form, like +33612345678.",
-  "sessionHeldToday": "A session of this meeting was already held today.",
+  "sessionHeldToday": "A session of this meeting was already held today: this one takes place on its own date. For a second session the same day, create another meeting.",
   "guestLinkInvalid": "This guest link is invalid, has expired or was revoked. Ask the host for a new one.",
   "projectMembersOnly": "Only the people working on this project can change its sheet.",
   "projectProgramme": "A project cannot belong to itself or to one of its own projects, and programs go three levels deep at most.",

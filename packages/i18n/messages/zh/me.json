@@ -9,6 +9,7 @@
     "decisions": "决定"
   },
   "notAMember": "你的邮箱与团队中的任何成员都不匹配，因此无需填写进展卡。",
+  "observerNote": "你以旁听者身份参加此会议：无需填写进展卡。可以阅读团队的进展卡，或实时旁听会议。",
   "yourTurnTitle": "轮到你了！",
   "youreNext": "下一个就是你",
   "yourTurn": "现在轮到你发言！",
@@ -25,6 +26,7 @@
   "browsing": "你正在查看 <strong>{view}</strong>，会议当前进行到 <strong>{live}</strong>。",
   "backToLive": "回到当前进度",
   "followOnly": "你的邮箱与团队中的任何成员都不匹配：你可以跟随会议，但不能互动。",
+  "observerDock": "你以旁听者身份参加会议。",
   "reactions": "表情回应",
   "react": "回应",
   "signals": "给发言者的信号",

@@ -1,8 +1,9 @@
 "use client";
 
+import { isRtl, type Locale } from "@ronde/i18n";
 import { Modal } from "@ronde/ui/modal";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { matchesWords } from "@/lib/shared/search";
 import type { ControlPane } from "./control-room-tour";
@@ -22,18 +23,24 @@ interface Command {
 
 /** Every word typed appears in the label or the group */
 const matches = (c: Command, q: string) => matchesWords(`${c.label} ${c.group}`, q);
-const isTyping = (e: KeyboardEvent) => !!(e.target as HTMLElement | null)?.closest?.("input,textarea,select,[contenteditable]");
+/** Typing in a field, or a dialog open: "?" is theirs (typed, dictated), not the help's */
+const isTyping = (e: KeyboardEvent) =>
+  !!(e.target as HTMLElement | null)?.closest?.("input,textarea,select,[contenteditable]") ||
+  !!document.querySelector('[aria-modal="true"]');
 
 export function useControlShortcuts() {
   const [palette, setPalette] = useState(false);
   const [help, setHelp] = useState(false);
+  // The help open, "?" closes it: its own dialog does not count as one where "?" is typed
+  const helpOpen = useRef(false);
+  helpOpen.current = help;
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         setHelp(false);
         setPalette((x) => !x);
-      } else if (e.key === "?" && !isTyping(e) && !e.metaKey && !e.ctrlKey) {
+      } else if (e.key === "?" && (helpOpen.current || !isTyping(e)) && !e.metaKey && !e.ctrlKey) {
         e.preventDefault();
         setPalette(false);
         setHelp((x) => !x);
@@ -211,9 +218,11 @@ export function CommandPalette({ onClose, onPane }: { onClose: () => void; onPan
 export function ShortcutsHelp({ onClose }: { onClose: () => void }) {
   const t = useTranslations("palette");
   const titleId = useId();
+  // Right to left, Next points left: ← moves on
+  const rtl = isRtl(useLocale() as Locale);
   const rows: [string, string][] = [
-    ["→", t("help.next")],
-    ["←", t("help.previous")],
+    [rtl ? "←" : "→", t("help.next")],
+    [rtl ? "→" : "←", t("help.previous")],
     [t("keys.space"), t("help.timer")],
     ["⌘K / Ctrl+K", t("help.palette")],
     ["?", t("help.help")],

@@ -186,7 +186,8 @@
     "confirmDelete": "Confirm deletion",
     "delete": "Delete",
     "none": "No action.",
-    "new": "New action"
+    "new": "New action",
+    "ownerGone": "Someone who left the meeting"
   },
   "topics": {
     "handled": "Topic handled",

@@ -84,6 +84,20 @@ test("a participant's session, from two tabs of check-in to last time's plans", 
   // The dock, on the Live tab: a question the host sees, thanks to Leo shown on the screen and the wall
   const screen = await page.context().newPage();
   await screen.goto(`${meeting}/screen`);
+  // Shared in another browser whose live stream cannot reach the server: the screen says so, and comes back by itself
+  const projector = await (await browser.newContext({ locale: "en-US", storageState: await page.context().storageState() })).newPage();
+  const cut = (route: { abort: () => Promise<void> }) => route.abort();
+  await projector.route("**/events?**", cut);
+  await projector.goto(`${meeting}/screen`);
+  await expect(projector.locator(".stage")).toBeVisible();
+  await expect(projector.getByRole("status").filter({ hasText: "Reconnecting…" })).toBeVisible({ timeout: 30_000 });
+  // A long item wraps anywhere and stops at four lines there, so a long check-in keeps its blockers in view
+  const screenItem = projector.locator(".stage .card li").first();
+  await expect(screenItem).toHaveCSS("overflow-wrap", "anywhere");
+  await expect(screenItem).toHaveCSS("-webkit-line-clamp", "4");
+  await projector.unroute("**/events?**", cut);
+  await expect(projector.getByRole("status").filter({ hasText: "Reconnecting…" })).toHaveCount(0, { timeout: 60_000 });
+  await projector.context().close();
   await openTab(pia, "Live meeting");
   await pia.getByRole("textbox", { name: "Question" }).fill("When is the release?");
   await pia.getByRole("button", { name: "Send", exact: true }).click();

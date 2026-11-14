@@ -65,5 +65,8 @@
   "notesStep": "Étape",
   "notesLabel": "Notes de cette étape",
   "notesSave": "Enregistrer",
-  "notesSaved": "Notes enregistrées"
+  "notesSaved": "Notes enregistrées",
+  "discardAsk": "Abandonner ce que vous avez écrit ?",
+  "discardYes": "Abandonner",
+  "discardNo": "Continuer à écrire"
 }

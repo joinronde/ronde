@@ -1,6 +1,6 @@
 import type { Section, Snapshot } from "@ronde/core/types";
 import { describe, expect, it } from "vitest";
-import { actionOwners, linesAbout, sheetRows, sheetsToComplete, writersOf } from "@/lib/shared/sheets";
+import { actionOwners, linesAbout, ownersOfAction, sheetRows, sheetsToComplete, writersOf } from "@/lib/shared/sheets";
 
 // The project sheets of the control room and who an action can go to, computed from the meeting's state
 
@@ -80,6 +80,17 @@ describe("action owners", () => {
     const hana = { ...member("hana", false), role: "host" };
     const s = state({ members: [member("alice"), hana, member("chloe", false)] as unknown as Snapshot["members"] });
     expect(actionOwners(s).map((x) => x.id)).toEqual(["alice", "hana", "olivia"]);
+  });
+});
+
+describe("the owners offered for an action already given", () => {
+  it("are the usual ones when its owner is among them", () => {
+    expect(ownersOfAction(state(), "alice", "Gone").map((x) => x.id)).toEqual(["alice", "bruno", "olivia"]);
+  });
+
+  it("start with its owner, by name or as gone, when they left the round or the meeting", () => {
+    expect(ownersOfAction(state(), "chloe", "Gone")[0]).toEqual({ id: "chloe", name: "Chloe Doe" });
+    expect(ownersOfAction(state(), "zoe", "Gone")[0]).toEqual({ id: "zoe", name: "Gone" });
   });
 });
 

@@ -62,6 +62,7 @@
   "ended": "Beendet",
   "live": "LIVE",
   "questionsNext": "{count, plural, one {# Frage} other {# Fragen}} als Nächstes",
+  "handsNext": "{count, plural, one {# Handmeldung} other {# Handmeldungen}} als Nächstes",
   "spotlight": "Spotlight",
   "agenda": "Agenda",
   "parking": "Themenspeicher fürs nächste Mal",

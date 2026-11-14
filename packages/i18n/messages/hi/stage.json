@@ -62,6 +62,7 @@
   "ended": "समाप्त",
   "live": "लाइव",
   "questionsNext": "आगे {count, plural, one {# सवाल} other {# सवाल}}",
+  "handsNext": "आगे {count, plural, one {# उठा हुआ हाथ} other {# उठे हुए हाथ}}",
   "spotlight": "स्पॉटलाइट",
   "agenda": "एजेंडा",
   "parking": "पार्किंग लॉट, अगली बार के लिए",

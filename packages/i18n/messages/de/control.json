@@ -186,7 +186,8 @@
     "confirmDelete": "Löschen bestätigen",
     "delete": "Löschen",
     "none": "Keine Aufgabe.",
-    "new": "Neue Aufgabe"
+    "new": "Neue Aufgabe",
+    "ownerGone": "Jemand, der das Meeting verlassen hat"
   },
   "topics": {
     "handled": "Thema behandelt",

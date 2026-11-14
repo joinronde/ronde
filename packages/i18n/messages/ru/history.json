@@ -65,5 +65,8 @@
   "notesStep": "Этап",
   "notesLabel": "Заметки этого этапа",
   "notesSave": "Сохранить",
-  "notesSaved": "Заметки сохранены"
+  "notesSaved": "Заметки сохранены",
+  "discardAsk": "Удалить написанное?",
+  "discardYes": "Удалить",
+  "discardNo": "Продолжить"
 }

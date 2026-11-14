@@ -63,6 +63,8 @@
   "timeZone": "时区",
   "workspaceZone": "工作空间时区（{zone}）",
   "saved": "日程已保存",
+  "draftPattern": "请选择星期和时间：选好后即保存这条规则。",
+  "notSaved": "未保存：{error}",
   "saving": "正在保存……",
   "upcoming": "接下来的日期",
   "saveToEdit": "保存日程后，即可跳过某次会议或改期。",

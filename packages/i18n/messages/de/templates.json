@@ -141,7 +141,7 @@
   },
   "shiftHandover": {
     "name": "Schichtübergabe",
-    "description": "Fünfzehn Minuten zwischen zwei Schichten: was passiert ist, worauf zu achten ist und was die nächste Schicht tun muss.",
+    "description": "Fünfzehn Minuten zwischen zwei Schichten: was passiert ist, worauf zu achten ist und was die nächste Schicht tun muss. Ein Meeting pro Übergabe: Ein Meeting hat eine Sitzung pro Tag.",
     "sections": {
       "events": "Was passiert ist",
       "watch": "Im Auge behalten",

@@ -7,6 +7,7 @@ import {
   canPlace,
   filledCount,
   isTracked,
+  keyAllowed,
   localToday,
   memberOfStep,
   minutesCheck,
@@ -15,6 +16,7 @@ import {
   parseOmit,
   projectOrderOf,
   serializeOmit,
+  shortcutOf,
   shuffleProjects,
   sortActions,
   startOp,
@@ -666,5 +668,39 @@ describe("minutesPartsOf", () => {
     expect(parts).toEqual(["checkIns", "comments", "topics", "kudos", "polls"]);
     expect(parts).not.toContain("mood");
     expect(minutesPartsOf(() => true)).toEqual([...MINUTES_PARTS]);
+  });
+});
+
+describe("the keys of the control room", () => {
+  it("move on with →, back with ←, and toggle the timer with Space", () => {
+    expect([shortcutOf("ArrowRight", false), shortcutOf("ArrowLeft", false), shortcutOf(" ", false)]).toEqual([
+      "next",
+      "previous",
+      "timer",
+    ]);
+    expect(shortcutOf("a", false)).toBeNull();
+  });
+
+  it("follow the buttons right to left: ← moves on, where Next points", () => {
+    expect([shortcutOf("ArrowLeft", true), shortcutOf("ArrowRight", true)]).toEqual(["next", "previous"]);
+  });
+});
+
+describe("where the keys of the control room act", () => {
+  it("moves with the arrows from the page and from a button clicked last", () => {
+    for (const where of ["page", "button", "deckButton"] as const) {
+      expect(keyAllowed("next", where)).toBe(true);
+      expect(keyAllowed("previous", where)).toBe(true);
+    }
+  });
+
+  it("toggles the timer with Space from the page and the deck's buttons, not from another button, which it presses", () => {
+    expect(keyAllowed("timer", "page")).toBe(true);
+    expect(keyAllowed("timer", "deckButton")).toBe(true);
+    expect(keyAllowed("timer", "button")).toBe(false);
+  });
+
+  it("leaves the keys to a field, a tab, a menu or a dialog", () => {
+    for (const action of ["next", "previous", "timer"] as const) expect(keyAllowed(action, "own")).toBe(false);
   });
 });

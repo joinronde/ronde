@@ -38,6 +38,17 @@ export function actionOwners(s: Snapshot): { id: string; name: string }[] {
   return [...s.members.filter((x) => x.active || runs(x)), ...s.observers].filter((x) => !seen.has(x.id) && seen.add(x.id));
 }
 
+/**
+ * The owners offered for an action already given: its owner first when no longer among them (out of the round, or
+ * gone from the meeting), so the list says who holds it and the host can hand it to someone else
+ */
+export function ownersOfAction(s: Snapshot, ownerId: string, gone: string): { id: string; name: string }[] {
+  const list = actionOwners(s);
+  if (list.some((x) => x.id === ownerId)) return list;
+  const known = s.members.find((x) => x.id === ownerId);
+  return [{ id: ownerId, name: known?.name ?? gone }, ...list];
+}
+
 export type SheetRow = { p: Snapshot["projects"][number]; missing: string[]; lines: { id: string; n: number }[]; complete: boolean };
 
 /** What each project sheet still needs: its health, its message of the day, a line from each of its people here */

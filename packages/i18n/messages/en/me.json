@@ -9,6 +9,7 @@
     "decisions": "Decisions"
   },
   "notAMember": "Your address does not match any team member: you have no check-in to fill in.",
+  "observerNote": "You follow this meeting as an observer: no check-in to fill in. Read the team's check-ins, or follow the meeting live.",
   "yourTurnTitle": "Your turn!",
   "youreNext": "You're next",
   "yourTurn": "It's your turn!",
@@ -25,6 +26,7 @@
   "browsing": "You are looking at <strong>{view}</strong>. Live is on <strong>{live}</strong>.",
   "backToLive": "Back to live",
   "followOnly": "Your address does not match any team member: you can follow the meeting without interacting.",
+  "observerDock": "You follow the meeting as an observer.",
   "reactions": "Reactions",
   "react": "React",
   "signals": "Signals to the speaker",

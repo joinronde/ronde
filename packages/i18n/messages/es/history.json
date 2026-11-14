@@ -65,5 +65,8 @@
   "notesStep": "Paso",
   "notesLabel": "Notas de este paso",
   "notesSave": "Guardar",
-  "notesSaved": "Notas guardadas"
+  "notesSaved": "Notas guardadas",
+  "discardAsk": "¿Descartar lo que escribiste?",
+  "discardYes": "Descartar",
+  "discardNo": "Seguir escribiendo"
 }

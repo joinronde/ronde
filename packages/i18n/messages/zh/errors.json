@@ -162,7 +162,7 @@
   "absencePeriod": "请按顺序选择第一天和最后一天，间隔最多一年。",
   "phoneMissing": "请先在个人资料中添加手机号码：测试会发送到该号码。",
   "phoneInvalid": "请使用国际格式输入手机号码，例如 +8613812345678。",
-  "sessionHeldToday": "此会议今天已经举行过一次。",
+  "sessionHeldToday": "此会议今天已经举行过一次：本次会议将在计划日期举行。如需当天再开一次，请另建一个会议。",
   "guestLinkInvalid": "此访客链接无效、已过期或已被撤销。请向主持人索取新的链接。",
   "projectMembersOnly": "只有参与此项目的人可以修改它的项目卡。",
   "projectProgramme": "项目不能隶属于自身或其下属项目，项目集最多嵌套三层。",

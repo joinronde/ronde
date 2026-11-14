@@ -63,6 +63,8 @@
   "timeZone": "Time zone",
   "workspaceZone": "Workspace time zone ({zone})",
   "saved": "Schedule saved",
+  "draftPattern": "Pick the days and the time: the pattern is saved then.",
+  "notSaved": "Not saved: {error}",
   "saving": "Saving…",
   "upcoming": "Next dates",
   "saveToEdit": "The dates can be skipped or moved once the schedule is saved, in a moment.",

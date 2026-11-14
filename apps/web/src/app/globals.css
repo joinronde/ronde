@@ -135,6 +135,9 @@ kbd{font-family:var(--mono);font-size:12.5px;border:1px solid var(--line);border
 .card h3 .n{margin-inline-start:auto;font-family:var(--mono);color:var(--ink-3);letter-spacing:0}
 .card li{padding-block:.3em;padding-inline:1.4em 0;position:relative;font-size:1.02em;border-top:1px solid var(--surface-2)}
 .card li:first-child{border-top:0}
+.stage .card li{overflow-wrap:anywhere}
+/* On the shared screen, nobody scrolls: a long item stops at four lines, so the cards after it (blockers) stay in view */
+body.screen-mode .stage:not(.mini) .card li{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;line-clamp:4;overflow:hidden}
 .card li::before{position:absolute;inset-inline-start:0;top:.3em;font-family:var(--mono);font-weight:600}
 .card.done li::before{content:"✓";color:var(--ok)}
 .card.next li::before{content:"→";color:var(--accent)}
@@ -180,6 +183,7 @@ kbd{font-family:var(--mono);font-size:12.5px;border:1px solid var(--line);border
 .step{flex:none;display:flex;align-items:center;gap:.5em;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding-block:.35em;padding-inline:.4em .75em;color:var(--ink-2)}
 .step .tm{font-family:var(--mono);font-size:.8em;color:var(--ink-3)}
 .step.done{background:var(--surface-2)}
+.step.skipped{border-style:dashed;background:var(--surface-2)}
 .step.cur{border-color:var(--live);color:var(--ink);box-shadow:inset 0 0 0 1px var(--live)}
 .step.view{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);color:var(--ink)}
 .step.qa{background:var(--warn-soft);border-style:dashed}
@@ -998,6 +1002,8 @@ textarea.free-text{min-height:44px;max-height:calc(3lh + 22px);overflow-y:auto;r
 .past{display:grid;gap:10px}
 .past-body{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px 22px;padding-top:14px}
 .past-body .lbl-s{margin-bottom:2px}
+.past-tab{display:grid;gap:10px;align-content:start}
+.past-tab > .hchip.proj{justify-self:start}
 .hchip.proj{background:var(--accent-soft);color:var(--accent);font-weight:600}
 .hchip-l{color:var(--ink-3)}
 @media (max-width:700px){.hchip-l{display:none}}
@@ -2762,6 +2768,7 @@ html[data-feedback-shot] .modal{visibility:hidden}
 .rec-btn.on{border-color:var(--live);color:var(--live)}
 .screen-rec{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:6}
 .screen-rec .rec-banner{margin:0;box-shadow:var(--shadow)}
+.screen-lost{position:fixed;top:12px;inset-inline-start:12px;z-index:6;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 10px;box-shadow:var(--shadow)}
 @media (prefers-reduced-motion:reduce){.rec-dot{animation:none}}
 .transcript{display:grid;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
 .transcript > .btn{justify-self:start}
@@ -4110,6 +4117,7 @@ mark.hit{background:color-mix(in srgb,var(--accent) 22%,transparent);color:inher
 .deck-clock .lbl{font-size:12px;color:var(--ink-3)}
 /* Moving on, and the timer */
 .deck-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.deck-start-error{flex-basis:100%}
 .deck-nav{display:flex;flex-wrap:wrap;gap:8px;flex:1 1 320px}
 .deck-nav .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .deck-nav .deck-main{flex:1 1 auto;max-width:420px}
@@ -4546,6 +4554,7 @@ textarea.grow{field-sizing:content;min-height:calc(3lh + 22px);max-height:calc(1
 .field-check .check{min-height:40px;display:flex;align-items:center;gap:8px}
 .schedule-status{margin:0;min-height:1.4em;font-size:13px;color:var(--ok)}
 .schedule-status.is-saving{color:var(--ink-3)}
+.schedule-status.is-failed{color:var(--live)}
 /* A form's foot holding only an empty save status takes no room (still there for screen readers to announce "Saved") */
 .form-foot:not(:has(button)):has(> .save-status:empty){position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 /* The agenda editor: off as a whole while a session runs; the wrap-up shown last, fixed */

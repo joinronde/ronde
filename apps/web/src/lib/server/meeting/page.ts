@@ -1,4 +1,5 @@
 import "server-only";
+import type { Permission } from "@ronde/core/permissions";
 import { notFound, redirect } from "next/navigation";
 import { pageUser } from "../authz";
 import { type MeetingCtx, meetingContext } from "./context";
@@ -17,9 +18,14 @@ export async function pageMeeting({ params }: MeetingPageParams): Promise<Meetin
 /** Page where each person lands: the control room for hosts, "My screen" for everyone else */
 export const homeOf = (ctx: MeetingCtx) => `${ctx.links.path}/${ctx.viewer.isHost ? "control" : "me"}`;
 
-/** Host pages (control room, settings, stats, history): others are sent to "My screen" */
+/** Host pages (control room, settings, stats): others are sent to "My screen" */
 export function requireHostPage(ctx: MeetingCtx) {
   if (!ctx.viewer.isHost) redirect(`${ctx.links.path}/me`);
+}
+
+/** Pages of one permission (the history: every person of the meeting reads the published minutes) */
+export function requirePagePermission(ctx: MeetingCtx, permission: Permission) {
+  if (!ctx.can(permission)) redirect(`${ctx.links.path}/me`);
 }
 
 /** "My screen" is where people fill in their check-in: a host who does not take part goes to the control room */

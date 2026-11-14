@@ -13,6 +13,25 @@ export const localToday = (d = new Date()) =>
 /** What the Start button sends: a session prepared for another day is first dated today (the schedule keeps its occurrence) */
 export const startOp = (meetingDate: string, today = localToday()) => (meetingDate !== today ? "session.now" : "meeting.togglePlay");
 
+/** What a key does in the control room: → moves on and ← back (swapped right to left, where Next points), Space the timer */
+export const shortcutOf = (key: string, rtl: boolean): "next" | "previous" | "timer" | null =>
+  key === " " ? "timer" : key === "ArrowRight" ? (rtl ? "previous" : "next") : key === "ArrowLeft" ? (rtl ? "next" : "previous") : null;
+
+/**
+ * What takes these keys itself, so a shortcut never fires there: a field, a tab or a radio (arrows move between
+ * them), a menu, a list, a slider, anything in a dialog
+ */
+export const OWN_KEYS =
+  "input,textarea,select,[contenteditable],summary,[role=tab],[role=radio],[role=option],[role=menu],[role=menuitem],[role=listbox],[role=slider],[role=dialog],dialog";
+
+/**
+ * Whether a key acts on the meeting, by where the focus is: the page; a button or a link, often the one clicked
+ * last (the arrows still move, Space presses it); Previous or Next, where Space toggles the timer instead of
+ * pressing Next again; or something that takes the keys itself ("own")
+ */
+export const keyAllowed = (action: "next" | "previous" | "timer", where: "page" | "button" | "deckButton" | "own") =>
+  where !== "own" && (action !== "timer" || where !== "button");
+
 /** Member a step is about: the person speaking, or the one whose questions are handled */
 export const memberOfStep = (key: string) => (key.startsWith("qa:") ? key.slice(3) : key);
 

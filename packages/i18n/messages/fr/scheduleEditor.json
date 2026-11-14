@@ -63,6 +63,8 @@
   "timeZone": "Fuseau horaire",
   "workspaceZone": "Fuseau de l’espace ({zone})",
   "saved": "Planification enregistrée",
+  "draftPattern": "Choisissez les jours et l’heure : le motif sera enregistré ensuite.",
+  "notSaved": "Non enregistré : {error}",
   "saving": "Enregistrement…",
   "upcoming": "Prochaines dates",
   "saveToEdit": "Les dates pourront être sautées ou déplacées une fois la planification enregistrée, dans un instant.",

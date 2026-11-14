@@ -186,7 +186,8 @@
     "confirmDelete": "Confirmer la suppression",
     "delete": "Supprimer",
     "none": "Aucune action.",
-    "new": "Nouvelle action"
+    "new": "Nouvelle action",
+    "ownerGone": "Une personne qui a quitté la réunion"
   },
   "topics": {
     "handled": "Sujet traité",

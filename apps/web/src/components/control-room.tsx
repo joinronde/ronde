@@ -19,7 +19,7 @@ import {
   plainItem,
   VOTES_PER_PERSON,
 } from "@ronde/core/util";
-import { formatters } from "@ronde/i18n";
+import { formatters, isRtl, type Locale } from "@ronde/i18n";
 import { MdEditor } from "@ronde/ui/md-editor";
 import { Tour } from "@ronde/ui/tour";
 import {
@@ -63,19 +63,22 @@ import {
   canPlace,
   filledCount,
   isTracked,
+  keyAllowed,
   memberOfStep,
   minutesCheck,
   minutesPartsOf,
   nextLabel as nextLabelOf,
+  OWN_KEYS,
   parseOmit,
   projectOrderOf,
   serializeOmit,
+  shortcutOf,
   shuffleProjects,
   sortActions,
   startOp,
   stepTitle,
 } from "@/lib/shared/control-room";
-import { actionOwners, sheetRows, sheetsToComplete, writersOf } from "@/lib/shared/sheets";
+import { actionOwners, ownersOfAction, sheetRows, sheetsToComplete, writersOf } from "@/lib/shared/sheets";
 import { track } from "@/lib/shared/track";
 import { ActionProgress } from "./action-progress";
 import { Board } from "./board";
@@ -190,6 +193,8 @@ export function ControlRoomView() {
   const t = useTranslations("control");
   const tStage = useTranslations("stage");
   const { s, agenda, cur, rpc, liveSeen, mod, sections } = useRonde();
+  // Right to left, Next points left: ← moves on (see shortcutOf)
+  const rtl = isRtl(useLocale() as Locale);
   const tour_ = useControlTour(s.modules);
   const [pane, setPane] = useState<Pane>("run");
   const [beep, setBeep] = useState(false);
@@ -197,6 +202,8 @@ export function ControlRoomView() {
   const [tour, setTour] = useState(false);
   const shortcuts = useControlShortcuts();
   const [remote, setRemote] = useState(false);
+  // "Start the meeting" refused (a session already held today): said under the button, until another start
+  const [startError, setStartError] = useState<string | null>(null);
   useTick(1000);
   const m = s.meeting;
   const step = agenda[cur];
@@ -214,22 +221,22 @@ export function ControlRoomView() {
     prevDate.current = m?.date;
   }, [m?.stepKey, m?.date]);
 
-  // Keyboard shortcuts: → next, ← previous, Space timer
+  // Keyboard shortcuts: → next, ← previous (swapped right to left), Space timer; never from a field, a tab, a menu
+  // or with a dialog open, where these keys do their own job; from a button, the arrows only, Space pressing it
+  // (but toggling the timer on Previous and Next, often the button clicked last)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (!m || (e.target as HTMLElement).closest("input,textarea,select,[contenteditable]")) return;
-      // Before the start, only "Start the meeting" moves forward
-      if ((e.key === "ArrowRight" || e.key === "ArrowLeft") && !m.startedAt) return;
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
-        void rpc({ op: "meeting.step", delta: 1, from: m.stepKey });
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        void rpc({ op: "meeting.step", delta: -1, from: m.stepKey });
-      } else if (e.key === " ") {
-        e.preventDefault();
-        void rpc({ op: "meeting.togglePlay" });
-      }
+      if (!m || e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+      const el = e.target as HTMLElement;
+      if (el.closest?.(OWN_KEYS) || document.querySelector('[aria-modal="true"]')) return;
+      // Before the start, only "Start the meeting" moves forward or starts (Space would start it unseen, undated)
+      if (!m.startedAt) return;
+      const action = shortcutOf(e.key, getComputedStyle(document.documentElement).direction === "rtl");
+      const where = el.closest?.("button,a[href],[role=button]") ? (el.closest(".deck-nav") ? "deckButton" : "button") : "page";
+      if (!action || !keyAllowed(action, where)) return;
+      e.preventDefault();
+      if (action === "timer") void rpc({ op: "meeting.togglePlay" });
+      else void rpc({ op: "meeting.step", delta: action === "next" ? 1 : -1, from: m.stepKey });
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -382,7 +389,7 @@ export function ControlRoomView() {
                         className="btn big"
                         disabled={cur <= 0 || !m.startedAt}
                         aria-label={t("previous")}
-                        title={t("shortcut", { key: "←" })}
+                        title={t("shortcut", { key: rtl ? "→" : "←" })}
                         onClick={() => rpc({ op: "meeting.step", delta: -1, from: m.stepKey })}
                       >
                         <ChevronLeft size={18} strokeWidth={2.4} aria-hidden="true" className="flip-rtl" />
@@ -394,11 +401,13 @@ export function ControlRoomView() {
                           className="btn big primary deck-main"
                           // A session prepared for another day happens today: it is dated today, the schedule keeps its occurrence
                           title={startOp(m.date) === "session.now" ? t("startToday") : undefined}
-                          onClick={() =>
-                            void rpc({ op: startOp(m.date) }, t("started") + (s.notify.started ? ` ${t("startedAnnounced")}` : "")).then(
-                              (ok) => ok && track("session_started"),
-                            )
-                          }
+                          aria-describedby={startError ? "startError" : undefined}
+                          onClick={() => {
+                            setStartError(null);
+                            void rpc({ op: startOp(m.date) }, t("started") + (s.notify.started ? ` ${t("startedAnnounced")}` : ""), {
+                              onError: setStartError,
+                            }).then((ok) => ok && track("session_started"));
+                          }}
                         >
                           <Play size={18} strokeWidth={2.4} aria-hidden="true" />
                           {t("start")}
@@ -413,7 +422,7 @@ export function ControlRoomView() {
                           type="button"
                           className={"btn big deck-main" + (m.startedAt ? " primary" : "")}
                           disabled={!next || !m.startedAt}
-                          title={m.startedAt ? t("shortcut", { key: "→" }) : t("startFirst")}
+                          title={m.startedAt ? t("shortcut", { key: rtl ? "←" : "→" }) : t("startFirst")}
                           onClick={() => rpc({ op: "meeting.step", delta: 1, from: m.stepKey })}
                         >
                           {next ? t("next", { label: nextLabel }) : t("lastStep")}
@@ -421,6 +430,11 @@ export function ControlRoomView() {
                         </button>
                       )}
                     </div>
+                    {startError && !m.startedAt && (
+                      <div className="form-alert error deck-start-error" id="startError" role="alert">
+                        {startError}
+                      </div>
+                    )}
                     {m.startedAt && step.type !== "end" && (
                       <div className="deck-timer-tools" role="group" aria-label={t("timerTools")}>
                         <button
@@ -1641,7 +1655,7 @@ function PaneActions() {
                   value={a.ownerId}
                   onChange={(e) => rpc({ op: "action.update", id: a.id, ownerId: e.target.value })}
                 >
-                  {owners.map((x) => (
+                  {ownersOfAction(s, a.ownerId, t("actions.ownerGone")).map((x) => (
                     <option key={x.id} value={x.id}>
                       {x.name}
                     </option>
