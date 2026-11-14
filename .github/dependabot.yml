@@ -1,0 +1,90 @@
+# Dependency updates, once a week (Monday morning), in few pull requests.
+#   - "npm" is the ecosystem pnpm belongs to: it reads pnpm-lock.yaml and the workspace's package.json files
+#     (pnpm-workspace.yaml: apps/*, packages/*, ee, ee-stub) and regenerates the lockfile with pnpm.
+#   - Security updates (opened when an advisory touches a dependency) have their own groups: they are not held
+#     back by the schedule or the cooldown, and are not mixed with the routine updates.
+#   - Dependabot does not edit the "overrides" of pnpm-workspace.yaml: when one of them follows a package that is
+#     updated (the Tiptap versions), change it in the same pull request.
+# The weekly audit (.github/workflows/audit.yml) opens an issue when a high or critical advisory is left.
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Paris
+    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 3
+    commit-message:
+      prefix: "📦 "
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
+      # Packages that must move together
+      tiptap:
+        patterns: ["@tiptap/*"]
+      sentry:
+        patterns: ["@sentry/*"]
+      prisma:
+        patterns: ["prisma", "@prisma/*"]
+      minor-and-patch:
+        update-types: [minor, patch]
+        patterns: ["*"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Paris
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "👷 "
+    groups:
+      actions:
+        patterns: ["*"]
+
+  # Images of docker/Dockerfile and of the compose files. The Node image is a build argument that follows
+  # .nvmrc and the Node security releases by hand, and a new major version of PostgreSQL needs a migration:
+  # neither is proposed.
+  - package-ecosystem: docker
+    directory: /docker
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Paris
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "🐳 "
+    ignore:
+      - dependency-name: node
+        update-types: ["version-update:semver-major"]
+      - dependency-name: postgres
+        update-types: ["version-update:semver-major"]
+    groups:
+      images:
+        patterns: ["*"]
+
+  - package-ecosystem: docker-compose
+    directory: /docker
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Paris
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "🐳 "
+    ignore:
+      - dependency-name: postgres
+        update-types: ["version-update:semver-major"]
+    groups:
+      images:
+        patterns: ["*"]

@@ -1,0 +1,76 @@
+name: Audit
+
+# Every Monday morning, and by hand: pnpm audit on the lockfile. When it finds an advisory of high or critical
+# severity, an issue labelled "dependency-audit" holds the report (the same issue is updated while it is open);
+# when the audit is clean again, that issue is closed. Dependabot (.github/dependabot.yml) opens the update
+# pull requests; this is the safety net for what it does not cover (an advisory with no fix to take, an
+# override to add in pnpm-workspace.yaml).
+
+on:
+  schedule:
+    - cron: "17 5 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: audit
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: pnpm audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      # The audit reads pnpm-lock.yaml: nothing to install
+      - name: Audit
+        id: audit
+        run: |
+          set +e
+          pnpm audit --audit-level high --json > audit.json
+          if ! jq -e '.advisories' audit.json > /dev/null; then
+            echo "pnpm audit did not answer (registry unreachable?):"; head -c 2000 audit.json; exit 1
+          fi
+          count=$(jq '[.advisories[] | select(.severity == "high" or .severity == "critical")] | length' audit.json)
+          pnpm audit --audit-level high > audit.txt 2>&1
+          cat audit.txt
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+      - name: Open, update or close the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          COUNT: ${{ steps.audit.outputs.count }}
+        run: |
+          gh label create dependency-audit --color B60205 --description "High or critical advisory in the dependencies" 2>/dev/null || true
+          number=$(gh issue list --label dependency-audit --state open --json number --jq '.[0].number // empty')
+          if [ "$COUNT" = 0 ]; then
+            if [ -n "$number" ]; then
+              gh issue close "$number" --comment "The audit is clean again: [run](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})."
+            fi
+            exit 0
+          fi
+          {
+            echo "\`pnpm audit --audit-level high\` found $COUNT advisories of high or critical severity on \`${GITHUB_REF_NAME}\` ([run](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}))."
+            echo
+            echo "Update the dependency (\`pnpm update <package> --depth Infinity -r\`, or a bump in its package.json); when its parent keeps it on the flawed version, add an \`overrides\` entry with a comment in \`pnpm-workspace.yaml\`. This issue is closed by the next audit that comes out clean."
+            echo
+            echo '````text'
+            head -c 55000 audit.txt
+            echo
+            echo '````'
+          } > body.md
+          if [ -n "$number" ]; then
+            gh issue edit "$number" --body-file body.md
+          else
+            gh issue create --title "Dependencies: high or critical advisories" --label dependency-audit --body-file body.md
+          fi
