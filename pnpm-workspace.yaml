@@ -15,3 +15,9 @@ overrides:
   "@tiptap/extension-floating-menu": 3.31.3
   # Pulled in by Better Auth for MySQL, which Ronde does not use: kept at a version without known flaws
   mysql2: 3.24.4
+  # Advisories on transitive dependencies that their parents' ranges kept on the flawed versions (pnpm audit, Nov 2026):
+  # they come with Prisma, imapflow and Better Auth SSO (vite, a peer of vitest, is a root devDependency)
+  deepmerge-ts: ^8.0.2
+  fast-uri: ^3.1.9
+  fast-xml-parser: ^5.12.0
+  ip-address: ^10.7.4
