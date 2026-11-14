@@ -1,9 +1,9 @@
 import { prisma } from "@ronde/db";
-import { beforeAll, describe, expect, it } from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { runOp } from "@/lib/server/meeting/ops";
 import { createMeeting } from "@/lib/server/meetings";
 import { encryptSecret } from "@/lib/server/secrets";
-import { deleteTemplate, meetingTemplate, resolveTemplate } from "@/lib/server/templates";
+import { deleteTemplate, listTemplates, meetingTemplate, resolveTemplate } from "@/lib/server/templates";
 import { type Fixture, meeting, workspace } from "./fixtures";
 
 // Templates: a meeting saved as a template, and a meeting created from it, keep the format and nothing private
@@ -158,5 +158,29 @@ describe("templates", () => {
     await expect(deleteTemplate(member as typeof f.ctx.ws, row.id)).rejects.toMatchObject({ key: "accessDenied" });
     await deleteTemplate(f.ctx.ws, row.id);
     expect(await prisma.template.count({ where: { workspaceId: f.workspaceId } })).toBe(0);
+  });
+});
+
+describe("templates for care teams", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+  const guides = async (locale: "en" | "fr") =>
+    Object.fromEntries((await listTemplates(f.ctx.ws, locale)).flatMap((x) => (x.healthGuide ? [[x.ref, x.healthGuide]] : [])));
+
+  it("say in Ronde's cloud where to read how to host Ronde oneself, in the reader's language", async () => {
+    vi.stubEnv("RONDE_CLOUD", "1");
+    vi.stubEnv("RONDE_SITE_URL", "https://site.test/");
+    // The two templates of the care teams, and no other
+    expect(await guides("en")).toEqual({
+      "builtin:shiftHandover": "https://site.test/en/docs/self-hosting",
+      "builtin:caseReview": "https://site.test/en/docs/self-hosting",
+    });
+    expect((await guides("fr"))["builtin:caseReview"]).toBe("https://site.test/fr/docs/self-hosting");
+  });
+
+  it("say nothing on a self-hosted instance: the data stays with the team", async () => {
+    vi.stubEnv("RONDE_SITE_URL", "https://site.test/");
+    expect(await guides("en")).toEqual({});
   });
 });

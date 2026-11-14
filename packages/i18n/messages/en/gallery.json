@@ -17,5 +17,7 @@
   },
   "minutes": "{count} min",
   "use": "Use this template",
+  "healthNotice": "No identifiable patient data in Ronde's cloud: write “Patient A” or initials, never a name. For health data, host Ronde on your own servers.",
+  "healthGuide": "Self-hosting guide",
   "saveHint": "Any meeting can become a workspace template: open its settings, then “Save as a template”."
 }

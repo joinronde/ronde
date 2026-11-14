@@ -50,6 +50,7 @@ import type { TemplateSummary } from "@/lib/server/templates";
 import { fold } from "@/lib/shared/search";
 import { track } from "@/lib/shared/track";
 import { useConfirm } from "./confirm";
+import { HealthDataNotice } from "./health-notice";
 import { browserTimeZone } from "./inputs";
 import { Menu } from "./menu";
 
@@ -268,6 +269,8 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
     </li>
   );
 
+  // A template for care teams, in Ronde's cloud: said next to the template while browsing, then above each step
+  const healthNotice = template.healthGuide ? <HealthDataNotice guide={template.healthGuide} /> : null;
   const preview = (
     // Scrolls on its own when long: it takes the focus so the keyboard can scroll it too
     <aside className="nm-preview" aria-label={t("preview.title")} tabIndex={0}>
@@ -276,6 +279,7 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
       </span>
       <h3>{template.name}</h3>
       {template.description && <p className="hint">{template.description}</p>}
+      {healthNotice}
       <dl className="nm-facts">
         <div>
           <dt>
@@ -360,6 +364,7 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
         <h2 ref={heading} tabIndex={-1} className="sr-only">
           {t(`steps.${STEPS[step]}`)}
         </h2>
+        {step > 0 && healthNotice}
 
         {step === 0 && (
           <div className="nm-browse">

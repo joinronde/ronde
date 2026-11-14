@@ -17,5 +17,7 @@
   },
   "minutes": "{count} min",
   "use": "Utiliser ce modèle",
+  "healthNotice": "Pas de données de patients identifiables dans le cloud de Ronde : écrivez « Patient A » ou des initiales, jamais un nom. Pour des données de santé, hébergez Ronde sur vos propres serveurs.",
+  "healthGuide": "Guide d'auto-hébergement",
   "saveHint": "Toute réunion peut devenir un modèle de l'espace : ouvrez ses réglages, puis « Enregistrer comme modèle »."
 }

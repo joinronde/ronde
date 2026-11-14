@@ -17,5 +17,7 @@
   },
   "minutes": "{count} min",
   "use": "Usar este modelo",
+  "healthNotice": "Nada de dados identificáveis de pacientes na nuvem do Ronde: escreva “Paciente A” ou iniciais, nunca um nome. Para dados de saúde, hospede o Ronde nos seus próprios servidores.",
+  "healthGuide": "Guia de auto-hospedagem",
   "saveHint": "Qualquer reunião pode virar um modelo do espaço: abra as configurações dela e depois “Salvar como modelo”."
 }
