@@ -6,6 +6,8 @@ import {
   describeRhythm,
   parseSections,
   parseTemplate,
+  preselectsEveryone,
+  roundTableMinutes,
   sectionsProblem,
   TEMPLATE_CATEGORY,
   templateData,
@@ -97,6 +99,35 @@ describe("template rhythm", () => {
     // A handover at each change of shift, morning and evening
     expect(rhythm(builtinTemplate("shiftHandover", "en").schedule, "en")).toBe("Every day · 15 min");
     expect(rhythm(builtinTemplate("shiftHandover", "fr").schedule, "fr")).toBe("Chaque jour · 15 min");
+  });
+});
+
+describe("who the creation wizard starts with", () => {
+  it("picks everyone in a small workspace, up to twelve active people", () => {
+    expect(preselectsEveryone("weekly", 2)).toBe(true);
+    expect(preselectsEveryone("weekly", 12)).toBe(true);
+    // A workspace's own template or a blank meeting, like the built-in ones
+    expect(preselectsEveryone("", 12)).toBe(true);
+  });
+
+  it("picks nobody in a larger one: forty boxes to untick is the slow way round", () => {
+    expect(preselectsEveryone("weekly", 13)).toBe(false);
+    expect(preselectsEveryone("standup", 41)).toBe(false);
+    expect(preselectsEveryone("", 13)).toBe(false);
+  });
+
+  it("picks nobody for a meeting of two, whatever the size of the workspace", () => {
+    for (const id of ["oneOnOne", "onboarding"]) {
+      expect(preselectsEveryone(id, 2)).toBe(false);
+      expect(preselectsEveryone(id, 41)).toBe(false);
+    }
+  });
+
+  it("tells how long the round table takes: each speaker's time, rounded up to the minute", () => {
+    expect(roundTableMinutes(8, 120)).toBe(16);
+    expect(roundTableMinutes(41, 120)).toBe(82);
+    expect(roundTableMinutes(5, 90)).toBe(8);
+    expect(roundTableMinutes(0, 120)).toBe(0);
   });
 });
 

@@ -611,6 +611,23 @@ export const DEFAULT_TEMPLATE_SETTINGS: TemplateData["settings"] = {
   reminderTime: "15:00",
 };
 
+/** Up to this many active people, a workspace starts a new meeting with everyone in it */
+const PRESELECT_ALL_MAX = 12;
+/** Meetings of two: the other person is picked, never the whole directory */
+const PAIR_TEMPLATES: readonly string[] = ["oneOnOne", "onboarding"] satisfies BuiltinTemplateId[];
+
+/**
+ * Whether the creation wizard starts with everyone picked: in a small workspace, where the whole team usually
+ * comes; never in a larger one (unticking forty people to keep five is the slow way round, and the teams are one
+ * click away), nor for a meeting of two. `template` is a built-in id; anything else (a workspace's own template,
+ * a blank meeting) follows the size of the workspace.
+ */
+export const preselectsEveryone = (template: string, activePeople: number): boolean =>
+  !PAIR_TEMPLATES.includes(template) && activePeople <= PRESELECT_ALL_MAX;
+
+/** Minutes a round table takes: each speaker's time, rounded up to the minute */
+export const roundTableMinutes = (speakers: number, speakSec: number): number => Math.ceil((speakers * speakSec) / 60);
+
 /** A meeting started from nothing rather than from a template: "blank" in the creation wizard */
 export const BLANK_TEMPLATE = "blank";
 

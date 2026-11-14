@@ -61,6 +61,8 @@
     "sections": "Rubriques",
     "recapSchedule": "{schedule} · {duration} · première séance le {date}",
     "recapPeople": "{count, plural, =0 {Personne au tour de table pour l'instant} one {# personne au tour de table} other {# personnes au tour de table}}",
+    "recapRound": "Environ {duration} de tour de table, à {each} de parole par personne, pour une réunion de {meeting}.",
+    "recapRoundOver": "Environ {duration} de tour de table, à {each} de parole par personne : plus que les {meeting} prévues.",
     "modules": "Modules",
     "back": "Retour",
     "next": "Suivant",

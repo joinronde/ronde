@@ -46,13 +46,22 @@ test("a host creates a meeting, a participant fills in their check-in and raises
   // exist before sign-up), in three steps
   await page.goto(`${workspace}/meetings/new`);
   await expect(page.getByRole("radio", { name: /Weekly sync/ })).toBeChecked();
+  // A meeting of two starts with nobody picked: the other person is chosen, not everyone else unticked
+  await page.locator("label.nm-tpl").filter({ hasText: "One-on-one" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await expect(page.getByRole("checkbox", { name: /Gus Guest/ })).not.toBeChecked();
+  await page.getByRole("button", { name: "Back", exact: true }).click();
+  // The weekly sync of a small workspace starts with everyone
+  await page.locator("label.nm-tpl").filter({ hasText: "Weekly sync" }).click();
   await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByLabel("Name").fill("Weekly sync");
   await expect(page.getByRole("checkbox", { name: /Gus Guest/ })).toBeChecked();
   await page.getByRole("button", { name: "Next", exact: true }).click();
   // Sections and modules: the template's, kept as they are
   await page.getByRole("button", { name: "Next", exact: true }).click();
+  // The review tells what the round table costs, next to the time the meeting has
   await expect(page.getByText("2 people in the round table")).toBeVisible();
+  await expect(page.getByText("About 4 min of round table, at 2:00 of speaking each, in a 30 min meeting.")).toBeVisible();
   await page.getByRole("button", { name: "Create the meeting" }).click();
   await page.waitForURL(/\/m\/[^/]+\/control$/, { timeout: 120_000 });
   const meeting = page.url().replace(/\/control$/, "");
