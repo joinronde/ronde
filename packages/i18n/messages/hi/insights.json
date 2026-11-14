@@ -10,12 +10,12 @@
     "meetings": "{count, plural, one {# मीटिंग में} other {# मीटिंग में}}",
     "attendance": "उपस्थिति",
     "followThrough": "पूरी हुई योजनाएँ",
-    "followThroughHint": "योजनाबद्ध आइटम जो अगले सत्र में पूरे बताए गए",
+    "followThroughHint": "योजना वाले बिंदु जो अगले सत्र में पूरे बताए गए",
     "onTime": "समय पर सत्र",
     "mood": "औसत मूड",
     "actions": "कार्य बंद / खुले",
     "actionsValue": "{done} / {created}",
-    "median": "{days} दिनों में बंद (माध्यिका)"
+    "median": "{days, plural, one {# दिन} other {# दिनों}} में बंद (मीडियन)"
   },
   "weekTitle": "हर हफ़्ते के सत्र",
   "weekLabel": "बार: हर हफ़्ते हुए सत्र; रेखा: उपस्थिति",
@@ -37,6 +37,6 @@
   "csv": {
     "participation": "भागीदारी",
     "total": "सभी मीटिंग",
-    "fileName": "vishleshan"
+    "fileName": "insights"
   }
 }

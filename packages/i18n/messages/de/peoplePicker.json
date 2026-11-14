@@ -5,7 +5,7 @@
   "none": "Niemand",
   "teams": "Teams",
   "pickTeam": "{name}: {count, plural, one {# Person} other {# Personen}}, Unterteams inklusive",
-  "noMatch": "Niemand passt.",
+  "noMatch": "Niemand gefunden.",
   "noTeam": "Ohne Team",
   "withSubTeams": "Unterteams inklusive",
   "fold": "{name} einklappen",

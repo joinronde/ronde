@@ -3,7 +3,7 @@
   "intro": "Veröffentliche das Protokoll jeder Sitzung als Seite in Notion oder Confluence. Jedes Meeting wählt dann sein Wiki unter Einstellungen › Integrationen.",
   "empty": "Noch kein Wiki.",
   "add": "Wiki hinzufügen",
-  "kind": "Werkzeug",
+  "kind": "Tool",
   "name": "Name",
   "optional": "optional",
   "kinds": {
@@ -26,7 +26,7 @@
     "confluence": "API-Token"
   },
   "hints": {
-    "notion": "Lege in Notion unter notion.so/profile/integrations eine interne Integration an und kopiere ihr Secret. Öffne dann die übergeordnete Seite und teile sie mit der Integration (••• › Verbindungen): Die Seiten werden darunter angelegt.",
+    "notion": "Lege in Notion unter notion.so/profile/integrations eine interne Integration an und kopiere ihr Secret. Öffne dann die übergeordnete Seite und teile sie mit der Integration (••• › Verbindungen). Die Seiten werden darunter angelegt.",
     "confluence": "Confluence Cloud: ein API-Token, auf id.atlassian.com für das Konto mit der obigen E-Mail erstellt. Data Center oder Server: ein persönliches Zugriffstoken (Profil › Persönliche Zugriffstoken), ohne E-Mail. Das Konto muss im Bereich Seiten anlegen dürfen."
   },
   "tokenKept": "Ein Token ist gespeichert. Gib ein neues ein, um es zu ersetzen.",
@@ -40,7 +40,7 @@
   "openInRonde": "In Ronde öffnen",
   "meeting": {
     "title": "Protokoll veröffentlichen",
-    "intro": "Jedes veröffentlichte Protokoll wird zu einer Wiki-Seite, benannt nach dem Datum der Sitzung. Wird die Zusammenfassung bearbeitet, zieht die Seite nach.",
+    "intro": "Jedes veröffentlichte Protokoll wird zu einer Wiki-Seite, benannt nach dem Datum der Sitzung. Wird die Zusammenfassung bearbeitet, wird die Seite aktualisiert.",
     "wiki": "Wiki",
     "none": "Nirgends",
     "hint": "Vergangene Sitzungen werden aus dem Verlauf veröffentlicht.",
@@ -59,11 +59,11 @@
     "retry": "Erneut versuchen"
   },
   "errors": {
-    "token": "Das Wiki hat das Token abgelehnt: Prüfe, ob es stimmt und noch gültig ist.",
-    "notionPage": "Notion findet die übergeordnete Seite nicht: Teile sie mit der Integration (••• › Verbindungen).",
-    "notionParent": "Die übergeordnete Seite ist keine Adresse einer Notion-Seite.",
+    "token": "Das Wiki hat das Token abgelehnt. Prüfe, ob es stimmt und noch gültig ist.",
+    "notionPage": "Notion findet die übergeordnete Seite nicht. Teile sie mit der Integration (••• › Verbindungen).",
+    "notionParent": "Die angegebene übergeordnete Seite ist keine Notion-Adresse.",
     "confluenceSpace": "Confluence findet den Bereich oder die übergeordnete Seite nicht, oder das Konto darf sie nicht sehen.",
     "answer": "Das Wiki hat geantwortet: {detail}.",
-    "network": "Das Wiki ist nicht erreichbar: Prüfe seine Adresse."
+    "network": "Das Wiki ist nicht erreichbar. Prüfe seine Adresse."
   }
 }

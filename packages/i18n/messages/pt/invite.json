@@ -12,8 +12,8 @@
   "invalid": "Este link de convite é inválido ou foi revogado. Peça um novo à pessoa que convidou você.",
   "expiredTitle": "Convite expirado",
   "expired": "Este convite para {workspace} expirou. Peça um novo à pessoa que convidou você.",
-  "memberTitle": "Você já está dentro",
+  "memberTitle": "Você já faz parte",
   "member": "Você já é membro de {workspace}.",
-  "memberOther": "Este convite é para <strong>{email}</strong>: envie o link para que possa entrar.",
+  "memberOther": "Este convite é para <strong>{email}</strong>: envie o link para essa pessoa poder entrar.",
   "open": "Abrir {workspace}"
 }

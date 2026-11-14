@@ -12,7 +12,7 @@
     },
     "checklist": {
       "label": "Checkliste",
-      "hint": "Aufgaben, die beim Erledigen abgehakt werden"
+      "hint": "To-dos, die abgehakt werden, sobald sie erledigt sind"
     },
     "text": {
       "label": "Freitext",

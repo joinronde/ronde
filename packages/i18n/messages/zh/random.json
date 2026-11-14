@@ -14,7 +14,7 @@
   "draw": "转动",
   "drawAgain": "再抽一次",
   "teamSize": "每组人数",
-  "applyWheel": "下一位发言：{name}",
+  "applyWheel": "让 {name} 下一个发言",
   "applyOrder": "使用此顺序",
   "applied": "已应用到发言顺序",
   "clear": "从屏幕上隐藏",

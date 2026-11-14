@@ -2,7 +2,7 @@
   "defaults": {
     "done": "本周完成",
     "next": "下周计划",
-    "blockers": "需要提出的阻碍",
+    "blockers": "遇到的阻碍",
     "other": "其他"
   },
   "types": {

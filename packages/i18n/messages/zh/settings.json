@@ -22,10 +22,10 @@
     "seconds": "秒",
     "minutes": "分钟",
     "hours": "小时",
-    "otherDuration": "其他时长…",
+    "otherDuration": "其他时长……",
     "target": "目标时长",
     "timer": "计时器",
-    "autoStart": "每轮自动开始",
+    "autoStart": "每人发言时自动开始",
     "announcements": "开场公告",
     "localeWorkspace": "工作空间语言（{language}）"
   },
@@ -33,8 +33,8 @@
     "title": "进展卡栏目",
     "name": "栏目名称",
     "nameOf": "栏目 {n} 的名称",
-    "input": "输入方式",
-    "inputOf": "“{label}”的输入方式",
+    "input": "格式",
+    "inputOf": "“{label}”的格式",
     "role": "作用",
     "roleOf": "“{label}”的作用",
     "roles": {
@@ -44,11 +44,11 @@
       },
       "plan": {
         "label": "计划",
-        "hint": "接下来做什么。会在下一场和提醒中再次显示。"
+        "hint": "接下来做什么。会在下次会议和提醒中再次显示。"
       },
       "blocker": {
         "label": "阻碍",
-        "hint": "什么卡住了。在屏幕上突出显示，可转为后续行动项，计入统计。"
+        "hint": "什么卡住了。在屏幕上突出显示，可转为行动项，并计入统计。"
       },
       "note": {
         "label": "其他",
@@ -56,18 +56,18 @@
       },
       "custom": {
         "label": "自定义",
-        "hint": "自由栏目，没有特殊行为。"
+        "hint": "普通栏目，无特殊功能。"
       }
     },
     "taken": "已被使用",
     "carryPlansSwitch": "该栏目将改为清单。",
-    "carryPlansHint": "每个人会看到自己上次的计划，以复选框形式出现，完成一项勾一项。未勾选的不算完成。",
-    "carryPlans": "带回上次“{plan}”中的内容",
+    "carryPlansHint": "每个人会以复选框形式看到自己上次的计划，完成一项勾一项。未勾选的不计为已完成。",
+    "carryPlans": "沿用上次“{plan}”中的内容",
     "removeOf": "移除“{label}”",
     "reorder": "移动“{label}”",
-    "customPlaceholder": "例如：调研、要展示的演示、需要帮助",
+    "customPlaceholder": "例如：调研、演示内容、需要协助",
     "add": "添加栏目",
-    "hint": "每种作用（已完成、计划、阻碍、其他）最多对应一个栏目。修改栏目的名称、作用或输入方式时，已填写的内容会保留。"
+    "hint": "每种作用（已完成、计划、阻碍、其他）最多对应一个栏目。修改栏目的名称、作用或格式时，已填写的内容会保留。"
   },
   "reminder": {
     "title": "进展卡提醒",
@@ -75,10 +75,10 @@
     "dayBefore": "会议前一个工作日",
     "sameDay": "会议当天，开会前",
     "time": "时间",
-    "byEmail": "通过电子邮件发送给每个人",
-    "emailHint": "只有尚未填写进展卡的人会收到提醒。你可以通过团队列表中的“提醒”复选框为某人取消订阅。",
+    "byEmail": "通过邮件发送给每个人",
+    "emailHint": "只有尚未填写进展卡的人会收到提醒。在成员列表中取消勾选“提醒”，即可不再提醒某人。",
     "noSmtp": "未配置邮件服务器：在容器中设置 SMTP_URL 以开启邮件提醒。",
-    "teamHint": "在团队聊天室中的集体提醒可在“通知”中设置。"
+    "teamHint": "如需在团队群聊中统一提醒，请在“通知”中设置。"
   },
   "warmUp": {
     "mood": "团队心情",
@@ -102,16 +102,16 @@
     "toSetUp": "待配置",
     "ready": "链接已就绪",
     "synced": "已同步",
-    "noneInWorkspace": "工作空间中没有",
+    "noneInWorkspace": "工作空间中没有 Wiki",
     "rulesOn": "{count} 条规则已启用",
-    "gitlab": "每个人的工单和合并请求显示在其进展卡中",
-    "github": "所关注仓库的 issue 和 pull request",
+    "gitlab": "每个人的 issue 和合并请求显示在其进展卡中",
+    "github": "所关注仓库的 issue 和拉取请求",
     "wikiName": "Wiki",
     "wiki": "会议纪要发布到团队 Wiki",
     "videoName": "视频通话",
     "video": "大家加入会议的链接",
     "calendarName": "日历",
-    "calendar": "会话同步到每个人的日历",
+    "calendar": "会议同步到每个人的日历，并保持更新",
     "notificationsName": "通知",
     "notifications": "围绕会议的聊天、邮件和短信",
     "goGeneral": "在“常规”中",
@@ -147,21 +147,21 @@
   },
   "people": {
     "title": "人员（{count}）",
-    "colPerson": "成员",
+    "colPerson": "人员",
     "colRole": "角色",
-    "intro": "个人资料来自工作空间目录。角色决定每个人在此会议中能做什么。",
+    "intro": "个人资料来自工作空间通讯录。角色决定每个人在此会议中能做什么。",
     "rolesGuide": "谁能做什么？",
     "roles": {
       "host": "主持人",
-      "cohost": "联合主持人",
-      "participant": "参与者",
-      "observer": "观察者"
+      "cohost": "联席主持人",
+      "participant": "参会者",
+      "observer": "旁听者"
     },
     "roleHints": {
-      "host": "主持会议并设置会议",
-      "cohost": "主持会议",
-      "participant": "填写进展卡并参与",
-      "observer": "旁观会议，无需进展卡"
+      "host": "在控制台主持会议，负责设置会议并发布纪要",
+      "cohost": "在控制台主持会议，但不能修改设置",
+      "participant": "每次会议前填写进展卡，并参与轮流发言",
+      "observer": "实时旁听会议并查看纪要，无需填写进展卡，也不发言"
     },
     "roleOf": "{name} 的角色",
     "speaks": "参与发言",
@@ -172,20 +172,20 @@
     "gitlab": "GitLab 用户名",
     "remove": "移除",
     "confirmRemove": "从会议中移除",
-    "removed": "{name} 不再参加",
+    "removed": "已将 {name} 移出会议",
     "added": "已将 {name} 加入会议",
     "updated": "已保存",
     "addTitle": "添加成员",
     "pick": "人员",
-    "pickPlaceholder": "从目录中选择",
+    "pickPlaceholder": "从通讯录中选择",
     "add": "添加",
-    "nobodyLeft": "目录中的所有人都已参加。",
-    "directory": "管理目录",
-    "categoriesHint": "团队、生日和姓名在空间通讯录中编辑。",
+    "nobodyLeft": "通讯录中的所有人都已参加。",
+    "directory": "管理通讯录",
+    "categoriesHint": "团队、生日和姓名在工作空间通讯录中编辑。",
     "github": "GitHub 用户名"
   },
   "template": {
-    "title": "复用此形式",
+    "title": "复用此会议形式",
     "intro": "以此会议为基础创建其他会议：在工作空间中创建会议时会提供该模板。",
     "carries": "纳入模板",
     "stays": "保留在本会议中",
@@ -230,14 +230,14 @@
     "schedule": "会议的时间安排及例外。",
     "people": "谁参加，以及每人的权限。",
     "sections": "每个人会前填写的内容。",
-    "agenda": "会议流程，逐块安排。",
-    "projects": "跟进的项目，各有其轮次。",
+    "agenda": "会议流程，逐个环节安排。",
+    "projects": "跟进的项目，每个项目都有自己的发言时间。",
     "modules": "引导、形式与工具，按需启用。",
     "appearance": "会议在所有屏幕上的颜色。",
     "notifications": "围绕会议发送的提醒和消息。",
-    "integrations": "视频会议、工单工具和维基。",
-    "template": "将此会议保存为空间模板。",
-    "danger": "不可撤销的操作：退出、停止或删除。"
+    "integrations": "视频通话、工单工具和 Wiki。",
+    "template": "将此会议保存为工作空间模板。",
+    "danger": "不可撤销的操作：删除会议。"
   },
   "status": {
     "auto": "更改会自动保存。",
@@ -277,17 +277,17 @@
     "link": "视频通话链接",
     "linkHint": "显示在每个页面顶部和邮件中。",
     "jitsiUrl": "Jitsi 服务器",
-    "jitsiHint": "留空：meet.jit.si。房间名只抽取一次，难以猜测，且每场都相同。",
+    "jitsiHint": "留空则使用 meet.jit.si。房间名随机生成一次，难以猜测，之后每次会议都保持不变。",
     "bbbUrl": "BigBlueButton 服务器",
     "server": "服务器",
     "ownServer": "此会议自己的服务器",
     "serverHint": "工作空间的服务器由其管理员在工作空间设置中添加。",
     "bbbSecret": "服务器共享密钥",
-    "bbbHint": "有人加入时 Ronde 会打开房间，并以各自的姓名让每个人进入；主持人以主持者身份加入。密钥会被加密且不再显示。",
+    "bbbHint": "有人加入时，Ronde 会开启房间，每个人以自己的姓名进入；主持人以主持者身份加入。密钥会加密保存，不会再次显示。",
     "current": "大家通过以下方式加入：",
     "tryIt": "BigBlueButton 房间",
     "save": "保存视频通话",
-    "createWith": "创建长期房间：",
+    "createWith": "创建固定会议室：",
     "roomCreated": "房间已创建：链接已保存。",
     "kinds": {
       "zoom": "Zoom",
@@ -296,11 +296,11 @@
       "bbb": "BigBlueButton"
     }
   },
-  "logoHint": "工作空间徽标会显示在共享屏幕、邮件和会议纪要中。",
+  "logoHint": "工作空间 Logo 会显示在共享屏幕、邮件和会议纪要中。",
   "logoLink": "在工作空间设置中修改",
   "icon": {
     "title": "图标",
-    "hint": "显示在菜单和列表中会议名称旁边：一个表情符号，或会议自己的图片（标志、团队合影）。",
+    "hint": "显示在菜单和列表中的会议名称旁边：一个表情符号，或会议自己的图片（Logo、团队合影）。",
     "upload": "上传图片",
     "changeImage": "更换图片",
     "removeImage": "移除图片",

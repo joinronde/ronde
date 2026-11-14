@@ -22,10 +22,10 @@
   "owner": "Ответственный",
   "status": "Статус",
   "kudos": "Благодарности",
-  "blockers": "Названные блокеры",
+  "blockers": "Названные препятствия",
   "nextMeeting": "Следующая встреча: {date}",
   "parts": {
-    "checkIns": "Карточки (проекты, разделы, блокеры)",
+    "checkIns": "Карточки (проекты, разделы, препятствия)",
     "comments": "👍 и комментарии к карточкам",
     "questions": "Заданные вопросы",
     "topics": "Открытые темы",
@@ -38,7 +38,7 @@
   },
   "summaryTitle": "Резюме",
   "retro": "Ретроспектива",
-  "timebox": "Таймбокс",
+  "timebox": "Тема с таймером",
   "poker": "Оценки",
   "estimate": "оценка {value}",
   "notEstimated": "не оценено",
@@ -48,10 +48,10 @@
   "projectRound": "Проекты",
   "aboutProject": "О проекте «{project}»",
   "rating": "Польза",
-  "ratingAverage": "{avg}/5 · {count, plural, one {# оценка} few {# оценки} other {# оценок}}",
+  "ratingAverage": "{avg}/5 · {count, plural, one {# оценка} few {# оценки} many {# оценок} other {# оценки}}",
   "progress": "Ход работы",
   "slide": "Слайд",
-  "slideItems": "Подняла команда",
+  "slideItems": "Что назвала команда",
   "slideTracked": "задача создана",
-  "slideActions": "Принятые задачи"
+  "slideActions": "Поставленные задачи"
 }

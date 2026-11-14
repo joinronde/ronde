@@ -37,9 +37,9 @@
     "unvote": "Retirar meu voto"
   },
   "host": {
-    "writers": "{count, plural, one {# de {total} pessoas escreveu} other {# de {total} pessoas escreveram}}",
+    "writers": "{count, plural, =0 {# de {total} pessoas escreveram} one {# de {total} pessoas escreveu} other {# de {total} pessoas escreveram}}",
     "revealHint": "“Próxima” revela as notas à equipe.",
-    "voters": "{count, plural, one {# de {total} pessoas votou} other {# de {total} pessoas votaram}}",
+    "voters": "{count, plural, =0 {# de {total} pessoas votaram} one {# de {total} pessoas votou} other {# de {total} pessoas votaram}}",
     "voteHint": "“Próxima” inicia a discussão dos grupos mais votados.",
     "groupHint": "Clique em uma nota e depois na nota com a qual agrupá-la. Dê nome aos grupos quando estiverem formados.",
     "pickTarget": "Agora clique na nota com a qual agrupá-la (ou na mesma para cancelar).",

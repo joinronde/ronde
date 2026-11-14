@@ -12,12 +12,12 @@
   "statuses": {
     "active": "Attivo",
     "trialing": "Prova",
-    "past_due": "Pagamento da ritentare",
+    "past_due": "Pagamento non riuscito",
     "canceled": "Annullato",
     "other": "In attesa"
   },
   "seats": "Posti",
-  "seatsValue": "{paid} pagati · {active} hanno partecipato negli ultimi 30 giorni",
+  "seatsValue": "{paid, plural, one {# posto pagato} other {# posti pagati}} · {active, plural, one {# persona ha partecipato} other {# persone hanno partecipato}} negli ultimi 30 giorni",
   "renewsOn": "Si rinnova il",
   "endsOn": "Termina il",
   "upgradeMonthly": "Passa a Team, mensile",

@@ -2,14 +2,14 @@
   "stage": {
     "items": "Vom Team genannt",
     "tracked": "Aufgabe",
-    "emptyIrritants": "Noch nichts genannt: Alle können ihre Punkte unter „Mein Bildschirm“ ergänzen.",
-    "anonymous": "Ohne Namen gepostet.",
+    "emptyIrritants": "Noch nichts genannt. Alle können ihre Punkte unter „Mein Bildschirm“ ergänzen.",
+    "anonymous": "Ohne Namen eingetragen.",
     "review": "Offene Aufgaben ({count})",
     "noActions": "Keine offene Aufgabe: alles erledigt.",
-    "decided": "Hier beschlossen ({count})"
+    "decided": "Hier vereinbart ({count})"
   },
   "me": {
-    "hint": "Sag jetzt, was stört: Es wird hier besprochen, nicht mitten in der Runde von jemand anderem.",
+    "hint": "Sag jetzt, was stört. Es wird hier besprochen, nicht mitten im Beitrag einer anderen Person.",
     "anonymous": "Dein Name wird nicht angezeigt.",
     "placeholder": "Was mich stört…",
     "add": "Hinzufügen",

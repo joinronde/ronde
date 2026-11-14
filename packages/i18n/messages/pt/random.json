@@ -14,7 +14,7 @@
   "draw": "Girar",
   "drawAgain": "Sortear de novo",
   "teamSize": "Pessoas por equipe",
-  "applyWheel": "{name} fala em seguida",
+  "applyWheel": "Passar a vez para {name}",
   "applyOrder": "Usar esta ordem",
   "applied": "Aplicado à ordem de fala",
   "clear": "Ocultar das telas",

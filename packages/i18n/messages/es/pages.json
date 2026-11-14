@@ -1,12 +1,12 @@
 {
   "title": "{page} · Ronde",
-  "description": "Dirige reuniones de equipo atractivas: sala de control, pantalla compartida, ronda cronometrada y actas.",
+  "description": "Dirige reuniones de equipo dinámicas: sala de control, pantalla compartida, ronda cronometrada y acta.",
   "control": "Sala de control",
   "screen": "Pantalla compartida",
   "me": "Mi pantalla",
   "settings": "Ajustes",
   "stats": "Estadísticas",
   "history": "Historial",
-  "remote": "Mando",
+  "remote": "Control remoto",
   "decisions": "Decisiones"
 }

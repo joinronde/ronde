@@ -3,7 +3,7 @@
   "new": "Neues Meeting",
   "empty": "Noch kein Meeting.",
   "emptyHint": "Leg eins an: Das dauert keine Minute, und alles lässt sich später ändern.",
-  "emptyMember": "Du nimmst noch an keinem Meeting teil. Eine Moderation fügt dich zu ihrem hinzu.",
+  "emptyMember": "Du nimmst noch an keinem Meeting teil. Die Moderation eines Meetings kann dich hinzufügen.",
   "open": "Öffnen",
   "live": "Live",
   "nextOn": "Nächste Sitzung {date}",
@@ -12,8 +12,8 @@
   "roles": {
     "host": "Moderation",
     "cohost": "Co-Moderation",
-    "participant": "Teilnehmend",
-    "observer": "Beobachtend",
+    "participant": "Teilnahme",
+    "observer": "Beobachtung",
     "none": "Admin-Zugriff"
   },
   "wizard": {
@@ -21,16 +21,16 @@
     "subtitle": "Vier kurze Schritte. Alles lässt sich später in den Einstellungen des Meetings ändern.",
     "stepOf": "Schritt {n} von {total}",
     "steps": {
-      "details": "Termin und Personen",
+      "details": "Zeitplan und Personen",
       "review": "Überblick",
       "start": "Ausgangspunkt",
       "content": "Abschnitte und Module"
     },
     "blank": {
-      "name": "Bei null anfangen",
+      "name": "Ohne Vorlage",
       "description": "Ein leeres Meeting: Abschnitte und Module wählst du selbst.",
       "meta": "Dein eigener Rhythmus",
-      "use": "Bei null anfangen"
+      "use": "Ohne Vorlage starten"
     },
     "search": "Vorlage suchen…",
     "noMatch": "Keine passende Vorlage.",
@@ -45,7 +45,7 @@
     "deleteTemplateNamed": "Vorlage {name} löschen",
     "deleteTemplateConfirm": "Vorlage „{name}“ löschen? Daraus erstellte Meetings sind nicht betroffen.",
     "name": "Name",
-    "schedule": "Termine",
+    "schedule": "Zeitplan",
     "scheduleLater": "Weitere Rhythmen, Ausnahmen und Feiertage stellst du später in den Einstellungen des Meetings ein.",
     "startDate": "Ab",
     "weekday": "Tag",
@@ -54,10 +54,10 @@
     "minutes": "{m} Min.",
     "durationRange": "Zwischen 5 Min. und 8 Std.",
     "people": "Personen",
-    "peopleHint": "Sie nehmen an der Runde teil. Du übernimmst die Moderation; weitere Personen fügst du in den Einstellungen des Meetings hinzu.",
+    "peopleHint": "Diese Personen nehmen an der Runde teil. Du übernimmst die Moderation; weitere Personen fügst du später in den Einstellungen des Meetings hinzu.",
     "nobody": "Noch niemand sonst im Verzeichnis.",
     "invite": "Personen einladen",
-    "creatorSpeaks": "Ich bin in der Runde auch dran",
+    "creatorSpeaks": "Ich komme in der Runde auch dran",
     "sections": "Abschnitte",
     "recapSchedule": "{schedule} · {duration} · erste Sitzung am {date}",
     "recapPeople": "{count, plural, =0 {Noch niemand in der Runde} one {# Person in der Runde} other {# Personen in der Runde}}",
@@ -76,12 +76,12 @@
       "sectionType": "Format",
       "removeSection": "Abschnitt {name} entfernen",
       "modulesOn": "{count, plural, =0 {Keines aktiv} one {# aktiv} other {# aktiv}}",
-      "modulesHint": "Aktiviere, was dein Meeting braucht: Alles lässt sich jederzeit ein- und ausschalten.",
+      "modulesHint": "Schalte ein, was dein Meeting braucht. Module lassen sich jederzeit ein- und ausschalten.",
       "roleHint": {
         "achievement": "Was seit dem letzten Mal erledigt wurde",
         "plan": "Was als Nächstes ansteht",
         "blocker": "Was blockiert oder bremst",
-        "note": "Alles andere zum Teilen",
+        "note": "Alles andere, was du teilen möchtest",
         "custom": "Eine eigene Liste, frei benannt"
       }
     },
@@ -90,10 +90,10 @@
     "order": {
       "title": "Reihenfolge",
       "team": "Zuerst das Team",
-      "teamHint": "Eine kurze Runde für alle, dann die Projekte gemeinsam.",
+      "teamHint": "Erst ein kurzer Beitrag pro Person, dann die Projekte gemeinsam.",
       "projects": "Zuerst die Projekte",
-      "projectsHint": "Projekt für Projekt, dann eine Runde für den Rest.",
-      "later": "Später in der Agenda des Meetings änderbar."
+      "projectsHint": "Projekt für Projekt, dann ein Beitrag pro Person für den Rest.",
+      "later": "Du kannst sie später in der Agenda des Meetings ändern."
     }
   }
 }

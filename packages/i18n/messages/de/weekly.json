@@ -15,7 +15,7 @@
   "from": "von {name}",
   "open": "Ronde öffnen",
   "footer": "Du bekommst diese Übersicht montags als Mitglied von {workspace}.",
-  "settings": "In deinem Konto änderbar.",
+  "settings": "Du kannst das in deinem Konto ändern.",
   "stop": "Wochenübersicht abbestellen",
   "page": {
     "title": "Wochenübersicht abbestellen?",

@@ -33,7 +33,7 @@
     "stepCheckIn": "Compila la tua scheda",
     "stepCheckInHint": "Cosa hai fatto, cosa prevedi, cosa ti blocca: qualche riga prima della riunione.",
     "stepSession": "Conduci una prima sessione",
-    "stepSessionHint": "Apri la regia, inizia la riunione, poi pubblicane il verbale."
+    "stepSessionHint": "Apri la regia, avvia la riunione, poi pubblicane il verbale."
   },
   "settings": {
     "title": "Impostazioni dello spazio di lavoro",
@@ -74,7 +74,7 @@
       "plans": "Piani"
     },
     "buffer": "Margine tra due riunioni",
-    "bufferHint": "Lasciato libero prima e dopo ogni riunione di una persona: «trova uno slot» lo rispetta, e i calendari avvisano quando due riunioni si avvicinano di più.",
+    "bufferHint": "Lasciato libero prima e dopo ogni riunione di una persona: la ricerca degli orari in cui tutti sono liberi ne tiene conto, e i calendari avvisano quando due riunioni sono più vicine di così.",
     "bufferNone": "Nessun margine",
     "bufferMinutes": "{count, plural, one {# minuto} other {# minuti}}"
   }

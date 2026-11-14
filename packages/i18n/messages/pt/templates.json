@@ -160,7 +160,7 @@
   },
   "teamProjects": {
     "name": "Equipe e projetos",
-    "description": "Primeiro, uma vez curta para as novidades de cada pessoa; depois, cada projeto em comum tem a sua vez, em que seus membros falam juntos.",
+    "description": "Primeiro, cada pessoa fala rapidamente das suas novidades; depois, cada projeto em comum tem a sua vez, em que seus membros falam juntos.",
     "sections": {}
   },
   "rhythm": {
@@ -196,7 +196,7 @@
     "sections": {
       "results": "Experimentos e resultados",
       "next": "Próximos passos",
-      "stuck": "Onde estou travado",
+      "stuck": "Onde travei",
       "reading": "Artigos para compartilhar"
     }
   },

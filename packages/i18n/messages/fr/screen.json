@@ -7,11 +7,11 @@
     "dark": "Sombre"
   },
   "reducedMotion": "Animations réduites",
-  "ambience": "Ambiance de l'écran d'attente",
-  "previewTheme": "Aperçu d'un thème",
+  "ambience": "Ambiance de l’écran d’attente",
+  "previewTheme": "Aperçu d’un thème",
   "replayIntro": "Rejouer le générique",
   "fullscreen": "Plein écran",
-  "drivenFromControl": "Cet onglet est piloté depuis la Régie.",
+  "drivenFromControl": "Cet onglet est piloté depuis la régie.",
   "yourTurn": "À vous, <span>{name}</span> !",
   "poweredBy": "Propulsé par Ronde"
 }

@@ -1,6 +1,6 @@
 {
   "title": "Conectores de notificação",
-  "intro": "Canais onde as reuniões deste espaço podem publicar: uma sala da equipe, um canal de chat, uma caixa de e-mail, seu próprio serviço. Depois, cada reunião escolhe o que enviar para lá, nas configurações.",
+  "intro": "Canais onde as reuniões deste espaço de trabalho podem publicar: uma sala da equipe, um canal de chat, uma caixa de e-mail, seu próprio serviço. Depois, cada reunião escolhe o que enviar para lá, nas configurações.",
   "empty": "Nenhum conector ainda.",
   "add": "Adicionar um conector",
   "pickKind": "Escolha um tipo…",

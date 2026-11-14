@@ -7,6 +7,6 @@
   "monthlyDay": "{count, plural, =1 {每月} other {每 # 个月}} {day} 日 {time}",
   "dailyOn": "{count, plural, =1 {每{days}} other {每 # 天，在{days}}} {time}",
   "monthlyLast": "{count, plural, =1 {每月} other {每 # 个月的}}最后一天 {time}",
-  "alternating": "隔周{days}，交替于 {first} 和 {second}",
+  "alternating": "隔周{days}，{first} 与 {second} 交替",
   "withZone": "{schedule}（{timeZone}）"
 }

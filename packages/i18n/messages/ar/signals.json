@@ -17,12 +17,12 @@
   "mindBlown": {
     "label": "مذهل!",
     "combo": "الكل مذهول!",
-    "comboNamed": "{name} أذهل الفريق للتو"
+    "comboNamed": "الفريق مذهول بفضل {name}"
   },
   "fire": {
     "label": "رائع!",
     "combo": "الفريق في قمة حماسه!",
-    "comboNamed": "{name} في قمة حماسه!"
+    "comboNamed": "حماس {name} مشتعل!"
   },
   "coffee": {
     "label": "استراحة قهوة؟",

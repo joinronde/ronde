@@ -7,17 +7,17 @@
   "today": "اليوم",
   "view": "العرض",
   "viewMonth": "شهر",
-  "viewAgenda": "جدول",
+  "viewAgenda": "قائمة",
   "legend": "الاجتماعات المعروضة",
   "hideMeeting": "إخفاء {name}",
   "showMeeting": "إظهار {name}",
   "more": "+{count} أخرى",
-  "upcoming": "قريبًا",
+  "upcoming": "القادمة",
   "nothing": "لا شيء مخطط له في الأسابيع الأربعة القادمة.",
   "nothingThisMonth": "لا توجد جلسات هذا الشهر.",
   "todayShort": "اليوم",
   "tomorrow": "غدًا",
-  "inDays": "بعد {count} أيام",
+  "inDays": "{count, plural, one {بعد يوم واحد} two {بعد يومين} few {بعد # أيام} many {بعد # يومًا} other {بعد # يوم}}",
   "status": {
     "planned": "مخطط لها",
     "live": "جارية الآن",
@@ -26,6 +26,6 @@
   },
   "attendance": {
     "yes": "سأحضر",
-    "no": "غائب"
+    "no": "لن أحضر"
   }
 }

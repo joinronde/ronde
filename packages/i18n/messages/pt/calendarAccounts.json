@@ -1,6 +1,6 @@
 {
   "title": "Agendas",
-  "intro": "Registre as sessões das suas reuniões nos calendários dos participantes (Google, Microsoft 365 ou um servidor CalDAV como iCloud, Fastmail ou Nextcloud) com uma conta do espaço de trabalho. O que muda lá volta para cá, e a disponibilidade deles ajuda a evitar conflitos.",
+  "intro": "Registre as sessões das suas reuniões nas agendas dos participantes (Google, Microsoft 365 ou um servidor CalDAV como iCloud, Fastmail ou Nextcloud) com uma conta do espaço de trabalho. O que muda lá volta para cá, e a disponibilidade das pessoas ajuda a evitar conflitos.",
   "empty": "Nenhuma conta de agenda ainda.",
   "add": "Adicionar uma conta de agenda",
   "kind": "Provedor",
@@ -34,7 +34,7 @@
   "hints": {
     "google": "No Google Cloud, crie uma conta de serviço e dê a ela delegação em todo o domínio para o escopo https://www.googleapis.com/auth/calendar no console de administração do Google Workspace. Os eventos são criados pelo organizador, que convida os participantes.",
     "microsoft": "No Microsoft Entra, registre um aplicativo com a permissão de aplicativo Calendars.ReadWrite (consentimento do administrador). Os eventos são criados na agenda do organizador, que convida os participantes.",
-    "caldav": "O endereço do servidor (https://caldav.icloud.com, https://caldav.fastmail.com/dav/, https://cloud.example.com/remote.php/dav) ou de um dos seus calendários. As sessões vão para o primeiro calendário de eventos da conta, a menos que você informe o endereço de um calendário, e o servidor convida os participantes. Só os horários ocupados do organizador podem ser lidos."
+    "caldav": "O endereço do servidor (https://caldav.icloud.com, https://caldav.fastmail.com/dav/, https://cloud.example.com/remote.php/dav) ou de uma das suas agendas. As sessões vão para a primeira agenda de eventos da conta, a menos que você informe o endereço de uma agenda, e o servidor convida os participantes. Só os horários ocupados do organizador podem ser lidos."
   },
   "useIt": "Depois, nas configurações de uma reunião, Agendamento → Agendas."
 }

@@ -9,7 +9,7 @@
   "sessions": "Vos séances de la semaine",
   "checkIn": "Ma fiche",
   "actions": "Vos actions en cours",
-  "actionsHint": "Cochez-les dans Ronde dès qu'elles sont faites.",
+  "actionsHint": "Cochez-les dans Ronde dès qu’elles sont faites.",
   "carried": "{count, plural, one {ouverte depuis # séance} other {ouverte depuis # séances}}",
   "kudos": "Les remerciements reçus",
   "from": "de {name}",
@@ -19,10 +19,10 @@
   "stop": "Ne plus recevoir le récapitulatif",
   "page": {
     "title": "Arrêter le récapitulatif hebdomadaire ?",
-    "body": "Vous ne recevrez plus le récapitulatif du lundi : vos séances, vos actions et vos bravos. Vous pourrez le réactiver dans votre compte.",
+    "body": "Vous ne recevrez plus le récapitulatif du lundi : vos séances, vos actions et vos remerciements. Vous pourrez le réactiver dans votre compte.",
     "button": "Arrêter le récapitulatif",
-    "done": "C'est fait : vous ne recevrez plus le récapitulatif hebdomadaire.",
-    "invalid": "Ce lien n'est pas valide.",
+    "done": "C’est fait : vous ne recevrez plus le récapitulatif hebdomadaire.",
+    "invalid": "Ce lien n’est pas valide.",
     "back": "Retour à Ronde"
   }
 }

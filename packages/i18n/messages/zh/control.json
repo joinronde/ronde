@@ -4,7 +4,7 @@
     "settings": "设置",
     "tour": "导览",
     "commands": "命令",
-    "commandsHint": "命令面板（⌘K 或 Ctrl+K）；“?”列出快捷键"
+    "commandsHint": "命令面板（⌘K 或 Ctrl+K）；按 ? 查看快捷键"
   },
   "nextQuestions": "提问（{count}）",
   "setup": {
@@ -34,7 +34,8 @@
   "shortcut": "快捷键：{key}",
   "spaceKey": "空格",
   "timerTools": "计时器",
-  "bonusHint": "本轮多 30 秒",
+  "bonusHint": "为本次发言加 30 秒",
+  "bonus": "+30 秒",
   "checkInsFilled": "已填写 {filled}/{total} 份进展卡",
   "then": "接下来：{next}",
   "endOfMeeting": "会议结束",
@@ -44,17 +45,17 @@
   "startFirst": "请先开始会议",
   "next": "下一步：{label}",
   "lastStep": "最后一步",
-  "started": "开始啦！开场正在共享屏幕上进行。",
+  "started": "会议开始了，共享屏幕上正在播放开场。",
   "start": "开始会议",
   "pause": "暂停",
   "timer": "计时器",
   "resetTimer": "重置计时器",
   "bonusAdded": "给 {name} 加 30 秒",
-  "beep": "0:00 时提示音",
-  "beepHint": "时间到时在此浏览器中提示音",
+  "beep": "时间到时响铃",
+  "beepHint": "时间到时，在此浏览器中播放提示音",
   "reviewMinutes": "审阅并发布会议纪要",
   "endedTitle": "会议已结束：还剩最后一步",
-  "endedNext": "查看纪要，必要时补充笔记，然后发布：纪要会发送给每个人，下一次会议也会开始准备。现在没时间？先结束会议，稍后在历史记录中撰写。",
+  "endedNext": "审阅纪要，必要时补充笔记，然后发布：纪要会发送给所有人，下一次会议也随之准备就绪。现在没时间？先结束会议，稍后在历史记录中撰写纪要。",
   "pendingRequests": "{count, plural, other {# 个举手或提问待处理}}",
   "panes": {
     "run": "议程",
@@ -64,7 +65,7 @@
     "minutes": "纪要",
     "polls": "投票",
     "random": "随机",
-    "sheets": "卡片"
+    "sheets": "项目卡"
   },
   "icebreaker": {
     "answers": "{count}/{total} 人已回答",
@@ -79,7 +80,7 @@
   "close": "关闭",
   "add": "添加",
   "owner": "负责人",
-  "ownerPlaceholder": "负责人…",
+  "ownerPlaceholder": "负责人……",
   "status": "状态",
   "actionCreated": "已创建跟进行动项",
   "spotlight": {
@@ -115,14 +116,14 @@
   "notes": {
     "saved": "已保存",
     "notSaved": "未保存",
-    "saving": "正在保存…",
+    "saving": "正在保存……",
     "actionPrefix": "行动项",
     "title": "纪要将记录的内容 · {label}",
     "place": "在纪要中：{place}",
     "pinned": "你正在补完 <strong>{pinned}</strong> 的笔记；屏幕已切换到 {label}。",
     "switchTo": "切换到 {label} 的笔记",
     "addTo": "添加到 {label} 的笔记",
-    "placeholder": "团队需要从这一轮中记住的内容。例如：\n{decision}：我们改用新的部署流水线\n验收测试推迟到 15 日，待与客户确认",
+    "placeholder": "这次发言中团队需要记住的内容。例如：\n{decision}：我们改用新的部署流水线\n验收测试推迟到 15 日，待与客户确认",
     "decisionHint": "添加一项决定：它也会列在纪要顶部",
     "actionHint": "创建一个有负责人的跟进行动项：未来几周会持续跟踪",
     "newAction": "跟进行动项",
@@ -135,7 +136,7 @@
     "absent": "缺席",
     "done": "已完成",
     "current": "当前",
-    "upcoming": "即将",
+    "upcoming": "待发言",
     "go": "前往",
     "reorder": "在发言顺序中移动 {name}",
     "questions": "提问（{total} 个中 {pending} 个待处理）",
@@ -151,7 +152,7 @@
     "checkInEmpty": "空进展卡",
     "topics": "开放议题",
     "end": "总结与纪要",
-    "legend": "勾选：进展卡已填写。<note></note>：已为纪要做笔记。“进展卡”可在需要时修正内容。有人举手时，会自动添加一个“提问”环节。"
+    "legend": "勾号：进展卡已填写。<note></note>：已为纪要做笔记。点击“进展卡”可在需要时修正内容。一旦有人举手，会自动添加“提问”环节。"
   },
   "unsavedCheckIn": "进展卡的修改尚未保存。",
   "closeAnyway": "仍然关闭",
@@ -163,13 +164,13 @@
     "during": "在 {step} 期间",
     "asksToSpeak": "请求发言",
     "reopen": "重新打开",
-    "floorGiven": "已给予发言",
-    "markAnswered": "标记为已回答",
+    "floorGiven": "已请其发言",
+    "markAnswered": "标记为已处理",
     "pending": "待处理（{count}）",
     "noHands": "没有人举手。",
     "handled": "已处理",
-    "kudos": "致谢（{count}）",
-    "reactions": "对当前环节的表情反应：{list}",
+    "kudos": "感谢（{count}）",
+    "reactions": "对当前环节的表情回应：{list}",
     "none": "无"
   },
   "actions": {
@@ -199,12 +200,12 @@
   "stop": {
     "confirmation": "确认",
     "endAsk": "直接跳到总结吗？剩下的环节将被跳过。",
-    "resetAsk": "返回等候屏吗？本次会议的计时、举手、提问、表情反应和致谢都会被清除。进展卡和你的笔记会保留。",
-    "ended": "会议已结束：检查纪要，然后发布。",
-    "reset": "已取消开始：回到等候屏。",
-    "endYes": "是，结束",
-    "resetYes": "是，回到等候",
-    "no": "不，继续",
+    "resetAsk": "返回等待屏幕吗？本次会议的计时、举手、提问、表情回应和感谢都会被清除，进展卡和你的笔记会保留。",
+    "ended": "会议已结束：请审阅纪要，然后发布。",
+    "reset": "已取消开始，已返回等待屏幕。",
+    "endYes": "跳到总结",
+    "resetYes": "返回等待屏幕",
+    "no": "继续会议",
     "end": "结束会议",
     "cancelStart": "取消开始"
   },
@@ -214,39 +215,39 @@
     "actions": "{count, plural, =0 {没有创建跟进行动项} other {已创建 # 个跟进行动项}}",
     "withoutNotes": "没有笔记：",
     "completeNotes": "补充关于 {name} 的笔记",
-    "allNoted": "每一轮都有笔记",
-    "hint": "对某人没什么要记录的？这很正常。否则，点击其姓名补充{notes}。"
+    "allNoted": "每个人的发言都有笔记",
+    "hint": "某人的发言没有需要记录的内容？这很正常。如果有，点击其姓名补充笔记。"
   },
   "minutesPane": {
     "generationFailed": "无法生成纪要。",
     "retry": "重试",
-    "generating": "正在生成纪要…",
+    "generating": "正在生成纪要……",
     "intro": "根据你的笔记、进展卡、提问和行动项生成：补充笔记即可修改纪要，并选择要保留的团队内容。",
     "content": "内容：",
     "everything": "全部",
     "notesOnly": "仅你的笔记和行动项",
-    "partsOf": "{total} 项团队内容中的 {count} 项",
+    "partsOf": "已选 {count}/{total} 项团队内容",
     "myNotesOnly": "仅我的笔记",
     "includeAll": "全部包含",
     "teamInputs": "要包含的团队内容",
-    "alwaysIncluded": "你的笔记和跟进行动项总会包含在内。此选择会保留到以后的会议。",
+    "alwaysIncluded": "你的笔记和跟进行动项始终会包含在内。此设置也会用于之后的会议。",
     "review": "审阅并修改",
     "reviewTitle": "发布前的会议纪要",
     "reviewHint": "修改摘要和各环节的笔记：右侧纪要会随输入实时更新。",
     "reviewEdit": "你写的内容",
-    "reviewPreview": "纪要的最终样式",
+    "reviewPreview": "纪要预览",
     "archiveAtEnd": "纪要在会议收尾时发布。",
-    "archiveAsk": "发布纪要、结束本次会议并清空到场者的进展卡？",
-    "archived": "纪要已发布，会议已结束。下一次已准备好。",
-    "archiveYes": "是，发布",
+    "archiveAsk": "发布纪要、结束本次会议，并清空出席者的进展卡吗？",
+    "archived": "纪要已发布，本次会议已结束。下一次会议已准备就绪。",
+    "archiveYes": "发布纪要",
     "archive": "发布纪要",
     "summaryHint": "可选：显示在纪要顶部的几行文字。之后仍可在历史记录中编辑。",
     "summaryPlaceholder": "用几行文字写下本次会议的要点（可选）",
     "draft": "结束，稍后撰写",
-    "draftHint": "团队可以立即准备下一次会议。纪要会以草稿形式在历史记录中等你。",
-    "draftAsk": "结束会议并清空出席者的签到内容吗？纪要会以草稿形式在历史记录中等你。",
-    "draftYes": "是，结束",
-    "drafted": "会议已结束，下一次已准备好。请在历史记录中完成纪要，然后发布。"
+    "draftHint": "团队现在就可以准备下一次会议，纪要会作为草稿保存在历史记录中。",
+    "draftAsk": "结束会议并清空出席者的进展卡吗？纪要会作为草稿保存在历史记录中，稍后再写。",
+    "draftYes": "结束会议",
+    "drafted": "会议已结束，下一次会议已准备就绪。请在历史记录中完成纪要，然后发布。"
   },
   "studio": {
     "back": "返回控制台",
@@ -261,9 +262,9 @@
   },
   "startedAnnounced": "已通知团队。",
   "remote": {
-    "title": "手机遥控",
-    "hint": "用已登录你账户的手机扫描此二维码：大按钮可以前进、暂停和加时，共享屏幕会同步跟随。",
-    "scan": "手机遥控二维码"
+    "title": "手机遥控器",
+    "hint": "用已登录你账户的手机扫描此二维码：用大按钮切换下一步、暂停和加时，共享屏幕会同步切换。",
+    "scan": "手机遥控器二维码"
   },
   "parking": {
     "title": "暂存区",
@@ -277,16 +278,16 @@
     "added": "已暂存到下次会议"
   },
   "async": {
-    "title": "无实时会议的会议",
-    "hint": "每个人在 {when} 之前填写自己的进展卡并评论他人的。之后本次会议会自动结束，摘要通过邮件发送。",
-    "hintNoTime": "每个人填写自己的进展卡并评论他人的。团队准备好后发布摘要。",
+    "title": "异步会议",
+    "hint": "每个人在 {when} 之前填写自己的进展卡，并评论其他人的进展卡。之后本次会议会自动结束，并通过邮件发送摘要。",
+    "hintNoTime": "每个人填写自己的进展卡，并评论其他人的进展卡。团队准备好后，发布摘要。",
     "publish": "立即发布摘要",
     "confirm": "现在结束本次会议并通过邮件把摘要发给团队吗？",
-    "yes": "是，发布",
+    "yes": "发布摘要",
     "published": "摘要已发布",
-    "orLive": "你仍然可以改为开始一场实时会议。"
+    "orLive": "你也可以改为开始一场实时会议。"
   },
-  "startToday": "此场次原计划在另一天：现在开始会将其日期改为今天，原计划日期仍保留在日程中。",
+  "startToday": "本次会议原定在另一天：现在开始会把日期改为今天，原定日期仍保留在日程中。",
   "projectSpeakers": "介绍项目的人：{names}",
   "projectNoSpeaker": "项目成员都不在场：由项目卡代为介绍。",
   "projectAway": "缺席：{names}",
@@ -295,13 +296,13 @@
   "projectReorder": "移动 {name}",
   "projectShuffle": "随机抽取顺序",
   "projectOrderReset": "恢复计划中的顺序",
-  "projectsSkippedTitle": "{count, plural, other {以下项目没有任何内容：不进行介绍。}}",
+  "projectsSkippedTitle": "{count, plural, other {以下项目没有填写任何内容，将跳过介绍。}}",
   "presentAnyway": "仍然介绍",
-  "projectAdded": "{name} 已加入本次会议的项目轮。",
+  "projectAdded": "{name} 已加入本次会议的项目轮流发言。",
   "projectAddedTag": "已添加",
-  "projectUnadd": "将 {name} 移出本次轮流",
+  "projectUnadd": "将 {name} 移出本次项目轮流发言",
   "sheets": {
-    "title": "项目卡片",
+    "title": "项目卡",
     "todo": "{count, plural, other {# 个待完善}}",
     "allDone": "全部已完成",
     "health": "健康度",
@@ -312,6 +313,6 @@
     "complete": "已完成",
     "missing": "缺少：{what}",
     "noMatch": "没有该名称的待完善项目。",
-    "allDoneHint": "所有卡片均已完成：健康度、今日要点，以及每位相关成员的一行内容。"
+    "allDoneHint": "所有项目卡均已完成：健康度、今日要点，以及每位成员的一行内容。"
   }
 }

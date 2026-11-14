@@ -1,7 +1,7 @@
 {
   "title": "Administración del servidor",
   "back": "Volver",
-  "intro": "Ajustes de este servidor de Ronde, comunes a todos sus espacios de trabajo. Los de cada espacio (miembros, roles, seguridad) están en sus Ajustes. Los valores guardados aquí prevalecen sobre las variables de entorno.",
+  "intro": "Ajustes de este servidor de Ronde, comunes a todos sus espacios de trabajo. Los de cada espacio de trabajo (miembros, roles, seguridad) están en sus Ajustes. Los valores guardados aquí prevalecen sobre las variables de entorno.",
   "counts": {
     "users": "Cuentas",
     "workspaces": "Espacios de trabajo",
@@ -44,7 +44,7 @@
     "reasons": {
       "format": "No se puede leer la clave guardada.",
       "payload": "No se puede leer la clave guardada.",
-      "signature": "La clave guardada fue modificada o no la emitió Ronde.",
+      "signature": "La clave guardada se ha modificado o no la ha emitido Ronde.",
       "unknownKey": "La clave guardada está firmada con una clave que esta versión no conoce."
     },
     "editions": {
@@ -57,7 +57,7 @@
     "seats": "{used} de {seats} plazas usadas",
     "seatsUnlimited": "{used} personas, sin límite de plazas",
     "seatsRule": "personas que participaron en una reunión en los últimos 30 días",
-    "peak": "Máximo de esta licencia: {count} (el {date}), el que cuenta la renovación.",
+    "peak": "Máximo de esta licencia: {count} (el {date}). Es el que se usa en la renovación.",
     "previousPeak": "Licencia anterior ({id}): máximo de {count} (el {date}), a regularizar en su renovación.",
     "overSeats": "Participan más personas que las {seats} plazas de la licencia: no se bloquea nada. El máximo alcanzado se regulariza al renovar la licencia.",
     "overPeak": "El máximo de esta licencia, {count}, superó sus {seats} plazas: no se bloquea nada, se regulariza al renovar la licencia.",
@@ -73,7 +73,7 @@
     "filter": "Mensajes mostrados",
     "open": "Actuales",
     "archived": "Archivados",
-    "intro": "Lo que la gente envía con el botón «Enviar comentarios». Respóndeles y marca lo que ya está resuelto; un problema del propio Ronde puede ir al proyecto Ronde como issue de GitHub. Los mensajes se eliminan al cabo de un año.",
+    "intro": "Lo que la gente envía con el botón «Enviar comentarios». Responde y marca lo que ya está resuelto; un problema del propio Ronde puede ir al proyecto Ronde como incidencia de GitHub. Los mensajes se eliminan al cabo de un año.",
     "empty": "Aún no hay mensajes. La gente los envía con el botón de la parte superior de las páginas.",
     "emptyArchived": "No hay mensajes archivados.",
     "kinds": {
@@ -99,7 +99,7 @@
       "handled": "Marcar como resuelto",
       "archived": "Archivar"
     },
-    "toGithub": "Abrir un issue en GitHub",
-    "toGithubHint": "Abre un issue prerrellenado en el proyecto Ronde: sin nombres ni espacios de trabajo, y puedes editarlo antes de publicarlo."
+    "toGithub": "Abrir una incidencia en GitHub",
+    "toGithubHint": "Abre en el proyecto Ronde una incidencia ya redactada, sin nombres ni espacios de trabajo, que puedes editar antes de publicarla."
   }
 }

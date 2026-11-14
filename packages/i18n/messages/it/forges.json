@@ -17,7 +17,7 @@
   "oauth": "connessa con GitLab",
   "add": "Aggiungi una connessione",
   "addOwn": "Aggiungi una connessione solo per questa riunione",
-  "addOwnHint": "Vista solo da questa riunione, per un server o un account che lo spazio non ha.",
+  "addOwnHint": "Solo questa riunione può usarla: per un server o un account che lo spazio non ha.",
   "connect": "Connetti con GitLab",
   "connectHint": "Il tuo account GitLab, in sola lettura, rinnovato da solo: nessun token da copiare o da sostituire quando scade.",
   "reconnect": "Riconnetti",

@@ -111,7 +111,7 @@
     }
   },
   "board": {
-    "name": "Consiglio direttivo dell'associazione",
+    "name": "Consiglio direttivo",
     "description": "La riunione mensile del direttivo di un'associazione: notizie dalle commissioni, votazioni, tesoreria e prossimi eventi.",
     "sections": {
       "news": "Notizie dalle commissioni",
@@ -131,12 +131,12 @@
   },
   "siteMeeting": {
     "name": "Riunione di cantiere",
-    "description": "La riunione settimanale di un cantiere: lavori fatti, lavori previsti, sicurezza e lista delle riserve.",
+    "description": "La riunione settimanale di un cantiere: lavori fatti, lavori previsti, sicurezza e difetti da sistemare.",
     "sections": {
       "done": "Lavori fatti",
       "planned": "Lavori previsti",
       "safety": "Problemi di sicurezza",
-      "punch": "Lista delle riserve"
+      "punch": "Difetti da sistemare"
     }
   },
   "shiftHandover": {
@@ -164,7 +164,7 @@
     "sections": {}
   },
   "rhythm": {
-    "weekdays": "Ogni giorno lavorativo",
+    "weekdays": "Ogni giorno feriale",
     "daily": "{count, plural, one {Ogni giorno} other {Ogni # giorni}}",
     "weekly": "{count, plural, one {Ogni settimana} =2 {Ogni due settimane} other {Ogni # settimane}}",
     "monthly": "{count, plural, one {Una volta al mese} =3 {Una volta a trimestre} other {Ogni # mesi}}",
@@ -196,7 +196,7 @@
     "sections": {
       "results": "Esperimenti e risultati",
       "next": "Prossimi passi",
-      "stuck": "Dove sono bloccato",
+      "stuck": "Cosa mi blocca",
       "reading": "Articoli da condividere"
     }
   },

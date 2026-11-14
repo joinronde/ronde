@@ -62,7 +62,7 @@
     "userFilterHint": "'{{email}}' é substituído pelo endereço digitado na página de login.",
     "emailAttribute": "Atributo de e-mail",
     "nameAttribute": "Atributo de nome",
-    "profileTitle": "Também copiado para a ficha de cada pessoa",
+    "profileTitle": "Também copiado para o perfil de cada pessoa",
     "profileHint": "Lidos a cada login. A equipe é a do diretório com esse nome (criada se faltar); um aniversário informado pela pessoa é mantido. Deixe um campo vazio para não lê-lo.",
     "phoneAttribute": "Atributo do telefone",
     "teamAttribute": "Atributo da equipe",

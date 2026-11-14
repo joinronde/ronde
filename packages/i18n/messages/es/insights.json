@@ -1,6 +1,6 @@
 {
   "title": "Análisis",
-  "intro": "Todas las reuniones del espacio, del {from} al {to}.",
+  "intro": "Todas las reuniones del espacio de trabajo, del {from} al {to}.",
   "period": "Periodo",
   "weeks": "{count, plural, one {# semana} other {# semanas}}",
   "cards": {
@@ -15,7 +15,7 @@
     "mood": "Ánimo medio",
     "actions": "Acciones cerradas / abiertas",
     "actionsValue": "{done} / {created}",
-    "median": "Cerradas en {days} días (mediana)"
+    "median": "Cerradas en {days, plural, one {# día} other {# días}} (mediana)"
   },
   "weekTitle": "Sesiones por semana",
   "weekLabel": "Barras: sesiones celebradas cada semana; línea: asistencia",

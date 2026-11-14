@@ -7,7 +7,7 @@
   "open": "Auswertungen in Ronde ansehen",
   "settings": {
     "title": "Bericht per E-Mail",
-    "intro": "Diese Zahlen, per E-Mail zu Beginn jeder Woche oder jedes Monats.",
+    "intro": "Diese Zahlen per E-Mail, zu Beginn jeder Woche oder jedes Monats.",
     "frequency": "Häufigkeit",
     "off": "Nicht senden",
     "weekly": "Jeden Montag (die Vorwoche)",

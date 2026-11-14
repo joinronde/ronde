@@ -67,7 +67,7 @@
   },
   "projects": {
     "portfolio": "Portafoglio di progetti: descrizione, tema, stato, responsabile, team, date e lo storico di ogni riunione",
-    "round": "Giro per progetto: un turno per progetto, in cui i suoi membri parlano insieme",
+    "round": "Giro dei progetti: un turno per progetto, in cui i suoi membri parlano insieme",
     "programs": "Programmi: progetti raggruppati in programmi annidati",
     "permissions": "Permessi per progetto",
     "import": "Progetti importati da GitHub, GitLab, Jira e Linear"

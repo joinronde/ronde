@@ -32,13 +32,13 @@
     "zoom": "Client-Secret",
     "meet": "Privater Schlüssel des Dienstkontos",
     "teams": "Client-Secret",
-    "bbb": "Gemeinsames Geheimnis des Servers"
+    "bbb": "Shared Secret des Servers"
   },
   "hints": {
     "zoom": "Erstelle im Zoom App Marketplace eine „Server-to-Server OAuth“-App mit dem Scope meeting:write:meeting:admin und kopiere Konto-ID, Client-ID und Secret.",
     "meet": "Erstelle in Google Cloud ein Dienstkonto, gib ihm in der Admin-Konsole von Google Workspace domainweite Delegierung für den Scope meetings.space.created und füge den private_key seines JSON-Schlüssels ein.",
     "teams": "Registriere in Microsoft Entra eine Anwendung mit der Anwendungsberechtigung OnlineMeetings.ReadWrite.All (Admin-Zustimmung) und einer Anwendungszugriffsrichtlinie für den Organisator.",
-    "bbb": "Die Adresse des Servers (https://…/bigbluebutton) und sein gemeinsames Geheimnis, das bbb-conf --secret auf dem Server ausgibt."
+    "bbb": "Die Adresse des Servers (https://…/bigbluebutton) und sein Shared Secret, das bbb-conf --secret auf dem Server ausgibt."
   },
   "useIt": "Danach in den Einstellungen eines Meetings, Allgemein → Videoanruf: „Dauerhaften Raum anlegen“.",
   "useItBbb": "Ein BigBlueButton-Server wird dann in den Einstellungen jedes Meetings angeboten, Allgemein → Videoanruf."

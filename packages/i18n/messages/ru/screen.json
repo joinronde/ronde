@@ -12,6 +12,6 @@
   "replayIntro": "Повторить заставку",
   "fullscreen": "Во весь экран",
   "drivenFromControl": "Эта вкладка управляется с пульта.",
-  "yourTurn": "Ваш черёд, <span>{name}</span>!",
-  "poweredBy": "Сделано на Ronde"
+  "yourTurn": "Ваша очередь, <span>{name}</span>!",
+  "poweredBy": "Работает на Ronde"
 }

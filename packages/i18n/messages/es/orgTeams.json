@@ -8,8 +8,8 @@
   "create": "Crear",
   "cancel": "Cancelar",
   "empty": "Aún no hay equipos",
-  "emptyHint": "Crea un primer equipo y añade personas desde su ficha en el directorio.",
-  "readOnly": "Solo los administradores del espacio modifican los equipos.",
+  "emptyHint": "Crea un primer equipo y añade personas desde su perfil en el directorio.",
+  "readOnly": "Solo los administradores del espacio de trabajo pueden modificar los equipos.",
   "members": "{count, plural, =0 {Nadie} one {# persona} other {# personas}}",
   "subTeams": "{count, plural, one {# subequipo} other {# subequipos}}",
   "withSub": "{count} en total",
@@ -26,5 +26,5 @@
   "deleteShort": "Eliminar",
   "deleteConfirm": "¿Eliminar el equipo «{name}»? Sus personas siguen en el directorio sin equipo; sus subequipos suben un nivel.",
   "noTeam": "Sin equipo",
-  "noTeamHint": "Su equipo se elige desde su ficha en el directorio."
+  "noTeamHint": "Su equipo se elige desde su perfil en el directorio."
 }

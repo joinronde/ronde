@@ -6,7 +6,7 @@
   "to": "Último día",
   "delegate": "Quién dirige tus reuniones mientras tanto",
   "noDelegate": "Nadie: los coanfitriones continúan",
-  "delegateHint": "Para las reuniones que diriges. Recibe una notificación.",
+  "delegateHint": "Para las reuniones que diriges. Esa persona recibirá una notificación.",
   "note": "Nota",
   "notePlaceholder": "P. ej. vacaciones, vuelvo el lunes",
   "save": "Guardar la ausencia",
@@ -14,6 +14,6 @@
   "period": "del {from} al {to}",
   "standsIn": "{name} te sustituye",
   "remove": "Quitar la ausencia {period}",
-  "empty": "Ninguna ausencia prevista.",
-  "emptyMine": "Ninguna ausencia prevista. ¿Te vas? Añádela aquí: tus reuniones lo sabrán."
+  "empty": "No hay ausencias previstas.",
+  "emptyMine": "No hay ausencias previstas. ¿Te vas a ausentar? Añádelo aquí y tus reuniones lo tendrán en cuenta."
 }

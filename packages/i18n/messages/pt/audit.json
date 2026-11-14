@@ -1,10 +1,10 @@
 {
   "title": "Registro de auditoria",
   "intro": "Quem mudou o quê neste espaço de trabalho: configurações, pessoas, papéis, reuniões. As interações ao vivo não são guardadas.",
-  "window": "Mostra os últimos {days} dias.",
+  "window": "Mostra {days, plural, =0 {os últimos 0 dias} one {o último dia} other {os últimos # dias}}.",
   "filters": {
     "action": "Ação",
-    "actionPlaceholder": "ex.: people, roles, meeting",
+    "actionPlaceholder": "Ex.: people, roles, meeting",
     "actor": "Pessoa",
     "actorPlaceholder": "Nome ou e-mail",
     "from": "De",
@@ -23,7 +23,7 @@
   "more": "Entradas mais antigas",
   "stream": {
     "title": "Enviar para um SIEM",
-    "hint": "Cada entrada também é enviada, assinada, para um conector webhook do espaço, para o seu SIEM ou plataforma de logs. Tenta de novo por alguns minutos quando não há resposta.",
+    "hint": "Cada entrada também é enviada, assinada, para um conector webhook do espaço de trabalho, para o seu SIEM ou plataforma de logs. Tenta de novo por alguns minutos quando não há resposta.",
     "connector": "Conector webhook",
     "none": "Sem envio",
     "save": "Salvar",
@@ -92,7 +92,7 @@
       "sso": "Entrou pelo login da empresa"
     },
     "workspace": {
-      "update": "Configurações do espaço alteradas",
+      "update": "Configurações do espaço de trabalho alteradas",
       "categoryAdd": "Equipe adicionada",
       "categoryRename": "Equipe renomeada",
       "categoryDelete": "Equipe excluída",
@@ -100,7 +100,7 @@
       "auditStream": "Envio da auditoria alterado",
       "logo": "Logotipo alterado",
       "logoRemoved": "Logotipo removido",
-      "delete": "Espaço excluído"
+      "delete": "Espaço de trabalho excluído"
     },
     "connectors": {
       "save": "Conector salvo",
@@ -212,13 +212,13 @@
       "configure": "Quebra-gelo configurado"
     },
     "poker": {
-      "configure": "Pôquer de estimativa configurado"
+      "configure": "Planning poker configurado"
     },
     "retro": {
       "configure": "Retrospectiva configurada"
     },
     "rotation": {
-      "configure": "Papéis rotativos configurados"
+      "configure": "Papéis em rodízio configurados"
     }
   },
   "fields": {
@@ -227,7 +227,7 @@
     "locale": "Idioma",
     "timezone": "Fuso horário",
     "meetingCreation": "Quem pode criar reuniões",
-    "bufferMin": "Tempo livre em volta das reuniões (min)",
+    "bufferMin": "Margem entre reuniões (min)",
     "email": "E-mail",
     "firstName": "Nome",
     "lastName": "Sobrenome",

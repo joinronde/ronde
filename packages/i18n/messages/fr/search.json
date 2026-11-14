@@ -1,8 +1,8 @@
 {
-  "title": "Rechercher dans l'espace",
+  "title": "Rechercher dans l’espace",
   "placeholder": "Rechercher réunions, personnes, actions, décisions…",
   "switchTo": "Passer à {name}",
-  "none": "Aucun résultat pour « {query} ».",
+  "none": "Aucun résultat pour « {query} ».",
   "foot": "↑ ↓ pour se déplacer, Entrée pour ouvrir, Échap pour fermer",
   "kinds": {
     "page": "Aller à",

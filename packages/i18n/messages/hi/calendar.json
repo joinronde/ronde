@@ -5,7 +5,7 @@
   "previous": "पिछला महीना",
   "next": "अगला महीना",
   "today": "आज",
-  "view": "प्रदर्शन",
+  "view": "व्यू",
   "viewMonth": "महीना",
   "viewAgenda": "सूची",
   "legend": "दिखाई गई मीटिंग",
@@ -17,7 +17,7 @@
   "nothingThisMonth": "इस महीने कोई सत्र नहीं।",
   "todayShort": "आज",
   "tomorrow": "कल",
-  "inDays": "{count} दिनों में",
+  "inDays": "{count, plural, one {# दिन में} other {# दिनों में}}",
   "status": {
     "planned": "नियोजित",
     "live": "अभी लाइव",
@@ -25,7 +25,7 @@
     "cancelled": "रद्द"
   },
   "attendance": {
-    "yes": "मैं रहूँगा/रहूँगी",
+    "yes": "उपस्थित",
     "no": "अनुपस्थित"
   }
 }
