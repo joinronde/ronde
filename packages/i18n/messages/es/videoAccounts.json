@@ -1,6 +1,6 @@
 {
   "title": "Cuentas de vídeo",
-  "intro": "Las cuentas de vídeo del espacio: un servidor BigBlueButton en el que sus reuniones abren su sala, o una cuenta de Zoom, Google Meet o Teams que crea una sala duradera para cada reunión. Nadie tiene que iniciar sesión.",
+  "intro": "Las cuentas de vídeo del espacio de trabajo: un servidor BigBlueButton en el que sus reuniones abren su sala, o una cuenta de Zoom, Google Meet o Teams que crea una sala permanente para cada reunión. Nadie tiene que iniciar sesión.",
   "empty": "Todavía no hay cuentas de vídeo.",
   "add": "Añadir una cuenta de vídeo",
   "kind": "Proveedor",
@@ -35,8 +35,8 @@
     "bbb": "Secreto compartido del servidor"
   },
   "hints": {
-    "zoom": "En el Zoom App Marketplace, crea una app «Server-to-Server OAuth» con el alcance meeting:write:meeting:admin y copia su ID de cuenta, ID de cliente y secreto.",
-    "meet": "En Google Cloud, crea una cuenta de servicio, dale delegación en todo el dominio para el alcance meetings.space.created en la consola de administración de Google Workspace y pega el private_key de su clave JSON.",
+    "zoom": "En el Zoom App Marketplace, crea una app «Server-to-Server OAuth» con el ámbito meeting:write:meeting:admin y copia su ID de cuenta, ID de cliente y secreto.",
+    "meet": "En Google Cloud, crea una cuenta de servicio, dale delegación en todo el dominio para el ámbito meetings.space.created en la consola de administración de Google Workspace y pega el private_key de su clave JSON.",
     "teams": "En Microsoft Entra, registra una aplicación con el permiso de aplicación OnlineMeetings.ReadWrite.All (con consentimiento de administrador) y una directiva de acceso de aplicación para el organizador.",
     "bbb": "La dirección del servidor (https://…/bigbluebutton) y su secreto compartido, que da bbb-conf --secret en el servidor."
   },

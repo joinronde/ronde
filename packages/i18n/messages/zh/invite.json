@@ -4,7 +4,7 @@
   "role": "你的角色：{role}",
   "signedInAs": "已登录为 <strong>{email}</strong>",
   "accept": "加入 {workspace}",
-  "otherEmail": "此邀请发送给了 <strong>{email}</strong>。请使用该地址登录后接受。",
+  "otherEmail": "此邀请是发给 <strong>{email}</strong> 的。请使用该邮箱登录后接受邀请。",
   "signIn": "登录后接受",
   "signUp": "创建账户",
   "switchAccount": "使用其他账户",

@@ -8,5 +8,5 @@
   "wall": "Agradecimientos dados",
   "fromTo": "<strong>{from}</strong> para <strong>{to}</strong>",
   "empty": "Todavía no hay agradecimientos.",
-  "emptyHint": "Durante una sesión, el módulo de agradecimientos permite a cualquiera dar las gracias a un compañero: cada agradecimiento llega a este muro."
+  "emptyHint": "Durante una sesión, el módulo de agradecimientos permite a cualquiera dar las gracias a alguien del equipo: cada agradecimiento llega a este muro."
 }

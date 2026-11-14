@@ -1,7 +1,7 @@
 {
   "title": "Assenze",
   "add": "Aggiungi un'assenza",
-  "intro": "Ferie, permessi, formazione: vieni segnato come assente alle sessioni di quei giorni e non ricevi promemoria.",
+  "intro": "Ferie, permessi, formazione: risulti assente alle sessioni di quei giorni e non ricevi promemoria.",
   "from": "Primo giorno",
   "to": "Ultimo giorno",
   "delegate": "Chi conduce le tue riunioni nel frattempo",
@@ -15,5 +15,5 @@
   "standsIn": "{name} sostituisce",
   "remove": "Rimuovi l'assenza {period}",
   "empty": "Nessuna assenza prevista.",
-  "emptyMine": "Nessuna assenza prevista. Stai per partire? Aggiungila qui: le tue riunioni lo sapranno."
+  "emptyMine": "Nessuna assenza prevista. Stai per partire? Aggiungila qui: le tue riunioni ne terranno conto."
 }

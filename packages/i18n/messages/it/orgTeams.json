@@ -8,7 +8,7 @@
   "create": "Crea",
   "cancel": "Annulla",
   "empty": "Nessun team per ora",
-  "emptyHint": "Crea un primo team, poi aggiungi persone dalla loro scheda in rubrica.",
+  "emptyHint": "Crea un primo team, poi aggiungi le persone dal loro profilo in rubrica.",
   "readOnly": "Solo gli amministratori dello spazio modificano i team.",
   "members": "{count, plural, =0 {Nessuno} one {# persona} other {# persone}}",
   "subTeams": "{count, plural, one {# sotto-team} other {# sotto-team}}",
@@ -26,5 +26,5 @@
   "deleteShort": "Elimina",
   "deleteConfirm": "Eliminare il team «{name}»? Le sue persone restano in rubrica senza team; i sotto-team salgono di un livello.",
   "noTeam": "Senza team",
-  "noTeamHint": "Il loro team si sceglie dalla loro scheda in rubrica."
+  "noTeamHint": "Il team si sceglie dal profilo di ciascuno in rubrica."
 }

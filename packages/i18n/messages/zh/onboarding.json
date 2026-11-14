@@ -5,7 +5,7 @@
   "name": "工作空间名称",
   "namePlaceholder": "产品团队",
   "slug": "地址",
-  "slugHint": "小写字母、数字和连字符。",
+  "slugHint": "仅限小写字母、数字和连字符。",
   "change": "修改",
   "defaults": "地址 {address} · {language} · {timezone}",
   "language": "邮件和会议纪要的语言",

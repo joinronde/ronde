@@ -8,13 +8,13 @@
     "round": "Giro di tavolo",
     "topics": "Argomenti aperti",
     "retro": "Retrospettiva",
-    "timebox": "Timebox",
+    "timebox": "Argomento a tempo",
     "poker": "Planning poker",
-    "projects": "Giro per progetto",
+    "projects": "Giro dei progetti",
     "slide": "Slide"
   },
   "blockHints": {
-    "intro": "Benvenuto, annunci e rompighiaccio prima del primo turno",
+    "intro": "Accoglienza, annunci e rompighiaccio prima del primo turno",
     "round": "Ognuno a turno, cronometrato, con la propria scheda sullo schermo",
     "projects": "Progetto per progetto, i suoi membri parlano insieme",
     "topics": "Gli argomenti proposti e votati dal team",

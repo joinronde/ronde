@@ -1,8 +1,8 @@
 {
   "title": "Agendas",
-  "intro": "Inscrivez les séances de vos réunions dans les agendas des participants (Google, Microsoft 365 ou un serveur CalDAV comme iCloud, Fastmail ou Nextcloud), avec un compte de l'espace. Ce qui y change revient ici, et leurs disponibilités aident à éviter les conflits.",
-  "empty": "Aucun compte d'agenda pour l'instant.",
-  "add": "Ajouter un compte d'agenda",
+  "intro": "Inscrivez les séances de vos réunions dans les agendas des participants (Google, Microsoft 365 ou un serveur CalDAV comme iCloud, Fastmail ou Nextcloud), avec un compte de l’espace. Ce qui y change revient ici, et leurs disponibilités aident à éviter les conflits.",
+  "empty": "Aucun compte d’agenda pour l’instant.",
+  "add": "Ajouter un compte d’agenda",
   "kind": "Fournisseur",
   "name": "Nom",
   "edit": "Modifier",
@@ -12,7 +12,7 @@
   "test": "Tester",
   "remove": "Retirer",
   "works": "✓ Connecté.",
-  "removeConfirm": "Retirer {name} ? Les réunions qui l'utilisent ne sont plus synchronisées ; les événements déjà inscrits restent dans les agendas.",
+  "removeConfirm": "Retirer {name} ? Les réunions qui l’utilisent ne sont plus synchronisées ; les événements déjà inscrits restent dans les agendas.",
   "kinds": {
     "google": "Google Agenda",
     "microsoft": "Microsoft 365",
@@ -24,17 +24,17 @@
     "tenant": "Tenant (identifiant ou domaine)",
     "clientId": "Client ID",
     "url": "Adresse CalDAV",
-    "username": "Nom d'utilisateur"
+    "username": "Nom d’utilisateur"
   },
   "secret": {
     "google": "Clé privée du compte de service",
     "microsoft": "Client secret",
-    "caldav": "Mot de passe (un mot de passe d'application pour iCloud ou Fastmail)"
+    "caldav": "Mot de passe (un mot de passe d’application pour iCloud ou Fastmail)"
   },
   "hints": {
-    "google": "Dans Google Cloud, créez un compte de service et donnez-lui la délégation à l'échelle du domaine pour la portée https://www.googleapis.com/auth/calendar dans la console d'administration Google Workspace. Les événements sont créés par l'organisateur, qui invite les participants.",
-    "microsoft": "Dans Microsoft Entra, enregistrez une application avec la permission d'application Calendars.ReadWrite (consentement administrateur). Les événements sont créés dans l'agenda de l'organisateur, qui invite les participants.",
-    "caldav": "L'adresse du serveur (https://caldav.icloud.com, https://caldav.fastmail.com/dav/, https://cloud.example.com/remote.php/dav) ou de l'un de ses agendas. Les séances vont dans le premier agenda d'événements du compte, sauf si vous donnez l'adresse d'un agenda, et le serveur invite les participants. Seules les disponibilités de l'organisateur peuvent être lues."
+    "google": "Dans Google Cloud, créez un compte de service et donnez-lui la délégation à l’échelle du domaine pour la portée https://www.googleapis.com/auth/calendar dans la console d’administration Google Workspace. Les événements sont créés par l’organisateur, qui invite les participants.",
+    "microsoft": "Dans Microsoft Entra, enregistrez une application avec la permission d’application Calendars.ReadWrite (consentement administrateur). Les événements sont créés dans l’agenda de l’organisateur, qui invite les participants.",
+    "caldav": "L’adresse du serveur (https://caldav.icloud.com, https://caldav.fastmail.com/dav/, https://cloud.example.com/remote.php/dav) ou de l’un de ses agendas. Les séances vont dans le premier agenda d’événements du compte, sauf si vous donnez l’adresse d’un agenda, et le serveur invite les participants. Seules les disponibilités de l’organisateur peuvent être lues."
   },
-  "useIt": "Ensuite, dans les réglages d'une réunion, Planification → Agendas."
+  "useIt": "Ensuite, dans les réglages d’une réunion, Planification → Agendas."
 }

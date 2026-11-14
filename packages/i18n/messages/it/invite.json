@@ -1,6 +1,6 @@
 {
   "title": "Unisciti a {workspace}",
-  "intro": "{inviter} ti ha invitato a unirti a {workspace} su Ronde.",
+  "intro": "{inviter} ti invita a unirti a {workspace} su Ronde.",
   "role": "Il tuo ruolo: {role}",
   "signedInAs": "Accesso effettuato come <strong>{email}</strong>",
   "accept": "Unisciti a {workspace}",
@@ -12,8 +12,8 @@
   "invalid": "Questo link di invito non è valido o è stato revocato. Chiedine uno nuovo a chi ti ha invitato.",
   "expiredTitle": "Invito scaduto",
   "expired": "Questo invito a {workspace} è scaduto. Chiedine uno nuovo a chi ti ha invitato.",
-  "memberTitle": "Sei già dentro",
+  "memberTitle": "Hai già accesso",
   "member": "Sei già membro di {workspace}.",
-  "memberOther": "Questo invito è per <strong>{email}</strong>: inoltragli il link perché possa unirsi.",
+  "memberOther": "Questo invito è per <strong>{email}</strong>: inoltra il link a questa persona perché possa unirsi.",
   "open": "Apri {workspace}"
 }

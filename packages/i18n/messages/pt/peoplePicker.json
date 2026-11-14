@@ -1,10 +1,10 @@
 {
-  "search": "Pesquisar uma pessoa ou equipe…",
+  "search": "Buscar uma pessoa ou equipe…",
   "selected": "{count} de {total} selecionadas",
   "all": "Todos",
   "none": "Ninguém",
   "teams": "Equipes",
-  "pickTeam": "{name}: {count, plural, one {# pessoa} other {# pessoas}}, subequipes incluídas",
+  "pickTeam": "{name}: {count, plural, =0 {# pessoas} one {# pessoa} other {# pessoas}}, subequipes incluídas",
   "noMatch": "Ninguém corresponde.",
   "noTeam": "Sem equipe",
   "withSubTeams": "subequipes incluídas",

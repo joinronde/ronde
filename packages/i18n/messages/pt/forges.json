@@ -1,6 +1,6 @@
 {
   "title": "GitLab e GitHub",
-  "intro": "As conexões com suas forjas de código, feitas uma vez para todo o espaço: cada reunião pode ler por elas as issues de cada pessoa, e os gerenciadores de tickets abrem tickets com elas.",
+  "intro": "As conexões com suas plataformas de código, feitas uma vez para todo o espaço de trabalho: cada reunião pode ler por elas as issues de cada pessoa, e os gerenciadores de tickets abrem tickets com elas.",
   "empty": "Ainda não há nenhuma conexão.",
   "kinds": {
     "gitlab": "GitLab",
@@ -17,7 +17,7 @@
   "oauth": "conectada com o GitLab",
   "add": "Adicionar uma conexão",
   "addOwn": "Adicionar uma conexão só para esta reunião",
-  "addOwnHint": "Vista apenas por esta reunião, para um servidor ou uma conta que o espaço não tem.",
+  "addOwnHint": "Só esta reunião pode usá-la: para um servidor ou uma conta que o espaço de trabalho não tem.",
   "connect": "Conectar com o GitLab",
   "connectHint": "Sua conta do GitLab, somente leitura, renovada sozinha: nenhum token para copiar nem para substituir quando expirar.",
   "reconnect": "Conectar de novo",
@@ -51,10 +51,10 @@
   },
   "meeting": {
     "title": "Conexões {kind}",
-    "inherited": "Enquanto você não escolher, esta reunião usa as conexões do espaço.",
+    "inherited": "Enquanto você não escolher, esta reunião usa as conexões do espaço de trabalho.",
     "picked": "Esta reunião usa as conexões marcadas abaixo.",
     "use": "Usar",
-    "none": "Nenhuma conexão {kind}: um administrador pode adicionar uma ao espaço, ou adicione abaixo uma só para esta reunião.",
+    "none": "Nenhuma conexão {kind}: um administrador pode adicionar uma ao espaço de trabalho, ou adicione abaixo uma só para esta reunião.",
     "save": "Salvar o acesso {kind}",
     "repos": "Repositórios seguidos",
     "reposHint": "“dono/repositório” ou todo um “dono”, um por linha; vazio: todos os repositórios. Informe também o usuário do GitHub de cada pessoa em “Pessoas e papéis”.",
@@ -63,6 +63,6 @@
     "projectsHint": "Só as issues destes projetos são propostas para importação. Informe também o usuário do GitLab de cada pessoa em “Pessoas e papéis”."
   },
   "hub": {
-    "count": "{count, plural, one {# conexão} other {# conexões}}"
+    "count": "{count, plural, =0 {# conexões} one {# conexão} other {# conexões}}"
   }
 }

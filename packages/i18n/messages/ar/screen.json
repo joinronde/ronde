@@ -9,9 +9,9 @@
   "reducedMotion": "تقليل الحركة",
   "ambience": "أجواء شاشة الانتظار",
   "previewTheme": "معاينة سمة",
-  "replayIntro": "إعادة تشغيل المقدمة",
+  "replayIntro": "إعادة تشغيل الافتتاح",
   "fullscreen": "ملء الشاشة",
   "drivenFromControl": "يُتحكَّم في علامة التبويب هذه من غرفة التحكم.",
-  "yourTurn": "دورك، <span>{name}</span>!",
-  "poweredBy": "بدعم من Ronde"
+  "yourTurn": "حان دورك يا <span>{name}</span>!",
+  "poweredBy": "بتقنية Ronde"
 }

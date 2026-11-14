@@ -2,8 +2,8 @@
   "host": "होस्ट",
   "duration": {
     "minutes": "{m} मिनट",
-    "hours": "{h} घंटे",
-    "hoursMinutes": "{h} घंटे {m} मिनट"
+    "hours": "{h, plural, one {# घंटा} other {# घंटे}}",
+    "hoursMinutes": "{h, plural, one {# घंटा} other {# घंटे}} {m} मिनट"
   },
   "noMeeting": {
     "title": "कोई मीटिंग नहीं चल रही",

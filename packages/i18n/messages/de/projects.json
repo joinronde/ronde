@@ -2,7 +2,7 @@
   "health": {
     "onTrack": "Im Plan",
     "atRisk": "Gefährdet",
-    "offTrack": "In Schwierigkeiten",
+    "offTrack": "Kritisch",
     "none": "Nicht angegeben"
   },
   "status": {
@@ -20,7 +20,7 @@
     "period": "Zeitraum",
     "weeks": "{count, plural, one {Letzte Woche} other {Letzte # Wochen}}",
     "watch": "Projekte im Blick behalten",
-    "allGood": "Kein Projekt in Schwierigkeiten, überfällig oder ohne Neuigkeiten.",
+    "allGood": "Kein Projekt ist kritisch, überfällig oder ohne Neuigkeiten.",
     "healthOverTime": "Der Stand Woche für Woche",
     "project": "Projekt",
     "done": "Erledigt",
@@ -42,14 +42,14 @@
   "byTheme": "Nach Thema",
   "byStatus": "Nach Status",
   "mine": "Meine Projekte",
-  "empty": "Noch kein Projekt. Beschreibe die Projekte des Teams und folge ihnen in einem Meeting, damit jedes seine Runde bekommt.",
+  "empty": "Noch kein Projekt. Beschreibe die Projekte des Teams und verfolge sie in einem Meeting, damit jedes an die Reihe kommt.",
   "noMatch": "Kein Projekt passt zu diesen Filtern.",
   "noTheme": "Ohne Thema",
   "archived": "Archiviert",
-  "overdue": "Fällig war: {date}",
-  "due": "Fällig: {date}",
+  "overdue": "War fällig am {date}",
+  "due": "Fällig am {date}",
   "started": "Begonnen am {date}",
-  "noHeadline": "Projektblatt vorgestellt, ohne Botschaft",
+  "noHeadline": "Projektblatt vorgestellt, ohne Kernaussage",
   "leadBy": "Verantwortlich: {name}",
   "newTitle": "Neues Projekt",
   "editTitle": "{name} bearbeiten",
@@ -102,7 +102,7 @@
   "roles": {
     "achievement": "Erledigt",
     "plan": "Geplant",
-    "blocker": "Blockaden",
+    "blocker": "Blocker",
     "note": "Notizen",
     "custom": "Sonstiges"
   },
@@ -117,10 +117,10 @@
   "noActions": "Keine offene Aufgabe.",
   "followed": {
     "title": "Verfolgte Projekte",
-    "intro": "Jedes verfolgte Projekt bekommt einen Tab im Check-in aller und, mit einer Projektrunde auf der Agenda, eine eigene Runde, in der sein Team gemeinsam spricht.",
+    "intro": "Jedes verfolgte Projekt bekommt einen Tab im Check-in aller. Steht eine Projektrunde auf der Agenda, kommt es dort an die Reihe, und sein Team spricht gemeinsam.",
     "portfolio": "Zum Portfolio",
-    "noRound": "Die Agenda hat noch keine Projektrunde: Die Einträge zu diesen Projekten werden in der Runde jeder Person vorgestellt. Füge unter Agenda den Block „Projektrunde“ hinzu, damit jedes Projekt seine Runde bekommt.",
-    "notActive": "nicht aktiv: keine Runde",
+    "noRound": "Die Agenda hat noch keine Projektrunde: Die Einträge zu diesen Projekten werden im Beitrag jeder Person vorgestellt. Füge unter „Agenda“ den Block „Projektrunde“ hinzu, damit jedes Projekt an die Reihe kommt.",
+    "notActive": "nicht aktiv: kein Beitrag",
     "reorder": "{name} verschieben",
     "remove": "{name} nicht mehr folgen",
     "removed": "{name} wird nicht mehr verfolgt",
@@ -131,12 +131,12 @@
     "create": "Projekt anlegen",
     "allFollowed": "Alle Projekte des Portfolios werden bereits verfolgt.",
     "createInPortfolio": "Neues Projekt im Portfolio",
-    "noneHint": "Wähle die Projekte, über die dieses Team spricht: Jedes bekommt einen Tab im Check-in und seine Runde im Meeting.",
+    "noneHint": "Wähle die Projekte, über die dieses Team spricht: Jedes bekommt einen Tab im Check-in und kommt im Meeting an die Reihe.",
     "whoAdds": "Wer darf Projekte hinzufügen?",
     "whoAddsHint": "Projekte stammen immer aus dem Portfolio des Arbeitsbereichs. Sortieren und Entfernen bleiben der Moderation vorbehalten.",
     "by": {
       "hosts": "Die Moderation",
-      "hostsHint": "Nur wer das Meeting konfiguriert, wählt seine Projekte.",
+      "hostsHint": "Nur wer das Meeting einrichtet, wählt seine Projekte.",
       "participants": "Alle Teilnehmenden",
       "participantsHint": "Alle Teilnehmenden können aus ihrem Check-in ein Projekt hinzufügen."
     },
@@ -151,7 +151,7 @@
     "health": "Kritische zuerst",
     "name": "Name",
     "due": "Fälligkeit",
-    "updated": "Neueste Meldung"
+    "updated": "Letzte Neuigkeit"
   },
   "density": "Darstellung",
   "densities": {
@@ -165,14 +165,14 @@
     "status": "Status",
     "due": "Fällig",
     "progress": "Fortschritt",
-    "updated": "Letzte Meldung"
+    "updated": "Letzte Neuigkeit"
   },
   "foldAll": "Alle einklappen",
   "unfoldAll": "Alle ausklappen",
   "showMore": "{count} weitere anzeigen ({total} übrig)",
   "partOf": "Gehört zu {name}",
   "partOfLink": "Gehört zu <link>{name}</link>",
-  "private": "Nur Mitglieder",
+  "private": "Nur Projektteam",
   "visibility": "Wer es sieht",
   "visibilityWorkspace": "Der ganze Arbeitsbereich",
   "visibilityMembers": "Nur sein Team (und wer alle Projekte verwaltet)",
@@ -180,7 +180,7 @@
   "subProjects": "Projekte dieses Programms",
   "rolledHealth": "Schlechtester Stand darunter:",
   "csv": {
-    "lastNews": "Letzte Neuigkeiten",
+    "lastNews": "Letzte Neuigkeit",
     "quiet": "Seit drei Wochen keine Neuigkeiten",
     "overdue": "Fälligkeit überschritten",
     "done": "Erledigt im Zeitraum",
@@ -202,7 +202,7 @@
     "issues": "{done} von {total, plural, one {# Ticket} other {# Tickets}} geschlossen",
     "synced": "Synchron mit {tool}",
     "updated": "aktualisiert {when}",
-    "refused": "Die letzte Aktualisierung ist fehlgeschlagen: {tool} hat das Token des Ticketsystems abgelehnt. Die Administration kann es in den Einstellungen des Arbeitsbereichs prüfen.",
+    "refused": "Die letzte Aktualisierung ist fehlgeschlagen: {tool} hat das Token des Ticketsystems abgelehnt. Ein Admin kann es in den Einstellungen des Arbeitsbereichs prüfen.",
     "notFound": "Die letzte Aktualisierung ist fehlgeschlagen: {tool} findet das Repository oder Projekt, aus dem es stammt, nicht mehr.",
     "failed": "Die letzte Aktualisierung ist fehlgeschlagen: {tool} hat nicht geantwortet. Ronde versucht es innerhalb einer Stunde erneut.",
     "gone": "{tool} findet es nicht mehr: Es wurde gelöscht oder verschoben, oder das Token des Ticketsystems kann es nicht mehr lesen. Ronde versucht es einmal am Tag erneut.",
@@ -214,7 +214,7 @@
     "editHintRepo": "Sein Name kommt aus {tool}: Ein hier vergebener neuer Name wird bei der nächsten Aktualisierung innerhalb einer Stunde ersetzt.",
     "justNow": "gerade eben",
     "rateLimited": "Die letzte Aktualisierung wurde verschoben: {tool} hat Ronde gebeten, weniger Anfragen zu senden. Ronde versucht es innerhalb einer Stunde erneut.",
-    "paused": "Bis zum Ende des Team-Tarifs mit {tool} synchronisiert. Mit dem Tarif geht die Synchronisierung weiter.",
+    "paused": "Bis zum Ende des Team-Tarifs mit {tool} synchronisiert. Sobald der Tarif wieder aktiv ist, geht die Synchronisierung weiter.",
     "trackerRemoved": "Nicht mehr synchronisiert: Sein Ticketsystem wurde aus den Einstellungen des Arbeitsbereichs entfernt.",
     "moved": "Nicht mehr synchronisiert: Sein Ticketsystem verweist jetzt auf einen anderen Server.",
     "unlinked": "Am {date} importiert, nicht mehr synchronisiert: Bearbeite es in Ronde.",

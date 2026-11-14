@@ -5,7 +5,7 @@
   "markAll": "Segna tutto come letto",
   "unread": "non letta",
   "someone": "Qualcuno",
-  "empty": "Sei in pari.",
+  "empty": "Nessuna notifica da leggere.",
   "emptyHint": "Qui compaiono le azioni assegnate a te, le sessioni che iniziano e i verbali pubblicati.",
   "kinds": {
     "action_assigned": "<strong>{actor}</strong> ti ha assegnato un'azione in <strong>{meeting}</strong>",
@@ -13,7 +13,7 @@
     "minutes_published": "Il verbale di <strong>{meeting}</strong> è disponibile",
     "kudo_received": "<strong>{actor}</strong> ti ha ringraziato in <strong>{meeting}</strong>",
     "meeting_joined": "<strong>{actor}</strong> ti ha aggiunto a <strong>{meeting}</strong>",
-    "absence_delegated": "<strong>{actor}</strong> sarà assente: nel frattempo conduci tu le riunioni che organizza",
+    "absence_delegated": "<strong>{actor}</strong> sarà assente: nel frattempo conduci tu le sue riunioni",
     "minutes_draft": "Il verbale di <strong>{meeting}</strong> aspetta di essere pubblicato",
     "line_assigned": "<strong>{actor}</strong> ti ha associato a una riga in <strong>{meeting}</strong>"
   }

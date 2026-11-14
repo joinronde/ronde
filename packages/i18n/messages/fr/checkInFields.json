@@ -5,11 +5,11 @@
   "markToDo": "Marquer comme à faire",
   "markDone": "Marquer comme fait",
   "itemLabel": "{section}, élément {n}",
-  "removeItem": "Retirer « {text} »",
+  "removeItem": "Retirer « {text} »",
   "emptyItem": "élément vide",
   "remove": "Retirer",
   "addItem": "Ajouter un élément",
-  "addTaskFirst": "Ajouter une tâche · vide s'il n'y a rien",
-  "addItemFirst": "Ajouter un élément · vide s'il n'y a rien",
-  "freeTextPlaceholder": "{section} : en quelques phrases · vide s'il n'y a rien"
+  "addTaskFirst": "Ajouter une tâche · à laisser vide s’il n’y a rien",
+  "addItemFirst": "Ajouter un élément · à laisser vide s’il n’y a rien",
+  "freeTextPlaceholder": "{section} : en quelques phrases · à laisser vide s’il n’y a rien"
 }

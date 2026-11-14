@@ -11,13 +11,13 @@
   },
   "popcorn": {
     "label": "Palomitas",
-    "combo": "Esto se pone interesante, sacad las palomitas",
-    "comboNamed": "Esto se pone interesante, sacad las palomitas"
+    "combo": "Esto se pone interesante: ¡palomitas!",
+    "comboNamed": "Esto se pone interesante: ¡palomitas!"
   },
   "mindBlown": {
     "label": "¡Alucinante!",
-    "combo": "¡Mentes alucinadas!",
-    "comboNamed": "{name} acaba de dejar alucinado al equipo"
+    "combo": "¡El equipo no se lo puede creer!",
+    "comboNamed": "{name} acaba de dejar al equipo con la boca abierta"
   },
   "fire": {
     "label": "¡En racha!",

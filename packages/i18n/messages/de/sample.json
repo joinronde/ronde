@@ -8,7 +8,7 @@
   "delete": "Beispiel löschen",
   "deleteConfirm": "Das Beispiel-Meeting und sein fiktives Team löschen? Das lässt sich nicht rückgängig machen.",
   "personHint": "Fiktive Person des Beispiel-Meetings",
-  "meetingName": "Wochenrunde (Beispiel)",
+  "meetingName": "Wochenmeeting (Beispiel)",
   "tasks": {
     "emma": {
       "1": "Datenmodell der Rechnungen",
@@ -29,7 +29,7 @@
     "sarah": {
       "1": "Mobile Entwürfe abgenommen",
       "2": "Grundgerüst der mobilen App und ihre CI",
-      "3": "Registrierungs-Bildschirme",
+      "3": "Registrierungs-Screens",
       "4": "Foto-Upload für Belege",
       "5": "Offline-Modus für das Dashboard",
       "6": "Beta für zehn Kunden"
@@ -64,7 +64,7 @@
   },
   "kudos": {
     "checklist": "Die Release-Checkliste hat meinen Freitag gerettet",
-    "screens": "Die neuen Bildschirme sind so viel klarer",
+    "screens": "Die neuen Screens sind so viel übersichtlicher",
     "export": "Danke, dass du den Export an einem Tag freigemacht hast"
   },
   "questions": {

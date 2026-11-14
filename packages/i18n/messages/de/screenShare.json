@@ -1,12 +1,12 @@
 {
-  "start": "Meinen Bildschirm auf dem Raumbildschirm teilen",
+  "start": "Meinen Bildschirm auf dem geteilten Bildschirm zeigen",
   "startShort": "Bildschirm teilen",
   "stop": "Teilen meines Bildschirms beenden",
   "stopShort": "Teilen beenden",
-  "screens": "{count, plural, =0 {Noch kein Raumbildschirm verbunden} one {# Raumbildschirm} other {# Raumbildschirme}}",
+  "screens": "{count, plural, =0 {Noch kein geteilter Bildschirm verbunden} one {# geteilter Bildschirm} other {# geteilte Bildschirme}}",
   "denied": "Der Browser hat den Bildschirm nicht geteilt.",
   "sharedBy": "Geteilt von {name}",
   "shared": "Geteilter Bildschirm",
   "sound": "Ton einschalten",
-  "previewBadge": "Auf dem Raumbildschirm · {count, plural, =0 {warte auf die Bildschirme} one {# Bildschirm} other {# Bildschirme}}"
+  "previewBadge": "Auf dem geteilten Bildschirm · {count, plural, =0 {warte auf die Bildschirme} one {# Bildschirm} other {# Bildschirme}}"
 }

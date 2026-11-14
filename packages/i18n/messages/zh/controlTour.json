@@ -12,7 +12,7 @@
     },
     "runOrder": {
       "title": "议程和发言顺序",
-      "body": "<p>开场、每人一轮、开放议题，然后总结。</p><ul><li><strong>↑ ↓</strong> 调整顺序，<strong>缺席</strong>把某人移出本轮。</li><li><strong>前往</strong>直接跳到某个环节。</li><li>绿点：此人的进展卡已准备好。</li></ul>"
+      "body": "<p>开场、每人轮流发言、开放议题，然后总结。</p><ul><li><strong>↑ ↓</strong> 调整顺序，<strong>缺席</strong>把某人移出发言顺序。</li><li><strong>前往</strong>直接跳到某个环节。</li><li>绿点：此人的进展卡已准备好。</li></ul>"
     },
     "controls": {
       "title": "开始与推进",

@@ -1,14 +1,14 @@
 {
   "defaults": {
     "done": "Fait cette semaine",
-    "next": "Prévu semaine prochaine",
+    "next": "Prévu la semaine prochaine",
     "blockers": "Difficultés à signaler",
     "other": "Autres"
   },
   "types": {
     "list": {
       "label": "Liste",
-      "hint": "Un élément par ligne, qu'on ajoute, réordonne et retire"
+      "hint": "Un élément par ligne, qu’on ajoute, réordonne et retire"
     },
     "checklist": {
       "label": "Liste à cocher",

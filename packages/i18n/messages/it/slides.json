@@ -1,8 +1,8 @@
 {
   "stage": {
-    "items": "Sollevati dal team",
+    "items": "Segnalati dal team",
     "tracked": "Azione",
-    "emptyIrritants": "Ancora niente: ognuno può aggiungere i suoi da «La mia schermata».",
+    "emptyIrritants": "Ancora niente: ognuno può aggiungere i suoi da «Il mio schermo».",
     "anonymous": "Pubblicati senza nomi.",
     "review": "Azioni aperte ({count})",
     "noActions": "Nessuna azione aperta: tutto in ordine.",
@@ -13,12 +13,12 @@
     "anonymous": "Il tuo nome non viene mostrato.",
     "placeholder": "Cosa mi intralcia…",
     "add": "Aggiungi",
-    "mine": "Cosa hai sollevato",
+    "mine": "Cosa hai segnalato",
     "remove": "Togli «{text}»"
   },
   "host": {
-    "count": "Sollevati: {count}",
-    "empty": "Ancora niente. Ognuno aggiunge i suoi da «La mia schermata», anche prima della riunione.",
+    "count": "Segnalati: {count}",
+    "empty": "Ancora niente. Ognuno aggiunge i suoi da «Il mio schermo», anche prima della riunione.",
     "owner": "Responsabile",
     "toAction": "Trasforma in azione",
     "created": "Azione creata"

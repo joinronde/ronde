@@ -19,11 +19,11 @@
     "details": "Detalles"
   },
   "empty": "Todavía no hay nada registrado.",
-  "noMatch": "Ninguna entrada coincide con estos filtros.",
+  "noMatch": "No hay entradas que coincidan con estos filtros.",
   "more": "Entradas anteriores",
   "stream": {
     "title": "Enviar a un SIEM",
-    "hint": "Cada entrada también se envía, firmada, a un conector webhook del espacio, para tu SIEM o plataforma de logs. Se reintenta durante unos minutos si no responde.",
+    "hint": "Cada entrada también se envía, firmada, a un conector webhook del espacio de trabajo, para tu SIEM o plataforma de logs. Si no responde, se reintenta durante unos minutos.",
     "connector": "Conector webhook",
     "none": "Sin envío",
     "save": "Guardar",
@@ -58,12 +58,12 @@
       "set": "Módulo activado o desactivado"
     },
     "template": {
-      "save": "Guardada como plantilla"
+      "save": "Reunión guardada como plantilla"
     },
     "schedule": {
-      "save": "Calendario modificado",
+      "save": "Programación modificada",
       "skip": "Sesión omitida",
-      "move": "Sesión movida",
+      "move": "Sesión trasladada",
       "restore": "Sesión restaurada",
       "holidays": "Festivos de la reunión cambiados"
     },
@@ -72,7 +72,7 @@
       "test": "Prueba de notificación enviada"
     },
     "history": {
-      "summary": "Resumen de las actas editado",
+      "summary": "Resumen del acta editado",
       "publish": "Acta publicada"
     },
     "people": {
@@ -92,7 +92,7 @@
       "sso": "Se unió por el inicio de sesión de su empresa"
     },
     "workspace": {
-      "update": "Ajustes del espacio modificados",
+      "update": "Ajustes del espacio de trabajo modificados",
       "categoryAdd": "Equipo añadido",
       "categoryRename": "Equipo renombrado",
       "categoryDelete": "Equipo eliminado",
@@ -100,7 +100,7 @@
       "auditStream": "Envío de auditoría modificado",
       "logo": "Logotipo cambiado",
       "logoRemoved": "Logotipo quitado",
-      "delete": "Espacio eliminado"
+      "delete": "Espacio de trabajo eliminado"
     },
     "connectors": {
       "save": "Conector guardado",
@@ -148,9 +148,9 @@
       "settings": "Ajustes del asistente de IA modificados"
     },
     "trackers": {
-      "add": "Gestor de incidencias añadido",
-      "update": "Gestor de incidencias modificado",
-      "delete": "Gestor de incidencias quitado",
+      "add": "Gestor de tickets añadido",
+      "update": "Gestor de tickets modificado",
+      "delete": "Gestor de tickets quitado",
       "ticket": "Ticket creado a partir de una acción"
     },
     "video": {
@@ -188,9 +188,9 @@
       "update": "Proyecto modificado",
       "archive": "Proyecto archivado",
       "restore": "Proyecto restaurado",
-      "delete": "Proyecto borrado",
+      "delete": "Proyecto eliminado",
       "theme": "Tema de la cartera modificado",
-      "themeDelete": "Tema de la cartera borrado"
+      "themeDelete": "Tema de la cartera eliminado"
     },
     "wikis": {
       "add": "Wiki añadido",
@@ -212,7 +212,7 @@
       "configure": "Rompehielos configurado"
     },
     "poker": {
-      "configure": "Póker de estimación configurado"
+      "configure": "Planning poker configurado"
     },
     "retro": {
       "configure": "Retrospectiva configurada"

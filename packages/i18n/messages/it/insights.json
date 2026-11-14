@@ -15,7 +15,7 @@
     "mood": "Umore medio",
     "actions": "Azioni chiuse / aperte",
     "actionsValue": "{done} / {created}",
-    "median": "Chiuse in {days} giorni (mediana)"
+    "median": "Chiuse in {days, plural, one {# giorno} other {# giorni}} (mediana)"
   },
   "weekTitle": "Sessioni a settimana",
   "weekLabel": "Barre: sessioni svolte ogni settimana; linea: presenza",

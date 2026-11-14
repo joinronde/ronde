@@ -66,8 +66,8 @@
     "retention": "Regeln zur Datenaufbewahrung"
   },
   "projects": {
-    "portfolio": "Projektportfolio: Beschreibung, Thema, Stand, Verantwortung, Team, Termine und der Verlauf aus jedem Meeting",
-    "round": "Projektrunde: eine Runde pro Projekt, in der sein Team gemeinsam spricht",
+    "portfolio": "Projektportfolio: Beschreibung, Thema, Stand, Projektleitung, Team, Termine und der Verlauf aus jedem Meeting",
+    "round": "Projektrunde: Jedes Projekt kommt an die Reihe, und sein Team spricht gemeinsam",
     "programs": "Programme: Projekte in verschachtelten Programmen",
     "permissions": "Berechtigungen pro Projekt",
     "import": "Import von Projekten aus GitHub, GitLab, Jira und Linear"

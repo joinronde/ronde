@@ -17,13 +17,13 @@
   "notes": "{count, plural, =0 {还没有便签} other {# 张便签}}",
   "votes": "{count, plural, =0 {无投票} other {# 票}}",
   "stage": {
-    "reflect": "{count, plural, =0 {每个人匿名书写} other {已有 # 人写下}}",
+    "reflect": "{count, plural, =0 {每个人匿名写下想法} other {已有 # 人写下}}",
     "vote": "{count, plural, =0 {还没有人投票} other {已有 # 人投票}}",
     "done": "我们讨论了什么"
   },
   "me": {
     "writeTitle": "你的便签",
-    "writeHint": "匿名：只有主持人揭示后团队才能看到，且永远不知道是谁写的。",
+    "writeHint": "匿名：主持人公开后团队才能看到，且不会显示是谁写的。",
     "placeholder": "一个想法、一个事实、一种感受……",
     "add": "添加",
     "addTo": "在“{column}”中新建便签",
@@ -38,7 +38,7 @@
   },
   "host": {
     "writers": "{count, plural, other {{total} 人中已有 # 人写下}}",
-    "revealHint": "“下一步”会向团队揭示便签。",
+    "revealHint": "“下一步”会向团队公开便签。",
     "voters": "{count, plural, other {{total} 人中已有 # 人投票}}",
     "voteHint": "“下一步”开始讨论得票最多的分组。",
     "groupHint": "点击一张便签，再点击要与之归在一起的便签。分组形成后为其命名。",
@@ -47,7 +47,7 @@
     "ungroup": "将“{text}”移出分组"
   },
   "settings": {
-    "title": "回顾",
+    "title": "回顾会",
     "preset": "列",
     "presets": {
       "well-improve-ideas": "做得好的、待改进的、想法",
@@ -61,8 +61,8 @@
     "reflect": "书写（分钟）",
     "vote": "投票（分钟）",
     "discuss": "每组讨论（分钟）",
-    "saved": "回顾设置已保存",
-    "save": "保存回顾设置",
+    "saved": "回顾会设置已保存",
+    "save": "保存回顾会设置",
     "change": "修改列、票数和时间"
   }
 }

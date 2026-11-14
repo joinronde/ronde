@@ -1,6 +1,6 @@
 {
   "title": "Присоединиться к {workspace}",
-  "intro": "{inviter} приглашает вас в {workspace} в Ronde.",
+  "intro": "{inviter} приглашает вас присоединиться к {workspace} в Ronde.",
   "role": "Ваша роль: {role}",
   "signedInAs": "Вы вошли как <strong>{email}</strong>",
   "accept": "Присоединиться к {workspace}",
@@ -14,6 +14,6 @@
   "expired": "Срок приглашения в {workspace} истёк. Попросите новое у того, кто вас пригласил.",
   "memberTitle": "Вы уже здесь",
   "member": "Вы уже состоите в {workspace}.",
-  "memberOther": "Это приглашение для <strong>{email}</strong>: перешлите ссылку, чтобы этот человек смог присоединиться.",
+  "memberOther": "Это приглашение для <strong>{email}</strong>: перешлите ссылку адресату, чтобы он смог присоединиться.",
   "open": "Открыть {workspace}"
 }

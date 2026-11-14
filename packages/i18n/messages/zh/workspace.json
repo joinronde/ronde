@@ -2,7 +2,7 @@
   "nav": {
     "label": "工作空间",
     "home": "首页",
-    "people": "目录",
+    "people": "通讯录",
     "settings": "设置"
   },
   "switcher": "切换工作空间",
@@ -12,7 +12,7 @@
   "roles": {
     "owner": "所有者",
     "admin": "管理员",
-    "billing": "账单",
+    "billing": "账单管理员",
     "organizer": "组织者",
     "member": "成员",
     "guest": "访客"
@@ -20,16 +20,16 @@
   "roleHints": {
     "owner": "所有权限，包括账单和删除工作空间",
     "admin": "管理人员、角色、模板和连接器",
-    "billing": "管理套餐、发票和付款方式，仅此而已",
-    "organizer": "即使创建会议仅限管理员，也能创建会议并邀请所需人员的成员",
+    "billing": "仅管理方案、发票和付款方式",
+    "organizer": "可邀请所需人员的成员；即使仅限管理员创建会议，组织者也能创建",
     "member": "创建会议并参加受邀的会议",
     "guest": "只能看到受邀的会议"
   },
   "home": {
     "stepInvite": "邀请你的团队",
-    "stepInviteHint": "{count, plural, =0 {目前还没有其他人} other {目录中还有 # 人}}",
+    "stepInviteHint": "{count, plural, =0 {目前还没有其他人} other {通讯录中还有 # 人}}",
     "stepMeeting": "创建你的第一个会议",
-    "stepMeetingHint": "每周同步模板，一分钟即可就绪。",
+    "stepMeetingHint": "使用“每周例会”模板，一分钟即可就绪。",
     "stepCheckIn": "填写你的进展卡",
     "stepCheckInHint": "你做了什么、计划做什么、什么卡住了：会前写几行。",
     "stepSession": "主持第一场会议",
@@ -50,17 +50,17 @@
     "categories": "团队",
     "manageTeams": "管理团队",
     "categoriesHint": "显示在进展卡上，并用于统计分组。团队可以嵌套：在通讯录中管理。",
-    "categoryPlaceholder": "例如 工程",
+    "categoryPlaceholder": "例如：工程",
     "add": "添加",
     "rename": "重命名 {name}",
     "delete": "删除 {name}",
     "noCategories": "还没有团队。",
     "danger": "危险区域",
     "leave": "退出工作空间",
-    "leaveHint": "你将无法访问其会议。你的个人资料仍保留在目录中。",
-    "leaveConfirm": "退出 {workspace}？",
+    "leaveHint": "你将无法再访问其会议。你的个人资料仍保留在通讯录中。",
+    "leaveConfirm": "要退出 {workspace} 吗？",
     "deleteWorkspace": "删除工作空间",
-    "deleteHint": "会议、人员和历史将对所有人消失。此操作无法撤销。",
+    "deleteHint": "所有人都将无法再看到会议、人员和历史记录。此操作无法撤销。",
     "deleteConfirm": "输入 <strong>{slug}</strong> 以确认。",
     "cancel": "取消",
     "readOnly": "只有管理员可以修改这些设置。",
@@ -74,7 +74,7 @@
       "plans": "方案"
     },
     "buffer": "两次会议之间的间隔",
-    "bufferHint": "在每个人的每次会议前后保留空闲时间：“查找时段”会遵守此间隔，两次会议靠得更近时日程会发出提醒。",
+    "bufferHint": "在每个人的每场会议前后预留空闲时间：查找所有人都有空的时间时会遵守此间隔；两场会议间隔不足时，日程中会给出提醒。",
     "bufferNone": "无间隔",
     "bufferMinutes": "{count, plural, other {# 分钟}}"
   }

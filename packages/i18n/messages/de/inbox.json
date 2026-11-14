@@ -9,12 +9,12 @@
   "emptyHint": "Dir zugewiesene Aufgaben, beginnende Sitzungen und veröffentlichte Protokolle erscheinen hier.",
   "kinds": {
     "action_assigned": "<strong>{actor}</strong> hat dir in <strong>{meeting}</strong> eine Aufgabe zugewiesen",
-    "session_started": "<strong>{meeting}</strong> hat begonnen: Tritt der Sitzung bei",
+    "session_started": "<strong>{meeting}</strong> hat begonnen. Tritt der Sitzung bei.",
     "minutes_published": "Das Protokoll von <strong>{meeting}</strong> ist da",
-    "kudo_received": "<strong>{actor}</strong> hat dir in <strong>{meeting}</strong> gedankt",
+    "kudo_received": "<strong>{actor}</strong> hat dir in <strong>{meeting}</strong> Kudos gegeben",
     "meeting_joined": "<strong>{actor}</strong> hat dich zu <strong>{meeting}</strong> hinzugefügt",
-    "absence_delegated": "<strong>{actor}</strong> ist abwesend: Du leitest in der Zeit die Meetings, die diese Person moderiert",
+    "absence_delegated": "<strong>{actor}</strong> ist abwesend. Bis dahin übernimmst du die Moderation der betreffenden Meetings.",
     "minutes_draft": "Das Protokoll von <strong>{meeting}</strong> wartet auf die Veröffentlichung",
-    "line_assigned": "<strong>{actor}</strong> hat dich in <strong>{meeting}</strong> einer Zeile zugeordnet"
+    "line_assigned": "<strong>{actor}</strong> hat dich in <strong>{meeting}</strong> einem Eintrag zugeordnet"
   }
 }

@@ -50,7 +50,7 @@
     "categories": "Equipes",
     "manageTeams": "Gerenciar as equipes",
     "categoriesHint": "Mostradas nas fichas e usadas para agrupar as estatísticas. As equipes podem ser aninhadas: são gerenciadas no diretório.",
-    "categoryPlaceholder": "ex.: Engenharia",
+    "categoryPlaceholder": "Ex.: Engenharia",
     "add": "Adicionar",
     "rename": "Renomear {name}",
     "delete": "Excluir {name}",
@@ -74,8 +74,8 @@
       "plans": "Planos"
     },
     "buffer": "Margem entre duas reuniões",
-    "bufferHint": "Mantida livre antes e depois de cada reunião de uma pessoa: “encontrar um horário” a respeita, e as agendas avisam quando duas reuniões ficam mais próximas.",
+    "bufferHint": "Mantida livre antes e depois de cada reunião de uma pessoa: a busca de horários em que todos estão livres a respeita, e o agendamento avisa quando duas reuniões ficam próximas demais.",
     "bufferNone": "Sem margem",
-    "bufferMinutes": "{count, plural, one {# minuto} other {# minutos}}"
+    "bufferMinutes": "{count, plural, =0 {# minutos} one {# minuto} other {# minutos}}"
   }
 }

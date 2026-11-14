@@ -10,7 +10,7 @@
   "votedOf": "{count} de {total} han elegido carta",
   "reveal": "Revelar las cartas",
   "agree": "Estimación acordada:",
-  "revote": "Nueva ronda",
+  "revote": "Votar de nuevo",
   "reopen": "Volver a estimar «{title}»",
   "remove": "Quitar «{title}»",
   "newItem": "Elemento que estimar",

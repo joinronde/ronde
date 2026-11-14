@@ -35,7 +35,7 @@
   },
   "modeHints": {
     "repos": "Jedes Projekt trägt den Namen des Repositorys, und seine Tickets kommen in den Meetings zur Sprache. Passt, wenn jedes Repository ein Produkt oder ein Dienst ist.",
-    "milestones": "Jedes Projekt heißt „Repository · Meilenstein“ und übernimmt dessen Fälligkeit und Fortschritt. Passt, wenn Meilensteine Lieferungen sind."
+    "milestones": "Jedes Projekt heißt „Repository · Meilenstein“ und übernimmt dessen Fälligkeit und Fortschritt. Passt, wenn Meilensteine Lieferergebnisse sind."
   },
   "fields": {
     "repo": "Repository (Besitzer/Name oder seine Adresse)",
@@ -59,10 +59,10 @@
     "jira": "Ein <link>API-Token</link> des Kontos mit der E-Mail oben.",
     "linear": "Ein persönlicher API-Schlüssel, erstellt in deinen Linear-Einstellungen."
   },
-  "tokenNotKept": "Es dient nur diesem Import: Ronde speichert es nicht.",
+  "tokenNotKept": "Es dient nur diesem Import. Ronde speichert es nicht.",
   "teamHint": "Mit dem Team-Tarif bleiben Projekte, die über ein gespeichertes Ticketsystem importiert wurden, mit dem Tool synchron: Name, Status, Termine und Fortschritt.",
   "syncHowTo": "Damit importierte Projekte synchron bleiben, füge das Tool zuerst in den <link>Einstellungen des Arbeitsbereichs</link> zu den Ticketsystemen hinzu und importiere dann von dort.",
-  "syncAskAdmin": "Projekte bleiben synchron, wenn die Administration des Arbeitsbereichs sie über dessen Ticketsysteme importiert. Was du hier importierst, wird einmalig importiert.",
+  "syncAskAdmin": "Projekte bleiben synchron, wenn ein Admin des Arbeitsbereichs sie über dessen Ticketsysteme importiert. Was du hier importierst, wird einmalig importiert.",
   "look": "Projekte suchen",
   "looking": "Suche läuft…",
   "pickTitle": {
@@ -90,8 +90,8 @@
   "progress": "{percent} erledigt",
   "themeHint": "Gilt für jedes importierte Projekt.",
   "keepSync": "Mit {tool} synchron halten",
-  "keepSyncHint": "Name, Status, Termine und Fortschritt folgen dem Tool stündlich; alles andere bearbeitest du selbst.",
-  "keepSyncHintRepo": "Ihr Name folgt dem Tool stündlich, und sobald sie archiviert sind, stehen sie auf „Abgeschlossen“; alles andere bearbeitest du selbst.",
+  "keepSyncHint": "Name, Status, Termine und Fortschritt werden stündlich aus dem Tool übernommen; alles andere bearbeitest du selbst.",
+  "keepSyncHintRepo": "Der Name wird stündlich aus dem Tool übernommen, und archivierte Repositorys werden als „Abgeschlossen“ markiert; alles andere bearbeitest du selbst.",
   "onceHint": "Einmalig importiert: Danach bearbeitest du sie in Ronde.",
   "back": "Zurück",
   "import": "{count, plural, =0 {Importieren} one {# Projekt importieren} other {# Projekte importieren}}",

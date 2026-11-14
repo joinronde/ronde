@@ -1,7 +1,7 @@
 {
   "title": "Commandes",
-  "placeholder": "Tapez une commande : suivant, Emma, compte rendu…",
-  "none": "Aucune commande ne correspond à « {query} ».",
+  "placeholder": "Tapez une commande : suivant, Emma, compte rendu…",
+  "none": "Aucune commande ne correspond à « {query} ».",
   "foot": "↑ ↓ pour choisir, Entrée pour lancer, Échap pour fermer.",
   "groups": {
     "meeting": "Réunion",
@@ -20,8 +20,8 @@
   "previous": "Étape précédente",
   "bonus": "Donner 30 secondes de plus",
   "resetTimer": "Remettre le chrono à zéro",
-  "shuffle": "Mélanger l'ordre de passage",
-  "absent": "Noter l'absence de {name}",
+  "shuffle": "Mélanger l’ordre de passage",
+  "absent": "Noter l’absence de {name}",
   "present": "Noter le retour de {name}",
   "panes": {
     "run": "Ordre du jour",

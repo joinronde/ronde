@@ -13,11 +13,11 @@
   "showMeeting": "Mostrar {name}",
   "more": "+{count} más",
   "upcoming": "Próximamente",
-  "nothing": "Nada previsto en las próximas cuatro semanas.",
-  "nothingThisMonth": "Ninguna sesión este mes.",
+  "nothing": "No hay nada previsto en las próximas cuatro semanas.",
+  "nothingThisMonth": "No hay sesiones este mes.",
   "todayShort": "hoy",
   "tomorrow": "mañana",
-  "inDays": "en {count} días",
+  "inDays": "en {count, plural, one {# día} other {# días}}",
   "status": {
     "planned": "prevista",
     "live": "En directo",
@@ -25,7 +25,7 @@
     "cancelled": "cancelada"
   },
   "attendance": {
-    "yes": "Estaré",
+    "yes": "Asistiré",
     "no": "Ausente"
   }
 }

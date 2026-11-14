@@ -61,7 +61,7 @@
       "save": "Salvata come modello"
     },
     "schedule": {
-      "save": "Programmazione modificata",
+      "save": "Calendario modificato",
       "skip": "Sessione saltata",
       "move": "Sessione spostata",
       "restore": "Sessione ripristinata",
@@ -212,7 +212,7 @@
       "configure": "Rompighiaccio configurato"
     },
     "poker": {
-      "configure": "Poker di stima configurato"
+      "configure": "Planning poker configurato"
     },
     "retro": {
       "configure": "Retrospettiva configurata"

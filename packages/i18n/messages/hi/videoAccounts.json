@@ -9,7 +9,7 @@
   "tokenKept": "एक सीक्रेट सहेजा गया है। बदलने के लिए नया लिखें।",
   "save": "सहेजें",
   "cancel": "रद्द करें",
-  "test": "जाँचें",
+  "test": "टेस्ट करें",
   "remove": "हटाएँ",
   "works": "✓ जुड़ गया।",
   "removeConfirm": "{name} हटाएँ? पहले से बने रूम चलते रहेंगे।",
@@ -36,7 +36,7 @@
   },
   "hints": {
     "zoom": "Zoom App Marketplace में meeting:write:meeting:admin स्कोप वाला “Server-to-Server OAuth” ऐप बनाएँ, फिर उसका खाता ID, क्लाइंट ID और सीक्रेट कॉपी करें।",
-    "meet": "Google Cloud में एक सर्विस खाता बनाएँ, Google Workspace एडमिन कंसोल में उसे meetings.space.created स्कोप के लिए डोमेन-व्यापी डेलिगेशन दें, फिर उसकी JSON कुंजी का private_key चिपकाएँ।",
+    "meet": "Google Cloud में एक सर्विस खाता बनाएँ, Google Workspace एडमिन कंसोल में उसे meetings.space.created स्कोप के लिए डोमेन-व्यापी डेलिगेशन दें, फिर उसकी JSON कुंजी का private_key पेस्ट करें।",
     "teams": "Microsoft Entra में OnlineMeetings.ReadWrite.All एप्लिकेशन अनुमति (एडमिन सहमति) वाला एक एप्लिकेशन और आयोजक के लिए एप्लिकेशन एक्सेस नीति रजिस्टर करें।",
     "bbb": "सर्वर का पता (https://…/bigbluebutton) और उसका साझा सीक्रेट, जो सर्वर पर bbb-conf --secret देता है।"
   },

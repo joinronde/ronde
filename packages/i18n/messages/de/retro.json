@@ -31,7 +31,7 @@
     "delete": "„{text}“ löschen",
     "editNote": "Notiz bearbeiten",
     "save": "Speichern",
-    "voteTitle": "Stimm für die Themen, die besprochen werden sollen",
+    "voteTitle": "Stimme ab, welche Themen besprochen werden",
     "votesLeft": "{count, plural, =0 {Alle Stimmen vergeben} one {# Stimme übrig} other {# Stimmen übrig}} von {total}",
     "vote": "Abstimmen",
     "unvote": "Meine Stimme zurücknehmen"

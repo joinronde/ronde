@@ -3,7 +3,7 @@
   "notFoundTitle": "Pagina non trovata",
   "notFoundBody": "Questa pagina non esiste o non hai più accesso.",
   "home": "Torna alla home",
-  "errorTitle": "Qualcosa è andato storto",
+  "errorTitle": "Si è verificato un errore",
   "errorBody": "Impossibile mostrare questa pagina. Riprova; se continua a non funzionare, ricarica la pagina.",
   "errorRef": "Riferimento: {ref}",
   "retry": "Riprova",

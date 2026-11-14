@@ -4,7 +4,7 @@
   "screenHint": "Öffnet sich in einem neuen Tab, zum Teilen im Videoanruf",
   "videoHint": "Öffnet den Videoanruf in einem neuen Tab",
   "joinVideo": "Am Videoanruf teilnehmen",
-  "reconnecting": "Verbinde neu…",
+  "reconnecting": "Wird neu verbunden…",
   "host": "Moderation",
   "cohost": "Co-Moderation",
   "backToWorkspace": "Zurück zu {workspace}",

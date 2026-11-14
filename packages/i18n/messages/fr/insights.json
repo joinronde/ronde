@@ -1,6 +1,6 @@
 {
   "title": "Analyses",
-  "intro": "Toutes les réunions de l'espace, du {from} au {to}.",
+  "intro": "Toutes les réunions de l’espace, du {from} au {to}.",
   "period": "Période",
   "weeks": "{count, plural, one {# semaine} other {# semaines}}",
   "cards": {
@@ -11,15 +11,15 @@
     "attendance": "Présence",
     "followThrough": "Prévus réalisés",
     "followThroughHint": "Éléments prévus annoncés faits à la séance suivante",
-    "onTime": "Séances à l'heure",
-    "mood": "Humeur moyenne",
+    "onTime": "Séances à l’heure",
+    "mood": "Météo moyenne",
     "actions": "Actions fermées / ouvertes",
     "actionsValue": "{done} / {created}",
-    "median": "Fermées en {days} jours (médiane)"
+    "median": "Fermées en {days, plural, one {# jour} other {# jours}} (médiane)"
   },
   "weekTitle": "Séances par semaine",
-  "weekLabel": "Barres : séances tenues chaque semaine ; ligne : présence",
-  "weekLegend": "Barres : séances tenues chaque semaine. Ligne : présence.",
+  "weekLabel": "Barres : séances tenues chaque semaine ; ligne : présence",
+  "weekLegend": "Barres : séances tenues chaque semaine. Ligne : présence.",
   "meetingsTitle": "Par réunion",
   "columns": {
     "meeting": "Réunion",
@@ -28,12 +28,12 @@
     "sessions": "Séances",
     "attendance": "Présence",
     "followThrough": "Suivi des prévus",
-    "onTime": "À l'heure",
-    "mood": "Humeur",
+    "onTime": "À l’heure",
+    "mood": "Météo",
     "openActions": "Actions ouvertes"
   },
-  "empty": "Aucune réunion pour l'instant.",
-  "engagementHow": "L'engagement, sur 100 : présence (30 %), prévus réalisés (25 %), participation par les questions, mains levées, remerciements et brise-glace (20 %), humeur (15 %) et ponctualité (10 %).",
+  "empty": "Aucune réunion pour l’instant.",
+  "engagementHow": "L’engagement, sur 100 : présence (30 %), prévus réalisés (25 %), participation par les questions, mains levées, remerciements et brise-glace (20 %), météo (15 %) et ponctualité (10 %).",
   "csv": {
     "participation": "Participation",
     "total": "Toutes les réunions",

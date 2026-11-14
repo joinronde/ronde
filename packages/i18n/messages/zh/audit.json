@@ -4,7 +4,7 @@
   "window": "显示最近 {days} 天的记录。",
   "filters": {
     "action": "操作",
-    "actionPlaceholder": "例如 people、roles、meeting",
+    "actionPlaceholder": "例如：people、roles、meeting",
     "actor": "人员",
     "actorPlaceholder": "姓名或邮箱",
     "from": "从",
@@ -32,8 +32,8 @@
   },
   "actions": {
     "meeting": {
-      "create": "会议场次已准备",
-      "reset": "会议场次已重置",
+      "create": "已准备一次会议",
+      "reset": "已重置一次会议",
       "archive": "会议已结束",
       "publish": "摘要已发布",
       "remove": "会议已删除",
@@ -50,9 +50,9 @@
       "save": "议程已修改"
     },
     "participant": {
-      "add": "已添加参与者",
-      "update": "参与者已修改",
-      "remove": "已移除参与者"
+      "add": "已添加参会者",
+      "update": "参会者已修改",
+      "remove": "已移除参会者"
     },
     "modules": {
       "set": "模块已开启或关闭"
@@ -81,11 +81,11 @@
       "update": "个人资料已修改",
       "remove": "已移除人员",
       "invitationRevoked": "邀请已撤销",
-      "absence": "已添加离开时段"
+      "absence": "已添加缺席安排"
     },
     "members": {
       "role": "角色已修改",
-      "leave": "已离开工作空间",
+      "leave": "已退出工作空间",
       "join": "已加入工作空间",
       "customRole": "附加角色已修改",
       "captured": "通过邮箱域名加入",
@@ -212,10 +212,10 @@
       "configure": "已设置破冰"
     },
     "poker": {
-      "configure": "已设置估算扑克"
+      "configure": "已设置计划扑克"
     },
     "retro": {
-      "configure": "已设置回顾"
+      "configure": "已设置回顾会"
     },
     "rotation": {
       "configure": "已设置轮换角色"

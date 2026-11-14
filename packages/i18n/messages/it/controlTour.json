@@ -7,7 +7,7 @@
   },
   "steps": {
     "welcome": {
-      "title": "Benvenuto in regia 👋",
+      "title": "Ecco la regia 👋",
       "body": "<p>Da questa pagina conduci la riunione; le tue note restano qui, solo per te.</p><ul><li><strong>Apri lo schermo condiviso</strong>: una pagina senza menu, pensata per la proiezione.</li><li><strong>Condividi quella pagina</strong> nella videochiamata, non tutto lo schermo: è ciò che vede il team.</li><li><strong>Torna qui</strong> per guidare: tutto appare in diretta sullo schermo condiviso.</li></ul><tip>Naviga con <kbd>→</kbd> e <kbd>←</kbd>, esci con <kbd>Esc</kbd>.</tip>"
     },
     "runOrder": {
@@ -28,7 +28,7 @@
     },
     "finish": {
       "title": "Tocca a te!",
-      "body": "<p>Persone, programmazione e moduli si impostano nelle impostazioni della riunione. Questo pulsante rifà la visita quando vuoi. Buona riunione!</p>"
+      "body": "<p>Persone, calendario e moduli si impostano nelle impostazioni della riunione. Questo pulsante rifà la visita quando vuoi. Buona riunione!</p>"
     }
   }
 }

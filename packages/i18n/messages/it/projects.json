@@ -117,9 +117,9 @@
   "noActions": "Nessuna azione aperta.",
   "followed": {
     "title": "Progetti seguiti",
-    "intro": "Ogni progetto seguito ha una sezione propria nella scheda di ciascuno e, con un giro per progetto nell'ordine del giorno, un turno tutto suo in cui i suoi membri parlano insieme.",
+    "intro": "Ogni progetto seguito ha una sezione propria nella scheda di ciascuno e, con un giro dei progetti nell'ordine del giorno, un turno tutto suo in cui i suoi membri parlano insieme.",
     "portfolio": "Vedi il portafoglio",
-    "noRound": "L'ordine del giorno non ha ancora un giro per progetto: gli elementi su questi progetti sono presentati nel turno di ciascuno. Aggiungi il blocco «Giro per progetto» in Ordine del giorno per dare a ogni progetto il suo turno.",
+    "noRound": "L'ordine del giorno non ha ancora un giro dei progetti: gli elementi su questi progetti sono presentati nel turno di ciascuno. Aggiungi il blocco «Giro dei progetti» in Ordine del giorno per dare a ogni progetto il suo turno.",
     "notActive": "non attivo: niente turno",
     "reorder": "Sposta {name}",
     "remove": "Smetti di seguire {name}",
@@ -161,8 +161,8 @@
   },
   "columns": {
     "project": "Progetto",
-    "health": "Salute",
-    "status": "Stato",
+    "health": "Stato",
+    "status": "Situazione",
     "due": "Scadenza",
     "progress": "Avanzamento",
     "updated": "Ultima notizia"
@@ -208,7 +208,7 @@
     "gone": "{tool} non lo trova più: è stato eliminato o spostato, oppure il token del sistema di ticketing non può più leggerlo. Ronde riprova una volta al giorno.",
     "once": "Importato il {date}, non sincronizzato: modificalo in Ronde.",
     "update": "Aggiorna ora",
-    "unlink": "Interrompi la sincronizzazione",
+    "unlink": "Scollega",
     "unlinkConfirm": "Interrompere la sincronizzazione di {name} con {tool}? Il progetto resta com'è e si modifica solo in Ronde. Per questo progetto la sincronizzazione non potrà essere riattivata.",
     "editHint": "Nome, situazione e date vengono da {tool}: le modifiche fatte qui vengono sostituite al prossimo aggiornamento, entro un'ora.",
     "editHintRepo": "Il nome viene da {tool}: un nuovo nome dato qui viene sostituito al prossimo aggiornamento, entro un'ora.",

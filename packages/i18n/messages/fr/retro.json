@@ -18,17 +18,17 @@
   "votes": "{count, plural, =0 {aucun vote} one {# vote} other {# votes}}",
   "stage": {
     "reflect": "{count, plural, =0 {Chacun écrit, anonymement} one {# personne a écrit} other {# personnes ont écrit}}",
-    "vote": "{count, plural, =0 {Personne n'a encore voté} one {# personne a voté} other {# personnes ont voté}}",
+    "vote": "{count, plural, =0 {Personne n’a encore voté} one {# personne a voté} other {# personnes ont voté}}",
     "done": "Ce dont nous avons parlé"
   },
   "me": {
     "writeTitle": "Vos notes",
-    "writeHint": "Anonymes : l'équipe ne les voit qu'une fois révélées par la régie, et ne sait jamais qui les a écrites.",
+    "writeHint": "Anonymes : l’équipe ne les voit qu’une fois révélées par l’animateur, et ne sait jamais qui les a écrites.",
     "placeholder": "Une idée, un fait, un ressenti…",
     "add": "Ajouter",
-    "addTo": "Nouvelle note dans « {column} »",
-    "edit": "Modifier « {text} »",
-    "delete": "Supprimer « {text} »",
+    "addTo": "Nouvelle note dans « {column} »",
+    "edit": "Modifier « {text} »",
+    "delete": "Supprimer « {text} »",
     "editNote": "Modifier la note",
     "save": "Enregistrer",
     "voteTitle": "Votez pour les sujets à discuter",
@@ -38,13 +38,13 @@
   },
   "host": {
     "writers": "{count, plural, one {# personne sur {total} a écrit} other {# personnes sur {total} ont écrit}}",
-    "revealHint": "« Suivant » révèle les notes à l'équipe.",
+    "revealHint": "« Suivant » révèle les notes à l’équipe.",
     "voters": "{count, plural, one {# personne sur {total} a voté} other {# personnes sur {total} ont voté}}",
-    "voteHint": "« Suivant » lance la discussion des groupes les plus votés.",
+    "voteHint": "« Suivant » lance la discussion des groupes les plus votés.",
     "groupHint": "Cliquez sur une note, puis sur la note avec laquelle la regrouper. Nommez les groupes une fois formés.",
     "pickTarget": "Cliquez maintenant sur la note avec laquelle la regrouper (ou la même pour annuler).",
     "rename": "Nom du groupe",
-    "ungroup": "Sortir « {text} » de son groupe"
+    "ungroup": "Sortir « {text} » de son groupe"
   },
   "settings": {
     "title": "Rétrospective",

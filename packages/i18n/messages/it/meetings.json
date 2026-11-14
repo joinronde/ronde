@@ -3,7 +3,7 @@
   "new": "Nuova riunione",
   "empty": "Ancora nessuna riunione.",
   "emptyHint": "Creane una: richiede meno di un minuto e tutto si può modificare in seguito.",
-  "emptyMember": "Non partecipi ancora a nessuna riunione. Un conduttore ti aggiunge alla sua.",
+  "emptyMember": "Non partecipi ancora a nessuna riunione. Chi conduce una riunione può aggiungerti.",
   "open": "Apri",
   "live": "In diretta",
   "nextOn": "Prossima sessione {date}",
@@ -19,7 +19,7 @@
   "wizard": {
     "title": "Nuova riunione",
     "subtitle": "Quattro passaggi rapidi. Tutto resta modificabile nelle impostazioni della riunione.",
-    "stepOf": "Passo {n} di {total}",
+    "stepOf": "Passaggio {n} di {total}",
     "steps": {
       "details": "Orario e persone",
       "review": "Riepilogo",
@@ -93,7 +93,7 @@
       "teamHint": "Un breve turno a testa, poi i progetti insieme.",
       "projects": "Prima i progetti",
       "projectsHint": "Progetto per progetto, poi un turno a testa per il resto.",
-      "later": "Puoi cambiarlo dopo nell'Ordine del giorno della riunione."
+      "later": "Puoi cambiarlo dopo nell'ordine del giorno della riunione."
     }
   }
 }

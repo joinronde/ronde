@@ -57,7 +57,7 @@
     "seats": "{used} di {seats} posti usati",
     "seatsUnlimited": "{used} persone, nessun limite di posti",
     "seatsRule": "persone che hanno partecipato a una riunione negli ultimi 30 giorni",
-    "peak": "Massimo di questa licenza: {count} (il {date}), quello che conta il rinnovo.",
+    "peak": "Massimo di questa licenza: {count} (il {date}). È il numero usato al rinnovo.",
     "previousPeak": "Licenza precedente ({id}): massimo di {count} (il {date}), da regolarizzare al suo rinnovo.",
     "overSeats": "Partecipano più persone dei {seats} posti della licenza: nulla è bloccato. Il massimo raggiunto viene regolarizzato al rinnovo della licenza.",
     "overPeak": "Il massimo di questa licenza, {count}, ha superato i suoi {seats} posti: nulla è bloccato, viene regolarizzato al rinnovo della licenza.",

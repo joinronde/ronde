@@ -2,12 +2,12 @@
   "loading": "Cargando las estadísticas…",
   "empty": "Las estadísticas aparecerán cuando se publique la primera acta.",
   "plannedDoneTip": "{done} de {planned} puntos previstos la vez anterior están hechos",
-  "presentTip": "{count} presentes",
+  "presentTip": "{count, plural, one {# presente} other {# presentes}}",
   "absentTip": "ausentes: {names}",
-  "exchangesTip": "{questions, plural, one {# pregunta} other {# preguntas}} · {hands, plural, one {# mano levantada} other {# manos levantadas}} · {kudos} agradecimientos · {answers, plural, one {# respuesta al rompehielos} other {# respuestas al rompehielos}}",
+  "exchangesTip": "{questions, plural, one {# pregunta} other {# preguntas}} · {hands, plural, one {# mano levantada} other {# manos levantadas}} · {kudos, plural, one {# agradecimiento} other {# agradecimientos}} · {answers, plural, one {# respuesta al rompehielos} other {# respuestas al rompehielos}}",
   "durationTip": "Duración: {duration}",
-  "blockersTip": "{count, plural, one {# bloqueo planteado} other {# bloqueos planteados}}",
-  "moodTip": "{avg}/5 · {count} respuestas",
+  "blockersTip": "{count, plural, one {# bloqueo señalado} other {# bloqueos señalados}}",
+  "moodTip": "{avg}/5 · {count, plural, one {# respuesta} other {# respuestas}}",
   "kpi": {
     "archived": "Sesiones celebradas",
     "since": "desde el {date}",
@@ -16,9 +16,9 @@
     "avgSpeaking": "Tiempo de palabra medio",
     "speakingTarget": "objetivo {target} por persona",
     "actions": "Acciones de seguimiento",
-    "open": "{count} abiertas",
-    "resolved": "{count} resueltas",
-    "median": "en {days} d (mediana)",
+    "open": "{count, plural, one {# abierta} other {# abiertas}}",
+    "resolved": "{count, plural, one {# hecha} other {# hechas}}",
+    "median": "en {days, plural, one {# día} other {# días}} (mediana)",
     "plannedDoneHint": "Parte de lo previsto en una reunión que aparece en «Hecho» en la siguiente",
     "plannedDone": "Previsto → hecho",
     "ofPlanned": "de {count} puntos previstos",
@@ -44,10 +44,10 @@
     "attendanceLabel": "Parte del equipo presente en cada reunión, en porcentaje",
     "exchanges": "Intercambios durante la reunión",
     "exchangesLabel": "Preguntas, manos levantadas y agradecimientos por reunión",
-    "noExchanges": "Ninguna pregunta, mano levantada ni agradecimiento en las sesiones pasadas.",
+    "noExchanges": "No hubo preguntas, manos levantadas ni agradecimientos en las sesiones pasadas.",
     "exchangesHint": "Preguntas, manos levantadas y agradecimientos. Pasa el ratón por una columna para ver el detalle, rompehielos incluido.",
-    "blockers": "Bloqueos planteados por reunión",
-    "blockersLabel": "Número de bloqueos planteados por reunión",
+    "blockers": "Bloqueos señalados por reunión",
+    "blockersLabel": "Número de bloqueos señalados por reunión",
     "mood": "Ánimo del equipo (media sobre 5)",
     "moodLabel": "Ánimo medio del equipo por reunión, sobre 5",
     "moodHint": "1 = ⛈️ tormenta, 5 = ☀️ sol. Respuestas anónimas.",
@@ -64,12 +64,12 @@
   "blockersColumn": "Bloqueos",
   "recurring": {
     "title": "Bloqueos recurrentes",
-    "times": "planteado {count} veces ({dates})",
+    "times": "señalado {count} veces ({dates})",
     "withAction": "Acción abierta",
     "withoutAction": "Sin acción",
     "none": "Ningún bloqueo se repite de una reunión a otra."
   },
-  "staleSince": "abierta desde hace {days} días",
+  "staleSince": "abierta desde hace {days, plural, one {# día} other {# días}}",
   "fromMeeting": "(reunión del {date})",
   "projects": {
     "title": "Avance por proyecto",
@@ -92,5 +92,5 @@
     "mood": "Ánimo",
     "rating": "Utilidad"
   },
-  "ratingTip": "{avg}/5 · {count} valoraciones"
+  "ratingTip": "{avg}/5 · {count, plural, one {# valoración} other {# valoraciones}}"
 }

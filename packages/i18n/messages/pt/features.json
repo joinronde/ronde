@@ -1,6 +1,6 @@
 {
   "workspaces": {
-    "unlimited": "Espaços, reuniões e pessoas ilimitados"
+    "unlimited": "Espaços de trabalho, reuniões e pessoas ilimitados"
   },
   "identity": {
     "local": "Contas com e-mail e senha",
@@ -15,13 +15,13 @@
     "domainCapture": "Captura de domínio"
   },
   "permissions": {
-    "builtInRoles": "Papéis integrados para espaços e reuniões",
+    "builtInRoles": "Papéis integrados para espaços de trabalho e reuniões",
     "customRoles": "Papéis personalizados e permissões detalhadas"
   },
   "meetings": {
     "unlimited": "Reuniões e sessões ilimitadas",
     "sectionRoles": "Seções da ficha com comportamento configurável",
-    "templates": "Modelos integrados e do espaço"
+    "templates": "Modelos integrados e do espaço de trabalho"
   },
   "scheduling": {
     "recurrence": "Recorrência flexível com exceções",
@@ -52,9 +52,9 @@
   "reporting": {
     "meeting": "Estatísticas por reunião",
     "export": "Exportação em Markdown, PDF e CSV",
-    "workspace": "Painéis do espaço com todas as reuniões",
+    "workspace": "Painéis do espaço de trabalho com todas as reuniões",
     "scheduled": "Relatórios enviados por e-mail periodicamente",
-    "portfolio": "Painel do portfólio: situação ao longo do tempo, prazos, projetos sem notícias, exportação CSV e relatório programado"
+    "portfolio": "Painel do portfólio: saúde ao longo do tempo, prazos, projetos sem notícias, exportação CSV e relatório programado"
   },
   "branding": {
     "customLogo": "Seu logotipo nas telas, nos e-mails e nas atas",
@@ -66,7 +66,7 @@
     "retention": "Regras de retenção de dados"
   },
   "projects": {
-    "portfolio": "Portfólio de projetos: descrição, tema, situação, responsável, equipe, datas e o histórico de cada reunião",
+    "portfolio": "Portfólio de projetos: descrição, tema, saúde, responsável, equipe, datas e o histórico de cada reunião",
     "round": "Rodada por projeto: cada projeto tem a sua vez, em que seus membros falam juntos",
     "programs": "Programas: projetos agrupados em programas aninhados",
     "permissions": "Permissões por projeto",

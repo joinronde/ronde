@@ -23,7 +23,7 @@
   },
   "me": {
     "writeTitle": "Le tue note",
-    "writeHint": "Anonime: il team le vede solo quando il conduttore le rivela, e non sa mai chi le ha scritte.",
+    "writeHint": "Anonime: il team le vede solo quando chi conduce le mostra, e non sa mai chi le ha scritte.",
     "placeholder": "Un'idea, un fatto, una sensazione…",
     "add": "Aggiungi",
     "addTo": "Nuova nota in «{column}»",
@@ -38,7 +38,7 @@
   },
   "host": {
     "writers": "{count, plural, one {# persona su {total} ha scritto} other {# persone su {total} hanno scritto}}",
-    "revealHint": "«Avanti» rivela le note al team.",
+    "revealHint": "«Avanti» mostra le note al team.",
     "voters": "{count, plural, one {# persona su {total} ha votato} other {# persone su {total} hanno votato}}",
     "voteHint": "«Avanti» avvia la discussione dei gruppi più votati.",
     "groupHint": "Fai clic su una nota, poi sulla nota a cui unirla. Dai un nome ai gruppi una volta formati.",

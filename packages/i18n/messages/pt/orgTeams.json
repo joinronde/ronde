@@ -2,16 +2,16 @@
   "title": "Equipes",
   "intro": "Organize o diretório em equipes: uma equipe pode pertencer a outra (um departamento, as suas equipes, os seus squads). Em uma reunião, escolher uma equipe escolhe também as subequipes.",
   "add": "Nova equipe",
-  "namePlaceholder": "Nome da equipe, ex. Design",
+  "namePlaceholder": "Nome da equipe, ex.: Design",
   "parent": "Pertence a",
   "top": "Nenhuma (primeiro nível)",
   "create": "Criar",
   "cancel": "Cancelar",
   "empty": "Ainda não há equipes",
-  "emptyHint": "Crie uma primeira equipe e associe pessoas a partir da ficha delas no diretório.",
-  "readOnly": "Só os administradores do espaço alteram as equipes.",
+  "emptyHint": "Crie uma primeira equipe e associe pessoas a ela pelo perfil delas no diretório.",
+  "readOnly": "Só os administradores do espaço de trabalho alteram as equipes.",
   "members": "{count, plural, =0 {Ninguém} one {# pessoa} other {# pessoas}}",
-  "subTeams": "{count, plural, one {# subequipe} other {# subequipes}}",
+  "subTeams": "{count, plural, =0 {# subequipes} one {# subequipe} other {# subequipes}}",
   "withSub": "{count} no total",
   "seePeople": "Ver as pessoas",
   "moveTo": "Equipe a que {name} pertence",
@@ -26,5 +26,5 @@
   "deleteShort": "Excluir",
   "deleteConfirm": "Excluir a equipe “{name}”? As pessoas ficam no diretório sem equipe; as subequipes sobem um nível.",
   "noTeam": "Sem equipe",
-  "noTeamHint": "A equipe é definida na ficha da pessoa no diretório."
+  "noTeamHint": "A equipe é definida no perfil da pessoa no diretório."
 }

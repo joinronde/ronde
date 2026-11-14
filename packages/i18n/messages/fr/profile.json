@@ -2,7 +2,7 @@
   "back": "Annuaire",
   "you": "vous",
   "noAccount": "Pas encore de compte",
-  "removed": "Retiré·e par l'annuaire de l'entreprise",
+  "removed": "Compte retiré par l’annuaire de l’entreprise",
   "edit": "Modifier",
   "email": "Envoyer un e-mail",
   "meetings": "Réunions",
@@ -17,5 +17,5 @@
   "kudos": "Remerciements reçus",
   "kudoFrom": "de {name}, le {date}",
   "noKudos": "Pas encore de remerciements.",
-  "awayUntil": "Absent jusqu'au {date}"
+  "awayUntil": "Absence jusqu’au {date}"
 }

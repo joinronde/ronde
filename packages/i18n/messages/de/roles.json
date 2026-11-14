@@ -18,9 +18,9 @@
   "cancel": "Abbrechen",
   "edit": "Bearbeiten",
   "delete": "Löschen",
-  "deleteConfirm": "Rolle „{name}“ löschen? {count, plural, =0 {Niemand hat sie.} one {# Person behält nur ihre Grundrolle.} other {# Personen behalten nur ihre Grundrolle.}}",
+  "deleteConfirm": "Rolle „{name}“ löschen? {count, plural, =0 {Sie ist niemandem zugewiesen.} one {# Person behält nur ihre Grundrolle.} other {# Personen behalten nur ihre Grundrolle.}}",
   "members": "{count, plural, =0 {niemand} one {# Person} other {# Personen}}",
   "empty": "Noch keine eigene Rolle.",
-  "examples": "Zum Beispiel: „Prüfung“ (Verlauf und Statistiken aller Meetings), „Moderation“ (leitet jedes Meeting), „Personalverwaltung“ (Verzeichnis und Einladungen).",
+  "examples": "Zum Beispiel: „Revision“ (Verlauf und Statistiken aller Meetings), „Moderationsteam“ (leitet jedes Meeting), „Personalverwaltung“ (Verzeichnis und Einladungen).",
   "readOnly": "Die Lizenz ist abgelaufen: Rollen bleiben sichtbar, geben aber bis zur Verlängerung keine Berechtigung mehr."
 }

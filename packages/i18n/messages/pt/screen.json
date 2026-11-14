@@ -7,11 +7,11 @@
     "dark": "Escuro"
   },
   "reducedMotion": "Movimento reduzido",
-  "ambience": "Clima da tela de espera",
+  "ambience": "Ambientação da tela de espera",
   "previewTheme": "Pré-visualizar um tema",
   "replayIntro": "Rever a abertura",
   "fullscreen": "Tela cheia",
   "drivenFromControl": "Esta aba é controlada pela sala de controle.",
   "yourTurn": "Sua vez, <span>{name}</span>!",
-  "poweredBy": "Desenvolvido com Ronde"
+  "poweredBy": "Com tecnologia Ronde"
 }
