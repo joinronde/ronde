@@ -60,6 +60,7 @@ export const BUILTIN_TEMPLATES = [
   "retro",
   "oneOnOne",
   "onboarding",
+  "sprintPlanning",
   "sprintReview",
   "steering",
   "portfolio",
@@ -93,6 +94,7 @@ export const TEMPLATE_ICONS: Record<BuiltinTemplateId, string> = {
   standup: "☀️",
   retro: "🔍",
   oneOnOne: "🤝",
+  sprintPlanning: "🃏",
   sprintReview: "🚀",
   steering: "🧭",
   portfolio: "🗂️",
@@ -128,6 +130,7 @@ export const TEMPLATE_CATEGORY: Record<BuiltinTemplateId, TemplateCategory> = {
   retro: "team",
   oneOnOne: "team",
   allHands: "team",
+  sprintPlanning: "product",
   sprintReview: "product",
   teamProjects: "product",
   portfolio: "leadership",
@@ -224,6 +227,25 @@ const SPECS: Record<BuiltinTemplateId, Spec> = {
     ],
     modules: { icebreaker: false, kudos: false, reactions: false, hands: false, birthdays: false, ambience: false, rating: false },
     schedule: [weekly(4, "11:00", 30)],
+  },
+  // The sprint starts here: each person brings the goal they see, what is ready to estimate and when they are away
+  sprintPlanning: {
+    settings: { targetMin: 60, speakSec: 180 },
+    sections: [
+      { key: "goal", role: "note", input: "text", named: true },
+      { key: "ready", role: "custom", input: "list", named: true },
+      // A second note: a role is held by one section, so this one is a section of its own
+      { key: "capacity", role: "custom", input: "text", named: true },
+      { key: "risks", role: "blocker", input: "list", named: true },
+    ],
+    modules: { poker: true },
+    schedule: [weekly(1, "10:00", 60, 2)],
+    // The round table gives way to the estimates
+    agenda: [
+      { id: "intro", type: "intro" },
+      { id: "poker", type: "poker" },
+      { id: "topics", type: "topics" },
+    ],
   },
   sprintReview: {
     settings: { targetMin: 45, speakSec: 300 },

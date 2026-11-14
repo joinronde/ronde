@@ -31,6 +31,16 @@
       "feedback": "Feedback"
     }
   },
+  "sprintPlanning": {
+    "name": "Sprint planning",
+    "description": "Every other week: the sprint goal, the items ready to estimate with planning poker, the team's capacity and the risks.",
+    "sections": {
+      "goal": "Sprint goal",
+      "ready": "Ready items",
+      "capacity": "Capacity and absences",
+      "risks": "Risks"
+    }
+  },
   "sprintReview": {
     "name": "Sprint review",
     "description": "Every other week: what was delivered, the demos, the next sprint and the risks.",

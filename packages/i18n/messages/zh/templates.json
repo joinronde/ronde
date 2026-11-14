@@ -31,6 +31,16 @@
       "feedback": "反馈"
     }
   },
+  "sprintPlanning": {
+    "name": "冲刺计划",
+    "description": "每两周一次：冲刺目标、可用计划扑克估算的就绪条目、团队容量和风险。",
+    "sections": {
+      "goal": "冲刺目标",
+      "ready": "就绪条目",
+      "capacity": "容量与缺席",
+      "risks": "风险"
+    }
+  },
   "sprintReview": {
     "name": "冲刺评审",
     "description": "每两周一次：交付内容、演示、下一个冲刺和风险。",

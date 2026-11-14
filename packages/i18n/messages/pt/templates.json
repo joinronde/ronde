@@ -31,6 +31,16 @@
       "feedback": "Feedback"
     }
   },
+  "sprintPlanning": {
+    "name": "Sprint planning",
+    "description": "A cada duas semanas: a meta do sprint, os itens prontos para estimar com planning poker, a capacidade da equipe e os riscos.",
+    "sections": {
+      "goal": "Meta do sprint",
+      "ready": "Itens prontos",
+      "capacity": "Capacidade e ausências",
+      "risks": "Riscos"
+    }
+  },
   "sprintReview": {
     "name": "Sprint review",
     "description": "A cada duas semanas: o que foi entregue, as demos, o próximo sprint e os riscos.",

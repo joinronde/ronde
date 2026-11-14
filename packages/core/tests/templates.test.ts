@@ -1,3 +1,4 @@
+import { BLOCK_MODULE } from "@ronde/core/agenda";
 import {
   BUILTIN_TEMPLATES,
   blankTemplate,
@@ -5,6 +6,8 @@ import {
   describeRhythm,
   parseSections,
   parseTemplate,
+  sectionsProblem,
+  TEMPLATE_CATEGORY,
   templateData,
 } from "@ronde/core/templates";
 import { locales } from "@ronde/i18n";
@@ -41,6 +44,40 @@ describe("built-in templates", () => {
     ] as const)
       expect(rated).not.toContain(id);
     for (const id of ["weekly", "retro", "sprintReview", "allHands", "teachingTeam", "volunteers"] as const) expect(rated).toContain(id);
+  });
+
+  it("brings sections the meeting's settings accept, and the module of each agenda block", () => {
+    for (const id of BUILTIN_TEMPLATES) {
+      const t = builtinTemplate(id, "en");
+      // A role held twice or a custom section without a name would refuse every later save of the sections
+      expect(sectionsProblem(t.sections), id).toBeNull();
+      // A retro or a planning poker block without its module would be a step nobody can run
+      for (const block of t.agenda ?? []) {
+        const module = BLOCK_MODULE[block.type];
+        if (module) expect(t.modules[module]?.enabled, `${id}: ${module}`).toBe(true);
+      }
+    }
+  });
+
+  it("plans a sprint every other week: the goal, what is ready, who is there, the risks, then planning poker", () => {
+    const t = builtinTemplate("sprintPlanning", "en");
+    expect(TEMPLATE_CATEGORY.sprintPlanning).toBe("product");
+    expect(t.sections.map((s) => [s.label, s.role, s.input])).toEqual([
+      ["Sprint goal", "note", "text"],
+      ["Ready items", "custom", "list"],
+      ["Capacity and absences", "custom", "text"],
+      ["Risks", "blocker", "list"],
+    ]);
+    // Estimating takes the place of the round table
+    expect(t.agenda?.map((b) => b.type)).toEqual(["intro", "poker", "topics"]);
+    expect(t.modules.poker).toEqual({ enabled: true });
+    expect(describeRhythm(t.schedule, "en").replace(/\s/g, " ")).toBe("Every other week · 1 hr");
+    expect(builtinTemplate("sprintPlanning", "fr").sections.map((s) => s.label)).toEqual([
+      "Objectif du sprint",
+      "Éléments prêts",
+      "Capacité et absences",
+      "Risques",
+    ]);
   });
 
   it("refuses what is not a template", () => {
