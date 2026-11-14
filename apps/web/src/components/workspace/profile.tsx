@@ -105,7 +105,7 @@ export function PersonProfile({ slug, profile: p }: { slug: string; profile: Pro
                   <li key={a.id} className="dash-act" style={tint(a.color)}>
                     <span className={`pf-status ${a.status}`} aria-hidden="true" />
                     <span className="dash-act-text">
-                      <span>{a.text}</span>
+                      <span dir="auto">{a.text}</span>
                       <span className="hint">
                         <span className="act-dot" aria-hidden="true" /> {a.meeting}
                         {a.status === "doing" && <> · {t("inProgress")}</>}

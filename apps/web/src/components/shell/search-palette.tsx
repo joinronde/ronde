@@ -194,6 +194,16 @@ export function SearchPalette({ data, onClose }: { data: ShellData; onClose: () 
           {loading && <span className="search-spin" aria-hidden="true" />}
           <kbd>esc</kbd>
         </div>
+        {/* Announced as it settles: the list itself changes under the focus, which stays in the field */}
+        <p className="sr-only" role="status">
+          {loading
+            ? t("searching")
+            : q.trim()
+              ? items.length
+                ? t("results", { count: items.length })
+                : t("none", { query: q.trim() })
+              : ""}
+        </p>
         <div id={listId} role="listbox" aria-label={t("title")} className="search-list">
           {groups.map((g) => (
             <div key={g.kind} role="group" aria-label={t(`kinds.${g.kind}`)} className="search-group">

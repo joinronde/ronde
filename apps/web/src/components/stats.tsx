@@ -10,6 +10,7 @@ import { LoadError } from "./common";
 import { ExportCsv } from "./export-csv";
 import { EmptyHero } from "./illustration";
 import { useRonde } from "./ronde-provider";
+import { ScrollRegion } from "./scroll-region";
 import { Avatar } from "./stage";
 
 interface Bar {
@@ -44,7 +45,7 @@ function Columns({
     ih = H - T - B;
   const raw = Math.max(1, refValue ?? 0, ...data.map((d) => d.value)) * 1.05;
   // Fixed scale (percentages: 0 to 100), otherwise rounded up above the largest value
-  const step = fixedMax ? fixedMax / 4 : niceStep(raw);
+  const step = fixedMax ? (fixedMax % 4 === 0 ? fixedMax / 4 : 1) : niceStep(raw);
   const max = fixedMax ?? step * Math.ceil(raw / step);
   const y = (v: number) => T + ih - (v / max) * ih;
   const band = iw / Math.max(1, data.length);
@@ -280,7 +281,7 @@ export function StatsView() {
           />
           <details className="dt">
             <summary>{t("seeData")}</summary>
-            <div className="tbl-wrap">
+            <ScrollRegion label={t("charts.duration")}>
               <table className="data">
                 <tbody>
                   <tr>
@@ -295,7 +296,7 @@ export function StatsView() {
                   ))}
                 </tbody>
               </table>
-            </div>
+            </ScrollRegion>
           </details>
         </div>
         <div className="panel">
@@ -329,7 +330,7 @@ export function StatsView() {
           <Columns data={blkData} fmt={(v) => String(v)} label={t("charts.blockersLabel")} />
           <details className="dt">
             <summary>{t("seeData")}</summary>
-            <div className="tbl-wrap">
+            <ScrollRegion label={t("charts.blockers")}>
               <table className="data">
                 <tbody>
                   <tr>
@@ -344,13 +345,18 @@ export function StatsView() {
                   ))}
                 </tbody>
               </table>
-            </div>
+            </ScrollRegion>
           </details>
         </div>
         {moodData.length > 0 && (
           <div className="panel">
             <h3>{t("charts.mood")}</h3>
-            <Columns data={moodData} fmt={(v) => (Number.isInteger(v) ? String(v) : fmt.decimal(v))} label={t("charts.moodLabel")} />
+            <Columns
+              data={moodData}
+              max={5}
+              fmt={(v) => (Number.isInteger(v) ? String(v) : fmt.decimal(v))}
+              label={t("charts.moodLabel")}
+            />
             <p className="hint" style={{ marginTop: 6 }}>
               {t("charts.moodHint")}
             </p>
@@ -359,7 +365,12 @@ export function StatsView() {
         {ratingData.length > 0 && (
           <div className="panel">
             <h3>{t("charts.rating")}</h3>
-            <Columns data={ratingData} fmt={(v) => (Number.isInteger(v) ? String(v) : fmt.decimal(v))} label={t("charts.ratingLabel")} />
+            <Columns
+              data={ratingData}
+              max={5}
+              fmt={(v) => (Number.isInteger(v) ? String(v) : fmt.decimal(v))}
+              label={t("charts.ratingLabel")}
+            />
             <p className="hint" style={{ marginTop: 6 }}>
               {t("charts.ratingHint")}
             </p>
@@ -427,7 +438,7 @@ export function StatsView() {
       )}
       <div className="panel" style={{ marginTop: 16 }}>
         <h3>{t("projects.title")}</h3>
-        <div className="tbl-wrap">
+        <ScrollRegion label={t("projects.title")}>
           <table className="data">
             <tbody>
               <tr>
@@ -448,7 +459,7 @@ export function StatsView() {
               ))}
             </tbody>
           </table>
-        </div>
+        </ScrollRegion>
       </div>
       {tip?.text && (
         <div id="tip" style={{ left: Math.min(tip.x + 14, window.innerWidth - 280), top: tip.y + 14 }}>

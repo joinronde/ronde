@@ -6,7 +6,21 @@ import { invitationState } from "@/lib/server/workspaces";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = { title: "Ronde" };
+/** The tab says which invitation this is: the workspace to join, or why the link does not work */
+export async function generateMetadata({ params }: { params: Promise<{ token: string }> }) {
+  const { token } = await params;
+  const state = await invitationState(token, await currentUser());
+  const t = await getTranslations("invite");
+  const title =
+    state.status === "invalid"
+      ? t("invalidTitle")
+      : state.status === "expired"
+        ? t("expiredTitle")
+        : state.status === "member"
+          ? t("memberTitle")
+          : t("title", { workspace: state.workspace });
+  return { title: `${title} · Ronde` };
+}
 
 export default async function InvitationPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;

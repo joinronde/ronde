@@ -89,7 +89,10 @@ export function ScreenView() {
   }, [s.settings.teamName, tPages]);
 
   return (
-    <div className="screen-page">
+    <main id="main" className="screen-page">
+      <h1 className="sr-only">
+        {tPages("screen")} · {s.settings.teamName}
+      </h1>
       {s.meeting ? (
         <div className="screen-stage">
           <Stage stepKey={s.meeting.stepKey} replay={replay} celebrate logo={s.brand.logo && withBasePath(s.brand.logo)} />
@@ -181,7 +184,7 @@ export function ScreenView() {
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 }
 

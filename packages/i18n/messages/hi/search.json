@@ -11,5 +11,7 @@
     "action": "कार्य",
     "topic": "विषय",
     "decision": "निर्णय"
-  }
+  },
+  "searching": "खोज जारी है…",
+  "results": "{count, plural, one {# परिणाम} other {# परिणाम}}"
 }

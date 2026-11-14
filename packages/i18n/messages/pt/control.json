@@ -151,7 +151,10 @@
     "checkInEmpty": "Ficha vazia",
     "topics": "Assuntos em aberto",
     "end": "Encerramento e ata",
-    "legend": "Visto: ficha preenchida. <note></note>: notas feitas para a ata. “Ficha” permite corrigi-la se necessário. Uma etapa “Perguntas” é adicionada sozinha assim que alguém levanta a mão."
+    "legend": "Visto: ficha preenchida. <note></note>: notas feitas para a ata. “Ficha” permite corrigi-la se necessário. Uma etapa “Perguntas” é adicionada sozinha assim que alguém levanta a mão.",
+    "goTo": "Ir para {name}",
+    "markAbsentNamed": "Marcar {name} como ausente",
+    "markPresentNamed": "Marcar {name} como presente"
   },
   "unsavedCheckIn": "As alterações da ficha não foram salvas.",
   "closeAnyway": "Fechar mesmo assim",

@@ -151,7 +151,10 @@
     "checkInEmpty": "空进展卡",
     "topics": "开放议题",
     "end": "总结与纪要",
-    "legend": "勾选：进展卡已填写。<note></note>：已为纪要做笔记。“进展卡”可在需要时修正内容。有人举手时，会自动添加一个“提问”环节。"
+    "legend": "勾选：进展卡已填写。<note></note>：已为纪要做笔记。“进展卡”可在需要时修正内容。有人举手时，会自动添加一个“提问”环节。",
+    "goTo": "前往 {name}",
+    "markAbsentNamed": "将 {name} 标记为缺席",
+    "markPresentNamed": "将 {name} 标记为出席"
   },
   "unsavedCheckIn": "进展卡的修改尚未保存。",
   "closeAnyway": "仍然关闭",

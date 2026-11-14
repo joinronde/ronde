@@ -151,7 +151,10 @@
     "checkInEmpty": "Ficha vacía",
     "topics": "Temas abiertos",
     "end": "Cierre y acta",
-    "legend": "Marca: ficha rellenada. <note></note>: notas tomadas para las actas. «Ficha» permite corregirla si hace falta. Se añade sola una etapa «Preguntas» en cuanto alguien levanta la mano."
+    "legend": "Marca: ficha rellenada. <note></note>: notas tomadas para las actas. «Ficha» permite corregirla si hace falta. Se añade sola una etapa «Preguntas» en cuanto alguien levanta la mano.",
+    "goTo": "Ir a {name}",
+    "markAbsentNamed": "Marcar a {name} como ausente",
+    "markPresentNamed": "Marcar a {name} como presente"
   },
   "unsavedCheckIn": "Los cambios de la ficha no están guardados.",
   "closeAnyway": "Cerrar de todos modos",

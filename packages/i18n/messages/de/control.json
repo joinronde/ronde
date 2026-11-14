@@ -151,7 +151,10 @@
     "checkInEmpty": "Leerer Check-in",
     "topics": "Offene Themen",
     "end": "Abschluss und Protokoll",
-    "legend": "Häkchen: Check-in ausgefüllt. <note></note>: Notizen fürs Protokoll gemacht. Über „Check-in“ lässt er sich bei Bedarf korrigieren. Ein Schritt „Fragen“ kommt von selbst hinzu, sobald sich jemand meldet."
+    "legend": "Häkchen: Check-in ausgefüllt. <note></note>: Notizen fürs Protokoll gemacht. Über „Check-in“ lässt er sich bei Bedarf korrigieren. Ein Schritt „Fragen“ kommt von selbst hinzu, sobald sich jemand meldet.",
+    "goTo": "Zu {name} wechseln",
+    "markAbsentNamed": "{name} als abwesend markieren",
+    "markPresentNamed": "{name} als anwesend markieren"
   },
   "unsavedCheckIn": "Die Änderungen am Check-in sind nicht gespeichert.",
   "closeAnyway": "Trotzdem schließen",

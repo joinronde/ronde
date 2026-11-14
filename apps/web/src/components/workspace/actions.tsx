@@ -324,7 +324,9 @@ function ActionCard({
       }}
       onDragEnd={() => onDrag(false)}
     >
-      <p className="act-text">{a.text}</p>
+      <p className="act-text" dir="auto">
+        {a.text}
+      </p>
       <p className="act-meta">
         <Link href={`/w/${slug}/m/${a.meetingId}`} className="act-meeting">
           <span className="act-dot" aria-hidden="true" />
@@ -425,7 +427,9 @@ function ActionItem({
         <CheckMark />
       </button>
       <div className="act-body">
-        <p className="act-text">{a.text}</p>
+        <p className="act-text" dir="auto">
+          {a.text}
+        </p>
         <p className="act-meta">
           <Link href={`/w/${slug}/m/${a.meetingId}`} className="act-meeting">
             <span className="act-dot" aria-hidden="true" />

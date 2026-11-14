@@ -27,7 +27,7 @@ export function Field({
         </span>
       )}
       {error && (
-        <span className="field-error" id={`${id}-error`}>
+        <span className="field-error" id={`${id}-error`} role="alert">
           {error}
         </span>
       )}
@@ -45,7 +45,6 @@ export function PasswordInput(props: React.InputHTMLAttributes<HTMLInputElement>
       <button
         type="button"
         className="eye-btn"
-        aria-pressed={shown}
         aria-label={shown ? t("hidePassword") : t("showPassword")}
         title={shown ? t("hidePassword") : t("showPassword")}
         onClick={() => setShown(!shown)}

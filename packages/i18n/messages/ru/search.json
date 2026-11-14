@@ -11,5 +11,7 @@
     "action": "Задачи",
     "topic": "Темы",
     "decision": "Решения"
-  }
+  },
+  "searching": "Идёт поиск…",
+  "results": "{count, plural, one {# результат} few {# результата} many {# результатов} other {# результата}}"
 }

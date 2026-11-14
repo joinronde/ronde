@@ -172,7 +172,15 @@ export function SignInForm({
         <Field label={t("email")}>
           {(p) => (
             // "webauthn": the browser suggests the passkeys of this site right in the field
-            <input {...p} type="email" autoComplete="username webauthn" required value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input
+              {...p}
+              type="email"
+              autoComplete="username webauthn"
+              aria-invalid={error === "invalidCredentials" ? true : p["aria-invalid"]}
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           )}
         </Field>
         {mode === "password" && (
@@ -187,6 +195,7 @@ export function SignInForm({
             {(p) => (
               <PasswordInput
                 {...p}
+                aria-invalid={error === "invalidCredentials" ? true : p["aria-invalid"]}
                 autoComplete="current-password"
                 required
                 value={password}
