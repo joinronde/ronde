@@ -105,8 +105,14 @@ export async function ownMeetings(ctx: WorkspaceContext): Promise<{ id: string; 
 
 /** For the sidebar: what is left to do */
 export async function openActionCount(ctx: WorkspaceContext): Promise<number> {
+  // The meetings the page lists them from (visibleMeetings): a meeting the person left counts no more
+  const seesAll = ctx.can("meeting.read");
   return ctx.db.action.count({
-    where: { ownerId: ctx.member.personId, status: { not: "done" }, meeting: { archivedAt: null } },
+    where: {
+      ownerId: ctx.member.personId,
+      status: { not: "done" },
+      meeting: { archivedAt: null, ...(seesAll ? {} : { participants: { some: { personId: ctx.member.personId } } }) },
+    },
   });
 }
 

@@ -81,6 +81,11 @@ test("the host runs a session from the control room, from the order of the turns
   await row("Dan Dorsey").getByRole("button", { name: "Absent" }).click();
   await expect(row("Dan Dorsey").getByRole("button", { name: "Present" })).toBeVisible();
 
+  // Space on the waiting screen starts nothing: only "Start the meeting" does, dating the session
+  await key(page, "Space");
+  await page.waitForTimeout(1500);
+  await expect(page.getByRole("button", { name: "Start the meeting", exact: true })).toBeVisible();
+
   await start(page);
   await expect(now(page)).toHaveText("Introduction");
   const turns: string[] = [];
@@ -226,6 +231,9 @@ test("the host runs a session from the control room, from the order of the turns
   await page.getByRole("button", { name: "Publish the minutes", exact: true }).click();
   await page.getByRole("button", { name: "Yes, publish" }).click();
   await expect(page.getByText("Minutes published, session closed. The next one is ready.")).toBeVisible();
+  // A session was held today: starting the next one now is refused, the reason and the way out under the button
+  await page.getByRole("button", { name: "Start the meeting", exact: true }).click();
+  await expect(page.getByRole("alert").filter({ hasText: "already held today" })).toContainText("create another meeting");
 
   // History: the omitted part is missing; a summary added afterwards; search
   await page.goto(`${meeting}/history`);
@@ -248,6 +256,11 @@ test("the host runs a session from the control room, from the order of the turns
   await expect(page.getByText("1 meeting found")).toBeVisible();
   await search.fill("zeppelin");
   await expect(page.getByText("No minutes contain “zeppelin”.")).toBeVisible();
+
+  // Pia, a participant, reads the published minutes in the history, without the hosts' tools
+  await pia.goto(`${meeting}/history`);
+  await expect(pia.locator(".minutes-doc").getByText("The invoices rollout went very well.")).toBeVisible();
+  await expect(pia.getByRole("button", { name: "Edit the summary" })).toHaveCount(0);
 
   // Pia finds her action on her home page and marks it done
   await pia.goto(workspace);

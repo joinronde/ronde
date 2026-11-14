@@ -161,7 +161,7 @@
   "absencePeriod": "Wähle einen ersten und einen letzten Tag, in dieser Reihenfolge, höchstens ein Jahr auseinander.",
   "phoneMissing": "Trag zuerst deine Handynummer in dein Profil ein: Der Test geht dorthin.",
   "phoneInvalid": "Gib die Handynummer im internationalen Format ein, etwa +4915123456789.",
-  "sessionHeldToday": "Heute fand bereits eine Sitzung dieses Meetings statt.",
+  "sessionHeldToday": "Heute fand bereits eine Sitzung dieses Meetings statt: Diese findet an ihrem geplanten Datum statt. Für eine zweite Sitzung am selben Tag leg ein weiteres Meeting an.",
   "guestLinkInvalid": "Dieser Gastlink ist ungültig, abgelaufen oder widerrufen. Bitte die Moderation um einen neuen.",
   "projectMembersOnly": "Nur wer an diesem Projekt arbeitet, kann sein Projektblatt ändern.",
   "projectProgramme": "Ein Projekt kann weder zu sich selbst noch zu einem seiner eigenen Projekte gehören, und Programme haben höchstens drei Ebenen.",

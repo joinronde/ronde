@@ -12,7 +12,8 @@ export const GET = meetingRoute("meeting.read", async (ctx) => {
   if (!me) return NextResponse.json([]);
   const locale = await requestLocale();
   const rows = await ctx.ws.db.session.findMany({
-    where: { meetingId: ctx.meeting.id, status: "archived" },
+    // A session whose minutes are still a draft stays with the hosts, the check-ins presented at it too
+    where: { meetingId: ctx.meeting.id, status: "archived", ...(ctx.can("minutes.edit") ? {} : { minutesPublishedAt: { not: null } }) },
     orderBy: { date: "desc" },
     take: 104,
     select: { date: true, record: true },

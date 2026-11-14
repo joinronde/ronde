@@ -62,6 +62,7 @@
   "ended": "Terminée",
   "live": "EN DIRECT",
   "questionsNext": "{count, plural, one {# question} other {# questions}} ensuite",
+  "handsNext": "{count, plural, one {# main levée} other {# mains levées}} ensuite",
   "spotlight": "Mis en avant",
   "agenda": "Déroulé",
   "parking": "Parking, pour la prochaine fois",

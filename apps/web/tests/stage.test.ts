@@ -3,11 +3,13 @@ import type { CheckInFields, Section, Snapshot } from "@ronde/core/types";
 import { afterEach, describe, expect, it } from "vitest";
 import {
   joinedOf,
+  pendingAsks,
   plannedStart,
   projectEntries,
   projectsWithTurn,
   sectionsHave,
   startTarget,
+  stepStatus,
   waitLabel,
   waitTone,
 } from "@/lib/shared/stage";
@@ -306,5 +308,27 @@ describe("the waiting pill", () => {
     inZone("UTC");
     expect(label(Number.NaN)).toBe("Tuesday · 09:30");
     expect(waitTone(Number.NaN)).toBe("");
+  });
+});
+
+describe("where a step of the agenda stands", () => {
+  // Intro and Ana spoke, Ben and Cy were jumped over ("Go" to Dee), Dee speaks, Eve is to come
+  const m = { stepKey: "dee", spent: { intro: 40_000, ana: 65_000 } };
+  const keys = ["intro", "ana", "ben", "cy", "dee", "eve"];
+  it("tells the steps that had their turn from those jumped over", () => {
+    expect(keys.map((k, i) => stepStatus(m, k, i, 4))).toEqual(["done", "done", "skipped", "skipped", "current", "upcoming"]);
+  });
+
+  it("counts a turn of a few milliseconds as had", () => {
+    expect(stepStatus({ stepKey: "dee", spent: { ben: 0 } }, "ben", 2, 4)).toBe("done");
+  });
+});
+
+describe("what waits after a step", () => {
+  it("tells raised hands from questions, the handled ones and other steps' left out", () => {
+    const ask = (type: "hand" | "question", stepKey: string, resolved = false) => ({ type, stepKey, resolved });
+    const list = [ask("hand", "ana"), ask("question", "ana"), ask("question", "ana", true), ask("hand", "ben")];
+    expect(pendingAsks(list, "ana")).toEqual({ hands: 1, questions: 1 });
+    expect(pendingAsks(list, "cy")).toEqual({ hands: 0, questions: 0 });
   });
 });

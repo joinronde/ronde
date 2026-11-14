@@ -15,9 +15,18 @@ vi.mock("@/lib/server/meeting/context", async (original) => {
   const real = await original<typeof import("@/lib/server/meeting/context")>();
   return { ...real, requireMeeting: async () => current };
 });
+// The history page as one person opens it (the list itself is drawn in the browser)
+vi.mock("@/lib/server/meeting/page", async (original) => {
+  const real = await original<typeof import("@/lib/server/meeting/page")>();
+  return { ...real, pageMeeting: async () => current };
+});
+vi.mock("@/components/history", () => ({ HistoryView: () => null }));
 
 const { runOp } = await import("@/lib/server/meeting/ops");
 const history = await import("@/app/api/w/[ws]/m/[meeting]/history/route");
+const transcript = await import("@/app/api/w/[ws]/m/[meeting]/transcript/route");
+const historyMine = await import("@/app/api/w/[ws]/m/[meeting]/history/mine/route");
+const historyPage = await import("@/app/w/[ws]/(shell)/m/[meeting]/(app)/history/page");
 
 let f: Fixture;
 let ana: MeetingCtx;
@@ -38,6 +47,36 @@ function participantCtx(personId: string): MeetingCtx {
     viewer: { userId: principal.userId, personId, email: "ana@draft.test", name: "Ana", memberId: personId, isHost: false, isAdmin: false },
     can: (p) => can(principal, p),
   };
+}
+
+/** The meeting seen by an observer: no check-in of their own */
+function observerCtx(personId: string): MeetingCtx {
+  const principal = {
+    userId: `user-${personId}`,
+    personId,
+    workspaceId: f.workspaceId,
+    workspaceRole: "member" as const,
+    meetingRole: "observer" as const,
+  };
+  const seen = participantCtx(personId);
+  return { ...seen, role: "observer", viewer: { ...seen.viewer, memberId: null }, can: (p) => can(principal, p) };
+}
+
+/** The transcript of a session, asked by one person */
+async function transcriptOf(ctx: MeetingCtx, day: string) {
+  current = ctx;
+  return transcript.GET(new Request(`http://localhost/x?date=${day}`), {
+    params: Promise.resolve({ ws: ctx.ws.workspace.slug, meeting: f.meetingId }),
+  });
+}
+
+/** The dates of one person's past check-ins */
+async function pastOf(ctx: MeetingCtx): Promise<string[]> {
+  current = ctx;
+  const res = await historyMine.GET(new Request("http://localhost/x"), {
+    params: Promise.resolve({ ws: ctx.ws.workspace.slug, meeting: f.meetingId }),
+  } as never);
+  return ((await res.json()) as { date: string }[]).map((p) => p.date);
 }
 
 /** The history as one person reads it */
@@ -85,6 +124,11 @@ describe("minutes written later", () => {
   it("show the draft to the hosts only", async () => {
     expect((await historyOf(f.ctx)).find((h) => h.date === date)?.draft).toBe(true);
     expect((await historyOf(ana)).find((h) => h.date === date)).toBeUndefined();
+    // Nor its transcript, nor the check-ins presented at it, asked for by its date
+    expect((await transcriptOf(f.ctx, date)).status).toBe(200);
+    // Refused as a date without a session is
+    expect((await transcriptOf(ana, date)).status).toBe(400);
+    expect(await pastOf(ana)).not.toContain(date);
   });
 
   it("let the hosts write the notes of a step, which the minutes follow", async () => {
@@ -106,6 +150,12 @@ describe("minutes written later", () => {
     expect(s.minutesPublishedAt).not.toBeNull();
     expect(await inbox("minutes.published")).toBeGreaterThan(0);
     expect((await historyOf(ana)).find((h) => h.date === date)?.draft).toBeUndefined();
+    // The notification and the email lead to the history page: open to the participants and observers, who read
+    // the published minutes there (the hosts alone edit them)
+    for (const who of [ana, observerCtx(f.memberId)]) {
+      current = who;
+      await expect(historyPage.default({ params: Promise.resolve({ ws: "x", meeting: f.meetingId }) })).resolves.toBeTruthy();
+    }
     await expect(runOp(f.ctx, { op: "history.publish", date })).rejects.toMatchObject({ key: "minutesPublished" });
     await expect(runOp(f.ctx, { op: "history.note", date, key: "intro", text: "late" })).rejects.toMatchObject({ key: "minutesPublished" });
   });

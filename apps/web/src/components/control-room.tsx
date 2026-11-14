@@ -75,7 +75,7 @@ import {
   startOp,
   stepTitle,
 } from "@/lib/shared/control-room";
-import { actionOwners, sheetRows, sheetsToComplete, writersOf } from "@/lib/shared/sheets";
+import { actionOwners, ownersOfAction, sheetRows, sheetsToComplete, writersOf } from "@/lib/shared/sheets";
 import { track } from "@/lib/shared/track";
 import { ActionProgress } from "./action-progress";
 import { Board } from "./board";
@@ -197,6 +197,8 @@ export function ControlRoomView() {
   const [tour, setTour] = useState(false);
   const shortcuts = useControlShortcuts();
   const [remote, setRemote] = useState(false);
+  // "Start the meeting" refused (a session already held today): said under the button, until another start
+  const [startError, setStartError] = useState<string | null>(null);
   useTick(1000);
   const m = s.meeting;
   const step = agenda[cur];
@@ -218,8 +220,8 @@ export function ControlRoomView() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (!m || (e.target as HTMLElement).closest("input,textarea,select,[contenteditable]")) return;
-      // Before the start, only "Start the meeting" moves forward
-      if ((e.key === "ArrowRight" || e.key === "ArrowLeft") && !m.startedAt) return;
+      // Before the start, only "Start the meeting" moves forward or starts (Space would start it unseen, undated)
+      if (!m.startedAt) return;
       if (e.key === "ArrowRight") {
         e.preventDefault();
         void rpc({ op: "meeting.step", delta: 1, from: m.stepKey });
@@ -394,11 +396,13 @@ export function ControlRoomView() {
                           className="btn big primary deck-main"
                           // A session prepared for another day happens today: it is dated today, the schedule keeps its occurrence
                           title={startOp(m.date) === "session.now" ? t("startToday") : undefined}
-                          onClick={() =>
-                            void rpc({ op: startOp(m.date) }, t("started") + (s.notify.started ? ` ${t("startedAnnounced")}` : "")).then(
-                              (ok) => ok && track("session_started"),
-                            )
-                          }
+                          aria-describedby={startError ? "startError" : undefined}
+                          onClick={() => {
+                            setStartError(null);
+                            void rpc({ op: startOp(m.date) }, t("started") + (s.notify.started ? ` ${t("startedAnnounced")}` : ""), {
+                              onError: setStartError,
+                            }).then((ok) => ok && track("session_started"));
+                          }}
                         >
                           <Play size={18} strokeWidth={2.4} aria-hidden="true" />
                           {t("start")}
@@ -421,6 +425,11 @@ export function ControlRoomView() {
                         </button>
                       )}
                     </div>
+                    {startError && !m.startedAt && (
+                      <div className="form-alert error deck-start-error" id="startError" role="alert">
+                        {startError}
+                      </div>
+                    )}
                     {m.startedAt && step.type !== "end" && (
                       <div className="deck-timer-tools" role="group" aria-label={t("timerTools")}>
                         <button
@@ -1621,7 +1630,7 @@ function PaneActions() {
                   value={a.ownerId}
                   onChange={(e) => rpc({ op: "action.update", id: a.id, ownerId: e.target.value })}
                 >
-                  {owners.map((x) => (
+                  {ownersOfAction(s, a.ownerId, t("actions.ownerGone")).map((x) => (
                     <option key={x.id} value={x.id}>
                       {x.name}
                     </option>

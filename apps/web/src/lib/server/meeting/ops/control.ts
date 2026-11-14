@@ -64,6 +64,43 @@ async function announceStart(
   });
 }
 
+/**
+ * The session happens now: the one being prepared, dated today (the occurrence it came from stays in the schedule
+ * for later), or a new one; refused when the meeting was already held today. Every way to start goes through it.
+ */
+async function holdNow(ctx: OpContext) {
+  const { db, m, meetingId } = ctx;
+  const timeZone = timeZoneOf(m.meeting, m.ws.workspace);
+  const now = Date.now();
+  const today = localDate(now, timeZone);
+  const time = localTime(now, timeZone);
+  let s = await db.session.findFirst({ where: { meetingId, status: "current" } });
+  if (s?.startedAt) return;
+  const heldToday = await db.session.findFirst({
+    where: { meetingId, date: today, ...(s ? { id: { not: s.id } } : {}) },
+    select: { id: true },
+  });
+  if (heldToday) throw new OpError("sessionHeldToday");
+  // The session being prepared happens now; the occurrence it came from stays in the schedule for later
+  if (s) {
+    const away = await awayPeople(db, today, s.order);
+    s = await db.session.update({
+      where: { id: s.id },
+      data: { date: today, time, startsAt: new Date(now), occurrenceKey: null, absent: [...new Set([...s.absent, ...away])] },
+    });
+  } else {
+    s = await openSession(db, m.meeting, m.ws.workspace, { date: today });
+    if (!s) throw new OpError("noUpcomingDate");
+    s = await db.session.update({ where: { id: s.id }, data: { time, startsAt: new Date(now) } });
+  }
+  const dto = toMeeting(s);
+  await db.session.update({
+    where: { id: s.id },
+    data: sessionData({ timer: { running: true, startedAt: now, baseMs: elapsedOf(dto, now) }, startedAt: now }),
+  });
+  await announceStart(ctx, s);
+}
+
 export const controlOps = [
   defineOp({
     name: "meeting.create",
@@ -141,9 +178,12 @@ export const controlOps = [
     permission: "session.run",
     session: "lock",
     input: z.object({}),
-    run: async ({ db, requireSession, m, after, meetingId, workspaceId }) => {
+    run: async (ctx) => {
+      const { db, requireSession, m, after, meetingId, workspaceId } = ctx;
       const s = requireSession();
       if (s.stepKey === "end") return;
+      // Started from the timer (Space, the remote) before its day: dated today, as "Start the meeting" does
+      if (!s.startedAt && s.date !== localDate(Date.now(), timeZoneOf(m.meeting, m.ws.workspace))) return holdNow(ctx);
       const dto = toMeeting(s);
       const now = Date.now();
       const el = elapsedOf(dto, now);
@@ -160,38 +200,7 @@ export const controlOps = [
     permission: "session.run",
     audit: true,
     input: z.object({}),
-    run: async (ctx) => {
-      const { db, m, meetingId } = ctx;
-      const timeZone = timeZoneOf(m.meeting, m.ws.workspace);
-      const now = Date.now();
-      const today = localDate(now, timeZone);
-      const time = localTime(now, timeZone);
-      let s = await db.session.findFirst({ where: { meetingId, status: "current" } });
-      if (s?.startedAt) return;
-      const heldToday = await db.session.findFirst({
-        where: { meetingId, date: today, ...(s ? { id: { not: s.id } } : {}) },
-        select: { id: true },
-      });
-      if (heldToday) throw new OpError("sessionHeldToday");
-      // The session being prepared happens now; the occurrence it came from stays in the schedule for later
-      if (s) {
-        const away = await awayPeople(db, today, s.order);
-        s = await db.session.update({
-          where: { id: s.id },
-          data: { date: today, time, startsAt: new Date(now), occurrenceKey: null, absent: [...new Set([...s.absent, ...away])] },
-        });
-      } else {
-        s = await openSession(db, m.meeting, m.ws.workspace, { date: today });
-        if (!s) throw new OpError("noUpcomingDate");
-        s = await db.session.update({ where: { id: s.id }, data: { time, startsAt: new Date(now) } });
-      }
-      const dto = toMeeting(s);
-      await db.session.update({
-        where: { id: s.id },
-        data: sessionData({ timer: { running: true, startedAt: now, baseMs: elapsedOf(dto, now) }, startedAt: now }),
-      });
-      await announceStart(ctx, s);
-    },
+    run: (ctx) => holdNow(ctx),
   }),
   defineOp({
     name: "meeting.resetTimer",

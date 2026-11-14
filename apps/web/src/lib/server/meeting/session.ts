@@ -220,7 +220,10 @@ export async function buildRecord(db: ScopedTx, ctx: RecordCtx, s: Session, omit
     endedAt: end,
     durationMs: dto.startedAt ? end - dto.startedAt : 0,
     spent,
-    participants: speakers.map((id) => ({ id, name: byId[id]!.name, jobCategory: byId[id]!.jobCategory })),
+    // The people of the round, and those who spoke for a project (the only ones there without a round table)
+    participants: [...new Set([...speakers, ...projectTurns.flatMap((x) => x.speakers ?? [])])]
+      .filter((id) => byId[id])
+      .map((id) => ({ id, name: byId[id]!.name, jobCategory: byId[id]!.jobCategory })),
     absent: dto.absent.filter((id) => byId[id]).map((id) => ({ id, name: byId[id]!.name })),
     sections,
     checkIns: Object.fromEntries(

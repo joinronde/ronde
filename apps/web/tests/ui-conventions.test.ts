@@ -140,4 +140,10 @@ describe("interface conventions", () => {
     // The stats page drew its own bubble for data-tip, and the app-wide one showed a second, elsewhere
     expect(sources.filter((s) => s.file !== "tooltips.tsx" && s.text.includes('"[data-tip]"')).map((s) => s.file)).toEqual([]);
   });
+
+  it("marks a step jumped over without fading its text below a readable contrast", () => {
+    const rule = /\.step\.skipped\{([^}]*)\}/.exec(css)?.[1] ?? "";
+    expect(rule).toContain("border-style:dashed");
+    expect(rule).not.toContain("opacity");
+  });
 });

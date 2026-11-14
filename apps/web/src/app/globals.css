@@ -178,6 +178,7 @@ kbd{font-family:var(--mono);font-size:12.5px;border:1px solid var(--line);border
 .step{flex:none;display:flex;align-items:center;gap:.5em;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding-block:.35em;padding-inline:.4em .75em;color:var(--ink-2)}
 .step .tm{font-family:var(--mono);font-size:.8em;color:var(--ink-3)}
 .step.done{opacity:.7}
+.step.skipped{border-style:dashed;background:var(--surface-2)}
 .step.cur{border-color:var(--live);color:var(--ink);box-shadow:inset 0 0 0 1px var(--live)}
 .step.view{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);color:var(--ink)}
 .step.qa{background:var(--warn-soft);border-style:dashed}
@@ -4099,6 +4100,7 @@ mark.hit{background:color-mix(in srgb,var(--accent) 22%,transparent);color:inher
 .deck-clock .lbl{font-size:12px;color:var(--ink-3)}
 /* Moving on, and the timer */
 .deck-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.deck-start-error{flex-basis:100%}
 .deck-nav{display:flex;flex-wrap:wrap;gap:8px;flex:1 1 320px}
 .deck-nav .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .deck-nav .deck-main{flex:1 1 auto;max-width:420px}

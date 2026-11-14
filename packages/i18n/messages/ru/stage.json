@@ -62,6 +62,7 @@
   "ended": "Завершено",
   "live": "ЭФИР",
   "questionsNext": "Далее {count, plural, one {# вопрос} few {# вопроса} many {# вопросов} other {# вопроса}}",
+  "handsNext": "Далее {count, plural, one {# поднятая рука} few {# поднятые руки} many {# поднятых рук} other {# поднятой руки}}",
   "spotlight": "В центре внимания",
   "agenda": "Повестка",
   "parking": "Парковка — на следующий раз",

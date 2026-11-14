@@ -182,7 +182,8 @@
     "confirmDelete": "确认删除",
     "delete": "删除",
     "none": "没有行动项。",
-    "new": "新行动项"
+    "new": "新行动项",
+    "ownerGone": "已离开会议的人"
   },
   "topics": {
     "handled": "议题已讨论",
