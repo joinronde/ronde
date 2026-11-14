@@ -137,6 +137,7 @@
   },
   "upgrade": {
     "comesWith": "{feature} 包含在 Ronde {edition} 中。",
-    "plans": "查看方案"
+    "plans": "查看方案",
+    "includedIn": "包含在 Ronde {edition} 中。"
   }
 }

@@ -137,6 +137,7 @@
   },
   "upgrade": {
     "comesWith": "{feature} comes with Ronde {edition}.",
-    "plans": "See the plans"
+    "plans": "See the plans",
+    "includedIn": "Included in Ronde {edition}."
   }
 }

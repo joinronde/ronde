@@ -137,6 +137,7 @@
   },
   "upgrade": {
     "comesWith": "{feature} входит в Ronde {edition}.",
-    "plans": "Посмотреть тарифы"
+    "plans": "Посмотреть тарифы",
+    "includedIn": "Входит в Ronde {edition}."
   }
 }

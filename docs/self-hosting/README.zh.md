@@ -15,7 +15,7 @@ Ronde 可以运行在任何装有 Docker 的机器上：应用本体、一个 Po
 2. 填写 `.env`：大家将访问的地址（`RONDE_URL`）和三个密钥。
 
    ```sh
-   for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env; done
+   for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i.bak "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env && rm .env.bak; done
    ```
 
 3. 启动：

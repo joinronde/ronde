@@ -317,6 +317,7 @@ export async function invite(
       workspace: ctx.workspace.name,
       inviter: ctx.user.name || ctx.user.email,
       brand: await emailBrand(ctx.workspace.id),
+      days: INVITATION_DAYS,
     }),
   });
   return { url, emailed: !!env.smtpUrl() };

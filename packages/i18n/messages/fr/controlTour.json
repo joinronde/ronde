@@ -12,7 +12,7 @@
     },
     "runOrder": {
       "title": "Le déroulé et l'ordre de passage",
-      "body": "<p>Intro, un passage par personne, points divers, puis clôture.</p><ul><li><strong>↑ ↓</strong> changent l'ordre, <strong>Absent</strong> retire quelqu'un du tour.</li><li><strong>Aller</strong> saute directement à une étape.</li><li>Un point vert : la fiche de la personne est prête.</li></ul>"
+      "body": "<p>Intro, un passage par personne, points divers, puis clôture.</p><ul><li>Faites glisser <strong>⠿</strong> (ou utilisez <strong>↑ ↓</strong> sur la poignée, au clavier) pour changer l'ordre ; <strong>Absent</strong> retire quelqu'un du tour.</li><li><strong>Aller</strong> saute directement à une étape.</li><li>Un point vert : la fiche de la personne est prête.</li></ul>"
     },
     "controls": {
       "title": "Démarrer et avancer",
@@ -20,7 +20,7 @@
     },
     "notes": {
       "title": "Vos notes",
-      "body": "<p>Une zone de notes par étape, <strong>enregistrée au fil de la frappe</strong> et visible par vous seul : elles vont dans le compte rendu, sous la bonne personne.</p><p><strong>+ Décision</strong> note une décision ; <strong>+ Action</strong> crée une action de suivi avec une personne responsable, suivie aux séances suivantes.</p>"
+      "body": "<p>Une zone de notes par étape, <strong>enregistrée au fil de la frappe</strong> et visible de vous seul jusqu'à la publication du compte rendu : elles vont dans le compte rendu, sous la bonne personne.</p><p><strong>Décision</strong> note une décision ; <strong>Action</strong> crée une action de suivi avec une personne responsable, suivie aux séances suivantes.</p>"
     },
     "minutes": {
       "title": "Le compte rendu",

@@ -22,6 +22,6 @@
     "subject": "{inviter} convida você para {workspace} no Ronde",
     "intro": "{inviter} convida você para o espaço de trabalho {workspace} no Ronde, para preparar e conduzir juntos as reuniões da equipe.",
     "action": "Entrar em {workspace}",
-    "footer": "Este convite expira em 7 dias. Se você não esperava por ele, pode ignorar este e-mail."
+    "footer": "Este convite expira em {days, plural, one {# dia} other {# dias}}. Se você não esperava por ele, pode ignorar este e-mail."
   }
 }

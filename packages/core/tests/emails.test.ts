@@ -23,6 +23,13 @@ describe("authEmail", () => {
     expect(mail.text).toContain("Ada");
   });
 
+  it("states the validity of the invitation it was given", () => {
+    expect(authEmail("invitation", { url, locale: "en", days: 14 }).text).toContain("expires in 14 days");
+    for (const locale of ["fr", "de", "es", "it", "pt", "ru", "zh", "ar", "hi"] as const) {
+      expect(authEmail("invitation", { url, locale, days: 14 }).text).toMatch(/14|١٤/);
+    }
+  });
+
   it("escapes names in the HTML part", () => {
     const mail = authEmail("invitation", { url, locale: "en", workspace: "<script>x</script>", inviter: "Ada" });
     expect(mail.html).not.toContain("<script>");

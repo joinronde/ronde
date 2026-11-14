@@ -22,6 +22,6 @@
     "subject": "{inviter} te invita a {workspace} en Ronde",
     "intro": "{inviter} te invita a unirte al espacio de trabajo {workspace} en Ronde, para preparar y dirigir juntos las reuniones del equipo.",
     "action": "Unirme a {workspace}",
-    "footer": "Esta invitación caduca en 7 días. Si no la esperabas, puedes ignorar este correo."
+    "footer": "Esta invitación caduca en {days, plural, one {# día} other {# días}}. Si no la esperabas, puedes ignorar este correo."
   }
 }

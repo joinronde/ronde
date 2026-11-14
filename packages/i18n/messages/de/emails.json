@@ -22,6 +22,6 @@
     "subject": "{inviter} lädt dich zu {workspace} auf Ronde ein",
     "intro": "{inviter} lädt dich in den Arbeitsbereich {workspace} auf Ronde ein, um eure Team-Meetings gemeinsam vorzubereiten und zu leiten.",
     "action": "{workspace} beitreten",
-    "footer": "Diese Einladung läuft in 7 Tagen ab. Falls du sie nicht erwartet hast, kannst du diese E-Mail ignorieren."
+    "footer": "Diese Einladung läuft in {days, plural, one {# Tag} other {# Tagen}} ab. Falls du sie nicht erwartet hast, kannst du diese E-Mail ignorieren."
   }
 }
