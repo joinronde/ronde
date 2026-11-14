@@ -246,7 +246,7 @@ test("tour of the main pages", async ({ page }) => {
   const calCard = page.locator(".calendar-accounts");
   await calCard.getByRole("button", { name: "Add a calendar account" }).click();
   await calCard.getByLabel("Email of the service account").fill("ronde@acme.iam.gserviceaccount.com");
-  await calCard.getByLabel("Organizer of the events").fill("rooms@acme.com");
+  await calCard.getByLabel("Account that sends the invitations").fill("rooms@acme.com");
   await calCard.getByLabel("Private key of the service account").fill("-----BEGIN PRIVATE KEY-----demo");
   await calCard.getByRole("button", { name: "Save" }).click();
   await calCard.locator(".tracker-list li").first().waitFor();

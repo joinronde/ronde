@@ -12,7 +12,7 @@
   "keyHint": "Needed for OpenAI; optional for a self-hosted server. Stored encrypted.",
   "keySaved": "A key is saved. Type a new one to replace it.",
   "instance": "Service of the instance",
-  "privacy": "The sound of a recorded session is sent to this service in pieces of thirty seconds, then deleted: only the text stays, with the session.",
+  "privacy": "The sound of a recorded session is sent to this service in 30-second chunks, then deleted: only the text stays, with the session.",
   "save": "Save",
   "saved": "Saved."
 }

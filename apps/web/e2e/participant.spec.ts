@@ -91,15 +91,15 @@ test("a participant's session, from two tabs of check-in to last time's plans", 
   await openTab(page, /^Live/);
   const live = page.getByRole("tabpanel");
   await expect(live.locator(".item").filter({ hasText: "When is the release?" })).toBeVisible();
-  await live.getByRole("button", { name: "✓ Mark as answered" }).click();
+  await live.getByRole("button", { name: "✓ Mark as handled" }).click();
   await expect(live.getByRole("heading", { name: "Pending (0)" })).toBeVisible();
 
-  await pia.getByRole("button", { name: "Thanks", exact: true }).click();
+  await pia.getByRole("button", { name: "Kudos", exact: true }).click();
   await pia.locator("#kudoTo").click();
   await pia.getByRole("option", { name: /Leo/ }).click();
   await pia.getByRole("textbox", { name: "Message" }).fill("Thanks for the review of the exports");
   await pia.getByRole("button", { name: "Send", exact: true }).click();
-  await expect(pia.getByText("Thanks sent: it shows on the shared screen.")).toBeVisible();
+  await expect(pia.getByText("Kudos sent: they show on the shared screen.")).toBeVisible();
   await expect(screen.getByText("Thanks for the review of the exports")).toBeVisible();
   await expect(live.getByRole("heading", { name: "Kudos (1)" })).toBeVisible();
   await screen.close();

@@ -45,7 +45,7 @@
     "setup": "How to set it up",
     "result": {
       "connected": "Slack is connected.",
-      "cancelled": "The installation was cancelled in Slack.",
+      "cancelled": "The installation was canceled in Slack.",
       "denied": "Only the people who manage the workspace’s connectors can add Slack.",
       "failed": "Slack could not be connected. Please try again; if it keeps failing, contact the administrator of this instance."
     }

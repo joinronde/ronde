@@ -12,7 +12,7 @@
   "save": "Save the absence",
   "cancel": "Cancel",
   "period": "{from} to {to}",
-  "standsIn": "{name} stands in",
+  "standsIn": "Stand-in: {name}",
   "remove": "Remove the absence of {period}",
   "empty": "No absence planned.",
   "emptyMine": "No absence planned. Going away? Add it here: your meetings will know."

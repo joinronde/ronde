@@ -62,7 +62,7 @@ describe("notification templates", () => {
 
   it("is written in the team language", () => {
     const mail = reminderEmail({ ...input, locale: "fr" });
-    expect(mail.subject).toBe("Ronde · Tools team : votre fiche pour jeudi 1 octobre à 14:00");
+    expect(mail.subject).toBe("Ronde · Tools team : votre fiche pour jeudi 1 octobre à 14:00");
     expect(mail.text).toContain("Bonjour Ines,");
     expect(mail.html).toContain('<html lang="fr" dir="ltr">');
     // Arabic reads right to left, the arrow of the button too

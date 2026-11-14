@@ -10,10 +10,10 @@
     "90": "90 days",
     "year": "This year"
   },
-  "kpiTotal": "decisions",
+  "kpiTotal": "{count, plural, one {decision} other {decisions}}",
   "kpiMonth": "in the last 30 days",
-  "kpiMeetings": "meetings that decided",
-  "during": "During: {context}",
+  "kpiMeetings": "{count, plural, one {meeting with decisions} other {meetings with decisions}}",
+  "during": "Noted during {context}",
   "openLog": "The meeting's decision log",
   "search": "Search the decisions",
   "noMatch": "No decision mentions “{query}”.",

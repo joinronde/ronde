@@ -22,19 +22,19 @@ test("irritants raised before the meeting, dealt with right after the intro", as
   // A slide goes right after the intro, where irritants are best raised
   await page.goto(`${meeting}/settings#agenda`);
   await page.getByRole("button", { name: "Add a block" }).click();
-  await expect(page.getByRole("button", { name: /^Slide/ })).toContainText("irritants");
+  await expect(page.getByRole("button", { name: /^Slide/ })).toContainText("pain points");
   await page.getByRole("button", { name: /^Slide/ }).click();
   const rows = page.locator(".agenda-blocks > li");
   await expect(rows.nth(0)).toContainText("Intro");
-  await expect(rows.nth(1).getByLabel("Slide title")).toHaveValue("Irritants");
-  await expect(rows.nth(1).getByLabel("What the slide is for")).toContainText("Irritants");
+  await expect(rows.nth(1).getByLabel("Slide title")).toHaveValue("Pain points");
+  await expect(rows.nth(1).getByLabel("What the slide is for")).toContainText("Pain points");
   await expect(page.getByText("Agenda saved")).toBeVisible();
   await shot(page, "0-agenda");
 
   // Before the meeting, with the check-in
   const max = await joinWithNewAccount(browser, link, { name: "Max Mind", email: `max-${run}@example.com`, password: "max-password-1234" });
   await max.goto(`${meeting}/me`);
-  const panel = max.getByRole("region", { name: "Irritants" }).first();
+  const panel = max.getByRole("region", { name: "Pain points" }).first();
   await panel.getByLabel("What gets in the way…").fill("Builds take 40 minutes");
   await panel.getByRole("button", { name: "Add" }).click();
   await expect(panel.getByRole("list", { name: "What you raised" })).toContainText("Builds take 40 minutes");
@@ -43,7 +43,7 @@ test("irritants raised before the meeting, dealt with right after the intro", as
   // On the stage at its step, then turned into an action from the control room
   await page.goto(`${meeting}/control`);
   await page.getByRole("button", { name: "Start the meeting" }).click();
-  await page.getByRole("button", { name: /^Next: Irritants/ }).click();
+  await page.getByRole("button", { name: /^Next: Pain points/ }).click();
   const wall = page.getByRole("list", { name: "Raised by the team" }).first();
   await expect(wall).toContainText("Builds take 40 minutes");
   await page.getByRole("button", { name: "Make it an action" }).click();

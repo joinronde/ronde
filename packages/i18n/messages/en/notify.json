@@ -7,7 +7,7 @@
   "timing": "Target {target} · {speak} of speaking time each",
   "labels": {
     "when": "When",
-    "timing": "Format",
+    "timing": "Timing",
     "duration": "Duration",
     "participants": "Participants"
   },

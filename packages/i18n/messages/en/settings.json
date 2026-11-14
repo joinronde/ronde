@@ -9,7 +9,7 @@
     "title": "Meeting",
     "teamName": "Meeting name",
     "hostLabel": "Name shown for the host",
-    "hostLabelHint": "A role or a first name, e.g. Scrum master, Facilitator, Julie. Shown everywhere in Ronde: “Notes · {host}”.",
+    "hostLabelHint": "A role or a first name, e.g. Scrum master, Chair, Julie. Shown everywhere in Ronde: “Notes · {host}”.",
     "locale": "Meeting language",
     "localeHint": "Language of the reminder emails, the notifications and the generated minutes.",
     "speakingTime": "Speaking time",
@@ -25,7 +25,7 @@
     "otherDuration": "Other duration…",
     "target": "Target duration",
     "timer": "Timer",
-    "autoStart": "Starts at each turn",
+    "autoStart": "Starts automatically at each turn",
     "announcements": "Intro announcements",
     "localeWorkspace": "Workspace language ({language})"
   },
@@ -33,8 +33,8 @@
     "title": "Check-in sections",
     "name": "Section name",
     "nameOf": "Name of section {n}",
-    "input": "Input",
-    "inputOf": "Input of “{label}”",
+    "input": "Format",
+    "inputOf": "Format of “{label}”",
     "role": "Role",
     "roleOf": "Role of “{label}”",
     "roles": {
@@ -61,13 +61,13 @@
     },
     "taken": "already used",
     "carryPlansSwitch": "This section becomes a checklist.",
-    "carryPlansHint": "Everyone finds what they planned as boxes to tick as they go. A box left unticked doesn't count as done.",
+    "carryPlansHint": "Everyone finds last time's plans as boxes to tick off. A box left unticked doesn't count as done.",
     "carryPlans": "Bring back what was in “{plan}” last time",
     "removeOf": "Remove “{label}”",
     "reorder": "Move “{label}”",
     "customPlaceholder": "E.g. Research, Demo to show, Need help",
     "add": "Add a section",
-    "hint": "Each role (done, planned, blocker, other) goes to one section at most. A section keeps what was entered when its name, role or input changes."
+    "hint": "Each role (done, planned, blocker, other) goes to one section at most. A section keeps what was entered when its name, role or format changes."
   },
   "reminder": {
     "title": "Check-in reminder",
@@ -76,7 +76,7 @@
     "sameDay": "On the meeting day, before the time",
     "time": "Time",
     "byEmail": "By email, to each person",
-    "emailHint": "Only people whose check-in is not filled in yet get the reminder. You can unsubscribe someone with the “Reminder” box in the team list.",
+    "emailHint": "Only people whose check-in is not filled in yet get the reminder. You can unsubscribe someone with the “Reminder” box in “People and roles”.",
     "noSmtp": "No mail server configured: set SMTP_URL in the container to turn email reminders on.",
     "teamHint": "A collective reminder in a team room is set up in “Notifications”."
   },
@@ -98,11 +98,11 @@
     "turnOn": "Turn on in Modules",
     "connected": "Connected",
     "toConnect": "To connect",
-    "configured": "Set up",
+    "configured": "Configured",
     "toSetUp": "To set up",
     "ready": "Link ready",
     "synced": "Synced",
-    "noneInWorkspace": "None in the workspace",
+    "noneInWorkspace": "No wiki in the workspace",
     "rulesOn": "{count, plural, one {# rule on} other {# rules on}}",
     "gitlab": "Issues and merge requests of each person in their check-in",
     "github": "Issues and pull requests of the followed repositories",
@@ -226,7 +226,7 @@
     "projects": "Projects"
   },
   "navHints": {
-    "general": "Name, mark, format and timer of the meeting.",
+    "general": "Name, icon, format and timer of the meeting.",
     "schedule": "When the sessions take place, and their exceptions.",
     "people": "Who takes part, and what each one may do.",
     "sections": "What everyone fills in before the meeting.",
@@ -237,7 +237,7 @@
     "notifications": "Reminders and messages sent around the meeting.",
     "integrations": "Video call, issue trackers and wiki.",
     "template": "Save this meeting as a template of the workspace.",
-    "danger": "What cannot be undone: leave, end or delete."
+    "danger": "What cannot be undone: deleting the meeting."
   },
   "status": {
     "auto": "Changes are saved automatically.",

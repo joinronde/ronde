@@ -39,7 +39,7 @@ test("an Enterprise workspace uses its paid features, and a Community one is tol
   await page.getByRole("option", { name: "CalDAV" }).click();
   await calendars.getByLabel("CalDAV address").fill("https://caldav.example.com/dav/");
   await calendars.getByLabel("User name").fill(who.email);
-  await calendars.getByLabel("Organizer of the events").fill(who.email);
+  await calendars.getByLabel("Account that sends the invitations").fill(who.email);
   await calendars.getByLabel(/^Password/).fill("app-password");
   await calendars.getByRole("button", { name: "Save" }).click();
   await expect(calendars.locator(".tracker-list")).toContainText("CalDAV");

@@ -23,7 +23,7 @@ describe("built-in templates", () => {
   });
 
   it("names sections in the workspace language", () => {
-    expect(builtinTemplate("standup", "fr").sections.map((s) => s.label)).toEqual(["Hier", "Aujourd'hui", ""]);
+    expect(builtinTemplate("standup", "fr").sections.map((s) => s.label)).toEqual(["Hier", "Aujourd’hui", ""]);
   });
 
   it("asks how useful the meeting was only where it fits", () => {

@@ -31,7 +31,7 @@ Next meeting: Monday, September 28"
 
 exports[`records > renders the same minutes in English and French from one record 2`] = `
 "# Compte rendu · Product team
-**lundi 21 septembre 2026** · durée 23:00 · 1 participant · absents : Bruno Petit
+**lundi 21 septembre 2026** · durée 23:00 · 1 participant · absents : Bruno Petit
 
 ## Synthèse
 Semaine **courte**.
@@ -45,15 +45,15 @@ Semaine **courte**.
 **Achievements**
 - OIDC sign-in
   - Bruno Petit: Nice
-**Prévu semaine prochaine**
+**Prévu la semaine prochaine**
 - ☐ Tests
 **Research**
 - Read
-**Notes · Régisseur**
+**Notes · Animateur**
 - Decision: ship
 
 ## Points divers
 - On-call rota
 
-Prochaine réunion : lundi 28 septembre"
+Prochaine réunion : lundi 28 septembre"
 `;

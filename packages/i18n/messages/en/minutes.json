@@ -38,7 +38,7 @@
   },
   "summaryTitle": "Summary",
   "retro": "Retrospective",
-  "timebox": "Timebox",
+  "timebox": "Timed topic",
   "poker": "Estimates",
   "estimate": "estimate {value}",
   "notEstimated": "not estimated",
