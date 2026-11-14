@@ -111,6 +111,17 @@ describe("occurrences", () => {
     expect(preview.find((o) => o.originalDate === "2026-01-12")?.cancelled).toBe(true);
   });
 
+  it("returns a session of a numbered series moved later once, whichever dates are asked", () => {
+    // 10 Mondays, the first one moved to the 21st: asked from the 20th, its original date is before the range
+    const r = rule({ count: 10 });
+    const exceptions = [{ ruleId: "r", originalDate: "2026-01-05", kind: "move" as const, date: "2026-01-21" }];
+    const list = occurrences([r], exceptions, "UTC", { from: "2026-01-20", to: "2026-01-31" });
+    expect(list.map((o) => [o.key, o.date])).toEqual([
+      ["r:2026-01-05", "2026-01-21"],
+      ["r:2026-01-26", "2026-01-26"],
+    ]);
+  });
+
   it("says which public holiday skips an occurrence, and which one it is held on", () => {
     const r = rule({});
     const exceptions = [

@@ -1,9 +1,9 @@
 import "server-only";
-import { isRealDate, occurrences } from "@ronde/core/schedule";
+import { isRealDate, localDate, occurrences } from "@ronde/core/schedule";
 import { z } from "zod";
 import { AccessError, OpError } from "../../errors";
 import { isHolidayCode, NO_HOLIDAYS } from "../../holidays";
-import { loadSchedule, resyncSession, timeZoneOf } from "../schedule";
+import { assertDateFree, resyncSession } from "../schedule";
 import { defineOp, type OpContext } from "./define";
 
 // Recurrence of a meeting (rules, exceptions per occurrence) and attendance answers
@@ -80,12 +80,13 @@ export const scheduleOps = [
       const { db, meetingId, workspaceId } = ctx;
       if (o.timeZone && !isTimeZone(o.timeZone)) throw new OpError("invalidRequest", { details: "timeZone" });
       // A meeting holds one session a day: rules meeting on the same day could never both be held
-      const from = new Date().toISOString().slice(0, 10);
-      const to = new Date(Date.now() + 366 * 86_400_000).toISOString().slice(0, 10);
+      const zone = o.timeZone || ctx.m.ws.workspace.timezone;
+      const from = localDate(Date.now(), zone);
+      const to = localDate(Date.now() + 366 * 86_400_000, zone);
       const dates = occurrences(
         o.rules.map((r, i) => ({ ...r, id: r.id ?? `new-${i}` })),
         [],
-        o.timeZone || "UTC",
+        zone,
         { from, to },
       ).map((x) => x.date);
       if (new Set(dates).size !== dates.length) throw new OpError("scheduleSameDay");
@@ -131,16 +132,7 @@ export const scheduleOps = [
       const { rule, originalDate } = await ruleOf(ctx, o.key);
       const { db, meetingId } = ctx;
       // Another occurrence or session already on that date: refused, two sessions cannot share a date
-      if (o.date && o.date !== originalDate) {
-        const tz = timeZoneOf(ctx.m.meeting, ctx.m.ws.workspace);
-        const { rules, exceptions } = await loadSchedule(db, meetingId);
-        const taken = occurrences(rules, exceptions, tz, { from: o.date, to: o.date }).some((x) => x.key !== o.key);
-        const session = await db.session.findFirst({
-          where: { meetingId, date: o.date, NOT: { occurrenceKey: o.key } },
-          select: { id: true },
-        });
-        if (taken || session) throw new OpError("meetingDateTaken");
-      }
+      if (o.date && o.date !== originalDate) await assertDateFree(db, ctx.m.meeting, ctx.m.ws.workspace, o.date, { key: o.key });
       const data = {
         kind: "move" as const,
         date: o.date && o.date !== originalDate ? o.date : null,
@@ -166,6 +158,8 @@ export const scheduleOps = [
     // Held although a public holiday would skip it (restore lets the holiday skip it again)
     run: async (ctx, o) => {
       const { rule, originalDate } = await ruleOf(ctx, o.key);
+      // Held on its own date: another session may have taken it meanwhile
+      await assertDateFree(ctx.db, ctx.m.meeting, ctx.m.ws.workspace, originalDate, { key: o.key });
       await ctx.db.scheduleException.upsert({
         where: { ruleId_originalDate: { ruleId: rule.id, originalDate } },
         create: { workspaceId: ctx.workspaceId, meetingId: ctx.meetingId, ruleId: rule.id, originalDate, kind: "keep" },
@@ -193,6 +187,10 @@ export const scheduleOps = [
     input: z.object({ key }),
     run: async (ctx, o) => {
       const { rule, originalDate } = await ruleOf(ctx, o.key);
+      // Back on its own date, unless another session took it meanwhile
+      const ex = await ctx.db.scheduleException.findFirst({ where: { ruleId: rule.id, originalDate } });
+      if (ex?.kind === "cancel" || (ex?.kind === "move" && ex.date))
+        await assertDateFree(ctx.db, ctx.m.meeting, ctx.m.ws.workspace, originalDate, { key: o.key });
       await ctx.db.scheduleException.deleteMany({ where: { ruleId: rule.id, originalDate } });
       await resync(ctx);
     },

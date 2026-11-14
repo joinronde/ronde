@@ -13,7 +13,7 @@ import { publishSession } from "../../wikis";
 import { afterPublish } from "../async";
 import { toMeeting } from "../dto";
 import { moduleStates } from "../modules";
-import { openSession, timeZoneOf } from "../schedule";
+import { assertDateFree, openSession, timeZoneOf } from "../schedule";
 import { agendaFor, archiveSession, goToKey, sessionData } from "../session";
 import { pushTurns } from "../turn-push";
 import { defineOp, type OpContext } from "./define";
@@ -124,7 +124,8 @@ export const controlOps = [
     run: async ({ db, requireSession, meetingId, workspaceId, m }, o) => {
       const s = requireSession();
       if (o.date === s.date) return;
-      if (await db.session.findFirst({ where: { meetingId, date: o.date }, select: { id: true } })) throw new OpError("meetingDateTaken");
+      // Another session or another occurrence of the schedule on that date: one session a day
+      await assertDateFree(db, m.meeting, m.ws.workspace, o.date, { key: s.occurrenceKey, sessionId: s.id });
       // The occurrence of the schedule is moved: the schedule, the calendar feed and reminders follow
       if (s.occurrenceKey) {
         const sep = s.occurrenceKey.lastIndexOf(":");

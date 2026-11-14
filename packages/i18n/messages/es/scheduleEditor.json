@@ -63,6 +63,8 @@
   "timeZone": "Zona horaria",
   "workspaceZone": "Zona horaria del espacio de trabajo ({zone})",
   "saved": "Calendario guardado",
+  "draftPattern": "Elige los días y la hora: el patrón se guardará entonces.",
+  "notSaved": "No guardado: {error}",
   "saving": "Guardando…",
   "upcoming": "Próximas fechas",
   "saveToEdit": "Podrás saltar o mover las fechas en cuanto se guarde la planificación, en un momento.",

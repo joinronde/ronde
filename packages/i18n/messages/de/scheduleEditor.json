@@ -63,6 +63,8 @@
   "timeZone": "Zeitzone",
   "workspaceZone": "Zeitzone des Arbeitsbereichs ({zone})",
   "saved": "Termine gespeichert",
+  "draftPattern": "Wähle die Tage und die Uhrzeit: Dann wird das Muster gespeichert.",
+  "notSaved": "Nicht gespeichert: {error}",
   "saving": "Wird gespeichert…",
   "upcoming": "Nächste Termine",
   "saveToEdit": "Die Termine lassen sich überspringen oder verschieben, sobald der Zeitplan gespeichert ist – gleich.",

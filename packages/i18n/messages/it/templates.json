@@ -141,7 +141,7 @@
   },
   "shiftHandover": {
     "name": "Passaggio di turno",
-    "description": "Quindici minuti tra due turni: cosa è successo, cosa tenere d'occhio e cosa deve fare il turno successivo.",
+    "description": "Quindici minuti tra due turni: cosa è successo, cosa tenere d'occhio e cosa deve fare il turno successivo. Una riunione per ogni cambio turno: una riunione ha una sessione al giorno.",
     "sections": {
       "events": "Cosa è successo",
       "watch": "Da tenere d'occhio",

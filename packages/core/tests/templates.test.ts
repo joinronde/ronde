@@ -7,7 +7,7 @@ import {
   parseTemplate,
   templateData,
 } from "@ronde/core/templates";
-import { locales } from "@ronde/i18n";
+import { locales, translator } from "@ronde/i18n";
 import { describe, expect, it } from "vitest";
 
 describe("built-in templates", () => {
@@ -20,6 +20,10 @@ describe("built-in templates", () => {
       // Named sections get a label in each language, the others the default of their role
       for (const s of t.sections) if (s.label) expect(s.label).not.toMatch(/\./);
     }
+  });
+
+  it("says a shift handover is one meeting per handover: a meeting holds one session a day", () => {
+    expect(translator("en", "templates")("shiftHandover.description")).toContain("One meeting per handover");
   });
 
   it("names sections in the workspace language", () => {

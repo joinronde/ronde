@@ -141,7 +141,7 @@
   },
   "shiftHandover": {
     "name": "Relevo de turno",
-    "description": "Quince minutos entre dos turnos: qué ha pasado, qué vigilar y qué debe hacer el turno siguiente.",
+    "description": "Quince minutos entre dos turnos: qué ha pasado, qué vigilar y qué debe hacer el turno siguiente. Una reunión por relevo: cada reunión tiene una sesión al día.",
     "sections": {
       "events": "Qué ha pasado",
       "watch": "A vigilar",

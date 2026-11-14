@@ -1,6 +1,6 @@
 import type { ScheduleRule } from "@ronde/core/schedule";
 import { afterEach, describe, expect, it } from "vitest";
-import { addDays, isoDow, newRule, sameDays, withFreq } from "@/lib/shared/schedule";
+import { addDays, draftRule, isoDow, newRule, ruleReady, sameDays, withFreq } from "@/lib/shared/schedule";
 
 // The schedule editor and the calendar grid: weekdays and days after a date, the same in every time zone
 
@@ -202,5 +202,22 @@ describe("a new rule", () => {
     const a = newRule("2026-10-13");
     a.byDay.push(5);
     expect(newRule("2026-10-13").byDay).toEqual([2]);
+  });
+});
+
+describe("another pattern, added to a schedule", () => {
+  it("starts with no day and no time: nothing is saved, nothing moves, until both are picked", () => {
+    const r = draftRule("2026-11-14");
+    expect([r.byDay, r.time]).toEqual([[], ""]);
+    expect(ruleReady(r)).toBe(false);
+    expect(ruleReady({ ...r, byDay: [4] })).toBe(false);
+    expect(ruleReady({ ...r, time: "15:00" })).toBe(false);
+    expect(ruleReady({ ...r, byDay: [4], time: "15:00" })).toBe(true);
+  });
+
+  it("is ready daily or monthly once it has a time", () => {
+    expect(ruleReady({ ...draftRule("2026-11-14"), freq: "daily", time: "09:00" })).toBe(true);
+    expect(ruleReady({ ...draftRule("2026-11-14"), freq: "monthly", monthDay: 14, time: "09:00" })).toBe(true);
+    expect(ruleReady(newRule("2026-11-14"))).toBe(true);
   });
 });

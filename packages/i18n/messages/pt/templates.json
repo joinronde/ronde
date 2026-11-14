@@ -141,7 +141,7 @@
   },
   "shiftHandover": {
     "name": "Passagem de turno",
-    "description": "Quinze minutos entre dois turnos: o que aconteceu, o que observar e o que o próximo turno deve fazer.",
+    "description": "Quinze minutos entre dois turnos: o que aconteceu, o que observar e o que o próximo turno deve fazer. Uma reunião por passagem de turno: cada reunião tem uma sessão por dia.",
     "sections": {
       "events": "O que aconteceu",
       "watch": "A observar",

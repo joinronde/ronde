@@ -141,7 +141,7 @@
   },
   "shiftHandover": {
     "name": "Transmissions",
-    "description": "Quinze minutes entre deux équipes : ce qui s'est passé, ce qu'il faut surveiller et ce que l'équipe suivante doit faire.",
+    "description": "Quinze minutes entre deux équipes : ce qui s'est passé, ce qu'il faut surveiller et ce que l'équipe suivante doit faire. Une réunion par relève : une réunion tient une séance par jour.",
     "sections": {
       "events": "Ce qui s'est passé",
       "watch": "À surveiller",

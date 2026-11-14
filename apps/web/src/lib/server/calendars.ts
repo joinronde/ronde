@@ -346,8 +346,9 @@ async function syncNow(meetingId: string): Promise<number> {
     db.calendarEvent.findMany({ where: { meetingId } }),
   ]);
   const now = Date.now();
-  const today = new Date(now).toISOString().slice(0, 10);
-  const until = new Date(now + HORIZON_DAYS * 86_400_000).toISOString().slice(0, 10);
+  // Dates of the meeting's time zone: west of UTC, the UTC date is already tomorrow on the evening
+  const today = localDate(now, timeZone);
+  const until = localDate(now + HORIZON_DAYS * 86_400_000, timeZone);
   const coming = occurrences(schedule.rules, schedule.exceptions, timeZone, {
     from: today,
     to: until,
@@ -357,7 +358,7 @@ async function syncNow(meetingId: string): Promise<number> {
   const later = new Set(
     occurrences(schedule.rules, schedule.exceptions, timeZone, {
       from: until,
-      to: new Date(now + 366 * 86_400_000).toISOString().slice(0, 10),
+      to: localDate(now + 366 * 86_400_000, timeZone),
     })
       .filter((o) => !o.cancelled)
       .map((o) => o.key),
@@ -508,8 +509,8 @@ export async function meetingAvailability(m: MeetingCtx): Promise<Availability> 
   const tz = timeZoneOf(meeting, m.ws.workspace);
   const schedule = await loadSchedule(m.ws.db, meeting.id);
   const coming = occurrences(schedule.rules, schedule.exceptions, tz, {
-    from: range.from.slice(0, 10),
-    to: range.to.slice(0, 10),
+    from: localDate(now, tz),
+    to: localDate(now + days * 86_400_000, tz),
   }).filter((o) => o.startsAt > now);
   const duration = coming[0]?.durationMin ?? schedule.rules[0]?.durationMin ?? 30;
   return {

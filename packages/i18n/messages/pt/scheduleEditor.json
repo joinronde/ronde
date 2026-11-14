@@ -63,6 +63,8 @@
   "timeZone": "Fuso horário",
   "workspaceZone": "Fuso horário do espaço de trabalho ({zone})",
   "saved": "Agenda salva",
+  "draftPattern": "Escolha os dias e a hora: o padrão será salvo em seguida.",
+  "notSaved": "Não salvo: {error}",
   "saving": "Salvando…",
   "upcoming": "Próximas datas",
   "saveToEdit": "As datas poderão ser puladas ou movidas assim que o agendamento for salvo, em um instante.",

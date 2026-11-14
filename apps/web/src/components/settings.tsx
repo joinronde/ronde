@@ -701,6 +701,22 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
     }, 900);
     return () => clearTimeout(id);
   }, [sig(snapshot()), sig(saved)]);
+  // Left before the pause ran out (another page from the sidebar, a tab put aside): saved at once, as the check-in is
+  const flush = useRef(() => {});
+  flush.current = () => {
+    if (!dirty || status === "saving") return;
+    const forms = [...document.querySelectorAll<HTMLFormElement>("form[data-cfg]")];
+    if (forms.some((form) => !form.checkValidity()) || secs.some((x) => x.role === "custom" && !x.label.trim())) return;
+    void saveCore(snapshot(), saved);
+  };
+  useEffect(() => {
+    const onHide = () => document.visibilityState === "hidden" && flush.current();
+    document.addEventListener("visibilitychange", onHide);
+    return () => {
+      document.removeEventListener("visibilitychange", onHide);
+      flush.current();
+    };
+  }, []);
   const undo = () => {
     if (!previous) return;
     setF(previous.f);
