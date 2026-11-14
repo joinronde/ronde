@@ -167,7 +167,7 @@ describe("describeSchedule", () => {
 
   it("recognises an alternating pattern", () => {
     const rules = [rule({ id: "a", interval: 2, time: "10:00" }), rule({ id: "b", interval: 2, startDate: "2026-01-12", time: "15:00" })];
-    expect(describeSchedule(rules, "Europe/Paris", "en")).toBe("Every other Monday, alternating 10:00 and 15:00 (Europe/Paris)");
+    expect(describeSchedule(rules, "Europe/Paris", "en")).toBe("Every other Monday, alternating between 10:00 and 15:00 (Europe/Paris)");
     expect(describeSchedule(rules, "Europe/Paris", "fr")).toBe("Un lundi sur deux, en alternance à 10:00 et à 15:00 (Europe/Paris)");
   });
 
@@ -175,7 +175,7 @@ describe("describeSchedule", () => {
     expect(describeSchedule([rule({})], "Europe/Paris", "en", "Europe/Paris")).toBe("Every Monday at 10:00");
     expect(describeSchedule([rule({})], "Europe/Paris", "en", "America/New_York")).toBe("Every Monday at 10:00 (Europe/Paris)");
     const rules = [rule({ id: "a", interval: 2, time: "10:00" }), rule({ id: "b", interval: 2, startDate: "2026-01-12", time: "15:00" })];
-    expect(describeSchedule(rules, "UTC", "en", "UTC")).toBe("Every other Monday, alternating 10:00 and 15:00");
+    expect(describeSchedule(rules, "UTC", "en", "UTC")).toBe("Every other Monday, alternating between 10:00 and 15:00");
   });
 });
 

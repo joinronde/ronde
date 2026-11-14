@@ -14,7 +14,7 @@
   "draw": "Gira",
   "drawAgain": "Estrai di nuovo",
   "teamSize": "Persone per squadra",
-  "applyWheel": "{name} parla dopo",
+  "applyWheel": "Dai il prossimo turno a {name}",
   "applyOrder": "Usa questo ordine",
   "applied": "Applicato all'ordine di parola",
   "clear": "Nascondi dagli schermi",

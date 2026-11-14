@@ -1,5 +1,5 @@
 {
-  "title": "Benachrichtigungs-Connectoren",
+  "title": "Benachrichtigungs-Connectors",
   "intro": "Kanäle, in denen die Meetings dieses Arbeitsbereichs posten können: ein Teamraum, ein Chatkanal, ein Postfach, dein eigener Dienst. Jedes Meeting wählt dann in seinen Einstellungen, was dorthin gesendet wird.",
   "empty": "Noch kein Connector.",
   "add": "Connector hinzufügen",
@@ -41,8 +41,8 @@
     "whatsapp": "WhatsApp"
   },
   "secretKept": "Gespeichert und verborgen. Leer lassen, um es zu behalten.",
-  "signingKeyGenerated": "Leer lassen, um einen erzeugen zu lassen.",
-  "signingKeyOnce": "Signaturschlüssel des Webhooks. Kopiere ihn jetzt: Er wird nicht noch einmal angezeigt.",
+  "signingKeyGenerated": "Leer lassen, damit einer erzeugt wird.",
+  "signingKeyOnce": "Signaturschlüssel des Webhooks. Kopiere ihn jetzt, er wird nicht noch einmal angezeigt.",
   "signingKeyHelp": "X-Ronde-Signature ist „sha256=“, gefolgt vom hexadezimalen HMAC-SHA256 mit diesem Schlüssel über den Wert von X-Ronde-Timestamp, einen Punkt und dann den Body.",
   "usedBy": "{count, plural, =0 {Noch nicht verwendet} one {Von # Benachrichtigung verwendet} other {Von # Benachrichtigungen verwendet}}",
   "lastSent": "letzte Nachricht gesendet",
@@ -57,7 +57,7 @@
   "save": "Speichern",
   "saved": "Connector gespeichert.",
   "cancel": "Abbrechen",
-  "noSecretKey": "Der Server hat keinen Verschlüsselungsschlüssel (SECRET_KEY): Nur E-Mail-Connectoren können hinzugefügt werden. Setze SECRET_KEY, um Tokens und Webhook-Adressen zu speichern.",
+  "noSecretKey": "Der Server hat keinen Verschlüsselungsschlüssel (SECRET_KEY), daher können nur E-Mail-Connectors hinzugefügt werden. Setze SECRET_KEY, um Tokens und Webhook-Adressen zu speichern.",
   "fromHint": "Im internationalen Format, wie in Twilio gekauft oder freigegeben.",
   "testSentPhone": "Testnachricht an deine Handynummer gesendet.",
   "paidKind": "{kind} (Team)",

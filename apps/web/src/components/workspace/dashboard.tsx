@@ -267,9 +267,9 @@ export function Dashboard({ slug, moment, firstName, today, data, meetings, step
               <section className="dash-card dash-pulse" style={order(1)} aria-labelledby="dash-pulse">
                 <h2 id="dash-pulse">{t("pulse")}</h2>
                 <ul className="stats">
-                  <Stat value={data.pulse.sessions} label={t("pulseSessions")} />
-                  <Stat value={data.pulse.actionsDone} label={t("pulseActions")} />
-                  <Stat value={data.pulse.people} label={t("pulsePeople")} href={`${base}/people`} />
+                  <Stat value={data.pulse.sessions} label={t("pulseSessions", { count: data.pulse.sessions })} />
+                  <Stat value={data.pulse.actionsDone} label={t("pulseActions", { count: data.pulse.actionsDone })} />
+                  <Stat value={data.pulse.people} label={t("pulsePeople", { count: data.pulse.people })} href={`${base}/people`} />
                 </ul>
               </section>
             )}

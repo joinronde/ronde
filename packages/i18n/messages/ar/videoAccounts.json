@@ -36,10 +36,10 @@
   },
   "hints": {
     "zoom": "في Zoom App Marketplace، أنشئ تطبيق «Server-to-Server OAuth» بنطاق meeting:write:meeting:admin، ثم انسخ معرّف الحساب ومعرّف العميل والسر.",
-    "meet": "في Google Cloud، أنشئ حساب خدمة، وامنحه التفويض على مستوى النطاق للنطاق meetings.space.created في وحدة تحكم مشرف Google Workspace، ثم الصق private_key من مفتاح JSON الخاص به.",
+    "meet": "في Google Cloud، أنشئ حساب خدمة، وامنحه التفويض على مستوى النطاق لنطاق الوصول meetings.space.created من وحدة تحكّم المشرف في Google Workspace، ثم الصق private_key من مفتاح JSON الخاص به.",
     "teams": "في Microsoft Entra، سجّل تطبيقًا بإذن التطبيق OnlineMeetings.ReadWrite.All (بموافقة المسؤول) وسياسة وصول للتطبيق خاصة بالمنظّم.",
     "bbb": "عنوان الخادم (https://…/bigbluebutton) وسره المشترك، الذي يعطيه الأمر bbb-conf --secret على الخادم."
   },
-  "useIt": "ثم في إعدادات الاجتماع، عام ← مكالمة الفيديو: «إنشاء غرفة دائمة».",
+  "useIt": "ثم في إعدادات أي اجتماع: عام ← مكالمة الفيديو: «إنشاء غرفة دائمة».",
   "useItBbb": "يُعرض بعدها خادم BigBlueButton في إعدادات كل اجتماع، عام ← مكالمة الفيديو."
 }

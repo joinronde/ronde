@@ -4,7 +4,7 @@
   "window": "It shows the last {days} days.",
   "filters": {
     "action": "Action",
-    "actionPlaceholder": "e.g. people, roles, meeting",
+    "actionPlaceholder": "E.g. people, roles, meeting",
     "actor": "Person",
     "actorPlaceholder": "Name or email",
     "from": "From",
@@ -212,7 +212,7 @@
       "configure": "Icebreaker set up"
     },
     "poker": {
-      "configure": "Estimation poker set up"
+      "configure": "Planning poker set up"
     },
     "retro": {
       "configure": "Retrospective set up"

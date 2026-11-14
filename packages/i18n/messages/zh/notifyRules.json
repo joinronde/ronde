@@ -1,6 +1,6 @@
 {
   "title": "通知",
-  "intro": "为此会议自动发送的消息：当某事发生时，通过工作空间的连接器发送。",
+  "intro": "为此会议自动发送的消息：在特定事件发生时，通过工作空间的连接器发送。",
   "noConnector": "工作空间还没有通知连接器。",
   "addConnector": "请在工作空间设置中添加一个。",
   "noConnectorAskAdmin": "工作空间还没有通知连接器：请让工作空间管理员添加一个。",
@@ -13,19 +13,19 @@
     "session_started": "会议已开始",
     "minutes_published": "会议纪要已发布",
     "checkin_reminder": "进展卡提醒",
-    "action_overdue": "后续行动项逾期",
-    "birthday": "参与者生日"
+    "action_overdue": "行动项逾期",
+    "birthday": "参会者生日"
   },
   "minutesBefore": "提前多久",
   "minutesBeforeValue": "提前 {m} 分钟",
   "overdueAfter": "未完成超过",
-  "days": "天",
+  "days": "{count, plural, other {天}}",
   "room": "房间",
   "roomPlaceholder": "房间：!abc…:example.org 或 #team:example.org",
   "audience": "接收人",
-  "audienceParticipants": "参与者",
+  "audienceParticipants": "参会者",
   "audienceHosts": "主持人",
-  "enabled": "开",
+  "enabled": "启用",
   "test": "测试",
   "testSent": "测试消息已发送。",
   "remove": "删除此通知",
@@ -63,7 +63,7 @@
     "titlePlaceholder": "例如 {meeting}：缺少 {missing} 张进展卡",
     "body": "正文",
     "bodyPlaceholder": "例如 请在 {time} 前填写进展卡：{link}",
-    "variables": "可插入的词",
+    "variables": "可插入的变量",
     "fields": {
       "weekday": "星期几（1 周一 … 7 周日）",
       "ready": "已准备的进展卡",
@@ -72,22 +72,22 @@
       "durationMin": "时长（分钟）",
       "decisions": "做出的决定",
       "openActions": "未完成的行动项",
-      "participants": "参与者",
+      "participants": "参会者",
       "overdue": "逾期行动项",
       "maxDays": "最早一项的天数",
-      "people": "被庆祝的人"
+      "people": "过生日的人"
     },
     "variables_": {
       "meeting": "会议名称",
-      "date": "场次日期",
-      "time": "场次时间",
+      "date": "会议日期",
+      "time": "会议时间",
       "link": "会议链接",
       "ready": "已准备的进展卡",
       "total": "应提交的进展卡",
       "missing": "缺少的进展卡",
       "decisions": "决定，每行一条",
       "actions": "行动项，每行一条",
-      "duration": "场次时长",
+      "duration": "会议时长",
       "names": "人员姓名"
     }
   }

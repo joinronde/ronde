@@ -111,7 +111,7 @@ describe("sections and mood", () => {
     expect(secs.map((x) => x.label)).toEqual(["Achievements", "Planned for next week", "Blockers to flag", "Research"]);
     expect(resolveSections(settings, "fr").map((x) => x.label)).toEqual([
       "Achievements",
-      "Prévu semaine prochaine",
+      "Prévu la semaine prochaine",
       "Difficultés à signaler",
       "Research",
     ]);
@@ -174,9 +174,9 @@ describe("sections and mood", () => {
     expect(fmtMinutes(45, "en")).toBe("45 min");
     expect(fmtMinutes(60, "en")).toBe("1 h");
     expect(fmtMinutes(105, "en")).toBe("1 h 45 min");
-    expect(fmtMinutes(105, "fr")).toBe("1 h 45");
+    expect(fmtMinutes(105, "fr")).toBe("1 h 45");
     expect(hostName({ hostLabel: "" }, "en")).toBe("Host");
-    expect(hostName({ hostLabel: "" }, "fr")).toBe("Régisseur");
+    expect(hostName({ hostLabel: "" }, "fr")).toBe("Animateur");
     expect(hostName({ hostLabel: " Julie " }, "fr")).toBe("Julie");
   });
 });
@@ -213,7 +213,7 @@ describe("signals", () => {
     expect(REACTION_EMOJIS).toContain("🍿");
     expect(new Set(REACTION_EMOJIS).size).toBe(REACTION_EMOJIS.length);
     expect(signalCombo("mindBlown", "Paul", "en")).toBe("Paul just blew the team's mind");
-    expect(signalCombo("mindBlown", "Paul", "fr")).toBe("Paul a retourné le cerveau de l'équipe");
+    expect(signalCombo("mindBlown", "Paul", "fr")).toBe("Paul a retourné le cerveau de l’équipe");
     expect(signalCombo("mindBlown", "", "en")).toBe("Minds blown!");
   });
 });

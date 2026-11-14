@@ -36,5 +36,5 @@
     "microsoft": "In Microsoft Entra, registra un'applicazione con l'autorizzazione applicativa Calendars.ReadWrite (consenso dell'amministratore). Gli eventi vengono creati nel calendario dell'organizzatore, che invita i partecipanti.",
     "caldav": "L'indirizzo del server (https://caldav.icloud.com, https://caldav.fastmail.com/dav/, https://cloud.example.com/remote.php/dav) o di uno dei suoi calendari. Le sessioni vanno nel primo calendario di eventi dell'account, a meno che tu non indichi l'indirizzo di un calendario, e il server invita i partecipanti. Si possono leggere solo gli impegni dell'organizzatore."
   },
-  "useIt": "Poi, nelle impostazioni di una riunione, Programmazione → Calendari."
+  "useIt": "Poi, nelle impostazioni di una riunione, Calendario → Calendari."
 }

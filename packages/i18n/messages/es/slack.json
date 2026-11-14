@@ -3,7 +3,7 @@
   "save": "Guardar",
   "cancel": "Cancelar",
   "close": "Cerrar",
-  "fillIn": "Rellenar mi ficha",
+  "fillIn": "Completar mi ficha",
   "openRonde": "Abrir en Ronde",
   "hint": {
     "list": "Un punto por línea.",
@@ -14,22 +14,22 @@
   "tooLong": "Esta ficha es demasiado larga para editarla en Slack. Ábrela en Ronde.",
   "tooMany": "Como máximo {max} puntos.",
   "itemTooLong": "Un punto supera los {max} caracteres.",
-  "changed": "Tu ficha cambió en Ronde mientras tanto. Cierra este formulario y ábrelo de nuevo para ver la última versión.",
+  "changed": "Tu ficha ha cambiado en Ronde mientras tanto. Cierra este formulario y ábrelo de nuevo para ver la última versión.",
   "saved": "Tu ficha para «{team}» está guardada. ¡Gracias!",
   "ready": "Ficha lista",
-  "toFill": "Ficha por rellenar",
-  "noSession": "Ninguna sesión prevista",
-  "noMeetings": "No participas en ninguna reunión de este espacio.",
+  "toFill": "Ficha por completar",
+  "noSession": "No hay sesiones previstas",
+  "noMeetings": "No participas en ninguna reunión de este espacio de trabajo.",
   "actions": "Tus acciones de seguimiento abiertas",
   "summary": "Tus reuniones en Ronde",
-  "unknown": "Ronde aún no te conoce: el correo de tu cuenta de Slack debe ser el de tu perfil en un espacio de Ronde que haya añadido la app.",
+  "unknown": "Ronde aún no te conoce: el correo de tu cuenta de Slack debe ser el de tu perfil en un espacio de trabajo de Ronde que haya añadido la app.",
   "unavailable": "Ronde no puede responder ahora mismo. Vuelve a intentarlo en un momento.",
   "settings": {
-    "intro": "Añade Ronde a tu espacio de Slack: cada persona rellena su ficha sin salir de Slack.",
+    "intro": "Añade Ronde a tu espacio de trabajo de Slack: cada persona completa su ficha sin salir de Slack.",
     "locked": "La app de Slack viene con Ronde {edition}.",
     "uses": {
       "reminders": "Recordatorios de ficha por mensaje directo, con un botón que abre la ficha en un formulario de Slack.",
-      "channel": "El canal elegido se convierte en un conector: en las notificaciones de cada reunión, elige qué se publica allí (actas, sesión a punto de empezar…).",
+      "channel": "El canal elegido se convierte en un conector: en las notificaciones de cada reunión, elige qué se publica allí (acta, sesión a punto de empezar…).",
       "command": "/ronde muestra a cada persona sus próximas sesiones y sus acciones de seguimiento abiertas."
     },
     "emailMatch": "Las personas se reconocen por su correo: su cuenta de Slack y su perfil de Ronde deben compartirlo.",
@@ -40,13 +40,13 @@
     "remindersHint": "Por mensaje directo, en lugar del correo, a las personas encontradas en Slack. Las demás siguen recibiendo el correo.",
     "reinstall": "Cambiar de canal",
     "disconnect": "Desconectar",
-    "disconnectConfirm": "¿Quitar Ronde de este espacio de Slack? Los recordatorios vuelven al correo y se eliminan las reglas de notificación que publican en su canal.",
-    "notConfigured": "Para usar Slack, el administrador de esta instancia de Ronde crea primero su app de Slack. Lleva unos minutos.",
+    "disconnectConfirm": "¿Quitar Ronde de este espacio de trabajo de Slack? Los recordatorios vuelven al correo y se eliminan las reglas de notificación que publican en su canal.",
+    "notConfigured": "Para usar Slack, el administrador de esta instancia de Ronde debe crear primero su app de Slack. Solo lleva unos minutos.",
     "setup": "Cómo configurarla",
     "result": {
       "connected": "Slack está conectado.",
       "cancelled": "La instalación se canceló en Slack.",
-      "denied": "Solo las personas que gestionan los conectores del espacio pueden añadir Slack.",
+      "denied": "Solo las personas que gestionan los conectores del espacio de trabajo pueden añadir Slack.",
       "failed": "No se pudo conectar Slack. Vuelve a intentarlo; si sigue fallando, contacta con el administrador de esta instancia."
     }
   }

@@ -2,19 +2,19 @@
   "title": "会议",
   "new": "新建会议",
   "empty": "还没有会议。",
-  "emptyHint": "创建一个吧：不到一分钟，之后一切都可以修改。",
-  "emptyMember": "你还没有参加任何会议。主持人会把你加入他们的会议。",
+  "emptyHint": "创建一个会议：不到一分钟就能完成，之后都可以修改。",
+  "emptyMember": "你还没有参加任何会议。主持人会把你加入其会议。",
   "open": "打开",
   "live": "进行中",
-  "nextOn": "下一场 {date}",
-  "noSession": "尚未准备会议场次",
+  "nextOn": "下一次：{date}",
+  "noSession": "尚未准备下一次会议",
   "people": "{count, plural, other {# 人}}",
   "roles": {
     "host": "主持人",
-    "cohost": "联合主持人",
-    "participant": "参与者",
-    "observer": "观察者",
-    "none": "管理员访问"
+    "cohost": "联席主持人",
+    "participant": "参会者",
+    "observer": "旁听者",
+    "none": "管理员权限"
   },
   "wizard": {
     "title": "新建会议",
@@ -32,7 +32,7 @@
       "meta": "自定节奏",
       "use": "从零开始"
     },
-    "search": "搜索模板…",
+    "search": "搜索模板……",
     "noMatch": "没有匹配的模板。",
     "preview": {
       "title": "预览",
@@ -55,11 +55,11 @@
     "durationRange": "5 分钟到 8 小时之间",
     "people": "人员",
     "peopleHint": "他们参与轮流发言。你将成为主持人；其他人可以在会议设置中添加。",
-    "nobody": "目录中还没有其他人。",
+    "nobody": "通讯录中还没有其他人。",
     "invite": "邀请成员",
     "creatorSpeaks": "我也参与轮流发言",
     "sections": "栏目",
-    "recapSchedule": "{schedule} · {duration} · 首场会议：{date}",
+    "recapSchedule": "{schedule} · {duration} · 首次会议：{date}",
     "recapPeople": "{count, plural, =0 {轮流发言中还没有人} other {轮流发言共 # 人}}",
     "modules": "模块",
     "back": "上一步",
@@ -76,7 +76,7 @@
       "sectionType": "格式",
       "removeSection": "移除栏目 {name}",
       "modulesOn": "{count, plural, =0 {未启用} other {已启用 # 个}}",
-      "modulesHint": "启用会议需要的功能：随时都可以开启或关闭。",
+      "modulesHint": "启用会议需要的模块：随时都可以开启或关闭。",
       "roleHint": {
         "achievement": "上次以来完成的事",
         "plan": "接下来的计划",
@@ -88,12 +88,12 @@
     "cancel": "取消",
     "modulesLater": "其他模块可随时在会议设置中添加。",
     "order": {
-      "title": "发言顺序",
+      "title": "议程顺序",
       "team": "先团队",
-      "teamHint": "每人简短发言，然后一起过项目。",
+      "teamHint": "每人先简短发言，再逐个项目讨论。",
       "projects": "先项目",
-      "projectsHint": "逐个项目，然后每人再讲其余内容。",
-      "later": "之后可在会议的议程中修改。"
+      "projectsHint": "先逐个项目讨论，再由每人分享其余内容。",
+      "later": "之后可在会议的“议程”中修改。"
     }
   }
 }

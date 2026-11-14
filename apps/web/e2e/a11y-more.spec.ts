@@ -80,7 +80,7 @@ test("the live meeting, its history and the other pages pass the accessibility a
     await audit(page, `control room live: ${pane}`);
   }
   await openTab(pia, "Live meeting");
-  await expect(pia.getByRole("button", { name: "Thanks", exact: true })).toBeVisible();
+  await expect(pia.getByRole("button", { name: "Kudos", exact: true })).toBeVisible();
   await audit(pia, "my screen: live with the dock");
   await visitor.goto(guestLink);
   await audit(visitor, "guest link, live");

@@ -22,7 +22,7 @@
     "epics": "史诗 {key}",
     "projects": "项目 {key}"
   },
-  "whatLabel": "在 Ronde 中成为项目的是",
+  "whatLabel": "导入为 Ronde 项目的对象",
   "modes": {
     "repos": {
       "github": "组织的每个仓库",
@@ -53,18 +53,18 @@
     "gitlab": "访问令牌（仅私有群组或项目需要）"
   },
   "tokenHint": {
-    "github": "公开仓库请留空。私有仓库需要一个可读取这些仓库（以及里程碑所需的议题）的<link>细粒度令牌</link>。",
+    "github": "公开仓库请留空。私有仓库需要一个可读取这些仓库（导入里程碑时还需读取其 Issues）的<link>细粒度令牌</link>。",
     "gitlab": "公开项目请留空。私有项目需要具有 read_api 范围的个人或项目访问令牌。",
     "gitlabGroup": "公开群组请留空。私有群组需要具有 read_api 范围的个人或群组访问令牌。",
     "jira": "上方邮箱对应账户的 <link>API 令牌</link>。",
     "linear": "在 Linear 设置中创建的个人 API 密钥。"
   },
   "tokenNotKept": "它仅用于本次导入：Ronde 不会保存它。",
-  "teamHint": "使用 Team 方案时，通过已保存的工单系统导入的项目会与该工具保持同步：名称、阶段、日期和进度。",
+  "teamHint": "使用 Team 方案时，通过已保存的工单系统导入的项目会与该工具保持同步：名称、状态、日期和进度。",
   "syncHowTo": "要让导入的项目保持同步，请先在<link>工作空间设置</link>中将该工具添加为工单系统，再从中导入。",
   "syncAskAdmin": "由工作空间管理员通过其工单系统导入的项目才会保持同步。你在此导入的项目仅导入一次。",
   "look": "查找项目",
-  "looking": "正在查找…",
+  "looking": "正在查找……",
   "pickTitle": {
     "repos": "要导入的仓库",
     "milestones": "要导入的里程碑",
@@ -90,11 +90,11 @@
   "progress": "已完成 {percent}",
   "themeHint": "应用于每个导入的项目。",
   "keepSync": "与 {tool} 保持同步",
-  "keepSyncHint": "名称、阶段、日期和进度每小时跟随该工具更新；其余内容由你编辑。",
-  "keepSyncHintRepo": "名称每小时跟随该工具更新，归档后阶段变为“已完成”；其余内容由你编辑。",
+  "keepSyncHint": "名称、状态、日期和进度每小时跟随该工具更新；其余内容由你编辑。",
+  "keepSyncHintRepo": "名称每小时跟随该工具更新，归档后状态变为“已完成”；其余内容由你编辑。",
   "onceHint": "仅导入一次：之后在 Ronde 中编辑。",
   "back": "返回",
   "import": "{count, plural, =0 {导入} other {导入 # 个项目}}",
-  "importing": "{count, plural, other {正在导入 # 个项目…}}",
+  "importing": "{count, plural, other {正在导入 # 个项目……}}",
   "offline": "无法连接 Ronde。请检查网络连接后重试。"
 }

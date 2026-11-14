@@ -6,16 +6,16 @@
   "edit": "تعديل",
   "email": "إرسال بريد",
   "meetings": "الاجتماعات",
-  "noMeetings": "ليس في أي اجتماع يمكنك رؤيته.",
+  "noMeetings": "لا اجتماعات يمكنك رؤيتها.",
   "actions": "الإجراءات المفتوحة",
   "seeAll": "عرض الكل",
   "inProgress": "قيد التنفيذ",
   "noActions": "لا إجراءات مفتوحة.",
   "presence": "الحضور، آخر 90 يومًا",
   "noSessions": "لم تُعقد جلسات مؤخرًا.",
-  "attended": "{attended} من {held} جلسات",
+  "attended": "الجلسات: {attended} من {held}",
   "kudos": "رسائل الشكر المستلمة",
   "kudoFrom": "من {name}، {date}",
   "noKudos": "لا رسائل شكر بعد.",
-  "awayUntil": "غائب حتى {date}"
+  "awayUntil": "غياب حتى {date}"
 }

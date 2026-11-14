@@ -2,12 +2,12 @@
   "loading": "Caricamento delle statistiche…",
   "empty": "Le statistiche compariranno dopo la pubblicazione del primo verbale.",
   "plannedDoneTip": "{done} su {planned} punti previsti la volta prima sono fatti",
-  "presentTip": "{count} presenti",
+  "presentTip": "{count, plural, one {# presente} other {# presenti}}",
   "absentTip": "assenti: {names}",
-  "exchangesTip": "{questions, plural, one {# domanda} other {# domande}} · {hands, plural, one {# mano alzata} other {# mani alzate}} · {kudos} ringraziamenti · {answers, plural, one {# risposta al rompighiaccio} other {# risposte al rompighiaccio}}",
+  "exchangesTip": "{questions, plural, one {# domanda} other {# domande}} · {hands, plural, one {# mano alzata} other {# mani alzate}} · {kudos, plural, one {# ringraziamento} other {# ringraziamenti}} · {answers, plural, one {# risposta al rompighiaccio} other {# risposte al rompighiaccio}}",
   "durationTip": "Durata: {duration}",
   "blockersTip": "{count, plural, one {# blocco segnalato} other {# blocchi segnalati}}",
-  "moodTip": "{avg}/5 · {count} risposte",
+  "moodTip": "{avg}/5 · {count, plural, one {# risposta} other {# risposte}}",
   "kpi": {
     "archived": "Sessioni svolte",
     "since": "dal {date}",
@@ -16,9 +16,9 @@
     "avgSpeaking": "Tempo di parola medio",
     "speakingTarget": "obiettivo {target} a persona",
     "actions": "Azioni di follow-up",
-    "open": "{count} aperte",
-    "resolved": "{count} risolte",
-    "median": "in {days} g (mediana)",
+    "open": "{count, plural, one {# aperta} other {# aperte}}",
+    "resolved": "{count, plural, one {# fatta} other {# fatte}}",
+    "median": "in {days, plural, one {# giorno} other {# giorni}} (mediana)",
     "plannedDoneHint": "Quota di quanto previsto in una riunione che compare in «Fatto» nella successiva",
     "plannedDone": "Previsto → fatto",
     "ofPlanned": "su {count} punti previsti",
@@ -69,7 +69,7 @@
     "withoutAction": "Nessuna azione",
     "none": "Nessun blocco si ripresenta da una riunione all'altra."
   },
-  "staleSince": "aperta da {days} giorni",
+  "staleSince": "aperta da {days, plural, one {# giorno} other {# giorni}}",
   "fromMeeting": "(riunione del {date})",
   "projects": {
     "title": "Avanzamento per progetto",
@@ -92,5 +92,5 @@
     "mood": "Umore",
     "rating": "Utilità"
   },
-  "ratingTip": "{avg}/5 · {count} voti"
+  "ratingTip": "{avg}/5 · {count, plural, one {# voto} other {# voti}}"
 }

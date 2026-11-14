@@ -20,7 +20,7 @@
   },
   "fields": {
     "clientEmail": "Email of the service account",
-    "organizer": "Organizer of the events",
+    "organizer": "Account that sends the invitations",
     "tenant": "Tenant (ID or domain)",
     "clientId": "Client ID",
     "url": "CalDAV address",

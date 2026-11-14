@@ -1,13 +1,13 @@
 {
   "title": "Análises",
-  "intro": "Todas as reuniões do espaço, de {from} a {to}.",
+  "intro": "Todas as reuniões do espaço de trabalho, de {from} a {to}.",
   "period": "Período",
-  "weeks": "{count, plural, one {# semana} other {# semanas}}",
+  "weeks": "{count, plural, =0 {# semanas} one {# semana} other {# semanas}}",
   "cards": {
     "engagement": "Engajamento",
     "engagementHint": "Média das reuniões, em 100",
     "sessions": "Sessões realizadas",
-    "meetings": "{count, plural, one {em # reunião} other {em # reuniões}}",
+    "meetings": "{count, plural, =0 {em # reuniões} one {em # reunião} other {em # reuniões}}",
     "attendance": "Presença",
     "followThrough": "Planos cumpridos",
     "followThroughHint": "Itens previstos marcados como feitos na sessão seguinte",
@@ -15,7 +15,7 @@
     "mood": "Humor médio",
     "actions": "Ações fechadas / abertas",
     "actionsValue": "{done} / {created}",
-    "median": "Fechadas em {days} dias (mediana)"
+    "median": "Fechadas em {days, plural, =0 {# dias} one {# dia} other {# dias}} (mediana)"
   },
   "weekTitle": "Sessões por semana",
   "weekLabel": "Barras: sessões realizadas por semana; linha: presença",

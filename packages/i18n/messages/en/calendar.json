@@ -17,12 +17,12 @@
   "nothingThisMonth": "No session this month.",
   "todayShort": "today",
   "tomorrow": "tomorrow",
-  "inDays": "in {count} days",
+  "inDays": "{count, plural, one {in # day} other {in # days}}",
   "status": {
     "planned": "planned",
     "live": "Live now",
     "held": "held",
-    "cancelled": "cancelled"
+    "cancelled": "canceled"
   },
   "attendance": {
     "yes": "I'll be there",

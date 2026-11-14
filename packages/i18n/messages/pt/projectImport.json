@@ -62,8 +62,8 @@
   "tokenNotKept": "Ele serve só para esta importação: o Ronde não o guarda.",
   "teamHint": "Com o plano Team, os projetos importados por um gerenciador de tickets salvo continuam sincronizados com a ferramenta: nome, status, datas e progresso.",
   "syncHowTo": "Para manter projetos importados sincronizados, primeiro adicione a ferramenta aos gerenciadores de tickets nas <link>configurações do espaço</link> e depois importe a partir dela.",
-  "syncAskAdmin": "Os projetos ficam sincronizados quando um administrador do espaço os importa pelos gerenciadores de tickets dele. O que você importa aqui é importado uma única vez.",
-  "look": "Procurar projetos",
+  "syncAskAdmin": "Os projetos ficam sincronizados quando um administrador do espaço de trabalho os importa pelos gerenciadores de tickets dele. O que você importa aqui é importado uma única vez.",
+  "look": "Buscar projetos",
   "looking": "Procurando…",
   "pickTitle": {
     "repos": "Repositórios a importar",
@@ -95,6 +95,6 @@
   "onceHint": "Importados uma única vez: daí em diante, são editados no Ronde.",
   "back": "Voltar",
   "import": "{count, plural, =0 {Importar} one {Importar # projeto} other {Importar # projetos}}",
-  "importing": "{count, plural, one {Importando # projeto…} other {Importando # projetos…}}",
+  "importing": "{count, plural, =0 {Importando # projetos…} one {Importando # projeto…} other {Importando # projetos…}}",
   "offline": "Não foi possível acessar o Ronde. Verifique sua conexão e tente de novo."
 }

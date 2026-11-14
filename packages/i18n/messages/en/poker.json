@@ -10,7 +10,7 @@
   "votedOf": "{count} of {total} have picked a card",
   "reveal": "Reveal the cards",
   "agree": "Estimate agreed:",
-  "revote": "New round",
+  "revote": "Vote again",
   "reopen": "Estimate “{title}” again",
   "remove": "Remove “{title}”",
   "newItem": "Item to estimate",

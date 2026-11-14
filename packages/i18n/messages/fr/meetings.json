@@ -1,17 +1,17 @@
 {
   "title": "Réunions",
   "new": "Nouvelle réunion",
-  "empty": "Aucune réunion pour l'instant.",
-  "emptyHint": "Créez-en une : cela prend moins d'une minute, et tout reste modifiable ensuite.",
-  "emptyMember": "Vous ne participez encore à aucune réunion. Un régisseur vous ajoute à la sienne.",
+  "empty": "Aucune réunion pour l’instant.",
+  "emptyHint": "Créez-en une : cela prend moins d’une minute, et tout reste modifiable ensuite.",
+  "emptyMember": "Vous ne participez encore à aucune réunion. Un animateur peut vous ajouter à la sienne.",
   "open": "Ouvrir",
   "live": "En direct",
   "nextOn": "Prochaine séance {date}",
   "noSession": "Aucune séance préparée",
   "people": "{count, plural, one {# personne} other {# personnes}}",
   "roles": {
-    "host": "Régisseur",
-    "cohost": "Co-régisseur",
+    "host": "Animateur",
+    "cohost": "Co-animateur",
     "participant": "Participant",
     "observer": "Observateur",
     "none": "Accès admin"
@@ -28,7 +28,7 @@
     },
     "blank": {
       "name": "Partir de zéro",
-      "description": "Une réunion vierge : choisissez vous-même ses rubriques et ses modules.",
+      "description": "Une réunion vierge : choisissez vous-même ses rubriques et ses modules.",
       "meta": "Le rythme de votre choix",
       "use": "Partir de zéro"
     },
@@ -43,7 +43,7 @@
     },
     "deleteTemplate": "Supprimer",
     "deleteTemplateNamed": "Supprimer le modèle {name}",
-    "deleteTemplateConfirm": "Supprimer le modèle « {name} » ? Les réunions créées avec ne changent pas.",
+    "deleteTemplateConfirm": "Supprimer le modèle « {name} » ? Les réunions créées avec ne changent pas.",
     "name": "Nom",
     "schedule": "Horaire",
     "scheduleLater": "Autres rythmes, exceptions et jours fériés se règlent ensuite dans les réglages de la réunion.",
@@ -51,21 +51,21 @@
     "weekday": "Jour",
     "time": "Heure",
     "duration": "Durée",
-    "minutes": "{m} min",
-    "durationRange": "Entre 5 min et 8 h",
+    "minutes": "{m} min",
+    "durationRange": "Entre 5 min et 8 h",
     "people": "Personnes",
-    "peopleHint": "Elles participent au tour de table. Vous devenez régisseur ; d'autres personnes s'ajoutent ensuite depuis les réglages de la réunion.",
-    "nobody": "Personne d'autre dans l'annuaire pour l'instant.",
+    "peopleHint": "Ces personnes passent au tour de table. Vous devenez animateur ; vous pourrez ajouter d’autres personnes ensuite, depuis les réglages de la réunion.",
+    "nobody": "Personne d’autre dans l’annuaire pour l’instant.",
     "invite": "Inviter des personnes",
     "creatorSpeaks": "Je prends aussi la parole au tour de table",
     "sections": "Rubriques",
     "recapSchedule": "{schedule} · {duration} · première séance le {date}",
-    "recapPeople": "{count, plural, =0 {Personne au tour de table pour l'instant} one {# personne au tour de table} other {# personnes au tour de table}}",
+    "recapPeople": "{count, plural, =0 {Personne au tour de table pour l’instant} one {# personne au tour de table} other {# personnes au tour de table}}",
     "modules": "Modules",
     "back": "Retour",
     "next": "Suivant",
     "create": "Créer la réunion",
-    "fromTemplate": "À partir du modèle « {name} »",
+    "fromTemplate": "À partir du modèle « {name} »",
     "edit": "Modifier",
     "content": {
       "sectionsTitle": "Rubriques de la fiche",
@@ -76,7 +76,7 @@
       "sectionType": "Format",
       "removeSection": "Retirer la rubrique {name}",
       "modulesOn": "{count, plural, =0 {Aucun activé} one {# activé} other {# activés}}",
-      "modulesHint": "Activez ce dont votre réunion a besoin : tout s'active et se désactive à tout moment.",
+      "modulesHint": "Activez ce dont votre réunion a besoin : tout s’active et se désactive à tout moment.",
       "roleHint": {
         "achievement": "Ce qui a été fait depuis la dernière fois",
         "plan": "Ce qui est prévu ensuite",
@@ -86,14 +86,14 @@
       }
     },
     "cancel": "Annuler",
-    "modulesLater": "D'autres s'ajoutent à tout moment depuis les réglages de la réunion.",
+    "modulesLater": "D’autres s’ajoutent à tout moment depuis les réglages de la réunion.",
     "order": {
       "title": "Ordre de passage",
-      "team": "L'équipe d'abord",
-      "teamHint": "Un court tour chacun, puis les projets ensemble.",
-      "projects": "Les projets d'abord",
-      "projectsHint": "Projet par projet, puis un tour chacun pour le reste.",
-      "later": "Modifiable ensuite dans l'Ordre du jour de la réunion."
+      "team": "L’équipe d’abord",
+      "teamHint": "Chacun son tour, brièvement, puis les projets ensemble.",
+      "projects": "Les projets d’abord",
+      "projectsHint": "Projet par projet, puis chacun son tour pour le reste.",
+      "later": "Modifiable ensuite dans l’ordre du jour de la réunion."
     }
   }
 }

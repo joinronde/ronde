@@ -38,7 +38,7 @@
   },
   "summaryTitle": "Sintesi",
   "retro": "Retrospettiva",
-  "timebox": "Timebox",
+  "timebox": "Argomento a tempo",
   "poker": "Stime",
   "estimate": "stima {value}",
   "notEstimated": "non stimato",
@@ -51,7 +51,7 @@
   "ratingAverage": "{avg}/5 · {count, plural, one {# voto} other {# voti}}",
   "progress": "Avanzamento",
   "slide": "Slide",
-  "slideItems": "Sollevati dal team",
+  "slideItems": "Segnalati dal team",
   "slideTracked": "azione creata",
   "slideActions": "Azioni decise"
 }

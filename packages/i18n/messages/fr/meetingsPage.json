@@ -1,6 +1,6 @@
 {
   "title": "Réunions",
-  "intro": "Toutes les réunions de l'espace que vous voyez : la prochaine séance, qui participe, ce qui reste ouvert.",
+  "intro": "Toutes les réunions de l’espace que vous voyez : la prochaine séance, qui participe, ce qui reste ouvert.",
   "new": "Nouvelle réunion",
   "filter": "Quelles réunions",
   "search": "Filtrer par nom",
@@ -14,7 +14,7 @@
   "filters": {
     "all": "Toutes",
     "live": "En direct",
-    "mine": "J'y participe",
+    "mine": "J’y participe",
     "run": "Je les anime"
   },
   "liveNow": "En direct",

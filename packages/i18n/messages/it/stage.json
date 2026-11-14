@@ -56,7 +56,7 @@
     "misc": "Argomenti aperti",
     "end": "Chiusura",
     "block": "Punto all'ordine del giorno",
-    "project": "Giro per progetto"
+    "project": "Giro dei progetti"
   },
   "browsing": "Consultazione",
   "ended": "Conclusa",
@@ -65,8 +65,8 @@
   "spotlight": "In evidenza",
   "agenda": "Ordine del giorno",
   "parking": "Parcheggio, per la prossima volta",
-  "projectPosition": "Giro per progetto · {n} / {total}",
-  "alsoInProjects": "Anche nel giro per progetto:",
+  "projectPosition": "Giro dei progetti · {n} / {total}",
+  "alsoInProjects": "Anche nel giro dei progetti:",
   "targetDate": "Scadenza: {date}",
   "projectProgressDone": "{percent} fatto",
   "projectSpeakers": "Persone che presentano il progetto",

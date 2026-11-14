@@ -20,7 +20,7 @@
   "cues": {
     "start": {
       "label": "Rintocco all'inizio",
-      "hint": "Quando si fa clic su «Inizia la riunione»"
+      "hint": "Quando si fa clic su «Avvia la riunione»"
     },
     "birthday": {
       "label": "Canzone di compleanno",

@@ -25,7 +25,7 @@
     "otherDuration": "Outra duração…",
     "target": "Duração alvo",
     "timer": "Cronômetro",
-    "autoStart": "Inicia a cada vez",
+    "autoStart": "Inicia a cada fala",
     "announcements": "Avisos da abertura",
     "localeWorkspace": "Idioma do espaço de trabalho ({language})"
   },
@@ -33,8 +33,8 @@
     "title": "Seções da ficha",
     "name": "Nome da seção",
     "nameOf": "Nome da seção {n}",
-    "input": "Entrada",
-    "inputOf": "Entrada de “{label}”",
+    "input": "Formato",
+    "inputOf": "Formato de “{label}”",
     "role": "Papel",
     "roleOf": "Papel de “{label}”",
     "roles": {
@@ -67,7 +67,7 @@
     "reorder": "Mover “{label}”",
     "customPlaceholder": "Ex.: Pesquisa, Demo para mostrar, Preciso de ajuda",
     "add": "Adicionar uma seção",
-    "hint": "Cada papel (feito, previsto, bloqueio, outros) vai para no máximo uma seção. Uma seção mantém o que foi escrito quando seu nome, papel ou entrada muda."
+    "hint": "Cada papel (feito, previsto, bloqueio, outros) vai para no máximo uma seção. Uma seção mantém o que foi escrito quando seu nome, papel ou formato muda."
   },
   "reminder": {
     "title": "Lembrete de ficha",
@@ -76,7 +76,7 @@
     "sameDay": "No dia da reunião, antes do horário",
     "time": "Hora",
     "byEmail": "Por e-mail, a cada pessoa",
-    "emailHint": "Só recebem o lembrete as pessoas cuja ficha ainda não está preenchida. Você pode cancelar a inscrição de alguém com a caixa “Lembrete” na lista da equipe.",
+    "emailHint": "Só recebem o lembrete as pessoas cuja ficha ainda não está preenchida. Você pode cancelar a inscrição de alguém com a caixa “Lembrete” em “Pessoas e papéis”.",
     "noSmtp": "Nenhum servidor de e-mail configurado: defina SMTP_URL no contêiner para ativar os lembretes por e-mail.",
     "teamHint": "Um lembrete coletivo em uma sala da equipe é configurado em “Notificações”."
   },
@@ -102,20 +102,20 @@
     "toSetUp": "A configurar",
     "ready": "Link pronto",
     "synced": "Sincronizado",
-    "noneInWorkspace": "Nenhum no espaço",
-    "rulesOn": "{count, plural, one {# regra ativa} other {# regras ativas}}",
-    "gitlab": "Tickets e merge requests de cada um na sua ficha",
+    "noneInWorkspace": "Nenhum wiki no espaço",
+    "rulesOn": "{count, plural, =0 {# regras ativas} one {# regra ativa} other {# regras ativas}}",
+    "gitlab": "Issues e merge requests de cada pessoa na ficha dela",
     "github": "Issues e pull requests dos repositórios seguidos",
     "wikiName": "Wiki",
     "wiki": "Atas publicadas no wiki da equipe",
     "videoName": "Videochamada",
     "video": "O link pelo qual todos entram",
-    "calendarName": "Calendário",
-    "calendar": "As sessões nos calendários de todos, sincronizadas",
+    "calendarName": "Agenda",
+    "calendar": "As sessões na agenda de cada pessoa, sincronizadas",
     "notificationsName": "Notificações",
     "notifications": "Chat, e-mail e SMS em torno da reunião",
     "goGeneral": "Em Geral",
-    "goSchedule": "Em Agenda",
+    "goSchedule": "Em Agendamento",
     "goNotifications": "Em Notificações",
     "origin": {
       "inherited": "Herdado do espaço",
@@ -135,7 +135,7 @@
   },
   "gitlab": {
     "unreachable": "O GitLab não responde.",
-    "followed": "{count, plural, one {# projeto ou grupo acompanhado} other {# projetos ou grupos acompanhados}}",
+    "followed": "{count, plural, =0 {# projetos ou grupos acompanhados} one {# projeto ou grupo acompanhado} other {# projetos ou grupos acompanhados}}",
     "noFilter": "Sem filtro: todos os projetos são acompanhados",
     "untickAll": "Desmarcar tudo",
     "loading": "Carregando projetos…",
@@ -158,22 +158,22 @@
       "observer": "Observador"
     },
     "roleHints": {
-      "host": "Conduz as sessões e configura a reunião",
-      "cohost": "Conduz as sessões",
-      "participant": "Preenche uma ficha e participa",
-      "observer": "Acompanha as sessões, sem ficha"
+      "host": "Conduz as sessões pela sala de controle, configura a reunião e publica a ata",
+      "cohost": "Conduz as sessões pela sala de controle, sem mudar as configurações",
+      "participant": "Preenche uma ficha antes de cada sessão e tem a sua vez na rodada",
+      "observer": "Acompanha as sessões ao vivo e lê a ata, sem ficha e sem vez de falar"
     },
     "roleOf": "Papel de {name}",
-    "speaks": "Tem a vez",
-    "speaksOf": "{name} tem a sua vez",
-    "speaksHint": "Incluído na rodada",
+    "speaks": "Fala na rodada",
+    "speaksOf": "{name} fala na rodada",
+    "speaksHint": "Faz parte da rodada",
     "remind": "Lembrete",
     "remindOf": "Lembrar {name}",
     "gitlab": "Usuário do GitLab",
     "remove": "Remover",
     "confirmRemove": "Remover da reunião",
     "removed": "{name} não participa mais",
-    "added": "{name} adicionado à reunião",
+    "added": "{name} agora participa da reunião",
     "updated": "Salvo",
     "addTitle": "Adicionar alguém",
     "pick": "Pessoa",
@@ -181,27 +181,27 @@
     "add": "Adicionar",
     "nobodyLeft": "Todos do diretório já participam.",
     "directory": "Gerenciar o diretório",
-    "categoriesHint": "As equipes, os aniversários e os nomes são editados no diretório do espaço.",
+    "categoriesHint": "As equipes, os aniversários e os nomes são editados no diretório do espaço de trabalho.",
     "github": "Usuário do GitHub"
   },
   "template": {
     "title": "Reutilizar este formato",
-    "intro": "Crie outras reuniões a partir desta: o modelo é proposto ao criar uma reunião no espaço.",
+    "intro": "Crie outras reuniões a partir desta: o modelo é proposto ao criar uma reunião no espaço de trabalho.",
     "carries": "Vai para o modelo",
     "stays": "Fica nesta reunião",
     "items": {
       "sections": "Seções da ficha",
       "agenda": "Pauta",
       "modules": "Módulos",
-      "schedule": "Horário",
-      "people": "{count, plural, one {# pessoa e o seu papel} other {# pessoas e os seus papéis}}",
+      "schedule": "Agendamento",
+      "people": "{count, plural, =0 {# pessoas e os seus papéis} one {# pessoa e o seu papel} other {# pessoas e os seus papéis}}",
       "history": "Histórico e atas",
       "tokens": "Tokens de acesso e integrações"
     },
     "counts": {
-      "sections": "{count, plural, one {# seção} other {# seções}}",
-      "agenda": "{count, plural, one {# bloco} other {# blocos}}",
-      "modules": "{count, plural, one {# módulo ativo} other {# módulos ativos}}"
+      "sections": "{count, plural, =0 {# seções} one {# seção} other {# seções}}",
+      "agenda": "{count, plural, =0 {# blocos} one {# bloco} other {# blocos}}",
+      "modules": "{count, plural, =0 {# módulos ativos} one {# módulo ativo} other {# módulos ativos}}"
     },
     "open": "Salvar como modelo",
     "name": "Nome do modelo",
@@ -213,7 +213,7 @@
   "nav": {
     "label": "Categorias de configurações",
     "general": "Geral",
-    "schedule": "Agenda",
+    "schedule": "Agendamento",
     "people": "Pessoas e papéis",
     "sections": "Seções",
     "modules": "Módulos",
@@ -232,12 +232,12 @@
     "sections": "O que cada um preenche antes da reunião.",
     "agenda": "O desenrolar da reunião, bloco a bloco.",
     "projects": "Os projetos acompanhados, cada um com a sua vez.",
-    "modules": "Animação, formatos e ferramentas, ativados conforme necessário.",
+    "modules": "Facilitação, formatos e ferramentas, ativados conforme necessário.",
     "appearance": "A cor da reunião em todas as telas.",
     "notifications": "Lembretes e mensagens enviados em torno da reunião.",
     "integrations": "Videochamada, ferramentas de tickets e wiki.",
-    "template": "Salvar esta reunião como modelo do espaço.",
-    "danger": "O que não pode ser desfeito: sair, parar ou excluir."
+    "template": "Salvar esta reunião como modelo do espaço de trabalho.",
+    "danger": "O que não pode ser desfeito: excluir a reunião."
   },
   "status": {
     "auto": "As alterações são salvas automaticamente.",
@@ -281,7 +281,7 @@
     "bbbUrl": "Servidor BigBlueButton",
     "server": "Servidor",
     "ownServer": "Um servidor próprio desta reunião",
-    "serverHint": "Os servidores do espaço são adicionados pelos seus administradores, nas configurações do espaço.",
+    "serverHint": "Os servidores do espaço de trabalho são adicionados pelos seus administradores, nas configurações do espaço de trabalho.",
     "bbbSecret": "Segredo compartilhado do servidor",
     "bbbHint": "O Ronde abre a sala quando alguém entra e faz cada pessoa entrar com seu nome; os anfitriões entram como moderadores. O segredo é criptografado e nunca mostrado de novo.",
     "current": "As pessoas entram com:",

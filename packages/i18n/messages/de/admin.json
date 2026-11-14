@@ -1,7 +1,7 @@
 {
   "title": "Serververwaltung",
   "back": "Zurück",
-  "intro": "Einstellungen dieses Ronde-Servers, gemeinsam für alle seine Arbeitsbereiche. Die Einstellungen eines Arbeitsbereichs (Mitglieder, Rollen, Sicherheit) stehen in dessen Einstellungen. Hier gespeicherte Werte haben Vorrang vor den Umgebungsvariablen.",
+  "intro": "Einstellungen dieses Ronde-Servers, gemeinsam für alle seine Arbeitsbereiche. Was einen einzelnen Arbeitsbereich betrifft (Mitglieder, Rollen, Sicherheit), steht in dessen Einstellungen. Hier gespeicherte Werte haben Vorrang vor den Umgebungsvariablen.",
   "counts": {
     "users": "Konten",
     "workspaces": "Arbeitsbereiche",
@@ -10,12 +10,12 @@
   },
   "language": "Sprache",
   "defaultLocale": "Standardsprache",
-  "defaultLocaleHint": "Für Personen, die in ihrem Konto keine Sprache gewählt haben und deren Browser keine Sprache anbietet, die Ronde spricht.",
+  "defaultLocaleHint": "Für Personen, die in ihrem Konto keine Sprache gewählt haben und deren Browser keine von Ronde unterstützte Sprache anbietet.",
   "signup": "Wer ein Konto erstellen darf",
   "recommended": "Empfohlen",
   "policies": {
     "invite-only": {
-      "label": "Auf Einladung",
+      "label": "Nur auf Einladung",
       "hint": "Nur Personen, die in einen Arbeitsbereich eingeladen wurden."
     },
     "domains": {
@@ -33,9 +33,9 @@
   "saved": "Gespeichert",
   "license": {
     "title": "Lizenz",
-    "pureCommunity": "Dieser Build ist die reine Community Edition: Der Code der bezahlten Editionen ist nicht enthalten.",
+    "pureCommunity": "Dieser Build ist die reine Community-Edition. Der Code der kostenpflichtigen Editionen ist nicht enthalten.",
     "status": {
-      "none": "Community Edition",
+      "none": "Community-Edition",
       "invalid": "Ungültiger Lizenzschlüssel",
       "active": "Lizenz aktiv",
       "grace": "Lizenz abgelaufen: Kulanzzeit",
@@ -52,18 +52,18 @@
       "enterprise": "Enterprise"
     },
     "summary": "{edition} für {customer}, bis {date}.",
-    "graceUntil": "Alles funktioniert weiter bis {date}: Verlängere die Lizenz vorher.",
-    "readOnly": "Bezahlte Funktionen sind schreibgeschützt: Ihr Inhalt bleibt lesbar, aber nichts Neues kann hinzugefügt werden. Community-Funktionen sind nicht betroffen.",
+    "graceUntil": "Alles funktioniert bis {date} weiter. Verlängere die Lizenz vorher.",
+    "readOnly": "Kostenpflichtige Funktionen sind schreibgeschützt. Die vorhandenen Inhalte bleiben lesbar, aber es kann nichts Neues hinzugefügt werden. Community-Funktionen sind nicht betroffen.",
     "seats": "{used} von {seats} Plätzen belegt",
     "seatsUnlimited": "{used} Personen, ohne Platzbegrenzung",
     "seatsRule": "Personen, die in den letzten 30 Tagen an einem Meeting teilgenommen haben",
-    "peak": "Höchststand dieser Lizenz: {count} (am {date}), den die Verlängerung zählt.",
+    "peak": "Höchststand dieser Lizenz: {count} (am {date}), maßgeblich für die Verlängerung.",
     "previousPeak": "Vorherige Lizenz ({id}): Höchststand {count} (am {date}), bei ihrer Verlängerung auszugleichen.",
-    "overSeats": "Mehr Personen nehmen teil, als die {seats} Plätze der Lizenz vorsehen: Nichts wird blockiert. Der Höchststand wird bei der Verlängerung der Lizenz ausgeglichen.",
-    "overPeak": "Der Höchststand dieser Lizenz, {count}, lag über ihren {seats} Plätzen: Nichts wird blockiert, er wird bei der Verlängerung der Lizenz ausgeglichen.",
-    "fromEnv": "Der Schlüssel kommt aus der Variable RONDE_LICENSE: Ändere ihn dort.",
+    "overSeats": "Mehr Personen nehmen teil, als die {seats} Plätze der Lizenz vorsehen. Nichts wird blockiert; der Höchststand wird bei der Verlängerung der Lizenz ausgeglichen.",
+    "overPeak": "Der Höchststand dieser Lizenz, {count}, lag über ihren {seats} Plätzen. Nichts wird blockiert; er wird bei der Verlängerung der Lizenz ausgeglichen.",
+    "fromEnv": "Der Schlüssel kommt aus der Variable RONDE_LICENSE. Ändere ihn dort.",
     "key": "Lizenzschlüssel",
-    "keyHint": "Wird auf diesem Server offline geprüft: Nichts wird irgendwohin gesendet.",
+    "keyHint": "Wird auf diesem Server offline geprüft. Es wird nichts nach außen gesendet.",
     "save": "Schlüssel speichern",
     "remove": "Lizenz entfernen"
   },
@@ -73,8 +73,8 @@
     "filter": "Angezeigte Nachrichten",
     "open": "Aktuell",
     "archived": "Archiviert",
-    "intro": "Was Leute über den Button „Feedback senden“ schicken. Antworte ihnen und markiere, was erledigt ist; ein Problem von Ronde selbst kann als GitHub-Issue an das Ronde-Projekt gehen. Nachrichten werden nach einem Jahr gelöscht.",
-    "empty": "Noch keine Nachricht. Leute senden sie über den Button oben auf den Seiten.",
+    "intro": "Was Personen über den Button „Feedback senden“ schicken. Antworte ihnen und markiere, was erledigt ist; ein Fehler in Ronde selbst kann als GitHub-Issue an das Ronde-Projekt gehen. Nachrichten werden nach einem Jahr gelöscht.",
+    "empty": "Noch keine Nachricht. Nachrichten kommen über den Button oben auf den Seiten.",
     "emptyArchived": "Keine archivierte Nachricht.",
     "kinds": {
       "bug": "Problem",
@@ -100,6 +100,6 @@
       "archived": "Archivieren"
     },
     "toGithub": "GitHub-Issue öffnen",
-    "toGithubHint": "Öffnet ein vorausgefülltes Issue im Ronde-Projekt: ohne Namen und Arbeitsbereiche, und du kannst es vor dem Veröffentlichen bearbeiten."
+    "toGithubHint": "Öffnet ein vorausgefülltes Issue im Ronde-Projekt, ohne Namen und Arbeitsbereiche. Du kannst es vor dem Veröffentlichen bearbeiten."
   }
 }

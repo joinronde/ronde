@@ -1,6 +1,6 @@
 {
   "title": "视频账户",
-  "intro": "工作空间的视频账号：会议在其上开启房间的 BigBlueButton 服务器，或为每个会议创建长期房间的 Zoom、Google Meet 或 Teams 账号。无需任何人登录。",
+  "intro": "工作空间的视频账户：会议可在其上开启房间的 BigBlueButton 服务器，或为每个会议创建固定会议室的 Zoom、Google Meet 或 Teams 账户。无需任何人登录。",
   "empty": "还没有视频账户。",
   "add": "添加视频账户",
   "kind": "提供方",
@@ -12,7 +12,7 @@
   "test": "测试",
   "remove": "移除",
   "works": "✓ 已连接。",
-  "removeConfirm": "移除 {name}？已创建的房间仍可使用。",
+  "removeConfirm": "要移除 {name} 吗？已创建的会议室仍可使用。",
   "kinds": {
     "zoom": "Zoom",
     "meet": "Google Meet",
@@ -40,6 +40,6 @@
     "teams": "在 Microsoft Entra 中注册一个具有 OnlineMeetings.ReadWrite.All 应用权限（需管理员同意）的应用，并为组织者设置应用访问策略。",
     "bbb": "服务器地址（https://…/bigbluebutton）及其共享密钥，可在服务器上通过 bbb-conf --secret 获取。"
   },
-  "useIt": "然后在会议设置的“常规 → 视频通话”中：“创建长期房间”。",
+  "useIt": "然后在会议设置的“常规 → 视频通话”中：“创建固定会议室”。",
   "useItBbb": "之后，每个会议的设置中“常规 → 视频通话”都会提供 BigBlueButton 服务器。"
 }

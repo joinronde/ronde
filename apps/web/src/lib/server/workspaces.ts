@@ -235,7 +235,7 @@ export async function removePerson(ctx: WorkspaceContext, personId: string): Pro
 async function assertCanChangeRole(ctx: WorkspaceContext, from: WorkspaceRole, to: WorkspaceRole | null) {
   const allowed = assignableRoles(ctx.member.role, { billing: billingOn() });
   // Nobody acts on a role above their own, nor hands one out
-  if (!allowed.includes(from) || (to && !allowed.includes(to))) throw new AccessError(403, "roleNotAssignable");
+  if (!allowed.includes(from) || (to && !allowed.includes(to))) throw new AccessError(403, "roleOutOfReach");
   if (from === "owner" && to !== "owner" && (await ctx.db.workspaceMember.count({ where: { role: "owner", status: "active" } })) <= 1) {
     throw new OpError("lastOwner");
   }
@@ -276,7 +276,7 @@ export async function invite(
   ctx: WorkspaceContext,
   input: PersonInput & { role: WorkspaceRole },
 ): Promise<{ url: string; emailed: boolean }> {
-  if (!assignableRoles(ctx.member.role, { billing: billingOn() }).includes(input.role)) throw new AccessError(403, "roleNotAssignable");
+  if (!assignableRoles(ctx.member.role, { billing: billingOn() }).includes(input.role)) throw new AccessError(403, "roleOutOfReach");
   const data = await personData(ctx, input);
   const existing = await ctx.db.person.findFirst({
     where: { email: data.email },

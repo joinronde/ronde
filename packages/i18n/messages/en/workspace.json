@@ -50,7 +50,7 @@
     "categories": "Teams",
     "manageTeams": "Manage the teams",
     "categoriesHint": "Shown on the check-ins and used to group the stats. Teams can sit inside each other: they are managed in the directory.",
-    "categoryPlaceholder": "e.g. Engineering",
+    "categoryPlaceholder": "E.g. Engineering",
     "add": "Add",
     "rename": "Rename {name}",
     "delete": "Delete {name}",
@@ -74,7 +74,7 @@
       "plans": "Plans"
     },
     "buffer": "Margin between two meetings",
-    "bufferHint": "Kept free before and after each meeting of a person: “find a slot” respects it, and schedules warn when two meetings come closer.",
+    "bufferHint": "Kept free before and after each of a person's meetings: the search for times when everyone is free respects it, and schedules warn when two meetings come closer than that.",
     "bufferNone": "No margin",
     "bufferMinutes": "{count, plural, one {# minute} other {# minutes}}"
   }

@@ -7,6 +7,6 @@
   "monthlyDay": "On day {day} of {count, plural, one {every month} other {every # months}} at {time}",
   "dailyOn": "{count, plural, one {Every {days}} other {Every # days, on {days}}} at {time}",
   "monthlyLast": "On the last day of {count, plural, one {every month} other {every # months}} at {time}",
-  "alternating": "Every other {days}, alternating {first} and {second}",
+  "alternating": "Every other {days}, alternating between {first} and {second}",
   "withZone": "{schedule} ({timeZone})"
 }

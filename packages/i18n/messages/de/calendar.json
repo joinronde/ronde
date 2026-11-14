@@ -17,7 +17,7 @@
   "nothingThisMonth": "Keine Sitzung in diesem Monat.",
   "todayShort": "heute",
   "tomorrow": "morgen",
-  "inDays": "in {count} Tagen",
+  "inDays": "in {count, plural, one {# Tag} other {# Tagen}}",
   "status": {
     "planned": "geplant",
     "live": "Jetzt live",

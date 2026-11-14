@@ -23,7 +23,7 @@
   "delete": "删除",
   "exportCsv": "导出为 CSV",
   "dragToReorder": "拖动以调整顺序（或使用 ↑ ↓ 键）",
-  "searchPlaceholder": "搜索…",
+  "searchPlaceholder": "搜索……",
   "noResults": "无结果",
   "showMore": "再显示 {count} 个（剩余 {total} 个）"
 }

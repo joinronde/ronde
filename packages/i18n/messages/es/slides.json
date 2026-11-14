@@ -2,23 +2,23 @@
   "stage": {
     "items": "Planteados por el equipo",
     "tracked": "Acción",
-    "emptyIrritants": "Nada por ahora: cada cual puede añadir los suyos desde «Mi pantalla».",
+    "emptyIrritants": "Nada por ahora: cada persona puede añadir los suyos desde «Mi pantalla».",
     "anonymous": "Publicados sin nombres.",
     "review": "Acciones abiertas ({count})",
-    "noActions": "Ninguna acción abierta: todo al día.",
+    "noActions": "No hay acciones abiertas: todo al día.",
     "decided": "Decidido aquí ({count})"
   },
   "me": {
-    "hint": "Di ahora lo que te molesta: se trata aquí, no en mitad del turno de otra persona.",
+    "hint": "Di ahora lo que te frena: se trata aquí, no en mitad del turno de otra persona.",
     "anonymous": "Tu nombre no se muestra.",
-    "placeholder": "Lo que me molesta…",
+    "placeholder": "Lo que me frena…",
     "add": "Añadir",
     "mine": "Lo que planteaste",
     "remove": "Quitar «{text}»"
   },
   "host": {
     "count": "Planteados: {count}",
-    "empty": "Nada por ahora. Cada cual añade los suyos desde «Mi pantalla», también antes de la reunión.",
+    "empty": "Nada por ahora. Cada persona añade los suyos desde «Mi pantalla», también antes de la reunión.",
     "owner": "Responsable",
     "toAction": "Convertir en acción",
     "created": "Acción creada"

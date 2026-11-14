@@ -23,7 +23,7 @@
   "delete": "Excluir",
   "exportCsv": "Exportar em CSV",
   "dragToReorder": "Arrastar para reordenar (ou teclas ↑ ↓)",
-  "searchPlaceholder": "Pesquisar…",
+  "searchPlaceholder": "Buscar…",
   "noResults": "Sem resultados",
   "showMore": "Mostrar mais {count} ({total} restantes)"
 }

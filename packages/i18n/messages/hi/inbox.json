@@ -2,19 +2,19 @@
   "label": "सूचनाएँ",
   "labelUnread": "{count, plural, one {सूचनाएँ, # अपठित} other {सूचनाएँ, # अपठित}}",
   "title": "सूचनाएँ",
-  "markAll": "सभी को पढ़ा हुआ चिह्नित करें",
+  "markAll": "सभी को पढ़ा हुआ मार्क करें",
   "unread": "अपठित",
   "someone": "कोई",
-  "empty": "सब कुछ देख लिया।",
+  "empty": "कोई नई सूचना नहीं।",
   "emptyHint": "आपको दिए गए कार्य, शुरू होते सत्र और प्रकाशित कार्यवृत्त यहाँ दिखते हैं।",
   "kinds": {
     "action_assigned": "<strong>{actor}</strong> ने <strong>{meeting}</strong> में आपको एक कार्य दिया",
     "session_started": "<strong>{meeting}</strong> शुरू हो गई: सत्र में शामिल हों",
-    "minutes_published": "<strong>{meeting}</strong> का कार्यवृत्त आ गया",
+    "minutes_published": "<strong>{meeting}</strong> का कार्यवृत्त प्रकाशित हो गया",
     "kudo_received": "<strong>{actor}</strong> ने <strong>{meeting}</strong> में आपको धन्यवाद दिया",
     "meeting_joined": "<strong>{actor}</strong> ने आपको <strong>{meeting}</strong> में जोड़ा",
-    "absence_delegated": "<strong>{actor}</strong> अनुपस्थित रहेंगे: इस बीच उनकी होस्ट की गई मीटिंग आप चलाएँगे",
+    "absence_delegated": "<strong>{actor}</strong> अनुपस्थित रहेंगे: इस बीच वे जिन मीटिंग के होस्ट हैं, उन्हें आप चलाएँगे",
     "minutes_draft": "<strong>{meeting}</strong> का कार्यवृत्त प्रकाशित होने का इंतज़ार कर रहा है",
-    "line_assigned": "<strong>{actor}</strong> ने <strong>{meeting}</strong> में आपको एक पंक्ति से जोड़ा"
+    "line_assigned": "<strong>{actor}</strong> ने <strong>{meeting}</strong> में आपको एक पंक्ति में जोड़ा"
   }
 }

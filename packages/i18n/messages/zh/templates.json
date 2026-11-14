@@ -1,19 +1,19 @@
 {
   "weekly": {
-    "name": "每周同步",
-    "description": "轮流分享已完成、计划中和受阻的事项，并处理开放议题和后续行动项。",
+    "name": "每周例会",
+    "description": "轮流分享已完成、计划中和受阻的事项，并处理开放议题和行动项。",
     "sections": {}
   },
   "standup": {
     "name": "每日站会",
-    "description": "工作日十五分钟：昨天、今天、阻碍。简短发言，仅此而已。",
+    "description": "工作日十五分钟：昨天、今天、阻碍。发言简短，点到为止。",
     "sections": {
       "yesterday": "昨天",
       "today": "今天"
     }
   },
   "retro": {
-    "name": "月度回顾",
+    "name": "月度回顾会",
     "description": "一起回顾这个月：做得好的、待改进的、想尝试的。",
     "sections": {
       "well": "做得好的",
@@ -22,8 +22,8 @@
     }
   },
   "oneOnOne": {
-    "name": "一对一",
-    "description": "两人之间的每周对话：成果、优先事项、挑战和反馈。",
+    "name": "一对一沟通",
+    "description": "两人每周一次的沟通：成果、优先事项、挑战和反馈。",
     "sections": {
       "wins": "成果",
       "priorities": "优先事项",
@@ -53,11 +53,11 @@
   },
   "allHands": {
     "name": "全员大会",
-    "description": "全员每月一次：亮点、动态和请求。",
+    "description": "全员每月一次：亮点、动态和需要的支持。",
     "sections": {
       "highlights": "亮点",
       "news": "动态",
-      "asks": "请求"
+      "asks": "需要支持"
     }
   },
   "leadership": {
@@ -81,7 +81,7 @@
     }
   },
   "editorial": {
-    "name": "编辑会议",
+    "name": "编辑选题会",
     "description": "适用于编辑部、内容或传播团队：已发布的、进行中的、选题和需要帮助的地方。",
     "sections": {
       "published": "已发布",
@@ -91,7 +91,7 @@
     }
   },
   "classCouncil": {
-    "name": "班级会议",
+    "name": "班级教师会",
     "description": "每学期一次：班级情况、需要支持的学生和商定的措施。",
     "sections": {
       "progress": "班级情况",
@@ -101,7 +101,7 @@
     }
   },
   "teachingTeam": {
-    "name": "教研组",
+    "name": "教研组例会",
     "description": "教师团队周会：上周课堂情况、接下来的安排、需要关注的学生和可分享的资源。",
     "sections": {
       "coming": "接下来",
@@ -150,7 +150,7 @@
   },
   "portfolio": {
     "name": "项目组合评审",
-    "description": "每两周一次，每个项目轮流发言：参与者介绍项目健康度、进展、下一个里程碑和风险；遇到困难的项目先发言。",
+    "description": "每两周一次，逐个项目发言：项目成员介绍健康度、进展、下一个里程碑和风险；有问题的项目先讲。",
     "sections": {
       "progress": "进展",
       "milestones": "下一个里程碑",
@@ -177,12 +177,12 @@
       "progress": "目标进展",
       "results": "关键结果",
       "risks": "风险",
-      "asks": "需要的决定"
+      "asks": "待决事项"
     }
   },
   "incidentReview": {
     "name": "事故复盘",
-    "description": "不追究个人责任地回顾本周事故：发生了什么、影响、原因和纠正措施。",
+    "description": "回顾本周事故，对事不对人：发生了什么、影响、原因和纠正措施。",
     "sections": {
       "timeline": "发生了什么",
       "impact": "影响",
@@ -212,7 +212,7 @@
   },
   "caseReview": {
     "name": "多学科病例讨论",
-    "description": "每周的多学科会议：讨论的病例、意见、商定的诊疗方案和需要安排的检查。",
+    "description": "每周多学科会诊（MDT）：讨论的病例、各科意见、商定的诊疗方案和需要安排的检查。",
     "sections": {
       "cases": "待讨论病例",
       "opinions": "意见与建议",
@@ -221,11 +221,11 @@
     }
   },
   "serviceBriefing": {
-    "name": "营业前简会",
-    "description": "每天开门前十分钟：预订情况、今日特供、工作安排和注意事项。",
+    "name": "班前会",
+    "description": "每天开门前十分钟：预订情况、今日推荐、工作安排和注意事项。",
     "sections": {
       "bookings": "预订与客流",
-      "specials": "今日特供",
+      "specials": "今日推荐",
       "instructions": "工作安排",
       "watch": "注意事项"
     }

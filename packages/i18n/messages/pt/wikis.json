@@ -42,10 +42,10 @@
     "title": "Publicar a ata",
     "intro": "A cada publicação, a ata vira uma página do wiki, com a data da sessão como nome. Quando o resumo é editado, a página acompanha.",
     "wiki": "Wiki",
-    "none": "Em nenhum lugar",
+    "none": "Nenhum",
     "hint": "As sessões anteriores são publicadas pelo histórico.",
-    "noWiki": "Ainda não há nenhum wiki neste espaço.",
-    "addWiki": "Adicione um nas configurações do espaço",
+    "noWiki": "Ainda não há nenhum wiki neste espaço de trabalho.",
+    "addWiki": "Adicione um nas configurações do espaço de trabalho",
     "on": "A ata será publicada em {name}.",
     "off": "A ata não é mais publicada."
   },

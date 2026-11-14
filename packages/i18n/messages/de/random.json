@@ -6,7 +6,7 @@
     "coin": "Kopf oder Zahl"
   },
   "hints": {
-    "wheel": "Wählt aus, wer als Nächstes spricht, unter denen, die noch nicht dran waren.",
+    "wheel": "Wählt unter denen, die noch nicht dran waren, aus, wer als Nächstes spricht.",
     "order": "Mischt die Reihenfolge derer, die noch nicht dran waren.",
     "teams": "Teilt die Anwesenden in Teams auf.",
     "coin": "Für eine Entscheidung, die niemand treffen will."
@@ -14,7 +14,7 @@
   "draw": "Drehen",
   "drawAgain": "Neu ziehen",
   "teamSize": "Personen pro Team",
-  "applyWheel": "{name} spricht als Nächstes",
+  "applyWheel": "{name} als Nächstes drannehmen",
   "applyOrder": "Diese Reihenfolge verwenden",
   "applied": "In die Redereihenfolge übernommen",
   "clear": "Von den Bildschirmen ausblenden",

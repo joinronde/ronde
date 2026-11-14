@@ -10,16 +10,16 @@
     "meetings": "{count, plural, other {来自 # 个会议}}",
     "attendance": "出席率",
     "followThrough": "计划完成率",
-    "followThroughHint": "在下一场会议中报告为已完成的计划项",
+    "followThroughHint": "在下次会议中被报告为已完成的计划项",
     "onTime": "准时举行的场次",
     "mood": "平均心情",
     "actions": "已关闭 / 新开行动项",
     "actionsValue": "{done} / {created}",
     "median": "{days} 天内关闭（中位数）"
   },
-  "weekTitle": "每周场次",
-  "weekLabel": "柱：每周举行的场次；线：出席率",
-  "weekLegend": "柱：每周举行的场次。线：出席率。",
+  "weekTitle": "每周会议数",
+  "weekLabel": "柱：每周举行的会议数；线：出席率",
+  "weekLegend": "柱：每周举行的会议数。线：出席率。",
   "meetingsTitle": "按会议",
   "columns": {
     "meeting": "会议",
@@ -33,10 +33,10 @@
     "openActions": "未完成行动项"
   },
   "empty": "还没有会议。",
-  "engagementHow": "参与度（满分 100）：出席率（30%）、计划完成率（25%）、通过提问、举手、致谢和破冰参与（20%）、心情（15%）和准时性（10%）。",
+  "engagementHow": "参与度（满分 100）：出席率（30%）、计划完成率（25%）、提问、举手、感谢和破冰的参与（20%）、心情（15%）和准时性（10%）。",
   "csv": {
     "participation": "参与度",
     "total": "所有会议",
-    "fileName": "dongcha"
+    "fileName": "数据洞察"
   }
 }

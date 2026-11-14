@@ -1,7 +1,7 @@
 {
   "title": "Audit-Log",
   "intro": "Wer was in diesem Arbeitsbereich geändert hat: Einstellungen, Personen, Rollen, Meetings. Live-Interaktionen werden nicht gespeichert.",
-  "window": "Es zeigt die letzten {days} Tage.",
+  "window": "Angezeigt werden die letzten {days} Tage.",
   "filters": {
     "action": "Aktion",
     "actionPlaceholder": "z. B. people, roles, meeting",
@@ -47,7 +47,7 @@
       "save": "Meeting-Einstellungen geändert"
     },
     "agenda": {
-      "save": "Tagesordnung geändert"
+      "save": "Agenda geändert"
     },
     "participant": {
       "add": "Teilnehmende Person hinzugefügt",
@@ -61,7 +61,7 @@
       "save": "Als Vorlage gespeichert"
     },
     "schedule": {
-      "save": "Terminplan geändert",
+      "save": "Zeitplan geändert",
       "skip": "Sitzung übersprungen",
       "move": "Sitzung verschoben",
       "restore": "Sitzung wiederhergestellt",
@@ -148,9 +148,9 @@
       "settings": "Einstellungen des KI-Assistenten geändert"
     },
     "trackers": {
-      "add": "Issue-Tracker hinzugefügt",
-      "update": "Issue-Tracker geändert",
-      "delete": "Issue-Tracker entfernt",
+      "add": "Ticketsystem hinzugefügt",
+      "update": "Ticketsystem geändert",
+      "delete": "Ticketsystem entfernt",
       "ticket": "Ticket aus einer Aufgabe erstellt"
     },
     "video": {
@@ -212,7 +212,7 @@
       "configure": "Eisbrecher eingerichtet"
     },
     "poker": {
-      "configure": "Schätzpoker eingerichtet"
+      "configure": "Planning Poker eingerichtet"
     },
     "retro": {
       "configure": "Retrospektive eingerichtet"

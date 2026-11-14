@@ -8,14 +8,14 @@
     "round": "Ronda",
     "topics": "Temas abiertos",
     "retro": "Retrospectiva",
-    "timebox": "Tiempo acotado",
+    "timebox": "Tema cronometrado",
     "poker": "Planning poker",
-    "projects": "Ronda por proyecto",
+    "projects": "Ronda de proyectos",
     "slide": "Diapositiva"
   },
   "blockHints": {
-    "intro": "Bienvenida, anuncios y rompehielos antes del primer turno",
-    "round": "Cada persona por turnos, cronometrada, con su ficha en pantalla",
+    "intro": "Bienvenida, anuncios y rompehielos, antes del primer turno",
+    "round": "Cada persona por turnos, con tiempo y con su ficha en pantalla",
     "projects": "Proyecto por proyecto, sus miembros hablan juntos",
     "topics": "Los temas que el equipo propuso y votó",
     "timebox": "Un tema aparte, con su propia duración",

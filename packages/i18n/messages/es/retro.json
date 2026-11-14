@@ -1,7 +1,7 @@
 {
   "columns": {
     "well": "Fue bien",
-    "improve": "A mejorar",
+    "improve": "Qué mejorar",
     "ideas": "Ideas que probar",
     "start": "Empezar",
     "stop": "Dejar de",
@@ -31,7 +31,7 @@
     "delete": "Eliminar «{text}»",
     "editNote": "Editar la nota",
     "save": "Guardar",
-    "voteTitle": "Vota los temas que comentar",
+    "voteTitle": "Vota los temas que debatir",
     "votesLeft": "{count, plural, =0 {Has usado todos tus votos} one {Te queda # voto} other {Te quedan # votos}} de {total}",
     "vote": "Votar",
     "unvote": "Retirar mi voto"
@@ -40,7 +40,7 @@
     "writers": "{count, plural, one {# de {total} personas ha escrito} other {# de {total} personas han escrito}}",
     "revealHint": "«Siguiente» revela las notas al equipo.",
     "voters": "{count, plural, one {# de {total} personas ha votado} other {# de {total} personas han votado}}",
-    "voteHint": "«Siguiente» inicia la conversación sobre los grupos más votados.",
+    "voteHint": "«Siguiente» inicia el debate sobre los grupos más votados.",
     "groupHint": "Haz clic en una nota y luego en la nota con la que agruparla. Pon nombre a los grupos cuando estén formados.",
     "pickTarget": "Ahora haz clic en la nota con la que agruparla (o en la misma para cancelar).",
     "rename": "Nombre del grupo",
@@ -50,7 +50,7 @@
     "title": "Retrospectiva",
     "preset": "Columnas",
     "presets": {
-      "well-improve-ideas": "Fue bien, a mejorar, ideas",
+      "well-improve-ideas": "Fue bien, qué mejorar, ideas",
       "start-stop-continue": "Empezar, dejar de, seguir",
       "4l": "Nos gustó, aprendimos, nos faltó, deseamos",
       "mad-sad-glad": "Enfadados, tristes, contentos",
@@ -60,7 +60,7 @@
     "votes": "Votos por persona",
     "reflect": "Escritura (min)",
     "vote": "Votación (min)",
-    "discuss": "Conversación por grupo (min)",
+    "discuss": "Debate por grupo (min)",
     "saved": "Ajustes de la retro guardados",
     "save": "Guardar los ajustes de la retro",
     "change": "Cambiar las columnas, los votos y los tiempos"

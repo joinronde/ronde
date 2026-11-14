@@ -5,8 +5,8 @@
   "weekly": "{count, plural, =1 {كل أسبوع: {days}} =2 {كل أسبوعين: {days}} few {كل # أسابيع: {days}} many {كل # أسبوعًا: {days}} other {كل # أسبوع: {days}}}، الساعة {time}",
   "monthlyNth": "{day} في الأسبوع {nth, select, 1 {الأول} 2 {الثاني} 3 {الثالث} 4 {الرابع} other {الأخير}} {count, plural, =1 {من كل شهر} =2 {كل شهرين} few {كل # أشهر} many {كل # شهرًا} other {كل # شهر}}، الساعة {time}",
   "monthlyDay": "اليوم {day} {count, plural, =1 {من كل شهر} =2 {كل شهرين} few {كل # أشهر} many {كل # شهرًا} other {كل # شهر}}، الساعة {time}",
-  "dailyOn": "{count, plural, one {كل {days}} other {كل # أيام، يوم {days}}} الساعة {time}",
-  "monthlyLast": "في آخر يوم {count, plural, one {من كل شهر} other {كل # أشهر}} الساعة {time}",
+  "dailyOn": "{count, plural, one {كل {days}} two {كل يومين، في {days}} few {كل # أيام، في {days}} many {كل # يومًا، في {days}} other {كل # يوم، في {days}}}، الساعة {time}",
+  "monthlyLast": "في آخر يوم {count, plural, one {من كل شهر} two {من كل شهرين} few {من كل # أشهر} many {من كل # شهرًا} other {من كل # شهر}}، الساعة {time}",
   "alternating": "كل أسبوعين ({days})، بالتناوب بين {first} و{second}",
   "withZone": "{schedule} ({timeZone})"
 }

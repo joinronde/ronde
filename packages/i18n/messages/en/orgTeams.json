@@ -8,7 +8,7 @@
   "create": "Create",
   "cancel": "Cancel",
   "empty": "No team yet",
-  "emptyHint": "Create a first team, then put people in it from their card in the directory.",
+  "emptyHint": "Create a first team, then add people to it from their profile in the directory.",
   "readOnly": "Only the workspace's administrators change the teams.",
   "members": "{count, plural, =0 {Nobody} one {# person} other {# people}}",
   "subTeams": "{count, plural, one {# sub-team} other {# sub-teams}}",
@@ -26,5 +26,5 @@
   "deleteShort": "Delete",
   "deleteConfirm": "Delete the team “{name}”? Its people stay in the directory without a team; its sub-teams move up one level.",
   "noTeam": "No team",
-  "noTeamHint": "Their team is set from their card in the directory."
+  "noTeamHint": "Their team is set from their profile in the directory."
 }

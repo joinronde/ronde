@@ -8,7 +8,7 @@
   "noMeeting": {
     "title": "Kein laufendes Meeting",
     "notPrepared": "{host} hat das nächste Meeting noch nicht vorbereitet. In der Zwischenzeit kannst du deinen Check-in ausfüllen.",
-    "pickDate": "Wähle das Datum des nächsten Meetings, um die Tagesordnung vorzubereiten.",
+    "pickDate": "Wähle das Datum des nächsten Meetings, um die Agenda vorzubereiten.",
     "dateLabel": "Datum des Meetings",
     "prepare": "Meeting vom {date} vorbereiten",
     "addTeamFirst": "Füge zuerst das Team in den Einstellungen hinzu.",
@@ -22,7 +22,7 @@
   "cancel": "Abbrechen",
   "delete": "Löschen",
   "exportCsv": "Als CSV exportieren",
-  "dragToReorder": "Zum Umsortieren ziehen (oder Tasten ↑ ↓)",
+  "dragToReorder": "Zum Sortieren ziehen (oder Pfeiltasten ↑ ↓)",
   "searchPlaceholder": "Suchen…",
   "noResults": "Keine Treffer",
   "showMore": "{count} weitere anzeigen ({total} übrig)"

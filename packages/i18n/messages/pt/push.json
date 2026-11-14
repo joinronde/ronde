@@ -20,7 +20,7 @@
     "notConfigured": "As notificações push não estão configuradas nesta instância.",
     "kinds": "O que você recebe",
     "turn": "Quando minha vez se aproxima",
-    "turnHint": "Durante uma sessão ao vivo: quando você vem logo depois, e depois quando é a sua vez.",
+    "turnHint": "Durante uma sessão ao vivo: quando você é a próxima pessoa e quando chega a sua vez.",
     "reminder": "Lembretes de ficha",
     "reminderHint": "Antes de uma reunião, quando sua ficha ainda está vazia.",
     "inbox": "Ações, agradecimentos e atas",

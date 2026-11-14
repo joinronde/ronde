@@ -1,6 +1,6 @@
 {
   "hostOnlyTitle": "Einstellungen nur für die Moderation ({host})",
-  "hostOnlyBody": "Die Moderation richtet das Meeting, seine Personen und Abschnitte ein. Bitte eine moderierende Person oder eine Admin-Person des Arbeitsbereichs um Änderungen.",
+  "hostOnlyBody": "Die Moderation richtet das Meeting, seine Personen und Abschnitte ein. Bitte sie oder einen Admin des Arbeitsbereichs um Änderungen.",
   "saved": "Einstellungen gespeichert",
   "onePerLine": "Eins pro Zeile",
   "remove": "Entfernen",
@@ -26,15 +26,15 @@
     "target": "Zieldauer",
     "timer": "Timer",
     "autoStart": "Startet bei jedem Beitrag",
-    "announcements": "Ankündigungen im Intro",
+    "announcements": "Ankündigungen im Einstieg",
     "localeWorkspace": "Sprache des Arbeitsbereichs ({language})"
   },
   "sections": {
     "title": "Abschnitte des Check-ins",
     "name": "Name des Abschnitts",
     "nameOf": "Name von Abschnitt {n}",
-    "input": "Eingabe",
-    "inputOf": "Eingabe von „{label}“",
+    "input": "Format",
+    "inputOf": "Format von „{label}“",
     "role": "Rolle",
     "roleOf": "Rolle von „{label}“",
     "roles": {
@@ -55,7 +55,7 @@
         "hint": "Alles andere, das sich zu teilen lohnt."
       },
       "custom": {
-        "label": "Eigener",
+        "label": "Frei",
         "hint": "Ein freier Abschnitt ohne besonderes Verhalten."
       }
     },
@@ -65,9 +65,9 @@
     "carryPlans": "Übernehmen, was beim letzten Mal in „{plan}“ stand",
     "removeOf": "„{label}“ entfernen",
     "reorder": "„{label}“ verschieben",
-    "customPlaceholder": "Z. B. Recherche, Demo zum Zeigen, Brauche Hilfe",
+    "customPlaceholder": "Z. B. Recherche, Demo, Hilfe gesucht",
     "add": "Abschnitt hinzufügen",
-    "hint": "Jede Rolle (erledigt, geplant, Blocker, Sonstiges) gehört zu höchstens einem Abschnitt. Ein Abschnitt behält seine Einträge, wenn sich Name, Rolle oder Eingabe ändern."
+    "hint": "Jede Rolle (erledigt, geplant, Blocker, Sonstiges) gehört zu höchstens einem Abschnitt. Ein Abschnitt behält seine Einträge, wenn sich Name, Rolle oder Format ändern."
   },
   "reminder": {
     "title": "Check-in-Erinnerung",
@@ -76,7 +76,7 @@
     "sameDay": "Am Tag des Meetings, vor der Uhrzeit",
     "time": "Uhrzeit",
     "byEmail": "Per E-Mail an jede Person",
-    "emailHint": "Nur Personen, deren Check-in noch nicht ausgefüllt ist, bekommen die Erinnerung. Mit dem Feld „Erinnerung“ in der Teamliste kannst du jemanden abmelden.",
+    "emailHint": "Nur wer den Check-in noch nicht ausgefüllt hat, bekommt die Erinnerung. Mit dem Kästchen „Erinnerung“ unter „Personen und Rollen“ schaltest du sie für einzelne Personen ab.",
     "noSmtp": "Kein Mailserver eingerichtet: Setze SMTP_URL im Container, um E-Mail-Erinnerungen einzuschalten.",
     "teamHint": "Eine gemeinsame Erinnerung in einem Team-Raum richtest du unter „Benachrichtigungen“ ein."
   },
@@ -95,14 +95,14 @@
     "configure": "Einrichten",
     "close": "Schließen",
     "off": "Aus",
-    "turnOn": "In Module aktivieren",
+    "turnOn": "Unter „Module“ einschalten",
     "connected": "Verbunden",
-    "toConnect": "Zu verbinden",
+    "toConnect": "Nicht verbunden",
     "configured": "Eingerichtet",
-    "toSetUp": "Einzurichten",
+    "toSetUp": "Nicht eingerichtet",
     "ready": "Link bereit",
     "synced": "Synchronisiert",
-    "noneInWorkspace": "Keines im Arbeitsbereich",
+    "noneInWorkspace": "Kein Wiki im Arbeitsbereich",
     "rulesOn": "{count, plural, one {# Regel aktiv} other {# Regeln aktiv}}",
     "gitlab": "Issues und Merge Requests jeder Person in ihrem Check-in",
     "github": "Issues und Pull Requests der verfolgten Repositorys",
@@ -111,16 +111,16 @@
     "videoName": "Videoanruf",
     "video": "Der Link, über den alle beitreten",
     "calendarName": "Kalender",
-    "calendar": "Die Sitzungen in den Kalendern aller, synchronisiert",
+    "calendar": "Die Sitzungen in den Kalendern aller, immer synchron",
     "notificationsName": "Benachrichtigungen",
     "notifications": "Chat, E-Mail und SMS rund um das Meeting",
-    "goGeneral": "Unter Allgemein",
-    "goSchedule": "Unter Planung",
-    "goNotifications": "Unter Benachrichtigungen",
+    "goGeneral": "Unter „Allgemein“",
+    "goSchedule": "Unter „Zeitplan“",
+    "goNotifications": "Unter „Benachrichtigungen“",
     "origin": {
       "inherited": "Vom Arbeitsbereich übernommen",
       "workspace": "Vom Arbeitsbereich",
-      "meeting": "Eigenes dieses Meetings",
+      "meeting": "Nur für dieses Meeting",
       "instance": "Vom Server"
     }
   },
@@ -154,18 +154,18 @@
     "roles": {
       "host": "Moderation",
       "cohost": "Co-Moderation",
-      "participant": "Teilnehmend",
-      "observer": "Beobachtend"
+      "participant": "Teilnahme",
+      "observer": "Beobachtung"
     },
     "roleHints": {
-      "host": "Leitet die Sitzungen und richtet das Meeting ein",
-      "cohost": "Leitet die Sitzungen",
-      "participant": "Füllt einen Check-in aus und nimmt teil",
-      "observer": "Verfolgt die Sitzungen, ohne Check-in"
+      "host": "Leitet die Sitzungen in der Regie, richtet das Meeting ein und veröffentlicht das Protokoll",
+      "cohost": "Leitet die Sitzungen in der Regie, ohne die Einstellungen zu ändern",
+      "participant": "Füllt vor jeder Sitzung einen Check-in aus und ist in der Runde dran",
+      "observer": "Verfolgt die Sitzungen live und liest das Protokoll, ohne Check-in und ohne eigenen Beitrag"
     },
     "roleOf": "Rolle von {name}",
-    "speaks": "Ist dran",
-    "speaksOf": "{name} ist in der Runde dran",
+    "speaks": "Spricht in der Runde",
+    "speaksOf": "{name} spricht in der Runde",
     "speaksHint": "Teil der Runde",
     "remind": "Erinnerung",
     "remindOf": "{name} erinnern",
@@ -186,12 +186,12 @@
   },
   "template": {
     "title": "Dieses Format wiederverwenden",
-    "intro": "Weitere Meetings aus diesem erstellen: Die Vorlage wird beim Anlegen eines Meetings im Arbeitsbereich angeboten.",
-    "carries": "Geht in die Vorlage",
+    "intro": "Lege weitere Meetings nach diesem Vorbild an: Die Vorlage wird angeboten, wenn jemand im Arbeitsbereich ein Meeting anlegt.",
+    "carries": "Wird übernommen",
     "stays": "Bleibt in diesem Meeting",
     "items": {
       "sections": "Abschnitte des Check-ins",
-      "agenda": "Tagesordnung",
+      "agenda": "Agenda",
       "modules": "Module",
       "schedule": "Zeitplan",
       "people": "{count, plural, one {# Person und ihre Rolle} other {# Personen und ihre Rollen}}",
@@ -208,12 +208,12 @@
     "description": "Beschreibung (optional)",
     "save": "Vorlage speichern",
     "cancel": "Abbrechen",
-    "saved": "Vorlage gespeichert: Sie wird beim Anlegen eines Meetings angeboten."
+    "saved": "Vorlage gespeichert. Sie wird beim Anlegen eines Meetings angeboten."
   },
   "nav": {
     "label": "Kategorien der Einstellungen",
     "general": "Allgemein",
-    "schedule": "Termine",
+    "schedule": "Zeitplan",
     "people": "Personen und Rollen",
     "sections": "Abschnitte",
     "modules": "Module",
@@ -227,17 +227,17 @@
   },
   "navHints": {
     "general": "Name, Symbol, Format und Timer des Meetings.",
-    "schedule": "Wann die Sitzungen stattfinden, und ihre Ausnahmen.",
+    "schedule": "Wann die Sitzungen stattfinden und welche Ausnahmen gelten.",
     "people": "Wer teilnimmt und was jede Person darf.",
     "sections": "Was alle vor dem Meeting ausfüllen.",
     "agenda": "Der Ablauf des Meetings, Block für Block.",
-    "projects": "Die verfolgten Projekte, jedes mit seiner Runde.",
-    "modules": "Moderation, Formate und Werkzeuge, nach Bedarf aktiviert.",
+    "projects": "Die verfolgten Projekte, jedes mit eigenem Beitrag in der Projektrunde.",
+    "modules": "Moderation, Formate und Werkzeuge, nach Bedarf einschalten.",
     "appearance": "Die Farbe des Meetings auf allen Bildschirmen.",
     "notifications": "Erinnerungen und Nachrichten rund um das Meeting.",
-    "integrations": "Videokonferenz, Ticket-Tools und Wiki.",
+    "integrations": "Videoanruf, Ticketsysteme und Wiki.",
     "template": "Dieses Meeting als Vorlage des Arbeitsbereichs speichern.",
-    "danger": "Was sich nicht rückgängig machen lässt: verlassen, beenden oder löschen."
+    "danger": "Was sich nicht rückgängig machen lässt: das Meeting löschen."
   },
   "status": {
     "auto": "Änderungen werden automatisch gespeichert.",
@@ -262,7 +262,7 @@
   },
   "danger": {
     "title": "Meeting löschen",
-    "hint": "Das Meeting verschwindet aus allen Listen und seine Seiten schließen sich für alle. Der Verlauf bleibt im Arbeitsbereich erhalten.",
+    "hint": "Das Meeting verschwindet aus allen Listen, und seine Seiten sind für niemanden mehr erreichbar. Der Verlauf bleibt im Arbeitsbereich erhalten.",
     "confirm": "Gib <strong>{name}</strong> zur Bestätigung ein",
     "remove": "Meeting löschen"
   },
@@ -277,14 +277,14 @@
     "link": "Link zum Videoanruf",
     "linkHint": "Oben auf jeder Seite und in den E-Mails angezeigt.",
     "jitsiUrl": "Jitsi-Server",
-    "jitsiHint": "Leer: meet.jit.si. Der Raumname wird einmal schwer erratbar gezogen und bleibt für alle Sitzungen gleich.",
+    "jitsiHint": "Leer: meet.jit.si. Der Raumname wird einmalig zufällig erzeugt, ist schwer zu erraten und bleibt für alle Sitzungen gleich.",
     "bbbUrl": "BigBlueButton-Server",
     "server": "Server",
-    "ownServer": "Ein eigener Server dieses Meetings",
-    "serverHint": "Die Server des Arbeitsbereichs fügen seine Administratoren in den Einstellungen des Arbeitsbereichs hinzu.",
+    "ownServer": "Eigener Server nur für dieses Meeting",
+    "serverHint": "Server für den ganzen Arbeitsbereich fügen die Admins in den Einstellungen des Arbeitsbereichs hinzu.",
     "bbbSecret": "Gemeinsames Secret des Servers",
-    "bbbHint": "Ronde öffnet den Raum, wenn jemand beitritt, und lässt jede Person mit ihrem Namen herein; die Moderation tritt als Moderator bei. Das Secret wird verschlüsselt und nie wieder angezeigt.",
-    "current": "Personen treten bei über:",
+    "bbbHint": "Ronde öffnet den Raum, wenn jemand beitritt, und lässt jede Person mit ihrem Namen herein; die Moderation erhält dort Moderationsrechte. Das Secret wird verschlüsselt und nie wieder angezeigt.",
+    "current": "Beitritt über:",
     "tryIt": "den BigBlueButton-Raum",
     "save": "Videoanruf speichern",
     "createWith": "Dauerhaften Raum anlegen mit:",

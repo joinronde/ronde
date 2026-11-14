@@ -7,7 +7,7 @@
   "enabled": "{name} activado",
   "disabled": "{name} desactivado",
   "categories": {
-    "facilitation": "Dinamización",
+    "facilitation": "Facilitación",
     "organisation": "Organización",
     "formats": "Formatos",
     "integrations": "Integraciones",
@@ -40,11 +40,11 @@
     },
     "hands": {
       "name": "Manos levantadas y preguntas",
-      "description": "Levanta la mano o haz una pregunta durante un turno: después de ese turno viene una etapa de preguntas."
+      "description": "Levanta la mano o haz una pregunta durante un turno: después de ese turno viene un paso de preguntas."
     },
     "kudos": {
       "name": "Agradecimientos",
-      "description": "Da las gracias a un compañero durante la reunión; los agradecimientos aparecen en todas las pantallas y en las actas."
+      "description": "Da las gracias a alguien del equipo durante la reunión; los agradecimientos aparecen en todas las pantallas y en el acta."
     },
     "spotlight": {
       "name": "Foco",
@@ -56,7 +56,7 @@
     },
     "sounds": {
       "name": "Sonidos",
-      "description": "Música de espera, avisos y una mesa de sonidos, en la pantalla de cada persona o en la pantalla compartida."
+      "description": "Música de espera, avisos y una botonera de sonidos, en la pantalla de cada persona o en la pantalla compartida."
     },
     "ambience": {
       "name": "Ambiente de temporada",
@@ -64,7 +64,7 @@
     },
     "gitlab": {
       "name": "GitLab",
-      "description": "Los tickets y merge requests recientes de cada persona, para importarlos en su ficha."
+      "description": "Las incidencias y merge requests recientes de cada persona, para importarlas en su ficha."
     },
     "workflows": {
       "name": "Flujos de notificación",
@@ -72,7 +72,7 @@
     },
     "aiAssistant": {
       "name": "Asistente de IA",
-      "description": "Resumen de la reunión y extracción de acciones; con tu propia clave en autoalojado."
+      "description": "Resumen de la reunión y extracción de acciones; en autoalojado, con tu propia clave."
     },
     "writeBack": {
       "name": "Creación de tickets",
@@ -92,15 +92,15 @@
     },
     "rotation": {
       "name": "Roles rotativos",
-      "description": "Quién dinamiza y quién toma notas cambia en cada sesión, siguiendo el orden de la ronda."
+      "description": "Quién facilita y quién toma notas cambia en cada sesión, siguiendo el orden de la ronda."
     },
     "retro": {
       "name": "Retrospectiva",
-      "description": "Notas anónimas en columnas, agrupadas por el anfitrión, votadas por el equipo y luego comentadas; añádela al orden del día."
+      "description": "Notas anónimas en columnas, agrupadas por el anfitrión, votadas por el equipo y luego debatidas; añádela al orden del día."
     },
     "timebox": {
-      "name": "Tiempo acotado",
-      "description": "Un tema propio en el orden del día, con su duración y sus notas en las actas."
+      "name": "Tema cronometrado",
+      "description": "Un tema propio en el orden del día, con su duración y sus notas en el acta."
     },
     "poker": {
       "name": "Planning poker",
@@ -115,8 +115,8 @@
       "description": "Una ruleta para elegir quién sigue, un orden de intervención al azar, equipos al azar o cara o cruz, en todas las pantallas a la vez."
     },
     "parking": {
-      "name": "Aparcamiento",
-      "description": "Aparta con un clic lo que surge fuera de tema; se convierte en un tema abierto de la siguiente sesión."
+      "name": "Temas apartados",
+      "description": "Aparta con un clic lo que surge fuera de tema; pasa a ser un tema abierto de la siguiente sesión."
     },
     "decisions": {
       "name": "Registro de decisiones",
@@ -124,7 +124,7 @@
     },
     "github": {
       "name": "GitHub",
-      "description": "Los tickets y pull requests recientes de cada persona, importados en su ficha con un clic."
+      "description": "Las incidencias y pull requests recientes de cada persona, importadas en su ficha con un clic."
     },
     "video": {
       "name": "Videollamada",
@@ -132,7 +132,7 @@
     },
     "async": {
       "name": "Modo asíncrono",
-      "description": "Sin sesión en directo: cada persona rellena su ficha y comenta, y el resumen se envía por correo a la hora prevista."
+      "description": "Sin sesión en directo: cada persona completa su ficha y comenta, y el resumen se envía por correo a la hora prevista."
     }
   },
   "upgrade": {

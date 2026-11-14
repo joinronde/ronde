@@ -12,7 +12,7 @@
     "tabOpen": "Aba aberta",
     "notOpen": "Ainda não aberta",
     "shareTab": "Na chamada de vídeo, compartilhe <strong>a aba</strong> “Tela compartilhada” em vez da tela inteira.",
-    "keys": "Conduza por esta aba: <kbd>→</kbd> próximo, <kbd>←</kbd> anterior, <kbd>Espaço</kbd> cronômetro.",
+    "keys": "Conduza por esta aba: <kbd>→</kbd> avança, <kbd>←</kbd> volta, <kbd>Espaço</kbd> controla o cronômetro.",
     "remote": "Ou conduza pelo celular."
   },
   "blocks": {
@@ -34,7 +34,8 @@
   "shortcut": "Atalho: {key}",
   "spaceKey": "Espaço",
   "timerTools": "Cronômetro",
-  "bonusHint": "Mais 30 segundos para esta vez",
+  "bonusHint": "Mais 30 segundos para quem está falando",
+  "bonus": "+30 s",
   "checkInsFilled": "{filled}/{total} fichas preenchidas",
   "then": "Depois: {next}",
   "endOfMeeting": "fim da reunião",
@@ -55,7 +56,7 @@
   "reviewMinutes": "Rever e publicar a ata",
   "endedTitle": "A reunião terminou: um último passo",
   "endedNext": "Revise a ata e complete suas notas se precisar, depois publique-a: ela vai para todos e a próxima reunião é preparada. Sem tempo agora? Encerre a reunião e escreva-a depois pelo histórico.",
-  "pendingRequests": "{count, plural, one {# mão levantada ou pergunta pendente} other {# mãos levantadas ou perguntas pendentes}}",
+  "pendingRequests": "{count, plural, =0 {# mãos levantadas ou perguntas pendentes} one {# mão levantada ou pergunta pendente} other {# mãos levantadas ou perguntas pendentes}}",
   "panes": {
     "run": "Pauta",
     "live": "Ao vivo",
@@ -109,7 +110,7 @@
     "board": "Mesa de sons",
     "birthdayOf": "Aniversário {names}",
     "music": "Música de espera",
-    "musicHint": "Só antes do início, em loop: ela some aos poucos quando a reunião começa.",
+    "musicHint": "Só antes do início, em loop: ela diminui aos poucos quando a reunião começa.",
     "cues": "Sinais automáticos"
   },
   "notes": {
@@ -122,7 +123,7 @@
     "pinned": "Você está terminando as notas de <strong>{pinned}</strong>; a tela passou para {label}.",
     "switchTo": "Ir para as notas de {label}",
     "addTo": "Adicionar às notas de {label}",
-    "placeholder": "O que a equipe deve lembrar desta vez. Por exemplo:\n{decision}: passamos para o novo pipeline de deploy\nOs testes de aceitação passam para o dia 15, a confirmar com o cliente",
+    "placeholder": "O que a equipe deve lembrar desta etapa. Por exemplo:\n{decision}: passamos para o novo pipeline de deploy\nOs testes de aceitação passam para o dia 15, a confirmar com o cliente",
     "decisionHint": "Adiciona uma decisão: ela também aparecerá no topo da ata",
     "actionHint": "Cria uma ação de acompanhamento com responsável: ela será acompanhada nas próximas semanas",
     "newAction": "Ação de acompanhamento",
@@ -156,15 +157,15 @@
   "unsavedCheckIn": "As alterações da ficha não foram salvas.",
   "closeAnyway": "Fechar mesmo assim",
   "keepEditing": "Continuar editando",
-  "meetingOf": "Reunião de",
+  "meetingOf": "Data da reunião",
   "meetingMoved": "Reunião remarcada para {date}",
   "pastDate": "Data passada: escolha a data desta reunião.",
   "live": {
     "during": "durante {step}",
     "asksToSpeak": "pede a palavra",
     "reopen": "Reabrir",
-    "floorGiven": "Palavra dada",
-    "markAnswered": "Marcar como respondida",
+    "floorGiven": "Palavra concedida",
+    "markAnswered": "Marcar como tratada",
     "pending": "Pendentes ({count})",
     "noHands": "Ninguém levantou a mão.",
     "handled": "Tratadas",
@@ -186,7 +187,7 @@
   },
   "topics": {
     "handled": "Assunto tratado",
-    "votes": "{count, plural, one {# voto} other {# votos}}",
+    "votes": "{count, plural, =0 {# votos} one {# voto} other {# votos}}",
     "showBig": "Destacar",
     "featured": "Em destaque",
     "unfeature": "Retirar da tela compartilhada",
@@ -214,8 +215,8 @@
     "actions": "{count, plural, =0 {Nenhuma ação de acompanhamento criada} one {# ação de acompanhamento criada} other {# ações de acompanhamento criadas}}",
     "withoutNotes": "Sem notas:",
     "completeNotes": "Completar as notas sobre {name}",
-    "allNoted": "Todas as vezes têm notas",
-    "hint": "Nada a lembrar sobre alguém? Acontece. Senão, clique no nome da pessoa para completar as {notes}."
+    "allNoted": "Nenhuma vez sem notas",
+    "hint": "Nada a anotar sobre alguém? Acontece. Senão, clique no nome da pessoa para completar as notas dela."
   },
   "minutesPane": {
     "generationFailed": "Não foi possível gerar a ata.",
@@ -244,7 +245,7 @@
     "summaryPlaceholder": "Em poucas linhas: o que lembrar desta reunião (opcional)",
     "draft": "Encerrar, escrever depois",
     "draftHint": "A equipe já pode preparar a próxima reunião. A ata espera por você como rascunho no histórico.",
-    "draftAsk": "Encerrar a reunião e esvaziar os check-ins dos presentes? A ata vai esperar por você como rascunho no histórico.",
+    "draftAsk": "Encerrar a reunião e esvaziar as fichas dos presentes? A ata vai esperar por você como rascunho no histórico.",
     "draftYes": "Sim, encerrar",
     "drafted": "Reunião encerrada, a próxima está pronta. Complete a ata pelo histórico e depois publique-a."
   },
@@ -261,9 +262,9 @@
   },
   "startedAnnounced": "A equipe foi avisada.",
   "remote": {
-    "title": "Controle pelo celular",
+    "title": "Controle remoto no celular",
     "hint": "Escaneie este código com o celular, conectado à sua conta: botões grandes para avançar, pausar e dar tempo extra, enquanto a tela compartilhada acompanha.",
-    "scan": "QR code do controle pelo celular"
+    "scan": "QR code do controle remoto"
   },
   "parking": {
     "title": "Estacionamento",
@@ -284,13 +285,13 @@
     "confirm": "Encerrar esta sessão e enviar o resumo por e-mail para a equipe agora?",
     "yes": "Sim, publicar",
     "published": "Resumo publicado",
-    "orLive": "Você ainda pode começar uma reunião ao vivo no lugar."
+    "orLive": "Você ainda pode começar uma reunião ao vivo em vez disso."
   },
-  "startToday": "Esta sessão estava prevista para outro dia: começar agora a coloca na data de hoje, e a data prevista continua na agenda.",
+  "startToday": "Esta sessão estava prevista para outro dia: se você começar agora, ela passa para hoje, e a data prevista continua no agendamento.",
   "projectSpeakers": "Apresentam o projeto: {names}",
   "projectNoSpeaker": "Ninguém do projeto está aqui: a ficha fala por ele.",
   "projectAway": "ausentes: {names}",
-  "projectHealthSet": "Situação do projeto atualizada",
+  "projectHealthSet": "Saúde do projeto atualizada",
   "projectOrder": "Ordem dos projetos",
   "projectReorder": "Mover {name}",
   "projectShuffle": "Sortear a ordem",
@@ -302,16 +303,16 @@
   "projectUnadd": "Tirar {name} da rodada desta sessão",
   "sheets": {
     "title": "Fichas de projeto",
-    "todo": "{count, plural, one {# a completar} other {# a completar}}",
+    "todo": "{count, plural, =0 {# a completar} one {# a completar} other {# a completar}}",
     "allDone": "Todas completas",
     "health": "saúde",
     "headline": "mensagem do dia",
-    "lines": "{count, plural, one {# linha} other {# linhas}}",
+    "lines": "{count, plural, =0 {# linhas} one {# linha} other {# linhas}}",
     "showAll": "Mostrar também as completas ({count} no total)",
-    "search": "Procurar um projeto",
+    "search": "Buscar um projeto",
     "complete": "Completa",
     "missing": "Falta: {what}",
     "noMatch": "Nenhum projeto com esse nome a completar.",
-    "allDoneHint": "Todas as fichas estão completas: saúde, mensagem do dia e uma linha de cada uma das suas pessoas."
+    "allDoneHint": "Todas as fichas estão completas: saúde, mensagem do dia e uma linha de cada pessoa do projeto."
   }
 }

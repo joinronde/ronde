@@ -6,8 +6,8 @@
     "hoursMinutes": "{h} h {m} min"
   },
   "noMeeting": {
-    "title": "Ninguna reunión en curso",
-    "notPrepared": "{host} todavía no ha preparado la próxima reunión. Mientras tanto, puedes rellenar tu ficha.",
+    "title": "No hay ninguna reunión en curso",
+    "notPrepared": "{host} todavía no ha preparado la próxima reunión. Mientras tanto, puedes completar tu ficha.",
     "pickDate": "Elige la fecha de la próxima reunión para preparar el orden del día.",
     "dateLabel": "Fecha de la reunión",
     "prepare": "Preparar la reunión del {date}",
@@ -22,7 +22,7 @@
   "cancel": "Cancelar",
   "delete": "Eliminar",
   "exportCsv": "Exportar en CSV",
-  "dragToReorder": "Arrastrar para reordenar (o teclas ↑ ↓)",
+  "dragToReorder": "Arrastra para reordenar (o usa las teclas ↑ ↓)",
   "searchPlaceholder": "Buscar…",
   "noResults": "Sin resultados",
   "showMore": "Mostrar {count} más ({total} restantes)"

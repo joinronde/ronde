@@ -1,13 +1,13 @@
 {
   "loading": "جارٍ تحميل الإحصاءات…",
   "empty": "تظهر الإحصاءات بعد نشر أول محضر.",
-  "plannedDoneTip": "أُنجز {done} من {planned} بنود مخطط لها في المرة السابقة",
-  "presentTip": "{count} حاضرون",
+  "plannedDoneTip": "أُنجز {done} من أصل {planned} مما خُطّط له في المرة السابقة",
+  "presentTip": "الحاضرون: {count}",
   "absentTip": "الغائبون: {names}",
-  "exchangesTip": "{questions, plural, zero {لا أسئلة} one {سؤال واحد} two {سؤالان} few {# أسئلة} many {# سؤالًا} other {# سؤال}} · {hands, plural, zero {لا أيدٍ مرفوعة} one {يد مرفوعة واحدة} two {يدان مرفوعتان} few {# أيدٍ مرفوعة} many {# يدًا مرفوعة} other {# يد مرفوعة}} · {kudos} رسائل شكر · {answers, plural, zero {لا إجابات لكسر الجليد} one {إجابة واحدة لكسر الجليد} two {إجابتان لكسر الجليد} few {# إجابات لكسر الجليد} many {# إجابة لكسر الجليد} other {# إجابة لكسر الجليد}}",
+  "exchangesTip": "{questions, plural, zero {لا أسئلة} one {سؤال واحد} two {سؤالان} few {# أسئلة} many {# سؤالًا} other {# سؤال}} · {hands, plural, zero {لا أيدٍ مرفوعة} one {يد مرفوعة واحدة} two {يدان مرفوعتان} few {# أيدٍ مرفوعة} many {# يدًا مرفوعة} other {# يد مرفوعة}} · رسائل الشكر: {kudos} · {answers, plural, zero {لا إجابات لكسر الجليد} one {إجابة واحدة لكسر الجليد} two {إجابتان لكسر الجليد} few {# إجابات لكسر الجليد} many {# إجابة لكسر الجليد} other {# إجابة لكسر الجليد}}",
   "durationTip": "المدة: {duration}",
   "blockersTip": "{count, plural, zero {لا عوائق} one {عائق واحد مطروح} two {عائقان مطروحان} few {# عوائق مطروحة} many {# عائقًا مطروحًا} other {# عائق مطروح}}",
-  "moodTip": "{avg}/5 · {count} إجابات",
+  "moodTip": "{avg}/5 · الإجابات: {count}",
   "kpi": {
     "archived": "الجلسات المنعقدة",
     "since": "منذ {date}",
@@ -17,15 +17,15 @@
     "speakingTarget": "الهدف {target} لكل شخص",
     "actions": "إجراءات المتابعة",
     "open": "{count} مفتوحة",
-    "resolved": "{count} محلولة",
-    "median": "خلال {days} ي (الوسيط)",
+    "resolved": "{count} منجزة",
+    "median": "المدة الوسيطة بالأيام: {days}",
     "plannedDoneHint": "نسبة ما خُطط له في اجتماع ويظهر في «منجز» في الاجتماع التالي",
     "plannedDone": "مخطط ← منجز",
-    "ofPlanned": "من {count} بنود مخططة",
+    "ofPlanned": "من أصل {count} من البنود المخطط لها",
     "afterTwo": "بعد جلستين",
     "attendance": "الحضور",
     "perMeeting": "في المتوسط لكل اجتماع",
-    "onTime": "أدوار في وقتها",
+    "onTime": "الأدوار في وقتها",
     "avgOverrun": "متوسط التجاوز {over}",
     "noOverrun": "لا تجاوز",
     "stale": "إجراءات عالقة",
@@ -64,12 +64,12 @@
   "blockersColumn": "العوائق",
   "recurring": {
     "title": "عوائق متكررة",
-    "times": "طُرح {count} مرات ({dates})",
+    "times": "عدد مرات الطرح: {count} ({dates})",
     "withAction": "إجراء مفتوح",
     "withoutAction": "بلا إجراء",
     "none": "لا يتكرر أي عائق من اجتماع إلى آخر."
   },
-  "staleSince": "مفتوح منذ {days} أيام",
+  "staleSince": "مفتوح منذ {days} يومًا",
   "fromMeeting": "(اجتماع {date})",
   "projects": {
     "title": "التقدّم حسب المشروع",
@@ -78,7 +78,7 @@
     "perMeeting": "لكل اجتماع",
     "last": "آخر تقدّم"
   },
-  "fileName": "ihsaat",
+  "fileName": "الإحصاءات",
   "csv": {
     "durationMin": "المدة (دقيقة)",
     "present": "الحاضرون",
@@ -92,5 +92,5 @@
     "mood": "المزاج",
     "rating": "الفائدة"
   },
-  "ratingTip": "{avg}/5 · {count} تقييم"
+  "ratingTip": "{avg}/5 · التقييمات: {count}"
 }

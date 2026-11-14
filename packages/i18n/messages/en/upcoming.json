@@ -14,6 +14,6 @@
   "copied": "Copied",
   "feedHint": "Paste this private link in your calendar app (subscribe by URL); it follows every change. Creating a new link turns this one off.",
   "openInApp": "Open in my calendar app",
-  "facilitator": "{name} facilitates",
-  "noteTaker": "{name} takes notes"
+  "facilitator": "Facilitator: {name}",
+  "noteTaker": "Note-taker: {name}"
 }

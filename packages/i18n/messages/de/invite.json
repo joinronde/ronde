@@ -14,6 +14,6 @@
   "expired": "Diese Einladung zu {workspace} ist abgelaufen. Bitte die Person, die dich eingeladen hat, um eine neue.",
   "memberTitle": "Du bist schon dabei",
   "member": "Du bist bereits Mitglied von {workspace}.",
-  "memberOther": "Diese Einladung ist für <strong>{email}</strong>: Schick ihr oder ihm den Link, damit sie oder er beitreten kann.",
+  "memberOther": "Diese Einladung gilt für <strong>{email}</strong>. Schick den Link an diese Adresse weiter.",
   "open": "{workspace} öffnen"
 }

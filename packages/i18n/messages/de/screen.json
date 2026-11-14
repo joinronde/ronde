@@ -7,11 +7,11 @@
     "dark": "Dunkel"
   },
   "reducedMotion": "Weniger Bewegung",
-  "ambience": "Stimmung des Wartebildschirms",
+  "ambience": "Ambiente des Wartebildschirms",
   "previewTheme": "Design ansehen",
   "replayIntro": "Intro erneut abspielen",
   "fullscreen": "Vollbild",
   "drivenFromControl": "Dieser Tab wird von der Regie gesteuert.",
   "yourTurn": "Du bist dran, <span>{name}</span>!",
-  "poweredBy": "Mit Ronde"
+  "poweredBy": "Läuft mit Ronde"
 }

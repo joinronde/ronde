@@ -1,6 +1,6 @@
 {
   "title": "Crea il tuo spazio di lavoro",
-  "welcome": "Benvenuto, {name}!",
+  "welcome": "Ti diamo il benvenuto, {name}!",
   "intro": "Uno spazio di lavoro riunisce il tuo team: persone, riunioni e modelli. Puoi crearne altri in seguito.",
   "name": "Nome dello spazio di lavoro",
   "namePlaceholder": "Team di prodotto",
@@ -12,7 +12,7 @@
   "timezone": "Fuso orario",
   "create": "Crea lo spazio di lavoro",
   "invitationsTitle": "Hai ricevuto un invito",
-  "join": "Partecipa",
+  "join": "Unisciti",
   "createOwn": "Oppure crea il tuo spazio di lavoro",
   "yourWorkspaces": "I tuoi spazi di lavoro",
   "open": "Apri"

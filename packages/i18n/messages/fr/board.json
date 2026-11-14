@@ -6,13 +6,13 @@
   "done": "Terminé",
   "customiseHint": "Déplacer les blocs, choisir le nombre de colonnes",
   "customise": "Personnaliser la page",
-  "customiseCustom": "Personnaliser la page · disposition perso",
-  "dragHint": "Déplacer « {title} » : attrapez et déposez où vous voulez",
-  "move": "Déplacer le bloc « {title} »",
+  "customiseCustom": "Personnaliser la page · disposition personnalisée",
+  "dragHint": "Déplacer « {title} » : attrapez et déposez où vous voulez",
+  "move": "Déplacer le bloc « {title} »",
   "up": "Monter",
   "down": "Descendre",
   "left": "Colonne de gauche",
   "right": "Colonne de droite",
   "dropAtEnd": "Déposez ici pour placer en bas de colonne",
-  "dropEmpty": "Colonne vide : dépose un bloc ici"
+  "dropEmpty": "Colonne vide : déposez un bloc ici"
 }

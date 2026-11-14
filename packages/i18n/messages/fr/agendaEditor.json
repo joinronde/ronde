@@ -1,6 +1,6 @@
 {
   "title": "Ordre du jour",
-  "intro": "Les étapes de chaque séance, dans l'ordre. La clôture termine toujours la réunion.",
+  "intro": "Les étapes de chaque séance, dans l’ordre. La clôture termine toujours la réunion.",
   "end": "Clôture et compte rendu",
   "endHint": "toujours en dernier",
   "blocks": {
@@ -8,49 +8,49 @@
     "round": "Tour de table",
     "topics": "Points divers",
     "retro": "Rétrospective",
-    "timebox": "Timebox",
+    "timebox": "Sujet minuté",
     "poker": "Planning poker",
-    "projects": "Tour par projet",
-    "slide": "Slide"
+    "projects": "Tour des projets",
+    "slide": "Diapositive"
   },
   "blockHints": {
     "intro": "Accueil, annonces et brise-glace, avant le premier tour",
-    "round": "Chacun son tour, minuté, avec sa fiche à l'écran",
+    "round": "Chacun son tour, minuté, avec sa fiche à l’écran",
     "projects": "Projet par projet, ses membres parlent ensemble",
-    "topics": "Les sujets apportés et votés par l'équipe",
+    "topics": "Les sujets apportés et votés par l’équipe",
     "timebox": "Un sujet à part, avec sa propre durée",
     "retro": "Des notes anonymes en colonnes, regroupées, votées puis discutées",
-    "poker": "L'équipe estime des éléments avec des cartes cachées",
-    "slide": "Un écran à part entière : contenu libre, irritants de l'équipe ou revue des actions ouvertes"
+    "poker": "L’équipe estime des éléments avec des cartes cachées",
+    "slide": "Un écran à part entière : contenu libre, irritants de l’équipe ou revue des actions ouvertes"
   },
   "timeboxTitle": "Sujet",
   "minutes": "Minutes",
-  "remove": "Retirer « {label} »",
-  "reorder": "Déplacer « {label} »",
+  "remove": "Retirer « {label} »",
+  "reorder": "Déplacer « {label} »",
   "add": "Ajouter un bloc",
-  "alreadyThere": "Déjà dans l'ordre du jour",
+  "alreadyThere": "Déjà dans l’ordre du jour",
   "newTimebox": "Nouveau sujet",
   "saved": "Ordre du jour enregistré",
-  "turnOn": "Activez le module dans « Modules » pour ajouter ce bloc.",
-  "locked": "Une séance est en cours : l'ordre du jour pourra changer une fois terminée.",
-  "noProjects": "choisissez les projets suivis par la réunion dans « Projets ».",
+  "turnOn": "Activez le module dans « Modules » pour ajouter ce bloc.",
+  "locked": "Une séance est en cours : l’ordre du jour pourra changer une fois terminée.",
+  "noProjects": "choisissez les projets suivis par la réunion dans « Projets ».",
   "projectOrder": "Ordre des projets",
   "projectOrders": {
-    "manual": "Dans l'ordre de la réunion",
+    "manual": "Dans l’ordre de la réunion",
     "theme": "Par thème",
-    "health": "Projets en difficulté d'abord"
+    "health": "Projets en difficulté d’abord"
   },
   "perProject": "min par projet",
   "perProjectAuto": "auto",
   "newSlide": "Irritants",
-  "slideTitle": "Titre de la slide",
-  "slideKind": "À quoi sert la slide",
+  "slideTitle": "Titre de la diapositive",
+  "slideKind": "À quoi sert la diapositive",
   "slideKinds": {
     "free": "Contenu libre",
     "irritants": "Irritants",
     "actions": "Revue des actions ouvertes"
   },
   "slideAnonymous": "Sans les noms",
-  "slideBody": "Texte à l'écran",
-  "slideBodyHint": "Markdown : contexte, chiffres, rappel des règles…"
+  "slideBody": "Texte à l’écran",
+  "slideBodyHint": "Markdown : contexte, chiffres, rappel des règles…"
 }
