@@ -7,7 +7,7 @@
     "weekly": "Every week",
     "weekdays": "Every weekday",
     "daily": "Every day",
-    "monthlyNth": "A weekday of the month",
+    "monthlyNth": "A day of the week (e.g. the first Monday)",
     "monthlyDay": "A day of the month"
   },
   "every": "Every",
@@ -75,7 +75,7 @@
   "skip": "Skip",
   "skipped": "Date skipped",
   "restore": "Restore",
-  "reset": "Back to usual",
+  "reset": "Undo the move",
   "restored": "Date restored",
   "newDate": "New date",
   "newTime": "New time",

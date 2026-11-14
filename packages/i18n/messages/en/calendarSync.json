@@ -5,7 +5,7 @@
   "addAccount": "Add one in the workspace settings",
   "account": "Calendar account",
   "none": "Do not write the sessions into calendars",
-  "accountHint": "Invitations are sent by the organizer of this account.",
+  "accountHint": "Invitations are sent from this account.",
   "written": "{count, plural, =0 {Calendars are up to date.} one {# event written.} other {# events written.}}",
   "removed": "Coming events removed from the calendars.",
   "synced": "{count, plural, =0 {Calendars are up to date.} one {# event updated.} other {# events updated.}}",

@@ -4,10 +4,10 @@
   "plannedDoneTip": "{done} of {planned} items planned the time before are done",
   "presentTip": "{count} present",
   "absentTip": "absent: {names}",
-  "exchangesTip": "{questions, plural, one {# question} other {# questions}} · {hands, plural, one {# raised hand} other {# raised hands}} · {kudos} kudos · {answers, plural, one {# icebreaker answer} other {# icebreaker answers}}",
+  "exchangesTip": "{questions, plural, one {# question} other {# questions}} · {hands, plural, one {# raised hand} other {# raised hands}} · {kudos, plural, one {# kudos} other {# kudos}} · {answers, plural, one {# icebreaker answer} other {# icebreaker answers}}",
   "durationTip": "Duration: {duration}",
   "blockersTip": "{count, plural, one {# blocker raised} other {# blockers raised}}",
-  "moodTip": "{avg}/5 · {count} answers",
+  "moodTip": "{avg}/5 · {count, plural, one {# answer} other {# answers}}",
   "kpi": {
     "archived": "Sessions held",
     "since": "since {date}",
@@ -17,8 +17,8 @@
     "speakingTarget": "target {target} per person",
     "actions": "Follow-up actions",
     "open": "{count} open",
-    "resolved": "{count} resolved",
-    "median": "in {days} d (median)",
+    "resolved": "{count} done",
+    "median": "in {days, plural, one {# day} other {# days}} (median)",
     "plannedDoneHint": "Share of what was planned at a meeting that shows up in “Done” at the next one",
     "plannedDone": "Planned → done",
     "ofPlanned": "of {count} planned items",
@@ -64,12 +64,12 @@
   "blockersColumn": "Blockers",
   "recurring": {
     "title": "Recurring blockers",
-    "times": "raised {count} times ({dates})",
+    "times": "raised {count, plural, one {once} other {# times}} ({dates})",
     "withAction": "Action open",
     "withoutAction": "No action",
     "none": "No blocker comes back from one meeting to the next."
   },
-  "staleSince": "open for {days} days",
+  "staleSince": "open for {days, plural, one {# day} other {# days}}",
   "fromMeeting": "(meeting of {date})",
   "projects": {
     "title": "Progress per project",
@@ -92,5 +92,5 @@
     "mood": "Mood",
     "rating": "Usefulness"
   },
-  "ratingTip": "{avg}/5 · {count} ratings"
+  "ratingTip": "{avg}/5 · {count, plural, one {# rating} other {# ratings}}"
 }

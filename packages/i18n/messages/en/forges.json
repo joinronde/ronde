@@ -1,6 +1,6 @@
 {
   "title": "GitLab and GitHub",
-  "intro": "Connections to your code forges, made once for the whole workspace: every meeting can read each person's issues through them, and trackers open tickets with them.",
+  "intro": "Connections to your code forges, made once for the whole workspace: every meeting can read each person's issues through them, and issue trackers open tickets with them.",
   "empty": "No connection yet.",
   "kinds": {
     "gitlab": "GitLab",
@@ -17,7 +17,7 @@
   "oauth": "connected with GitLab",
   "add": "Add a connection",
   "addOwn": "Add a connection for this meeting only",
-  "addOwnHint": "Seen by this meeting alone, for a server or an account the workspace does not have.",
+  "addOwnHint": "Only this meeting can use it: for a server or an account the workspace does not have.",
   "connect": "Connect with GitLab",
   "connectHint": "Your GitLab account, read-only, renewed by itself: no token to copy or to replace when it expires.",
   "reconnect": "Connect again",
@@ -47,7 +47,7 @@
     "connected": "GitLab connected.",
     "failed": "Connecting with GitLab failed: try again, or use a personal token.",
     "denied": "You are not allowed to connect GitLab here.",
-    "cancelled": "Connecting with GitLab was cancelled."
+    "cancelled": "Connecting with GitLab was canceled."
   },
   "meeting": {
     "title": "{kind} connections",

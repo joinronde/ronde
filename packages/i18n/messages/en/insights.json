@@ -15,7 +15,7 @@
     "mood": "Average mood",
     "actions": "Actions closed / opened",
     "actionsValue": "{done} / {created}",
-    "median": "Closed in {days} days (median)"
+    "median": "Closed in {days, plural, one {# day} other {# days}} (median)"
   },
   "weekTitle": "Sessions per week",
   "weekLabel": "Bars: sessions held each week; line: attendance",

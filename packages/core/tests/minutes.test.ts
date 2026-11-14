@@ -106,7 +106,7 @@ describe("minutesMarkdown", () => {
     expect(fr).toContain("# Compte rendu · Product team");
     expect(fr).toContain("durée 23:00");
     expect(fr).toContain("**Fait cette semaine**\n- OIDC sign-in");
-    expect(fr).toContain("**Notes · Régisseur**");
+    expect(fr).toContain("**Notes · Animateur**");
     expect(fr).toContain("| Follow up / with IT | Alice Martin | En cours |");
     expect(fr).toContain("## Décisions\n- on relance la DSI _(Alice Martin)_");
     expect(fr).toMatch(/Prochaine réunion\s: lundi 28 septembre/);

@@ -8,7 +8,7 @@
   "preparation": "Update your projects and the relevant sections: {sections}. A few short points are enough; leave sections with nothing to share empty.",
   "when": "{date} at {time}",
   "email": {
-    "footer": "To stop receiving this reminder, ask {host} to turn it off in the team settings.",
+    "footer": "To stop receiving this reminder, ask {host} to turn it off in the meeting settings.",
     "greeting": "Hi {name},",
     "intro": "The next “{team}” meeting is coming up. Fill in or update your check-in beforehand to share your progress and where you need help.",
     "subject": "Ronde · {team}: your check-in for {date} at {time}",

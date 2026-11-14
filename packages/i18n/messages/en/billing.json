@@ -12,12 +12,12 @@
   "statuses": {
     "active": "Active",
     "trialing": "Trial",
-    "past_due": "Payment to retry",
-    "canceled": "Cancelled",
+    "past_due": "Payment failed",
+    "canceled": "Canceled",
     "other": "Pending"
   },
   "seats": "Seats",
-  "seatsValue": "{paid} paid · {active} took part in the last 30 days",
+  "seatsValue": "{paid, plural, one {# seat paid} other {# seats paid}} · {active, plural, one {# person took part} other {# people took part}} in the last 30 days",
   "renewsOn": "Renews on",
   "endsOn": "Ends on",
   "upgradeMonthly": "Move to Team, monthly",

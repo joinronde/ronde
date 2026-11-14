@@ -125,7 +125,7 @@ test("the host runs a session from the control room, from the order of the turns
   // Cancel the start: back to the waiting screen, check-ins kept
   await page.getByRole("button", { name: "Cancel the start" }).click();
   await page.getByRole("group", { name: "Confirmation" }).getByRole("button", { name: "Yes, back to waiting" }).click();
-  await expect(page.getByText("Start cancelled: back to the waiting screen.")).toBeVisible();
+  await expect(page.getByText("Start canceled: back to the waiting screen.")).toBeVisible();
   await expect(page.getByRole("button", { name: "Start the meeting", exact: true })).toBeVisible();
   await expect(now(page)).toHaveText("Introduction");
 
@@ -205,8 +205,8 @@ test("the host runs a session from the control room, from the order of the turns
   await openTab(page, /^Minutes/);
   await pane.getByText("Content:").click();
   await pane.getByRole("checkbox", { name: "Open topics" }).uncheck();
-  // One team input fewer than there are (how many depends on the modules on)
-  await expect(pane.getByText("Content:")).toContainText(/(\d+) of (\d+) team inputs/);
+  // One team contribution fewer than there are (how many depends on the modules on)
+  await expect(pane.getByText("Content:")).toContainText(/(\d+) of (\d+) team contributions/);
   const [kept, total] = ((await pane.getByText("Content:").textContent()) ?? "")
     .match(/(\d+) of (\d+)/)!
     .slice(1)

@@ -106,7 +106,7 @@ test("a poll and a planning poker round", async ({ page, browser }) => {
   await page.getByRole("button", { name: "Spin" }).click();
   await expect(max.locator(".draw-band .draw-result")).toHaveText(/^(Pia|Max) \w+!$/, { timeout: 10_000 });
   await shot(max, "0-wheel");
-  await page.getByRole("button", { name: /speaks next$/ }).click();
+  await page.getByRole("button", { name: /^Give the next turn to / }).click();
   await expect(page.getByText("✓ Applied to the speaking order")).toBeVisible();
   await page.getByRole("button", { name: "Hide from the screens" }).click();
   await expect(max.locator(".draw-band")).toHaveCount(0);

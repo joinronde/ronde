@@ -10,7 +10,7 @@
     "active": "Active",
     "paused": "Paused",
     "done": "Done",
-    "cancelled": "Cancelled"
+    "cancelled": "Canceled"
   },
   "healthLabel": "Health",
   "dashboard": {
@@ -18,7 +18,7 @@
     "quiet": "no news for three weeks",
     "title": "Dashboard",
     "period": "Period",
-    "weeks": "{count, plural, one {Last week} other {Last # weeks}}",
+    "weeks": "{count, plural, one {Past week} other {Past # weeks}}",
     "watch": "Projects to watch",
     "allGood": "No project in trouble, overdue or gone quiet.",
     "healthOverTime": "Health week after week",

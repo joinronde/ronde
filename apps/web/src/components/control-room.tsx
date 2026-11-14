@@ -458,7 +458,7 @@ export function ControlRoomView() {
                             }
                           >
                             <TimerReset size={16} strokeWidth={2.4} aria-hidden="true" />
-                            +30 s
+                            {t("bonus")}
                           </button>
                         )}
                       </div>
@@ -1904,8 +1904,7 @@ const writeOmit = (omit: MinutesPart[]) => {
 /** Summary before archiving: decisions, actions created, turns without notes (to complete here) */
 function MinutesCheck() {
   const t = useTranslations("control");
-  const tMinutes = useTranslations("minutes");
-  const { s, agenda, members, host } = useRonde();
+  const { s, agenda, members } = useRonde();
   const [open, setOpen] = useState<string | null>(null);
   const m = s.meeting!;
   const { decisions, created, silent } = minutesCheck(s, m.startedAt, agenda);
@@ -1938,7 +1937,7 @@ function MinutesCheck() {
           )}
         </li>
       </ul>
-      {silent.length > 0 && <span className="hint">{t("check.hint", { notes: tMinutes("hostNotes", { host }) })}</span>}
+      {silent.length > 0 && <span className="hint">{t("check.hint")}</span>}
       {open && (
         <Modal onClose={() => setOpen(null)}>
           <NotesBox stepKey={open} label={first(members[open]?.name)} autoFocus />

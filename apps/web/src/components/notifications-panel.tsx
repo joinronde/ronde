@@ -196,7 +196,7 @@ export function NotificationsPanel() {
                           onChange={(e) => patch(i, { options: { days: Number(e.target.value) || 7 } })}
                           style={{ width: "5em" }}
                         />{" "}
-                        {t("days")}
+                        {t("days", { count: r.options.days ?? 7 })}
                       </label>
                     )}
                     {c?.kind === "matrix" && (

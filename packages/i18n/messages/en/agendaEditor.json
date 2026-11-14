@@ -8,7 +8,7 @@
     "round": "Round table",
     "topics": "Open topics",
     "retro": "Retrospective",
-    "timebox": "Timebox",
+    "timebox": "Timed topic",
     "poker": "Planning poker",
     "projects": "Project round",
     "slide": "Slide"
@@ -21,10 +21,10 @@
     "timebox": "A topic of its own, with its own duration",
     "retro": "Anonymous notes in columns, grouped, voted, then discussed",
     "poker": "The team estimates items with hidden cards",
-    "slide": "A screen of its own: free text, the team's irritants, or a review of the open actions"
+    "slide": "A screen of its own: free text, the team's pain points, or a review of the open actions"
   },
   "timeboxTitle": "Topic",
-  "minutes": "Minutes",
+  "minutes": "min",
   "remove": "Remove “{label}”",
   "reorder": "Move “{label}”",
   "add": "Add a block",
@@ -42,12 +42,12 @@
   },
   "perProject": "min per project",
   "perProjectAuto": "auto",
-  "newSlide": "Irritants",
+  "newSlide": "Pain points",
   "slideTitle": "Slide title",
   "slideKind": "What the slide is for",
   "slideKinds": {
     "free": "Free content",
-    "irritants": "Irritants",
+    "irritants": "Pain points",
     "actions": "Open actions review"
   },
   "slideAnonymous": "Without names",

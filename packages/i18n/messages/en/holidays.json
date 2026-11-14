@@ -11,7 +11,7 @@
   "source": "Holidays from the date-holidays project, based on Wikipedia (CC BY-SA 3.0).",
   "saved": "Public holidays updated",
   "skipped": "Public holiday · {name}",
-  "kept": "Held on {name}",
+  "kept": "Held despite {name}",
   "keep": "Hold it anyway",
   "held": "Session held",
   "skipAgain": "Skip it again"
