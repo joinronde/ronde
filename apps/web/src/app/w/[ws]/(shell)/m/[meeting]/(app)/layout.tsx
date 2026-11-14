@@ -13,7 +13,7 @@ export default async function MeetingLayout({ children, ...props }: MeetingPageP
   return (
     <RondeProvider initial={initial}>
       <MeetingFrame />
-      <main id="main" className="page-main wide">
+      <main id="main" tabIndex={-1} className="page-main wide">
         <SampleBanner />
         {children}
       </main>

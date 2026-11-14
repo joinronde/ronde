@@ -11,5 +11,7 @@
     "action": "الإجراءات",
     "topic": "المواضيع",
     "decision": "القرارات"
-  }
+  },
+  "searching": "جارٍ البحث…",
+  "results": "{count, plural, zero {لا نتائج} one {نتيجة واحدة} two {نتيجتان} few {# نتائج} many {# نتيجة} other {# نتيجة}}"
 }

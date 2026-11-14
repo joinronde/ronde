@@ -12,7 +12,7 @@
     },
     "runOrder": {
       "title": "El orden del día y el orden de intervención",
-      "body": "<p>Introducción, un turno por persona, temas abiertos y cierre.</p><ul><li><strong>↑ ↓</strong> cambian el orden, <strong>Ausente</strong> quita a alguien de la ronda.</li><li><strong>Ir</strong> salta directamente a un paso.</li><li>Un punto verde: la ficha de esa persona está lista.</li></ul>"
+      "body": "<p>Introducción, un turno por persona, temas abiertos y cierre.</p><ul><li>Arrastra <strong>⠿</strong> (o usa <strong>↑ ↓</strong> en el asa, con el teclado) para cambiar el orden; <strong>Ausente</strong> quita a alguien de la ronda.</li><li><strong>Ir</strong> salta directamente a un paso.</li><li>Un punto verde: la ficha de esa persona está lista.</li></ul>"
     },
     "controls": {
       "title": "Empezar y avanzar",
@@ -20,7 +20,7 @@
     },
     "notes": {
       "title": "Tus notas",
-      "body": "<p>Un área de notas por paso, <strong>guardada mientras escribes</strong> y visible solo para ti: van al acta, bajo la persona correspondiente.</p><p><strong>+ Decisión</strong> anota una decisión; <strong>+ Acción</strong> crea una acción de seguimiento con responsable, que se sigue en las próximas sesiones.</p>"
+      "body": "<p>Un área de notas por paso, <strong>guardada mientras escribes</strong> y visible solo para ti hasta que se publique el acta: van al acta, bajo la persona correspondiente.</p><p><strong>Decisión</strong> anota una decisión; <strong>Acción</strong> crea una acción de seguimiento con responsable, que se sigue en las próximas sesiones.</p>"
     },
     "minutes": {
       "title": "El acta",

@@ -17,7 +17,7 @@ limite de reuniões ou de pessoas. Uma chave de licença ativa os recursos do Te
 2. Preencha o `.env`: defina o endereço que as pessoas vão abrir (`RONDE_URL`) e depois gere os três segredos:
 
    ```sh
-   for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env; done
+   for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i.bak "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env && rm .env.bak; done
    ```
 
 3. Inicie:

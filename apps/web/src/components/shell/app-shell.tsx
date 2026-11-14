@@ -227,7 +227,7 @@ function SideNav({ data }: { data: ShellData }) {
           <NavItem href={`${base}/settings`} icon="settings" label={t("settings")} active={path.startsWith(`${base}/settings`)} />
         )}
       </nav>
-      <section className="side-section" aria-labelledby="side-meetings">
+      <div className="side-section" role="group" aria-labelledby="side-meetings">
         <div className="side-heading">
           <h2 id="side-meetings">
             <Link href={`${base}/meetings`} className="side-heading-link" aria-current={path === `${base}/meetings` ? "page" : undefined}>
@@ -265,7 +265,7 @@ function SideNav({ data }: { data: ShellData }) {
         ) : (
           <p className="side-empty">{t("noMeetings")}</p>
         )}
-      </section>
+      </div>
     </>
   );
 }

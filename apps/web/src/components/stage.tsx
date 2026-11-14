@@ -305,7 +305,11 @@ function SpeakerBody({ step, live, spot, joinable }: { step: Step; live: boolean
           <Avatar id={id} />
           <div className="who-name">
             <FitName name={m?.name ?? ""} />
-            <div style={{ marginTop: ".35em" }}>{m && <JobCategoryTag category={m.jobCategory} />}</div>
+            {m?.jobCategory && (
+              <div style={{ marginTop: ".35em" }}>
+                <JobCategoryTag category={m.jobCategory} />
+              </div>
+            )}
           </div>
         </div>
         {elsewhere.length > 0 && (

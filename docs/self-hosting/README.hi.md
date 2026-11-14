@@ -17,7 +17,7 @@ Ronde Docker वाली किसी भी मशीन पर चलता �
 2. `.env` भरें: वह पता सेट करें जो लोग खोलेंगे (`RONDE_URL`), फिर तीनों सीक्रेट बनाएँ:
 
    ```sh
-   for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env; done
+   for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i.bak "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env && rm .env.bak; done
    ```
 
 3. शुरू करें:

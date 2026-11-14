@@ -152,7 +152,10 @@
     "checkInEmpty": "Fiche vide",
     "topics": "Points divers",
     "end": "Clôture et compte rendu",
-    "legend": "Coche : fiche remplie. <note></note> : notes prises pour le compte rendu. « Fiche » permet de la corriger en cas de besoin. Une étape « Questions » s’ajoute d’elle-même dès qu’une main est levée."
+    "legend": "Coche : fiche remplie. <note></note> : notes prises pour le compte rendu. « Fiche » permet de la corriger en cas de besoin. Une étape « Questions » s’ajoute d’elle-même dès qu’une main est levée.",
+    "goTo": "Aller à {name}",
+    "markAbsentNamed": "Marquer {name} comme absent",
+    "markPresentNamed": "Marquer {name} comme présent"
   },
   "unsavedCheckIn": "Les modifications de la fiche ne sont pas enregistrées.",
   "closeAnyway": "Fermer quand même",

@@ -23,7 +23,7 @@ export default async function WorkspaceLayout({ children, params }: { children: 
           {t("paymentFailed")} <Link href={`/w/${ctx.workspace.slug}/settings/billing`}>{t("paymentFix")}</Link>
         </p>
       )}
-      <main id="main" className="page-main">
+      <main id="main" tabIndex={-1} className="page-main">
         {children}
       </main>
     </>

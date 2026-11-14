@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useEffect, useRef } from "react";
 
 export type SettingsTab = "general" | "security" | "roles" | "audit" | "billing" | "plans";
 
@@ -19,10 +20,15 @@ export function WorkspaceSettingsTabs({
 }) {
   const t = useTranslations("workspace.settings.tabs");
   const path = usePathname();
+  const nav = useRef<HTMLElement>(null);
+  // On a narrow screen the row scrolls: bring the open tab into view
+  useEffect(() => {
+    nav.current?.querySelector("[aria-current]")?.scrollIntoView({ inline: "center", block: "nearest" });
+  }, [path]);
   const base = `/w/${slug}/settings`;
   const href = (tab: SettingsTab) => (tab === "general" ? base : `${base}/${tab}`);
   return (
-    <nav className="tabs settings-tabs" aria-label={t("label")}>
+    <nav ref={nav} className="tabs settings-tabs" aria-label={t("label")}>
       {tabs.map((tab) => (
         <Link
           key={tab}

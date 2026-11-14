@@ -152,7 +152,10 @@
     "checkInEmpty": "Ficha vacía",
     "topics": "Temas abiertos",
     "end": "Cierre y acta",
-    "legend": "Marca de verificación: ficha completada. <note></note>: notas tomadas para el acta. «Ficha» permite corregirla si hace falta. Se añade automáticamente un paso «Preguntas» en cuanto alguien levanta la mano."
+    "legend": "Marca de verificación: ficha completada. <note></note>: notas tomadas para el acta. «Ficha» permite corregirla si hace falta. Se añade automáticamente un paso «Preguntas» en cuanto alguien levanta la mano.",
+    "goTo": "Ir a {name}",
+    "markAbsentNamed": "Marcar a {name} como ausente",
+    "markPresentNamed": "Marcar a {name} como presente"
   },
   "unsavedCheckIn": "Los cambios de la ficha no están guardados.",
   "closeAnyway": "Cerrar de todos modos",

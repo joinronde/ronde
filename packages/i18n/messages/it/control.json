@@ -152,7 +152,10 @@
     "checkInEmpty": "Scheda vuota",
     "topics": "Argomenti aperti",
     "end": "Chiusura e verbale",
-    "legend": "Spunta: scheda compilata. <note></note>: note prese per il verbale. «Scheda» permette di correggerla se serve. Una fase «Domande» si aggiunge da sola appena qualcuno alza la mano."
+    "legend": "Spunta: scheda compilata. <note></note>: note prese per il verbale. «Scheda» permette di correggerla se serve. Una fase «Domande» si aggiunge da sola appena qualcuno alza la mano.",
+    "goTo": "Vai a {name}",
+    "markAbsentNamed": "Segna {name} come assente",
+    "markPresentNamed": "Segna {name} come presente"
   },
   "unsavedCheckIn": "Le modifiche alla scheda non sono salvate.",
   "closeAnyway": "Chiudi comunque",

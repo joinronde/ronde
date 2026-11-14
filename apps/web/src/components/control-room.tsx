@@ -709,7 +709,7 @@ function SpotlightControl({ step }: { step: Step }) {
   return (
     <div className="notes" data-tour="spotlight">
       <div className="notes-head">
-        <h4>{t("spotlight.title")}</h4>
+        <h4 aria-level={3}>{t("spotlight.title")}</h4>
       </div>
       {spot && (
         <div className="spot-bar" role="status">
@@ -1080,7 +1080,7 @@ function NotesBox({ stepKey, label, autoFocus }: { stepKey: string; label: strin
   return (
     <div className="notes" data-tour="notes" ref={box} onBlur={onBlurArea}>
       <div className="notes-head">
-        <h4>{t("notes.title", { label: shown })}</h4>
+        <h4 aria-level={3}>{t("notes.title", { label: shown })}</h4>
         <span className="saved" role="status">
           {status}
         </span>
@@ -1232,7 +1232,9 @@ function RunRow(p: {
       {p.grip ?? <span className="sort-grip-space" aria-hidden="true" />}
       <span className="st">{p.state}</span>
       {p.person ? p.ico : <span className="run-ico">{p.ico}</span>}
-      <span className="nm">{p.label}</span>
+      <span className="nm" title={typeof p.label === "string" ? p.label : undefined}>
+        <bdi dir="auto">{p.label}</bdi>
+      </span>
       {p.noted && (
         <span className="noted" title={t("run.notedHint")} role="img" aria-label={t("run.noted")}>
           <Icon name="note" size={14} />
@@ -1343,9 +1345,9 @@ function PaneRun() {
     return i < 0 ? t("run.absent") : i < cur ? t("run.done") : i === cur ? t("run.current") : t("run.upcoming");
   };
   // No step jumping before the start
-  const go = (k: string) =>
+  const go = (k: string, label: string) =>
     m.startedAt ? (
-      <button className="icon-btn" onClick={() => rpc({ op: "meeting.goto", key: k })}>
+      <button className="icon-btn" aria-label={t("run.goTo", { name: label })} onClick={() => rpc({ op: "meeting.goto", key: k })}>
         {t("run.go")}
       </button>
     ) : null;
@@ -1372,7 +1374,14 @@ function PaneRun() {
   );
   const qa = (k: string) => {
     const x: Step | undefined = agenda.find((a) => a.key === "qa:" + k);
-    return x ? row(x.key, t("run.questions", { pending: x.pending ?? 0, total: x.total ?? 0 }), go(x.key), { cls: "qa", ico: "✋" }) : null;
+    return x
+      ? row(
+          x.key,
+          t("run.questions", { pending: x.pending ?? 0, total: x.total ?? 0 }),
+          go(x.key, t("run.questions", { pending: x.pending ?? 0, total: x.total ?? 0 })),
+          { cls: "qa", ico: "✋" },
+        )
+      : null;
   };
   // Blocks of the agenda whose module is on, in order
   const blocks = s.settings.agenda.filter((b) => !BLOCK_MODULE[b.type] || s.modules[BLOCK_MODULE[b.type]!]);
@@ -1384,13 +1393,22 @@ function PaneRun() {
           id,
           members[id]!.name,
           <>
-            <button className="icon-btn" onClick={() => rpc({ op: "meeting.absent", id })}>
+            <button
+              className="icon-btn"
+              aria-label={t(absent.has(id) ? "run.markPresentNamed" : "run.markAbsentNamed", { name: first(members[id]!.name) })}
+              onClick={() => rpc({ op: "meeting.absent", id })}
+            >
               {absent.has(id) ? t("run.markPresent") : t("run.markAbsent")}
             </button>
-            <button className="icon-btn" onClick={() => setEditing(id)} title={t("run.editCheckIn", { name: first(members[id]!.name) })}>
+            <button
+              className="icon-btn"
+              aria-label={t("run.editCheckIn", { name: first(members[id]!.name) })}
+              onClick={() => setEditing(id)}
+              title={t("run.editCheckIn", { name: first(members[id]!.name) })}
+            >
               {t("run.checkIn")}
             </button>
-            {!absent.has(id) && go(id)}
+            {!absent.has(id) && go(id, first(members[id]!.name))}
           </>,
           {
             cls: absent.has(id) ? "abs" : "",
@@ -1428,18 +1446,20 @@ function PaneRun() {
       </div>
       <ul className="run" data-tour="run-list">
         {blocks.map((b) => {
-          if (b.type === "intro") return [row("intro", t("run.intro"), go("intro"), { ico: <Icon name="play" size={14} /> }), qa("intro")];
-          if (b.type === "topics") return [row("misc", t("run.topics"), go("misc"), { ico: <Icon name="pin" size={14} /> }), qa("misc")];
+          if (b.type === "intro")
+            return [row("intro", t("run.intro"), go("intro", t("run.intro")), { ico: <Icon name="play" size={14} /> }), qa("intro")];
+          if (b.type === "topics")
+            return [row("misc", t("run.topics"), go("misc", t("run.topics")), { ico: <Icon name="pin" size={14} /> }), qa("misc")];
           if (b.type === "round") return roundRows();
           // A module block: each of its steps (retro phases, a timebox…)
           return agenda
             .filter((x) => x.type === "block" && x.blockId === b.id)
             .flatMap((x) => [
-              row(x.key, x.label, go(x.key), { ico: <Icon name={BLOCK_ICON[x.block ?? "timebox"]} size={14} /> }),
+              row(x.key, x.label, go(x.key, x.label), { ico: <Icon name={BLOCK_ICON[x.block ?? "timebox"]} size={14} /> }),
               qa(x.key),
             ]);
         })}
-        {row("end", t("run.end"), go("end"), { ico: <Icon name="flag" size={14} /> })}
+        {row("end", t("run.end"), go("end", t("run.end")), { ico: <Icon name="flag" size={14} /> })}
       </ul>
       <p className="hint" style={{ marginTop: 8 }}>
         {t.rich("run.legend", { note: () => <Icon name="note" size={13} /> })}
@@ -1798,7 +1818,9 @@ function ParkingLot() {
   const [text, setText] = useState("");
   return (
     <section className="parking" aria-labelledby="parking-title">
-      <h4 id="parking-title">🅿️ {t("parking.title")}</h4>
+      <h4 id="parking-title" aria-level={3}>
+        🅿️ {t("parking.title")}
+      </h4>
       <p className="hint">{t("parking.hint")}</p>
       {s.parking.map((x) => (
         <div className="item" key={x.id}>

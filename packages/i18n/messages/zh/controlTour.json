@@ -12,7 +12,7 @@
     },
     "runOrder": {
       "title": "议程和发言顺序",
-      "body": "<p>开场、每人轮流发言、开放议题，然后总结。</p><ul><li><strong>↑ ↓</strong> 调整顺序，<strong>缺席</strong>把某人移出发言顺序。</li><li><strong>前往</strong>直接跳到某个环节。</li><li>绿点：此人的进展卡已准备好。</li></ul>"
+      "body": "<p>开场、每人轮流发言、开放议题，然后总结。</p><ul><li>拖动 <strong>⠿</strong>（或在手柄上用键盘按 <strong>↑ ↓</strong>）调整顺序，<strong>缺席</strong>把某人移出发言顺序。</li><li><strong>前往</strong>直接跳到某个环节。</li><li>绿点：此人的进展卡已准备好。</li></ul>"
     },
     "controls": {
       "title": "开始与推进",
@@ -20,7 +20,7 @@
     },
     "notes": {
       "title": "你的笔记",
-      "body": "<p>每个环节一个笔记区，<strong>边写边保存</strong>，只有你能看到：笔记会写进纪要，放在对应的人名下。</p><p><strong>+ 决定</strong>记录一项决定；<strong>+ 行动项</strong>创建一个有负责人的跟进行动项，在之后的会议中持续跟踪。</p>"
+      "body": "<p>每个环节一个笔记区，<strong>边写边保存</strong>，在纪要发布前只有你能看到：笔记会写进纪要，放在对应的人名下。</p><p><strong>决定</strong>记录一项决定；<strong>行动项</strong>创建一个有负责人的跟进行动项，在之后的会议中持续跟踪。</p>"
     },
     "minutes": {
       "title": "会议纪要",

@@ -29,7 +29,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
           <p className="auth-lead">{t("lead")}</p>
         </div>
       </aside>
-      <main className="auth-main" id="main">
+      <main className="auth-main" id="main" tabIndex={-1}>
         <div className="auth-panel">{children}</div>
         <footer className="auth-footer">
           {site && (

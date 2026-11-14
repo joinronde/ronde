@@ -11,7 +11,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <AppShell data={await shellData(user)}>
       <TopBar crumbs={[{ label: t("admin") }]} />
-      <main id="main" className="page-main">
+      <main id="main" tabIndex={-1} className="page-main">
         {children}
       </main>
     </AppShell>

@@ -152,7 +152,10 @@
     "checkInEmpty": "Empty check-in",
     "topics": "Open topics",
     "end": "Wrap-up and minutes",
-    "legend": "Tick: check-in filled in. <note></note>: notes taken for the minutes. “Check-in” lets you fix it if needed. A “Questions” step is added by itself as soon as a hand is raised."
+    "legend": "Tick: check-in filled in. <note></note>: notes taken for the minutes. “Check-in” lets you fix it if needed. A “Questions” step is added by itself as soon as a hand is raised.",
+    "goTo": "Go to {name}",
+    "markAbsentNamed": "Mark {name} absent",
+    "markPresentNamed": "Mark {name} present"
   },
   "unsavedCheckIn": "The check-in changes are not saved.",
   "closeAnyway": "Close anyway",

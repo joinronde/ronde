@@ -22,6 +22,6 @@
     "subject": "{inviter} 邀请你加入 Ronde 上的 {workspace}",
     "intro": "{inviter} 邀请你加入 Ronde 上的工作空间 {workspace}，一起准备并主持团队会议。",
     "action": "加入 {workspace}",
-    "footer": "此邀请 7 天后失效。如果这不是你预期的邀请，可以忽略这封邮件。"
+    "footer": "此邀请 {days} 天后失效。如果这不是你预期的邀请，可以忽略这封邮件。"
   }
 }

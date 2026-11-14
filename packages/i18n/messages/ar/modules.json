@@ -137,6 +137,7 @@
   },
   "upgrade": {
     "comesWith": "الميزة «{feature}» مشمولة في Ronde {edition}.",
-    "plans": "عرض الخطط"
+    "plans": "عرض الخطط",
+    "includedIn": "مضمَّن في Ronde {edition}."
   }
 }

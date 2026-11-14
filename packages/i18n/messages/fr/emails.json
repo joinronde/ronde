@@ -22,6 +22,6 @@
     "subject": "{inviter} vous invite dans {workspace} sur Ronde",
     "intro": "{inviter} vous invite à rejoindre l’espace {workspace} sur Ronde, pour préparer et animer vos réunions d’équipe ensemble.",
     "action": "Rejoindre {workspace}",
-    "footer": "Cette invitation expire dans 7 jours. Si vous ne l’attendiez pas, vous pouvez ignorer ce message."
+    "footer": "Cette invitation expire dans {days, plural, one {# jour} other {# jours}}. Si vous ne l’attendiez pas, vous pouvez ignorer ce message."
   }
 }

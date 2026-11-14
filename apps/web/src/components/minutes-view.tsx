@@ -5,6 +5,7 @@ import type { LabelTone, MinutesBlock, MinutesDoc, MinutesItem, MinutesKind } fr
 import { initials, mmssPlain } from "@ronde/core/util";
 import { useTranslations } from "next-intl";
 import { useLayoutEffect, useRef } from "react";
+import { ScrollRegion } from "./scroll-region";
 import { Icon, type IconName } from "./shell/icons";
 
 // Minutes rendered from their tree: one part per kind, one card per person of the round table, labels
@@ -96,7 +97,7 @@ function Block({ block, prefix, index }: { block: MinutesBlock; prefix: string; 
       );
     case "table":
       return (
-        <div className="tbl-wrap">
+        <ScrollRegion label={block.head.join(", ")}>
           <table>
             <thead>
               <tr>
@@ -117,7 +118,7 @@ function Block({ block, prefix, index }: { block: MinutesBlock; prefix: string; 
               ))}
             </tbody>
           </table>
-        </div>
+        </ScrollRegion>
       );
     case "person":
       return (

@@ -137,6 +137,7 @@
   },
   "upgrade": {
     "comesWith": "{feature} Ronde {edition} के साथ आता है।",
-    "plans": "प्लान देखें"
+    "plans": "प्लान देखें",
+    "includedIn": "Ronde {edition} में शामिल।"
   }
 }

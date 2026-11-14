@@ -14,14 +14,15 @@ export function authEmail(
     workspace = "",
     inviter = "",
     brand = null,
-  }: { url: string; locale: Locale; workspace?: string; inviter?: string; brand?: EmailBrand | null },
+    days = 14,
+  }: { url: string; locale: Locale; workspace?: string; inviter?: string; brand?: EmailBrand | null; days?: number },
 ): { subject: string; text: string; html: string } {
   const t = translator(locale, "emails");
   const values = { workspace, inviter };
   const subject = t(`${kind}.subject`, values);
   const intro = t(`${kind}.intro`, values);
   const action = t(`${kind}.action`, values);
-  const footer = t(`${kind}.footer`);
+  const footer = t(`${kind}.footer`, { days });
   const text = [intro, "", `${action}: ${url}`, "", footer].join("\n");
   // Arabic reads right to left: the whole email turns, its arrow too
   const dir = dirOf(locale);

@@ -22,6 +22,6 @@
     "subject": "{inviter} ti invita in {workspace} su Ronde",
     "intro": "{inviter} ti invita a unirti allo spazio di lavoro {workspace} su Ronde, per preparare e condurre insieme le riunioni del team.",
     "action": "Unisciti a {workspace}",
-    "footer": "Questo invito scade tra 7 giorni. Se non te lo aspettavi, puoi ignorare questa email."
+    "footer": "Questo invito scade tra {days, plural, one {# giorno} other {# giorni}}. Se non te lo aspettavi, puoi ignorare questa email."
   }
 }

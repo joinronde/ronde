@@ -137,6 +137,7 @@
   },
   "upgrade": {
     "comesWith": "{feature} gehört zu Ronde {edition}.",
-    "plans": "Tarife ansehen"
+    "plans": "Tarife ansehen",
+    "includedIn": "Enthalten in Ronde {edition}."
   }
 }

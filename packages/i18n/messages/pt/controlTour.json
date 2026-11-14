@@ -12,7 +12,7 @@
     },
     "runOrder": {
       "title": "A pauta e a ordem de fala",
-      "body": "<p>Abertura, a vez de cada pessoa, assuntos em aberto e encerramento.</p><ul><li><strong>↑ ↓</strong> mudam a ordem, <strong>Ausente</strong> tira alguém da rodada.</li><li><strong>Ir</strong> pula direto para uma etapa.</li><li>Um ponto verde: a ficha da pessoa está pronta.</li></ul>"
+      "body": "<p>Abertura, a vez de cada pessoa, assuntos em aberto e encerramento.</p><ul><li>Arraste <strong>⠿</strong> (ou use <strong>↑ ↓</strong> na alça, com o teclado) para mudar a ordem; <strong>Ausente</strong> tira alguém da rodada.</li><li><strong>Ir</strong> pula direto para uma etapa.</li><li>Um ponto verde: a ficha da pessoa está pronta.</li></ul>"
     },
     "controls": {
       "title": "Começar e avançar",
@@ -20,7 +20,7 @@
     },
     "notes": {
       "title": "Suas notas",
-      "body": "<p>Uma área de notas por etapa, <strong>salva enquanto você digita</strong> e visível só para você: elas vão para a ata, na parte da pessoa certa.</p><p><strong>+ Decisão</strong> registra uma decisão; <strong>+ Ação</strong> cria uma ação de acompanhamento com responsável, acompanhada nas próximas sessões.</p>"
+      "body": "<p>Uma área de notas por etapa, <strong>salva enquanto você digita</strong> e visível só para você até a publicação da ata: elas vão para a ata, na parte da pessoa certa.</p><p><strong>Decisão</strong> registra uma decisão; <strong>Ação</strong> cria uma ação de acompanhamento com responsável, acompanhada nas próximas sessões.</p>"
     },
     "minutes": {
       "title": "A ata",

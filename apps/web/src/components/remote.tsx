@@ -11,6 +11,7 @@ import { Timer, UpCount } from "./stage";
 export function RemoteView() {
   const t = useTranslations("remote");
   const tStage = useTranslations("stage");
+  const tHeader = useTranslations("header");
   const { s, agenda, cur, rpc, connected } = useRonde();
   const m = s.meeting;
   const step = m ? agenda[cur] : undefined;
@@ -63,13 +64,17 @@ export function RemoteView() {
       <header className="remote-head">
         <span className={`remote-dot ${connected ? "ok" : ""}`} aria-hidden="true" />
         <span className="remote-team">{s.settings.teamName}</span>
+        {/* Said in words too, not by the dot's colour alone */}
+        <span className="remote-state hint" role="status">
+          {connected ? "" : tHeader("reconnecting")}
+        </span>
         <Link href={`${s.context.path}/control`} className="remote-back">
           {t("back")}
         </Link>
       </header>
-      <section className="remote-now" aria-live="polite">
+      <section className="remote-now">
         <div className="eyebrow">{t("now")}</div>
-        <h1>{title}</h1>
+        <h1 aria-live="polite">{title}</h1>
         <div className="remote-timer">
           {step.type === "speaker" || step.type === "project" ? (
             <Timer stepKey={step.key} live />
@@ -77,7 +82,9 @@ export function RemoteView() {
             <UpCount className="upcount" />
           ) : null}
         </div>
-        <p className="remote-next">{next ? t("then", { next: next.type === "speaker" ? first(next.label) : next.label }) : t("last")}</p>
+        <p className="remote-next" aria-live="polite">
+          {next ? t("then", { next: next.type === "speaker" ? first(next.label) : next.label }) : t("last")}
+        </p>
       </section>
       {!started ? (
         <div className="remote-pad">
