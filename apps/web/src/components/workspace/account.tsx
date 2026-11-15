@@ -35,6 +35,7 @@ import {
   setWeeklySummaryAction,
   updateProfileAction,
 } from "@/app/account/actions";
+import { leaveWorkspaceAction } from "@/app/w/[ws]/actions";
 import { Field, FormAlert, PasswordInput } from "@/components/auth/fields";
 import { PasskeyIcon } from "@/components/auth/sign-in-form";
 import { Select } from "@/components/select";
@@ -44,6 +45,7 @@ import { withBasePath } from "@/lib/shared/base-path";
 import { passwordStrength } from "@/lib/shared/password";
 import { squareImage } from "../avatar-picker";
 import { CalendarLink } from "../upcoming-sessions";
+import { useConfirm } from "./confirm";
 import { LocaleSelect, TimeZoneSelect } from "./inputs";
 import { deviceLabel, PushSettings, type PushSettingsProps } from "./push-settings";
 
@@ -395,6 +397,18 @@ export function AccountWorkspacesView({
   const t = useTranslations("account");
   const tw = useTranslations("workspace");
   const ts = useTranslations("states");
+  const tl = useTranslations("workspace.settings");
+  const router = useRouter();
+  const [confirmDialog, confirm] = useConfirm();
+  const [error, setError] = useState<string | null>(null);
+  // Leaving is everyone's to do, whatever their role: here, not only in the settings administrators see
+  const leave = async (w: { slug: string; name: string }) => {
+    if (!(await confirm({ message: tl("leaveConfirm", { workspace: w.name }), confirmLabel: tl("leave"), danger: true }))) return;
+    setError(null);
+    const res = await leaveWorkspaceAction(w.slug);
+    if (!res.ok) return setError(res.error);
+    router.refresh();
+  };
   return (
     <section className="stack acct-card" aria-labelledby="workspaces-title">
       <h2 id="workspaces-title" className="acct-title">
@@ -403,6 +417,7 @@ export function AccountWorkspacesView({
         </span>
         {t("workspaces")}
       </h2>
+      <FormAlert>{error}</FormAlert>
       {workspaces.length ? (
         <ul className="choice-list">
           {workspaces.map((w) => (
@@ -412,6 +427,11 @@ export function AccountWorkspacesView({
                 {tw(`roles.${w.role}`)}
                 {w.suspended && ` · ${ts("suspendedMark")}`}
               </span>
+              {!w.suspended && (
+                <button type="button" className="btn sm" onClick={() => void leave(w)} aria-label={t("leaveNamed", { workspace: w.name })}>
+                  {t("leaveWorkspace")}
+                </button>
+              )}
             </li>
           ))}
         </ul>
@@ -423,6 +443,7 @@ export function AccountWorkspacesView({
           <Icon name="plus" size={16} /> {t("createWorkspace")}
         </Link>
       </div>
+      {confirmDialog}
     </section>
   );
 }

@@ -76,6 +76,24 @@ describe("custom roles", () => {
     expect(can({ ...member, extra: ["history.read"] }, "session.run")).toBe(false);
   });
 
+  it("create meetings with meeting.create, even where the workspace keeps that to its administrators", () => {
+    expect(can({ ...member, extra: ["meeting.create"] }, "meeting.create", { meetingCreation: "admins" })).toBe(true);
+    expect(can(member, "meeting.create", { meetingCreation: "admins" })).toBe(false);
+  });
+
+  it("hand out the member and guest roles to a people manager, never more", () => {
+    expect(assignableRoles("member", { extra: ["people.invite"] })).toEqual(["member", "guest"]);
+    expect(assignableRoles("member", { extra: ["members.manage"] })).toEqual(["member", "guest"]);
+    expect(assignableRoles("organizer", { extra: ["people.manage"] })).toEqual(["member", "guest"]);
+    expect(assignableRoles("member", { extra: ["people.manage"] })).toEqual(["member", "guest"]);
+    // Never above the person's own built-in role: a guest hands out only "guest"
+    expect(assignableRoles("guest", { extra: ["members.manage"] })).toEqual(["guest"]);
+    expect(assignableRoles("billing", { extra: ["members.manage"] })).toEqual([]);
+    expect(assignableRoles("member", { extra: ["history.read"] })).toEqual([]);
+    // Nothing taken from a built-in role that already hands out more
+    expect(assignableRoles("admin", { extra: ["people.invite"] })).toContain("admin");
+  });
+
   it("never grant owning the workspace", () => {
     expect(CUSTOM_ROLE_PERMISSIONS).not.toContain("workspace.billing");
     expect(CUSTOM_ROLE_PERMISSIONS).not.toContain("workspace.delete");

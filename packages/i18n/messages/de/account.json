@@ -58,6 +58,8 @@
   "workspaces": "Deine Arbeitsbereiche",
   "noWorkspace": "Du bist noch in keinem Arbeitsbereich.",
   "createWorkspace": "Arbeitsbereich erstellen",
+  "leaveWorkspace": "Verlassen",
+  "leaveNamed": "{workspace} verlassen",
   "calendar": "Kalender",
   "calendarHint": "Ein privater Link mit allen Meetings, an denen du teilnimmst, für deine Kalender-App.",
   "appearance": "Darstellung",

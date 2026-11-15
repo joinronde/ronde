@@ -56,6 +56,8 @@
   "revoke": "Revoca l'invito",
   "remove": "Rimuovi",
   "removeConfirm": "Rimuovere {name} da {workspace}? Profilo e accesso vengono eliminati; ciò che ha detto nelle riunioni resta, firmato da un ex membro.",
+  "roleConfirm": "Assegnare a {name} il ruolo «{role}»? {hint}.",
+  "roleConfirmYes": "Cambia ruolo",
   "removed": "{name} rimosso.",
   "changeRole": "Ruolo di {name}",
   "saved": "Salvato",

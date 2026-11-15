@@ -39,6 +39,7 @@ export async function shellData(user: CurrentUser, slug?: string | null): Promis
       manage: !!ctx?.can("workspace.manage"),
       createMeeting: !!ctx?.can("meeting.create"),
       projects: !!ctx?.can("projects.read"),
+      people: !!ctx?.can("people.read"),
       insights: !!ctx?.can("stats.read") && (!insightsLocked || hints),
     },
     locked: { insights: insightsLocked },

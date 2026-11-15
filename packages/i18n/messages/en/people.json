@@ -56,6 +56,8 @@
   "revoke": "Revoke the invitation",
   "remove": "Remove",
   "removeConfirm": "Remove {name} from {workspace}? Their profile and access are deleted; what they said in meetings stays, signed by a former member.",
+  "roleConfirm": "Give {name} the role “{role}”? {hint}.",
+  "roleConfirmYes": "Change the role",
   "removed": "{name} removed.",
   "changeRole": "Role of {name}",
   "saved": "Saved",

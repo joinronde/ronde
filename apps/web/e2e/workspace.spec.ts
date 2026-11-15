@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { choose } from "./select";
 
 const run = Date.now().toString(36);
 const owner = { name: "Ada Lovelace", email: `ada-${run}@example.com`, password: "correct-horse-battery" };
@@ -149,4 +150,46 @@ test("an email link used twice opens the email link sign-in, which can send the 
   const again = page.getByRole("button", { name: "Send the link again" });
   await expect(again).toBeDisabled();
   await expect(again).toBeEnabled({ timeout: 40_000 });
+});
+
+test("a role that runs the workspace is given after a confirmation; anyone leaves from their account", async ({ page, browser }) => {
+  test.setTimeout(90_000);
+  const role = (p: typeof page) => p.getByRole("combobox", { name: "Role of Grace Hopper" });
+  await page.goto("/sign-in");
+  await page.getByLabel("Email", { exact: true }).fill(owner.email);
+  await page.getByLabel("Password", { exact: true }).fill(owner.password);
+  await page.getByRole("button", { name: "Sign in", exact: true }).click();
+  await expect(page).toHaveURL(/\/w\//);
+  await page.goto(`/w/e2e-team-${run}/people`);
+  // Owner, then cancelled: nothing changes
+  await choose(page, role(page), "owner");
+  const ask = page.getByRole("dialog");
+  await expect(ask).toContainText("Give Grace Hopper the role “Owner”?");
+  await ask.getByRole("button", { name: "Cancel" }).click();
+  await expect(role(page)).toContainText("Member");
+  await page.reload();
+  await expect(role(page)).toContainText("Member");
+  // Admin, confirmed
+  await choose(page, role(page), "admin");
+  await page.getByRole("dialog").getByRole("button", { name: "Change the role" }).click();
+  await expect(role(page)).toContainText("Admin");
+  await page.reload();
+  await expect(role(page)).toContainText("Admin");
+  // Taking the running of the workspace away is asked too
+  await choose(page, role(page), "member");
+  await page.getByRole("dialog").getByRole("button", { name: "Change the role" }).click();
+  await expect(role(page)).toContainText("Member");
+
+  // Grace leaves from her account's list of workspaces, without the settings administrators see
+  const grace = await (await browser.newContext({ locale: "en-US" })).newPage();
+  await grace.goto("/sign-in");
+  await grace.getByLabel("Email", { exact: true }).fill(invitee.email);
+  await grace.getByLabel("Password", { exact: true }).fill(invitee.password);
+  await grace.getByRole("button", { name: "Sign in", exact: true }).click();
+  await expect(grace).toHaveURL(/\/w\//);
+  await grace.goto("/account/workspaces");
+  await grace.getByRole("button", { name: `Leave ${workspace}` }).click();
+  await grace.getByRole("dialog").getByRole("button", { name: "Leave the workspace" }).click();
+  await expect(grace.getByText("You are not in any workspace yet.")).toBeVisible();
+  await grace.context().close();
 });

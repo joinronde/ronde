@@ -58,6 +58,8 @@
   "workspaces": "I tuoi spazi di lavoro",
   "noWorkspace": "Non sei ancora in nessuno spazio di lavoro.",
   "createWorkspace": "Crea uno spazio di lavoro",
+  "leaveWorkspace": "Esci",
+  "leaveNamed": "Esci da {workspace}",
   "calendar": "Calendario",
   "calendarHint": "Un link privato con tutte le riunioni a cui partecipi, per la tua app di calendario.",
   "appearance": "Aspetto",

@@ -1,7 +1,7 @@
 import { createHmac, randomBytes } from "node:crypto";
 import { prisma } from "@ronde/db";
 import { isValidElement, type ReactNode } from "react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { meeting, workspace } from "./fixtures";
 
 // The ways into a workspace and out of a dead end, signed in for real: the home page, the notice of a suspended
@@ -42,6 +42,14 @@ const TwoFactorPage = (await import("@/app/(auth)/sign-in/two-factor/page")).def
 const { failureKey } = await import("@/lib/auth-client");
 const { hashToken } = await import("@/lib/server/workspaces");
 const WorkspaceHome = (await import("@/app/w/[ws]/(shell)/(workspace)/page")).default;
+const SettingsPage = (await import("@/app/w/[ws]/(shell)/(workspace)/settings/page")).default;
+const BillingPage = (await import("@/app/w/[ws]/(shell)/(workspace)/settings/billing/page")).default;
+const PlansPage = (await import("@/app/w/[ws]/(shell)/(workspace)/settings/plans/page")).default;
+const ProjectsPage = (await import("@/app/w/[ws]/(shell)/(workspace)/projects/page")).default;
+const { shellData } = await import("@/lib/server/shell");
+const StatsPage = (await import("@/app/w/[ws]/(shell)/m/[meeting]/(app)/stats/page")).default;
+const { inviteAction, changeRoleAction, removePersonAction } = await import("@/app/w/[ws]/actions");
+const { workspaceContext } = await import("@/lib/server/authz");
 
 const signOut = () => {
   request = { "accept-language": "en" };
@@ -323,6 +331,147 @@ describe("the first steps of a new member", () => {
     await signIn(w.user.id);
     const home = (await WorkspaceHome({ params: Promise.resolve({ ws: w.ws.slug }) })) as { props: { steps: { key: string }[] } };
     expect(home.props.steps.map((s) => s.key)).toEqual(["meeting", "invite", "checkIn", "session"]);
+  });
+});
+
+/** Someone of the workspace with the given role, signed in */
+async function withRole(role: "admin" | "organizer" | "member" | "billing" | "guest") {
+  const user = await prisma.user.create({
+    data: { id: crypto.randomUUID(), email: `${role}-${run}-${n}@access.test`, name: `Role ${role}` },
+  });
+  const person = await prisma.person.create({ data: { workspaceId: w.ws.id, userId: user.id, email: user.email, firstName: role } });
+  await prisma.workspaceMember.create({ data: { workspaceId: w.ws.id, userId: user.id, personId: person.id, role } });
+  await signIn(user.id);
+  return prisma.user.findUniqueOrThrow({ where: { id: user.id } });
+}
+const params = () => Promise.resolve({ ws: w.ws.slug });
+/** Someone of the workspace with the given role, not signed in: their seat */
+async function withRoleNoSignIn(role: "owner" | "admin" | "member") {
+  const user = await prisma.user.create({ data: { id: crypto.randomUUID(), email: `seat-${role}-${run}-${n}@access.test`, name: role } });
+  const person = await prisma.person.create({ data: { workspaceId: w.ws.id, userId: user.id, email: user.email, firstName: role } });
+  await prisma.workspaceMember.create({ data: { workspaceId: w.ws.id, userId: user.id, personId: person.id, role } });
+  return { userId: user.id, personId: person.id };
+}
+
+describe("what a role is offered", () => {
+  it("gives a guest no way to the directory, which would only send them home without a word", async () => {
+    const member = await withRole("member");
+    expect((await shellData(member as never, w.ws.slug)).can).toMatchObject({ people: true });
+    const guest = await withRole("guest");
+    expect((await shellData(guest as never, w.ws.slug)).can).toMatchObject({ people: false });
+    const settings = (await SettingsPage({ params: params() })) as { props: { categories: unknown } };
+    // The teams of the directory, and their "Manage the teams" link, are not theirs to see
+    expect(settings.props.categories).toBeNull();
+  });
+
+  it("does not show a member the projects' dashboard tab of a plan the workspace lacks", async () => {
+    await withRole("member");
+    const page = (await ProjectsPage({ params: params(), searchParams: Promise.resolve({ view: "dashboard" }) })) as {
+      props: { view: string; dashboardShown: boolean };
+    };
+    expect(page.props).toMatchObject({ view: "board", dashboardShown: false });
+  });
+
+  it("leads the billing address, without payments, to the plans; the plans open to whoever pays", async () => {
+    await signIn(w.user.id);
+    expect(await redirectOf(BillingPage({ params: params(), searchParams: Promise.resolve({}) }))).toBe(`/w/${w.ws.slug}/settings/plans`);
+    await withRole("billing");
+    expect(await redirectOf(PlansPage({ params: params() }))).toBeNull();
+  });
+
+  it("keeps a page not found of the workspace in its frame, with a way back", async () => {
+    const WorkspaceNotFound = (await import("@/app/w/[ws]/(shell)/(workspace)/not-found")).default;
+    const page = await WorkspaceNotFound();
+    expect(textOf(page)).toContain("Page not found");
+    expect(hrefsOf(page)).toEqual(["/"]);
+  });
+});
+
+describe("a custom role (Enterprise)", () => {
+  /** In the cloud, the workspace on Enterprise, a member holding a custom role with these permissions */
+  async function holding(permissions: string[], builtIn: "member" | "guest" = "member") {
+    process.env.RONDE_CLOUD = "1";
+    await prisma.workspace.update({ where: { id: w.ws.id }, data: { plan: "enterprise" } });
+    const role = await prisma.customRole.create({ data: { workspaceId: w.ws.id, name: `Role ${n}`, permissions } });
+    const user = await prisma.user.create({ data: { id: crypto.randomUUID(), email: `cr-${run}-${n}@access.test`, name: "Cara" } });
+    const person = await prisma.person.create({ data: { workspaceId: w.ws.id, userId: user.id, email: user.email, firstName: "Cara" } });
+    await prisma.workspaceMember.create({
+      data: { workspaceId: w.ws.id, userId: user.id, personId: person.id, role: builtIn, customRoleId: role.id },
+    });
+    await signIn(user.id);
+  }
+  afterEach(() => {
+    delete process.env.RONDE_CLOUD;
+  });
+
+  it("“Auditor” reads the statistics of a meeting it does not run", async () => {
+    const m = await meeting(w, "Weekly");
+    await holding(["meeting.read", "history.read", "stats.read"]);
+    expect(await redirectOf(StatsPage({ params: Promise.resolve({ ws: w.ws.slug, meeting: m.meetingId }) }))).toBeNull();
+  });
+
+  it("“People manager” invites members and changes a member's role", async () => {
+    const other = await prisma.person.create({ data: { workspaceId: w.ws.id, email: `x-${run}-${n}@access.test`, firstName: "Xavi" } });
+    const xUser = await prisma.user.create({ data: { id: crypto.randomUUID(), email: other.email, name: "Xavi" } });
+    await prisma.person.update({ where: { id: other.id }, data: { userId: xUser.id } });
+    await prisma.workspaceMember.create({ data: { workspaceId: w.ws.id, userId: xUser.id, personId: other.id, role: "member" } });
+    await holding(["people.read", "people.invite", "members.manage"]);
+    const invited = await inviteAction(w.ws.slug, { email: `new-${run}-${n}@access.test`, firstName: "Nora", role: "member" });
+    expect(invited.ok).toBe(true);
+    expect(await changeRoleAction(w.ws.slug, other.id, "guest")).toEqual({ ok: true, data: null });
+    // Never more than a member
+    expect((await changeRoleAction(w.ws.slug, other.id, "admin")).ok).toBe(false);
+  });
+
+  it("never lets a guest raise their own role, nor invite above it", async () => {
+    await holding(["people.read", "people.invite", "members.manage"], "guest");
+    const me = await prisma.workspaceMember.findFirstOrThrow({ where: { workspaceId: w.ws.id, role: "guest" } });
+    expect((await changeRoleAction(w.ws.slug, me.personId, "member")).ok).toBe(false);
+    expect((await prisma.workspaceMember.findUniqueOrThrow({ where: { id: me.id } })).role).toBe("guest");
+    const invited = await inviteAction(w.ws.slug, { email: `up-${run}-${n}@access.test`, firstName: "Up", role: "member" });
+    expect(invited.ok).toBe(false);
+  });
+
+  it("lets nobody raise their own role, while stepping down stays possible", async () => {
+    await holding(["people.read", "members.manage"]);
+    const me = await prisma.workspaceMember.findFirstOrThrow({ where: { workspaceId: w.ws.id, customRoleId: { not: null } } });
+    expect(await changeRoleAction(w.ws.slug, me.personId, "guest")).toEqual({ ok: true, data: null });
+  });
+
+  it("“People manager” with people.manage alone removes a member, not an admin", async () => {
+    const member = await withRoleNoSignIn("member");
+    const admin = await withRoleNoSignIn("admin");
+    await holding(["people.read", "people.manage"]);
+    expect(await removePersonAction(w.ws.slug, member.personId)).toEqual({ ok: true, data: null });
+    expect((await removePersonAction(w.ws.slug, admin.personId)).ok).toBe(false);
+  });
+
+  it("creating meetings holds where the workspace keeps that to its administrators", async () => {
+    await prisma.workspace.update({ where: { id: w.ws.id }, data: { settings: { meetingCreation: "admins" } } });
+    await holding(["meeting.create"]);
+    expect((await workspaceContext(w.ws.slug))?.can("meeting.create")).toBe(true);
+  });
+});
+
+describe("the last owner", () => {
+  it("stays when two owners leave at the same moment", async () => {
+    const second = await withRoleNoSignIn("owner");
+    const { memberContext } = await import("@/lib/server/authz");
+    const { leaveWorkspace } = await import("@/lib/server/workspaces");
+    // Each in their own browser: two requests at once
+    const [a, b] = await Promise.all([memberContext(w.ws.id, w.user.id), memberContext(w.ws.id, second.userId)]);
+    const results = await Promise.allSettled([leaveWorkspace(a!), leaveWorkspace(b!)]);
+    expect(results.filter((r) => r.status === "fulfilled")).toHaveLength(1);
+    expect(await prisma.workspaceMember.count({ where: { workspaceId: w.ws.id, role: "owner" } })).toBe(1);
+  });
+
+  it("stays when two owners step each other down at the same moment", async () => {
+    const second = await withRoleNoSignIn("owner");
+    const { memberContext } = await import("@/lib/server/authz");
+    const { changeRole } = await import("@/lib/server/workspaces");
+    const [a, b] = await Promise.all([memberContext(w.ws.id, w.user.id), memberContext(w.ws.id, second.userId)]);
+    await Promise.allSettled([changeRole(a!, second.personId, "admin"), changeRole(b!, w.host.id, "admin")]);
+    expect(await prisma.workspaceMember.count({ where: { workspaceId: w.ws.id, role: "owner" } })).toBe(1);
   });
 });
 

@@ -363,6 +363,7 @@ export function PortfolioView({
   periods,
   locked,
   dashboardOn,
+  dashboardShown = true,
   openNew,
   trackers,
   syncOn,
@@ -377,6 +378,8 @@ export function PortfolioView({
   /** What the Team plan brings, when the workspace does not have it */
   locked: React.ReactNode;
   dashboardOn: boolean;
+  /** The dashboard's tab: with the plan, or presenting it to whoever sees the plans; otherwise the board alone */
+  dashboardShown?: boolean;
   openNew: boolean;
   /** Where projects can be imported from, besides any tool and a token */
   trackers: ImportTracker[];
@@ -494,18 +497,20 @@ export function PortfolioView({
           )}
         </div>
       </header>
-      <div className="subtabs">
-        <div className="subtabs-list" role="tablist" aria-label={t("views")}>
-          <button type="button" role="tab" aria-selected={view === "board"} onClick={() => setView("board")}>
-            {t("board")}
-          </button>
-          {/* Without the plan, the tab presents what the dashboard brings */}
-          <button type="button" role="tab" aria-selected={view === "dashboard"} onClick={() => setView("dashboard")}>
-            {t("dashboard.title")}
-            {!dashboardOn && <span className="plan-badge">{tm("editions.team")}</span>}
-          </button>
+      {dashboardShown && (
+        <div className="subtabs">
+          <div className="subtabs-list" role="tablist" aria-label={t("views")}>
+            <button type="button" role="tab" aria-selected={view === "board"} onClick={() => setView("board")}>
+              {t("board")}
+            </button>
+            {/* Without the plan, the tab presents what the dashboard brings */}
+            <button type="button" role="tab" aria-selected={view === "dashboard"} onClick={() => setView("dashboard")}>
+              {t("dashboard.title")}
+              {!dashboardOn && <span className="plan-badge">{tm("editions.team")}</span>}
+            </button>
+          </div>
         </div>
-      </div>
+      )}
       {view === "dashboard" ? (
         dashboard ? (
           <PortfolioDashboard slug={slug} data={dashboard} weeks={weeks} periods={periods} onWeeks={(w) => setView("dashboard", w)} />

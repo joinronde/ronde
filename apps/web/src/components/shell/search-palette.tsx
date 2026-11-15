@@ -69,7 +69,9 @@ export function SearchPalette({ data, onClose }: { data: ShellData; onClose: () 
     { key: "decisions", kind: "page", icon: "flag", title: ts("decisions"), href: `${base}/decisions` },
     { key: "kudos", kind: "page", icon: "heart", title: ts("kudos"), href: `${base}/kudos` },
     { key: "templates", kind: "page", icon: "panel", title: ts("templates"), href: `${base}/templates` },
-    { key: "people", kind: "page", icon: "people", title: ts("people"), href: `${base}/people` },
+    ...(data.can.people
+      ? [{ key: "people", kind: "page" as const, icon: "people" as const, title: ts("people"), href: `${base}/people` }]
+      : []),
     ...(data.can.insights
       ? [{ key: "insights", kind: "page" as const, icon: "chart" as const, title: ts("insights"), href: `${base}/insights` }]
       : []),

@@ -28,7 +28,10 @@ export default async function ProjectsPage({
   const query = await searchParams;
   const portfolio = await loadPortfolio(ctx);
   const dashboardOn = hasFeature(readEditionOf(ctx.workspace), "reporting.portfolio");
-  const view = query.view === "dashboard" ? "dashboard" : "board";
+  // Without the plan, the tab presents it only to whoever sees the plans: no paid feature in others' way
+  const plans = await plansUrl(ctx);
+  const dashboardShown = dashboardOn || plans !== null;
+  const view = query.view === "dashboard" && dashboardShown ? "dashboard" : "board";
   const asked = Number(query.weeks);
   const weeks = (PERIODS as readonly number[]).includes(asked) ? asked : 12;
   let dashboard = null;
@@ -62,8 +65,9 @@ export default async function ProjectsPage({
       dashboard={dashboard}
       weeks={weeks}
       periods={[...PERIODS]}
-      locked={dashboardOn || view !== "dashboard" ? null : <PlanNotice feature="reporting.portfolio" plansUrl={await plansUrl(ctx)} />}
+      locked={dashboardOn || view !== "dashboard" ? null : <PlanNotice feature="reporting.portfolio" plansUrl={plans} />}
       dashboardOn={dashboardOn}
+      dashboardShown={dashboardShown}
       openNew={query.new === "1"}
       trackers={trackers}
       syncOn={projectSyncOn(ctx.workspace)}

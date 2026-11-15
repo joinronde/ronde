@@ -56,6 +56,8 @@
   "revoke": "إلغاء الدعوة",
   "remove": "إزالة",
   "removeConfirm": "إزالة {name} من {workspace}؟ سيُحذف ملفه الشخصي ووصوله؛ ويبقى ما قاله في الاجتماعات باسم عضو سابق.",
+  "roleConfirm": "منح {name} دور «{role}»؟ {hint}.",
+  "roleConfirmYes": "تغيير الدور",
   "removed": "تمت إزالة {name}.",
   "changeRole": "دور {name}",
   "saved": "تم الحفظ",

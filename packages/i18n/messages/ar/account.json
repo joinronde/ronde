@@ -58,6 +58,8 @@
   "workspaces": "مساحات العمل الخاصة بك",
   "noWorkspace": "لست في أي مساحة عمل بعد.",
   "createWorkspace": "إنشاء مساحة عمل",
+  "leaveWorkspace": "مغادرة",
+  "leaveNamed": "مغادرة {workspace}",
   "calendar": "التقويم",
   "calendarHint": "رابط خاص يضم كل الاجتماعات التي تشارك فيها، لتطبيق التقويم لديك.",
   "appearance": "المظهر",

@@ -2,7 +2,7 @@ import "server-only";
 import { createHash, randomBytes } from "node:crypto";
 import { PHONE_NUMBER } from "@ronde/connectors/kinds";
 import { authEmail } from "@ronde/core/emails";
-import { assignableRoles, type WorkspaceRole } from "@ronde/core/permissions";
+import { assignableRoles, ROLE_RANK, type WorkspaceRole } from "@ronde/core/permissions";
 import { availableSlug, isSlugFormat, RESERVED_SLUGS, slugify, splitName } from "@ronde/core/slug";
 import { prisma } from "@ronde/db";
 import { TEAM_PALETTE_SIZE } from "@ronde/db/teams";
@@ -224,7 +224,14 @@ export async function updatePerson(ctx: WorkspaceContext, personId: string, inpu
 export async function removePerson(ctx: WorkspaceContext, personId: string): Promise<void> {
   const person = await ctx.db.person.findFirst({ where: { id: personId }, select: { id: true, member: { select: { role: true } } } });
   if (!person) throw new OpError("notFound");
-  if (person.member) await assertCanChangeRole(ctx, person.member.role, null);
+  // The seat goes first, under the owners' lock: never the last owner's
+  if (person.member) {
+    const from = person.member.role;
+    await withOwnersLocked(ctx.workspace.id, async (tx) => {
+      await assertCanChangeRole(ctx, tx, from, null);
+      await tx.workspaceMember.deleteMany({ where: { workspaceId: ctx.workspace.id, personId } });
+    });
+  }
   // Their profile and access go; what they said stays the team's, signed by a former member (their open actions
   // included, to hand over)
   await erasePerson(ctx.db, ctx.workspace.id, person.id);
@@ -232,21 +239,40 @@ export async function removePerson(ctx: WorkspaceContext, personId: string): Pro
 
 // ---------- Roles ----------
 
-async function assertCanChangeRole(ctx: WorkspaceContext, from: WorkspaceRole, to: WorkspaceRole | null) {
-  const allowed = assignableRoles(ctx.member.role, { billing: billingOn() });
+type Tx = Parameters<Parameters<typeof prisma.$transaction>[0]>[0];
+
+/**
+ * Runs a change of the workspace's owners with the workspace's row locked: two owners leaving, or stepping each
+ * other down, at the same moment are counted one after the other, never leaving the workspace without an owner
+ */
+async function withOwnersLocked<T>(workspaceId: string, run: (tx: Tx) => Promise<T>): Promise<T> {
+  return prisma.$transaction(async (tx) => {
+    await tx.$queryRaw`SELECT "id" FROM "Workspace" WHERE "id" = ${workspaceId} FOR UPDATE`;
+    return run(tx);
+  });
+}
+
+async function assertLastOwnerStays(tx: Tx, workspaceId: string) {
+  if ((await tx.workspaceMember.count({ where: { workspaceId, role: "owner", status: "active" } })) <= 1) throw new OpError("lastOwner");
+}
+
+async function assertCanChangeRole(ctx: WorkspaceContext, tx: Tx, from: WorkspaceRole, to: WorkspaceRole | null) {
+  const allowed = assignableRoles(ctx.member.role, { billing: billingOn(), extra: ctx.principal.extra });
   // Nobody acts on a role above their own, nor hands one out
   if (!allowed.includes(from) || (to && !allowed.includes(to))) throw new AccessError(403, "roleNotAssignable");
-  if (from === "owner" && to !== "owner" && (await ctx.db.workspaceMember.count({ where: { role: "owner", status: "active" } })) <= 1) {
-    throw new OpError("lastOwner");
-  }
+  if (from === "owner" && to !== "owner") await assertLastOwnerStays(tx, ctx.workspace.id);
 }
 
 export async function changeRole(ctx: WorkspaceContext, personId: string, role: WorkspaceRole): Promise<void> {
   const member = await ctx.db.workspaceMember.findFirst({ where: { personId }, select: { id: true, role: true } });
   if (!member) throw new OpError("notFound");
   if (member.role === role) return;
-  await assertCanChangeRole(ctx, member.role, role);
-  await ctx.db.workspaceMember.update({ where: { id: member.id }, data: { role } });
+  // One's own role only goes down: a role given by a custom role never raises the person who holds it
+  if (member.id === ctx.member.id && ROLE_RANK[role] >= ROLE_RANK[member.role]) throw new AccessError(403, "roleNotAssignable");
+  await withOwnersLocked(ctx.workspace.id, async (tx) => {
+    await assertCanChangeRole(ctx, tx, member.role, role);
+    await tx.workspaceMember.update({ where: { id: member.id }, data: { role } });
+  });
 }
 
 /**
@@ -254,13 +280,11 @@ export async function changeRole(ctx: WorkspaceContext, personId: string, role: 
  * notification or turn reaches the person any more
  */
 export async function leaveWorkspace(ctx: WorkspaceContext): Promise<void> {
-  if (ctx.member.role === "owner" && (await ctx.db.workspaceMember.count({ where: { role: "owner", status: "active" } })) <= 1) {
-    throw new OpError("lastOwner");
-  }
-  await prisma.$transaction([
-    prisma.workspaceMember.delete({ where: { id: ctx.member.id } }),
-    prisma.person.update({ where: { id: ctx.member.personId }, data: { userId: null, active: false } }),
-  ]);
+  await withOwnersLocked(ctx.workspace.id, async (tx) => {
+    if (ctx.member.role === "owner") await assertLastOwnerStays(tx, ctx.workspace.id);
+    await tx.workspaceMember.delete({ where: { id: ctx.member.id } });
+    await tx.person.update({ where: { id: ctx.member.personId }, data: { userId: null, active: false } });
+  });
 }
 
 // ---------- Invitations ----------
@@ -276,7 +300,8 @@ export async function invite(
   ctx: WorkspaceContext,
   input: PersonInput & { role: WorkspaceRole },
 ): Promise<{ url: string; emailed: boolean }> {
-  if (!assignableRoles(ctx.member.role, { billing: billingOn() }).includes(input.role)) throw new AccessError(403, "roleNotAssignable");
+  if (!assignableRoles(ctx.member.role, { billing: billingOn(), extra: ctx.principal.extra }).includes(input.role))
+    throw new AccessError(403, "roleNotAssignable");
   const data = await personData(ctx, input);
   const existing = await ctx.db.person.findFirst({
     where: { email: data.email },
