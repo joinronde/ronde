@@ -34,7 +34,7 @@ async function write(page: Page, text: string) {
 /** The host invites a person of the directory; returns the invitation link */
 async function inviteFromDirectory(host: Page, name: string) {
   await host.goto("/w/demo/people");
-  await host.getByRole("button", { name: `Actions for ${name}` }).click();
+  await host.getByRole("button", { name: `Options for ${name}` }).click();
   await host.getByRole("button", { name: "Send an invitation" }).click();
   await host.getByRole("dialog", { name: "Invite someone" }).getByRole("button", { name: "Send the invitation" }).click();
   const link = await host.getByRole("dialog", { name: "Invitation link" }).getByRole("textbox").inputValue();
@@ -50,8 +50,8 @@ async function joins(browser: Browser, link: string, who: { name: string; passwo
   await page.getByRole("link", { name: "Create an account" }).click();
   await page.getByLabel("Full name").fill(who.name);
   await page.getByLabel("Password", { exact: true }).fill(who.password);
+  // Created from the invitation, the account joins the workspace at once
   await page.getByRole("button", { name: "Create account" }).click();
-  await page.getByRole("button", { name: /^Join / }).click();
   await page.waitForURL(/\/w\/demo$/);
   return { context, page };
 }
@@ -90,7 +90,7 @@ test("clips of the site and the promo video", async ({ browser }) => {
   });
   encodeClip(checkin, "checkin", { width: 780 });
 
-  // The agenda of the meeting, block by block: the host opens the blocks there are and adds a timebox (it stays
+  // The agenda of the meeting, block by block: the host opens the blocks there are and adds a timed topic (it stays
   // on the agenda, after the open topics: the session ends before it)
   await host.page.goto(`${meeting}/settings#agenda`);
   await host.page.waitForTimeout(1500);
@@ -99,7 +99,7 @@ test("clips of the site and the promo video", async ({ browser }) => {
     await host.page.waitForTimeout(900);
     await host.page.getByRole("button", { name: "Add a block" }).click();
     await host.page.waitForTimeout(2200);
-    await host.page.getByRole("button", { name: /^Timebox/ }).click();
+    await host.page.getByRole("button", { name: /^Timed topic/ }).click();
     await host.page.waitForTimeout(500);
     const topic = host.page.getByLabel("Topic", { exact: true }).last();
     await topic.click({ clickCount: 3 });
@@ -121,7 +121,7 @@ test("clips of the site and the promo video", async ({ browser }) => {
   await screen.waitForTimeout(2500);
   await host.page.getByRole("button", { name: "Start the meeting" }).click();
   await screen.waitForTimeout(6000);
-  await host.page.getByRole("button", { name: /^Next: Irritants/ }).click();
+  await host.page.getByRole("button", { name: /^Next: Pain points/ }).click();
   await screen.waitForTimeout(2800);
   // The host turns the first one into an action: it says so on the shared screen, and in the minutes
   await host.page.getByRole("button", { name: "Make it an action" }).first().click();

@@ -348,7 +348,7 @@ async function main() {
       // The irritants come first, right after the intro: dealt with there, not in the middle of someone's turn
       agenda: [
         { id: "intro", type: "intro" },
-        { id: "irritants", type: "slide", kind: "irritants", title: "Irritants" },
+        { id: "irritants", type: "slide", kind: "irritants", title: "Pain points" },
         { id: "round", type: "round" },
         { id: "topics", type: "topics" },
       ],
