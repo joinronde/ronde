@@ -149,6 +149,24 @@ export function withRoundsOrder(blocks: AgendaBlock[], first: "team" | "projects
   return out;
 }
 
+/** What a new meeting keeps of a round table and a project round: both, one of them first, or only one */
+export const ROUNDS_CHOICES = ["teamFirst", "projectsFirst", "teamOnly", "projectsOnly"] as const;
+export type RoundsChoice = (typeof ROUNDS_CHOICES)[number];
+
+/** An agenda with both rounds: both, in its own order (the choice a new meeting starts from); otherwise null */
+export function roundsChoiceOf(blocks: readonly AgendaBlock[] | undefined): RoundsChoice | null {
+  const order = roundsOrder(blocks);
+  return order && (order === "team" ? "teamFirst" : "projectsFirst");
+}
+
+/** The same agenda with the rounds chosen; an agenda without both rounds stays as it is */
+export function withRounds(blocks: AgendaBlock[], choice: RoundsChoice): AgendaBlock[] {
+  if (roundsOrder(blocks) === null) return blocks;
+  if (choice === "teamOnly") return blocks.filter((b) => b.type !== "projects");
+  if (choice === "projectsOnly") return blocks.filter((b) => b.type !== "round");
+  return withRoundsOrder(blocks, choice === "teamFirst" ? "team" : "projects");
+}
+
 /**
  * Whether the agenda gives people a turn (a round table or a project round): only then are check-ins presented.
  * Without one (a retrospective on its board alone…), nobody is asked to fill one in.

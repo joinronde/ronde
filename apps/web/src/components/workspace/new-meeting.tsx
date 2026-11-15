@@ -1,6 +1,6 @@
 "use client";
 
-import { roundsOrder } from "@ronde/core/agenda";
+import { ROUNDS_CHOICES, type RoundsChoice, roundsChoiceOf } from "@ronde/core/agenda";
 import { describeSchedule, occurrences, type ScheduleRule } from "@ronde/core/schedule";
 import { preselectsEveryone, roundTableMinutes } from "@ronde/core/templates";
 import type { SectionDef, SectionRole, SectionType } from "@ronde/core/types";
@@ -134,10 +134,11 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
     );
   const [sections, setSections] = useState<SectionDef[]>(template.data.sections);
   const [mods, setMods] = useState<Record<string, boolean>>(() => modulesOf(template));
-  // A template with a round table and a project round: which one opens the meeting (the template's order until changed)
-  const templateOrder = roundsOrder(template.data.agenda);
-  const [orderPick, setOrderPick] = useState<{ ref: string; first: "team" | "projects" } | null>(null);
-  const firstRound = orderPick?.ref === template.ref ? orderPick.first : templateOrder;
+  // A template with a round table and a project round: both or only one, and which one opens the meeting (both, in
+  // the template's order, until changed)
+  const templateRounds = roundsChoiceOf(template.data.agenda);
+  const [roundsPick, setRoundsPick] = useState<{ ref: string; rounds: RoundsChoice } | null>(null);
+  const rounds = roundsPick?.ref === template.ref ? roundsPick.rounds : templateRounds;
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const weeklyOneDay = first.freq === "weekly" && first.byDay.length <= 1;
@@ -241,7 +242,7 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
       modules: mods,
       // A section of its own left unnamed takes the name it showed (its placeholder): it needs one
       sections: sections.map((s) => ({ ...s, label: s.label.trim() || (s.role === "custom" ? sectionLabel(s) : "") })),
-      first: firstRound,
+      rounds,
     });
     if (!res.ok) {
       setBusy(false);
@@ -256,7 +257,7 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
   const valid = (s: Step) => s !== 2 || sections.length > 0;
   // What the round table costs: each speaker's time, next to the time the meeting has (no round table, nothing to tell)
   const speakers = picked.size + (creatorSpeaks ? 1 : 0);
-  const hasRound = !template.data.agenda || template.data.agenda.some((b) => b.type === "round");
+  const hasRound = (!template.data.agenda || template.data.agenda.some((b) => b.type === "round")) && rounds !== "projectsOnly";
   const roundMin = hasRound ? roundTableMinutes(speakers, template.data.settings.speakSec) : 0;
   const roundOver = roundMin > durationMin;
 
@@ -522,26 +523,27 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
                 })}
               </p>
               <p className="hint">{t("scheduleLater")}</p>
-              {firstRound && (
+              {rounds && (
                 <fieldset className="plain stack">
                   <legend className="lbl-s">{t("order.title")}</legend>
-                  <div className="order-choice">
-                    {(["team", "projects"] as const).map((o) => (
-                      <label key={o} className={`order-option${firstRound === o ? " on" : ""}`}>
+                  {/* Both rounds on the first line, one of them only on the second: what the choice means, said once under them */}
+                  <div className="order-choice rounds-choice">
+                    {ROUNDS_CHOICES.map((o) => (
+                      <label key={o} className={`order-option${rounds === o ? " on" : ""}`}>
                         <input
                           type="radio"
-                          name="first-round"
-                          checked={firstRound === o}
-                          onChange={() => setOrderPick({ ref: template.ref, first: o })}
+                          name="rounds"
+                          checked={rounds === o}
+                          aria-describedby={rounds === o ? "nm-rounds-hint" : undefined}
+                          onChange={() => setRoundsPick({ ref: template.ref, rounds: o })}
                         />
-                        <span>
-                          <strong>{t(`order.${o}`)}</strong>
-                          <span className="hint">{t(`order.${o}Hint`)}</span>
-                        </span>
+                        <strong>{t(`order.${o}`)}</strong>
                       </label>
                     ))}
                   </div>
-                  <span className="hint">{t("order.later")}</span>
+                  <span className="hint" id="nm-rounds-hint">
+                    {t(`order.${rounds}Hint`)} {t("order.later")}
+                  </span>
                 </fieldset>
               )}
             </div>
@@ -549,7 +551,7 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
               <h3 className="nm-pane-title">
                 <Users size={18} strokeWidth={2} aria-hidden="true" /> {t("people")}
               </h3>
-              <p className="hint">{t("peopleHint")}</p>
+              <p className="hint">{t(hasRound ? "peopleHint" : "peopleHintNoRound")}</p>
               {people.length === 0 ? (
                 <p className="empty-state">
                   {t("nobody")}{" "}
@@ -562,8 +564,11 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
               ) : (
                 <PeoplePicker slug={slug} people={people} teams={teams} picked={picked} onChange={setOwnPick} />
               )}
+              {/* Whether the creator takes part (a turn in the round table, notes on a retrospective's board…), said in the
+                  words of the meeting: without a round table, nobody takes a turn in it */}
               <label className="check nm-me">
-                <input type="checkbox" checked={creatorSpeaks} onChange={(e) => setCreatorSpeaks(e.target.checked)} /> {t("creatorSpeaks")}
+                <input type="checkbox" checked={creatorSpeaks} onChange={(e) => setCreatorSpeaks(e.target.checked)} />{" "}
+                {t(hasRound ? "creatorSpeaks" : "creatorTakesPart")}
               </label>
             </div>
           </div>
@@ -730,7 +735,7 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
                   step: 1 as Step,
                   value: (
                     <>
-                      {t("recapPeople", { count: speakers })}
+                      {hasRound ? t("recapPeople", { count: speakers }) : t("recapPeopleNoRound", { count: picked.size })}
                       {roundMin > 0 && (
                         <span className={`hint nm-round${roundOver ? " warn" : ""}`}>
                           {t(roundOver ? "recapRoundOver" : "recapRound", {
@@ -743,7 +748,7 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
                     </>
                   ),
                 },
-                ...(firstRound ? [{ icon: ArrowRight, label: t("order.title"), step: 1 as Step, value: t(`order.${firstRound}`) }] : []),
+                ...(rounds ? [{ icon: ArrowRight, label: t("order.title"), step: 1 as Step, value: t(`order.${rounds}`) }] : []),
                 { icon: ListChecks, label: t("sections"), step: 2 as Step, value: sections.map(sectionLabel).join(" · ") },
                 {
                   icon: SlidersHorizontal,

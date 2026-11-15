@@ -1,5 +1,5 @@
 import "server-only";
-import { withRoundsOrder } from "@ronde/core/agenda";
+import { ROUNDS_CHOICES, type RoundsChoice, withRounds } from "@ronde/core/agenda";
 import { describeSchedule } from "@ronde/core/schedule";
 import { parseSections, sectionsProblem } from "@ronde/core/templates";
 import { sectionBehavior } from "@ronde/core/util";
@@ -81,8 +81,11 @@ export interface NewMeeting {
   creatorSpeaks: boolean;
   /** Modules turned on or off over the template's choice */
   modules: Record<string, boolean>;
-  /** With a round table and a project round: which one comes first (null or missing: the template's order) */
-  first?: "team" | "projects" | null;
+  /**
+   * With a round table and a project round: both, one of them first, or only one (null or missing: both, in the
+   * template's order). A template with one round or none keeps its agenda.
+   */
+  rounds?: RoundsChoice | null;
   /** Sections of the check-in, when changed in the wizard (missing: the template's) */
   sections?: unknown;
 }
@@ -99,6 +102,7 @@ export async function createMeeting(ctx: WorkspaceContext, input: NewMeeting): P
     (input.weekday !== null && !(input.weekday >= 1 && input.weekday <= 7))
   )
     throw new OpError("invalidRequest", { details: "schedule" });
+  if (input.rounds != null && !ROUNDS_CHOICES.includes(input.rounds)) throw new OpError("invalidRequest", { details: "rounds" });
   const locale = resolveLocale(ctx.workspace.locale);
   const template = await resolveTemplate(ctx, input.template, locale);
   // Sections picked in the wizard replace the template's
@@ -145,9 +149,7 @@ export async function createMeeting(ctx: WorkspaceContext, input: NewMeeting): P
         ...settings,
         ...(template.agenda
           ? {
-              agenda: (input.first === "team" || input.first === "projects"
-                ? withRoundsOrder(template.agenda, input.first)
-                : template.agenda) as unknown as Prisma.InputJsonArray,
+              agenda: (input.rounds ? withRounds(template.agenda, input.rounds) : template.agenda) as unknown as Prisma.InputJsonArray,
             }
           : {}),
       },

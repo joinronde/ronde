@@ -138,12 +138,16 @@ export function useSortable<T>({
   return { list, row, grip, dragging: drag !== null };
 }
 
-/** The handle of a row: dragged, or moved with the arrow keys; and its two buttons, one step up or down */
+/**
+ * The handle of a row: dragged, or moved with the arrow keys; and its two buttons, one step up or down. One box
+ * for the row's layout (a single cell of a grid, a single item of a flex row), its room kept for the buttons
+ * while they are hidden: nothing on the row moves when they show
+ */
 export function SortGrip({ label, moves, ...props }: ReturnType<ReturnType<typeof useSortable>["grip"]>) {
   const t = useTranslations("common");
   const tb = useTranslations("board");
   return (
-    <>
+    <span className="sort-handle">
       <button
         type="button"
         className="sort-grip"
@@ -178,6 +182,6 @@ export function SortGrip({ label, moves, ...props }: ReturnType<ReturnType<typeo
           </button>
         </span>
       )}
-    </>
+    </span>
   );
 }

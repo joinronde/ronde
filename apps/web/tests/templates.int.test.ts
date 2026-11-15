@@ -124,15 +124,26 @@ describe("templates", () => {
     expect(copy.settings).toMatchObject({ targetMin: 15, speakSec: 90 });
   });
 
-  it("opens a meeting with the round its host picked, and takes the handover's time picked", async () => {
-    const team = await createMeeting(f.ctx.ws, { name: "Teams", template: "builtin:teamProjects", ...schedule });
-    const projects = await createMeeting(f.ctx.ws, { name: "Projects", template: "builtin:teamProjects", ...schedule, first: "projects" });
+  it("opens a meeting with the rounds its host picked, and takes the handover's time picked", async () => {
     const blocks = async (id: string) =>
       ((await prisma.meeting.findUniqueOrThrow({ where: { id }, select: { agenda: true } })).agenda as { type: string }[]).map(
         (b) => b.type,
       );
-    expect(await blocks(team.id)).toEqual(["intro", "round", "projects", "topics"]);
-    expect(await blocks(projects.id)).toEqual(["intro", "projects", "round", "topics"]);
+    const create = async (rounds?: unknown, template = "builtin:teamProjects") =>
+      blocks((await createMeeting(f.ctx.ws, { name: "Teams", template, ...schedule, rounds } as Parameters<typeof createMeeting>[1])).id);
+    // Nothing picked: the template's agenda
+    expect(await create()).toEqual(["intro", "round", "projects", "topics"]);
+    expect(await create("teamFirst")).toEqual(["intro", "round", "projects", "topics"]);
+    expect(await create("projectsFirst")).toEqual(["intro", "projects", "round", "topics"]);
+    // One round only: the other one is not on the new meeting's agenda
+    expect(await create("teamOnly")).toEqual(["intro", "round", "topics"]);
+    expect(await create("projectsOnly")).toEqual(["intro", "projects", "topics"]);
+    // A template with one round keeps it, whatever is sent
+    expect(await create("teamOnly", "builtin:portfolio")).toEqual(["intro", "projects", "topics"]);
+    const count = await prisma.meeting.count();
+    for (const rounds of ["nobody", "projects", 3])
+      await expect(create(rounds)).rejects.toMatchObject({ key: "invalidRequest", values: { details: "rounds" } });
+    expect(await prisma.meeting.count()).toBe(count);
     const shifts = await createMeeting(f.ctx.ws, {
       name: "Ward",
       template: "builtin:shiftHandover",
