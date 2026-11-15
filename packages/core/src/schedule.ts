@@ -268,7 +268,7 @@ export function weeklyRule(id: string, weekday: number, time: string, everyWeeks
 const sameDays = (a: number[], b: number[]) => a.length === b.length && a.every((x) => b.includes(x));
 
 /**
- * A readable summary: "Every other Monday, alternating 10:00 and 15:00 (Europe/Paris)". The time zone is said
+ * A readable summary: "Every other Monday, alternating between 10:00 and 15:00 (Europe/Paris)". The time zone is said
  * only when it is not the reader's own (`viewerZone`, when known).
  */
 export function describeSchedule(rules: ScheduleRule[], timeZone: string, locale: Locale, viewerZone?: string | null): string {

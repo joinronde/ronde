@@ -42,7 +42,7 @@ describe("sample meeting", () => {
     expect(archived).toHaveLength(4);
     const last = parseRecord(archived.at(-1)!.record)!;
     expect(last.rating?.avg).toBeGreaterThan(3);
-    expect(last.kudos[0]?.text).toBe("Merci d'avoir débloqué l'export en une journée");
+    expect(last.kudos[0]?.text).toBe("Merci d’avoir débloqué l’export en une journée");
     expect(archived.at(-1)!.summary).toContain("Emma");
     // What was planned one week is done the next: the stats see the follow-through
     const done = await prisma.checkInItem.count({ where: { meetingId: id, sessionId: { not: null }, sourceItemId: { not: null } } });

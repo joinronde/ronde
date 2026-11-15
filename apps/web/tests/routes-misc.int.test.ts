@@ -414,7 +414,15 @@ describe("one's own past check-ins", () => {
     });
     const archive = (date: string, items: Record<string, string>) =>
       prisma.session.create({
-        data: { workspaceId: w.ws.id, meetingId: f.meetingId, date, status: "archived", record: record(date, items) },
+        // Published minutes: a session whose minutes are still a draft stays with the hosts
+        data: {
+          workspaceId: w.ws.id,
+          meetingId: f.meetingId,
+          date,
+          status: "archived",
+          minutesPublishedAt: new Date(),
+          record: record(date, items),
+        },
       });
     await archive("2026-09-07", { [participant.id]: "Lena's first week", [f.hostPersonId]: "The host's week" });
     await archive("2026-09-14", { [participant.id]: "Lena's second week" });

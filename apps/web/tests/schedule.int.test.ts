@@ -125,7 +125,7 @@ describe("sessions follow the schedule", () => {
     await runOp(f.ctx, { op: "schedule.save", timeZone: "", rules: [weekly(monday, "10:00", 2), weekly(addDays(monday, 7), "15:00", 2)] });
     const snap = await loadSnapshot(f.ctx, "en");
     expect(snap.settings.schedule.upcoming.slice(0, 4).map((o) => o.time)).toEqual(["10:00", "15:00", "10:00", "15:00"]);
-    expect(snap.settings.schedule.summary).toBe("Every other Monday, alternating 10:00 and 15:00 (Europe/Paris)");
+    expect(snap.settings.schedule.summary).toBe("Every other Monday, alternating between 10:00 and 15:00 (Europe/Paris)");
   });
 
   it("marks people who will be away as absent, and keeps them absent at the next session", async () => {
