@@ -56,7 +56,8 @@ test("a retrospective with three people, from the notes to the minutes", async (
   await page.getByText("Monthly retrospective", { exact: true }).click();
   await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByLabel("Name").fill("Team retro");
-  await page.getByLabel("I also take a turn in the round table").uncheck();
+  // No round table in a retrospective: the host only runs it, without writing notes
+  await page.getByLabel("I take part too").uncheck();
   await page.getByRole("button", { name: "Next", exact: true }).click();
   // Sections and modules: the template's, kept as they are
   await page.getByRole("button", { name: "Next", exact: true }).click();

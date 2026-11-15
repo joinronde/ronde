@@ -186,3 +186,58 @@ test("a host creates a meeting, a participant fills in their check-in and raises
     expect((await res.text()).startsWith(`\uFEFF${head}`)).toBe(true);
   }
 });
+
+test("the wizard keeps the rounds picked: the projects only, or both with the projects first", async ({ page }) => {
+  test.setTimeout(240_000);
+  await signUp(page, { name: "Rhea Rounds", email: `rhea-${run}@example.com`, password: "rounds-password-123" });
+  await page.getByLabel("Workspace name").fill(`Rounds ${run}`);
+  await page.getByRole("button", { name: "Create the workspace" }).click();
+  await page.waitForURL(/\/w\/rounds-/);
+  const workspace = page.url();
+  const agenda = async (meeting: string) => {
+    await page.goto(`${meeting}/settings#agenda`);
+    await expect(page.locator(".agenda-blocks > li.agenda-fixed")).toBeVisible();
+    return page.locator(".agenda-blocks > li .agenda-label").allInnerTexts();
+  };
+  const create = async (name: string, pick: string) => {
+    await page.goto(`${workspace}/meetings/new`);
+    await page.getByText("Team and projects").click();
+    await page.getByRole("button", { name: "Next", exact: true }).click();
+    await page.getByLabel("Name").fill(name);
+    const rounds = page.getByRole("group", { name: "Round table and project round" });
+    // Both rounds, the template's order, until another choice is made
+    await expect(rounds.getByRole("radio")).toHaveCount(4);
+    await expect(rounds.getByRole("radio", { name: "Both, the team first" })).toBeChecked();
+    await expect(page.getByRole("checkbox", { name: "I also take a turn in the round table" })).toBeVisible();
+    await rounds.getByText(pick).click();
+    await expect(rounds.getByRole("radio", { name: pick })).toBeChecked();
+    // Without a round table, nobody takes a turn in it: the creator still chooses to take part
+    const creator = pick === "The projects only" ? "I take part too" : "I also take a turn in the round table";
+    await expect(page.getByRole("checkbox", { name: creator })).toBeChecked();
+    await page.getByRole("button", { name: "Next", exact: true }).click();
+    await page.getByRole("button", { name: "Next", exact: true }).click();
+    // The review says what was picked
+    await expect(page.locator(".nm-review-row").filter({ hasText: "Round table and project round" })).toContainText(pick);
+    return page;
+  };
+
+  await create("Portfolio review", "The projects only");
+  // No round table: the review says nothing of its length, and counts the people added
+  const peopleRow = page.locator(".nm-review-row").filter({ hasText: "People" });
+  await expect(peopleRow).toContainText("Nobody added yet");
+  await expect(peopleRow).not.toContainText("round table");
+  await page.getByRole("button", { name: "Create the meeting" }).click();
+  await page.waitForURL(/\/m\/[^/]+\/control$/, { timeout: 120_000 });
+  const projectsOnly = page.url().replace(/\/control$/, "");
+  const steps = (await agenda(projectsOnly)).join(" | ");
+  expect(steps).toContain("Project round");
+  expect(steps).not.toContain("Round table");
+
+  await create("Team sync", "Both, the projects first");
+  await expect(page.getByText(/of round table/)).toBeVisible();
+  await page.getByRole("button", { name: "Create the meeting" }).click();
+  await page.waitForURL(/\/m\/[^/]+\/control$/, { timeout: 120_000 });
+  const both = await agenda(page.url().replace(/\/control$/, ""));
+  expect(both.findIndex((x) => x.includes("Project round"))).toBeLessThan(both.findIndex((x) => x.includes("Round table")));
+  expect(both.findIndex((x) => x.includes("Project round"))).toBeGreaterThanOrEqual(0);
+});

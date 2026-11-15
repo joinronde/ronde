@@ -1415,6 +1415,12 @@ a.userbox:hover{color:var(--ink)}
 .order-option input{margin-top:3px;flex:none;accent-color:var(--accent)}
 .order-option > span{display:grid;gap:2px}
 .order-option.on{border-color:var(--accent);background:var(--accent-soft)}
+/* The rounds of a new meeting: both (the team or the projects first), or one only, two by two; one under the other on a phone */
+.rounds-choice{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.rounds-choice .order-option{align-items:center;padding:10px 12px}
+.rounds-choice .order-option input{margin-top:0}
+.rounds-choice strong{font-weight:600}
+@media (max-width: 560px){.rounds-choice{grid-template-columns:1fr}}
 .month-option input[type=number]{width:4.5em;text-align:end}
 .month-option input:disabled,.month-option [aria-disabled=true]{opacity:.5}
 .focus-btn[aria-disabled=true]{cursor:default}
