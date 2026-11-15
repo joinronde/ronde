@@ -1,7 +1,7 @@
 {
   "title": "Registro de auditoria",
   "intro": "Quem mudou o quê neste espaço de trabalho: configurações, pessoas, papéis, reuniões. As interações ao vivo não são guardadas.",
-  "window": "Mostra os últimos {days} dias.",
+  "window": "Mostra {days, plural, =0 {os últimos 0 dias} one {o último dia} other {os últimos # dias}}.",
   "filters": {
     "action": "Ação",
     "actionPlaceholder": "Ex.: people, roles, meeting",

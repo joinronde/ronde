@@ -141,9 +141,9 @@
     "loading": "Carregando projetos…",
     "saveForGroups": "Salve as configurações para mostrar os projetos dos novos grupos.",
     "filter": "Filtrar projetos",
-    "filterPlaceholder": "Filtrar os {count} projetos…",
+    "filterPlaceholder": "{count, plural, =0 {Filtrar os 0 projetos…} one {Filtrar o projeto…} other {Filtrar os # projetos…}}",
     "outsideGroups": "fora dos grupos",
-    "wholeGroup": "grupo inteiro · {count} projetos"
+    "wholeGroup": "grupo inteiro · {count, plural, =0 {0 projetos} one {# projeto} other {# projetos}}"
   },
   "people": {
     "title": "Pessoas ({count})",

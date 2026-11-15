@@ -17,7 +17,7 @@
   "nothingThisMonth": "Nenhuma sessão este mês.",
   "todayShort": "hoje",
   "tomorrow": "amanhã",
-  "inDays": "daqui a {count, plural, one {# dia} other {# dias}}",
+  "inDays": "daqui a {count, plural, =0 {# dias} one {# dia} other {# dias}}",
   "status": {
     "planned": "prevista",
     "live": "Ao vivo agora",

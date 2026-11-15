@@ -107,7 +107,7 @@
   "loadingPast": "Carregando suas fichas…",
   "noPast": "Nenhuma ficha anterior ainda: elas aparecem aqui depois de cada reunião em que você apresentou a sua.",
   "search": "Buscar",
-  "searchPast": "Buscar nas suas {count} fichas (projeto, palavra-chave…)",
+  "searchPast": "Buscar {count, plural, =0 {nas suas 0 fichas} one {na sua ficha} other {nas suas # fichas}} (projeto, palavra-chave…)",
   "backToCheckIn": "Voltar para minha ficha (não salva)",
   "pastMatches": "{shown} de {total} fichas contêm “{query}”",
   "noMatch": "Nada corresponde a “{query}”.",

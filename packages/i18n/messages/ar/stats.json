@@ -21,7 +21,7 @@
     "median": "المدة الوسيطة بالأيام: {days}",
     "plannedDoneHint": "نسبة ما خُطط له في اجتماع ويظهر في «منجز» في الاجتماع التالي",
     "plannedDone": "مخطط ← منجز",
-    "ofPlanned": "من أصل {count} من البنود المخطط لها",
+    "ofPlanned": "من أصل {count, plural, one {بند واحد مخطط له} two {بندين مخططين} few {# بنود مخطط لها} many {# بندًا مخططًا لها} other {# بند مخطط لها}}",
     "afterTwo": "بعد جلستين",
     "attendance": "الحضور",
     "perMeeting": "في المتوسط لكل اجتماع",
@@ -69,7 +69,7 @@
     "withoutAction": "بلا إجراء",
     "none": "لا يتكرر أي عائق من اجتماع إلى آخر."
   },
-  "staleSince": "مفتوح منذ {days} يومًا",
+  "staleSince": "مفتوح منذ {days, plural, one {يوم واحد} two {يومين} few {# أيام} many {# يومًا} other {# يوم}}",
   "fromMeeting": "(اجتماع {date})",
   "projects": {
     "title": "التقدّم حسب المشروع",

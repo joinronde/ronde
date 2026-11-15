@@ -21,7 +21,7 @@
     "median": "em {days, plural, =0 {# dias} one {# dia} other {# dias}} (mediana)",
     "plannedDoneHint": "Parte do que foi previsto em uma reunião que aparece em “Feito” na seguinte",
     "plannedDone": "Previsto → feito",
-    "ofPlanned": "de {count} itens previstos",
+    "ofPlanned": "de {count, plural, =0 {0 itens previstos} one {# item previsto} other {# itens previstos}}",
     "afterTwo": "após duas sessões",
     "attendance": "Presença",
     "perMeeting": "em média por reunião",
@@ -69,7 +69,7 @@
     "withoutAction": "Sem ação",
     "none": "Nenhum bloqueio se repete de uma reunião para a outra."
   },
-  "staleSince": "em aberto há {days, plural, one {# dia} other {# dias}}",
+  "staleSince": "em aberto há {days, plural, =0 {# dias} one {# dia} other {# dias}}",
   "fromMeeting": "(reunião de {date})",
   "projects": {
     "title": "Avanço por projeto",
