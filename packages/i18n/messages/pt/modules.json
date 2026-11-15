@@ -40,7 +40,7 @@
     },
     "hands": {
       "name": "Mãos levantadas e perguntas",
-      "description": "Levante a mão ou faça uma pergunta durante a vez de alguém: uma etapa de perguntas vem logo depois dessa vez."
+      "description": "Levante a mão ou faça uma pergunta durante a vez de alguém: uma etapa de perguntas vem logo depois da vez dessa pessoa."
     },
     "kudos": {
       "name": "Agradecimentos",
@@ -59,7 +59,7 @@
       "description": "Música de espera, avisos e uma mesa de sons, tocados na tela de cada pessoa ou na tela compartilhada."
     },
     "ambience": {
-      "name": "Clima da estação",
+      "name": "Ambientação sazonal",
       "description": "Decorações de festas e estações na tela de espera."
     },
     "gitlab": {
@@ -92,14 +92,14 @@
     },
     "rotation": {
       "name": "Papéis em rodízio",
-      "description": "Quem facilita e quem toma notas muda a cada sessão, na ordem da rodada."
+      "description": "Quem facilita e quem faz as anotações muda a cada sessão, na ordem da rodada."
     },
     "retro": {
       "name": "Retrospectiva",
       "description": "Notas adesivas anônimas em colunas, agrupadas pelo anfitrião, votadas pela equipe e depois discutidas; adicione-a à pauta."
     },
     "timebox": {
-      "name": "Timebox",
+      "name": "Tema cronometrado",
       "description": "Um assunto próprio na pauta, com sua duração e suas notas na ata."
     },
     "poker": {
@@ -137,6 +137,7 @@
   },
   "upgrade": {
     "comesWith": "{feature} vem com o Ronde {edition}.",
-    "plans": "Ver os planos"
+    "plans": "Ver os planos",
+    "includedIn": "Incluído no Ronde {edition}."
   }
 }

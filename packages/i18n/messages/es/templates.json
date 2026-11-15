@@ -31,6 +31,16 @@
       "feedback": "Feedback"
     }
   },
+  "sprintPlanning": {
+    "name": "Sprint planning",
+    "description": "Cada dos semanas: el objetivo del sprint, los elementos listos para estimar con planning poker, la capacidad del equipo y los riesgos.",
+    "sections": {
+      "goal": "Objetivo del sprint",
+      "ready": "Elementos listos",
+      "capacity": "Capacidad y ausencias",
+      "risks": "Riesgos"
+    }
+  },
   "sprintReview": {
     "name": "Sprint review",
     "description": "Cada dos semanas: lo entregado, las demos, el próximo sprint y los riesgos.",
@@ -102,10 +112,10 @@
   },
   "teachingTeam": {
     "name": "Equipo docente",
-    "description": "La reunión semanal de un equipo docente: la semana pasada en clase, lo que viene, alumnado a seguir y recursos que compartir.",
+    "description": "La reunión semanal de un equipo docente: la semana pasada en clase, lo que viene, el alumnado en seguimiento y recursos que compartir.",
     "sections": {
       "coming": "Lo que viene",
-      "students": "Alumnado a seguir",
+      "students": "Alumnado en seguimiento",
       "resources": "Recursos que compartir",
       "lastweek": "La semana pasada en clase"
     }
@@ -141,10 +151,10 @@
   },
   "shiftHandover": {
     "name": "Relevo de turno",
-    "description": "Quince minutos entre dos turnos: qué ha pasado, qué vigilar y qué debe hacer el turno siguiente.",
+    "description": "Quince minutos entre dos turnos: qué ha pasado, qué vigilar y qué debe hacer el turno siguiente. Una reunión por relevo: cada reunión tiene una sesión al día.",
     "sections": {
       "events": "Qué ha pasado",
-      "watch": "A vigilar",
+      "watch": "Qué vigilar",
       "todo": "Para el turno siguiente"
     }
   },
@@ -196,7 +206,7 @@
     "sections": {
       "results": "Experimentos y resultados",
       "next": "Próximos pasos",
-      "stuck": "Dónde estoy atascado",
+      "stuck": "Dónde me he atascado",
       "reading": "Artículos para compartir"
     }
   },

@@ -31,6 +31,16 @@
       "feedback": "Feedback"
     }
   },
+  "sprintPlanning": {
+    "name": "Sprint planning",
+    "description": "Ogni due settimane: l'obiettivo dello sprint, gli elementi pronti da stimare con il planning poker, la capacità del team e i rischi.",
+    "sections": {
+      "goal": "Obiettivo dello sprint",
+      "ready": "Elementi pronti",
+      "capacity": "Capacità e assenze",
+      "risks": "Rischi"
+    }
+  },
   "sprintReview": {
     "name": "Sprint review",
     "description": "Ogni due settimane: cosa è stato consegnato, le demo, il prossimo sprint e i rischi.",
@@ -111,7 +121,7 @@
     }
   },
   "board": {
-    "name": "Consiglio direttivo dell'associazione",
+    "name": "Consiglio direttivo",
     "description": "La riunione mensile del direttivo di un'associazione: notizie dalle commissioni, votazioni, tesoreria e prossimi eventi.",
     "sections": {
       "news": "Notizie dalle commissioni",
@@ -131,17 +141,17 @@
   },
   "siteMeeting": {
     "name": "Riunione di cantiere",
-    "description": "La riunione settimanale di un cantiere: lavori fatti, lavori previsti, sicurezza e lista delle riserve.",
+    "description": "La riunione settimanale di un cantiere: lavori fatti, lavori previsti, sicurezza e difetti da sistemare.",
     "sections": {
       "done": "Lavori fatti",
       "planned": "Lavori previsti",
       "safety": "Problemi di sicurezza",
-      "punch": "Lista delle riserve"
+      "punch": "Difetti da sistemare"
     }
   },
   "shiftHandover": {
     "name": "Passaggio di turno",
-    "description": "Quindici minuti tra due turni: cosa è successo, cosa tenere d'occhio e cosa deve fare il turno successivo.",
+    "description": "Quindici minuti tra due turni: cosa è successo, cosa tenere d'occhio e cosa deve fare il turno successivo. Una riunione per ogni cambio turno: una riunione ha una sessione al giorno.",
     "sections": {
       "events": "Cosa è successo",
       "watch": "Da tenere d'occhio",
@@ -164,7 +174,7 @@
     "sections": {}
   },
   "rhythm": {
-    "weekdays": "Ogni giorno lavorativo",
+    "weekdays": "Ogni giorno feriale",
     "daily": "{count, plural, one {Ogni giorno} other {Ogni # giorni}}",
     "weekly": "{count, plural, one {Ogni settimana} =2 {Ogni due settimane} other {Ogni # settimane}}",
     "monthly": "{count, plural, one {Una volta al mese} =3 {Una volta a trimestre} other {Ogni # mesi}}",
@@ -196,7 +206,7 @@
     "sections": {
       "results": "Esperimenti e risultati",
       "next": "Prossimi passi",
-      "stuck": "Dove sono bloccato",
+      "stuck": "Cosa mi blocca",
       "reading": "Articoli da condividere"
     }
   },

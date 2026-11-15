@@ -8,5 +8,5 @@
   "host": "ведущий",
   "cohost": "соведущий",
   "backToWorkspace": "Назад в {workspace}",
-  "breadcrumb": "Где вы"
+  "breadcrumb": "Навигационная цепочка"
 }

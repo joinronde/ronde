@@ -262,6 +262,12 @@ describe("someone else's data", () => {
     await expect(runOp(as(f, outsider.id, null, "admin"), { op: "action.add", text: "x", ownerId: outsider.id })).rejects.toMatchObject({
       key: "unknownOwner",
     });
+    // Someone who left the workspace, still listed in the meeting: no new action for them, nor one handed over
+    const gone = await person(f, "Gone");
+    await join(f, gone.id);
+    await prisma.person.update({ where: { id: gone.id }, data: { active: false } });
+    await expect(runOp(f.ctx, { op: "action.add", text: "Never done", ownerId: gone.id })).rejects.toMatchObject({ key: "unknownOwner" });
+    await expect(runOp(f.ctx, { op: "action.update", id: theirs.id, ownerId: gone.id })).rejects.toMatchObject({ key: "unknownOwner" });
   });
 
   it("actions: their owner or the host says where they stand, in one sentence", async () => {

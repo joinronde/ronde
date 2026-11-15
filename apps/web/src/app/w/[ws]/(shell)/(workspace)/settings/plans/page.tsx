@@ -13,7 +13,9 @@ export async function generateMetadata() {
 
 /** The paid plans, in one place: what Team and Enterprise add to the Community Edition, and where to get them */
 export default async function PlansPage({ params }: { params: Promise<{ ws: string }> }) {
-  const ctx = await pageWorkspace((await params).ws, "workspace.manage");
+  const ctx = await pageWorkspace((await params).ws);
+  // The administrators, and whoever pays (the "billing" role, which sees the plans' tab)
+  if (!ctx.can("workspace.manage") && !ctx.can("workspace.billing")) redirect(`/w/${ctx.workspace.slug}`);
   // In the cloud, a workspace changes its plan from its billing page
   if (billingOn()) redirect(`/w/${ctx.workspace.slug}/settings/billing`);
   const url = await plansUrl(ctx);

@@ -36,18 +36,23 @@ export function PageActions({ children }: { children: React.ReactNode }) {
   return slot ? createPortal(children, slot) : null;
 }
 
-export function MeetingFrame() {
-  const t = useTranslations("header");
-  const tPages = useTranslations("pages");
-  const path = usePathname();
-  const { s, connected } = useRonde();
-  // Lost for more than a moment: the stream opening at each page load must not flash a warning
+/** The connection to the server lost for more than a moment: the stream opening at each page load must not flash a warning */
+export function useLost(connected: boolean) {
   const [lost, setLost] = useState(false);
   useEffect(() => {
     if (connected) return setLost(false);
     const timer = setTimeout(() => setLost(true), 2500);
     return () => clearTimeout(timer);
   }, [connected]);
+  return lost;
+}
+
+export function MeetingFrame() {
+  const t = useTranslations("header");
+  const tPages = useTranslations("pages");
+  const path = usePathname();
+  const { s, connected } = useRonde();
+  const lost = useLost(connected);
   const base = s.context.path;
   const tabs = s.viewer.isHost
     ? TABS.filter(

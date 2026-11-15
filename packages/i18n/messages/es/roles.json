@@ -21,6 +21,6 @@
   "deleteConfirm": "¿Eliminar el rol «{name}»? {count, plural, =0 {Nadie lo tiene.} one {# persona vuelve a tener solo su rol.} other {# personas vuelven a tener solo su rol.}}",
   "members": "{count, plural, =0 {nadie} one {# persona} other {# personas}}",
   "empty": "Todavía no hay roles propios.",
-  "examples": "Por ejemplo: «Auditor» (historial y estadísticas de todas las reuniones), «Dinamizador» (dirige cualquier reunión), «Gestor de personas» (directorio e invitaciones).",
+  "examples": "Por ejemplo: «Auditor» (historial y estadísticas de todas las reuniones), «Facilitador» (dirige cualquier reunión), «Gestión de personas» (directorio e invitaciones).",
   "readOnly": "La licencia ha caducado: los roles siguen visibles pero ya no otorgan ningún permiso hasta que se renueve."
 }

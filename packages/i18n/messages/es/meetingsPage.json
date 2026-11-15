@@ -17,10 +17,10 @@
     "mine": "En las que participo",
     "run": "Las que dirijo"
   },
-  "liveNow": "En directo ahora",
+  "liveNow": "En directo",
   "sessionOf": "Sesión de las {time}",
   "next": "Próxima sesión",
-  "noNext": "Ninguna sesión prevista",
+  "noNext": "No hay sesiones previstas",
   "held": "{count, plural, one {sesión celebrada} other {sesiones celebradas}}",
   "openActions": "{count, plural, one {acción abierta} other {acciones abiertas}}",
   "last": "la última el {date}",
@@ -28,7 +28,7 @@
   "checkIn": "Mi ficha",
   "control": "Dirigir la reunión",
   "history": "Historial",
-  "noMatch": "Ninguna reunión coincide.",
+  "noMatch": "No hay reuniones que coincidan.",
   "empty": "Aún no hay reuniones.",
   "templates": "Plantillas"
 }

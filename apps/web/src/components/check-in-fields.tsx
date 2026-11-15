@@ -197,9 +197,7 @@ export function ListEditor({
               >
                 ⠿
               </span>
-              {checklist && (
-                <input type="checkbox" checked={!!r.done} onChange={() => toggle(i)} aria-label={r.done ? t("markToDo") : t("markDone")} />
-              )}
+              {checklist && <input type="checkbox" checked={!!r.done} onChange={() => toggle(i)} aria-label={r.text} />}
               {/* The text keeps the whole width; what goes with the line (who joined it) sits under it */}
               <span className="list-body">
                 <AutoText

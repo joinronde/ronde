@@ -7,7 +7,7 @@
   "timing": "Meta {target} · {speak} de fala por pessoa",
   "labels": {
     "when": "Quando",
-    "timing": "Formato",
+    "timing": "Tempos",
     "duration": "Duração",
     "participants": "Participantes"
   },
@@ -19,8 +19,8 @@
     "body": "As notificações de “{team}” chegarão aqui."
   },
   "soon": {
-    "title": "⏰ {team} começa em {minutes, plural, one {# minuto} other {# minutos}}",
-    "body": "Hora de se juntar à equipe e ter sua ficha à mão. Em “Minha tela”, você pode acompanhar as vezes, levantar a mão e fazer perguntas."
+    "title": "⏰ {team} começa em {minutes, plural, =0 {# minutos} one {# minuto} other {# minutos}}",
+    "body": "Hora de se juntar à equipe e ter sua ficha à mão. Em “Minha tela”, você pode acompanhar a vez de cada pessoa, levantar a mão e fazer perguntas."
   },
   "started": {
     "title": "▶️ {team} está começando",
@@ -38,13 +38,13 @@
     "ready": "Fichas prontas: {ready}/{total}",
     "none": "Nenhuma ficha esperada para esta sessão.",
     "allReady": "Todas as fichas estão prontas, obrigado, equipe!",
-    "remaining": "{count, plural, one {# ficha ainda precisa ser preparada ou atualizada.} other {# fichas ainda precisam ser preparadas ou atualizadas.}}",
+    "remaining": "{count, plural, =0 {# fichas ainda precisam ser preparadas ou atualizadas.} one {# ficha ainda precisa ser preparada ou atualizada.} other {# fichas ainda precisam ser preparadas ou atualizadas.}}",
     "prepare": "Atualize seus projetos e suas seções ({sections}) e revise suas ações de acompanhamento.",
     "fillIn": "📝 Preencher minha ficha"
   },
   "overdue": {
-    "title": "⏳ {team}: {count, plural, one {# ação de acompanhamento aguarda} other {# ações de acompanhamento aguardam}}",
-    "item": "{text} ({owner}, {days, plural, one {# dia} other {# dias}})",
+    "title": "⏳ {team}: {count, plural, =0 {# ações de acompanhamento aguardam} one {# ação de acompanhamento aguarda} other {# ações de acompanhamento aguardam}}",
+    "item": "{text} ({owner}, {days, plural, =0 {# dias} one {# dia} other {# dias}})",
     "update": "Atualizar minhas ações"
   },
   "birthday": {

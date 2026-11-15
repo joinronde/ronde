@@ -43,7 +43,7 @@ export async function PlanNotice({ feature, plansUrl }: { feature: FeatureId; pl
         <span className="plan-pill">{t("badge", { edition: editionName })}</span>
         <h1 id="plan-notice-title">{label(feature)}</h1>
         {pitch && <p className="plan-notice-lead">{pitch}</p>}
-        <p>{tm("upgrade.comesWith", { feature: label(feature), edition: editionName })}</p>
+        <p>{tm("upgrade.includedIn", { edition: editionName })}</p>
         {plansUrl ? (
           <>
             {also.length > 0 && (

@@ -5,10 +5,15 @@
   "home": "返回首页",
   "errorTitle": "出了点问题",
   "errorBody": "无法显示此页面。请重试；如果仍然失败，请刷新页面。",
-  "errorRef": "参考编号：{ref}",
+  "errorRef": "错误编号：{ref}",
   "retry": "重试",
   "suspendedTitle": "此工作空间已暂停",
   "suspendedBody": "{workspace} 目前已暂停：其会议、进展卡和历史都会保留，但任何人都无法打开。所有者知道原因；如需重新开放，请联系此服务的管理员。",
+  "suspendedBodyOwner": "此服务的管理员已暂停 {workspace}：其会议、进展卡和历史都会保留，但任何人都无法打开。如需重新开放，请联系管理员。",
   "suspendedBack": "返回我的工作空间",
+  "suspendedCreate": "创建另一个工作空间",
+  "suspendedMark": "已暂停",
+  "guestLinkGoneTitle": "此链接已失效",
+  "guestLinkGone": "这个会议共享屏幕的链接已过期或已被移除。请向发送给你的人索取新链接。",
   "report": "告诉我们发生了什么"
 }

@@ -4,10 +4,10 @@
   "title": "你的会议报告",
   "byMeeting": "按会议",
   "noSession": "此期间没有举行会议。",
-  "open": "在 Ronde 中查看分析",
+  "open": "在 Ronde 中查看数据洞察",
   "settings": {
     "title": "邮件报告",
-    "intro": "这些数据会在每周或每月初通过电子邮件发送。",
+    "intro": "这些数据会在每周或每月初通过邮件发送。",
     "frequency": "频率",
     "off": "不发送",
     "weekly": "每周一（上一周）",
@@ -18,9 +18,9 @@
     "emails": "地址，每行一个",
     "save": "保存",
     "saved": "已保存",
-    "test": "现在给我发一份测试",
+    "test": "立即给我发一份测试报告",
     "testSent": "测试报告已发送至 {email}"
   },
-  "openBranded": "查看分析",
+  "openBranded": "查看数据洞察",
   "projectsToWatch": "需要关注的项目"
 }

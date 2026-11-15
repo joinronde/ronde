@@ -19,13 +19,13 @@
   "ready": "Ficha pronta",
   "toFill": "Ficha a preencher",
   "noSession": "Nenhuma sessão prevista",
-  "noMeetings": "Você não participa de nenhuma reunião deste espaço.",
+  "noMeetings": "Você não participa de nenhuma reunião deste espaço de trabalho.",
   "actions": "Suas ações de acompanhamento em aberto",
   "summary": "Suas reuniões no Ronde",
-  "unknown": "O Ronde ainda não conhece você: o e-mail da sua conta do Slack deve ser o do seu perfil em um espaço do Ronde que adicionou o app.",
+  "unknown": "O Ronde ainda não conhece você: o e-mail da sua conta do Slack deve ser o do seu perfil em um espaço de trabalho do Ronde que adicionou o app.",
   "unavailable": "O Ronde não pode responder agora. Tente de novo em instantes.",
   "settings": {
-    "intro": "Adicione o Ronde ao seu espaço do Slack: cada pessoa preenche a ficha sem sair do Slack.",
+    "intro": "Adicione o Ronde ao seu espaço de trabalho do Slack: cada pessoa preenche a ficha sem sair do Slack.",
     "locked": "O app do Slack vem com o Ronde {edition}.",
     "uses": {
       "reminders": "Lembretes de ficha por mensagem direta, com um botão que abre a ficha em um formulário do Slack.",
@@ -40,13 +40,13 @@
     "remindersHint": "Por mensagem direta, no lugar do e-mail, para as pessoas encontradas no Slack. As demais continuam recebendo o e-mail.",
     "reinstall": "Trocar de canal",
     "disconnect": "Desconectar",
-    "disconnectConfirm": "Remover o Ronde deste espaço do Slack? Os lembretes voltam para o e-mail, e as regras de notificação que publicam no canal são excluídas.",
+    "disconnectConfirm": "Remover o Ronde deste espaço de trabalho do Slack? Os lembretes voltam para o e-mail, e as regras de notificação que publicam no canal são excluídas.",
     "notConfigured": "Para usar o Slack, o administrador desta instância do Ronde primeiro cria o app do Slack. Leva alguns minutos.",
     "setup": "Como configurar",
     "result": {
       "connected": "O Slack está conectado.",
       "cancelled": "A instalação foi cancelada no Slack.",
-      "denied": "Só as pessoas que gerenciam os conectores do espaço podem adicionar o Slack.",
+      "denied": "Só as pessoas que gerenciam os conectores do espaço de trabalho podem adicionar o Slack.",
       "failed": "Não foi possível conectar o Slack. Tente de novo; se continuar falhando, fale com o administrador desta instância."
     }
   }

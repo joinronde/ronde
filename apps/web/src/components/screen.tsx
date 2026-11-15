@@ -10,6 +10,7 @@ import { Select } from "@/components/select";
 import { withBasePath } from "@/lib/shared/base-path";
 import { AMBIENCE_KEY, readAmbienceChoice } from "./ambience";
 import { NoMeeting } from "./common";
+import { useLost } from "./header";
 import { RecordingBanner } from "./recorder";
 import { useRonde } from "./ronde-provider";
 import { RoundTable } from "./roundtable";
@@ -39,7 +40,10 @@ export function ScreenView() {
   const t = useTranslations("screen");
   const tPages = useTranslations("pages");
   const tAmbience = useTranslations("ambience");
-  const { s, mod } = useRonde();
+  const tHeader = useTranslations("header");
+  const { s, mod, connected } = useRonde();
+  // Shared to the room and rarely looked at by the host: a lost connection is said on it, until it comes back
+  const lost = useLost(connected);
   const [menu, setMenu] = useState(false);
   const [theme, setTheme] = useState<Theme>("auto");
   const [calm, setCalm] = useState(false);
@@ -89,7 +93,10 @@ export function ScreenView() {
   }, [s.settings.teamName, tPages]);
 
   return (
-    <div className="screen-page">
+    <main id="main" className="screen-page">
+      <h1 className="sr-only">
+        {tPages("screen")} · {s.settings.teamName}
+      </h1>
       {s.meeting ? (
         <div className="screen-stage">
           <Stage stepKey={s.meeting.stepKey} replay={replay} celebrate logo={s.brand.logo && withBasePath(s.brand.logo)} />
@@ -114,6 +121,12 @@ export function ScreenView() {
       <div className="screen-rec">
         <RecordingBanner />
       </div>
+      {lost && (
+        <span className="sync off screen-lost" role="status">
+          <i />
+          <span>{tHeader("reconnecting")}</span>
+        </span>
+      )}
       <div className="screen-menu">
         <button className="btn" aria-expanded={menu} aria-label={t("options")} onClick={() => setMenu(!menu)}>
           ⋯
@@ -181,7 +194,7 @@ export function ScreenView() {
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 }
 

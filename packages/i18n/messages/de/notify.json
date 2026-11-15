@@ -7,7 +7,7 @@
   "timing": "Ziel {target} · {speak} Redezeit pro Person",
   "labels": {
     "when": "Wann",
-    "timing": "Format",
+    "timing": "Zeiten",
     "duration": "Dauer",
     "participants": "Teilnehmende"
   },
@@ -20,11 +20,11 @@
   },
   "soon": {
     "title": "⏰ {team} beginnt in {minutes, plural, one {# Minute} other {# Minuten}}",
-    "body": "Zeit, zum Team zu stoßen und den Check-in griffbereit zu haben. Unter „Mein Bildschirm“ kannst du den Beiträgen folgen, dich melden und Fragen stellen."
+    "body": "Zeit, dazuzukommen. Halte deinen Check-in bereit. Unter „Mein Bildschirm“ kannst du den Beiträgen folgen, dich melden und Fragen stellen."
   },
   "started": {
     "title": "▶️ {team} beginnt",
-    "body": "Die Runde geht gleich los: Komm dazu, um deine Fortschritte und Fragen zu teilen."
+    "body": "Die Runde geht gleich los. Komm dazu und teile deine Fortschritte und Fragen."
   },
   "minutes": {
     "title": "📝 Protokoll von {team} · {date}",
@@ -34,7 +34,7 @@
     "read": "Protokoll lesen"
   },
   "checkIn": {
-    "title": "📝 Bereiten wir {team} vor",
+    "title": "📝 Zeit, {team} vorzubereiten",
     "ready": "Check-ins bereit: {ready}/{total}",
     "none": "Für diese Sitzung wird kein Check-in erwartet.",
     "allReady": "Alle Check-ins sind bereit, danke, Team!",

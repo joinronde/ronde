@@ -8,7 +8,8 @@ import { Field, FormAlert } from "./fields";
 
 type FailureKey = ReturnType<typeof failureKey>;
 
-export function TwoFactorForm({ next: rawNext }: { next?: string }) {
+/** The code of a sign-in waiting for its second factor; the page adds the ways out (children) */
+export function TwoFactorForm({ next: rawNext, children }: { next?: string; children?: React.ReactNode }) {
   const t = useTranslations("auth");
   const router = useRouter();
   const [backup, setBackup] = useState(false);
@@ -73,6 +74,7 @@ export function TwoFactorForm({ next: rawNext }: { next?: string }) {
       >
         {backup ? t("useAuthenticator") : t("useBackupCode")}
       </button>
+      {children}
     </div>
   );
 }

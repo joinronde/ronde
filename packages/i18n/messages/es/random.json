@@ -1,28 +1,28 @@
 {
   "kinds": {
     "wheel": "Ruleta",
-    "order": "Orden de palabra",
+    "order": "Orden de intervención",
     "teams": "Equipos",
     "coin": "Cara o cruz"
   },
   "hints": {
     "wheel": "Elige quién habla a continuación entre las personas que aún no han hablado.",
-    "order": "Baraja el orden de las personas que aún no han hablado.",
+    "order": "Sortea el orden de las personas que aún no han hablado.",
     "teams": "Reparte a las personas presentes en equipos.",
     "coin": "Para una decisión que nadie quiere tomar."
   },
   "draw": "Girar",
   "drawAgain": "Volver a sortear",
   "teamSize": "Personas por equipo",
-  "applyWheel": "{name} habla a continuación",
+  "applyWheel": "Dar el siguiente turno a {name}",
   "applyOrder": "Usar este orden",
-  "applied": "Aplicado al orden de palabra",
+  "applied": "Aplicado al orden de intervención",
   "clear": "Ocultar de las pantallas",
   "picked": "¡{name}!",
   "heads": "Cara",
   "tails": "Cruz",
   "team": "Equipo {n}",
-  "orderTitle": "Orden de palabra",
+  "orderTitle": "Orden de intervención",
   "drawing": "Sorteando…",
   "everyone": "Todo el mundo ve el mismo sorteo: lo elige el servidor y cada pantalla lo reproduce.",
   "tool": "Herramienta de azar",

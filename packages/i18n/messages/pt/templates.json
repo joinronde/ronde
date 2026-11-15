@@ -31,6 +31,16 @@
       "feedback": "Feedback"
     }
   },
+  "sprintPlanning": {
+    "name": "Sprint planning",
+    "description": "A cada duas semanas: a meta do sprint, os itens prontos para estimar com planning poker, a capacidade da equipe e os riscos.",
+    "sections": {
+      "goal": "Meta do sprint",
+      "ready": "Itens prontos",
+      "capacity": "Capacidade e ausências",
+      "risks": "Riscos"
+    }
+  },
   "sprintReview": {
     "name": "Sprint review",
     "description": "A cada duas semanas: o que foi entregue, as demos, o próximo sprint e os riscos.",
@@ -141,7 +151,7 @@
   },
   "shiftHandover": {
     "name": "Passagem de turno",
-    "description": "Quinze minutos entre dois turnos: o que aconteceu, o que observar e o que o próximo turno deve fazer.",
+    "description": "Quinze minutos entre dois turnos: o que aconteceu, o que observar e o que o próximo turno deve fazer. Uma reunião por passagem de turno: cada reunião tem uma sessão por dia.",
     "sections": {
       "events": "O que aconteceu",
       "watch": "A observar",
@@ -160,7 +170,7 @@
   },
   "teamProjects": {
     "name": "Equipe e projetos",
-    "description": "Primeiro, uma vez curta para as novidades de cada pessoa; depois, cada projeto em comum tem a sua vez, em que seus membros falam juntos.",
+    "description": "Primeiro, cada pessoa fala rapidamente das suas novidades; depois, cada projeto em comum tem a sua vez, em que seus membros falam juntos.",
     "sections": {}
   },
   "rhythm": {
@@ -196,7 +206,7 @@
     "sections": {
       "results": "Experimentos e resultados",
       "next": "Próximos passos",
-      "stuck": "Onde estou travado",
+      "stuck": "Onde travei",
       "reading": "Artigos para compartilhar"
     }
   },

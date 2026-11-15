@@ -64,8 +64,8 @@ describe("changing a role", () => {
     const admin = await seat("admin");
     const member = await seat("member");
     await signIn(admin.userId);
-    expect(await actions.changeRoleAction(slug, member.personId, "owner")).toEqual(refused("roleNotAssignable"));
-    expect(await actions.changeRoleAction(slug, w.host.id, "member")).toEqual(refused("roleNotAssignable"));
+    expect(await actions.changeRoleAction(slug, member.personId, "owner")).toEqual(refused("roleOutOfReach"));
+    expect(await actions.changeRoleAction(slug, w.host.id, "member")).toEqual(refused("roleOutOfReach"));
     expect(await roleOf(member.personId)).toBe("member");
     expect(await roleOf(w.host.id)).toBe("owner");
     // Within their reach, it goes through
@@ -76,7 +76,7 @@ describe("changing a role", () => {
   it("does not hand out the billing role where the workspace pays for nothing (self-hosted)", async () => {
     const member = await seat("member");
     await signIn(w.user.id);
-    expect(await actions.changeRoleAction(slug, member.personId, "billing")).toEqual(refused("roleNotAssignable"));
+    expect(await actions.changeRoleAction(slug, member.personId, "billing")).toEqual(refused("roleOutOfReach"));
   });
 
   it("leaves the workspace at least one owner", async () => {
@@ -112,7 +112,7 @@ describe("removing a person", () => {
   it("never removes someone above the administrator's role", async () => {
     const admin = await seat("admin");
     await signIn(admin.userId);
-    expect(await actions.removePersonAction(slug, w.host.id)).toEqual(refused("roleNotAssignable"));
+    expect(await actions.removePersonAction(slug, w.host.id)).toEqual(refused("roleOutOfReach"));
     expect(await roleOf(w.host.id)).toBe("owner");
   });
 

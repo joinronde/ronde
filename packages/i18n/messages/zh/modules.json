@@ -9,7 +9,7 @@
   "categories": {
     "facilitation": "主持引导",
     "organisation": "组织",
-    "formats": "形式",
+    "formats": "会议形式",
     "integrations": "集成",
     "notifications": "通知",
     "reporting": "报告"
@@ -18,7 +18,7 @@
     "team": "Team",
     "enterprise": "Enterprise"
   },
-  "paidTitle": "付费方案提供",
+  "paidTitle": "付费方案功能",
   "paidIntro": "Ronde Team 和 Enterprise 提供，可在云端使用，也可凭许可证密钥自托管。",
   "learnMore": "查看方案",
   "items": {
@@ -31,20 +31,20 @@
       "description": "每个人分享自己的心情（⛈️ 到 ☀️），匿名展示并计入统计。"
     },
     "rating": {
-      "name": "会议价值",
-      "description": "总结时，每人匿名为会议的价值打 1 到 5 分；平均分会记录在统计中。"
+      "name": "会议评分",
+      "description": "总结时，每人匿名为会议的有用程度打分（1–5 分）；平均分计入统计。"
     },
     "reactions": {
-      "name": "表情与信号",
-      "description": "表情反应和信号（太长了、大声点……）飞过所有屏幕。"
+      "name": "表情回应与信号",
+      "description": "表情回应和信号（太长了、大声点……）会飘过所有屏幕。"
     },
     "hands": {
       "name": "举手与提问",
       "description": "在某人发言时举手或提问：该发言之后会增加一个提问环节。"
     },
     "kudos": {
-      "name": "致谢",
-      "description": "会议中感谢一位同事；致谢会显示在所有屏幕和会议纪要中。"
+      "name": "感谢",
+      "description": "在会议中感谢一位同事；感谢会显示在所有屏幕和会议纪要中。"
     },
     "spotlight": {
       "name": "聚光灯",
@@ -52,7 +52,7 @@
     },
     "birthdays": {
       "name": "生日",
-      "description": "等待屏幕会庆祝本周的生日（仅日和月）。"
+      "description": "等待屏幕会为本周过生日的人送上祝福（只显示月和日）。"
     },
     "sounds": {
       "name": "声音",
@@ -68,7 +68,7 @@
     },
     "workflows": {
       "name": "通知工作流",
-      "description": "仅在满足条件时发送通知，用你自己的措辞，发送到 Slack、Teams、Matrix 或电子邮件。"
+      "description": "仅在满足条件时发送通知，内容可自定义，可发送到 Slack、Teams、Matrix 或邮件。"
     },
     "aiAssistant": {
       "name": "AI 助手",
@@ -76,7 +76,7 @@
     },
     "writeBack": {
       "name": "创建工单",
-      "description": "把后续行动项变成 Jira、Linear、GitLab 或 GitHub 工单，并保持同步。"
+      "description": "把行动项转为 Jira、Linear、GitLab 或 GitHub 工单，并保持同步。"
     },
     "calendarSync": {
       "name": "日历同步",
@@ -84,7 +84,7 @@
     },
     "analytics": {
       "name": "工作空间分析",
-      "description": "跨会议的仪表板：出席、参与度、反复出现的阻碍。"
+      "description": "跨会议的仪表盘：出席、参与度、反复出现的阻碍。"
     },
     "scheduledReports": {
       "name": "定期报告",
@@ -92,11 +92,11 @@
     },
     "rotation": {
       "name": "角色轮换",
-      "description": "引导者和记录者每场轮换，按轮流发言的顺序。"
+      "description": "每次会议按轮流发言的顺序，轮换引导人和记录人。"
     },
     "retro": {
-      "name": "回顾",
-      "description": "按列匿名贴便签，主持人归类，团队投票，再进行讨论；请将其加入议程。"
+      "name": "回顾会",
+      "description": "分栏匿名贴便签，主持人归类，团队投票，然后讨论；需加入议程。"
     },
     "timebox": {
       "name": "限时议题",
@@ -104,7 +104,7 @@
     },
     "poker": {
       "name": "计划扑克",
-      "description": "团队用翻牌前保持隐藏的卡片估算条目；请将其加入议程。"
+      "description": "团队用暗牌估算任务，亮牌前互不可见；需加入议程。"
     },
     "polls": {
       "name": "投票",
@@ -115,12 +115,12 @@
       "description": "转盘决定下一位、随机发言顺序、随机分组或抛硬币，所有屏幕同时播放。"
     },
     "parking": {
-      "name": "停车场",
-      "description": "一键搁置离题内容；它会成为下一场的开放议题。"
+      "name": "暂存区",
+      "description": "一键搁置离题内容；它会成为下次会议的开放议题。"
     },
     "decisions": {
-      "name": "决定日志",
-      "description": "所有场次笔记中的每一行“决定：”，汇集为全队可搜索的列表。"
+      "name": "决定记录",
+      "description": "所有会议笔记中以“决定：”开头的行，汇集成全队可搜索的列表。"
     },
     "github": {
       "name": "GitHub",
@@ -132,11 +132,12 @@
     },
     "async": {
       "name": "异步模式",
-      "description": "没有实时会议：每个人填写进展卡并评论，然后在计划时间通过电子邮件发送汇总。"
+      "description": "不开实时会议：每个人填写进展卡并评论，到计划时间后通过邮件发送汇总。"
     }
   },
   "upgrade": {
     "comesWith": "{feature} 包含在 Ronde {edition} 中。",
-    "plans": "查看方案"
+    "plans": "查看方案",
+    "includedIn": "包含在 Ronde {edition} 中。"
   }
 }

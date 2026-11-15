@@ -1,5 +1,5 @@
 {
-  "editingHint": "Toma un bloque por su asa <handle></handle> y suéltalo donde quieras, o usa sus flechas. La disposición se guarda solo para ti.",
+  "editingHint": "Arrastra un bloque por su asa <handle></handle> hasta donde quieras, o usa sus flechas. La disposición se guarda solo para ti.",
   "columnCount": "Número de columnas",
   "columns": "{count, plural, one {# columna} other {# columnas}}",
   "defaultLayout": "Disposición por defecto",
@@ -7,7 +7,7 @@
   "customiseHint": "Mueve los bloques, elige el número de columnas",
   "customise": "Personalizar la página",
   "customiseCustom": "Personalizar la página · disposición propia",
-  "dragHint": "Mover «{title}»: tómalo y suéltalo donde quieras",
+  "dragHint": "Mover «{title}»: arrástralo hasta donde quieras",
   "move": "Mover el bloque «{title}»",
   "up": "Subir",
   "down": "Bajar",

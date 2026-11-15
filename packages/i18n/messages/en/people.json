@@ -10,7 +10,7 @@
     "category": "Team",
     "role": "Role",
     "status": "Status",
-    "actions": "Actions"
+    "actions": "Options"
   },
   "status": {
     "active": "Active",
@@ -50,12 +50,14 @@
   "linkShare": "You can also share this link with them directly.",
   "copy": "Copy the link",
   "copied": "Copied",
-  "actionsFor": "Actions for {name}",
+  "actionsFor": "Options for {name}",
   "edit": "Edit",
   "inviteAgain": "Send an invitation",
   "revoke": "Revoke the invitation",
   "remove": "Remove",
-  "removeConfirm": "Remove {name} from {workspace}? Their profile and access are deleted; what they said in meetings stays, signed by a former member.",
+  "removeConfirm": "Remove {name} from {workspace}? Their profile and access are deleted; what they said in meetings stays, shown as “Former member”.",
+  "roleConfirm": "Give {name} the role “{role}”? {hint}.",
+  "roleConfirmYes": "Change the role",
   "removed": "{name} removed.",
   "changeRole": "Role of {name}",
   "saved": "Saved",

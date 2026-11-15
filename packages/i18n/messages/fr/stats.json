@@ -1,13 +1,13 @@
 {
   "loading": "Chargement des statistiques…",
   "empty": "Les statistiques apparaîtront après le premier compte rendu publié.",
-  "plannedDoneTip": "{done} sur {planned} éléments prévus la fois d'avant sont faits",
+  "plannedDoneTip": "{done} des {planned} éléments prévus la fois précédente sont faits",
   "presentTip": "{count, plural, one {# présent} other {# présents}}",
-  "absentTip": "absents : {names}",
-  "exchangesTip": "{questions, plural, one {# question} other {# questions}} · {hands, plural, one {# main levée} other {# mains levées}} · {kudos} merci · {answers, plural, one {# réponse} other {# réponses}} au brise-glace",
-  "durationTip": "Durée : {duration}",
+  "absentTip": "absents : {names}",
+  "exchangesTip": "{questions, plural, one {# question} other {# questions}} · {hands, plural, one {# main levée} other {# mains levées}} · {kudos, plural, one {# remerciement} other {# remerciements}} · {answers, plural, one {# réponse} other {# réponses}} au brise-glace",
+  "durationTip": "Durée : {duration}",
   "blockersTip": "{count, plural, one {# difficulté signalée} other {# difficultés signalées}}",
-  "moodTip": "{avg}/5 · {count} réponses",
+  "moodTip": "{avg}/5 · {count, plural, one {# réponse} other {# réponses}}",
   "kpi": {
     "archived": "Séances tenues",
     "since": "depuis le {date}",
@@ -16,10 +16,10 @@
     "avgSpeaking": "Temps de parole moyen",
     "speakingTarget": "repère {target} par personne",
     "actions": "Actions de suivi",
-    "open": "{count} ouvertes",
-    "resolved": "{count, plural, one {# résolue} other {# résolues}}",
-    "median": "en {days} j (médiane)",
-    "plannedDoneHint": "Part de ce qui était prévu à une réunion et qui figure dans « Fait » à la suivante",
+    "open": "{count, plural, one {# ouverte} other {# ouvertes}}",
+    "resolved": "{count, plural, one {# faite} other {# faites}}",
+    "median": "en {days, plural, one {# jour} other {# jours}} (médiane)",
+    "plannedDoneHint": "Part de ce qui était prévu à une réunion et qui figure dans « Fait » à la suivante",
     "plannedDone": "Prévu → fait",
     "ofPlanned": "sur {count} éléments prévus",
     "afterTwo": "après deux séances",
@@ -39,24 +39,24 @@
     "plannedDone": "Prévu → fait (%)",
     "plannedDoneLabel": "Part des éléments prévus faits à la réunion suivante, en pourcentage",
     "needTwo": "Il faut deux séances.",
-    "plannedDoneHint": "Ce que chacun avait prévu la fois d'avant et qu'on retrouve dans son « Fait » (texte identique ou proche). Un bon indicateur de la fiabilité des prévisions, pas de la charge de travail.",
+    "plannedDoneHint": "Ce que chacun avait prévu la fois d’avant et qu’on retrouve dans son « Fait » (texte identique ou proche). Un bon indicateur de la fiabilité des prévisions, pas de la charge de travail.",
     "attendance": "Présence (%)",
-    "attendanceLabel": "Part de l'équipe présente à chaque réunion, en pourcentage",
+    "attendanceLabel": "Part de l’équipe présente à chaque réunion, en pourcentage",
     "exchanges": "Échanges pendant la réunion",
     "exchangesLabel": "Questions, mains levées et remerciements par réunion",
     "noExchanges": "Aucune question, main levée ni remerciement dans les séances passées.",
     "exchangesHint": "Questions, mains levées et remerciements. Survolez une colonne pour le détail, brise-glace compris.",
     "blockers": "Difficultés signalées par réunion",
     "blockersLabel": "Nombre de difficultés signalées par réunion",
-    "mood": "Météo de l'équipe (moyenne sur 5)",
-    "moodLabel": "Humeur moyenne de l'équipe par réunion, sur 5",
+    "mood": "Météo de l’équipe (moyenne sur 5)",
+    "moodLabel": "Météo moyenne de l’équipe par réunion, sur 5",
     "moodHint": "1 = ⛈️ orageux, 5 = ☀️ grand soleil. Réponses anonymes.",
     "speaking": "Temps de parole moyen par personne",
     "speakingTip": "{avg} en moyenne sur {count, plural, one {# réunion} other {# réunions}}",
     "speakingHint": "Le trait vertical marque {target}.",
     "rating": "Utilité (moyenne sur 5)",
     "ratingLabel": "Utilité moyenne par réunion, sur 5",
-    "ratingHint": "Donnée par les participants à la conclusion, anonymement."
+    "ratingHint": "Donnée anonymement par les participants à la clôture."
   },
   "seeData": "Voir les données",
   "date": "Date",
@@ -67,9 +67,9 @@
     "times": "signalée {count} fois ({dates})",
     "withAction": "Action ouverte",
     "withoutAction": "Sans action",
-    "none": "Aucune difficulté ne revient d'une semaine à l'autre."
+    "none": "Aucune difficulté ne revient d’une semaine à l’autre."
   },
-  "staleSince": "ouverte depuis {days} jours",
+  "staleSince": "ouverte depuis {days, plural, one {# jour} other {# jours}}",
   "fromMeeting": "(réunion du {date})",
   "projects": {
     "title": "Avancement par projet",
@@ -92,5 +92,5 @@
     "mood": "Météo",
     "rating": "Utilité"
   },
-  "ratingTip": "{avg}/5 · {count} notes"
+  "ratingTip": "{avg}/5 · {count, plural, one {# note} other {# notes}}"
 }

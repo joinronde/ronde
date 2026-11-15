@@ -126,7 +126,7 @@ describe("waiting-screen ambience", () => {
     expect(resolveAmbience("christmas", d, "en")?.key).toBe("christmas");
     expect(resolveAmbience("auto", d, "en")?.key).toBe("halloween");
     expect(resolveAmbience("unknown", d, "en")?.key).toBe("halloween");
-    expect(resolveAmbience("auto", d, "fr")?.greeting).toBe("Joyeux Halloween : gare aux bugs zombies 🎃");
+    expect(resolveAmbience("auto", d, "fr")?.greeting).toBe("Joyeux Halloween : gare aux bugs zombies 🎃");
   });
 });
 

@@ -1,8 +1,8 @@
 {
-  "title": "Créer votre espace",
+  "title": "Créer votre espace de travail",
   "welcome": "Bienvenue, {name} !",
-  "intro": "Un espace réunit votre équipe : ses personnes, ses réunions et ses modèles. Vous pourrez en créer d'autres ensuite.",
-  "name": "Nom de l'espace",
+  "intro": "Un espace de travail réunit votre équipe : ses membres, ses réunions et ses modèles. Vous pourrez en créer d’autres ensuite.",
+  "name": "Nom de l’espace de travail",
   "namePlaceholder": "Équipe produit",
   "slug": "Adresse",
   "slugHint": "Lettres minuscules, chiffres et tirets.",
@@ -10,10 +10,11 @@
   "defaults": "Adresse {address} · {language} · {timezone}",
   "language": "Langue des e-mails et des comptes rendus",
   "timezone": "Fuseau horaire",
-  "create": "Créer l'espace",
+  "create": "Créer l’espace de travail",
   "invitationsTitle": "Vous avez reçu des invitations",
+  "invitationByLink": "{count, plural, one {Une invitation vous attend : ouvrez le lien reçu par e-mail pour rejoindre l’équipe.} other {# invitations vous attendent : ouvrez les liens reçus par e-mail pour rejoindre les équipes.}}",
   "join": "Rejoindre",
-  "createOwn": "Ou créez votre propre espace",
-  "yourWorkspaces": "Vos espaces",
+  "createOwn": "Ou créez votre propre espace de travail",
+  "yourWorkspaces": "Vos espaces de travail",
   "open": "Ouvrir"
 }

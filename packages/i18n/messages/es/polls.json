@@ -39,7 +39,7 @@
   "delete": "Eliminar la encuesta «{question}»",
   "yes": "Sí",
   "no": "No",
-  "yesNo": "Sí o no, ya",
+  "yesNo": "Sí o no, al momento",
   "yesNoHint": "La pregunta escrita abajo, o «¿Estás de acuerdo?», en pantalla al momento, con quién respondió qué.",
   "yesNoQuestion": "¿Estás de acuerdo?"
 }

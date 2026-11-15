@@ -30,17 +30,20 @@ import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Select } from "@/components/select";
 import {
+  allPlansSorted,
   appendLine,
   carryPlans,
   type Draft,
   draftOf,
   fieldsOf as fieldsOfTab,
   normDraft,
+  pastTabs,
   pendingPlans,
   planKey,
   planStatus,
   rebaseDraft,
   sameDraft,
+  savedThisSession,
   sheetHolder,
   type TabItems,
 } from "@/lib/shared/check-in-draft";
@@ -82,8 +85,10 @@ export function MeView() {
   const t = useTranslations("me");
   const { s } = useRonde();
   const started = !!s.meeting?.startedAt;
+  // An observer has no check-in of their own: they follow the meeting and read the team's
+  const observer = !s.viewer.memberId && s.observers.some((o) => o.id === s.viewer.personId);
   // Before the meeting people fill in their check-in; once started, they follow the host's screen
-  const [tab, setTab] = useState<MeTab>(started ? "follow" : "checkIn");
+  const [tab, setTab] = useState<MeTab>(started || observer ? "follow" : "checkIn");
   const wasStarted = useRef(started);
   useEffect(() => {
     if (started && !wasStarted.current) setTab("follow");
@@ -106,10 +111,12 @@ export function MeView() {
       {/* Each tab with its pictogram, the row set apart from the content under it */}
       <div className="subtabs me-tabs">
         <SwipeRow role="tablist" aria-label={t("tabsLabel")} className="subtabs-list" selected={tab}>
-          <button role="tab" aria-selected={tab === "checkIn"} onClick={() => setTab("checkIn")}>
-            <Icon name="note" size={15} />
-            {t("tabs.checkIn")}
-          </button>
+          {!observer && (
+            <button role="tab" aria-selected={tab === "checkIn"} onClick={() => setTab("checkIn")}>
+              <Icon name="note" size={15} />
+              {t("tabs.checkIn")}
+            </button>
+          )}
           <button role="tab" aria-selected={tab === "follow"} onClick={() => setTab("follow")}>
             {started && live.state !== "ended" ? <span className="tab-live" aria-hidden="true" /> : <Icon name="monitor" size={15} />}
             {started ? t("tabs.live") : t("tabs.meeting")}
@@ -146,6 +153,8 @@ export function MeView() {
       {s.modules.async && s.meeting && !started && <AsyncNote plannedAt={s.meeting.plannedAt} />}
       {hasCheckIn ? (
         <MyCheckIn tab={tab} memberId={s.viewer.memberId!} onBack={() => setTab("checkIn")} />
+      ) : observer ? (
+        !started && tab === "follow" && <div className="note-box">{t("observerNote")}</div>
       ) : (
         tab === "checkIn" && <div className="emptybox">{t("notAMember")}</div>
       )}
@@ -391,7 +400,7 @@ function Dock() {
   if (!me)
     return (
       <div className="dock">
-        <div className="dock-in">{t("followOnly")}</div>
+        <div className="dock-in">{s.observers.some((o) => o.id === s.viewer.personId) ? t("observerDock") : t("followOnly")}</div>
       </div>
     );
   const myHand = s.interactions.find((x) => x.type === "hand" && x.byId === me && !x.resolved);
@@ -828,12 +837,14 @@ export function useCheckInDraft(memberId: string) {
     rev.current++;
   };
   /** Add an item to a section of the tab shown (GitLab import, "+ Done", past check-in), without duplicates */
-  const append = (k: string, line: string) => {
+  /** `tab`: the tab to add it to ("" for the person's own), the one shown by default */
+  const append = (k: string, line: string, tab?: string) => {
     const sec = sections.find((x) => x.k === k);
     if (!sec) return;
-    setD((x) => {
+    setD((shown) => {
+      const x = tab === undefined ? shown : { ...shown, tab };
       const next = appendLine(current(x)[k] ?? [], sec, line);
-      return next ? withTab(x, { ...current(x), [k]: next }) : x;
+      return next ? { ...withTab(x, { ...current(x), [k]: next }), tab: shown.tab } : shown;
     });
     setDirty(true);
     rev.current++;
@@ -946,7 +957,8 @@ export function CheckInForm({
         <div>
           <h3 style={{ margin: 0 }}>{members[memberId]?.name}</h3>
           <div className="hint" suppressHydrationWarning>
-            {f?.updatedAt
+            {/* Written for this session: last session's update would read as this one's */}
+            {f?.updatedAt && savedThisSession(f.updatedAt, s.lastArchivedAt)
               ? t("lastUpdate", {
                   when: new Date(f.updatedAt).toLocaleString(locale, {
                     weekday: "long",
@@ -1034,7 +1046,7 @@ export function CheckInForm({
             <>
               <LoaderCircle size={15} strokeWidth={2.2} aria-hidden="true" className="spin" /> {t("autosaving")}
             </>
-          ) : f?.updatedAt ? (
+          ) : savedThisSession(f?.updatedAt, s.lastArchivedAt) ? (
             <>
               <CircleCheck size={15} strokeWidth={2.2} aria-hidden="true" /> {t("autosaved")}
             </>
@@ -1524,7 +1536,8 @@ function CheckInBoard({ memberId, draft }: { memberId: string; draft: ReturnType
                   <p className="muted">{t("nothingInHistory")}</p>
                 ) : (
                   <>
-                    {triage.pending.length > 0 ? (
+                    {/* Sorted once each plan got an answer: one brought back unticked still waits for it */}
+                    {!triage.sorted ? (
                       <p className="hint">{t("sortHint", { done: doneSec?.label ?? "", next: nextSec?.label ?? "" })}</p>
                     ) : (
                       <p className="lw-done">✓ {t("allSorted")}</p>
@@ -1726,6 +1739,7 @@ function useLastWeekTriage(memberId: string, draft: ReturnType<typeof useCheckIn
   };
   return {
     pending: pendingPlans(lw?.next ?? [], draft.d, skipped),
+    sorted: allPlansSorted(lw?.next ?? [], draft.d, skipped),
     statusOf: (n: string) => planStatus(draft.d, skipped, n),
     skip: (n: string) => save([...skipped, planKey(n)]),
     unskip: (n: string) => save(skipped.filter((x) => x !== planKey(n))),
@@ -1733,11 +1747,19 @@ function useLastWeekTriage(memberId: string, draft: ReturnType<typeof useCheckIn
 }
 
 /** The person's check-ins from archived meetings, to find information or reuse an item */
-function PastCheckIns({ onPick, dirty, onBack }: { onPick: (k: string, line: string) => void; dirty: boolean; onBack: () => void }) {
+function PastCheckIns({
+  onPick,
+  dirty,
+  onBack,
+}: {
+  onPick: (k: string, line: string, tab?: string) => void;
+  dirty: boolean;
+  onBack: () => void;
+}) {
   const t = useTranslations("me");
   const locale = useLocale();
   const fmt = formatters(locale);
-  const { sections, toast, now, api } = useRonde();
+  const { s, sections, toast, now, api } = useRonde();
   const [list, setList] = useState<PastCheckIn[] | null>(null);
   const [error, setError] = useState("");
   const [q, setQ] = useState("");
@@ -1797,9 +1819,12 @@ function PastCheckIns({ onPick, dirty, onBack }: { onPick: (k: string, line: str
       )}
       {shown.map((p) => {
         const isOpen = open === p.date || !!needle;
-        const secs = (p.sections ?? []).filter((sec) => itemsOf(p.checkIn, sec).length);
+        // Every tab: the person's own, then each project's (teams organised by project write everything there)
+        const tabs = pastTabs(p);
+        const all = allTabs(p.checkIn);
+        const secs = (p.sections ?? []).filter((sec) => itemsOf(all, sec).length);
         // A glance at the week without opening the check-in: number of items per section (blockers highlighted)
-        const counts = secs.filter((sec) => sec.type !== "text").map((sec) => ({ sec, n: itemsOf(p.checkIn, sec).length }));
+        const counts = secs.filter((sec) => sec.type !== "text").map((sec) => ({ sec, n: itemsOf(all, sec).length }));
         return (
           <div className={"hcard" + (isOpen ? " open" : "")} key={p.date}>
             <button className="hhead" aria-expanded={isOpen} onClick={() => setOpen(isOpen && !needle ? null : p.date)}>
@@ -1834,34 +1859,43 @@ function PastCheckIns({ onPick, dirty, onBack }: { onPick: (k: string, line: str
             </button>
             {isOpen && (
               <div className="hbody past-body">
-                {secs.length ? (
-                  secs.map((sec) => {
-                    const to = target(sec);
+                {tabs.length ? (
+                  tabs.map(({ project, sections: filled }) => {
+                    // Reused in the same project's tab, while the meeting still follows it; otherwise in one's own
+                    const tab = project && s.projects.some((x) => x.id === project.id) ? project.id : "";
                     return (
-                      <div key={sec.k}>
-                        <div className="lbl-s">{sec.label}</div>
-                        <ul className="past-items">
-                          {itemsOf(p.checkIn, sec).map((x, i) => (
-                            <li key={i} className={needle && x.toLowerCase().includes(needle) ? "hit" : ""}>
-                              <span className={"body" + (sec.type === "text" ? " pre" : "")}>
-                                <ItemText item={x} />
-                              </span>
-                              {to && (
-                                <button
-                                  type="button"
-                                  className="icon-btn"
-                                  title={t("reuseIn", { section: to.label })}
-                                  onClick={() => {
-                                    onPick(to.k, plainItem(x));
-                                    toast(t("reused", { section: to.label }), "ok");
-                                  }}
-                                >
-                                  {t("reuse")}
-                                </button>
-                              )}
-                            </li>
-                          ))}
-                        </ul>
+                      <div key={project?.id ?? ""} className="past-tab">
+                        {project && <span className="hchip proj">{project.name}</span>}
+                        {filled.map(({ sec, items }) => {
+                          const to = target(sec);
+                          return (
+                            <div key={sec.k}>
+                              <div className="lbl-s">{sec.label}</div>
+                              <ul className="past-items">
+                                {items.map((x, i) => (
+                                  <li key={i} className={needle && x.toLowerCase().includes(needle) ? "hit" : ""}>
+                                    <span className={"body" + (sec.type === "text" ? " pre" : "")}>
+                                      <ItemText item={x} />
+                                    </span>
+                                    {to && (
+                                      <button
+                                        type="button"
+                                        className="icon-btn"
+                                        title={t("reuseIn", { section: to.label })}
+                                        onClick={() => {
+                                          onPick(to.k, plainItem(x), tab);
+                                          toast(t("reused", { section: to.label }), "ok");
+                                        }}
+                                      >
+                                        {t("reuse")}
+                                      </button>
+                                    )}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          );
+                        })}
                       </div>
                     );
                   })

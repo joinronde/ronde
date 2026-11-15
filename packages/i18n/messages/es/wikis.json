@@ -42,10 +42,10 @@
     "title": "Publicar el acta",
     "intro": "Cada vez que se publica un acta, se convierte en una página del wiki, con la fecha de la sesión como nombre. Cuando se edita el resumen, la página se actualiza.",
     "wiki": "Wiki",
-    "none": "En ningún sitio",
+    "none": "Ninguno",
     "hint": "Las sesiones pasadas se publican desde el historial.",
-    "noWiki": "Todavía no hay ningún wiki en este espacio.",
-    "addWiki": "Añade uno en los ajustes del espacio",
+    "noWiki": "Todavía no hay ningún wiki en este espacio de trabajo.",
+    "addWiki": "Añade uno en los ajustes del espacio de trabajo",
     "on": "El acta se publicará en {name}.",
     "off": "El acta ya no se publica."
   },

@@ -205,7 +205,8 @@ function computeOccurrences(
           isRuleDate(rule, e.originalDate),
       )
       .map((e) => e.originalDate);
-    for (const originalDate of [...ruleDates(rule, to, { from }), ...movedIn]) {
+    // Once each: with a COUNT, the rule's dates start at its first one and already hold those moved in from before
+    for (const originalDate of new Set([...ruleDates(rule, to, { from }), ...movedIn])) {
       const key = occurrenceKey(rule.id, originalDate);
       const ex = byKey.get(key);
       const cancelled = ex?.kind === "cancel";
@@ -237,12 +238,12 @@ export function nextOccurrence(
   exceptions: ScheduleException[],
   timeZone: string,
   from: string,
-  options: { skipDates?: ReadonlySet<string>; horizonDays?: number } = {},
+  options: { skipDates?: ReadonlySet<string>; horizonDays?: number; skip?: (o: Occurrence) => boolean } = {},
 ): Occurrence | null {
   const to = plain(from)
     .add({ days: options.horizonDays ?? 400 })
     .toString();
-  return occurrences(rules, exceptions, timeZone, { from, to }).find((o) => !options.skipDates?.has(o.date)) ?? null;
+  return occurrences(rules, exceptions, timeZone, { from, to }).find((o) => !options.skipDates?.has(o.date) && !options.skip?.(o)) ?? null;
 }
 
 /** Rule for "every N weeks on this weekday at this time", starting on the next such date */
@@ -267,7 +268,7 @@ export function weeklyRule(id: string, weekday: number, time: string, everyWeeks
 const sameDays = (a: number[], b: number[]) => a.length === b.length && a.every((x) => b.includes(x));
 
 /**
- * A readable summary: "Every other Monday, alternating 10:00 and 15:00 (Europe/Paris)". The time zone is said
+ * A readable summary: "Every other Monday, alternating between 10:00 and 15:00 (Europe/Paris)". The time zone is said
  * only when it is not the reader's own (`viewerZone`, when known).
  */
 export function describeSchedule(rules: ScheduleRule[], timeZone: string, locale: Locale, viewerZone?: string | null): string {

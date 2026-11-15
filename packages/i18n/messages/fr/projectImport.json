@@ -35,7 +35,7 @@
   },
   "modeHints": {
     "repos": "Chaque projet prend le nom du dépôt, et ses tickets s’affichent en réunion. Idéal quand chaque dépôt est un produit ou un service.",
-    "milestones": "Chaque projet s’appelle « dépôt · jalon » et reprend son échéance et son avancement. Idéal quand les jalons sont des livrables."
+    "milestones": "Chaque projet s’appelle « dépôt · jalon » et reprend son échéance et son avancement. Idéal quand les jalons sont des livrables."
   },
   "fields": {
     "repo": "Dépôt (propriétaire/nom ou son adresse)",
@@ -44,7 +44,7 @@
     "group": "Groupe (nom ou adresse)",
     "site": "Adresse du site",
     "project": "Clé du projet",
-    "projectHint": "Les lettres avant le numéro de ses tickets : OPS dans OPS-42.",
+    "projectHint": "Les lettres avant le numéro de ses tickets : OPS dans OPS-42.",
     "email": "E-mail du compte"
   },
   "token": "Jeton d’API",
@@ -53,14 +53,14 @@
     "gitlab": "Jeton d’accès (seulement pour des groupes ou projets privés)"
   },
   "tokenHint": {
-    "github": "Laissez-le vide pour des dépôts publics. Pour des dépôts privés : un <link>jeton « fine-grained »</link> qui peut les lire (et leurs Issues, pour les jalons).",
-    "gitlab": "Laissez-le vide pour des projets publics. Pour des projets privés : un jeton d’accès personnel ou de projet avec la portée read_api.",
-    "gitlabGroup": "Laissez-le vide pour des groupes publics. Pour un groupe privé : un jeton d’accès personnel ou de groupe avec la portée read_api.",
+    "github": "Laissez-le vide pour des dépôts publics. Pour des dépôts privés : un <link>jeton « fine-grained »</link> qui peut les lire (et leurs Issues, pour les jalons).",
+    "gitlab": "Laissez-le vide pour des projets publics. Pour des projets privés : un jeton d’accès personnel ou de projet avec la portée read_api.",
+    "gitlabGroup": "Laissez-le vide pour des groupes publics. Pour un groupe privé : un jeton d’accès personnel ou de groupe avec la portée read_api.",
     "jira": "Un <link>jeton d’API</link> du compte dont l’e-mail est ci-dessus.",
     "linear": "Une clé d’API personnelle, créée dans vos réglages Linear."
   },
-  "tokenNotKept": "Il ne sert qu’à cet import : Ronde ne le conserve pas.",
-  "teamHint": "Avec l’offre Team, les projets importés via un outil de tickets enregistré restent synchronisés avec lui : nom, statut, dates et avancement.",
+  "tokenNotKept": "Il ne sert qu’à cet import : Ronde ne le conserve pas.",
+  "teamHint": "Avec l’offre Team, les projets importés via un outil de tickets enregistré restent synchronisés avec lui : nom, statut, dates et avancement.",
   "syncHowTo": "Pour garder des projets importés synchronisés, ajoutez d’abord l’outil aux outils de tickets dans les <link>réglages de l’espace</link>, puis importez depuis celui-ci.",
   "syncAskAdmin": "Les projets restent synchronisés quand un administrateur de l’espace les importe via ses outils de tickets. Ce que vous importez ici l’est une seule fois.",
   "look": "Chercher les projets",
@@ -91,8 +91,8 @@
   "themeHint": "Appliqué à chaque projet importé.",
   "keepSync": "Les garder synchronisés avec {tool}",
   "keepSyncHint": "Leur nom, leur statut, leurs dates et leur avancement suivent l’outil toutes les heures ; le reste se modifie dans Ronde.",
-  "keepSyncHintRepo": "Leur nom suit l’outil toutes les heures, et ils passent à « Terminé » une fois archivés ; le reste se modifie dans Ronde.",
-  "onceHint": "Importés une fois : ils se modifient ensuite dans Ronde.",
+  "keepSyncHintRepo": "Leur nom suit l’outil toutes les heures, et ils passent à « Terminé » une fois archivés ; le reste se modifie dans Ronde.",
+  "onceHint": "Importés une fois : ils se modifient ensuite dans Ronde.",
   "back": "Retour",
   "import": "{count, plural, =0 {Importer} one {Importer # projet} other {Importer # projets}}",
   "importing": "{count, plural, one {Import de # projet…} other {Import de # projets…}}",

@@ -86,7 +86,7 @@ export default async function PeoplePage({
       canInvite={ctx.can("people.invite")}
       canManage={ctx.can("people.manage")}
       canChangeRoles={ctx.can("members.manage")}
-      assignable={assignableRoles(ctx.member.role, { billing: billingOn() })}
+      assignable={assignableRoles(ctx.member.role, { billing: billingOn(), extra: ctx.principal.extra })}
       customRoles={
         customRolesReadable(ctx.workspace) ? (await enterprise.roles.list(ctx.db)).map((r) => ({ id: r.id, name: r.name })) : null
       }

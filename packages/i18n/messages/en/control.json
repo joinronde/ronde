@@ -35,6 +35,7 @@
   "spaceKey": "Space",
   "timerTools": "Timer",
   "bonusHint": "30 more seconds for this turn",
+  "bonus": "+30 s",
   "checkInsFilled": "{filled}/{total} check-ins filled in",
   "then": "Then: {next}",
   "endOfMeeting": "end of the meeting",
@@ -151,12 +152,15 @@
     "checkInEmpty": "Empty check-in",
     "topics": "Open topics",
     "end": "Wrap-up and minutes",
-    "legend": "Tick: check-in filled in. <note></note>: notes taken for the minutes. “Check-in” lets you fix it if needed. A “Questions” step is added by itself as soon as a hand is raised."
+    "legend": "Tick: check-in filled in. <note></note>: notes taken for the minutes. “Check-in” lets you fix it if needed. A “Questions” step is added by itself as soon as a hand is raised.",
+    "goTo": "Go to {name}",
+    "markAbsentNamed": "Mark {name} absent",
+    "markPresentNamed": "Mark {name} present"
   },
   "unsavedCheckIn": "The check-in changes are not saved.",
   "closeAnyway": "Close anyway",
   "keepEditing": "Keep editing",
-  "meetingOf": "Meeting of",
+  "meetingOf": "Meeting date",
   "meetingMoved": "Meeting moved to {date}",
   "pastDate": "Past date: pick the date of this meeting.",
   "live": {
@@ -164,7 +168,7 @@
     "asksToSpeak": "asks to speak",
     "reopen": "Reopen",
     "floorGiven": "Floor given",
-    "markAnswered": "Mark as answered",
+    "markAnswered": "Mark as handled",
     "pending": "Pending ({count})",
     "noHands": "Nobody raised their hand.",
     "handled": "Handled",
@@ -182,7 +186,8 @@
     "confirmDelete": "Confirm deletion",
     "delete": "Delete",
     "none": "No action.",
-    "new": "New action"
+    "new": "New action",
+    "ownerGone": "Someone who left the meeting"
   },
   "topics": {
     "handled": "Topic handled",
@@ -201,7 +206,7 @@
     "endAsk": "Jump straight to the wrap-up? The remaining steps are skipped.",
     "resetAsk": "Go back to the waiting screen? The timer, raised hands, questions, reactions and kudos of this session are erased. Check-ins and your notes are kept.",
     "ended": "Meeting ended: review the minutes, then publish them.",
-    "reset": "Start cancelled: back to the waiting screen.",
+    "reset": "Start canceled: back to the waiting screen.",
     "endYes": "Yes, end it",
     "resetYes": "Yes, back to waiting",
     "no": "No, carry on",
@@ -215,20 +220,20 @@
     "withoutNotes": "Without notes:",
     "completeNotes": "Complete the notes about {name}",
     "allNoted": "Every turn has notes",
-    "hint": "Nothing to remember for someone? That happens. Otherwise, click their name to complete the {notes}."
+    "hint": "Nothing to note for someone? That happens. Otherwise, click their name to complete their notes."
   },
   "minutesPane": {
     "generationFailed": "The minutes could not be generated.",
     "retry": "Try again",
     "generating": "Generating the minutes…",
-    "intro": "Generated from your notes, the check-ins, the questions and the actions: complete your notes to change them, and pick the team inputs to keep.",
+    "intro": "Generated from your notes, the check-ins, the questions and the actions: complete your notes to change them, and pick the team contributions to keep.",
     "content": "Content:",
     "everything": "everything",
     "notesOnly": "your notes and the actions only",
-    "partsOf": "{count} of {total} team inputs",
+    "partsOf": "{count} of {total} team contributions",
     "myNotesOnly": "My notes only",
     "includeAll": "Include everything",
-    "teamInputs": "Team inputs to include",
+    "teamInputs": "Team contributions to include",
     "alwaysIncluded": "Your notes and the follow-up actions are always included. This choice is kept for the next meetings.",
     "review": "Review and edit",
     "reviewTitle": "The minutes, before they are published",
@@ -262,7 +267,7 @@
   "startedAnnounced": "The team is notified.",
   "remote": {
     "title": "Phone remote",
-    "hint": "Scan this code with your phone, signed in with your account: big buttons to move on, pause and give extra time, while the shared screen follows.",
+    "hint": "Scan this code with your phone, signed in with your account: big buttons to move on, pause and give extra time, and the shared screen follows along.",
     "scan": "QR code of the phone remote"
   },
   "parking": {
@@ -286,9 +291,9 @@
     "published": "Digest published",
     "orLive": "You can still start a live meeting instead."
   },
-  "startToday": "This session was planned for another day: starting now dates it today, and the planned date stays in the schedule.",
+  "startToday": "This session was planned for another day: if you start it now, it takes today's date, and the planned date stays in the schedule.",
   "projectSpeakers": "Speaking for the project: {names}",
-  "projectNoSpeaker": "Nobody working on it is here: its sheet speaks for it.",
+  "projectNoSpeaker": "Nobody working on it is here: its sheet is shown on its own.",
   "projectAway": "away: {names}",
   "projectHealthSet": "Health of the project updated",
   "projectOrder": "Order of the projects",

@@ -1,6 +1,6 @@
 {
   "title": "GitLab y GitHub",
-  "intro": "Las conexiones a tus forjas de código, hechas una vez para todo el espacio: cada reunión puede leer por ellas las incidencias de cada persona, y los trackers abren tickets con ellas.",
+  "intro": "Las conexiones a tus forjas de código, configuradas una sola vez para todo el espacio de trabajo: a través de ellas, cada reunión puede leer las incidencias de cada persona y los gestores de tickets pueden abrir tickets.",
   "empty": "Todavía no hay ninguna conexión.",
   "kinds": {
     "gitlab": "GitLab",
@@ -17,9 +17,9 @@
   "oauth": "conectada con GitLab",
   "add": "Añadir una conexión",
   "addOwn": "Añadir una conexión solo para esta reunión",
-  "addOwnHint": "Solo la ve esta reunión, para un servidor o una cuenta que el espacio no tiene.",
+  "addOwnHint": "Solo esta reunión puede usarla: para un servidor o una cuenta que el espacio de trabajo no tiene.",
   "connect": "Conectar con GitLab",
-  "connectHint": "Tu cuenta de GitLab, de solo lectura, renovada sola: ningún token que copiar ni que reemplazar cuando caduque.",
+  "connectHint": "Tu cuenta de GitLab, en solo lectura y con renovación automática: sin tokens que copiar ni que reemplazar cuando caduquen.",
   "reconnect": "Volver a conectar",
   "orToken": "o con un token personal",
   "kind": "Herramienta",
@@ -29,8 +29,8 @@
   "token": "Token",
   "tokenKept": "Deja el token vacío para conservar el guardado.",
   "tokenHints": {
-    "gitlab": "Un token personal con el alcance <code>read_api</code> (<code>api</code> para un tracker que abre tickets).",
-    "github": "Un token de granularidad fina que lee issues y pull requests (y los escribe, para un tracker que abre tickets)."
+    "gitlab": "Un token personal con el ámbito <code>read_api</code> (<code>api</code> para un gestor de tickets que abre incidencias).",
+    "github": "Un token de acceso detallado que lea incidencias y pull requests (y que pueda escribirlas, para un gestor de tickets que abre incidencias)."
   },
   "encrypted": "Los tokens se cifran antes de guardarse y nunca se vuelven a mostrar.",
   "noSecretKey": "El cifrado de tokens no está configurado en el servidor: pide a los operadores que definan la clave SECRET_KEY.",
@@ -41,7 +41,7 @@
   "test": "Probar",
   "works": "Funciona",
   "remove": "Quitar",
-  "removeConfirm": "¿Quitar la conexión {name}? Las reuniones que la usan dejan de leer por ella, y se quitan los trackers que abren tickets con ella.",
+  "removeConfirm": "¿Quitar la conexión {name}? Las reuniones que la usan dejan de leer a través de ella, y se quitan los gestores de tickets que abren tickets con ella.",
   "removeOwnConfirm": "¿Quitar la conexión {name} de esta reunión?",
   "back": {
     "connected": "GitLab conectado.",
@@ -51,10 +51,10 @@
   },
   "meeting": {
     "title": "Conexiones de {kind}",
-    "inherited": "Mientras no elijas ninguna, esta reunión usa las conexiones del espacio.",
+    "inherited": "Mientras no elijas ninguna, esta reunión usa las conexiones del espacio de trabajo.",
     "picked": "Esta reunión usa las conexiones marcadas abajo.",
     "use": "Usar",
-    "none": "Ninguna conexión de {kind}: un administrador puede añadir una al espacio, o añade abajo una solo para esta reunión.",
+    "none": "No hay ninguna conexión de {kind}: un administrador puede añadir una al espacio de trabajo, o puedes añadir abajo una solo para esta reunión.",
     "save": "Guardar el acceso a {kind}",
     "repos": "Repositorios seguidos",
     "reposHint": "«propietario/repositorio» o todo un «propietario», uno por línea; vacío: todos los repositorios. Indica también el usuario de GitHub de cada persona en «Personas y roles».",

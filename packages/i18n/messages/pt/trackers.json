@@ -7,7 +7,7 @@
   "name": "Nome",
   "token": "Token de API",
   "connection": "Conexão",
-  "noConnection": "Ainda não há nenhuma conexão {kind} no espaço.",
+  "noConnection": "Ainda não há nenhuma conexão {kind} no espaço de trabalho.",
   "toConnections": "Adicione uma em “GitLab e GitHub”.",
   "tokenKept": "Há um token salvo. Digite um novo para substituí-lo.",
   "save": "Salvar",

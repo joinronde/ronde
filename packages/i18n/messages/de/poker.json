@@ -10,7 +10,7 @@
   "votedOf": "{count} von {total} haben eine Karte gewählt",
   "reveal": "Karten aufdecken",
   "agree": "Vereinbarte Schätzung:",
-  "revote": "Neue Runde",
+  "revote": "Noch einmal schätzen",
   "reopen": "„{title}“ neu schätzen",
   "remove": "„{title}“ entfernen",
   "newItem": "Zu schätzender Punkt",

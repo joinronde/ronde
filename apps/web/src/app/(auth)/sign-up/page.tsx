@@ -7,6 +7,7 @@ import { currentUser } from "@/lib/server/authz";
 import { env } from "@/lib/server/env";
 import { isCloud } from "@/lib/server/license";
 import { canSendEmail } from "@/lib/server/mailer";
+import { invitationState } from "@/lib/server/workspaces";
 import { safeNext } from "@/lib/shared/safe-next";
 
 export async function generateMetadata() {
@@ -17,8 +18,12 @@ export async function generateMetadata() {
 export default async function SignUpPage({ searchParams }: { searchParams: Promise<{ next?: string; email?: string }> }) {
   const { next, email } = await searchParams;
   if (await currentUser()) redirect(safeNext(next));
-  // Invite-only instance: the form stays reachable from an invitation link (it carries the next path)
-  const invited = !!next?.startsWith("/invite/");
+  // Invite-only instance: the form stays reachable from a valid invitation link (it carries the next path);
+  // a link that no longer works shows why on its own page, before anything is typed for nothing
+  const token = next?.startsWith("/invite/") ? next.slice("/invite/".length) : null;
+  const state = token ? await invitationState(token, null) : null;
+  const invited = state?.status === "pending" ? state : null;
+  if (token && !invited && !(await signupOpen())) redirect(safeNext(next));
   if (!invited && !(await signupOpen())) {
     const t = await getTranslations("auth");
     return (
@@ -38,6 +43,7 @@ export default async function SignUpPage({ searchParams }: { searchParams: Promi
       providers={signInProviders()}
       next={next}
       email={email}
+      invitation={invited && token ? { token, workspace: invited.workspace, inviter: invited.inviter, email: invited.email } : null}
       mailConfigured={canSendEmail()}
       legal={isCloud() ? { terms: `${site}/terms`, privacy: `${site}/privacy` } : null}
     />

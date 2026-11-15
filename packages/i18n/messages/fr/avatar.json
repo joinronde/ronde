@@ -1,9 +1,10 @@
 {
-  "notSaved": "La photo n'a pas été enregistrée.",
+  "notSaved": "La photo n’a pas été enregistrée.",
   "saved": "Photo enregistrée",
   "removed": "Photo retirée",
   "change": "Changer la photo",
   "add": "Ajouter une photo",
   "remove": "Retirer la photo",
+  "removeConfirm": "Retirer votre photo ? Vos initiales s’affichent à sa place.",
   "unreadable": "Image illisible."
 }

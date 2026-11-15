@@ -10,9 +10,9 @@
     "90": "90 giorni",
     "year": "Quest'anno"
   },
-  "kpiTotal": "decisioni",
+  "kpiTotal": "{count, plural, one {decisione} other {decisioni}}",
   "kpiMonth": "negli ultimi 30 giorni",
-  "kpiMeetings": "riunioni che hanno deciso",
+  "kpiMeetings": "{count, plural, one {riunione con decisioni} other {riunioni con decisioni}}",
   "during": "Durante: {context}",
   "openLog": "Il registro delle decisioni della riunione",
   "search": "Cerca nelle decisioni",

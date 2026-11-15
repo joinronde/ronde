@@ -12,8 +12,14 @@
   "invalid": "Este link de convite é inválido ou foi revogado. Peça um novo à pessoa que convidou você.",
   "expiredTitle": "Convite expirado",
   "expired": "Este convite para {workspace} expirou. Peça um novo à pessoa que convidou você.",
-  "memberTitle": "Você já está dentro",
+  "expiredFrom": "Este convite para {workspace} expirou. Peça um novo a {inviter}.",
+  "acceptedTitle": "Convite já aceito",
+  "accepted": "Este convite para {workspace} já foi aceito. Entre com a conta que o aceitou para abrir {workspace}.",
+  "acceptedAnonymous": "Este convite já foi aceito. Entre com a conta que o aceitou.",
+  "goSignIn": "Ir para o login",
+  "openWorkspaces": "Abrir meus espaços de trabalho",
+  "memberTitle": "Você já faz parte",
   "member": "Você já é membro de {workspace}.",
-  "memberOther": "Este convite é para <strong>{email}</strong>: envie o link para que possa entrar.",
+  "memberOther": "Este convite é para <strong>{email}</strong>: envie o link para essa pessoa poder entrar.",
   "open": "Abrir {workspace}"
 }

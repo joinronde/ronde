@@ -11,12 +11,12 @@
   },
   "popcorn": {
     "label": "Popcorn",
-    "combo": "Si fa interessante, prendete i popcorn",
-    "comboNamed": "Si fa interessante, prendete i popcorn"
+    "combo": "Si fa interessante: popcorn pronti",
+    "comboNamed": "Si fa interessante: popcorn pronti"
   },
   "mindBlown": {
     "label": "Incredibile!",
-    "combo": "Menti esplose!",
+    "combo": "Tutti a bocca aperta!",
     "comboNamed": "{name} ha appena lasciato il team a bocca aperta"
   },
   "fire": {

@@ -3,11 +3,11 @@
   "new": "Nueva reunión",
   "empty": "Aún no hay reuniones.",
   "emptyHint": "Crea una: lleva menos de un minuto y todo se puede cambiar después.",
-  "emptyMember": "Todavía no participas en ninguna reunión. Un anfitrión te añade a la suya.",
+  "emptyMember": "Todavía no participas en ninguna reunión. El anfitrión de una reunión puede añadirte.",
   "open": "Abrir",
   "live": "En directo",
   "nextOn": "Próxima sesión {date}",
-  "noSession": "Ninguna sesión preparada",
+  "noSession": "No hay ninguna sesión preparada",
   "people": "{count, plural, one {# persona} other {# personas}}",
   "roles": {
     "host": "Anfitrión",
@@ -33,7 +33,7 @@
       "use": "Empezar de cero"
     },
     "search": "Buscar una plantilla…",
-    "noMatch": "Ninguna plantilla coincide.",
+    "noMatch": "No hay plantillas que coincidan.",
     "preview": {
       "title": "Vista previa",
       "rhythm": "Ritmo",
@@ -45,7 +45,7 @@
     "deleteTemplateNamed": "Eliminar la plantilla {name}",
     "deleteTemplateConfirm": "¿Eliminar la plantilla «{name}»? Las reuniones creadas a partir de ella no se ven afectadas.",
     "name": "Nombre",
-    "schedule": "Calendario",
+    "schedule": "Programación",
     "scheduleLater": "Otros ritmos, excepciones y festivos se ajustan después en los ajustes de la reunión.",
     "startDate": "Desde",
     "weekday": "Día",
@@ -54,13 +54,15 @@
     "minutes": "{m} min",
     "durationRange": "Entre 5 min y 8 h",
     "people": "Personas",
-    "peopleHint": "Participan en la ronda. Tú pasas a ser anfitrión; puedes añadir a otras personas desde los ajustes de la reunión.",
+    "peopleHint": "Participan en la ronda. Tú tendrás el rol de anfitrión; puedes añadir a otras personas desde los ajustes de la reunión.",
     "nobody": "Todavía no hay nadie más en el directorio.",
     "invite": "Invitar a personas",
     "creatorSpeaks": "Yo también tengo turno en la ronda",
     "sections": "Secciones",
     "recapSchedule": "{schedule} · {duration} · primera sesión el {date}",
     "recapPeople": "{count, plural, =0 {Todavía nadie en la ronda} one {# persona en la ronda} other {# personas en la ronda}}",
+    "recapRound": "Unos {duration} de ronda, con {each} de palabra por persona, en una reunión de {meeting}.",
+    "recapRoundOver": "Unos {duration} de ronda, con {each} de palabra por persona: más que los {meeting} previstos.",
     "modules": "Módulos",
     "back": "Atrás",
     "next": "Siguiente",
@@ -69,14 +71,14 @@
     "edit": "Editar",
     "content": {
       "sectionsTitle": "Secciones de la ficha",
-      "sectionsHint": "Lo que cada persona rellena antes de la reunión. Cámbiales el nombre o el formato, o añade las tuyas.",
+      "sectionsHint": "Lo que cada persona completa antes de la reunión. Cámbiales el nombre o el formato, o añade las tuyas.",
       "addSection": "Añadir una sección",
       "custom": "Sección personalizada",
       "sectionLabel": "Nombre de la sección",
       "sectionType": "Formato",
       "removeSection": "Quitar la sección {name}",
       "modulesOn": "{count, plural, =0 {Ninguno activado} one {# activado} other {# activados}}",
-      "modulesHint": "Activa lo que necesita tu reunión: todo se puede activar y desactivar en cualquier momento.",
+      "modulesHint": "Activa lo que necesite tu reunión: puedes activarlo y desactivarlo en cualquier momento.",
       "roleHint": {
         "achievement": "Lo hecho desde la última vez",
         "plan": "Lo previsto a continuación",
@@ -86,14 +88,16 @@
       }
     },
     "cancel": "Cancelar",
+    "leaveConfirm": "¿Salir de la nueva reunión? Lo que escribiste no se guarda.",
+    "leave": "Salir",
     "modulesLater": "Puedes añadir otros en cualquier momento desde los ajustes de la reunión.",
     "order": {
-      "title": "Orden de paso",
+      "title": "Orden de intervención",
       "team": "Primero el equipo",
-      "teamHint": "Un turno corto para cada uno y luego los proyectos juntos.",
+      "teamHint": "Un turno corto para cada persona y luego los proyectos juntos.",
       "projects": "Primero los proyectos",
       "projectsHint": "Proyecto a proyecto y luego un turno para el resto.",
-      "later": "Puedes cambiarlo después en el Orden del día de la reunión."
+      "later": "Puedes cambiarlo después en el orden del día de la reunión."
     }
   }
 }

@@ -19,7 +19,7 @@ import {
   plainItem,
   VOTES_PER_PERSON,
 } from "@ronde/core/util";
-import { formatters } from "@ronde/i18n";
+import { formatters, isRtl, type Locale } from "@ronde/i18n";
 import { MdEditor } from "@ronde/ui/md-editor";
 import { Tour } from "@ronde/ui/tour";
 import {
@@ -54,7 +54,7 @@ import {
   Users,
 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { renderSVG } from "uqr";
 import { Select } from "@/components/select";
 import { withBasePath } from "@/lib/shared/base-path";
@@ -63,19 +63,22 @@ import {
   canPlace,
   filledCount,
   isTracked,
+  keyAllowed,
   memberOfStep,
   minutesCheck,
   minutesPartsOf,
   nextLabel as nextLabelOf,
+  OWN_KEYS,
   parseOmit,
   projectOrderOf,
   serializeOmit,
+  shortcutOf,
   shuffleProjects,
   sortActions,
   startOp,
   stepTitle,
 } from "@/lib/shared/control-room";
-import { actionOwners, sheetRows, sheetsToComplete, writersOf } from "@/lib/shared/sheets";
+import { actionOwners, ownersOfAction, sheetRows, sheetsToComplete, writersOf } from "@/lib/shared/sheets";
 import { track } from "@/lib/shared/track";
 import { ActionProgress } from "./action-progress";
 import { Board } from "./board";
@@ -190,6 +193,8 @@ export function ControlRoomView() {
   const t = useTranslations("control");
   const tStage = useTranslations("stage");
   const { s, agenda, cur, rpc, liveSeen, mod, sections } = useRonde();
+  // Right to left, Next points left: ← moves on (see shortcutOf)
+  const rtl = isRtl(useLocale() as Locale);
   const tour_ = useControlTour(s.modules);
   const [pane, setPane] = useState<Pane>("run");
   const [beep, setBeep] = useState(false);
@@ -197,6 +202,8 @@ export function ControlRoomView() {
   const [tour, setTour] = useState(false);
   const shortcuts = useControlShortcuts();
   const [remote, setRemote] = useState(false);
+  // "Start the meeting" refused (a session already held today): said under the button, until another start
+  const [startError, setStartError] = useState<string | null>(null);
   useTick(1000);
   const m = s.meeting;
   const step = agenda[cur];
@@ -214,22 +221,22 @@ export function ControlRoomView() {
     prevDate.current = m?.date;
   }, [m?.stepKey, m?.date]);
 
-  // Keyboard shortcuts: → next, ← previous, Space timer
+  // Keyboard shortcuts: → next, ← previous (swapped right to left), Space timer; never from a field, a tab, a menu
+  // or with a dialog open, where these keys do their own job; from a button, the arrows only, Space pressing it
+  // (but toggling the timer on Previous and Next, often the button clicked last)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (!m || (e.target as HTMLElement).closest("input,textarea,select,[contenteditable]")) return;
-      // Before the start, only "Start the meeting" moves forward
-      if ((e.key === "ArrowRight" || e.key === "ArrowLeft") && !m.startedAt) return;
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
-        void rpc({ op: "meeting.step", delta: 1, from: m.stepKey });
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        void rpc({ op: "meeting.step", delta: -1, from: m.stepKey });
-      } else if (e.key === " ") {
-        e.preventDefault();
-        void rpc({ op: "meeting.togglePlay" });
-      }
+      if (!m || e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+      const el = e.target as HTMLElement;
+      if (el.closest?.(OWN_KEYS) || document.querySelector('[aria-modal="true"]')) return;
+      // Before the start, only "Start the meeting" moves forward or starts (Space would start it unseen, undated)
+      if (!m.startedAt) return;
+      const action = shortcutOf(e.key, getComputedStyle(document.documentElement).direction === "rtl");
+      const where = el.closest?.("button,a[href],[role=button]") ? (el.closest(".deck-nav") ? "deckButton" : "button") : "page";
+      if (!action || !keyAllowed(action, where)) return;
+      e.preventDefault();
+      if (action === "timer") void rpc({ op: "meeting.togglePlay" });
+      else void rpc({ op: "meeting.step", delta: action === "next" ? 1 : -1, from: m.stepKey });
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -382,7 +389,7 @@ export function ControlRoomView() {
                         className="btn big"
                         disabled={cur <= 0 || !m.startedAt}
                         aria-label={t("previous")}
-                        title={t("shortcut", { key: "←" })}
+                        title={t("shortcut", { key: rtl ? "→" : "←" })}
                         onClick={() => rpc({ op: "meeting.step", delta: -1, from: m.stepKey })}
                       >
                         <ChevronLeft size={18} strokeWidth={2.4} aria-hidden="true" className="flip-rtl" />
@@ -394,11 +401,13 @@ export function ControlRoomView() {
                           className="btn big primary deck-main"
                           // A session prepared for another day happens today: it is dated today, the schedule keeps its occurrence
                           title={startOp(m.date) === "session.now" ? t("startToday") : undefined}
-                          onClick={() =>
-                            void rpc({ op: startOp(m.date) }, t("started") + (s.notify.started ? ` ${t("startedAnnounced")}` : "")).then(
-                              (ok) => ok && track("session_started"),
-                            )
-                          }
+                          aria-describedby={startError ? "startError" : undefined}
+                          onClick={() => {
+                            setStartError(null);
+                            void rpc({ op: startOp(m.date) }, t("started") + (s.notify.started ? ` ${t("startedAnnounced")}` : ""), {
+                              onError: setStartError,
+                            }).then((ok) => ok && track("session_started"));
+                          }}
                         >
                           <Play size={18} strokeWidth={2.4} aria-hidden="true" />
                           {t("start")}
@@ -413,7 +422,7 @@ export function ControlRoomView() {
                           type="button"
                           className={"btn big deck-main" + (m.startedAt ? " primary" : "")}
                           disabled={!next || !m.startedAt}
-                          title={m.startedAt ? t("shortcut", { key: "→" }) : t("startFirst")}
+                          title={m.startedAt ? t("shortcut", { key: rtl ? "←" : "→" }) : t("startFirst")}
                           onClick={() => rpc({ op: "meeting.step", delta: 1, from: m.stepKey })}
                         >
                           {next ? t("next", { label: nextLabel }) : t("lastStep")}
@@ -421,6 +430,11 @@ export function ControlRoomView() {
                         </button>
                       )}
                     </div>
+                    {startError && !m.startedAt && (
+                      <div className="form-alert error deck-start-error" id="startError" role="alert">
+                        {startError}
+                      </div>
+                    )}
                     {m.startedAt && step.type !== "end" && (
                       <div className="deck-timer-tools" role="group" aria-label={t("timerTools")}>
                         <button
@@ -458,7 +472,7 @@ export function ControlRoomView() {
                             }
                           >
                             <TimerReset size={16} strokeWidth={2.4} aria-hidden="true" />
-                            +30 s
+                            {t("bonus")}
                           </button>
                         )}
                       </div>
@@ -709,7 +723,7 @@ function SpotlightControl({ step }: { step: Step }) {
   return (
     <div className="notes" data-tour="spotlight">
       <div className="notes-head">
-        <h4>{t("spotlight.title")}</h4>
+        <h4 aria-level={3}>{t("spotlight.title")}</h4>
       </div>
       {spot && (
         <div className="spot-bar" role="status">
@@ -1080,7 +1094,7 @@ function NotesBox({ stepKey, label, autoFocus }: { stepKey: string; label: strin
   return (
     <div className="notes" data-tour="notes" ref={box} onBlur={onBlurArea}>
       <div className="notes-head">
-        <h4>{t("notes.title", { label: shown })}</h4>
+        <h4 aria-level={3}>{t("notes.title", { label: shown })}</h4>
         <span className="saved" role="status">
           {status}
         </span>
@@ -1232,7 +1246,9 @@ function RunRow(p: {
       {p.grip ?? <span className="sort-grip-space" aria-hidden="true" />}
       <span className="st">{p.state}</span>
       {p.person ? p.ico : <span className="run-ico">{p.ico}</span>}
-      <span className="nm">{p.label}</span>
+      <span className="nm" title={typeof p.label === "string" ? p.label : undefined}>
+        <bdi dir="auto">{p.label}</bdi>
+      </span>
       {p.noted && (
         <span className="noted" title={t("run.notedHint")} role="img" aria-label={t("run.noted")}>
           <Icon name="note" size={14} />
@@ -1343,9 +1359,9 @@ function PaneRun() {
     return i < 0 ? t("run.absent") : i < cur ? t("run.done") : i === cur ? t("run.current") : t("run.upcoming");
   };
   // No step jumping before the start
-  const go = (k: string) =>
+  const go = (k: string, label: string) =>
     m.startedAt ? (
-      <button className="icon-btn" onClick={() => rpc({ op: "meeting.goto", key: k })}>
+      <button className="icon-btn" aria-label={t("run.goTo", { name: label })} onClick={() => rpc({ op: "meeting.goto", key: k })}>
         {t("run.go")}
       </button>
     ) : null;
@@ -1372,7 +1388,14 @@ function PaneRun() {
   );
   const qa = (k: string) => {
     const x: Step | undefined = agenda.find((a) => a.key === "qa:" + k);
-    return x ? row(x.key, t("run.questions", { pending: x.pending ?? 0, total: x.total ?? 0 }), go(x.key), { cls: "qa", ico: "✋" }) : null;
+    return x
+      ? row(
+          x.key,
+          t("run.questions", { pending: x.pending ?? 0, total: x.total ?? 0 }),
+          go(x.key, t("run.questions", { pending: x.pending ?? 0, total: x.total ?? 0 })),
+          { cls: "qa", ico: "✋" },
+        )
+      : null;
   };
   // Blocks of the agenda whose module is on, in order
   const blocks = s.settings.agenda.filter((b) => !BLOCK_MODULE[b.type] || s.modules[BLOCK_MODULE[b.type]!]);
@@ -1384,13 +1407,22 @@ function PaneRun() {
           id,
           members[id]!.name,
           <>
-            <button className="icon-btn" onClick={() => rpc({ op: "meeting.absent", id })}>
+            <button
+              className="icon-btn"
+              aria-label={t(absent.has(id) ? "run.markPresentNamed" : "run.markAbsentNamed", { name: first(members[id]!.name) })}
+              onClick={() => rpc({ op: "meeting.absent", id })}
+            >
               {absent.has(id) ? t("run.markPresent") : t("run.markAbsent")}
             </button>
-            <button className="icon-btn" onClick={() => setEditing(id)} title={t("run.editCheckIn", { name: first(members[id]!.name) })}>
+            <button
+              className="icon-btn"
+              aria-label={t("run.editCheckIn", { name: first(members[id]!.name) })}
+              onClick={() => setEditing(id)}
+              title={t("run.editCheckIn", { name: first(members[id]!.name) })}
+            >
               {t("run.checkIn")}
             </button>
-            {!absent.has(id) && go(id)}
+            {!absent.has(id) && go(id, first(members[id]!.name))}
           </>,
           {
             cls: absent.has(id) ? "abs" : "",
@@ -1428,18 +1460,20 @@ function PaneRun() {
       </div>
       <ul className="run" data-tour="run-list">
         {blocks.map((b) => {
-          if (b.type === "intro") return [row("intro", t("run.intro"), go("intro"), { ico: <Icon name="play" size={14} /> }), qa("intro")];
-          if (b.type === "topics") return [row("misc", t("run.topics"), go("misc"), { ico: <Icon name="pin" size={14} /> }), qa("misc")];
+          if (b.type === "intro")
+            return [row("intro", t("run.intro"), go("intro", t("run.intro")), { ico: <Icon name="play" size={14} /> }), qa("intro")];
+          if (b.type === "topics")
+            return [row("misc", t("run.topics"), go("misc", t("run.topics")), { ico: <Icon name="pin" size={14} /> }), qa("misc")];
           if (b.type === "round") return roundRows();
           // A module block: each of its steps (retro phases, a timebox…)
           return agenda
             .filter((x) => x.type === "block" && x.blockId === b.id)
             .flatMap((x) => [
-              row(x.key, x.label, go(x.key), { ico: <Icon name={BLOCK_ICON[x.block ?? "timebox"]} size={14} /> }),
+              row(x.key, x.label, go(x.key, x.label), { ico: <Icon name={BLOCK_ICON[x.block ?? "timebox"]} size={14} /> }),
               qa(x.key),
             ]);
         })}
-        {row("end", t("run.end"), go("end"), { ico: <Icon name="flag" size={14} /> })}
+        {row("end", t("run.end"), go("end", t("run.end")), { ico: <Icon name="flag" size={14} /> })}
       </ul>
       <p className="hint" style={{ marginTop: 8 }}>
         {t.rich("run.legend", { note: () => <Icon name="note" size={13} /> })}
@@ -1621,7 +1655,7 @@ function PaneActions() {
                   value={a.ownerId}
                   onChange={(e) => rpc({ op: "action.update", id: a.id, ownerId: e.target.value })}
                 >
-                  {owners.map((x) => (
+                  {ownersOfAction(s, a.ownerId, t("actions.ownerGone")).map((x) => (
                     <option key={x.id} value={x.id}>
                       {x.name}
                     </option>
@@ -1798,7 +1832,9 @@ function ParkingLot() {
   const [text, setText] = useState("");
   return (
     <section className="parking" aria-labelledby="parking-title">
-      <h4 id="parking-title">🅿️ {t("parking.title")}</h4>
+      <h4 id="parking-title" aria-level={3}>
+        🅿️ {t("parking.title")}
+      </h4>
       <p className="hint">{t("parking.hint")}</p>
       {s.parking.map((x) => (
         <div className="item" key={x.id}>
@@ -1846,12 +1882,24 @@ function StopControls() {
   const t = useTranslations("control");
   const { s, rpc } = useRonde();
   const [ask, setAsk] = useState<null | "end" | "reset">(null);
+  const askId = useId();
+  // Declined, the question gives the keyboard back to the button that asked it
+  const back = useRef<"end" | "reset" | null>(null);
+  const endBtn = useRef<HTMLButtonElement>(null);
+  const resetBtn = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (ask || !back.current) return;
+    (back.current === "end" ? endBtn : resetBtn).current?.focus();
+    back.current = null;
+  }, [ask]);
   const m = s.meeting;
   if (!m?.startedAt) return null;
   if (ask)
     return (
-      <div className="controls" role="group" aria-label={t("stop.confirmation")} data-tour="stop">
-        <span style={{ flex: 1, minWidth: "14em", fontSize: 14.5 }}>{ask === "end" ? t("stop.endAsk") : t("stop.resetAsk")}</span>
+      <div className="controls" role="group" aria-label={t("stop.confirmation")} aria-describedby={askId} data-tour="stop">
+        <span id={askId} aria-live="polite" style={{ flex: 1, minWidth: "14em", fontSize: 14.5 }}>
+          {ask === "end" ? t("stop.endAsk") : t("stop.resetAsk")}
+        </span>
         <button
           type="button"
           className={`btn ${ask === "reset" ? "danger-solid" : "primary"}`}
@@ -1865,7 +1913,16 @@ function StopControls() {
         >
           {ask === "end" ? t("stop.endYes") : t("stop.resetYes")}
         </button>
-        <button className="btn" onClick={() => setAsk(null)}>
+        {/* The safe answer takes the focus: the question is read with it */}
+        <button
+          type="button"
+          className="btn"
+          autoFocus
+          onClick={() => {
+            back.current = ask;
+            setAsk(null);
+          }}
+        >
           {t("stop.no")}
         </button>
       </div>
@@ -1873,11 +1930,11 @@ function StopControls() {
   return (
     <div className="controls deck-stop" data-tour="stop">
       {m.stepKey !== "end" && (
-        <button type="button" className="btn" onClick={() => setAsk("end")}>
+        <button type="button" className="btn" ref={endBtn} onClick={() => setAsk("end")}>
           <Flag size={16} strokeWidth={2.2} aria-hidden="true" /> {t("stop.end")}
         </button>
       )}
-      <button type="button" className="linkbtn danger" onClick={() => setAsk("reset")}>
+      <button type="button" className="linkbtn danger" ref={resetBtn} onClick={() => setAsk("reset")}>
         <Undo2 size={14} strokeWidth={2.2} aria-hidden="true" /> {t("stop.cancelStart")}
       </button>
     </div>
@@ -1904,8 +1961,7 @@ const writeOmit = (omit: MinutesPart[]) => {
 /** Summary before archiving: decisions, actions created, turns without notes (to complete here) */
 function MinutesCheck() {
   const t = useTranslations("control");
-  const tMinutes = useTranslations("minutes");
-  const { s, agenda, members, host } = useRonde();
+  const { s, agenda, members } = useRonde();
   const [open, setOpen] = useState<string | null>(null);
   const m = s.meeting!;
   const { decisions, created, silent } = minutesCheck(s, m.startedAt, agenda);
@@ -1938,7 +1994,7 @@ function MinutesCheck() {
           )}
         </li>
       </ul>
-      {silent.length > 0 && <span className="hint">{t("check.hint", { notes: tMinutes("hostNotes", { host }) })}</span>}
+      {silent.length > 0 && <span className="hint">{t("check.hint")}</span>}
       {open && (
         <Modal onClose={() => setOpen(null)}>
           <NotesBox stepKey={open} label={first(members[open]?.name)} autoFocus />
@@ -1962,6 +2018,15 @@ function PaneMinutes({ draft: saved, setDraft: setSaved }: { draft: MinutesDraft
   const parts = minutesPartsOf(mod);
   // Publishing now, or closing the session and writing the minutes later from the history
   const [confirm, setConfirm] = useState<"publish" | "draft" | null>(null);
+  const publishAskId = useId();
+  const publishBack = useRef<"publish" | "draft" | null>(null);
+  const draftBtn = useRef<HTMLButtonElement>(null);
+  const publishBtn = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (confirm || !publishBack.current) return;
+    (publishBack.current === "draft" ? draftBtn : publishBtn).current?.focus();
+    publishBack.current = null;
+  }, [confirm]);
   const [preview, setPreview] = useState(false);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -2013,8 +2078,10 @@ function PaneMinutes({ draft: saved, setDraft: setSaved }: { draft: MinutesDraft
     }
   };
   const publishControls = confirm ? (
-    <span className="publish-confirm">
-      <span className="publish-ask">{t(confirm === "draft" ? "minutesPane.draftAsk" : "minutesPane.archiveAsk")}</span>
+    <span className="publish-confirm" role="group" aria-label={t("stop.confirmation")} aria-describedby={publishAskId}>
+      <span className="publish-ask" id={publishAskId} aria-live="polite">
+        {t(confirm === "draft" ? "minutesPane.draftAsk" : "minutesPane.archiveAsk")}
+      </span>
       <button type="button" className="btn primary" disabled={busy} aria-busy={busy} onClick={() => void publish(confirm === "draft")}>
         {confirm === "draft" ? (
           <Clock size={15} strokeWidth={2.2} aria-hidden="true" />
@@ -2023,16 +2090,25 @@ function PaneMinutes({ draft: saved, setDraft: setSaved }: { draft: MinutesDraft
         )}{" "}
         {t(confirm === "draft" ? "minutesPane.draftYes" : "minutesPane.archiveYes")}
       </button>
-      <button type="button" className="btn" onClick={() => setConfirm(null)}>
+      {/* The safe answer takes the focus; declined, it goes back to the button that asked */}
+      <button
+        type="button"
+        className="btn"
+        autoFocus
+        onClick={() => {
+          publishBack.current = confirm;
+          setConfirm(null);
+        }}
+      >
         {t("cancel")}
       </button>
     </span>
   ) : (
     <>
-      <button type="button" className="btn" onClick={() => setConfirm("draft")} title={t("minutesPane.draftHint")}>
+      <button type="button" className="btn" ref={draftBtn} onClick={() => setConfirm("draft")} title={t("minutesPane.draftHint")}>
         <Clock size={15} strokeWidth={2.2} aria-hidden="true" /> {t("minutesPane.draft")}
       </button>
-      <button type="button" className="btn primary" onClick={() => setConfirm("publish")}>
+      <button type="button" className="btn primary" ref={publishBtn} onClick={() => setConfirm("publish")}>
         <Send size={15} strokeWidth={2.2} aria-hidden="true" className="flip-rtl" /> {t("minutesPane.archive")}
       </button>
     </>

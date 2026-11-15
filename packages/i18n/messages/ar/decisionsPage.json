@@ -10,9 +10,9 @@
     "90": "90 يومًا",
     "year": "هذا العام"
   },
-  "kpiTotal": "قرارات",
+  "kpiTotal": "{count, plural, zero {قرار} one {قرار} two {قراران} few {قرارات} many {قرارًا} other {قرار}}",
   "kpiMonth": "خلال آخر 30 يومًا",
-  "kpiMeetings": "اجتماعات اتخذت قرارات",
+  "kpiMeetings": "{count, plural, zero {اجتماع اتخذ قرارات} one {اجتماع اتخذ قرارات} two {اجتماعان اتخذا قرارات} few {اجتماعات اتخذت قرارات} many {اجتماعًا اتخذ قرارات} other {اجتماع اتخذ قرارات}}",
   "during": "أثناء: {context}",
   "openLog": "سجل قرارات الاجتماع",
   "search": "البحث في القرارات",
@@ -25,6 +25,6 @@
     "meeting": "الاجتماع",
     "decision": "القرار",
     "context": "السياق",
-    "fileName": "qararat"
+    "fileName": "القرارات"
   }
 }

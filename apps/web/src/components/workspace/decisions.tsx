@@ -86,7 +86,7 @@ export function DecisionsView({
               <Gavel size={18} strokeWidth={2.2} />
             </span>
             <strong>{decisions.length}</strong>
-            <span>{t("kpiTotal")}</span>
+            <span>{t("kpiTotal", { count: decisions.length })}</span>
           </div>
           <div className="act-kpi done">
             <span className="act-kpi-ico" aria-hidden="true">
@@ -100,7 +100,7 @@ export function DecisionsView({
               <MessagesSquare size={18} strokeWidth={2.2} />
             </span>
             <strong>{meetings.length}</strong>
-            <span>{t("kpiMeetings")}</span>
+            <span>{t("kpiMeetings", { count: meetings.length })}</span>
           </div>
         </div>
       )}

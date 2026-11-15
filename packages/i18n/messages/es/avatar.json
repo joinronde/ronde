@@ -1,9 +1,10 @@
 {
   "notSaved": "La foto no se guardó.",
   "saved": "Foto guardada",
-  "removed": "Foto quitada",
+  "removed": "Foto eliminada",
   "change": "Cambiar la foto",
   "add": "Añadir una foto",
   "remove": "Quitar la foto",
+  "removeConfirm": "¿Quitar tu foto? En su lugar se muestran tus iniciales.",
   "unreadable": "Imagen ilegible."
 }

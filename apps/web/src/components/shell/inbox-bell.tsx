@@ -43,7 +43,9 @@ export function InboxBell({ slug }: { slug: string }) {
   const t = useTranslations("inbox");
   const format = useFormatter();
   const now = useNow({ updateInterval: 60_000 });
-  const [inbox, setInbox] = useState<Inbox>({ unread: 0, items: [] });
+  const tStates = useTranslations("states");
+  // Not loaded yet: the list says it is coming, never "all caught up" before knowing
+  const [inbox, setInbox] = useState<Inbox | null>(null);
   const [ring, setRing] = useState(false);
   const last = useRef(0);
   const api = withBasePath(`/api/w/${slug}/inbox`);
@@ -81,7 +83,8 @@ export function InboxBell({ slug }: { slug: string }) {
     };
   }, [load]);
 
-  const label = inbox.unread ? t("labelUnread", { count: inbox.unread }) : t("label");
+  const unread = inbox?.unread ?? 0;
+  const label = unread ? t("labelUnread", { count: unread }) : t("label");
   return (
     <Menu
       label={label}
@@ -90,9 +93,9 @@ export function InboxBell({ slug }: { slug: string }) {
       button={
         <span className={`bell${ring ? " ringing" : ""}`}>
           <Icon name="bell" />
-          {inbox.unread > 0 && (
-            <span className="bell-count" key={inbox.unread} aria-hidden="true">
-              {inbox.unread > 9 ? "9+" : inbox.unread}
+          {unread > 0 && (
+            <span className="bell-count" key={unread} aria-hidden="true">
+              {unread > 9 ? "9+" : unread}
             </span>
           )}
         </span>
@@ -102,13 +105,19 @@ export function InboxBell({ slug }: { slug: string }) {
         <div className="inbox-pop">
           <div className="inbox-head">
             <strong>{t("title")}</strong>
-            {inbox.unread > 0 && (
+            {unread > 0 && (
               <button type="button" className="link-btn" onClick={() => void read()}>
                 {t("markAll")}
               </button>
             )}
           </div>
-          {inbox.items.length ? (
+          {!inbox ? (
+            <div className="inbox-loading" role="status" aria-busy="true">
+              <span className="sk sk-line" aria-hidden="true" />
+              <span className="sk sk-line" aria-hidden="true" />
+              <span className="sr-only">{tStates("loading")}</span>
+            </div>
+          ) : inbox.items.length ? (
             <ul className="inbox-list">
               {inbox.items.map((n) => (
                 <li key={n.id} className={n.read ? undefined : "unread"}>

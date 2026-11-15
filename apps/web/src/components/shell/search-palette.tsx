@@ -69,7 +69,9 @@ export function SearchPalette({ data, onClose }: { data: ShellData; onClose: () 
     { key: "decisions", kind: "page", icon: "flag", title: ts("decisions"), href: `${base}/decisions` },
     { key: "kudos", kind: "page", icon: "heart", title: ts("kudos"), href: `${base}/kudos` },
     { key: "templates", kind: "page", icon: "panel", title: ts("templates"), href: `${base}/templates` },
-    { key: "people", kind: "page", icon: "people", title: ts("people"), href: `${base}/people` },
+    ...(data.can.people
+      ? [{ key: "people", kind: "page" as const, icon: "people" as const, title: ts("people"), href: `${base}/people` }]
+      : []),
     ...(data.can.insights
       ? [{ key: "insights", kind: "page" as const, icon: "chart" as const, title: ts("insights"), href: `${base}/insights` }]
       : []),
@@ -194,6 +196,16 @@ export function SearchPalette({ data, onClose }: { data: ShellData; onClose: () 
           {loading && <span className="search-spin" aria-hidden="true" />}
           <kbd>esc</kbd>
         </div>
+        {/* Announced as it settles: the list itself changes under the focus, which stays in the field */}
+        <p className="sr-only" role="status">
+          {loading
+            ? t("searching")
+            : q.trim()
+              ? items.length
+                ? t("results", { count: items.length })
+                : t("none", { query: q.trim() })
+              : ""}
+        </p>
         <div id={listId} role="listbox" aria-label={t("title")} className="search-list">
           {groups.map((g) => (
             <div key={g.kind} role="group" aria-label={t(`kinds.${g.kind}`)} className="search-group">

@@ -17,6 +17,7 @@ import { type Locale, resolveLocale } from "@ronde/i18n";
 import { readConfig } from "@ronde/module-sdk";
 import { icebreaker, pickIcebreaker, rotation } from "@ronde/modules";
 import { awayPeople } from "../absences";
+import { OpError } from "../errors";
 import { holidayCountries, holidayRegions, holidaysOf, publicHolidays } from "../holidays";
 import { personName } from "./dto";
 
@@ -170,18 +171,48 @@ export async function scheduleConflicts(
   return out;
 }
 
+/**
+ * A meeting holds one session a day: refused when another occurrence of the schedule, or another session, is on
+ * that date. `own`: the occurrence (and the session) being placed there, which do not count.
+ */
+export async function assertDateFree(
+  db: Db,
+  meeting: { id: string; timezone: string | null },
+  workspace: { timezone: string },
+  date: string,
+  own: { key?: string | null; sessionId?: string } = {},
+) {
+  const { rules, exceptions } = await loadSchedule(db, meeting.id);
+  const taken = occurrences(rules, exceptions, timeZoneOf(meeting, workspace), { from: date, to: date }).some((x) => x.key !== own.key);
+  const session = await db.session.findFirst({
+    where: {
+      meetingId: meeting.id,
+      date,
+      ...(own.key ? { OR: [{ occurrenceKey: null }, { occurrenceKey: { not: own.key } }] } : {}),
+      ...(own.sessionId ? { id: { not: own.sessionId } } : {}),
+    },
+    select: { id: true },
+  });
+  if (taken || session) throw new OpError("meetingDateTaken");
+}
+
 /** Next occurrence for a new session: on or after `from` (today by default), on a date with no session yet */
 export async function nextSessionOccurrence(
   db: Db,
   meeting: { id: string; timezone: string | null },
   workspace: { timezone: string },
   from?: string,
+  /** Only an occurrence starting after this instant (a schedule change never opens a session already late) */
+  notBefore?: number,
 ): Promise<Occurrence | null> {
   const timeZone = timeZoneOf(meeting, workspace);
   const { rules, exceptions } = await loadSchedule(db, meeting.id);
   const used = await db.session.findMany({ where: { meetingId: meeting.id }, select: { date: true } });
   const start = from && from > today(timeZone) ? from : today(timeZone);
-  return nextOccurrence(rules, exceptions, timeZone, start, { skipDates: new Set(used.map((s) => s.date)) });
+  return nextOccurrence(rules, exceptions, timeZone, start, {
+    skipDates: new Set(used.map((s) => s.date)),
+    ...(notBefore ? { skip: (o: Occurrence) => o.startsAt <= notBefore } : {}),
+  });
 }
 
 /** Session columns for an occurrence */
@@ -243,11 +274,11 @@ export async function openSession(
   db: ScopedTx,
   meeting: { id: string; workspaceId: string; timezone: string | null },
   workspace: { timezone: string },
-  options: { date?: string; after?: string; avoidIcebreaker?: string | null } = {},
+  options: { date?: string; after?: string; avoidIcebreaker?: string | null; notBefore?: number } = {},
 ): Promise<Session | null> {
   const occurrence = options.date
     ? null
-    : await nextSessionOccurrence(db, meeting, workspace, options.after ? plusDays(options.after, 1) : undefined);
+    : await nextSessionOccurrence(db, meeting, workspace, options.after ? plusDays(options.after, 1) : undefined, options.notBefore);
   if (!options.date && !occurrence) return null;
   const timeZone = timeZoneOf(meeting, workspace);
   const ice = await db.moduleInstallation.findFirst({ where: { meetingId: meeting.id, moduleId: "icebreaker" } });
@@ -297,9 +328,14 @@ export async function resyncSession(
   const archived = new Set(
     (await db.session.findMany({ where: { meetingId: meeting.id, status: "archived" }, select: { date: true } })).map((s) => s.date),
   );
-  const next = nextOccurrence(rules, exceptions, timeZone, today(timeZone), { skipDates: archived });
+  // Never an occurrence whose hour is past (a pattern just added for today): the session's own one stays, late
+  const now = Date.now();
+  const next = nextOccurrence(rules, exceptions, timeZone, today(timeZone), {
+    skipDates: archived,
+    skip: (o) => o.startsAt <= now && o.key !== session?.occurrenceKey,
+  });
   if (!session) {
-    if (next) await openSession(db, meeting, workspace);
+    if (next) await openSession(db, meeting, workspace, { notBefore: now });
     return;
   }
   if (!next) return;

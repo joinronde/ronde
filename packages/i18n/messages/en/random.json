@@ -14,7 +14,7 @@
   "draw": "Spin",
   "drawAgain": "Draw again",
   "teamSize": "People per team",
-  "applyWheel": "{name} speaks next",
+  "applyWheel": "Give the next turn to {name}",
   "applyOrder": "Use this order",
   "applied": "Applied to the speaking order",
   "clear": "Hide from the screens",

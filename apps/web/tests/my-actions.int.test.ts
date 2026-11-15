@@ -1,3 +1,4 @@
+import { can, type Permission } from "@ronde/core/permissions";
 import { prisma } from "@ronde/db";
 import { beforeAll, describe, expect, it } from "vitest";
 import { runOp } from "@/lib/server/meeting/ops";
@@ -55,5 +56,21 @@ describe("actions across meetings", () => {
     await prisma.action.update({ where: { id: done!.id }, data: { doneAt: new Date(Date.now() - 30 * 86_400_000) } });
     expect(await listActions(f.ctx.ws, "mine")).toHaveLength(0);
     expect((await listActions(f.ctx.ws, "mine", { all: true })).map((a) => a.id)).toEqual([done!.id]);
+  });
+
+  it("counts the actions of a meeting the person left as the page lists them: not at all", async () => {
+    // A plain member, removed from the meeting with an action still open there
+    const personId = f.memberId;
+    const principal = { ...f.ctx.ws.principal, personId, workspaceRole: "member" as const };
+    const ws = {
+      ...f.ctx.ws,
+      member: { ...f.ctx.ws.member, personId, role: "member" as const },
+      principal,
+      can: (p: Permission) => can(principal, p),
+    };
+    await prisma.action.create({ data: { workspaceId: f.workspaceId, meetingId: f.meetingId, text: "left behind", ownerId: personId } });
+    await prisma.meetingParticipant.deleteMany({ where: { meetingId: f.meetingId, personId } });
+    expect(await listActions(ws, "mine")).toHaveLength(0);
+    expect(await openActionCount(ws)).toBe(0);
   });
 });

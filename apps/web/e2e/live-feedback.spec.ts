@@ -48,7 +48,7 @@ test("the live meeting, as hosts asked for it", async ({ page, browser }) => {
   await max.getByRole("link", { name: "Create an account" }).click();
   await max.waitForURL(/\/sign-up\?/);
   await signUp(max, "Max Mind", `max-${run}@example.com`, max.url());
-  await max.getByRole("button", { name: /^Join / }).click();
+  // The new account joins the workspace at once
   await max.waitForURL(/\/w\/[^/]+$/);
   await max.goto(`${meeting}/me`);
   await max
@@ -102,8 +102,8 @@ test("the live meeting, as hosts asked for it", async ({ page, browser }) => {
   const lea = await page.context().newPage();
   await lea.goto(`${meeting}/me`);
   await lea.getByRole("tab", { name: "Live" }).click();
-  await lea.getByRole("button", { name: "Me too on “Shipped the login page”" }).click();
-  await expect(lea.getByRole("button", { name: "Stop showing on “Shipped the login page”" })).toHaveAttribute("aria-pressed", "true");
+  await lea.getByRole("button", { name: "Add me to “Shipped the login page”" }).click();
+  await expect(lea.getByRole("button", { name: "Remove me from “Shipped the login page”" })).toHaveAttribute("aria-pressed", "true");
   // A reaction on the line, picked among a few: the 👍 then shows as one's own
   await lea.locator(".line-actions .rx-add").first().click();
   await lea.locator(".rx-pop").getByRole("button", { name: "👍" }).click();

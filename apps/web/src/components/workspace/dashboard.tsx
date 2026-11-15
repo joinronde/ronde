@@ -214,9 +214,12 @@ export function Dashboard({ slug, moment, firstName, today, data, meetings, step
                         href={`${base}/m/${e.meetingId}`}
                         className={`wk-event ${e.status}`}
                         style={tint(e.color)}
+                        title={e.meeting}
                       >
                         <span className="wk-time">{e.time}</span>
-                        <span className="wk-name-m">{e.meeting}</span>
+                        <bdi dir="auto" className="wk-name-m">
+                          {e.meeting}
+                        </bdi>
                       </Link>
                     ))}
                   </li>
@@ -267,9 +270,9 @@ export function Dashboard({ slug, moment, firstName, today, data, meetings, step
               <section className="dash-card dash-pulse" style={order(1)} aria-labelledby="dash-pulse">
                 <h2 id="dash-pulse">{t("pulse")}</h2>
                 <ul className="stats">
-                  <Stat value={data.pulse.sessions} label={t("pulseSessions")} />
-                  <Stat value={data.pulse.actionsDone} label={t("pulseActions")} />
-                  <Stat value={data.pulse.people} label={t("pulsePeople")} href={`${base}/people`} />
+                  <Stat value={data.pulse.sessions} label={t("pulseSessions", { count: data.pulse.sessions })} />
+                  <Stat value={data.pulse.actionsDone} label={t("pulseActions", { count: data.pulse.actionsDone })} />
+                  <Stat value={data.pulse.people} label={t("pulsePeople", { count: data.pulse.people })} href={`${base}/people`} />
                 </ul>
               </section>
             )}
@@ -341,9 +344,9 @@ function Hero({ slug, next, today }: { slug: string; next: NextSession; today: s
       : live.step === "block"
         ? live.title || t("liveStep.block")
         : t(`liveStep.${live.step}`);
-  // A live session's day and time are when it started, in the workspace's time zone (the same on the server)
-  const startedTime = next.time;
-  const startedDay = next.date;
+  // A live session's day and time are when it really started (computed on the server, where the person is)
+  const startedTime = live?.startedTime ?? next.time;
+  const startedDay = live?.startedDate ?? next.date;
   // Seats, ring and arc on one circle, 42% from the centre
   const R = 42;
   return (
@@ -513,7 +516,7 @@ function MyActions({ slug, actions, open }: { slug: string; actions: DashboardDa
     <section className="dash-card dash-actions" style={order(3)} aria-labelledby="dash-actions">
       <div className="dash-card-head">
         <h2 id="dash-actions">
-          {t("myActions")} {open > 0 && <span className="side-count">{open}</span>}
+          {t("myActions")} {open > 0 && <span className="side-count dash-count">{open}</span>}
         </h2>
         <Link href={`/w/${slug}/actions`} className="link">
           {t("seeAll")}
@@ -543,7 +546,7 @@ function MyActions({ slug, actions, open }: { slug: string; actions: DashboardDa
                 </svg>
               </button>
               <span className="dash-act-text">
-                <span>{a.text}</span>
+                <span dir="auto">{a.text}</span>
                 <span className="hint">
                   <span className="act-dot" aria-hidden="true" /> {a.meeting}
                   {a.status === "doing" && <> · {ta("inProgress")}</>}

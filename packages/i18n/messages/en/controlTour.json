@@ -12,7 +12,7 @@
     },
     "runOrder": {
       "title": "The agenda and the speaking order",
-      "body": "<p>Intro, one turn per person, open topics, then the wrap-up.</p><ul><li><strong>↑ ↓</strong> change the order, <strong>Absent</strong> takes someone out of the round.</li><li><strong>Go</strong> jumps straight to a step.</li><li>A green dot: that person's check-in is ready.</li></ul>"
+      "body": "<p>Intro, one turn per person, open topics, then the wrap-up.</p><ul><li>Drag <strong>⠿</strong> (or use <strong>↑ ↓</strong> on the handle, with the keyboard) to change the order; <strong>Absent</strong> skips that person's turn.</li><li><strong>Go</strong> jumps straight to a step.</li><li>A green dot: that person's check-in is ready.</li></ul>"
     },
     "controls": {
       "title": "Start and move on",
@@ -20,7 +20,7 @@
     },
     "notes": {
       "title": "Your notes",
-      "body": "<p>One notes area per step, <strong>saved as you type</strong> and seen only by you: they go into the minutes, under the right person.</p><p><strong>+ Decision</strong> records a decision; <strong>+ Action</strong> creates a follow-up action with an owner, tracked in the next sessions.</p>"
+      "body": "<p>One notes area per step, <strong>saved as you type</strong> and visible only to you until the minutes are published: they go into the minutes, under the right person.</p><p><strong>Decision</strong> records a decision; <strong>Action</strong> creates a follow-up action with an owner, tracked in the next sessions.</p>"
     },
     "minutes": {
       "title": "The minutes",

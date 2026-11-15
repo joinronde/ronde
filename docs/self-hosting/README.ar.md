@@ -17,7 +17,7 @@
 2. املأ ملف `.env`: اضبط العنوان الذي سيفتحه الناس (`RONDE_URL`)، ثم أنشئ الأسرار الثلاثة:
 
    ```sh
-   for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env; done
+   for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i.bak "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env && rm .env.bak; done
    ```
 
 3. شغّل:

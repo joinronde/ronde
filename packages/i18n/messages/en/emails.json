@@ -22,6 +22,6 @@
     "subject": "{inviter} invites you to {workspace} on Ronde",
     "intro": "{inviter} invites you to join the {workspace} workspace on Ronde, to prepare and run your team meetings together.",
     "action": "Join {workspace}",
-    "footer": "This invitation expires in 7 days. If you were not expecting it, you can ignore this email."
+    "footer": "This invitation expires in {days, plural, one {# day} other {# days}}. If you were not expecting it, you can ignore this email."
   }
 }

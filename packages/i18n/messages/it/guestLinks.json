@@ -1,6 +1,6 @@
 {
   "title": "Link ospite",
-  "intro": "Persone senza account seguono lo schermo condiviso in diretta, in sola lettura, con un link segreto che scade: un cliente, un consiglio, un partner. Vedono ciò che mostra lo schermo della sala.",
+  "intro": "Chi non ha un account segue lo schermo condiviso in diretta, in sola lettura, con un link segreto a scadenza: un cliente, un consiglio di amministrazione, un partner. Vede esattamente ciò che mostra lo schermo condiviso.",
   "label": "Per chi è",
   "labelPlaceholder": "Es. Membri del consiglio",
   "duration": "Valido per",
@@ -13,6 +13,7 @@
   "until": "Valido fino al {date}",
   "expiredOn": "Scaduto il {date}",
   "revoke": "Revoca",
+  "revokeConfirm": "Revocare il link per «{label}»? Smette subito di funzionare e non può più essere mostrato: dovrai inviare un nuovo link.",
   "remove": "Rimuovi",
   "revoked": "Link revocato"
 }

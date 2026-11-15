@@ -1,6 +1,6 @@
 {
   "title": "Roles",
-  "intro": "Roles of your own add permissions to organizers, members and guests. Meeting permissions apply to every meeting of the workspace.",
+  "intro": "Custom roles add permissions to organizers, members and guests. Meeting permissions apply to every meeting of the workspace.",
   "new": "New role",
   "newTitle": "New role",
   "editTitle": "Edit the role",
@@ -20,7 +20,7 @@
   "delete": "Delete",
   "deleteConfirm": "Delete the role “{name}”? {count, plural, =0 {Nobody holds it.} one {# person goes back to their role alone.} other {# people go back to their role alone.}}",
   "members": "{count, plural, =0 {nobody} one {# person} other {# people}}",
-  "empty": "No role of your own yet.",
-  "examples": "For instance: “Auditor” (history and statistics of every meeting), “Facilitator” (runs any meeting), “People manager” (directory and invitations).",
+  "empty": "No custom role yet.",
+  "examples": "For example: “Auditor” (history and statistics of every meeting), “Facilitator” (runs any meeting), “People manager” (directory and invitations).",
   "readOnly": "The license has expired: roles stay visible but give no permission any more until it is renewed."
 }

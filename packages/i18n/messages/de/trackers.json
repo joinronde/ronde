@@ -27,13 +27,13 @@
     "project": "Projektschlüssel",
     "email": "E-Mail des Kontos",
     "team": "Team-Schlüssel oder -ID",
-    "repo": "Repository (owner/name)"
+    "repo": "Repository (Besitzer/Name)"
   },
   "hints": {
     "jira": "Ein API-Token, erstellt auf id.atlassian.com, für das Konto mit der E-Mail oben.",
     "linear": "Ein persönlicher API-Schlüssel aus den Linear-Einstellungen → API. Der Team-Schlüssel (ENG in ENG-12) steht vor jeder Ticketnummer.",
     "gitlab": "Projekt: sein Pfad (Gruppe/Projekt) oder seine Nummer. Tickets werden mit dem Token der Verbindung eröffnet, das den Bereich api braucht.",
-    "github": "Repository: Besitzer/Name. Tickets werden mit dem Token der Verbindung eröffnet, das darauf „Issues: Lesen und Schreiben“ braucht."
+    "github": "Repository: Besitzer/Name. Tickets werden mit dem Token der Verbindung eröffnet, das dafür „Issues: Lesen und Schreiben“ braucht."
   },
   "assignee": "Verantwortliche werden in GitLab und GitHub zugewiesen, wenn ihr Benutzername in ihrem Verzeichnisprofil steht.",
   "edit": "Bearbeiten"

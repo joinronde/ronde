@@ -5,8 +5,8 @@
   "tooLong": "{max, plural, one {# caractère} other {# caractères}} au maximum",
   "tooFew": "au moins {min, plural, one {# élément} other {# éléments}}",
   "tooMany": "{max, plural, one {# élément} other {# éléments}} au maximum",
-  "format": "une valeur n'a pas le format attendu",
+  "format": "une valeur n’a pas le format attendu",
   "missing": "une valeur manque",
-  "invalid": "une valeur n'est pas acceptée",
-  "at": "{field} : {problem}"
+  "invalid": "une valeur n’est pas acceptée",
+  "at": "{field} : {problem}"
 }

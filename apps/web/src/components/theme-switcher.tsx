@@ -28,14 +28,24 @@ export function ThemeSwitcher() {
       document.cookie = `ronde-theme=${next}; path=/; max-age=31536000; samesite=lax`;
     }
   };
+  // Arrow keys move the choice and the focus, as radios do; only the chosen one is a tab stop
+  const move = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const dir = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+    if (!dir) return;
+    e.preventDefault();
+    const next = THEMES[(THEMES.findIndex((x) => x.id === theme) + dir + THEMES.length) % THEMES.length]!;
+    choose(next.id);
+    e.currentTarget.querySelectorAll<HTMLElement>("[role=radio]")[THEMES.indexOf(next)]?.focus();
+  };
   return (
-    <div className="theme-switch" role="radiogroup" aria-label={t("theme")}>
+    <div className="theme-switch" role="radiogroup" aria-label={t("theme")} onKeyDown={move}>
       {THEMES.map((x) => (
         <button
           key={x.id}
           type="button"
           role="radio"
           aria-checked={theme === x.id}
+          tabIndex={theme === x.id ? 0 : -1}
           title={t(`themes.${x.id}`)}
           onClick={() => choose(x.id)}
         >

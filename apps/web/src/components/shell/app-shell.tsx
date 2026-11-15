@@ -29,7 +29,7 @@ export interface ShellData {
   workspace: { slug: string; name: string; logo?: string | null } | null;
   workspaces: { slug: string; name: string }[];
   meetings: { id: string; name: string; icon: string; image: number | null; live: boolean }[];
-  can: { manage: boolean; createMeeting: boolean; projects: boolean; insights: boolean };
+  can: { manage: boolean; createMeeting: boolean; projects: boolean; people: boolean; insights: boolean };
   /** Paid pages the plan lacks, with the plan that has them (shown to administrators) */
   locked: { insights: "team" | "enterprise" | null };
   /** Follow-up actions the person still has to do */
@@ -205,12 +205,15 @@ function SideNav({ data }: { data: ShellData }) {
         {data.can.projects && (
           <NavItem href={`${base}/projects`} icon="folder" label={t("projects")} active={path.startsWith(`${base}/projects`)} />
         )}
-        <NavItem
-          href={`${base}/people`}
-          icon="people"
-          label={t("people")}
-          active={PEOPLE_PAGES.some((p) => path.startsWith(`${base}${p}`))}
-        />
+        {/* A guest has no directory: the link would only bring them back home */}
+        {data.can.people && (
+          <NavItem
+            href={`${base}/people`}
+            icon="people"
+            label={t("people")}
+            active={PEOPLE_PAGES.some((p) => path.startsWith(`${base}${p}`))}
+          />
+        )}
         {/* The thanks people gave each other in the meetings: a page of their own, not part of the directory */}
         <NavItem href={`${base}/kudos`} icon="heart" label={t("kudos")} active={path.startsWith(`${base}/kudos`)} />
         {/* Without the plan, administrators still see the page, marked with it: it presents what the plan brings */}
@@ -227,7 +230,7 @@ function SideNav({ data }: { data: ShellData }) {
           <NavItem href={`${base}/settings`} icon="settings" label={t("settings")} active={path.startsWith(`${base}/settings`)} />
         )}
       </nav>
-      <section className="side-section" aria-labelledby="side-meetings">
+      <div className="side-section" role="group" aria-labelledby="side-meetings">
         <div className="side-heading">
           <h2 id="side-meetings">
             <Link href={`${base}/meetings`} className="side-heading-link" aria-current={path === `${base}/meetings` ? "page" : undefined}>
@@ -265,7 +268,7 @@ function SideNav({ data }: { data: ShellData }) {
         ) : (
           <p className="side-empty">{t("noMeetings")}</p>
         )}
-      </section>
+      </div>
     </>
   );
 }

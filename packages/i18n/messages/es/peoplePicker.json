@@ -5,9 +5,9 @@
   "none": "Nadie",
   "teams": "Equipos",
   "pickTeam": "{name}: {count, plural, one {# persona} other {# personas}}, subequipos incluidos",
-  "noMatch": "Nadie coincide.",
+  "noMatch": "Sin resultados.",
   "noTeam": "Sin equipo",
   "withSubTeams": "subequipos incluidos",
-  "fold": "Plegar {name}",
-  "unfold": "Desplegar {name}"
+  "fold": "Contraer {name}",
+  "unfold": "Expandir {name}"
 }

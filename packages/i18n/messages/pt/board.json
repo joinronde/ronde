@@ -1,7 +1,7 @@
 {
   "editingHint": "Pegue um bloco pela alça <handle></handle> e solte onde quiser, ou use as setas. A disposição é guardada só para você.",
   "columnCount": "Número de colunas",
-  "columns": "{count, plural, one {# coluna} other {# colunas}}",
+  "columns": "{count, plural, =0 {# colunas} one {# coluna} other {# colunas}}",
   "defaultLayout": "Disposição padrão",
   "done": "Pronto",
   "customiseHint": "Mova os blocos, escolha o número de colunas",

@@ -1,4 +1,4 @@
-import type { CheckInDTO, ProjectDTO, Section, Snapshot } from "@ronde/core/types";
+import type { CheckInDTO, PastCheckIn, ProjectDTO, Section, Snapshot } from "@ronde/core/types";
 import { itemsOf, plainItem, rebaseList, rebaseText, taskItem, taskOf } from "@ronde/core/util";
 
 // The check-in being written: how it is loaded, brought back plans, merged with a version saved elsewhere and
@@ -206,3 +206,36 @@ export const planKey = (x: string) => plainItem(x).trim().toLowerCase();
 /** Last time's plans still to sort */
 export const pendingPlans = (next: string[], d: Pick<Draft, "items" | "byProject">, skipped: string[]) =>
   next.filter((n) => !planStatus(d, skipped, n));
+
+/** Every one of last time's plans got an answer: done, carried over or dismissed (brought back unticked is not one) */
+export const allPlansSorted = (next: string[], d: Pick<Draft, "items" | "byProject">, skipped: string[]) =>
+  next.every((n) => {
+    const st = planStatus(d, skipped, n);
+    return st !== null && st !== "here";
+  });
+
+/**
+ * The check-in was saved for the session being prepared: written since the last session ended. Before that,
+ * "Saved" and its last update would be last session's
+ */
+export const savedThisSession = (updatedAt: number | null | undefined, lastArchivedAt: number | null) =>
+  !!updatedAt && (lastArchivedAt === null || updatedAt >= lastArchivedAt);
+
+/**
+ * A past check-in as "My past check-ins" shows it: the person's own tab, then each project's tab under its
+ * project, each with the sections that have items. Empty tabs are left out: none at all for an empty check-in
+ */
+export function pastTabs(
+  p: PastCheckIn,
+): { project: { id: string; name: string } | null; sections: { sec: Section; items: string[] }[] }[] {
+  const tabs = [
+    { project: null, fields: p.checkIn },
+    ...p.projects.map((project) => ({ project, fields: p.checkIn.byProject?.[project.id] })),
+  ];
+  return tabs
+    .map(({ project, fields }) => ({
+      project,
+      sections: (p.sections ?? []).map((sec) => ({ sec, items: itemsOf(fields, sec) })).filter((x) => x.items.length),
+    }))
+    .filter((x) => x.sections.length);
+}

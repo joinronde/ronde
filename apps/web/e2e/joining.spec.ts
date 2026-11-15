@@ -64,6 +64,38 @@ test("an existing account joins from an invitation; the wrong account switches t
   await expect(page.getByRole("row", { name: /Quinn Other/ })).toContainText("Member");
 });
 
+test("an account created from an invitation keeps its context and lands in the workspace", async ({ page, browser }) => {
+  test.setTimeout(240_000);
+  const host = { name: "Iris Inviter", email: `iris-${run}@example.com`, password: "host-password-123" };
+  const nina = { name: "Nina New", email: `nina-${run}@example.com`, password: "nina-password-123" };
+  const name = `Newcomers ${run}`;
+  const workspace = await hostWithWorkspace(page, host, name);
+  const link = await invite(page, workspace, nina.email, "Nina", "New");
+
+  const ninaPage = await (await browser.newContext({ locale: "en-US" })).newPage();
+  await ninaPage.goto(link);
+  await ninaPage.getByRole("link", { name: "Create an account" }).click();
+  await ninaPage.waitForURL(/\/sign-up\?/);
+  // Whom the account joins, who invites, and the address the invitation was sent to, which cannot change
+  await expect(ninaPage.getByRole("heading", { name: `Join ${name}` })).toBeVisible();
+  await expect(ninaPage.getByText(`${host.name} invites you`)).toBeVisible();
+  const email = ninaPage.getByLabel("Email", { exact: true });
+  await expect(email).toHaveValue(nina.email);
+  await expect(email).not.toBeEditable();
+  await ninaPage.getByLabel("Full name").fill(nina.name);
+  await ninaPage.getByLabel("Password", { exact: true }).fill(nina.password);
+  await ninaPage.getByRole("button", { name: "Create account" }).click();
+  // No second page to click through: the account is in the workspace
+  await expect(ninaPage).toHaveURL(new RegExp(`${new URL(workspace).pathname}$`));
+
+  // The onboarding page says which account is signed in, and signs out
+  await ninaPage.goto("/onboarding");
+  await expect(ninaPage.getByText(`Signed in as ${nina.email}`)).toBeVisible();
+  await ninaPage.getByRole("button", { name: "Sign out" }).click();
+  await ninaPage.waitForURL(/\/sign-in/);
+  await ninaPage.context().close();
+});
+
 test("a template picked on the site opens the wizard of the first meeting on it", async ({ page }) => {
   test.setTimeout(120_000);
   await signUp(page, { name: "Tara Template", email: `tara-${run}@example.com`, password: "template-password-123" });
@@ -131,9 +163,15 @@ test("a guest link shows the meeting live without an account, until it is revoke
   // Revoked: the link no longer opens anything
   await page.goto(`${meeting}/settings#people`);
   await panel.getByRole("listitem").filter({ hasText: "Board members" }).getByRole("button", { name: "Revoke" }).click();
+  // Asked first: the link cannot be shown again once revoked
+  await expect(page.getByRole("dialog")).toContainText("Revoke the link for “Board members”?");
+  await page.getByRole("dialog").getByRole("button", { name: "Revoke" }).click();
   await expect(page.getByText("Link revoked")).toBeVisible();
   await expect(panel.getByRole("listitem").filter({ hasText: "Board members" })).toHaveCount(0);
   const gone = await guest.goto(link);
   expect(gone?.status()).toBe(404);
+  // Said in words for a guest, with no sign-in page to go to
+  await expect(guest.getByRole("heading", { name: "This link no longer works" })).toBeVisible();
+  await expect(guest.getByRole("link")).toHaveCount(0);
   await guestCtx.close();
 });

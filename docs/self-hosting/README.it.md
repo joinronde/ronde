@@ -17,7 +17,7 @@ senza limiti di riunioni o persone. Una chiave di licenza attiva le funzioni di 
 2. Compila `.env`: l'indirizzo che le persone apriranno (`RONDE_URL`) e tre segreti.
 
    ```sh
-   for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env; done
+   for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i.bak "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env && rm .env.bak; done
    ```
 
 3. Avvia:

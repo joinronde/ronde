@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import type { TemplateSummary } from "@/lib/server/templates";
 import { Icon } from "../shell/icons";
+import { HealthDataNotice } from "./health-notice";
 
 /** Colour of each kind of template */
 const HUE: Record<TemplateSummary["category"], number> = {
@@ -49,6 +50,7 @@ export function TemplateGallery({ slug, templates, canCreate }: { slug: string; 
             </div>
             <h2>{x.name}</h2>
             {x.description && <p className="gl-desc">{x.description}</p>}
+            {x.healthGuide && <HealthDataNotice guide={x.healthGuide} />}
             <ul className="gl-facts">
               <li>
                 <Icon name="calendar" size={14} /> {x.schedule}

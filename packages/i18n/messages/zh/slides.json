@@ -1,6 +1,6 @@
 {
   "stage": {
-    "items": "团队提出的",
+    "items": "团队提出的内容",
     "tracked": "行动项",
     "emptyIrritants": "暂时没有：每个人都可以在“我的屏幕”中添加。",
     "anonymous": "不显示姓名。",
@@ -11,7 +11,7 @@
   "me": {
     "hint": "现在就说出困扰你的事：在这里处理，而不是在别人发言时打断。",
     "anonymous": "不会显示你的姓名。",
-    "placeholder": "困扰我的事…",
+    "placeholder": "困扰我的事……",
     "add": "添加",
     "mine": "你提出的",
     "remove": "删除“{text}”"

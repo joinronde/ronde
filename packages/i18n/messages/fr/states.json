@@ -1,14 +1,19 @@
 {
   "loading": "Chargement…",
   "notFoundTitle": "Page introuvable",
-  "notFoundBody": "Cette page n'existe pas, ou vous n'y avez plus accès.",
-  "home": "Retour à l'accueil",
+  "notFoundBody": "Cette page n’existe pas, ou vous n’y avez plus accès.",
+  "home": "Retour à l’accueil",
   "errorTitle": "Un problème est survenu",
-  "errorBody": "Cette page n'a pas pu s'afficher. Réessayez ; si le problème continue, rechargez la page.",
-  "errorRef": "Référence : {ref}",
+  "errorBody": "Cette page n’a pas pu s’afficher. Réessayez ; si le problème continue, rechargez la page.",
+  "errorRef": "Référence : {ref}",
   "retry": "Réessayer",
   "suspendedTitle": "Cet espace de travail est suspendu",
-  "suspendedBody": "{workspace} est suspendu pour le moment : ses réunions, fiches et historique sont conservés, mais personne ne peut les ouvrir. Ses propriétaires savent pourquoi ; écrivez à l'administrateur de ce service pour le rouvrir.",
+  "suspendedBody": "{workspace} est suspendu pour le moment : ses réunions, ses fiches et son historique sont conservés, mais personne ne peut les ouvrir. Ses propriétaires savent pourquoi ; pour le rouvrir, écrivez à l’administrateur de ce service.",
+  "suspendedBodyOwner": "{workspace} a été suspendu par l’administrateur de ce service : ses réunions, ses fiches et son historique sont conservés, mais personne ne peut les ouvrir. Pour le rouvrir, écrivez-lui.",
   "suspendedBack": "Retour à mes espaces de travail",
-  "report": "Racontez-nous ce qui s'est passé"
+  "suspendedCreate": "Créer un autre espace de travail",
+  "suspendedMark": "Suspendu",
+  "guestLinkGoneTitle": "Ce lien ne fonctionne plus",
+  "guestLinkGone": "Ce lien vers l’écran partagé d’une réunion a expiré ou a été retiré. Demandez-en un nouveau à la personne qui vous l’a envoyé.",
+  "report": "Racontez-nous ce qui s’est passé"
 }

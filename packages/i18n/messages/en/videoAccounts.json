@@ -25,7 +25,7 @@
     "clientEmail": "Email of the service account",
     "subject": "User the rooms belong to",
     "tenant": "Tenant (ID or domain)",
-    "organizer": "Organizer of the meetings",
+    "organizer": "User the meetings belong to",
     "url": "Server address"
   },
   "secret": {

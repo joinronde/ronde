@@ -3,7 +3,7 @@
   "new": "Nuova riunione",
   "empty": "Ancora nessuna riunione.",
   "emptyHint": "Creane una: richiede meno di un minuto e tutto si può modificare in seguito.",
-  "emptyMember": "Non partecipi ancora a nessuna riunione. Un conduttore ti aggiunge alla sua.",
+  "emptyMember": "Non partecipi ancora a nessuna riunione. Chi conduce una riunione può aggiungerti.",
   "open": "Apri",
   "live": "In diretta",
   "nextOn": "Prossima sessione {date}",
@@ -19,7 +19,7 @@
   "wizard": {
     "title": "Nuova riunione",
     "subtitle": "Quattro passaggi rapidi. Tutto resta modificabile nelle impostazioni della riunione.",
-    "stepOf": "Passo {n} di {total}",
+    "stepOf": "Passaggio {n} di {total}",
     "steps": {
       "details": "Orario e persone",
       "review": "Riepilogo",
@@ -61,6 +61,8 @@
     "sections": "Sezioni",
     "recapSchedule": "{schedule} · {duration} · prima sessione il {date}",
     "recapPeople": "{count, plural, =0 {Ancora nessuno nel giro di tavolo} one {# persona nel giro di tavolo} other {# persone nel giro di tavolo}}",
+    "recapRound": "Circa {duration} di giro di tavolo, con {each} di parola a testa, in una riunione di {meeting}.",
+    "recapRoundOver": "Circa {duration} di giro di tavolo, con {each} di parola a testa: più dei {meeting} previsti.",
     "modules": "Moduli",
     "back": "Indietro",
     "next": "Avanti",
@@ -86,6 +88,8 @@
       }
     },
     "cancel": "Annulla",
+    "leaveConfirm": "Uscire dalla nuova riunione? Quello che hai inserito non viene salvato.",
+    "leave": "Esci",
     "modulesLater": "Altri si aggiungono in qualsiasi momento dalle impostazioni della riunione.",
     "order": {
       "title": "Ordine dei turni",
@@ -93,7 +97,7 @@
       "teamHint": "Un breve turno a testa, poi i progetti insieme.",
       "projects": "Prima i progetti",
       "projectsHint": "Progetto per progetto, poi un turno a testa per il resto.",
-      "later": "Puoi cambiarlo dopo nell'Ordine del giorno della riunione."
+      "later": "Puoi cambiarlo dopo nell'ordine del giorno della riunione."
     }
   }
 }

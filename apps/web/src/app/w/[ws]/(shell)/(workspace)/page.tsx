@@ -54,10 +54,13 @@ export default async function WorkspaceHome({ params }: { params: Promise<{ ws: 
   const hosted = real.find((m) => m.role === "host" || m.role === "cohost");
   const manager = ctx.can("people.invite");
   const canCreate = ctx.can("meeting.create");
+  // Creating a first meeting and running its session are a host's steps: someone who joins a workspace that
+  // already has its meetings, and runs none of them, is not asked to (nor shown them done by others)
+  const hostSteps = canCreate && (real.length === 0 || !!hosted);
   // The first steps, in the order that gets a team going, and always the same ones (a list that grows as
   // they are done reads like going backwards). The profile and the job categories are settings, not steps.
   const steps = [
-    ...(canCreate
+    ...(hostSteps
       ? [{ key: "meeting", done: real.length > 0, title: t("stepMeeting"), hint: t("stepMeetingHint"), href: `${base}/meetings/new` }]
       : []),
     ...(manager
@@ -71,7 +74,7 @@ export default async function WorkspaceHome({ params }: { params: Promise<{ ws: 
           },
         ]
       : []),
-    ...(canCreate || joined
+    ...(hostSteps || joined
       ? [
           {
             key: "checkIn",
@@ -82,7 +85,7 @@ export default async function WorkspaceHome({ params }: { params: Promise<{ ws: 
           },
         ]
       : []),
-    ...(canCreate || hosted
+    ...(hostSteps
       ? [
           {
             key: "session",

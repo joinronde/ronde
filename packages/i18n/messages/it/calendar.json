@@ -14,10 +14,10 @@
   "more": "+{count} altre",
   "upcoming": "In arrivo",
   "nothing": "Niente in programma nelle prossime quattro settimane.",
-  "nothingThisMonth": "Nessuna seduta questo mese.",
+  "nothingThisMonth": "Nessuna sessione questo mese.",
   "todayShort": "oggi",
   "tomorrow": "domani",
-  "inDays": "tra {count} giorni",
+  "inDays": "tra {count, plural, one {# giorno} other {# giorni}}",
   "status": {
     "planned": "prevista",
     "live": "In diretta ora",

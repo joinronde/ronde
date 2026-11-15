@@ -30,7 +30,7 @@
       "1": "Maquetas móviles aprobadas",
       "2": "Esqueleto de la app móvil y su integración continua",
       "3": "Pantallas de registro",
-      "4": "Foto de los justificantes",
+      "4": "Subida de fotos de los justificantes",
       "5": "Modo sin conexión del panel",
       "6": "Beta abierta a diez clientes"
     },
@@ -56,7 +56,7 @@
     "crm": "La exportación del CRM se corta a las 2.000 filas",
     "licence": "El juego de iconos elegido necesita una licencia de pago"
   },
-  "dayOff": "Fuera el jueves por la tarde (formación)",
+  "dayOff": "Ausente el jueves por la tarde (formación)",
   "actions": {
     "staging": "Conseguir acceso a la base de datos de pruebas (insistir a informática)",
     "crm": "Encontrar cómo sortear el límite de exportación del CRM",
@@ -72,13 +72,13 @@
     "alerts": "¿Las alertas pueden ir también al canal de soporte?"
   },
   "decisions": {
-    "escalate": "Decisión: escalamos el ticket de informática si no hay respuesta el jueves.",
+    "escalate": "Decisión: escalamos el ticket de informática si no hay respuesta antes del jueves.",
     "notes": "Decisión: el sistema de diseño tiene sus propias notas de versión."
   },
   "summary": "Una buena semana: la documentación de la API está publicada y la beta va según lo previsto. El acceso a la base de datos de pruebas sigue bloqueado, así que Emma lo escala el jueves.",
   "icebreaker": "¿Tu pequeña victoria de la semana?",
   "answers": {
-    "lucas": "Cinco entrevistas con clientes cerradas en una mañana",
+    "lucas": "Cinco entrevistas con clientes concertadas en una mañana",
     "sofia": "Cero alertas este fin de semana"
   },
   "topics": {

@@ -30,7 +30,7 @@ describe("notification messages", () => {
     expect(notifyMessage({ ...base, locale: "fr", event: "session.started" }).summary).toBe("▶️ Tools <team> commence");
     expect(notifyMessage({ ...base, locale: "fr", event: "checkin.reminder", progress: { ready: 1, total: 3 } }).blocks).toContainEqual({
       kind: "text",
-      text: "Fiches prêtes : 1/3\n2 fiches restent à préparer ou à mettre à jour.",
+      text: "Fiches prêtes : 1/3\n2 fiches restent à préparer ou à mettre à jour.",
     });
   });
 

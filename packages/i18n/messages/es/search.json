@@ -11,5 +11,7 @@
     "action": "Acciones",
     "topic": "Temas",
     "decision": "Decisiones"
-  }
+  },
+  "searching": "Buscando…",
+  "results": "{count, plural, one {# resultado} other {# resultados}}"
 }

@@ -99,7 +99,7 @@
       "description": "Anonymous sticky notes in columns, grouped by the host, voted on by the team, then discussed; add it to the agenda."
     },
     "timebox": {
-      "name": "Timebox",
+      "name": "Timed topic",
       "description": "A topic of its own on the agenda, with its own duration and its notes in the minutes."
     },
     "poker": {
@@ -137,6 +137,7 @@
   },
   "upgrade": {
     "comesWith": "{feature} comes with Ronde {edition}.",
-    "plans": "See the plans"
+    "plans": "See the plans",
+    "includedIn": "Included in Ronde {edition}."
   }
 }

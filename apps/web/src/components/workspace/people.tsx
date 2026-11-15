@@ -227,7 +227,22 @@ export function PeopleDirectory(props: Props) {
                           className="compact"
                           aria-label={t("changeRole", { name })}
                           value={p.role}
-                          onChange={(e) => act(() => changeRoleAction(slug, p.id, e.target.value as WorkspaceRole), t("saved"))}
+                          onChange={async (e) => {
+                            const role = e.target.value as WorkspaceRole;
+                            // Giving or taking away the running of the workspace is asked first: a wrong line of a
+                            // long list on a phone would otherwise hand someone the deletion and the billing
+                            const weighty = (r: WorkspaceRole | null) => r === "owner" || r === "admin";
+                            if (
+                              (weighty(role) || weighty(p.role)) &&
+                              !(await confirm({
+                                message: t("roleConfirm", { name, role: tw(`roles.${role}`), hint: tw(`roleHints.${role}`) }),
+                                confirmLabel: t("roleConfirmYes"),
+                                danger: role === "owner" || role === "guest",
+                              }))
+                            )
+                              return;
+                            act(() => changeRoleAction(slug, p.id, role), t("saved"));
+                          }}
                         >
                           {assignable.map((r) => (
                             <option key={r} value={r}>

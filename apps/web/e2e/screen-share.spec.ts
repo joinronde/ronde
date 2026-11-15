@@ -14,7 +14,7 @@ async function signUp(page: Page) {
   await page.getByRole("button", { name: "Create account" }).click();
 }
 
-test("the host's screen shows on the room screen, and leaves it when the share stops", async ({ baseURL }) => {
+test("the host's screen shows on the shared screen, and leaves it when the share stops", async ({ baseURL }) => {
   test.setTimeout(180_000);
   // A browser that grants screen capture by itself, with a generated picture
   const browser = await chromium.launch({
@@ -37,7 +37,7 @@ test("the host's screen shows on the room screen, and leaves it when the share s
   const meeting = page.url().replace(/\/control$/, "");
   await page.getByRole("button", { name: "Skip the tour" }).click();
 
-  // The room screen is open in another tab
+  // The shared screen is open in another tab
   const screen = await context.newPage();
   await screen.goto(`${meeting}/screen`);
   await expect(screen.locator(".share-view")).not.toHaveClass(/on/);

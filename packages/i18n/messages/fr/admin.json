@@ -1,7 +1,7 @@
 {
   "title": "Administration du serveur",
   "back": "Retour",
-  "intro": "Réglages de ce serveur Ronde, communs à tous ses espaces. Ceux de chaque espace (membres, rôles, sécurité) sont dans ses Réglages. Les valeurs enregistrées ici priment sur les variables d'environnement.",
+  "intro": "Réglages de ce serveur Ronde, communs à tous ses espaces. Ceux de chaque espace (membres, rôles, sécurité) sont dans ses Réglages. Les valeurs enregistrées ici priment sur les variables d’environnement.",
   "counts": {
     "users": "Comptes",
     "workspaces": "Espaces",
@@ -10,7 +10,7 @@
   },
   "language": "Langue",
   "defaultLocale": "Langue par défaut",
-  "defaultLocaleHint": "Pour les personnes qui n'ont pas choisi de langue dans leur compte et dont le navigateur n'en propose aucune que Ronde parle.",
+  "defaultLocaleHint": "Pour les personnes qui n’ont pas choisi de langue dans leur compte et dont le navigateur n’en propose aucune que Ronde parle.",
   "signup": "Qui peut créer un compte",
   "recommended": "Recommandé",
   "policies": {
@@ -19,7 +19,7 @@
       "hint": "Seulement les personnes invitées dans un espace."
     },
     "domains": {
-      "label": "Domaines d'e-mail",
+      "label": "Domaines d’e-mail",
       "hint": "Les personnes invitées, et toute adresse des domaines ci-dessous."
     },
     "open": {
@@ -33,37 +33,37 @@
   "saved": "Enregistré",
   "license": {
     "title": "Licence",
-    "pureCommunity": "Cette version est l'édition Community pure : le code des éditions payantes n'y est pas inclus.",
+    "pureCommunity": "Cette version est l’édition Community pure : le code des éditions payantes n’y est pas inclus.",
     "status": {
       "none": "Édition Community",
       "invalid": "Clé de licence invalide",
       "active": "Licence active",
-      "grace": "Licence expirée : période de grâce",
+      "grace": "Licence expirée : période de grâce",
       "expired": "Licence expirée"
     },
     "reasons": {
       "format": "La clé enregistrée est illisible.",
       "payload": "La clé enregistrée est illisible.",
-      "signature": "La clé enregistrée a été modifiée ou n'a pas été émise par Ronde.",
+      "signature": "La clé enregistrée a été modifiée ou n’a pas été émise par Ronde.",
       "unknownKey": "La clé enregistrée a été signée par une clé que cette version ne connaît pas."
     },
     "editions": {
       "team": "Team",
       "enterprise": "Enterprise"
     },
-    "summary": "{edition} pour {customer}, jusqu'au {date}.",
-    "graceUntil": "Tout continue de fonctionner jusqu'au {date} : renouvelez la licence d'ici là.",
-    "readOnly": "Les fonctions payantes sont en lecture seule : ce qu'elles contiennent reste lisible, rien de nouveau ne peut être ajouté. Les fonctions Community ne sont pas concernées.",
+    "summary": "{edition} pour {customer}, jusqu’au {date}.",
+    "graceUntil": "Tout continue de fonctionner jusqu’au {date} : renouvelez la licence d’ici là.",
+    "readOnly": "Les fonctions payantes sont en lecture seule : ce qu’elles contiennent reste lisible, rien de nouveau ne peut être ajouté. Les fonctions Community ne sont pas concernées.",
     "seats": "{used} sièges utilisés sur {seats}",
     "seatsUnlimited": "{used} personnes, sans limite de sièges",
     "seatsRule": "personnes ayant participé à une réunion ces 30 derniers jours",
-    "peak": "Maximum de cette licence : {count} (le {date}), celui que compte le renouvellement.",
-    "previousPeak": "Licence précédente ({id}) : maximum de {count} (le {date}), à régulariser à son renouvellement.",
-    "overSeats": "Plus de personnes participent que les {seats} sièges de la licence : rien n'est bloqué. Le maximum atteint est régularisé au renouvellement de la licence.",
-    "overPeak": "Le maximum de cette licence, {count}, a dépassé ses {seats} sièges : rien n'est bloqué, il est régularisé au renouvellement de la licence.",
-    "fromEnv": "La clé vient de la variable RONDE_LICENSE : modifiez-la à cet endroit.",
+    "peak": "Maximum de cette licence : {count} (le {date}). C’est ce nombre qui compte au renouvellement.",
+    "previousPeak": "Licence précédente ({id}) : maximum de {count} (le {date}), à régulariser à son renouvellement.",
+    "overSeats": "Plus de personnes participent que les {seats} sièges de la licence : rien n’est bloqué. Le maximum atteint est régularisé au renouvellement de la licence.",
+    "overPeak": "Le maximum de cette licence, {count}, a dépassé ses {seats} sièges : rien n’est bloqué, il est régularisé au renouvellement de la licence.",
+    "fromEnv": "La clé vient de la variable RONDE_LICENSE : modifiez-la à cet endroit.",
     "key": "Clé de licence",
-    "keyHint": "Vérifiée sur ce serveur, hors ligne : rien n'est envoyé nulle part.",
+    "keyHint": "Vérifiée sur ce serveur, hors ligne : rien n’est envoyé nulle part.",
     "save": "Enregistrer la clé",
     "remove": "Retirer la licence"
   },
@@ -73,20 +73,20 @@
     "filter": "Messages affichés",
     "open": "En cours",
     "archived": "Archivés",
-    "intro": "Ce que les gens envoient avec le bouton « Envoyer un retour ». Répondez-leur et marquez ce qui a été traité ; un problème propre à Ronde peut partir au projet Ronde sous forme de ticket GitHub. Les messages sont supprimés au bout d'un an.",
-    "empty": "Aucun message pour l'instant. Les gens les envoient avec le bouton en haut des pages.",
+    "intro": "Ce que les gens envoient avec le bouton « Envoyer un retour ». Répondez-leur et marquez ce qui a été traité ; un problème propre à Ronde peut partir au projet Ronde sous forme de ticket GitHub. Les messages sont supprimés au bout d’un an.",
+    "empty": "Aucun message pour l’instant. Les gens les envoient avec le bouton en haut des pages.",
     "emptyArchived": "Aucun message archivé.",
     "kinds": {
       "bug": "Problème",
       "idea": "Idée",
       "other": "Autre"
     },
-    "someone": "Quelqu'un",
+    "someone": "Quelqu’un",
     "statuses": {
       "handled": "Traité",
       "archived": "Archivé"
     },
-    "screenshot": "Capture d'écran envoyée avec le message",
+    "screenshot": "Capture d’écran envoyée avec le message",
     "page": "Page",
     "browser": "Navigateur",
     "version": "Version",
@@ -100,6 +100,6 @@
       "archived": "Archiver"
     },
     "toGithub": "Ouvrir un ticket GitHub",
-    "toGithubHint": "Ouvre un ticket prérempli sur le projet Ronde : sans les noms ni les espaces, et modifiable avant publication."
+    "toGithubHint": "Ouvre un ticket prérempli sur le projet Ronde : sans les noms ni les espaces, et modifiable avant publication."
   }
 }

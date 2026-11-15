@@ -1,10 +1,10 @@
 {
   "title": "Calendrier",
-  "intro": "Toutes les séances de vos réunions : prévues, en cours et passées.",
+  "intro": "Toutes les séances de vos réunions : prévues, en cours et passées.",
   "months": "Mois",
   "previous": "Mois précédent",
   "next": "Mois suivant",
-  "today": "Aujourd'hui",
+  "today": "Aujourd’hui",
   "view": "Affichage",
   "viewMonth": "Mois",
   "viewAgenda": "Agenda",
@@ -15,9 +15,9 @@
   "upcoming": "À venir",
   "nothing": "Rien de prévu dans les quatre prochaines semaines.",
   "nothingThisMonth": "Aucune séance ce mois-ci.",
-  "todayShort": "aujourd'hui",
+  "todayShort": "aujourd’hui",
   "tomorrow": "demain",
-  "inDays": "dans {count} jours",
+  "inDays": "{count, plural, one {dans # jour} other {dans # jours}}",
   "status": {
     "planned": "prévue",
     "live": "En cours",
@@ -25,7 +25,7 @@
     "cancelled": "annulée"
   },
   "attendance": {
-    "yes": "Présent·e",
-    "no": "Absent·e"
+    "yes": "Je serai là",
+    "no": "Absent"
   }
 }

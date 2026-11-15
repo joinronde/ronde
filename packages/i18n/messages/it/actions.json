@@ -2,7 +2,7 @@
   "title": "Azioni",
   "introMine": "Quello che hai detto che avresti fatto, in tutte le riunioni. Spuntalo appena è fatto.",
   "introHosted": "Il seguito delle riunioni che conduci: chi fa cosa e cosa aspetta da troppo tempo.",
-  "views": "Azioni di chi",
+  "views": "Mostra le azioni",
   "mine": "Mie",
   "hosted": "Riunioni che conduco",
   "filter": "Riunione",
@@ -12,7 +12,7 @@
   "layout": "Vista",
   "layoutList": "Elenco",
   "layoutBoard": "Kanban",
-  "stuck": "In attesa da troppo",
+  "stuck": "Ferme da troppo tempo",
   "dropHere": "Trascina qui un'azione",
   "moveTo": "Sposta «{text}» in {column}",
   "group": {

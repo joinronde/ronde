@@ -1,8 +1,8 @@
 {
   "title": "الانضمام إلى {workspace}",
-  "intro": "دعاك {inviter} للانضمام إلى {workspace} على Ronde.",
+  "intro": "لديك دعوة من {inviter} للانضمام إلى {workspace} على Ronde.",
   "role": "دورك: {role}",
-  "signedInAs": "مسجّل الدخول باسم <strong>{email}</strong>",
+  "signedInAs": "تم تسجيل الدخول باسم <strong>{email}</strong>",
   "accept": "الانضمام إلى {workspace}",
   "otherEmail": "أُرسلت هذه الدعوة إلى <strong>{email}</strong>. سجّل الدخول بهذا العنوان لقبولها.",
   "signIn": "تسجيل الدخول للقبول",
@@ -12,8 +12,14 @@
   "invalid": "رابط الدعوة هذا غير صالح أو أُلغي. اطلب رابطًا جديدًا ممن دعاك.",
   "expiredTitle": "انتهت صلاحية الدعوة",
   "expired": "انتهت صلاحية الدعوة إلى {workspace}. اطلب دعوة جديدة ممن دعاك.",
-  "memberTitle": "أنت منضم بالفعل",
+  "expiredFrom": "انتهت صلاحية هذه الدعوة إلى {workspace}. اطلب دعوة جديدة من {inviter}.",
+  "acceptedTitle": "تم قبول الدعوة مسبقًا",
+  "accepted": "تم قبول هذه الدعوة إلى {workspace} مسبقًا. لفتح {workspace}، سجّل الدخول بالحساب الذي قبلها.",
+  "acceptedAnonymous": "تم قبول هذه الدعوة مسبقًا. سجّل الدخول بالحساب الذي قبلها.",
+  "goSignIn": "الانتقال إلى تسجيل الدخول",
+  "openWorkspaces": "فتح مساحات عملي",
+  "memberTitle": "سبق أن انضممت",
   "member": "أنت عضو في {workspace} بالفعل.",
-  "memberOther": "هذه الدعوة موجّهة إلى <strong>{email}</strong>: أرسل إليه الرابط ليتمكن من الانضمام.",
+  "memberOther": "هذه الدعوة موجّهة إلى <strong>{email}</strong>: أرسل الرابط إلى هذا العنوان ليتمكن صاحبه من الانضمام.",
   "open": "فتح {workspace}"
 }

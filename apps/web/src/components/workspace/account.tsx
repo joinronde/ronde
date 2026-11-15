@@ -35,6 +35,7 @@ import {
   setWeeklySummaryAction,
   updateProfileAction,
 } from "@/app/account/actions";
+import { leaveWorkspaceAction } from "@/app/w/[ws]/actions";
 import { Field, FormAlert, PasswordInput } from "@/components/auth/fields";
 import { PasskeyIcon } from "@/components/auth/sign-in-form";
 import { Select } from "@/components/select";
@@ -44,6 +45,7 @@ import { withBasePath } from "@/lib/shared/base-path";
 import { passwordStrength } from "@/lib/shared/password";
 import { squareImage } from "../avatar-picker";
 import { CalendarLink } from "../upcoming-sessions";
+import { useConfirm } from "./confirm";
 import { LocaleSelect, TimeZoneSelect } from "./inputs";
 import { deviceLabel, PushSettings, type PushSettingsProps } from "./push-settings";
 
@@ -387,9 +389,26 @@ export function AccountNotificationsView({
 }
 
 /** The workspaces the person belongs to, with their role */
-export function AccountWorkspacesView({ workspaces }: { workspaces: { slug: string; name: string; role: WorkspaceRole }[] }) {
+export function AccountWorkspacesView({
+  workspaces,
+}: {
+  workspaces: { slug: string; name: string; role: WorkspaceRole; suspended?: boolean }[];
+}) {
   const t = useTranslations("account");
   const tw = useTranslations("workspace");
+  const ts = useTranslations("states");
+  const tl = useTranslations("workspace.settings");
+  const router = useRouter();
+  const [confirmDialog, confirm] = useConfirm();
+  const [error, setError] = useState<string | null>(null);
+  // Leaving is everyone's to do, whatever their role: here, not only in the settings administrators see
+  const leave = async (w: { slug: string; name: string }) => {
+    if (!(await confirm({ message: tl("leaveConfirm", { workspace: w.name }), confirmLabel: tl("leave"), danger: true }))) return;
+    setError(null);
+    const res = await leaveWorkspaceAction(w.slug);
+    if (!res.ok) return setError(res.error);
+    router.refresh();
+  };
   return (
     <section className="stack acct-card" aria-labelledby="workspaces-title">
       <h2 id="workspaces-title" className="acct-title">
@@ -398,12 +417,21 @@ export function AccountWorkspacesView({ workspaces }: { workspaces: { slug: stri
         </span>
         {t("workspaces")}
       </h2>
+      <FormAlert>{error}</FormAlert>
       {workspaces.length ? (
         <ul className="choice-list">
           {workspaces.map((w) => (
             <li key={w.slug}>
               <Link href={`/w/${w.slug}`}>{w.name}</Link>
-              <span className="hint">{tw(`roles.${w.role}`)}</span>
+              <span className="hint">
+                {tw(`roles.${w.role}`)}
+                {w.suspended && ` · ${ts("suspendedMark")}`}
+              </span>
+              {!w.suspended && (
+                <button type="button" className="btn sm" onClick={() => void leave(w)} aria-label={t("leaveNamed", { workspace: w.name })}>
+                  {t("leaveWorkspace")}
+                </button>
+              )}
             </li>
           ))}
         </ul>
@@ -415,6 +443,7 @@ export function AccountWorkspacesView({ workspaces }: { workspaces: { slug: stri
           <Icon name="plus" size={16} /> {t("createWorkspace")}
         </Link>
       </div>
+      {confirmDialog}
     </section>
   );
 }
@@ -688,6 +717,7 @@ function AccountPhoto({ photo, name }: { photo: Props["photo"]; name: string }) 
   const t = useTranslations("account");
   const ta = useTranslations("avatar");
   const router = useRouter();
+  const [confirmDialog, confirm] = useConfirm();
   const input = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState<{ ok: boolean; text: string } | null>(null);
@@ -732,7 +762,14 @@ function AccountPhoto({ photo, name }: { photo: Props["photo"]; name: string }) 
                 {url ? ta("change") : ta("add")}
               </button>
               {url && (
-                <button type="button" className="btn sm danger" disabled={busy} onClick={() => void send(null)}>
+                <button
+                  type="button"
+                  className="btn sm danger"
+                  disabled={busy}
+                  onClick={async () => {
+                    if (await confirm({ message: ta("removeConfirm"), confirmLabel: ta("remove"), danger: true })) void send(null);
+                  }}
+                >
                   {ta("remove")}
                 </button>
               )}
@@ -761,6 +798,7 @@ function AccountPhoto({ photo, name }: { photo: Props["photo"]; name: string }) 
           <p className="hint">{t("photoNoWorkspace")}</p>
         )}
       </div>
+      {confirmDialog}
     </div>
   );
 }
@@ -800,16 +838,7 @@ function ChangePassword() {
       </Field>
       <div className="grid2">
         <Field label={t("newPassword")} hint={tAuth("passwordHint")}>
-          {(p) => (
-            <PasswordInput
-              {...p}
-              autoComplete="new-password"
-              required
-              minLength={10}
-              value={next}
-              onChange={(e) => setNext(e.target.value)}
-            />
-          )}
+          {(p) => <PasswordInput {...p} autoComplete="new-password" required value={next} onChange={(e) => setNext(e.target.value)} />}
         </Field>
         <Field label={t("newPasswordAgain")} error={mismatch ? t("passwordMismatch") : null}>
           {(p) => <PasswordInput {...p} autoComplete="new-password" required value={again} onChange={(e) => setAgain(e.target.value)} />}

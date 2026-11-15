@@ -1,6 +1,6 @@
 {
-  "hostOnlyTitle": "Réglages réservés aux régisseurs ({host})",
-  "hostOnlyBody": "Les régisseurs configurent la réunion, ses personnes et ses rubriques. Demandez à l'un d'eux, ou à un admin de l'espace, de modifier quelque chose.",
+  "hostOnlyTitle": "Réglages réservés aux animateurs ({host})",
+  "hostOnlyBody": "Les animateurs configurent la réunion, ses participants et ses rubriques. Pour modifier quelque chose, adressez-vous à l’un d’eux ou à un admin de l’espace de travail.",
   "saved": "Réglages enregistrés",
   "onePerLine": "Un par ligne",
   "remove": "Retirer",
@@ -8,14 +8,14 @@
   "meeting": {
     "title": "Réunion",
     "teamName": "Nom de la réunion",
-    "hostLabel": "Nom affiché pour la personne qui anime",
-    "hostLabelHint": "Un rôle ou un prénom, ex. : Scrum master, Animation, Julie. Affiché partout dans Ronde : « Notes · {host} ».",
+    "hostLabel": "Nom affiché pour l’animateur",
+    "hostLabelHint": "Un rôle ou un prénom, par exemple Scrum master, Animatrice ou Julie. Affiché partout dans Ronde : « Notes · {host} ».",
     "locale": "Langue de la réunion",
     "localeHint": "Langue des e-mails de rappel, des notifications et des comptes rendus générés.",
     "speakingTime": "Temps de parole",
     "perPerson": "{time} par personne",
-    "targetRange": "De 5 min à 8 h.",
-    "speakRange": "De 15 s à 30 min.",
+    "targetRange": "De 5 min à 8 h.",
+    "speakRange": "De 15 s à 30 min.",
     "unitSec": "s",
     "unitMin": "min",
     "unitH": "h",
@@ -26,17 +26,19 @@
     "target": "Durée visée",
     "timer": "Chronomètre",
     "autoStart": "Démarre à chaque passage",
-    "announcements": "Annonces de l'intro",
-    "localeWorkspace": "Langue de l'espace ({language})"
+    "announcements": "Annonces de l’intro",
+    "localeWorkspace": "Langue de l’espace ({language})"
   },
   "sections": {
     "title": "Rubriques de la fiche",
     "name": "Nom de la rubrique",
     "nameOf": "Nom de la rubrique {n}",
-    "input": "Saisie",
-    "inputOf": "Saisie de « {label} »",
+    "unnamed": "Nommez cette rubrique pour l’enregistrer. Les autres réglages sont enregistrés sans elle.",
+    "unnamedKept": "Une rubrique a besoin d’un nom : elle garde « {label} » tant que vous n’en saisissez pas un autre.",
+    "input": "Format",
+    "inputOf": "Format de « {label} »",
     "role": "Rôle",
-    "roleOf": "Rôle de « {label} »",
+    "roleOf": "Rôle de « {label} »",
     "roles": {
       "achievement": {
         "label": "Réalisé",
@@ -48,11 +50,11 @@
       },
       "blocker": {
         "label": "Difficulté",
-        "hint": "Ce qui bloque. Mis en évidence à l'écran, peut devenir une action de suivi, suivi dans les statistiques."
+        "hint": "Ce qui bloque. Mis en évidence à l’écran, peut devenir une action de suivi, suivi dans les statistiques."
       },
       "note": {
         "label": "Autre",
-        "hint": "Tout ce qui mérite d'être partagé."
+        "hint": "Tout ce qui mérite d’être partagé."
       },
       "custom": {
         "label": "Personnalisé",
@@ -61,34 +63,34 @@
     },
     "taken": "déjà utilisé",
     "carryPlansSwitch": "La rubrique passe en liste à cocher.",
-    "carryPlansHint": "Chacun retrouve ce qu'il avait prévu en cases à cocher, à cocher au fil de l'avancement. Une case non cochée ne compte pas comme fait.",
-    "carryPlans": "Reprendre ce qui était dans « {plan} » la dernière fois",
-    "removeOf": "Retirer « {label} »",
-    "reorder": "Déplacer « {label} »",
-    "customPlaceholder": "Ex. Veille, Démo à montrer, Besoin d'aide",
+    "carryPlansHint": "Chacun retrouve ce qu’il avait prévu en cases à cocher, à cocher au fil de l’avancement. Une case non cochée ne compte pas comme fait.",
+    "carryPlans": "Reprendre ce qui était dans « {plan} » la dernière fois",
+    "removeOf": "Retirer « {label} »",
+    "reorder": "Déplacer « {label} »",
+    "customPlaceholder": "Ex. : Veille, Démo à montrer, Besoin d’aide",
     "add": "Ajouter une rubrique",
-    "hint": "Chaque rôle (réalisé, prévu, difficulté, autre) va à une rubrique au plus. Une rubrique garde ce qui a été saisi quand son nom, son rôle ou sa saisie change."
+    "hint": "Chaque rôle (réalisé, prévu, difficulté, autre) va à une rubrique au plus. Une rubrique garde ce qui a été saisi quand son nom, son rôle ou son format change."
   },
   "reminder": {
     "title": "Rappel pour remplir sa fiche",
     "when": "Quand",
     "dayBefore": "Le jour ouvré avant la réunion",
-    "sameDay": "Le jour de la réunion, avant l'heure",
+    "sameDay": "Le jour de la réunion, avant l’heure",
     "time": "Heure",
     "byEmail": "Par e-mail, à chacun",
-    "emailHint": "Seules les personnes dont la fiche n'est pas encore remplie reçoivent le rappel. Vous pouvez désinscrire quelqu'un avec la case « Rappel » dans la liste des personnes.",
-    "noSmtp": "Aucun serveur d'envoi configuré : renseignez SMTP_URL sur le serveur pour activer les rappels par e-mail.",
-    "teamHint": "Un rappel collectif dans un salon d'équipe se règle dans « Notifications »."
+    "emailHint": "Seules les personnes dont la fiche n’est pas encore remplie reçoivent le rappel. Vous pouvez désinscrire quelqu’un avec la case « Rappel » dans la liste des personnes.",
+    "noSmtp": "Aucun serveur d’envoi configuré : renseignez SMTP_URL sur le serveur pour activer les rappels par e-mail.",
+    "teamHint": "Un rappel collectif dans un salon d’équipe se règle dans « Notifications »."
   },
   "warmUp": {
-    "mood": "Météo d'équipe",
+    "mood": "Météo d’équipe",
     "moodOffer": "Proposer à chacun de donner sa météo du jour (anonyme)",
     "icebreaker": "Brise-glace",
     "bank": "Banque de questions",
-    "bankHint": "Une question est tirée au hasard pour chaque réunion ; la Régie peut en changer. Laissez vide pour désactiver le brise-glace."
+    "bankHint": "Une question est tirée au hasard pour chaque réunion ; la régie peut en changer. Laissez vide pour désactiver le brise-glace."
   },
   "sources": {
-    "turnOn": "Aucune intégration n'est activée pour cette réunion. Activez GitLab ou GitHub dans « Modules » pour importer les tickets et les merge ou pull requests de chacun."
+    "turnOn": "Aucune intégration n’est activée pour cette réunion. Activez GitLab ou GitHub dans « Modules » pour importer les tickets et les merge ou pull requests de chacun."
   },
   "hub": {
     "intro": "Les outils avec lesquels cette réunion travaille, et où chacun en est. Ouvrez une carte pour la configurer.",
@@ -102,12 +104,12 @@
     "toSetUp": "À configurer",
     "ready": "Lien prêt",
     "synced": "Synchronisé",
-    "noneInWorkspace": "Aucun dans l'espace",
+    "noneInWorkspace": "Aucun wiki dans l’espace",
     "rulesOn": "{count, plural, one {# règle active} other {# règles actives}}",
     "gitlab": "Tickets et merge requests de chacun dans sa fiche",
     "github": "Issues et pull requests des dépôts suivis",
     "wikiName": "Wiki",
-    "wiki": "Comptes rendus publiés dans le wiki de l'équipe",
+    "wiki": "Comptes rendus publiés dans le wiki de l’équipe",
     "videoName": "Visio",
     "video": "Le lien par lequel chacun rejoint",
     "calendarName": "Agenda",
@@ -118,25 +120,25 @@
     "goSchedule": "Dans Planification",
     "goNotifications": "Dans Notifications",
     "origin": {
-      "inherited": "Hérité de l'espace",
-      "workspace": "De l'espace",
+      "inherited": "Hérité de l’espace",
+      "workspace": "De l’espace",
       "meeting": "Propre à cette réunion",
       "instance": "Du serveur"
     }
   },
   "preview": {
-    "to": "À : {email} · {date} à {time}",
-    "frameTitle": "Aperçu du mail de rappel pour {name}"
+    "to": "À : {email} · {date} à {time}",
+    "frameTitle": "Aperçu de l’e-mail de rappel pour {name}"
   },
   "token": {
-    "removed": "Sera retiré à l'enregistrement",
+    "removed": "Sera retiré à l’enregistrement",
     "saved": "Enregistré · saisissez-en un autre pour le remplacer",
     "keep": "Garder"
   },
   "gitlab": {
     "unreachable": "GitLab ne répond pas.",
     "followed": "{count, plural, one {# projet ou groupe suivi} other {# projets ou groupes suivis}}",
-    "noFilter": "Aucun filtre : tous les projets sont suivis",
+    "noFilter": "Aucun filtre : tous les projets sont suivis",
     "untickAll": "Tout décocher",
     "loading": "Chargement des projets…",
     "saveForGroups": "Enregistrez les réglages pour afficher les projets des nouveaux groupes.",
@@ -149,11 +151,11 @@
     "title": "Personnes ({count})",
     "colPerson": "Personne",
     "colRole": "Rôle",
-    "intro": "Les profils viennent de l'annuaire de l'espace. Le rôle fixe ce que chacun peut faire dans cette réunion.",
+    "intro": "Les profils viennent de l’annuaire de l’espace. Le rôle fixe ce que chacun peut faire dans cette réunion.",
     "rolesGuide": "Qui peut faire quoi ?",
     "roles": {
-      "host": "Régisseur",
-      "cohost": "Co-régisseur",
+      "host": "Animateur",
+      "cohost": "Co-animateur",
       "participant": "Participant",
       "observer": "Observateur"
     },
@@ -173,20 +175,20 @@
     "remove": "Retirer",
     "confirmRemove": "Retirer de la réunion",
     "removed": "{name} ne participe plus",
-    "added": "{name} ajouté à la réunion",
+    "added": "{name} participe maintenant à la réunion",
     "updated": "Enregistré",
-    "addTitle": "Ajouter quelqu'un",
+    "addTitle": "Ajouter quelqu’un",
     "pick": "Personne",
-    "pickPlaceholder": "Choisir dans l'annuaire",
+    "pickPlaceholder": "Choisir dans l’annuaire",
     "add": "Ajouter",
-    "nobodyLeft": "Tout l'annuaire participe déjà.",
-    "directory": "Gérer l'annuaire",
-    "categoriesHint": "Les équipes, anniversaires et noms se modifient dans l'annuaire de l'espace.",
+    "nobodyLeft": "Tout l’annuaire participe déjà.",
+    "directory": "Gérer l’annuaire",
+    "categoriesHint": "Les équipes, anniversaires et noms se modifient dans l’annuaire de l’espace.",
     "github": "Identifiant GitHub"
   },
   "template": {
     "title": "Réutiliser ce format",
-    "intro": "Créez d'autres réunions à partir de celle-ci : le modèle est proposé à la création d'une réunion dans l'espace.",
+    "intro": "Créez d’autres réunions à partir de celle-ci : le modèle est proposé à la création d’une réunion dans l’espace.",
     "carries": "Part dans le modèle",
     "stays": "Reste dans cette réunion",
     "items": {
@@ -196,7 +198,7 @@
       "schedule": "Horaire",
       "people": "{count, plural, one {# personne et son rôle} other {# personnes et leurs rôles}}",
       "history": "Historique et comptes rendus",
-      "tokens": "Jetons d'accès et intégrations"
+      "tokens": "Jetons d’accès et intégrations"
     },
     "counts": {
       "sections": "{count, plural, one {# rubrique} other {# rubriques}}",
@@ -208,7 +210,7 @@
     "description": "Description (facultative)",
     "save": "Enregistrer le modèle",
     "cancel": "Annuler",
-    "saved": "Modèle enregistré : il est proposé à la création d'une réunion."
+    "saved": "Modèle enregistré : il est proposé à la création d’une réunion."
   },
   "nav": {
     "label": "Catégories de réglages",
@@ -231,25 +233,25 @@
     "people": "Qui participe, et ce que chacun peut faire.",
     "sections": "Ce que chacun remplit avant la réunion.",
     "agenda": "Le déroulé de la réunion, bloc par bloc.",
-    "projects": "Les projets suivis, chacun avec son tour.",
+    "projects": "Les projets suivis, chacun avec son passage.",
     "modules": "Animation, formats et outils, activés au besoin.",
     "appearance": "La couleur de la réunion sur tous les écrans.",
     "notifications": "Rappels et messages envoyés autour de la réunion.",
     "integrations": "Visio, outils de tickets et wiki.",
-    "template": "Enregistrer cette réunion comme modèle de l'espace.",
-    "danger": "Ce qui ne s'annule pas : quitter, arrêter ou supprimer."
+    "template": "Enregistrer cette réunion comme modèle de l’espace.",
+    "danger": "Ce qui ne s’annule pas : supprimer la réunion."
   },
   "status": {
     "auto": "Les modifications sont enregistrées automatiquement.",
     "saving": "Enregistrement…",
     "saved": "Enregistré",
-    "invalid": "Non enregistré : vérifiez les champs signalés.",
-    "failed": "Non enregistré : la modification a été refusée.",
+    "invalid": "Non enregistré : vérifiez les champs signalés.",
+    "failed": "Non enregistré : la modification a été refusée.",
     "undo": "Annuler"
   },
   "appearance": {
-    "accent": "Couleur d'accent",
-    "accentHint": "Utilisée pour les boutons, le chrono et l'écran partagé de cette réunion, en thème clair comme sombre.",
+    "accent": "Couleur d’accent",
+    "accentHint": "Utilisée pour les boutons, le chrono et l’écran partagé de cette réunion, en thème clair comme sombre.",
     "accents": {
       "ember": "Braise",
       "ocean": "Océan",
@@ -257,38 +259,38 @@
       "plum": "Prune",
       "slate": "Ardoise"
     },
-    "themeHint": "Le thème clair ou sombre est un choix personnel :",
+    "themeHint": "Le thème clair ou sombre est un choix personnel :",
     "themeLink": "choisissez-le dans votre compte."
   },
   "danger": {
     "title": "Supprimer la réunion",
-    "hint": "La réunion disparaît de toutes les listes et ses pages se ferment pour tout le monde. Son historique est conservé avec l'espace.",
-    "confirm": "Tapez <strong>{name}</strong> pour confirmer",
+    "hint": "La réunion disparaît de toutes les listes et ses pages se ferment pour tout le monde. Son historique est conservé avec l’espace.",
+    "confirm": "Saisissez <strong>{name}</strong> pour confirmer",
     "remove": "Supprimer la réunion"
   },
   "video": {
     "title": "Visioconférence",
     "provider": "Outil de visio",
     "providers": {
-      "link": "Un lien vers n'importe quel outil (Meet, Zoom, Teams…)",
+      "link": "Un lien vers n’importe quel outil (Meet, Zoom, Teams…)",
       "jitsi": "Jitsi Meet (une salle créée pour cette réunion)",
       "bbb": "BigBlueButton (votre serveur)"
     },
     "link": "Lien de la visio",
     "linkHint": "Affiché en haut de chaque page et dans les e-mails.",
     "jitsiUrl": "Serveur Jitsi",
-    "jitsiHint": "Vide : meet.jit.si. Le nom de la salle est tiré une fois, difficile à deviner, et reste le même à chaque séance.",
+    "jitsiHint": "Vide : meet.jit.si. Le nom de la salle est tiré une fois, difficile à deviner, et reste le même à chaque séance.",
     "bbbUrl": "Serveur BigBlueButton",
     "server": "Serveur",
     "ownServer": "Un serveur propre à cette réunion",
-    "serverHint": "Les serveurs de l'espace sont ajoutés par ses administrateurs, dans les réglages de l'espace.",
+    "serverHint": "Les serveurs de l’espace sont ajoutés par ses administrateurs, dans les réglages de l’espace.",
     "bbbSecret": "Secret partagé du serveur",
-    "bbbHint": "Ronde ouvre la salle quand quelqu'un la rejoint et fait entrer chaque personne avec son nom ; les régisseurs entrent comme modérateurs. Le secret est chiffré et jamais réaffiché.",
-    "current": "Les participants rejoignent avec :",
+    "bbbHint": "Ronde ouvre la salle quand quelqu’un la rejoint et fait entrer chaque personne sous son nom ; les animateurs entrent comme modérateurs. Le secret est chiffré et n’est jamais réaffiché.",
+    "current": "Les participants rejoignent avec :",
     "tryIt": "la salle BigBlueButton",
     "save": "Enregistrer la visio",
-    "createWith": "Créer une salle permanente avec :",
-    "roomCreated": "Salle créée : le lien est enregistré.",
+    "createWith": "Créer une salle permanente avec :",
+    "roomCreated": "Salle créée : le lien est enregistré.",
     "kinds": {
       "zoom": "Zoom",
       "meet": "Google Meet",
@@ -296,15 +298,15 @@
       "bbb": "BigBlueButton"
     }
   },
-  "logoHint": "Le logo de l'espace s'affiche sur l'écran partagé, dans les e-mails et les comptes rendus.",
-  "logoLink": "Le changer dans les réglages de l'espace",
+  "logoHint": "Le logo de l’espace s’affiche sur l’écran partagé, dans les e-mails et les comptes rendus.",
+  "logoLink": "Le changer dans les réglages de l’espace",
   "icon": {
     "title": "Icône",
-    "hint": "Affichée à côté du nom de la réunion dans les menus et les listes : un emoji, ou une image à elle (un logo, une photo d'équipe).",
+    "hint": "Affichée à côté du nom de la réunion dans les menus et les listes : un emoji, ou une image à elle (un logo, une photo d’équipe).",
     "upload": "Envoyer une image",
-    "changeImage": "Changer l'image",
-    "removeImage": "Retirer l'image",
-    "imageFirst": "L'image s'affiche à la place de l'emoji ; retirez-la pour revoir l'emoji.",
+    "changeImage": "Changer l’image",
+    "removeImage": "Retirer l’image",
+    "imageFirst": "L’image s’affiche à la place de l’emoji ; retirez-la pour revoir l’emoji.",
     "emoji": "Emoji",
     "initials": "Initiales",
     "initialsShort": "Aa",
@@ -314,6 +316,6 @@
     "saved": "Icône enregistrée",
     "imageSaved": "Image enregistrée",
     "imageRemoved": "Image retirée",
-    "notSaved": "L'image n'a pas pu être enregistrée."
+    "notSaved": "L’image n’a pas pu être enregistrée."
   }
 }

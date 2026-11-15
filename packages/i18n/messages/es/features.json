@@ -1,6 +1,6 @@
 {
   "workspaces": {
-    "unlimited": "Espacios, reuniones y personas ilimitados"
+    "unlimited": "Espacios de trabajo, reuniones y personas ilimitados"
   },
   "identity": {
     "local": "Cuentas con correo y contraseña",
@@ -15,13 +15,13 @@
     "domainCapture": "Captura de dominio"
   },
   "permissions": {
-    "builtInRoles": "Roles integrados para espacios y reuniones",
+    "builtInRoles": "Roles integrados para espacios de trabajo y reuniones",
     "customRoles": "Roles personalizados y permisos detallados"
   },
   "meetings": {
     "unlimited": "Reuniones y sesiones ilimitadas",
     "sectionRoles": "Secciones de ficha con comportamiento configurable",
-    "templates": "Plantillas integradas y del espacio"
+    "templates": "Plantillas integradas y del espacio de trabajo"
   },
   "scheduling": {
     "recurrence": "Recurrencia flexible con excepciones",
@@ -29,7 +29,7 @@
     "calendarSync": "Sincronización bidireccional con calendarios de Google, Microsoft 365 y CalDAV"
   },
   "modules": {
-    "facilitation": "Todos los módulos de dinamización",
+    "facilitation": "Todos los módulos de facilitación",
     "notifications": "Notificaciones por correo, chat y webhooks",
     "formats": "Retrospectivas, planning poker, reuniones asíncronas",
     "workflows": "Flujos de notificación: condiciones y mensajes propios",
@@ -44,7 +44,7 @@
     "writeBack": "Tickets en Jira, Linear, GitLab y GitHub a partir de las acciones",
     "videoLinks": "Salas de Zoom, Google Meet y Teams creadas con un clic",
     "sms": "Recordatorios por SMS y WhatsApp (Twilio)",
-    "slack": "App de Slack: fichas rellenadas desde Slack, actas en el canal, /ronde",
+    "slack": "App de Slack: fichas completadas desde Slack, actas en el canal, /ronde",
     "wikis": "Actas publicadas en Notion y Confluence",
     "teams": "App de Microsoft Teams: recordatorios y fichas en Teams, un canal para las notificaciones",
     "projectSync": "Proyectos importados siempre al día: nombre, situación, fechas y avance"
@@ -52,7 +52,7 @@
   "reporting": {
     "meeting": "Estadísticas por reunión",
     "export": "Exportación a Markdown, PDF y CSV",
-    "workspace": "Paneles del espacio que abarcan todas las reuniones",
+    "workspace": "Paneles del espacio de trabajo que abarcan todas las reuniones",
     "scheduled": "Informes enviados por correo de forma periódica",
     "portfolio": "Panel de la cartera: estado en el tiempo, fechas límite, proyectos sin noticias, exportación CSV e informe programado"
   },
@@ -67,7 +67,7 @@
   },
   "projects": {
     "portfolio": "Cartera de proyectos: descripción, tema, estado, responsable, equipo, fechas y el historial de cada reunión",
-    "round": "Ronda por proyecto: un turno por proyecto, donde sus miembros hablan juntos",
+    "round": "Ronda de proyectos: un turno por proyecto, en el que sus miembros hablan juntos",
     "programs": "Programas: proyectos agrupados en programas anidados",
     "permissions": "Permisos por proyecto",
     "import": "Proyectos importados desde GitHub, GitLab, Jira y Linear"

@@ -35,7 +35,7 @@
   },
   "checkin": {
     "write": {
-      "own": "Rellenar su propia ficha",
+      "own": "Completar su propia ficha",
       "any": "Editar la ficha de cualquiera"
     },
     "read": {

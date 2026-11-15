@@ -27,6 +27,11 @@ test("the profile, the photo, the theme, the weekly summary, the data export and
   await page.reload();
   await expect(page.locator(".account-head-av img")).toBeVisible();
   await expect(page.getByRole("button", { name: "Change the photo" })).toBeVisible();
+  // Removing it is asked first: declined, the photo stays
+  await page.getByRole("button", { name: "Remove the photo" }).click();
+  await expect(page.getByRole("dialog")).toContainText("Remove your photo?");
+  await page.getByRole("dialog").getByRole("button", { name: "Cancel" }).click();
+  await expect(page.locator(".account-head-av img")).toBeVisible();
 
   // Theme: applied at once, and kept by the server for the next page
   // The preview drawn over each radio is what people click

@@ -320,6 +320,31 @@ describe("the project round", () => {
     expect((await prisma.project.findUniqueOrThrow({ where: { id: t.projectId } })).health).toBe("onTrack");
   });
 
+  it("counts the people of the project steps as present when the agenda has no round table", async () => {
+    const w = await workspace(`noround-${Date.now().toString(36)}`);
+    const t = await meeting(w, "Weekly");
+    await prisma.meeting.update({
+      where: { id: t.meetingId },
+      data: {
+        agenda: [
+          { id: "intro", type: "intro" },
+          { id: "projects", type: "projects", order: "manual" },
+        ],
+      },
+    });
+    t.ctx.meeting = await prisma.meeting.findUniqueOrThrow({ where: { id: t.meetingId } });
+    await runOp(asParticipant(t, t.memberId), {
+      op: "checkIn.save",
+      memberId: t.memberId,
+      ...empty,
+      byProject: { [t.projectId]: { ...empty, done: ["Login page"] } },
+    });
+    await runOp(t.ctx, { op: "meeting.goto", key: "end" });
+    await runOp(t.ctx, { op: "meeting.archive", summary: null, omit: [] });
+    const record = parseRecord((await prisma.session.findFirstOrThrow({ where: { id: t.sessionId } })).record)!;
+    expect(record.participants.map((p) => p.id)).toEqual([t.memberId]);
+  });
+
   it("presents a project nobody wrote about when the host adds it, for this session", async () => {
     const w = await workspace(`add-${Date.now().toString(36)}`);
     const t = await meeting(w, "Weekly");

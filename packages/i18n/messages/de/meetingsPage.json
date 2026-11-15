@@ -8,7 +8,7 @@
   "sorts": {
     "next": "Nächste Sitzung",
     "name": "Name",
-    "recent": "Zuletzt abgehalten",
+    "recent": "Letzte Sitzung",
     "actions": "Offene Aufgaben"
   },
   "filters": {
@@ -28,7 +28,7 @@
   "checkIn": "Mein Check-in",
   "control": "Meeting leiten",
   "history": "Verlauf",
-  "noMatch": "Kein Meeting passt.",
+  "noMatch": "Kein passendes Meeting.",
   "empty": "Noch kein Meeting.",
   "templates": "Vorlagen"
 }

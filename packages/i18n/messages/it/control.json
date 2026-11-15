@@ -4,7 +4,7 @@
     "settings": "Impostazioni",
     "tour": "Visita guidata",
     "commands": "Comandi",
-    "commandsHint": "Tavolozza dei comandi (⌘K o Ctrl+K); «?» elenca le scorciatoie"
+    "commandsHint": "Palette dei comandi (⌘K o Ctrl+K); «?» elenca le scorciatoie"
   },
   "nextQuestions": "Domande ({count})",
   "setup": {
@@ -26,7 +26,7 @@
   "notStarted": "Non iniziata",
   "pausedNow": "In pausa",
   "endedNow": "Terminata",
-  "stepOf": "Passo {n} di {total}",
+  "stepOf": "Fase {n} di {total}",
   "turnOf": "turno {n}/{total}",
   "projectOf": "progetto {n}/{total}",
   "progress": "Avanzamento della riunione",
@@ -35,6 +35,7 @@
   "spaceKey": "Spazio",
   "timerTools": "Cronometro",
   "bonusHint": "30 secondi in più per questo turno",
+  "bonus": "+30 s",
   "checkInsFilled": "{filled}/{total} schede compilate",
   "then": "Poi: {next}",
   "endOfMeeting": "fine della riunione",
@@ -106,7 +107,7 @@
     },
     "participantsHint": "Sono attivi su «Il mio schermo» di tutti, e ognuno può disattivarli o regolarne il volume. Non condividere l'audio nella videochiamata.",
     "screenHint": "Clicca una volta sullo schermo condiviso per consentire l'audio, e condividi l'audio della pagina nella videochiamata.",
-    "board": "Soundboard",
+    "board": "Effetti sonori",
     "birthdayOf": "Compleanno {names}",
     "music": "Musica d'attesa",
     "musicHint": "Solo prima dell'inizio, in loop: sfuma quando la riunione comincia.",
@@ -151,12 +152,15 @@
     "checkInEmpty": "Scheda vuota",
     "topics": "Argomenti aperti",
     "end": "Chiusura e verbale",
-    "legend": "Spunta: scheda compilata. <note></note>: note prese per il verbale. «Scheda» permette di correggerla se serve. Una fase «Domande» si aggiunge da sola appena qualcuno alza la mano."
+    "legend": "Spunta: scheda compilata. <note></note>: note prese per il verbale. «Scheda» permette di correggerla se serve. Una fase «Domande» si aggiunge da sola appena qualcuno alza la mano.",
+    "goTo": "Vai a {name}",
+    "markAbsentNamed": "Segna {name} come assente",
+    "markPresentNamed": "Segna {name} come presente"
   },
   "unsavedCheckIn": "Le modifiche alla scheda non sono salvate.",
   "closeAnyway": "Chiudi comunque",
   "keepEditing": "Continua a modificare",
-  "meetingOf": "Riunione del",
+  "meetingOf": "Data della riunione",
   "meetingMoved": "Riunione spostata al {date}",
   "pastDate": "Data passata: scegli la data di questa riunione.",
   "live": {
@@ -164,7 +168,7 @@
     "asksToSpeak": "chiede la parola",
     "reopen": "Riapri",
     "floorGiven": "Parola data",
-    "markAnswered": "Segna come risposta",
+    "markAnswered": "Segna come gestita",
     "pending": "In attesa ({count})",
     "noHands": "Nessuno ha alzato la mano.",
     "handled": "Gestite",
@@ -182,7 +186,8 @@
     "confirmDelete": "Conferma l'eliminazione",
     "delete": "Elimina",
     "none": "Nessuna azione.",
-    "new": "Nuova azione"
+    "new": "Nuova azione",
+    "ownerGone": "Una persona che ha lasciato la riunione"
   },
   "topics": {
     "handled": "Argomento trattato",
@@ -199,9 +204,9 @@
   "stop": {
     "confirmation": "Conferma",
     "endAsk": "Passare direttamente alla chiusura? Le fasi rimanenti vengono saltate.",
-    "resetAsk": "Tornare alla schermata di attesa? Timer, mani alzate, domande, reazioni e ringraziamenti di questa sessione vengono cancellati. Schede e note restano.",
+    "resetAsk": "Tornare alla schermata d'attesa? Timer, mani alzate, domande, reazioni e ringraziamenti di questa sessione vengono cancellati. Schede e note restano.",
     "ended": "Riunione terminata: rivedi il verbale, poi pubblicalo.",
-    "reset": "Avvio annullato: di nuovo alla schermata di attesa.",
+    "reset": "Avvio annullato: di nuovo alla schermata d'attesa.",
     "endYes": "Sì, termina",
     "resetYes": "Sì, torna all'attesa",
     "no": "No, continua",
@@ -215,7 +220,7 @@
     "withoutNotes": "Senza note:",
     "completeNotes": "Completa le note su {name}",
     "allNoted": "Ogni turno ha delle note",
-    "hint": "Niente da ricordare per qualcuno? Succede. Altrimenti, clicca sul nome per completare le {notes}."
+    "hint": "Niente da annotare per qualcuno? Succede. Altrimenti, clicca sul nome per completare le sue note."
   },
   "minutesPane": {
     "generationFailed": "Impossibile generare il verbale.",
@@ -232,32 +237,32 @@
     "alwaysIncluded": "Le tue note e le azioni di follow-up sono sempre incluse. Questa scelta resta per le prossime riunioni.",
     "review": "Rileggi e modifica",
     "reviewTitle": "Il verbale, prima della pubblicazione",
-    "reviewHint": "Modifica la sintesi e le note di ogni passaggio: il verbale a destra segue mentre scrivi.",
+    "reviewHint": "Modifica la sintesi e le note di ogni fase: il verbale a destra si aggiorna mentre scrivi.",
     "reviewEdit": "Ciò che hai scritto",
     "reviewPreview": "Il verbale come sarà letto",
     "archiveAtEnd": "Il verbale si pubblica alla chiusura della riunione.",
-    "archiveAsk": "Pubblicare il verbale, chiudere la seduta e svuotare le schede dei presenti?",
-    "archived": "Verbale pubblicato, seduta chiusa. La prossima è pronta.",
+    "archiveAsk": "Pubblicare il verbale, chiudere la sessione e svuotare le schede dei presenti?",
+    "archived": "Verbale pubblicato, sessione chiusa. La prossima è pronta.",
     "archiveYes": "Sì, pubblica",
     "archive": "Pubblica il verbale",
     "summaryHint": "Facoltativo: qualche riga in cima al verbale. Si può ancora modificare dalla cronologia.",
     "summaryPlaceholder": "In poche righe: cosa ricordare di questa riunione (facoltativo)",
     "draft": "Termina, scrivi dopo",
     "draftHint": "Il team può preparare subito la prossima riunione. Il verbale ti aspetta come bozza nella cronologia.",
-    "draftAsk": "Terminare la riunione e svuotare i check-in dei presenti? Il verbale ti aspetterà come bozza nella cronologia.",
+    "draftAsk": "Terminare la riunione e svuotare le schede dei presenti? Il verbale ti aspetterà come bozza nella cronologia.",
     "draftYes": "Sì, termina",
     "drafted": "Riunione terminata, la prossima è pronta. Completa il verbale dalla cronologia, poi pubblicalo."
   },
   "studio": {
     "back": "Torna alla regia",
     "sections": "Da rileggere",
-    "steps": "Note di ogni passo",
+    "steps": "Note di ogni fase",
     "written": "Scritto",
     "optional": "facoltativo",
     "noNotes": "Ancora nessuna nota",
     "previous": "Precedente",
     "next": "Successivo",
-    "notedSteps": "{count}/{total} passi con note"
+    "notedSteps": "{count}/{total} fasi con note"
   },
   "startedAnnounced": "Il team è stato avvisato.",
   "remote": {
@@ -288,7 +293,7 @@
   },
   "startToday": "Questa sessione era prevista per un altro giorno: avviarla ora la sposta a oggi, e la data prevista resta nel calendario.",
   "projectSpeakers": "Presentano il progetto: {names}",
-  "projectNoSpeaker": "Nessuno del progetto è presente: parla per lui la sua scheda.",
+  "projectNoSpeaker": "Nessuno del progetto è presente: parlerà la sua scheda.",
   "projectAway": "assenti: {names}",
   "projectHealthSet": "Stato del progetto aggiornato",
   "projectOrder": "Ordine dei progetti",
@@ -297,14 +302,14 @@
   "projectOrderReset": "Torna all'ordine previsto",
   "projectsSkippedTitle": "{count, plural, one {Niente di scritto su questo progetto: non viene presentato.} other {Niente di scritto su questi progetti: non vengono presentati.}}",
   "presentAnyway": "Presenta comunque",
-  "projectAdded": "{name} entra nel giro per progetto di questa sessione.",
+  "projectAdded": "{name} entra nel giro dei progetti di questa sessione.",
   "projectAddedTag": "aggiunto",
-  "projectUnadd": "Togli {name} dal giro di questa sessione",
+  "projectUnadd": "Togli {name} dal giro dei progetti di questa sessione",
   "sheets": {
     "title": "Schede progetto",
     "todo": "{count, plural, one {# da completare} other {# da completare}}",
     "allDone": "Tutte complete",
-    "health": "salute",
+    "health": "stato",
     "headline": "messaggio del giorno",
     "lines": "{count, plural, one {# riga} other {# righe}}",
     "showAll": "Mostra anche quelle complete ({count} in tutto)",
@@ -312,6 +317,6 @@
     "complete": "Completa",
     "missing": "Manca: {what}",
     "noMatch": "Nessun progetto con quel nome da completare.",
-    "allDoneHint": "Tutte le schede sono complete: salute, messaggio del giorno e una riga da ciascuna delle loro persone."
+    "allDoneHint": "Tutte le schede sono complete: stato, messaggio del giorno e una riga da ciascuna delle persone del progetto."
   }
 }

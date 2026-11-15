@@ -1,12 +1,12 @@
 {
   "workspace": {
-    "manage": "Modifier les réglages de l'espace"
+    "manage": "Modifier les réglages de l’espace"
   },
   "members": {
     "manage": "Changer le rôle des membres"
   },
   "people": {
-    "read": "Voir l'annuaire",
+    "read": "Voir l’annuaire",
     "manage": "Modifier et retirer des personnes",
     "invite": "Inviter des personnes"
   },
@@ -17,7 +17,7 @@
     "manage": "Gérer les connecteurs de notification"
   },
   "audit": {
-    "read": "Lire le journal d'audit"
+    "read": "Lire le journal d’audit"
   },
   "meeting": {
     "create": "Créer des réunions",
@@ -36,20 +36,20 @@
   "checkin": {
     "write": {
       "own": "Remplir sa propre fiche",
-      "any": "Modifier la fiche de n'importe qui"
+      "any": "Modifier la fiche de n’importe qui"
     },
     "read": {
       "all": "Lire toutes les fiches"
     }
   },
   "notes": {
-    "read": "Lire les notes du régisseur"
+    "read": "Lire les notes de l’animateur"
   },
   "minutes": {
     "edit": "Modifier les comptes rendus"
   },
   "history": {
-    "read": "Lire l'historique"
+    "read": "Lire l’historique"
   },
   "stats": {
     "read": "Voir les statistiques"

@@ -9,8 +9,9 @@
     "decisions": "Decisions"
   },
   "notAMember": "Your address does not match any team member: you have no check-in to fill in.",
+  "observerNote": "You follow this meeting as an observer: no check-in to fill in. Read the team's check-ins, or follow the meeting live.",
   "yourTurnTitle": "Your turn!",
-  "youreNext": "you're next",
+  "youreNext": "You're next",
   "yourTurn": "It's your turn!",
   "afterSpeaker": "You speak after {name}",
   "rightAfter": "You speak right after",
@@ -25,14 +26,15 @@
   "browsing": "You are looking at <strong>{view}</strong>. Live is on <strong>{live}</strong>.",
   "backToLive": "Back to live",
   "followOnly": "Your address does not match any team member: you can follow the meeting without interacting.",
+  "observerDock": "You follow the meeting as an observer.",
   "reactions": "Reactions",
   "react": "React",
   "signals": "Signals to the speaker",
   "signal": "Signal: {label}",
-  "thanks": "Thanks",
+  "thanks": "Kudos",
   "writeKind": "What to send",
-  "reactWait": "Easy! Reactions back in {seconds} s",
-  "kudoSent": "Thanks sent: it shows on the shared screen.",
+  "reactWait": "Not so fast: reactions are back in {seconds} s",
+  "kudoSent": "Kudos sent: they show on the shared screen.",
   "kudoWho": "Who to thank",
   "kudoWhoPlaceholder": "Who to thank?",
   "message": "Message",
@@ -179,10 +181,10 @@
   "sheetNotSaved": "Not saved",
   "sheetAutoHint": "The sheet saves itself as you write, and stays yours until you leave it.",
   "joined": "Me too",
-  "joinLine": "Me too on “{text}”",
-  "leaveLine": "Stop showing on “{text}”",
-  "joinLineHint": "You are on it too: your face shows on this line",
-  "leaveLineHint": "Take your face off this line",
+  "joinLine": "Add me to “{text}”",
+  "leaveLine": "Remove me from “{text}”",
+  "joinLineHint": "You worked on it too: your photo shows on this line",
+  "leaveLineHint": "Take your photo off this line",
   "screenPrefs": "Sound and animations",
   "importFilter": "Filter by title, project or number",
   "importNoMatch": "Nothing matches this filter.",
@@ -194,7 +196,7 @@
     "levels": {
       "1": "A waste of time",
       "2": "Not much",
-      "3": "Worth it",
+      "3": "Fairly useful",
       "4": "Useful",
       "5": "Excellent"
     }
@@ -210,6 +212,6 @@
   "focusOff": "Show the reactions and animations again (still hidden during your turn)",
   "focusTurn": "Your turn: reactions and animations are hidden until it ends",
   "assign": "Assign…",
-  "assignLine": "Put someone on “{text}”",
-  "assignHint": "Add the people who took part in this line: their face shows on it, as with “Me too”."
+  "assignLine": "Add people to “{text}”",
+  "assignHint": "Add the people who worked on this line: their photo shows on it, as with “Me too”."
 }

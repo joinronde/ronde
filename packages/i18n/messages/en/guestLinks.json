@@ -1,6 +1,6 @@
 {
   "title": "Guest links",
-  "intro": "People without an account follow the shared screen live, read-only, with a secret link that expires: a client, a board, a partner. They see what the room screen shows.",
+  "intro": "People without an account follow the shared screen live, read-only, with a secret link that expires: a client, a board, a partner. They see exactly what the shared screen shows.",
   "label": "Who it is for",
   "labelPlaceholder": "E.g. Board members",
   "duration": "Valid for",
@@ -13,6 +13,7 @@
   "until": "Valid until {date}",
   "expiredOn": "Expired on {date}",
   "revoke": "Revoke",
+  "revokeConfirm": "Revoke the link for “{label}”? It stops working at once and cannot be shown again: a new link will have to be sent.",
   "remove": "Remove",
   "revoked": "Link revoked"
 }

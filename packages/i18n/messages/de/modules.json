@@ -40,11 +40,11 @@
     },
     "hands": {
       "name": "Handmeldungen und Fragen",
-      "description": "Melde dich oder stell eine Frage während eines Beitrags: Danach folgt ein Fragenschritt."
+      "description": "Während eines Beitrags die Hand heben oder eine Frage stellen: Danach folgt ein Schritt „Fragen“."
     },
     "kudos": {
       "name": "Kudos",
-      "description": "Bedanke dich während des Meetings bei jemandem aus dem Team; Kudos erscheinen auf allen Bildschirmen und im Protokoll."
+      "description": "Gib jemandem aus dem Team während des Meetings Kudos; sie erscheinen auf allen Bildschirmen und im Protokoll."
     },
     "spotlight": {
       "name": "Spotlight",
@@ -96,10 +96,10 @@
     },
     "retro": {
       "name": "Retrospektive",
-      "description": "Anonyme Haftnotizen in Spalten, von der Moderation gruppiert, vom Team bewertet, dann besprochen; füge sie der Agenda hinzu."
+      "description": "Anonyme Haftnotizen in Spalten, von der Moderation gruppiert, vom Team per Punktabstimmung gewichtet und dann besprochen; füge sie der Agenda hinzu."
     },
     "timebox": {
-      "name": "Timebox",
+      "name": "Thema mit Zeitlimit",
       "description": "Ein eigenes Thema auf der Agenda, mit eigener Dauer und Notizen im Protokoll."
     },
     "poker": {
@@ -112,15 +112,15 @@
     },
     "random": {
       "name": "Zufallswerkzeuge",
-      "description": "Ein Glücksrad für die nächste Person, eine zufällige Redereihenfolge, Teams oder Kopf oder Zahl, auf allen Bildschirmen gleichzeitig."
+      "description": "Ein Glücksrad für die nächste Person, eine zufällige Redereihenfolge, zufällige Teams oder Kopf oder Zahl, auf allen Bildschirmen gleichzeitig."
     },
     "parking": {
-      "name": "Parkplatz",
-      "description": "Leg mit einem Klick beiseite, was abseits des Themas aufkommt; es wird ein offenes Thema der nächsten Sitzung."
+      "name": "Themenspeicher",
+      "description": "Leg mit einem Klick beiseite, was nicht zum Thema gehört; es wird zum offenen Thema der nächsten Sitzung."
     },
     "decisions": {
-      "name": "Entscheidungslog",
-      "description": "Jede „Entscheidung:“-Zeile der Notizen aus allen Sitzungen, in einer durchsuchbaren Liste für das ganze Team."
+      "name": "Entscheidungsregister",
+      "description": "Jede Notizzeile, die mit „Entscheidung:“ beginnt, aus allen Sitzungen, in einer durchsuchbaren Liste für das ganze Team."
     },
     "github": {
       "name": "GitHub",
@@ -128,15 +128,16 @@
     },
     "video": {
       "name": "Videoanruf",
-      "description": "Tritt dem Anruf von jeder Seite aus bei: ein Link zu jedem Tool, ein Jitsi-Raum oder dein BigBlueButton-Server."
+      "description": "Tritt dem Anruf von jeder Seite aus bei: ein Link zu einem beliebigen Tool, ein Jitsi-Raum oder dein BigBlueButton-Server."
     },
     "async": {
       "name": "Asynchroner Modus",
-      "description": "Keine Live-Sitzung: Alle füllen ihren Check-in aus und kommentieren, dann geht die Übersicht zur geplanten Zeit per E-Mail raus."
+      "description": "Keine Live-Sitzung: Alle füllen ihren Check-in aus und kommentieren, dann wird die Übersicht zur geplanten Zeit per E-Mail verschickt."
     }
   },
   "upgrade": {
     "comesWith": "{feature} gehört zu Ronde {edition}.",
-    "plans": "Tarife ansehen"
+    "plans": "Tarife ansehen",
+    "includedIn": "Enthalten in Ronde {edition}."
   }
 }

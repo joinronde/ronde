@@ -14,7 +14,7 @@ export default async function AccountLayout({ children }: { children: React.Reac
   return (
     <AppShell data={await shellData(user)}>
       <TopBar crumbs={[{ label: t("account") }]} />
-      <main id="main" className="page-main">
+      <main id="main" tabIndex={-1} className="page-main">
         <div className="page narrow settings-page account-page">
           <AccountHeader user={{ name: user.name, email: user.email }} photo={await accountPhoto(user.id)} />
           {children}

@@ -33,8 +33,10 @@
     "title": "Sezioni della scheda",
     "name": "Nome della sezione",
     "nameOf": "Nome della sezione {n}",
-    "input": "Inserimento",
-    "inputOf": "Inserimento di «{label}»",
+    "unnamed": "Dai un nome a questa sezione per salvarla. Le altre impostazioni vengono salvate senza di essa.",
+    "unnamedKept": "Una sezione ha bisogno di un nome: mantiene «{label}» finché non ne scrivi un altro.",
+    "input": "Formato",
+    "inputOf": "Formato di «{label}»",
     "role": "Ruolo",
     "roleOf": "Ruolo di «{label}»",
     "roles": {
@@ -67,16 +69,16 @@
     "reorder": "Sposta «{label}»",
     "customPlaceholder": "Es. Ricerca, Demo da mostrare, Mi serve aiuto",
     "add": "Aggiungi una sezione",
-    "hint": "Ogni ruolo (fatto, previsto, blocco, altro) va al massimo a una sezione. Una sezione conserva ciò che è stato inserito quando ne cambiano nome, ruolo o inserimento."
+    "hint": "Ogni ruolo (fatto, previsto, blocco, altro) va al massimo a una sezione. Una sezione conserva ciò che è stato inserito quando ne cambiano nome, ruolo o formato."
   },
   "reminder": {
     "title": "Promemoria della scheda",
     "when": "Quando",
-    "dayBefore": "Il giorno lavorativo prima della riunione",
+    "dayBefore": "Il giorno feriale prima della riunione",
     "sameDay": "Il giorno della riunione, prima dell'ora",
     "time": "Ora",
     "byEmail": "Via email, a ogni persona",
-    "emailHint": "Ricevono il promemoria solo le persone la cui scheda non è ancora compilata. Puoi disiscrivere qualcuno con la casella «Promemoria» nell'elenco del team.",
+    "emailHint": "Ricevono il promemoria solo le persone la cui scheda non è ancora compilata. Puoi disiscrivere qualcuno con la casella «Promemoria» in «Persone e ruoli».",
     "noSmtp": "Nessun server di posta configurato: imposta SMTP_URL nel container per attivare i promemoria via email.",
     "teamHint": "Un promemoria collettivo in una stanza del team si configura in «Notifiche»."
   },
@@ -91,7 +93,7 @@
     "turnOn": "Nessuna integrazione è attiva in questa riunione. Attiva GitLab o GitHub in «Moduli» per importare issue e merge o pull request di ogni persona."
   },
   "hub": {
-    "intro": "Gli strumenti con cui lavora questa riunione e a che punto è ciascuno. Apri una scheda per configurarla.",
+    "intro": "Gli strumenti con cui lavora questa riunione e a che punto è ciascuno. Apri un'integrazione per configurarla.",
     "configure": "Configura",
     "close": "Chiudi",
     "off": "Disattivata",
@@ -102,7 +104,7 @@
     "toSetUp": "Da configurare",
     "ready": "Link pronto",
     "synced": "Sincronizzato",
-    "noneInWorkspace": "Nessuno nello spazio",
+    "noneInWorkspace": "Nessun wiki nello spazio",
     "rulesOn": "{count, plural, one {# regola attiva} other {# regole attive}}",
     "gitlab": "Ticket e merge request di ognuno nella sua scheda",
     "github": "Issue e pull request dei repository seguiti",
@@ -115,7 +117,7 @@
     "notificationsName": "Notifiche",
     "notifications": "Chat, email e SMS intorno alla riunione",
     "goGeneral": "In Generale",
-    "goSchedule": "In Pianificazione",
+    "goSchedule": "In Calendario",
     "goNotifications": "In Notifiche",
     "origin": {
       "inherited": "Ereditato dallo spazio",
@@ -173,7 +175,7 @@
     "remove": "Rimuovi",
     "confirmRemove": "Rimuovi dalla riunione",
     "removed": "{name} non partecipa più",
-    "added": "{name} aggiunto alla riunione",
+    "added": "{name} ora partecipa alla riunione",
     "updated": "Salvato",
     "addTitle": "Aggiungi qualcuno",
     "pick": "Persona",
@@ -193,7 +195,7 @@
       "sections": "Sezioni della scheda",
       "agenda": "Ordine del giorno",
       "modules": "Moduli",
-      "schedule": "Orario",
+      "schedule": "Calendario",
       "people": "{count, plural, one {# persona e il suo ruolo} other {# persone e i loro ruoli}}",
       "history": "Cronologia e verbali",
       "tokens": "Token di accesso e integrazioni"
@@ -227,17 +229,17 @@
   },
   "navHints": {
     "general": "Nome, icona, formato e cronometro della riunione.",
-    "schedule": "Quando si tengono le sedute, e le loro eccezioni.",
+    "schedule": "Quando si tengono le sessioni, e le loro eccezioni.",
     "people": "Chi partecipa e cosa può fare ciascuno.",
     "sections": "Ciò che ognuno compila prima della riunione.",
     "agenda": "Lo svolgimento della riunione, blocco per blocco.",
-    "projects": "I progetti seguiti, ciascuno con il suo giro.",
+    "projects": "I progetti seguiti, ciascuno con il suo turno.",
     "modules": "Animazione, formati e strumenti, attivati quando servono.",
     "appearance": "Il colore della riunione su tutti gli schermi.",
     "notifications": "Promemoria e messaggi inviati attorno alla riunione.",
     "integrations": "Videochiamata, strumenti di ticket e wiki.",
     "template": "Salva questa riunione come modello dello spazio.",
-    "danger": "Ciò che non si annulla: lasciare, fermare o eliminare."
+    "danger": "Ciò che non si annulla: eliminare la riunione."
   },
   "status": {
     "auto": "Le modifiche vengono salvate automaticamente.",

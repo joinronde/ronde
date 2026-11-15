@@ -7,7 +7,7 @@
   "timing": "Objetivo {target} · {speak} de palabra por persona",
   "labels": {
     "when": "Cuándo",
-    "timing": "Formato",
+    "timing": "Tiempos",
     "duration": "Duración",
     "participants": "Participantes"
   },
@@ -20,18 +20,18 @@
   },
   "soon": {
     "title": "⏰ {team} empieza en {minutes, plural, one {# minuto} other {# minutos}}",
-    "body": "Es hora de reunirse con el equipo y tener tu ficha a mano. En «Mi pantalla» puedes seguir los turnos, levantar la mano y hacer preguntas."
+    "body": "Es hora de unirte al equipo; ten tu ficha a mano. En «Mi pantalla» puedes seguir los turnos, levantar la mano y hacer preguntas."
   },
   "started": {
     "title": "▶️ {team} está empezando",
     "body": "La ronda va a comenzar: únete al equipo para compartir tus avances y preguntas."
   },
   "minutes": {
-    "title": "📝 Actas de {team} · {date}",
+    "title": "📝 Acta de {team} · {date}",
     "decisions": "Decisiones",
     "actions": "Acciones de seguimiento",
     "action": "{text} ({owner})",
-    "read": "Leer las actas"
+    "read": "Leer el acta"
   },
   "checkIn": {
     "title": "📝 Preparemos {team}",
@@ -40,7 +40,7 @@
     "allReady": "Todas las fichas están listas, ¡gracias, equipo!",
     "remaining": "{count, plural, one {Queda # ficha por} other {Quedan # fichas por}} preparar o actualizar.",
     "prepare": "Actualiza tus proyectos y tus secciones ({sections}) y revisa tus acciones de seguimiento.",
-    "fillIn": "📝 Rellenar mi ficha"
+    "fillIn": "📝 Completar mi ficha"
   },
   "overdue": {
     "title": "⏳ {team}: {count, plural, one {# acción de seguimiento espera} other {# acciones de seguimiento esperan}}",

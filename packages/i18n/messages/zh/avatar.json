@@ -5,5 +5,6 @@
   "change": "更换照片",
   "add": "添加照片",
   "remove": "移除照片",
+  "removeConfirm": "移除你的照片？将改为显示你的姓名首字母。",
   "unreadable": "无法读取图片。"
 }

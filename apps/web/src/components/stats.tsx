@@ -10,6 +10,7 @@ import { LoadError } from "./common";
 import { ExportCsv } from "./export-csv";
 import { EmptyHero } from "./illustration";
 import { useRonde } from "./ronde-provider";
+import { ScrollRegion } from "./scroll-region";
 import { Avatar } from "./stage";
 
 interface Bar {
@@ -18,7 +19,10 @@ interface Bar {
   tip: string;
 }
 
-/** Single-series vertical bar chart, with an optional reference line */
+/**
+ * Single-series vertical bar chart, with an optional reference line; its values in a table under it too (the
+ * bars' figures show on hover only: the table gives them to the keyboard and to screen readers)
+ */
 function Columns({
   data,
   refValue,
@@ -26,6 +30,7 @@ function Columns({
   fmt,
   label,
   max: fixedMax,
+  table = true,
 }: {
   data: Bar[];
   refValue?: number;
@@ -33,7 +38,10 @@ function Columns({
   fmt: (v: number) => string;
   label: string;
   max?: number;
+  /** The table of values (false: the chart has its own) */
+  table?: boolean;
 }) {
+  const t = useTranslations("stats");
   const W = 640,
     H = 230,
     L = 36,
@@ -44,7 +52,7 @@ function Columns({
     ih = H - T - B;
   const raw = Math.max(1, refValue ?? 0, ...data.map((d) => d.value)) * 1.05;
   // Fixed scale (percentages: 0 to 100), otherwise rounded up above the largest value
-  const step = fixedMax ? fixedMax / 4 : niceStep(raw);
+  const step = fixedMax ? (fixedMax % 4 === 0 ? fixedMax / 4 : 1) : niceStep(raw);
   const max = fixedMax ?? step * Math.ceil(raw / step);
   const y = (v: number) => T + ih - (v / max) * ih;
   const band = iw / Math.max(1, data.length);
@@ -52,52 +60,81 @@ function Columns({
   const ticks = Array.from({ length: Math.round(max / step) + 1 }, (_, i) => i * step);
   const last = data[data.length - 1];
   return (
-    <svg className="chart" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={label}>
-      {ticks.map((t) => (
-        <g key={t}>
-          <line className="ch-grid" x1={L} x2={W - R} y1={y(t)} y2={y(t)} />
-          <text className="ch-t" x={L - 6} y={y(t) + 4} textAnchor="end">
-            {fmt(t)}
-          </text>
-        </g>
-      ))}
-      {data.map((d, i) => {
-        const cx = L + band * i + band / 2,
-          x = cx - bw / 2,
-          top = y(d.value),
-          h = Math.max(0, T + ih - top),
-          r = Math.min(4, h);
-        return (
-          <g className="ch-g" key={i}>
-            <rect className="ch-hit" x={L + band * i} y={T} width={band} height={ih} data-chart-tip={d.tip} />
-            {h > 0 && (
-              <path
-                className="ch-bar"
-                pointerEvents="none"
-                d={`M${x},${T + ih} V${top + r} Q${x},${top} ${x + r},${top} H${x + bw - r} Q${x + bw},${top} ${x + bw},${top + r} V${T + ih} Z`}
-              />
-            )}
-            <text className="ch-t" x={cx} y={H - 8} textAnchor="middle">
-              {d.label}
+    <>
+      <svg className="chart" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={label}>
+        {ticks.map((t) => (
+          <g key={t}>
+            <line className="ch-grid" x1={L} x2={W - R} y1={y(t)} y2={y(t)} />
+            <text className="ch-t" x={L - 6} y={y(t) + 4} textAnchor="end">
+              {fmt(t)}
             </text>
           </g>
-        );
-      })}
-      <line className="ch-base" x1={L} x2={W - R} y1={T + ih} y2={T + ih} />
-      {refValue !== undefined && (
-        <>
-          <line className="ch-ref" x1={L} x2={W - R} y1={y(refValue)} y2={y(refValue)} />
-          <text className="ch-t" x={W - R} y={y(refValue) - 6} textAnchor="end">
-            {refLabel}
+        ))}
+        {data.map((d, i) => {
+          const cx = L + band * i + band / 2,
+            x = cx - bw / 2,
+            top = y(d.value),
+            h = Math.max(0, T + ih - top),
+            r = Math.min(4, h);
+          return (
+            <g className="ch-g" key={i}>
+              <rect className="ch-hit" x={L + band * i} y={T} width={band} height={ih} data-chart-tip={d.tip} />
+              {h > 0 && (
+                <path
+                  className="ch-bar"
+                  pointerEvents="none"
+                  d={`M${x},${T + ih} V${top + r} Q${x},${top} ${x + r},${top} H${x + bw - r} Q${x + bw},${top} ${x + bw},${top + r} V${T + ih} Z`}
+                />
+              )}
+              <text className="ch-t" x={cx} y={H - 8} textAnchor="middle">
+                {d.label}
+              </text>
+            </g>
+          );
+        })}
+        <line className="ch-base" x1={L} x2={W - R} y1={T + ih} y2={T + ih} />
+        {refValue !== undefined && (
+          <>
+            <line className="ch-ref" x1={L} x2={W - R} y1={y(refValue)} y2={y(refValue)} />
+            <text className="ch-t" x={W - R} y={y(refValue) - 6} textAnchor="end">
+              {refLabel}
+            </text>
+          </>
+        )}
+        {last && (
+          <text className="ch-v" x={L + band * (data.length - 1) + band / 2} y={y(last.value) - 7} textAnchor="middle">
+            {fmt(last.value)}
           </text>
-        </>
+        )}
+      </svg>
+      {table && (
+        <details className="dt">
+          <summary>{t("seeData")}</summary>
+          <div className="tbl-wrap">
+            <table className="data">
+              <tbody>
+                <tr>
+                  <th>{t("date")}</th>
+                  <th>{label}</th>
+                </tr>
+                {data.map((d, i) => {
+                  const [day, ...rest] = d.tip.split("\n");
+                  return (
+                    <tr key={i}>
+                      <td>{day}</td>
+                      <td>
+                        <span className="num">{fmt(d.value)}</span>
+                        {rest.length > 0 && ` · ${rest.join(" ")}`}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </details>
       )}
-      {last && (
-        <text className="ch-v" x={L + band * (data.length - 1) + band / 2} y={y(last.value) - 7} textAnchor="middle">
-          {fmt(last.value)}
-        </text>
-      )}
-    </svg>
+    </>
   );
 }
 
@@ -277,10 +314,11 @@ export function StatsView() {
             refLabel={t("kpi.target", { target: fmtMinutes(target, locale) })}
             fmt={(v) => String(Math.round(v))}
             label={t("charts.durationLabel")}
+            table={false}
           />
           <details className="dt">
             <summary>{t("seeData")}</summary>
-            <div className="tbl-wrap">
+            <ScrollRegion label={t("charts.duration")}>
               <table className="data">
                 <tbody>
                   <tr>
@@ -295,7 +333,7 @@ export function StatsView() {
                   ))}
                 </tbody>
               </table>
-            </div>
+            </ScrollRegion>
           </details>
         </div>
         <div className="panel">
@@ -329,7 +367,7 @@ export function StatsView() {
           <Columns data={blkData} fmt={(v) => String(v)} label={t("charts.blockersLabel")} />
           <details className="dt">
             <summary>{t("seeData")}</summary>
-            <div className="tbl-wrap">
+            <ScrollRegion label={t("charts.blockers")}>
               <table className="data">
                 <tbody>
                   <tr>
@@ -344,13 +382,18 @@ export function StatsView() {
                   ))}
                 </tbody>
               </table>
-            </div>
+            </ScrollRegion>
           </details>
         </div>
         {moodData.length > 0 && (
           <div className="panel">
             <h3>{t("charts.mood")}</h3>
-            <Columns data={moodData} fmt={(v) => (Number.isInteger(v) ? String(v) : fmt.decimal(v))} label={t("charts.moodLabel")} />
+            <Columns
+              data={moodData}
+              max={5}
+              fmt={(v) => (Number.isInteger(v) ? String(v) : fmt.decimal(v))}
+              label={t("charts.moodLabel")}
+            />
             <p className="hint" style={{ marginTop: 6 }}>
               {t("charts.moodHint")}
             </p>
@@ -359,7 +402,12 @@ export function StatsView() {
         {ratingData.length > 0 && (
           <div className="panel">
             <h3>{t("charts.rating")}</h3>
-            <Columns data={ratingData} fmt={(v) => (Number.isInteger(v) ? String(v) : fmt.decimal(v))} label={t("charts.ratingLabel")} />
+            <Columns
+              data={ratingData}
+              max={5}
+              fmt={(v) => (Number.isInteger(v) ? String(v) : fmt.decimal(v))}
+              label={t("charts.ratingLabel")}
+            />
             <p className="hint" style={{ marginTop: 6 }}>
               {t("charts.ratingHint")}
             </p>
@@ -427,7 +475,7 @@ export function StatsView() {
       )}
       <div className="panel" style={{ marginTop: 16 }}>
         <h3>{t("projects.title")}</h3>
-        <div className="tbl-wrap">
+        <ScrollRegion label={t("projects.title")}>
           <table className="data">
             <tbody>
               <tr>
@@ -448,7 +496,7 @@ export function StatsView() {
               ))}
             </tbody>
           </table>
-        </div>
+        </ScrollRegion>
       </div>
       {tip?.text && (
         <div id="tip" style={{ left: Math.min(tip.x + 14, window.innerWidth - 280), top: tip.y + 14 }}>

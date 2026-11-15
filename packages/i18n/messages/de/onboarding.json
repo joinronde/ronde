@@ -12,6 +12,7 @@
   "timezone": "Zeitzone",
   "create": "Arbeitsbereich anlegen",
   "invitationsTitle": "Du wurdest eingeladen",
+  "invitationByLink": "{count, plural, one {Eine Einladung wartet auf dich: Öffne den Link aus der E-Mail, um beizutreten.} other {# Einladungen warten auf dich: Öffne die Links aus den E-Mails, um beizutreten.}}",
   "join": "Beitreten",
   "createOwn": "Oder leg deinen eigenen Arbeitsbereich an",
   "yourWorkspaces": "Deine Arbeitsbereiche",

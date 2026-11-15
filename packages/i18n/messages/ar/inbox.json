@@ -8,10 +8,10 @@
   "empty": "لا جديد.",
   "emptyHint": "تظهر هنا الإجراءات المسندة إليك والجلسات التي تبدأ والمحاضر المنشورة.",
   "kinds": {
-    "action_assigned": "أسند إليك <strong>{actor}</strong> إجراءً في <strong>{meeting}</strong>",
+    "action_assigned": "إجراء جديد لك من <strong>{actor}</strong> في <strong>{meeting}</strong>",
     "session_started": "بدأ <strong>{meeting}</strong>: انضم إلى الجلسة",
-    "minutes_published": "صدر محضر <strong>{meeting}</strong>",
-    "kudo_received": "شكرك <strong>{actor}</strong> في <strong>{meeting}</strong>",
+    "minutes_published": "نُشر محضر <strong>{meeting}</strong>",
+    "kudo_received": "رسالة شكر لك من <strong>{actor}</strong> في <strong>{meeting}</strong>",
     "meeting_joined": "أضافك <strong>{actor}</strong> إلى <strong>{meeting}</strong>",
     "absence_delegated": "سيغيب <strong>{actor}</strong>: تدير في هذه الأثناء الاجتماعات التي يستضيفها",
     "minutes_draft": "محضر <strong>{meeting}</strong> بانتظار النشر",

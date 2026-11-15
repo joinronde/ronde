@@ -3,7 +3,7 @@
   "period": "del {from} al {to}",
   "title": "El informe de tus reuniones",
   "byMeeting": "Por reunión",
-  "noSession": "No se celebró ninguna sesión en este periodo.",
+  "noSession": "No se ha celebrado ninguna sesión en este periodo.",
   "open": "Ver los análisis en Ronde",
   "settings": {
     "title": "Informe por correo",
@@ -22,5 +22,5 @@
     "testSent": "Informe de prueba enviado a {email}"
   },
   "openBranded": "Ver los análisis",
-  "projectsToWatch": "Proyectos a vigilar"
+  "projectsToWatch": "Proyectos que vigilar"
 }

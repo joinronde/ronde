@@ -31,6 +31,16 @@
       "feedback": "Feedback"
     }
   },
+  "sprintPlanning": {
+    "name": "Sprint planning",
+    "description": "Every other week: the sprint goal, the items ready to estimate with planning poker, the team's capacity and the risks.",
+    "sections": {
+      "goal": "Sprint goal",
+      "ready": "Ready items",
+      "capacity": "Capacity and absences",
+      "risks": "Risks"
+    }
+  },
   "sprintReview": {
     "name": "Sprint review",
     "description": "Every other week: what was delivered, the demos, the next sprint and the risks.",
@@ -141,7 +151,7 @@
   },
   "shiftHandover": {
     "name": "Shift handover",
-    "description": "Fifteen minutes between two shifts: what happened, what to watch and what the next shift must do.",
+    "description": "Fifteen minutes between two shifts: what happened, what to watch and what the next shift must do. One meeting per handover: a meeting holds one session a day.",
     "sections": {
       "events": "What happened",
       "watch": "To watch",

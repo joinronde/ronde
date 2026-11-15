@@ -1,6 +1,6 @@
 {
   "weekly": {
-    "name": "Wöchentliches Team-Meeting",
+    "name": "Wochenmeeting",
     "description": "Eine Runde zu Erledigtem, Geplantem und Blockern, mit offenen Themen und Folgeaufgaben.",
     "sections": {}
   },
@@ -29,6 +29,16 @@
       "priorities": "Prioritäten",
       "challenges": "Herausforderungen",
       "feedback": "Feedback"
+    }
+  },
+  "sprintPlanning": {
+    "name": "Sprint Planning",
+    "description": "Alle zwei Wochen: das Sprint-Ziel, die Einträge, die bereit zum Schätzen im Planning Poker sind, die Kapazität des Teams und die Risiken.",
+    "sections": {
+      "goal": "Sprint-Ziel",
+      "ready": "Bereite Einträge",
+      "capacity": "Kapazität und Abwesenheiten",
+      "risks": "Risiken"
     }
   },
   "sprintReview": {
@@ -141,7 +151,7 @@
   },
   "shiftHandover": {
     "name": "Schichtübergabe",
-    "description": "Fünfzehn Minuten zwischen zwei Schichten: was passiert ist, worauf zu achten ist und was die nächste Schicht tun muss.",
+    "description": "Fünfzehn Minuten zwischen zwei Schichten: was passiert ist, worauf zu achten ist und was die nächste Schicht tun muss. Ein Meeting pro Übergabe: Ein Meeting hat eine Sitzung pro Tag.",
     "sections": {
       "events": "Was passiert ist",
       "watch": "Im Auge behalten",
@@ -150,7 +160,7 @@
   },
   "portfolio": {
     "name": "Portfolio-Review",
-    "description": "Alle zwei Wochen eine Runde pro Projekt: Wer daran arbeitet, berichtet über den Stand, die Fortschritte, die nächsten Meilensteine und die Risiken; Projekte mit Schwierigkeiten kommen zuerst.",
+    "description": "Alle zwei Wochen kommt jedes Projekt an die Reihe: Wer daran arbeitet, berichtet über den Stand, die Fortschritte, die nächsten Meilensteine und die Risiken; kritische Projekte zuerst.",
     "sections": {
       "progress": "Fortschritt",
       "milestones": "Nächste Meilensteine",
@@ -160,7 +170,7 @@
   },
   "teamProjects": {
     "name": "Team und Projekte",
-    "description": "Eine kurze Runde für persönliche Neuigkeiten, dann eine Runde pro gemeinsamem Projekt, in der das Projektteam gemeinsam spricht.",
+    "description": "Zuerst ein kurzer Beitrag pro Person für persönliche Neuigkeiten, dann ein Beitrag pro gemeinsamem Projekt, bei dem das Projektteam gemeinsam spricht.",
     "sections": {}
   },
   "rhythm": {

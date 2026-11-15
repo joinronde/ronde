@@ -21,7 +21,7 @@
     "@ronde/i18n": "workspace:*",
     "@ronde/module-sdk": "workspace:*",
     "@ronde/random-core": "workspace:*",
-    "zod": "^4.6.5"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@ronde/config": "workspace:*",

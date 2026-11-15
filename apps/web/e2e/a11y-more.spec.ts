@@ -31,6 +31,8 @@ test("the live meeting, its history and the other pages pass the accessibility a
   for (const tab of ["audit", "billing", "plans", "roles", "security"]) {
     // Billing and plans exist on a self-hosted instance too: its license and the plans it could have
     expect((await page.goto(`${workspace}/settings/${tab}`))?.status(), tab).toBe(200);
+    // Without payments, the billing page leads to the plans
+    if (tab === "billing") await page.waitForURL(/\/settings\/plans$/);
     await audit(page, `workspace settings: ${tab}`);
   }
 
@@ -80,7 +82,7 @@ test("the live meeting, its history and the other pages pass the accessibility a
     await audit(page, `control room live: ${pane}`);
   }
   await openTab(pia, "Live meeting");
-  await expect(pia.getByRole("button", { name: "Thanks", exact: true })).toBeVisible();
+  await expect(pia.getByRole("button", { name: "Kudos", exact: true })).toBeVisible();
   await audit(pia, "my screen: live with the dock");
   await visitor.goto(guestLink);
   await audit(visitor, "guest link, live");

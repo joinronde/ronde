@@ -36,7 +36,7 @@
   "checkin": {
     "write": {
       "own": "Eigenen Check-in ausfüllen",
-      "any": "Check-ins aller bearbeiten"
+      "any": "Jeden Check-in bearbeiten"
     },
     "read": {
       "all": "Alle Check-ins lesen"
@@ -55,7 +55,7 @@
     "read": "Statistiken sehen"
   },
   "projects": {
-    "read": "Das Portfolio sehen",
+    "read": "Portfolio sehen",
     "create": "Projekte anlegen",
     "manage": "Alle Projekte bearbeiten und archivieren"
   }

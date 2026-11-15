@@ -1,5 +1,5 @@
 import { generateKeyPairSync, sign } from "node:crypto";
-import { localDate, localTime } from "@ronde/core/schedule";
+import { localDate, localTime, zonedInstant } from "@ronde/core/schedule";
 import { prisma, scoped } from "@ronde/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { meetingAvailability, saveCalendarAccount, setMeetingCalendar, syncMeetingCalendar } from "@/lib/server/calendars";
@@ -299,5 +299,23 @@ describe("calendar sync", () => {
     }
     // A server of the instance's own network, self-hosted
     await expect(caldav("http://radicale:5232/ana/")).resolves.toMatchObject({ id: expect.any(String) });
+  });
+  it("keeps the evening's session west of UTC, when the UTC date is already the next day", async () => {
+    // Los Angeles, every Monday at 18:30; it is 17:00 there on a Monday, 01:00 UTC on Tuesday
+    await prisma.meeting.update({ where: { id: f.meetingId }, data: { timezone: "America/Los_Angeles" } });
+    await prisma.scheduleRule.updateMany({ where: { meetingId: f.meetingId }, data: { time: "18:30" } });
+    // Weeks after the sessions the tests above skipped or moved
+    let d = new Date(Date.now() + 42 * 86_400_000);
+    while (d.getUTCDay() !== 1) d = new Date(d.getTime() + 86_400_000);
+    const monday = d.toISOString().slice(0, 10);
+    const at = zonedInstant(monday, "17:00", "America/Los_Angeles");
+    vi.useFakeTimers({ now: at, toFake: ["Date"] });
+    try {
+      await syncMeetingCalendar(f.meetingId);
+      const tonight = (await coming()).find((e) => e.occurrenceKey.endsWith(`:${monday}`));
+      expect(tonight?.startsAt.getTime()).toBe(zonedInstant(monday, "18:30", "America/Los_Angeles"));
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

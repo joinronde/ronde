@@ -13,6 +13,21 @@ const PEEKED = "ronde:swipe-peeked";
 /** Pixels from an end of the row that still count as that end */
 const EDGE = 6;
 
+/** Scrolls the row so its selected item shows whole (measured on screen, so it holds right to left too) */
+function reveal(el: HTMLElement) {
+  const item = el.querySelector<HTMLElement>('[aria-selected="true"], [aria-current="step"], [aria-current="page"]');
+  if (!item) return;
+  const box = el.getBoundingClientRect();
+  const at = item.getBoundingClientRect();
+  const delta = at.left < box.left ? at.left - box.left - 24 : at.right > box.right ? at.right - box.right + 24 : 0;
+  if (!delta) return;
+  // Close to an end, go all the way: a row stopped a few pixels short shows its arrow over the first or last item
+  const max = el.scrollWidth - el.clientWidth;
+  const sign = getComputedStyle(el).direction === "rtl" ? -1 : 1;
+  const x = Math.abs(el.scrollLeft + delta);
+  el.scrollTo({ left: sign * (x < 40 ? 0 : x > max - 40 ? max : x), behavior: "smooth" });
+}
+
 export function useSwipeRow<T extends HTMLElement>(selected?: string) {
   const ref = useRef<T>(null);
 
@@ -34,6 +49,7 @@ export function useSwipeRow<T extends HTMLElement>(selected?: string) {
     observer.observe(el);
 
     let back: ReturnType<typeof setTimeout> | undefined;
+    let settle: ReturnType<typeof setTimeout> | undefined;
     const still = !motionAllowed();
     let peeked = true;
     try {
@@ -48,29 +64,22 @@ export function useSwipeRow<T extends HTMLElement>(selected?: string) {
       el.scrollBy({ left: 48 * dir, behavior: "smooth" });
       // Back to where it was, not 48 pixels back: the items snap, and a relative move could stop on another one
       back = setTimeout(() => el.scrollTo({ left: from, behavior: "smooth" }), 650);
+      // …and the selected item in view once it is back: a slow device may not finish the return, or snap it away
+      settle = setTimeout(() => reveal(el), 1400);
     }
+    // Widths change once the fonts arrive: the selected item may have slipped out of view meanwhile
+    void document.fonts?.ready.then(() => ref.current === el && reveal(el));
     return () => {
       el.removeEventListener("scroll", update);
       observer.disconnect();
       clearTimeout(back);
+      clearTimeout(settle);
     };
   }, []);
 
-  // The selected item stays in view as the selection moves
+  // The selected item stays in view as the selection moves; the page itself never scrolls
   useEffect(() => {
-    const el = ref.current;
-    const item = el?.querySelector<HTMLElement>('[aria-selected="true"], [aria-current="step"], [aria-current="page"]');
-    if (!el || !item) return;
-    // Measured on screen, so it holds right to left too; the page itself never scrolls
-    const box = el.getBoundingClientRect();
-    const at = item.getBoundingClientRect();
-    const delta = at.left < box.left ? at.left - box.left - 24 : at.right > box.right ? at.right - box.right + 24 : 0;
-    if (!delta) return;
-    // Close to an end, go all the way: a row stopped a few pixels short shows its arrow over the first or last item
-    const max = el.scrollWidth - el.clientWidth;
-    const sign = getComputedStyle(el).direction === "rtl" ? -1 : 1;
-    const x = Math.abs(el.scrollLeft + delta);
-    el.scrollTo({ left: sign * (x < 40 ? 0 : x > max - 40 ? max : x), behavior: "smooth" });
+    if (ref.current) reveal(ref.current);
   }, [selected]);
 
   return ref;

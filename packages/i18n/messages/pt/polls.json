@@ -1,5 +1,5 @@
 {
-  "count": "{count, plural, one {# resposta} other {# respostas}}",
+  "count": "{count, plural, =0 {# respostas} one {# resposta} other {# respostas}}",
   "noAnswer": "Ainda não há respostas.",
   "poll": "Enquete",
   "answers": "{count, plural, =0 {nenhuma resposta} one {# resposta} other {# respostas}}",
@@ -39,7 +39,7 @@
   "delete": "Excluir a enquete “{question}”",
   "yes": "Sim",
   "no": "Não",
-  "yesNo": "Sim ou não, já",
+  "yesNo": "Sim ou não, na hora",
   "yesNoHint": "A pergunta digitada abaixo, ou “Você concorda?”, na tela na hora, com quem respondeu o quê.",
   "yesNoQuestion": "Você concorda?"
 }

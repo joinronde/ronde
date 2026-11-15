@@ -53,7 +53,7 @@
     "gitlab": "Token de acceso (solo para grupos o proyectos privados)"
   },
   "tokenHint": {
-    "github": "Déjalo vacío para repositorios públicos. Para los privados: un <link>token de acceso detallado</link> que pueda leerlos (y sus issues, para los hitos).",
+    "github": "Déjalo vacío para repositorios públicos. Para los privados: un <link>token de acceso detallado</link> que pueda leerlos (y sus incidencias, para los hitos).",
     "gitlab": "Déjalo vacío para proyectos públicos. Para los privados: un token de acceso personal o de proyecto con el ámbito read_api.",
     "gitlabGroup": "Déjalo vacío para grupos públicos. Para uno privado: un token de acceso personal o de grupo con el ámbito read_api.",
     "jira": "Un <link>token de API</link> de la cuenta cuyo correo figura arriba.",
@@ -61,8 +61,8 @@
   },
   "tokenNotKept": "Solo sirve para esta importación: Ronde no lo guarda.",
   "teamHint": "Con el plan Team, los proyectos importados mediante un gestor de tickets guardado siguen sincronizados con la herramienta: nombre, situación, fechas y avance.",
-  "syncHowTo": "Para mantener sincronizados los proyectos importados, primero añade la herramienta a los gestores de tickets en los <link>ajustes del espacio</link> y luego importa desde ella.",
-  "syncAskAdmin": "Los proyectos siguen sincronizados cuando un administrador del espacio los importa mediante sus gestores de tickets. Lo que importas aquí se importa una sola vez.",
+  "syncHowTo": "Para mantener sincronizados los proyectos importados, primero añade la herramienta a los gestores de tickets en los <link>ajustes del espacio de trabajo</link> y luego importa desde ella.",
+  "syncAskAdmin": "Los proyectos siguen sincronizados cuando un administrador del espacio de trabajo los importa mediante sus gestores de tickets. Lo que importas aquí se importa una sola vez.",
   "look": "Buscar proyectos",
   "looking": "Buscando…",
   "pickTitle": {
@@ -87,7 +87,7 @@
   "pickAll": "Seleccionar todo ({count})",
   "pickSome": "Marca los que quieras importar.",
   "inPortfolio": "En la cartera",
-  "progress": "{percent} hecho",
+  "progress": "{percent} completado",
   "themeHint": "Se aplica a cada proyecto importado.",
   "keepSync": "Mantenerlos sincronizados con {tool}",
   "keepSyncHint": "Su nombre, situación, fechas y avance siguen a la herramienta cada hora; lo demás lo editas tú.",

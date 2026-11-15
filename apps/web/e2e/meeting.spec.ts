@@ -20,7 +20,6 @@ async function guestJoins(browser: Browser, url: string) {
   await page.getByRole("link", { name: "Create an account" }).click();
   await page.waitForURL(/\/sign-up\?/);
   await signUp(page, guest, page.url());
-  await page.getByRole("button", { name: /^Join / }).click();
   await page.waitForURL(/\/w\/[^/]+$/);
   return page;
 }
@@ -46,13 +45,22 @@ test("a host creates a meeting, a participant fills in their check-in and raises
   // exist before sign-up), in three steps
   await page.goto(`${workspace}/meetings/new`);
   await expect(page.getByRole("radio", { name: /Weekly sync/ })).toBeChecked();
+  // A meeting of two starts with nobody picked: the other person is chosen, not everyone else unticked
+  await page.locator("label.nm-tpl").filter({ hasText: "One-on-one" }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await expect(page.getByRole("checkbox", { name: /Gus Guest/ })).not.toBeChecked();
+  await page.getByRole("button", { name: "Back", exact: true }).click();
+  // The weekly sync of a small workspace starts with everyone
+  await page.locator("label.nm-tpl").filter({ hasText: "Weekly sync" }).click();
   await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByLabel("Name").fill("Weekly sync");
   await expect(page.getByRole("checkbox", { name: /Gus Guest/ })).toBeChecked();
   await page.getByRole("button", { name: "Next", exact: true }).click();
   // Sections and modules: the template's, kept as they are
   await page.getByRole("button", { name: "Next", exact: true }).click();
+  // The review tells what the round table costs, next to the time the meeting has
   await expect(page.getByText("2 people in the round table")).toBeVisible();
+  await expect(page.getByText("About 4 min of round table, at 2:00 of speaking each, in a 30 min meeting.")).toBeVisible();
   await page.getByRole("button", { name: "Create the meeting" }).click();
   await page.waitForURL(/\/m\/[^/]+\/control$/, { timeout: 120_000 });
   const meeting = page.url().replace(/\/control$/, "");
@@ -95,13 +103,15 @@ test("a host creates a meeting, a participant fills in their check-in and raises
   await expect(page.getByRole("tab", { name: /^Live/ })).toHaveAttribute("aria-selected", "true");
   await page.keyboard.press("?");
   await expect(page.getByRole("dialog", { name: "Keyboard shortcuts" })).toBeVisible();
-  await page.keyboard.press("Escape");
+  // "?" again closes it
+  await page.keyboard.press("?");
+  await expect(page.getByRole("dialog", { name: "Keyboard shortcuts" })).toHaveCount(0);
 
   // Phone remote: the host moves on from it, the control room follows
   const remote = await page.context().newPage();
   await remote.goto(`${meeting}/remote`);
   await expect(remote.getByRole("heading", { level: 1 })).toHaveText("Introduction");
-  await remote.getByRole("button", { name: "Next →" }).click();
+  await remote.getByRole("button", { name: "Next", exact: true }).click();
   await expect(remote.getByRole("heading", { level: 1 })).toHaveText("Questions and discussion");
   await expect(page.getByRole("heading", { name: "Questions and discussion", level: 2 }).first()).toBeVisible();
   await remote.close();
@@ -152,6 +162,10 @@ test("a host creates a meeting, a participant fills in their check-in and raises
   await page.goto(`${meeting}/stats`);
   const archived = page.locator(".kpi").filter({ has: page.locator(".l", { hasText: /^Sessions held$/ }) });
   await expect(archived.locator(".v")).toHaveText("1");
+  // Every chart's values, readable without a mouse: the attendance's among them
+  const attendance = page.locator(".panel").filter({ has: page.getByRole("heading", { name: "Attendance (%)" }) });
+  await attendance.getByText("See the data").click();
+  await expect(attendance.getByRole("cell", { name: /present/ })).toBeVisible();
 
   // Exports for a spreadsheet: UTF-8 with its byte order mark, one line per archived session
   const download = page.waitForEvent("download");

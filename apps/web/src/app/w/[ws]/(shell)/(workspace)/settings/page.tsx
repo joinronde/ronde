@@ -28,7 +28,10 @@ export async function generateMetadata() {
 
 export default async function WorkspaceSettingsPage({ params }: { params: Promise<{ ws: string }> }) {
   const ctx = await pageWorkspace((await params).ws);
-  const categories = await ctx.db.jobCategory.findMany({ orderBy: { position: "asc" }, select: { id: true, name: true } });
+  // The directory's teams, for whoever may read the directory (their page is its)
+  const categories = ctx.can("people.read")
+    ? await ctx.db.jobCategory.findMany({ orderBy: { position: "asc" }, select: { id: true, name: true } })
+    : null;
   const canConnect = ctx.can("connectors.manage");
   const available = brandingOn(ctx.workspace);
   const plans = await plansUrl(ctx);

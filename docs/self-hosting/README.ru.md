@@ -17,7 +17,7 @@ Ronde работает на любой машине с Docker: приложен�
 2. Заполните `.env`: укажите адрес, который будут открывать люди (`RONDE_URL`), затем сгенерируйте три секрета:
 
    ```sh
-   for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env; done
+   for v in POSTGRES_PASSWORD AUTH_SECRET SECRET_KEY; do sed -i.bak "s|^$v=.*|$v=$(openssl rand -base64 32 | tr -d '/+=')|" .env && rm .env.bak; done
    ```
 
 3. Запустите:
