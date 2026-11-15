@@ -16,16 +16,19 @@ export async function generateMetadata() {
 export default async function OnboardingPage({ searchParams }: { searchParams: Promise<{ plan?: string; template?: string }> }) {
   const user = await pageUser("/onboarding");
   const asked = await searchParams;
-  // Offered here only to a proven address: otherwise the invitation's link is the way in
-  const [invitations, workspaces] = await Promise.all([
-    addressProven(user.id).then((ok) => (ok ? pendingInvitationsFor(user.email) : [])),
+  // Offered here only to a proven address: otherwise the invitation's link is the way in, which is said
+  const [proven, pending, workspaces] = await Promise.all([
+    addressProven(user.id),
+    pendingInvitationsFor(user.email),
     userWorkspaces(user.id),
   ]);
   return (
     <Onboarding
       firstName={splitName(user.name)[0] || user.email}
-      invitations={invitations}
-      workspaces={workspaces.map(({ slug, name }) => ({ slug, name }))}
+      email={user.email}
+      invitations={proven ? pending : []}
+      invitationsByLink={proven ? 0 : pending.length}
+      workspaces={workspaces.map(({ slug, name, suspendedAt }) => ({ slug, name, suspended: !!suspendedAt }))}
       plan={billingOn() && asked.plan === "team" ? "team" : null}
       template={isBuiltinTemplate(asked.template) ? asked.template : null}
     />

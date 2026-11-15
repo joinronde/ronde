@@ -387,9 +387,14 @@ export function AccountNotificationsView({
 }
 
 /** The workspaces the person belongs to, with their role */
-export function AccountWorkspacesView({ workspaces }: { workspaces: { slug: string; name: string; role: WorkspaceRole }[] }) {
+export function AccountWorkspacesView({
+  workspaces,
+}: {
+  workspaces: { slug: string; name: string; role: WorkspaceRole; suspended?: boolean }[];
+}) {
   const t = useTranslations("account");
   const tw = useTranslations("workspace");
+  const ts = useTranslations("states");
   return (
     <section className="stack acct-card" aria-labelledby="workspaces-title">
       <h2 id="workspaces-title" className="acct-title">
@@ -403,7 +408,10 @@ export function AccountWorkspacesView({ workspaces }: { workspaces: { slug: stri
           {workspaces.map((w) => (
             <li key={w.slug}>
               <Link href={`/w/${w.slug}`}>{w.name}</Link>
-              <span className="hint">{tw(`roles.${w.role}`)}</span>
+              <span className="hint">
+                {tw(`roles.${w.role}`)}
+                {w.suspended && ` · ${ts("suspendedMark")}`}
+              </span>
             </li>
           ))}
         </ul>

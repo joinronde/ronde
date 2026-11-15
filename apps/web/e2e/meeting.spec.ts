@@ -20,7 +20,6 @@ async function guestJoins(browser: Browser, url: string) {
   await page.getByRole("link", { name: "Create an account" }).click();
   await page.waitForURL(/\/sign-up\?/);
   await signUp(page, guest, page.url());
-  await page.getByRole("button", { name: /^Join / }).click();
   await page.waitForURL(/\/w\/[^/]+$/);
   return page;
 }

@@ -15,6 +15,8 @@ export default async function AccountWorkspacesPage() {
   const user = await pageUser("/account/workspaces");
   const workspaces = await userWorkspaces(user.id);
   return (
-    <AccountWorkspacesView workspaces={workspaces.map((w) => ({ slug: w.slug, name: w.name, role: w.members[0]?.role ?? "member" }))} />
+    <AccountWorkspacesView
+      workspaces={workspaces.map((w) => ({ slug: w.slug, name: w.name, role: w.members[0]?.role ?? "member", suspended: !!w.suspendedAt }))}
+    />
   );
 }

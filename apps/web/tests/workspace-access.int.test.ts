@@ -1,0 +1,341 @@
+import { createHmac, randomBytes } from "node:crypto";
+import { prisma } from "@ronde/db";
+import { isValidElement, type ReactNode } from "react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { meeting, workspace } from "./fixtures";
+
+// The ways into a workspace and out of a dead end, signed in for real: the home page, the notice of a suspended
+// workspace, the onboarding page and the account's list of workspaces
+
+let request: Record<string, string> = {};
+let lastWorkspace: string | undefined;
+/** Other cookies of the browser, by name */
+let jar: Record<string, string> = {};
+vi.mock("next/cache", () => ({ revalidatePath: () => {}, revalidateTag: () => {} }));
+vi.mock("next/headers", () => ({
+  headers: async () => new Headers(request),
+  cookies: async () => ({
+    get: (name: string) =>
+      name === "ronde-ws" && lastWorkspace ? { name, value: lastWorkspace } : jar[name] ? { name, value: jar[name] } : undefined,
+    set: () => {},
+    delete: () => {},
+    getAll: () => [],
+  }),
+}));
+vi.mock("next-intl/server", async () => {
+  const { translator } = await import("@ronde/i18n");
+  return {
+    getTranslations: async (ns: Parameters<typeof translator>[1]) => translator("en", ns),
+    getLocale: async () => "en",
+  };
+});
+
+const { env } = await import("@/lib/server/env");
+const Home = (await import("@/app/page")).default;
+const Suspended = (await import("@/app/suspended/page")).default;
+const OnboardingPage = (await import("@/app/onboarding/page")).default;
+const AccountWorkspacesPage = (await import("@/app/account/workspaces/page")).default;
+const InvitationPage = (await import("@/app/(auth)/invite/[token]/page")).default;
+const GuestScreenPage = (await import("@/app/g/[token]/page")).default;
+const SignUpPage = (await import("@/app/(auth)/sign-up/page")).default;
+const TwoFactorPage = (await import("@/app/(auth)/sign-in/two-factor/page")).default;
+const { failureKey } = await import("@/lib/auth-client");
+const { hashToken } = await import("@/lib/server/workspaces");
+const WorkspaceHome = (await import("@/app/w/[ws]/(shell)/(workspace)/page")).default;
+
+const signOut = () => {
+  request = { "accept-language": "en" };
+};
+
+/** Opens a real session for the user: the row Better Auth reads, and the cookie it signs */
+async function signIn(userId: string) {
+  request = { "accept-language": "en" };
+  const token = crypto.randomUUID().replaceAll("-", "");
+  await prisma.authSession.create({ data: { id: crypto.randomUUID(), token, userId, expiresAt: new Date(Date.now() + 86_400_000) } });
+  const signature = createHmac("sha256", env.authSecret()).update(token).digest("base64");
+  request.cookie = `ronde.session_token=${encodeURIComponent(`${token}.${signature}`)}`;
+}
+
+/** Where a page redirects: the path Next's redirect() carries */
+async function redirectOf(page: Promise<unknown>): Promise<string | null> {
+  try {
+    await page;
+    return null;
+  } catch (e) {
+    const digest = (e as { digest?: string }).digest ?? "";
+    if (!digest.startsWith("NEXT_REDIRECT")) throw e;
+    return digest.split(";")[2] ?? null;
+  }
+}
+
+/** The text a page shows, and the links and controls it offers, read from its element tree */
+function walk(node: ReactNode, visit: (props: Record<string, unknown>, type: unknown) => void) {
+  if (Array.isArray(node)) return node.forEach((n) => walk(n, visit));
+  if (!isValidElement(node)) return;
+  const props = node.props as Record<string, unknown>;
+  visit(props, node.type);
+  walk(props.children as ReactNode, visit);
+}
+function textOf(node: ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(textOf).join("");
+  if (!isValidElement(node)) return "";
+  const props = node.props as { children?: ReactNode; label?: string };
+  return `${props.label ?? ""}${textOf(props.children)}`;
+}
+function hrefsOf(node: ReactNode): string[] {
+  const out: string[] = [];
+  walk(node, (props) => {
+    if (typeof props.href === "string") out.push(props.href);
+  });
+  return out;
+}
+
+const run = Date.now().toString(36);
+let n = 0;
+let w: Awaited<ReturnType<typeof workspace>>;
+beforeEach(async () => {
+  lastWorkspace = undefined;
+  jar = {};
+  w = await workspace(`access-${run}-${++n}`);
+});
+const suspend = (id: string) => prisma.workspace.update({ where: { id }, data: { suspendedAt: new Date() } });
+/** A second workspace the same account belongs to, with the given role */
+async function alsoIn(userId: string, role: "owner" | "member" = "owner") {
+  const other = await workspace(`access-${run}-${n}-b`);
+  const person = await prisma.person.create({
+    data: { workspaceId: other.ws.id, userId, email: `also-${n}@access.test`, firstName: "Also" },
+  });
+  await prisma.workspaceMember.create({ data: { workspaceId: other.ws.id, userId, personId: person.id, role } });
+  return other;
+}
+
+describe("a suspended workspace", () => {
+  it("is not where the home page leads: without another workspace, onboarding", async () => {
+    await suspend(w.ws.id);
+    await signIn(w.user.id);
+    lastWorkspace = w.ws.slug;
+    expect(await redirectOf(Home())).toBe("/onboarding");
+  });
+
+  it("is passed over for the account's other workspace, even when it was the last one opened", async () => {
+    const other = await alsoIn(w.user.id);
+    await suspend(w.ws.id);
+    await signIn(w.user.id);
+    lastWorkspace = w.ws.slug;
+    expect(await redirectOf(Home())).toBe(`/w/${other.ws.slug}`);
+  });
+
+  it("offers its owner a new workspace and a way to sign out, and does not tell them the owners know why", async () => {
+    await suspend(w.ws.id);
+    await signIn(w.user.id);
+    const page = await Suspended({ searchParams: Promise.resolve({ w: w.ws.slug }) });
+    const text = textOf(page);
+    expect(text).toContain("suspended by the administrator of this service");
+    expect(text).not.toContain("Its owners know why");
+    expect(text).toContain("Sign out");
+    expect(hrefsOf(page)).toContain("/onboarding");
+    // No other workspace to go back to: "/" would only come back here
+    expect(hrefsOf(page)).not.toContain("/");
+  });
+
+  it("tells a member its owners know why, and leads back to their other workspaces", async () => {
+    const member = await prisma.user.create({ data: { id: crypto.randomUUID(), email: `m-${run}-${n}@access.test`, name: "Mia" } });
+    const person = await prisma.person.create({ data: { workspaceId: w.ws.id, userId: member.id, email: member.email, firstName: "Mia" } });
+    await prisma.workspaceMember.create({ data: { workspaceId: w.ws.id, userId: member.id, personId: person.id, role: "member" } });
+    await alsoIn(member.id, "member");
+    await suspend(w.ws.id);
+    await signIn(member.id);
+    const page = await Suspended({ searchParams: Promise.resolve({ w: w.ws.slug }) });
+    expect(textOf(page)).toContain("Its owners know why");
+    expect(hrefsOf(page)).toContain("/");
+  });
+
+  it("is marked suspended on the onboarding page and in the account's workspaces", async () => {
+    await suspend(w.ws.id);
+    await signIn(w.user.id);
+    const onboarding = (await OnboardingPage({ searchParams: Promise.resolve({}) })) as { props: { workspaces: unknown[] } };
+    expect(onboarding.props.workspaces).toEqual([{ slug: w.ws.slug, name: w.ws.name, suspended: true }]);
+    const account = (await AccountWorkspacesPage()) as { props: { workspaces: unknown[] } };
+    expect(account.props.workspaces).toEqual([expect.objectContaining({ slug: w.ws.slug, suspended: true })]);
+  });
+});
+
+describe("an invitation link that no longer opens a seat", () => {
+  /** An invitation to the workspace, sent by its owner, and the token of its link */
+  async function invitation(data: { expiresAt?: Date; acceptedAt?: Date; revokedAt?: Date } = {}) {
+    const token = randomBytes(32).toString("base64url");
+    await prisma.invitation.create({
+      data: {
+        workspaceId: w.ws.id,
+        email: `lena-${run}-${n}@access.test`,
+        role: "member",
+        tokenHash: hashToken(token),
+        invitedById: w.user.id,
+        expiresAt: data.expiresAt ?? new Date(Date.now() + 86_400_000),
+        acceptedAt: data.acceptedAt ?? null,
+        revokedAt: data.revokedAt ?? null,
+      },
+    });
+    return token;
+  }
+  const open = (token: string) => InvitationPage({ params: Promise.resolve({ token }) });
+
+  /** The account the invitation was sent to, signed in */
+  const invitee = async () => {
+    const user = await prisma.user.create({ data: { id: crypto.randomUUID(), email: `lena-${run}-${n}@access.test`, name: "Lena" } });
+    await signIn(user.id);
+  };
+
+  it("says an accepted invitation was used, without naming the workspace to someone signed out", async () => {
+    const token = await invitation({ acceptedAt: new Date() });
+    signOut();
+    const page = await open(token);
+    expect(textOf(page)).toContain("already accepted");
+    expect(textOf(page)).not.toContain("invalid or was revoked");
+    expect(textOf(page)).not.toContain(w.ws.name);
+    expect(hrefsOf(page)).toEqual(["/sign-in"]);
+  });
+
+  it("names the workspace of an accepted invitation to the account it was sent to", async () => {
+    const token = await invitation({ acceptedAt: new Date() });
+    await invitee();
+    expect(textOf(await open(token))).toContain(`This invitation to ${w.ws.name} was already accepted`);
+  });
+
+  it("leads to signing in once expired, and names who to ask only to the account it was sent to", async () => {
+    const token = await invitation({ expiresAt: new Date(Date.now() - 1000) });
+    signOut();
+    const page = await open(token);
+    expect(textOf(page)).toContain("has expired");
+    expect(textOf(page)).not.toContain(w.user.name!);
+    expect(hrefsOf(page)).toEqual(["/sign-in"]);
+    await invitee();
+    expect(textOf(await open(token))).toContain(`Ask ${w.user.name} for a new one`);
+  });
+
+  it("offers a signed-in visitor their own workspaces when it was revoked", async () => {
+    const token = await invitation({ revokedAt: new Date() });
+    const visitor = await prisma.user.create({ data: { id: crypto.randomUUID(), email: `v-${run}-${n}@access.test`, name: "Vera" } });
+    await signIn(visitor.id);
+    const page = await open(token);
+    expect(textOf(page)).toContain("Open my workspaces");
+    expect(hrefsOf(page)).toEqual(["/"]);
+  });
+});
+
+describe("signing up from an invitation", () => {
+  async function invitation(data: { revokedAt?: Date } = {}) {
+    const token = randomBytes(32).toString("base64url");
+    const email = `nina-${run}-${n}@access.test`;
+    await prisma.invitation.create({
+      data: {
+        workspaceId: w.ws.id,
+        email,
+        role: "member",
+        tokenHash: hashToken(token),
+        invitedById: w.user.id,
+        expiresAt: new Date(Date.now() + 86_400_000),
+        revokedAt: data.revokedAt ?? null,
+      },
+    });
+    return { token, email };
+  }
+  const signUp = (next: string, email?: string) => SignUpPage({ searchParams: Promise.resolve({ next, email }) });
+
+  it("keeps the invitation's context: the workspace, who invites, and the address it was sent to", async () => {
+    const { token, email } = await invitation();
+    signOut();
+    const form = (await signUp(`/invite/${token}`, "typed-over@access.test")) as { props: Record<string, unknown> };
+    expect(form.props.invitation).toEqual({ token, workspace: w.ws.name, inviter: w.user.name, email });
+  });
+
+  it("does not open the form for an invitation that no longer works, on an instance by invitation", async () => {
+    const before = process.env.SIGNUP_POLICY;
+    process.env.SIGNUP_POLICY = "invite-only";
+    try {
+      const { token } = await invitation({ revokedAt: new Date() });
+      signOut();
+      expect(await redirectOf(signUp(`/invite/${token}`))).toBe(`/invite/${token}`);
+      expect(await redirectOf(signUp("/invite/made-up"))).toBe("/invite/made-up");
+    } finally {
+      process.env.SIGNUP_POLICY = before;
+    }
+  });
+});
+
+describe("the onboarding page", () => {
+  it("shows the account it is signed in with, and an invitation waiting for an address not proven yet", async () => {
+    const user = await prisma.user.create({
+      data: { id: crypto.randomUUID(), email: `olga-${run}-${n}@access.test`, name: "Olga", emailVerified: false },
+    });
+    await prisma.invitation.create({
+      data: {
+        workspaceId: w.ws.id,
+        email: user.email,
+        role: "member",
+        tokenHash: hashToken(randomBytes(32).toString("base64url")),
+        invitedById: w.user.id,
+        expiresAt: new Date(Date.now() + 86_400_000),
+      },
+    });
+    await signIn(user.id);
+    const page = (await OnboardingPage({ searchParams: Promise.resolve({}) })) as { props: Record<string, unknown> };
+    expect(page.props).toMatchObject({ email: user.email, invitations: [], invitationsByLink: 1 });
+  });
+});
+
+describe("the two-step verification page", () => {
+  const open = () => TwoFactorPage({ searchParams: Promise.resolve({}) });
+
+  it("sends back to sign in, saying why, when no sign-in is waiting for its code", async () => {
+    signOut();
+    expect(await redirectOf(open())).toBe("/sign-in?error=TWO_FACTOR_EXPIRED");
+    // A code sent once the challenge is gone is not "invalid": the sign-in expired
+    expect(failureKey({ code: "INVALID_TWO_FACTOR_COOKIE" })).toBe("twoFactorExpired");
+  });
+
+  it("offers another account, and says what to do without the app or the codes", async () => {
+    signOut();
+    jar["ronde.two_factor"] = "signed-challenge";
+    const page = await open();
+    expect(hrefsOf(page)).toContain("/sign-in");
+    expect(textOf(page)).toContain("Use another account");
+    expect(textOf(page)).toContain("Ask the administrator of your workspace");
+  });
+});
+
+describe("the first steps of a new member", () => {
+  it("are their own: no meeting to create nor session to run in a workspace that has its meetings", async () => {
+    const m = await meeting(w, "Weekly");
+    const user = await prisma.user.create({ data: { id: crypto.randomUUID(), email: `pia-${run}-${n}@access.test`, name: "Pia" } });
+    const person = await prisma.person.create({ data: { workspaceId: w.ws.id, userId: user.id, email: user.email, firstName: "Pia" } });
+    await prisma.workspaceMember.create({ data: { workspaceId: w.ws.id, userId: user.id, personId: person.id, role: "member" } });
+    await prisma.meetingParticipant.create({
+      data: { workspaceId: w.ws.id, meetingId: m.meetingId, personId: person.id, role: "participant", position: 2 },
+    });
+    await signIn(user.id);
+    const home = (await WorkspaceHome({ params: Promise.resolve({ ws: w.ws.slug }) })) as { props: { steps: { key: string }[] } };
+    expect(home.props.steps.map((s) => s.key)).toEqual(["checkIn"]);
+  });
+
+  it("stay those of a host for whoever starts the workspace", async () => {
+    await signIn(w.user.id);
+    const home = (await WorkspaceHome({ params: Promise.resolve({ ws: w.ws.slug }) })) as { props: { steps: { key: string }[] } };
+    expect(home.props.steps.map((s) => s.key)).toEqual(["meeting", "invite", "checkIn", "session"]);
+  });
+});
+
+describe("a guest link that no longer works", () => {
+  it("says so in its own words, without sending a person with no account to sign in", async () => {
+    signOut();
+    // A 404, with its own notice
+    await expect(GuestScreenPage({ params: Promise.resolve({ token: "no-such-link" }) })).rejects.toMatchObject({
+      digest: "NEXT_HTTP_ERROR_FALLBACK;404",
+    });
+    const GuestLinkGone = (await import("@/app/g/[token]/not-found")).default;
+    const page = await GuestLinkGone();
+    expect(textOf(page)).toContain("expired or was removed");
+    expect(hrefsOf(page)).toEqual([]);
+  });
+});

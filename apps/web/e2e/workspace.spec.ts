@@ -54,8 +54,7 @@ test("sign up, create a workspace, invite someone who joins", async ({ page, bro
   await guest.getByLabel("Full name").fill(invitee.name);
   await guest.getByLabel("Password", { exact: true }).fill(invitee.password);
   await guest.getByRole("button", { name: "Create account" }).click();
-  await guest.waitForURL(/\/invite\//);
-  await guest.getByRole("button", { name: `Join ${workspace}` }).click();
+  // The new account joins at once
   await expect(guest).toHaveURL(new RegExp(`/w/e2e-team-${run}$`));
   await expect(guest.getByRole("heading", { level: 1, name: /\bGrace$/ })).toBeVisible();
 
@@ -128,10 +127,26 @@ test("wrong password shows an error, a stranger's workspace is a 404", async ({ 
   await page.getByRole("button", { name: "Sign in", exact: true }).click();
   // (Next.js also renders a route announcer with role="alert")
   await expect(page.locator(".form-alert")).toHaveText("Wrong email or password.");
+  // The keyboard is back where the mistake is
+  await expect(page.getByLabel("Password", { exact: true })).toBeFocused();
 
   await page.getByLabel("Password", { exact: true }).fill(owner.password);
   await page.getByRole("button", { name: "Sign in", exact: true }).click();
   await expect(page).toHaveURL(/\/w\//);
   const response = await page.goto(`/w/does-not-exist-${run}`);
   expect(response?.status()).toBe(404);
+});
+
+test("an email link used twice opens the email link sign-in, which can send the link again", async ({ page }) => {
+  // Better Auth comes back here with this code for a link already used or expired
+  await page.goto("/sign-in?error=INVALID_TOKEN");
+  await expect(page.locator(".form-alert")).toHaveText("This link has expired. Ask for a new one.");
+  await expect(page.getByRole("radio", { name: "With email link" })).toBeChecked();
+  await page.getByLabel("Email", { exact: true }).fill(owner.email);
+  await page.getByRole("button", { name: "Email me a sign-in link" }).click();
+  await expect(page.getByRole("heading", { name: "Check your inbox" })).toBeVisible();
+  // Sent again only after a pause, so a double click does not send two
+  const again = page.getByRole("button", { name: "Send the link again" });
+  await expect(again).toBeDisabled();
+  await expect(again).toBeEnabled({ timeout: 40_000 });
 });

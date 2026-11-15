@@ -39,11 +39,11 @@ const isTimeZone = (tz: string) => {
   }
 };
 
-/** Workspaces of a user, most recent first */
+/** Workspaces of a user, most recent first; those suspended by the Ronde team have their date of suspension */
 export function userWorkspaces(userId: string) {
   return prisma.workspace.findMany({
     where: { deletedAt: null, members: { some: { userId, status: "active" } } },
-    select: { id: true, slug: true, name: true, members: { where: { userId }, select: { role: true } } },
+    select: { id: true, slug: true, name: true, suspendedAt: true, members: { where: { userId }, select: { role: true } } },
     orderBy: { createdAt: "desc" },
   });
 }
@@ -332,7 +332,8 @@ export async function revokeInvitation(ctx: WorkspaceContext, invitationId: stri
 
 export type InvitationState =
   | { status: "invalid" }
-  | { status: "expired"; workspace: string }
+  | { status: "expired"; workspace: string; inviter: string; email: string }
+  | { status: "accepted"; workspace: string; slug: string; email: string }
   | { status: "member"; workspace: string; slug: string; forOther: string | null }
   | { status: "pending"; id: string; workspace: string; slug: string; email: string; inviter: string; role: WorkspaceRole };
 
@@ -362,9 +363,11 @@ export async function invitationState(token: string, user: CurrentUser | null): 
     const forOther = waiting && invitation.email !== user.email.toLowerCase() ? invitation.email : null;
     return { status: "member", workspace: workspace.name, slug: workspace.slug, forOther };
   }
-  if (invitation.acceptedAt) return { status: "invalid" };
-  if (invitation.expiresAt < new Date()) return { status: "expired", workspace: workspace.name };
+  // Accepted already (on another device, by another account): signing in opens the workspace
+  if (invitation.acceptedAt) return { status: "accepted", workspace: workspace.name, slug: workspace.slug, email: invitation.email };
   const inviter = await prisma.user.findUnique({ where: { id: invitation.invitedById }, select: { name: true, email: true } });
+  if (invitation.expiresAt < new Date())
+    return { status: "expired", workspace: workspace.name, inviter: inviter?.name || "", email: invitation.email };
   return {
     status: "pending",
     id: invitation.id,

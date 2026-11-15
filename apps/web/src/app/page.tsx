@@ -6,11 +6,12 @@ import { LAST_WORKSPACE_COOKIE } from "@/lib/shared/cookies";
 
 export const dynamic = "force-dynamic";
 
-// Home: the last workspace opened, otherwise the first one, otherwise onboarding
+// Home: the last workspace opened, otherwise the first one, otherwise onboarding. A suspended workspace is
+// never chosen: its notice leads back here, which would only lead to it again
 export default async function Home() {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
-  const workspaces = await userWorkspaces(user.id);
+  const workspaces = (await userWorkspaces(user.id)).filter((w) => !w.suspendedAt);
   if (!workspaces.length) redirect("/onboarding");
   const last = (await cookies()).get(LAST_WORKSPACE_COOKIE)?.value;
   redirect(`/w/${(workspaces.find((w) => w.slug === last) ?? workspaces[0]!).slug}`);

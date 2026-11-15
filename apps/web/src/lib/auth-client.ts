@@ -30,7 +30,9 @@ export function failureKey(error: { code?: string; status?: number; message?: st
   if (code === "EMAIL_NOT_VERIFIED") return "emailNotVerified" as const;
   if (code.startsWith("USER_ALREADY_EXISTS")) return "userExists" as const;
   if (code === "PASSWORD_TOO_SHORT" || code === "PASSWORD_TOO_LONG") return "weakPassword" as const;
-  if (code === "INVALID_CODE" || code === "INVALID_BACKUP_CODE" || code === "INVALID_TWO_FACTOR_COOKIE") return "invalidCode" as const;
+  if (code === "INVALID_CODE" || code === "INVALID_BACKUP_CODE") return "invalidCode" as const;
+  // No sign-in waits for a code any more (it expired): the code itself may be right
+  if (code === "INVALID_TWO_FACTOR_COOKIE" || code === "TWO_FACTOR_EXPIRED") return "twoFactorExpired" as const;
   if (code === "INVALID_TOKEN" || code === "TOKEN_EXPIRED") return "linkExpired" as const;
   if (code === "SSO_REQUIRED" || error?.message?.includes("SSO_REQUIRED")) return "ssoRequired" as const;
   if (code === "TWO_FACTOR_REQUIRED") return "twoFactorRequired" as const;

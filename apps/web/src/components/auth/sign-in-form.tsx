@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { authClient, failureKey, passkeyDismissed, safeNext } from "@/lib/auth-client";
 import { withBasePath } from "@/lib/shared/base-path";
 import { Field, FormAlert, PasswordInput } from "./fields";
@@ -33,12 +33,26 @@ export function SignInForm({
   const t = useTranslations("auth");
   const router = useRouter();
   const next = safeNext(rawNext);
-  const [mode, setMode] = useState<"password" | "magic" | "sso">("password");
+  // An email link that failed (used already, or expired) comes back here: a new one is a click away
+  const [mode, setMode] = useState<"password" | "magic" | "sso">(initialError === "linkExpired" ? "magic" : "password");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<FailureKey | null>(initialError ?? null);
   const [sent, setSent] = useState(false);
+  // The link can be sent again, once a short pause has passed
+  const [resendIn, setResendIn] = useState(0);
+  const form = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    if (resendIn <= 0) return;
+    const timer = setTimeout(() => setResendIn((s) => s - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [resendIn]);
+  /** After a refusal, the keyboard goes back to the field to correct: the password, or the address */
+  const refocus = (key: FailureKey) => {
+    const field = key === "invalidCredentials" ? "current-password" : "username webauthn";
+    requestAnimationFrame(() => form.current?.querySelector<HTMLInputElement>(`input[autocomplete="${field}"]`)?.focus());
+  };
   // Passkeys, once the browser says it can use them
   const [passkeys, setPasskeys] = useState(false);
 
@@ -86,22 +100,26 @@ export function SignInForm({
     window.location.href = data.url;
   };
 
+  const sendLink = async () => {
+    const { error } = await authClient.signIn.magicLink({
+      email,
+      callbackURL: withBasePath(next),
+      errorCallbackURL: withBasePath("/sign-in"),
+    });
+    setBusy(false);
+    if (error) setError(failureKey(error));
+    else {
+      setSent(true);
+      setResendIn(30);
+    }
+  };
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setBusy(true);
     setError(null);
     if (mode === "sso") return companySignIn();
-    if (mode === "magic") {
-      const { error } = await authClient.signIn.magicLink({
-        email,
-        callbackURL: withBasePath(next),
-        errorCallbackURL: withBasePath("/sign-in"),
-      });
-      setBusy(false);
-      if (error) setError(failureKey(error));
-      else setSent(true);
-      return;
-    }
+    if (mode === "magic") return sendLink();
     // An address with a company directory signs in with the directory password
     if (companyLdap) {
       const { error: ldapError } = await authClient.$fetch("/sign-in/ldap", {
@@ -116,6 +134,7 @@ export function SignInForm({
       if (ldapError.status !== 404) {
         setBusy(false);
         setError("invalidCredentials");
+        refocus("invalidCredentials");
         return;
       }
     }
@@ -125,6 +144,7 @@ export function SignInForm({
       if (companySso && failureKey(error) === "ssoRequired") return companySignIn();
       setBusy(false);
       setError(failureKey(error));
+      refocus(failureKey(error));
       return;
     }
     router.replace(next);
@@ -137,6 +157,21 @@ export function SignInForm({
         <h1>{t("checkEmailTitle")}</h1>
         <p>{t.rich("checkEmailMagic", { email, strong: (c) => <strong>{c}</strong> })}</p>
         {!mailConfigured && <p className="hint">{t("noMailServer")}</p>}
+        <FormAlert>{error && t(`failure.${error}`)}</FormAlert>
+        <button
+          type="button"
+          className="btn"
+          disabled={busy || resendIn > 0}
+          aria-busy={busy}
+          onClick={() => {
+            setBusy(true);
+            setError(null);
+            void sendLink();
+          }}
+        >
+          {t("resendLink")}
+        </button>
+        {resendIn > 0 && <p className="hint">{t("resendIn", { seconds: resendIn })}</p>}
         <button type="button" className="link-btn" onClick={() => setSent(false)}>
           {t("backToSignIn")}
         </button>
@@ -168,7 +203,7 @@ export function SignInForm({
       </div>
       {mode === "magic" && <p className="hint">{t("magicHint")}</p>}
       {mode === "sso" && <p className="hint">{t("ssoHint")}</p>}
-      <form className="auth-form" onSubmit={submit} noValidate={false}>
+      <form ref={form} className="auth-form" onSubmit={submit} noValidate={false}>
         <Field label={t("email")}>
           {(p) => (
             // "webauthn": the browser suggests the passkeys of this site right in the field

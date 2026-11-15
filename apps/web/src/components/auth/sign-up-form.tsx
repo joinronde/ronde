@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { acceptInvitationAction } from "@/app/(auth)/invite/[token]/actions";
 import { authClient, failureKey, safeNext } from "@/lib/auth-client";
 import { withBasePath } from "@/lib/shared/base-path";
 import { track } from "@/lib/shared/track";
@@ -19,19 +20,23 @@ export function SignUpForm({
   email: invitedEmail,
   mailConfigured,
   legal = null,
+  invitation = null,
 }: {
   providers: ProviderInfo[];
   next?: string;
   email?: string;
+  /** A valid invitation the form was opened from: whom it joins, and the address it was sent to */
+  invitation?: { token: string; workspace: string; inviter: string; email: string } | null;
   mailConfigured: boolean;
   /** The terms and privacy policy an account accepts (the cloud); none on a self-hosted instance */
   legal?: { terms: string; privacy: string } | null;
 }) {
   const t = useTranslations("auth");
+  const ti = useTranslations("invite");
   const router = useRouter();
   const next = safeNext(rawNext);
   const [name, setName] = useState("");
-  const [email, setEmail] = useState(invitedEmail ?? "");
+  const [email, setEmail] = useState(invitation?.email ?? invitedEmail ?? "");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<FailureKey | null>(null);
@@ -56,6 +61,16 @@ export function SignUpForm({
       setVerify(true);
       return;
     }
+    // Opened from an invitation: the new account joins at once, without a second page to click through
+    if (invitation) {
+      const joined = await acceptInvitationAction(invitation.token);
+      if (joined.ok) {
+        track("invite_accepted");
+        router.replace(`/w/${joined.data.slug}`);
+        router.refresh();
+        return;
+      }
+    }
     router.replace(next);
     router.refresh();
   };
@@ -76,8 +91,14 @@ export function SignUpForm({
   return (
     <div className="auth-body">
       <header className="auth-title">
-        <h1>{t("signUpTitle")}</h1>
-        <p className="muted">{t("signUpIntro")}</p>
+        <h1>{invitation ? ti("title", { workspace: invitation.workspace }) : t("signUpTitle")}</h1>
+        <p className="muted">
+          {invitation
+            ? invitation.inviter
+              ? t("signUpInvited", { inviter: invitation.inviter })
+              : t("signUpInvitedAnonymous")
+            : t("signUpIntro")}
+        </p>
       </header>
       <FormAlert>{error && t(`failure.${error}`)}</FormAlert>
       <ProviderButtons providers={providers} next={next} onError={setError} />
@@ -87,7 +108,18 @@ export function SignUpForm({
           {(p) => <input {...p} type="text" autoComplete="name" required value={name} onChange={(e) => setName(e.target.value)} />}
         </Field>
         <Field label={t("email")}>
-          {(p) => <input {...p} type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />}
+          {(p) => (
+            // The invitation opens a seat only for the address it was sent to
+            <input
+              {...p}
+              type="email"
+              autoComplete="email"
+              required
+              readOnly={!!invitation}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          )}
         </Field>
         <Field
           label={t("password")}

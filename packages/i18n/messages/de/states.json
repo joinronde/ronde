@@ -9,6 +9,11 @@
   "retry": "Erneut versuchen",
   "suspendedTitle": "Dieser Arbeitsbereich ist gesperrt",
   "suspendedBody": "{workspace} ist vorerst gesperrt: Meetings, Check-ins und Verlauf bleiben erhalten, aber niemand kann sie öffnen. Die Inhaber kennen den Grund; schreib an die Administration dieses Dienstes, um ihn wieder zu öffnen.",
+  "suspendedBodyOwner": "{workspace} wurde vom Betreiber dieses Dienstes gesperrt. Meetings, Check-ins und Verlauf bleiben erhalten, aber niemand kann sie öffnen. Um den Arbeitsbereich wieder freizuschalten, wende dich an den Betreiber.",
   "suspendedBack": "Zurück zu meinen Arbeitsbereichen",
+  "suspendedCreate": "Weiteren Arbeitsbereich erstellen",
+  "suspendedMark": "Gesperrt",
+  "guestLinkGoneTitle": "Dieser Link funktioniert nicht mehr",
+  "guestLinkGone": "Dieser Link zum geteilten Bildschirm eines Meetings ist abgelaufen oder wurde entfernt. Bitte die Person, die ihn dir geschickt hat, um einen neuen.",
   "report": "Erzähl uns, was passiert ist"
 }
