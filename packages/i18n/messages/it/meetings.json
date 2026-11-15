@@ -86,6 +86,8 @@
       }
     },
     "cancel": "Annulla",
+    "leaveConfirm": "Uscire dalla nuova riunione? Quello che hai inserito non viene salvato.",
+    "leave": "Esci",
     "modulesLater": "Altri si aggiungono in qualsiasi momento dalle impostazioni della riunione.",
     "order": {
       "title": "Ordine dei turni",

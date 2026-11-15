@@ -42,8 +42,22 @@ test("a project of the portfolio gets its turn in a meeting, then its page tells
   await expect(page.getByRole("option", { name: /\(you\)$/ })).toHaveCount(1);
   await expect(page.getByRole("option", { name: "Me", exact: true })).toHaveCount(0);
   await page.getByRole("option", { name: /\(you\)$/ }).click();
-  await form.getByRole("button", { name: "Create the project" }).click();
+  // The project's page is slow to come: meanwhile the form cannot create the project a second time
+  let release = () => {};
+  const held = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route("**/projects/billing-api**", async (route) => {
+    await held;
+    await route.continue();
+  });
+  const create = form.getByRole("button", { name: "Create the project" });
+  await create.click();
+  await page.waitForTimeout(2000);
+  await expect(create).toBeDisabled();
+  release();
   await page.waitForURL(/\/projects\/billing-api$/);
+  await page.unroute("**/projects/billing-api**");
   await expect(page.getByRole("heading", { name: "Billing API", level: 1 })).toBeVisible();
 
   // A meeting with a project round, following the project

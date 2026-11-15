@@ -151,6 +151,10 @@ test("a host creates a meeting, a participant fills in their check-in and raises
   await page.goto(`${meeting}/stats`);
   const archived = page.locator(".kpi").filter({ has: page.locator(".l", { hasText: /^Sessions held$/ }) });
   await expect(archived.locator(".v")).toHaveText("1");
+  // Every chart's values, readable without a mouse: the attendance's among them
+  const attendance = page.locator(".panel").filter({ has: page.getByRole("heading", { name: "Attendance (%)" }) });
+  await attendance.getByText("See the data").click();
+  await expect(attendance.getByRole("cell", { name: /present/ })).toBeVisible();
 
   // Exports for a spreadsheet: UTF-8 with its byte order mark, one line per archived session
   const download = page.waitForEvent("download");

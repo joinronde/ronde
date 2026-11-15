@@ -717,6 +717,7 @@ function AccountPhoto({ photo, name }: { photo: Props["photo"]; name: string }) 
   const t = useTranslations("account");
   const ta = useTranslations("avatar");
   const router = useRouter();
+  const [confirmDialog, confirm] = useConfirm();
   const input = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState<{ ok: boolean; text: string } | null>(null);
@@ -761,7 +762,14 @@ function AccountPhoto({ photo, name }: { photo: Props["photo"]; name: string }) 
                 {url ? ta("change") : ta("add")}
               </button>
               {url && (
-                <button type="button" className="btn sm danger" disabled={busy} onClick={() => void send(null)}>
+                <button
+                  type="button"
+                  className="btn sm danger"
+                  disabled={busy}
+                  onClick={async () => {
+                    if (await confirm({ message: ta("removeConfirm"), confirmLabel: ta("remove"), danger: true })) void send(null);
+                  }}
+                >
                   {ta("remove")}
                 </button>
               )}
@@ -790,6 +798,7 @@ function AccountPhoto({ photo, name }: { photo: Props["photo"]; name: string }) 
           <p className="hint">{t("photoNoWorkspace")}</p>
         )}
       </div>
+      {confirmDialog}
     </div>
   );
 }
@@ -829,16 +838,7 @@ function ChangePassword() {
       </Field>
       <div className="grid2">
         <Field label={t("newPassword")} hint={tAuth("passwordHint")}>
-          {(p) => (
-            <PasswordInput
-              {...p}
-              autoComplete="new-password"
-              required
-              minLength={10}
-              value={next}
-              onChange={(e) => setNext(e.target.value)}
-            />
-          )}
+          {(p) => <PasswordInput {...p} autoComplete="new-password" required value={next} onChange={(e) => setNext(e.target.value)} />}
         </Field>
         <Field label={t("newPasswordAgain")} error={mismatch ? t("passwordMismatch") : null}>
           {(p) => <PasswordInput {...p} autoComplete="new-password" required value={again} onChange={(e) => setAgain(e.target.value)} />}

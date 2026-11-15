@@ -86,6 +86,8 @@
       }
     },
     "cancel": "Cancelar",
+    "leaveConfirm": "Sair da nova reunião? O que você preencheu não é salvo.",
+    "leave": "Sair",
     "modulesLater": "Você pode adicionar outros a qualquer momento nas configurações da reunião.",
     "order": {
       "title": "Ordem das falas",

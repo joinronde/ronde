@@ -46,8 +46,25 @@ test("people, sections, schedule, template and deletion of a meeting; leaving an
   // Sections: a free section of the meeting's own, saved by itself, then on everyone's check-in
   await page.goto(`${meeting}/settings#sections`);
   await page.getByRole("button", { name: "+ Add a section" }).click();
-  await page.getByRole("textbox", { name: "Name of section 5" }).fill("Demo to show");
+  // Not named yet: no error before anything is typed, and the other settings still save
+  const newName = page.getByRole("textbox", { name: "Name of section 5" });
+  await page.waitForTimeout(1500);
+  await expect(page.getByText("Not saved: check the highlighted fields.")).toHaveCount(0);
+  await expect(newName).not.toHaveAttribute("aria-invalid", "true");
+  await newName.focus();
+  await newName.blur();
+  await expect(newName).toHaveAttribute("aria-invalid", "true");
+  await expect(page.getByText("Name this section to save it")).toBeVisible();
+  await newName.fill("Demo to show");
+  await expect(newName).not.toHaveAttribute("aria-invalid", "true");
   await expect(page.locator(".cfg-status")).toHaveClass(/is-saved/);
+  await page.reload();
+  await expect(page.getByRole("textbox", { name: "Name of section 5" })).toHaveValue("Demo to show");
+  // Its name cleared to be typed again: the section stays, with its name, until another one is typed
+  await page.getByRole("textbox", { name: "Name of section 5" }).fill("");
+  await page.getByRole("textbox", { name: "Name of section 5" }).blur();
+  await expect(page.getByText("keeps “Demo to show” until")).toBeVisible();
+  await page.waitForTimeout(1500);
   await page.reload();
   await expect(page.getByRole("textbox", { name: "Name of section 5" })).toHaveValue("Demo to show");
   await rui.goto(`${meeting}/me`);

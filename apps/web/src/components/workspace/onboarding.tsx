@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { createWorkspaceAction, joinInvitationAction, suggestSlugAction } from "@/app/onboarding/actions";
 import { Field, FormAlert } from "@/components/auth/fields";
 import { SignOutButton } from "@/components/auth/sign-out-button";
+import { useHydrated } from "@/components/use-hydrated";
 import { track } from "@/lib/shared/track";
 import { browserTimeZone, LocaleSelect, TimeZoneSelect } from "./inputs";
 
@@ -59,6 +60,7 @@ export function Onboarding({
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const suggestion = useRef(0);
+  const hydrated = useHydrated();
   const newMeeting = (ws: string) => `/w/${ws}/meetings/new?template=${encodeURIComponent(`builtin:${template}`)}`;
 
   useEffect(() => setTimezone(browserTimeZone()), []);
@@ -204,7 +206,7 @@ export function Onboarding({
               </button>
             </p>
           )}
-          <button type="submit" className="btn primary big" disabled={!!busy} aria-busy={busy === "create"}>
+          <button type="submit" className="btn primary big" disabled={!!busy || !hydrated} aria-busy={busy === "create"}>
             {t("create")}
           </button>
         </form>

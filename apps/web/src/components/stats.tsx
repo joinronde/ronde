@@ -18,7 +18,10 @@ interface Bar {
   tip: string;
 }
 
-/** Single-series vertical bar chart, with an optional reference line */
+/**
+ * Single-series vertical bar chart, with an optional reference line; its values in a table under it too (the
+ * bars' figures show on hover only: the table gives them to the keyboard and to screen readers)
+ */
 function Columns({
   data,
   refValue,
@@ -26,6 +29,7 @@ function Columns({
   fmt,
   label,
   max: fixedMax,
+  table = true,
 }: {
   data: Bar[];
   refValue?: number;
@@ -33,7 +37,10 @@ function Columns({
   fmt: (v: number) => string;
   label: string;
   max?: number;
+  /** The table of values (false: the chart has its own) */
+  table?: boolean;
 }) {
+  const t = useTranslations("stats");
   const W = 640,
     H = 230,
     L = 36,
@@ -52,52 +59,81 @@ function Columns({
   const ticks = Array.from({ length: Math.round(max / step) + 1 }, (_, i) => i * step);
   const last = data[data.length - 1];
   return (
-    <svg className="chart" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={label}>
-      {ticks.map((t) => (
-        <g key={t}>
-          <line className="ch-grid" x1={L} x2={W - R} y1={y(t)} y2={y(t)} />
-          <text className="ch-t" x={L - 6} y={y(t) + 4} textAnchor="end">
-            {fmt(t)}
-          </text>
-        </g>
-      ))}
-      {data.map((d, i) => {
-        const cx = L + band * i + band / 2,
-          x = cx - bw / 2,
-          top = y(d.value),
-          h = Math.max(0, T + ih - top),
-          r = Math.min(4, h);
-        return (
-          <g className="ch-g" key={i}>
-            <rect className="ch-hit" x={L + band * i} y={T} width={band} height={ih} data-chart-tip={d.tip} />
-            {h > 0 && (
-              <path
-                className="ch-bar"
-                pointerEvents="none"
-                d={`M${x},${T + ih} V${top + r} Q${x},${top} ${x + r},${top} H${x + bw - r} Q${x + bw},${top} ${x + bw},${top + r} V${T + ih} Z`}
-              />
-            )}
-            <text className="ch-t" x={cx} y={H - 8} textAnchor="middle">
-              {d.label}
+    <>
+      <svg className="chart" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={label}>
+        {ticks.map((t) => (
+          <g key={t}>
+            <line className="ch-grid" x1={L} x2={W - R} y1={y(t)} y2={y(t)} />
+            <text className="ch-t" x={L - 6} y={y(t) + 4} textAnchor="end">
+              {fmt(t)}
             </text>
           </g>
-        );
-      })}
-      <line className="ch-base" x1={L} x2={W - R} y1={T + ih} y2={T + ih} />
-      {refValue !== undefined && (
-        <>
-          <line className="ch-ref" x1={L} x2={W - R} y1={y(refValue)} y2={y(refValue)} />
-          <text className="ch-t" x={W - R} y={y(refValue) - 6} textAnchor="end">
-            {refLabel}
+        ))}
+        {data.map((d, i) => {
+          const cx = L + band * i + band / 2,
+            x = cx - bw / 2,
+            top = y(d.value),
+            h = Math.max(0, T + ih - top),
+            r = Math.min(4, h);
+          return (
+            <g className="ch-g" key={i}>
+              <rect className="ch-hit" x={L + band * i} y={T} width={band} height={ih} data-chart-tip={d.tip} />
+              {h > 0 && (
+                <path
+                  className="ch-bar"
+                  pointerEvents="none"
+                  d={`M${x},${T + ih} V${top + r} Q${x},${top} ${x + r},${top} H${x + bw - r} Q${x + bw},${top} ${x + bw},${top + r} V${T + ih} Z`}
+                />
+              )}
+              <text className="ch-t" x={cx} y={H - 8} textAnchor="middle">
+                {d.label}
+              </text>
+            </g>
+          );
+        })}
+        <line className="ch-base" x1={L} x2={W - R} y1={T + ih} y2={T + ih} />
+        {refValue !== undefined && (
+          <>
+            <line className="ch-ref" x1={L} x2={W - R} y1={y(refValue)} y2={y(refValue)} />
+            <text className="ch-t" x={W - R} y={y(refValue) - 6} textAnchor="end">
+              {refLabel}
+            </text>
+          </>
+        )}
+        {last && (
+          <text className="ch-v" x={L + band * (data.length - 1) + band / 2} y={y(last.value) - 7} textAnchor="middle">
+            {fmt(last.value)}
           </text>
-        </>
+        )}
+      </svg>
+      {table && (
+        <details className="dt">
+          <summary>{t("seeData")}</summary>
+          <div className="tbl-wrap">
+            <table className="data">
+              <tbody>
+                <tr>
+                  <th>{t("date")}</th>
+                  <th>{label}</th>
+                </tr>
+                {data.map((d, i) => {
+                  const [day, ...rest] = d.tip.split("\n");
+                  return (
+                    <tr key={i}>
+                      <td>{day}</td>
+                      <td>
+                        <span className="num">{fmt(d.value)}</span>
+                        {rest.length > 0 && ` · ${rest.join(" ")}`}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </details>
       )}
-      {last && (
-        <text className="ch-v" x={L + band * (data.length - 1) + band / 2} y={y(last.value) - 7} textAnchor="middle">
-          {fmt(last.value)}
-        </text>
-      )}
-    </svg>
+    </>
   );
 }
 
@@ -277,6 +313,7 @@ export function StatsView() {
             refLabel={t("kpi.target", { target: fmtMinutes(target, locale) })}
             fmt={(v) => String(Math.round(v))}
             label={t("charts.durationLabel")}
+            table={false}
           />
           <details className="dt">
             <summary>{t("seeData")}</summary>

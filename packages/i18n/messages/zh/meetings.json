@@ -86,6 +86,8 @@
       }
     },
     "cancel": "取消",
+    "leaveConfirm": "离开新会议？你填写的内容不会保留。",
+    "leave": "离开",
     "modulesLater": "其他模块可随时在会议设置中添加。",
     "order": {
       "title": "发言顺序",

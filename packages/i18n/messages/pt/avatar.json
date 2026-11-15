@@ -5,5 +5,6 @@
   "change": "Trocar a foto",
   "add": "Adicionar uma foto",
   "remove": "Remover a foto",
+  "removeConfirm": "Remover sua foto? Suas iniciais aparecem no lugar dela.",
   "unreadable": "Imagem ilegível."
 }

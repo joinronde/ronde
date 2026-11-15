@@ -163,9 +163,15 @@ test("a guest link shows the meeting live without an account, until it is revoke
   // Revoked: the link no longer opens anything
   await page.goto(`${meeting}/settings#people`);
   await panel.getByRole("listitem").filter({ hasText: "Board members" }).getByRole("button", { name: "Revoke" }).click();
+  // Asked first: the link cannot be shown again once revoked
+  await expect(page.getByRole("dialog")).toContainText("Revoke the link for “Board members”?");
+  await page.getByRole("dialog").getByRole("button", { name: "Revoke" }).click();
   await expect(page.getByText("Link revoked")).toBeVisible();
   await expect(panel.getByRole("listitem").filter({ hasText: "Board members" })).toHaveCount(0);
   const gone = await guest.goto(link);
   expect(gone?.status()).toBe(404);
+  // Said in words for a guest, with no sign-in page to go to
+  await expect(guest.getByRole("heading", { name: "This link no longer works" })).toBeVisible();
+  await expect(guest.getByRole("link")).toHaveCount(0);
   await guestCtx.close();
 });

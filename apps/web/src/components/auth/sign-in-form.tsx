@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { authClient, failureKey, passkeyDismissed, safeNext } from "@/lib/auth-client";
 import { withBasePath } from "@/lib/shared/base-path";
+import { useHydrated } from "../use-hydrated";
 import { Field, FormAlert, PasswordInput } from "./fields";
 import { ProviderButtons, type ProviderInfo } from "./providers";
 
@@ -55,6 +56,7 @@ export function SignInForm({
   };
   // Passkeys, once the browser says it can use them
   const [passkeys, setPasskeys] = useState(false);
+  const hydrated = useHydrated();
 
   /**
    * Sign-in with a passkey: from the button, or picked in the email field's suggestions (autoFill), which the
@@ -230,7 +232,7 @@ export function SignInForm({
             )}
           </Field>
         )}
-        <button type="submit" className="btn primary big" disabled={busy} aria-busy={busy}>
+        <button type="submit" className="btn primary big" disabled={busy || !hydrated} aria-busy={busy}>
           {mode === "password" ? t("signIn") : mode === "magic" ? t("sendMagicLink") : t("continueSso")}
         </button>
       </form>

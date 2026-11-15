@@ -752,8 +752,11 @@ export function ProjectDialog({
     setBusy(true);
     setError(null);
     const res = await onSubmit({ ...v, links: v.links.filter((l) => l.url.trim()) });
-    setBusy(false);
-    if (!res.ok) setError(res.error);
+    // Saved: the dialog stays busy until it closes or the project's page opens, never to be sent twice
+    if (!res.ok) {
+      setBusy(false);
+      setError(res.error);
+    }
   };
   return (
     <Modal onClose={onClose} labelledBy={titleId} size="lg">

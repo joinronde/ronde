@@ -33,6 +33,8 @@
     "title": "Seções da ficha",
     "name": "Nome da seção",
     "nameOf": "Nome da seção {n}",
+    "unnamed": "Dê um nome a esta seção para salvá-la. As outras configurações são salvas sem ela.",
+    "unnamedKept": "Uma seção precisa de um nome: ela mantém “{label}” até você digitar outro.",
     "input": "Entrada",
     "inputOf": "Entrada de “{label}”",
     "role": "Papel",

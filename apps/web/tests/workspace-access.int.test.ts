@@ -50,6 +50,7 @@ const { shellData } = await import("@/lib/server/shell");
 const StatsPage = (await import("@/app/w/[ws]/(shell)/m/[meeting]/(app)/stats/page")).default;
 const { inviteAction, changeRoleAction, removePersonAction } = await import("@/app/w/[ws]/actions");
 const { workspaceContext } = await import("@/lib/server/authz");
+const AccountPage = (await import("@/app/account/page")).default;
 
 const signOut = () => {
   request = { "accept-language": "en" };
@@ -472,6 +473,26 @@ describe("the last owner", () => {
     const [a, b] = await Promise.all([memberContext(w.ws.id, w.user.id), memberContext(w.ws.id, second.userId)]);
     await Promise.allSettled([changeRole(a!, second.personId, "admin"), changeRole(b!, w.host.id, "admin")]);
     expect(await prisma.workspaceMember.count({ where: { workspaceId: w.ws.id, role: "owner" } })).toBe(1);
+  });
+});
+
+describe("the appearance", () => {
+  const shown = async () => ((await AccountPage()) as { props: { theme: string } }).props.theme;
+  const applied = async () => (await import("@/lib/server/appearance")).appliedTheme();
+
+  it("shown in the account is the one applied: picked before signing in, on this device", async () => {
+    await signIn(w.user.id);
+    jar["ronde-theme"] = "dark";
+    expect(await shown()).toBe("dark");
+  });
+
+  it("saved in the account follows the person to a device that has none", async () => {
+    await prisma.userPref.create({ data: { userId: w.user.id, key: "theme", value: "dark" } });
+    await signIn(w.user.id);
+    expect(await applied()).toBe("dark");
+    expect(await shown()).toBe("dark");
+    signOut();
+    expect(await applied()).toBeUndefined();
   });
 });
 

@@ -9,6 +9,7 @@ import { authClient, failureKey, safeNext } from "@/lib/auth-client";
 import { withBasePath } from "@/lib/shared/base-path";
 import { track } from "@/lib/shared/track";
 import { NewTab } from "../shell/new-tab";
+import { useHydrated } from "../use-hydrated";
 import { Field, FormAlert, PasswordInput } from "./fields";
 import { ProviderButtons, type ProviderInfo } from "./providers";
 
@@ -41,6 +42,7 @@ export function SignUpForm({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<FailureKey | null>(null);
   const [verify, setVerify] = useState(false);
+  const hydrated = useHydrated();
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,17 +133,10 @@ export function SignUpForm({
           error={error === "weakPassword" ? t("failure.weakPassword") : null}
         >
           {(p) => (
-            <PasswordInput
-              {...p}
-              autoComplete="new-password"
-              required
-              minLength={10}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <PasswordInput {...p} autoComplete="new-password" required value={password} onChange={(e) => setPassword(e.target.value)} />
           )}
         </Field>
-        <button type="submit" className="btn primary big" disabled={busy} aria-busy={busy}>
+        <button type="submit" className="btn primary big" disabled={busy || !hydrated} aria-busy={busy}>
           {t("signUp")}
         </button>
         {legal && (

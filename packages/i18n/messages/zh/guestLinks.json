@@ -13,6 +13,7 @@
   "until": "有效期至 {date}",
   "expiredOn": "已于 {date} 过期",
   "revoke": "撤销",
+  "revokeConfirm": "撤销“{label}”的链接？链接会立即失效，且无法再次显示：需要重新发送一个新链接。",
   "remove": "移除",
   "revoked": "链接已撤销"
 }

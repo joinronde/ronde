@@ -1,9 +1,9 @@
-import { isTheme } from "@ronde/core/appearance";
 import { prisma } from "@ronde/db";
 import { getTranslations } from "next-intl/server";
 import { AccountProfileView } from "@/components/workspace/account";
 import { accountBirthday } from "@/lib/server/account-birthday";
 import { accountPhoto } from "@/lib/server/account-photo";
+import { shownTheme } from "@/lib/server/appearance";
 import { pageUser } from "@/lib/server/authz";
 import { env } from "@/lib/server/env";
 import { userWorkspaces } from "@/lib/server/workspaces";
@@ -19,9 +19,9 @@ export async function generateMetadata() {
 /** The account's profile: photo, name, language, time zone, appearance */
 export default async function AccountPage() {
   const user = await pageUser("/account");
-  const [workspaces, themePref, hintsPref, photo, birthday] = await Promise.all([
+  const [workspaces, theme, hintsPref, photo, birthday] = await Promise.all([
     userWorkspaces(user.id),
-    prisma.userPref.findUnique({ where: { userId_key: { userId: user.id, key: "theme" } } }),
+    shownTheme(),
     prisma.userPref.findUnique({ where: { userId_key: { userId: user.id, key: HIDE_UPGRADE_HINTS } } }),
     accountPhoto(user.id),
     accountBirthday(user.id),
@@ -32,7 +32,7 @@ export default async function AccountPage() {
     <AccountProfileView
       user={{ name: user.name, email: user.email, locale: user.locale ?? "", timezone: user.timezone ?? "" }}
       photo={photo}
-      theme={isTheme(themePref?.value) ? themePref.value : "system"}
+      theme={theme}
       upgradeHints={admin && !env.hideUpgradeHints() ? !hintsPref : null}
       birthday={birthday.offered || birthday.birthday ? birthday.birthday : undefined}
     />

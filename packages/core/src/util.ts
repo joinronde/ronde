@@ -356,13 +356,24 @@ export function firstGrapheme(text: string): string {
   return [...text][0]!;
 }
 
-export const initials = (n: string | null | undefined) =>
-  String(n ?? "")
-    .split(/[\s'-]+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => firstGrapheme(w).toUpperCase())
-    .join("") || "?";
+/** A suffix after a name ("Jr.", "Sr", "III"): not a word of the name for its initials */
+const NAME_SUFFIX = /^(jr|sr|ii|iii|iv|v|vi)\.?$/i;
+
+/**
+ * A person's (or a project's) initials, the same on every screen: the first and the last word ("Ana María López"
+ * gives "AL"), words starting with a letter or a digit only ("Product team (demo)" gives "PT"), a suffix left out,
+ * "?" when nothing is left
+ */
+export function initials(name: string | null | undefined): string {
+  const words = String(name ?? "")
+    .trim()
+    .split(/\s+/)
+    .filter((w) => /^[\p{L}\p{N}]/u.test(w));
+  const parts = words.length > 1 ? words.filter((w, i) => i === 0 || !NAME_SUFFIX.test(w)) : words;
+  const first = parts[0] ? firstGrapheme(parts[0]) : "";
+  const last = parts.length > 1 ? firstGrapheme(parts[parts.length - 1]!) : "";
+  return (first + last).toUpperCase() || "?";
+}
 
 const HAN = /\p{Script=Han}/u;
 const HAN_RUNS = /\p{Script=Han}+|[^\p{Script=Han}]+/gu;

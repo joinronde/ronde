@@ -86,6 +86,8 @@
       }
     },
     "cancel": "Abbrechen",
+    "leaveConfirm": "Das neue Meeting verlassen? Deine Eingaben werden nicht gespeichert.",
+    "leave": "Verlassen",
     "modulesLater": "Weitere lassen sich jederzeit in den Einstellungen des Meetings hinzufügen.",
     "order": {
       "title": "Reihenfolge",

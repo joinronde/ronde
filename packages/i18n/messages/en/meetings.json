@@ -86,6 +86,8 @@
       }
     },
     "cancel": "Cancel",
+    "leaveConfirm": "Leave the new meeting? What you entered is not kept.",
+    "leave": "Leave",
     "modulesLater": "Others can be added at any time from the meeting settings.",
     "order": {
       "title": "Running order",

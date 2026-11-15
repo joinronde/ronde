@@ -37,7 +37,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createMeetingAction, deleteTemplateAction } from "@/app/w/[ws]/actions";
 import { Field, FormAlert } from "@/components/auth/fields";
 import { DateInput } from "@/components/date-input";
@@ -104,6 +104,7 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
   const fmt = formatters(locale);
   const router = useRouter();
   const heading = useRef<HTMLHeadingElement>(null);
+  const nameInput = useRef<HTMLInputElement>(null);
   const [confirmDialog, confirm] = useConfirm();
   const [list, setList] = useState(templates);
   const all = [blank, ...list];
@@ -154,12 +155,42 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
     to: `${Number(startDate.slice(0, 4)) + 1}${startDate.slice(4)}`,
   })[0];
 
-  const go = (next: Step) => {
+  // Each step is a page of the browser's history: Back (a phone's back gesture) goes back a step, not out. The
+  // entries pushed follow each other, from the step the wizard opened on (`opened`) to the current one
+  const opened = useRef(step);
+  const go = (next: Step, fromHistory = false) => {
+    if (!fromHistory && next < step && step - opened.current >= step - next) {
+      // Back by the wizard's own buttons: the browser's history goes back too (its popstate brings the step)
+      window.history.go(next - step);
+      return;
+    }
     setStep(next);
     setError(null);
-    // The new step is announced: focus moves to its title
-    requestAnimationFrame(() => heading.current?.focus());
+    if (!fromHistory) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("step", String(next));
+      const state = { ...window.history.state, nmStep: next };
+      if (next > step) window.history.pushState(state, "", url);
+      else {
+        window.history.replaceState(state, "", url);
+        opened.current = next;
+      }
+    }
+    // The schedule step starts in its name, the field to fill; the others announce themselves by their title
+    requestAnimationFrame(() => (next === 1 ? nameInput.current : heading.current)?.focus());
   };
+  const goRef = useRef(go);
+  goRef.current = go;
+  // Once, for the step the wizard opened on
+  useEffect(() => {
+    window.history.replaceState({ ...window.history.state, nmStep: opened.current }, "");
+    const onPop = (e: PopStateEvent) => {
+      const at = (e.state as { nmStep?: unknown } | null)?.nmStep;
+      if (typeof at === "number" && at >= 0 && at <= 3) goRef.current(at as Step, true);
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
   const pick = (x: TemplateSummary) => {
     setRef(x.ref);
     const p = x.data.schedule[0]!;
@@ -217,6 +248,26 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
     router.push(`/w/${slug}/m/${res.data.id}/control`);
   };
   const valid = (s: Step) => s !== 2 || sections.length > 0;
+
+  // Leaving by a link (the sidebar, the breadcrumb) once something was typed or chosen asks first: nothing is kept
+  const dirty = !busy && (name.trim() !== "" || step >= 2);
+  useEffect(() => {
+    if (!dirty) return;
+    const onClick = (e: MouseEvent) => {
+      const link = (e.target as Element | null)?.closest?.("a[href]") as HTMLAnchorElement | null;
+      if (!link || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (link.target === "_blank" || link.hasAttribute("download")) return;
+      const to = new URL(link.href, window.location.href);
+      if (to.origin !== window.location.origin || to.pathname === window.location.pathname) return;
+      e.preventDefault();
+      e.stopPropagation();
+      void confirm({ message: t("leaveConfirm"), confirmLabel: t("leave"), danger: true }).then((ok) => {
+        if (ok) router.push(`${to.pathname}${to.search}${to.hash}`);
+      });
+    };
+    document.addEventListener("click", onClick, true);
+    return () => document.removeEventListener("click", onClick, true);
+  }, [dirty, confirm, router, t]);
 
   // Step 0: where to start from
   const builtins = list.filter((x) => x.builtin);
@@ -404,6 +455,7 @@ export function NewMeetingWizard({ slug, people, teams, canInvite, templates, bl
                     {...p}
                     type="text"
                     maxLength={100}
+                    ref={nameInput}
                     autoFocus
                     placeholder={template.name}
                     value={name}

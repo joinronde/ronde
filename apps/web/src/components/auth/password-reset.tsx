@@ -88,7 +88,6 @@ export function ResetPasswordForm({ token }: { token: string | null }) {
                     {...p}
                     autoComplete="new-password"
                     required
-                    minLength={10}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />

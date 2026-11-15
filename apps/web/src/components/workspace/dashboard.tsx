@@ -341,9 +341,9 @@ function Hero({ slug, next, today }: { slug: string; next: NextSession; today: s
       : live.step === "block"
         ? live.title || t("liveStep.block")
         : t(`liveStep.${live.step}`);
-  // A live session's day and time are when it started, in the workspace's time zone (the same on the server)
-  const startedTime = next.time;
-  const startedDay = next.date;
+  // A live session's day and time are when it really started (computed on the server, where the person is)
+  const startedTime = live?.startedTime ?? next.time;
+  const startedDay = live?.startedDate ?? next.date;
   // Seats, ring and arc on one circle, 42% from the centre
   const R = 42;
   return (

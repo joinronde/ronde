@@ -6,6 +6,7 @@ import { createGuestLinkAction, listGuestLinksAction, revokeGuestLinkAction } fr
 import type { GuestLinkView } from "@/lib/server/guest-links";
 import { useRonde } from "./ronde-provider";
 import { Select } from "./select";
+import { useConfirm } from "./workspace/confirm";
 
 const DURATIONS = [1, 7, 30, 90];
 
@@ -43,7 +44,12 @@ export function GuestLinksPanel() {
     setFresh(res.data.url);
     void load();
   };
-  const revoke = async (linkId: string) => {
+  const [confirmDialog, confirm] = useConfirm();
+  const revoke = async (link: GuestLinkView) => {
+    // A link still working is asked for first: once revoked it cannot be given back (it is shown only once)
+    if (!link.expired && !(await confirm({ message: t("revokeConfirm", { label: link.label }), confirmLabel: t("revoke"), danger: true })))
+      return;
+    const linkId = link.id;
     const res = await revokeGuestLinkAction(slug, meetingId, linkId);
     if (!res.ok) return setError(res.error);
     toast(t("revoked"), "off");
@@ -88,7 +94,7 @@ export function GuestLinksPanel() {
                     : t("until", { date: format.dateTime(l.expiresAt, { dateStyle: "medium" }) })}
                 </span>
               </span>
-              <button type="button" className="btn sm danger" onClick={() => void revoke(l.id)}>
+              <button type="button" className="btn sm danger" onClick={() => void revoke(l)}>
                 {l.expired ? t("remove") : t("revoke")}
               </button>
             </li>
@@ -116,6 +122,7 @@ export function GuestLinksPanel() {
           {t("create")}
         </button>
       </form>
+      {confirmDialog}
     </section>
   );
 }
