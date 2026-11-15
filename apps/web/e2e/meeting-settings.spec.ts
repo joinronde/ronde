@@ -49,6 +49,24 @@ test("people, sections, schedule, template and deletion of a meeting; leaving an
 
   // Sections: a free section of the meeting's own, saved by itself, then on everyone's check-in
   await page.goto(`${meeting}/settings#sections`);
+  // A row pointed at or reached by the keyboard shows its "Move up" and "Move down" buttons in the room kept for
+  // them, next to its grip: nothing else on the row moves (its remove button once wrapped onto a line of its own)
+  const firstSection = page.locator(".sec-list .sec-row").first();
+  const removeFirst = firstSection.getByRole("button", { name: /^Remove/ });
+  const nameFirst = firstSection.getByRole("textbox");
+  await page.mouse.move(0, 0);
+  const atRest = { row: (await firstSection.boundingBox())!, remove: (await removeFirst.boundingBox())! };
+  await firstSection.hover();
+  await expect(firstSection.getByRole("button", { name: "Move down" })).toBeVisible();
+  expect(await firstSection.boundingBox()).toEqual(atRest.row);
+  expect(await removeFirst.boundingBox()).toEqual(atRest.remove);
+  const nameBox = (await nameFirst.boundingBox())!;
+  expect(Math.abs(atRest.remove.y + atRest.remove.height / 2 - (nameBox.y + nameBox.height / 2))).toBeLessThan(4);
+  await page.mouse.move(0, 0);
+  await firstSection.getByRole("button", { name: /^Move “/ }).focus();
+  await page.keyboard.press("Tab");
+  await expect(firstSection.getByRole("button", { name: "Move down" })).toBeFocused();
+  expect(await removeFirst.boundingBox()).toEqual(atRest.remove);
   await page.getByRole("button", { name: "+ Add a section" }).click();
   // Not named yet: no error before anything is typed, and the other settings still save
   const newName = page.getByRole("textbox", { name: "Name of section 5" });
