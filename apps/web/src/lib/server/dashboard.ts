@@ -39,8 +39,11 @@ export interface NextSession {
   attendance: "yes" | "no" | null;
   /** Sheets of the projects the person works on that the meeting follows: written for this session or not */
   sheets: { name: string; written: boolean }[];
-  /** A session going on: when it started, where it stands, how many turns before the person's (null: not started yet) */
-  progress: (LiveProgress & { startedAt: number; yourTurn: number | null }) | null;
+  /**
+   * A session going on: when it started (also as a day and an "HH:MM" where the person is, early or late as it
+   * really was), where it stands, how many turns before the person's (null: not started yet)
+   */
+  progress: (LiveProgress & { startedAt: number; startedDate: string; startedTime: string; yourTurn: number | null }) | null;
 }
 
 export interface DashboardData {
@@ -55,6 +58,9 @@ export interface DashboardData {
 }
 
 const DAY = 86_400_000;
+/** "HH:MM" of an instant in a time zone, as the schedule writes its times */
+const clockTime = (at: Date, timeZone: string) =>
+  new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZone }).format(at);
 const iso = (d: Date) => d.toISOString().slice(0, 10);
 const fullName = (p: { firstName: string; lastName: string; email: string }) =>
   [p.firstName, p.lastName].filter(Boolean).join(" ") || p.email;
@@ -62,7 +68,8 @@ const fullName = (p: { firstName: string; lastName: string; email: string }) =>
 export async function dashboard(ctx: WorkspaceContext): Promise<DashboardData> {
   const now = new Date();
   // Today where the person is (not in UTC: an evening in America is already tomorrow there)
-  const today = localDate(now.getTime(), ctx.user.timezone ?? ctx.workspace.timezone);
+  const zone = ctx.user.timezone ?? ctx.workspace.timezone;
+  const today = localDate(now.getTime(), zone);
   const monday = new Date(Date.parse(`${today}T00:00:00Z`) - ((new Date(`${today}T12:00:00Z`).getUTCDay() + 6) % 7) * DAY);
   const horizon = iso(new Date(now.getTime() + 35 * DAY));
   const from = iso(monday) < today ? iso(monday) : today;
@@ -179,7 +186,13 @@ export async function dashboard(ctx: WorkspaceContext): Promise<DashboardData> {
         : [],
       progress:
         progress && session?.startedAt
-          ? { startedAt: session.startedAt.getTime(), ...progress, yourTurn: turnsBefore(progress, ctx.member.personId) }
+          ? {
+              startedAt: session.startedAt.getTime(),
+              startedDate: localDate(session.startedAt.getTime(), zone),
+              startedTime: clockTime(session.startedAt, zone),
+              ...progress,
+              yourTurn: turnsBefore(progress, ctx.member.personId),
+            }
           : null,
     };
   }

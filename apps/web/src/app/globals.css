@@ -1595,6 +1595,7 @@ a.userbox:hover{color:var(--ink)}
 /* ================= Loading, error and not-found pages ================= */
 .state-page{min-height:70vh;display:grid;place-content:center;justify-items:center;text-align:center;gap:10px;padding:24px 16px}
 .state-page h1{margin:0}
+.state-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
 .state-code{font-family:var(--display);font-size:64px;font-weight:800;margin:0;color:var(--accent)}
 /* Page not found: the table with its empty seat, then the words coming in under it */
 .state-page.lost{gap:12px;min-height:80vh}
@@ -2484,6 +2485,7 @@ a.step-tile:hover .step-mark{border-color:var(--accent)}
 .inbox-dot{flex:none;width:8px;height:8px;margin-top:6px;border-radius:50%;background:var(--accent)}
 .inbox-empty{display:grid;justify-items:center;text-align:center;gap:4px;padding:26px 20px}
 .inbox-empty p{margin:0}
+.inbox-loading{display:grid;gap:10px;padding:18px 16px}
 @media (prefers-reduced-motion:reduce){.bell.ringing .ico,.bell-count,.inbox .menu-pop{animation:none}}
 
 /* Feedback about Ronde: the button of the top bar (in the account menu on phones) and its dialog */
@@ -4039,6 +4041,13 @@ a[target="_blank"]:not(.btn) > svg.ico:last-of-type{display:inline;margin-inline
 .sort-grip:hover,.sort-grip:focus-visible{color:var(--ink);background:var(--surface-2)}
 .sort-grip:active{cursor:grabbing}
 .sort-grip:disabled{opacity:.35;cursor:default;background:none}
+/* One step up or down without dragging: shown on the row pointed at or holding the focus, always on a touch screen */
+.sort-moves{display:none;flex:none;gap:2px}
+.sort-row:hover .sort-moves,.sort-row:focus-within .sort-moves{display:inline-flex}
+@media (pointer:coarse){.sort-moves{display:inline-flex}}
+.sort-move{display:inline-grid;place-items:center;width:24px;height:26px;padding:0;border:0;border-radius:6px;background:none;color:var(--ink-3);cursor:pointer}
+.sort-move:hover,.sort-move:focus-visible{color:var(--ink);background:var(--surface-2)}
+.sort-move:disabled{opacity:.35;cursor:default;background:none}
 .sort-grip-space{display:inline-block;flex:none;width:18px}
 html.sorting,html.sorting *{cursor:grabbing !important;user-select:none !important}
 @media (prefers-reduced-motion:reduce){.sort-row{transition:none}}

@@ -9,6 +9,11 @@
   "retry": "Try again",
   "suspendedTitle": "This workspace is suspended",
   "suspendedBody": "{workspace} is suspended for now: its meetings, check-ins and history are kept, but nobody can open them. Its owners know why; write to the administrator of this service to reopen it.",
+  "suspendedBodyOwner": "{workspace} was suspended by the administrator of this service: its meetings, check-ins and history are kept, but nobody can open them. To reopen it, write to them.",
   "suspendedBack": "Back to my workspaces",
+  "suspendedCreate": "Create another workspace",
+  "suspendedMark": "Suspended",
+  "guestLinkGoneTitle": "This link no longer works",
+  "guestLinkGone": "This link to a meeting's shared screen has expired or was removed. Ask whoever sent it to you for a new one.",
   "report": "Tell us what happened"
 }

@@ -64,7 +64,7 @@ test("a poll and a planning poker round", async ({ page, browser }) => {
   await max.getByRole("link", { name: "Create an account" }).click();
   await max.waitForURL(/\/sign-up\?/);
   await signUp(max, "Max Mind", `max-${run}@example.com`, max.url());
-  await max.getByRole("button", { name: /^Join / }).click();
+  // The new account joins the workspace at once
   await max.waitForURL(/\/w\/[^/]+$/);
 
   // Poll: asked from the control room, answered by Max, shown on the screen

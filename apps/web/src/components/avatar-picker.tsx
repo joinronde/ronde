@@ -7,12 +7,14 @@ import { useRonde } from "./ronde-provider";
 import { Icon } from "./shell/icons";
 import { squareImage } from "./square-image";
 import { Avatar } from "./stage";
+import { useConfirm } from "./workspace/confirm";
 
 export { squareImage };
 
 /** Photo of a person: click it to pick one, or remove it (the person themselves, the host or the admin) */
 export function AvatarPicker({ memberId, sm }: { memberId: string; sm?: boolean }) {
   const t = useTranslations("avatar");
+  const [confirmDialog, confirm] = useConfirm();
   const { members, toast, s } = useRonde();
   const input = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
@@ -51,7 +53,14 @@ export function AvatarPicker({ memberId, sm }: { memberId: string; sm?: boolean 
         </span>
       </button>
       {has && (
-        <button type="button" className="linkbtn danger" disabled={busy} onClick={() => send("DELETE")}>
+        <button
+          type="button"
+          className="linkbtn danger"
+          disabled={busy}
+          onClick={async () => {
+            if (await confirm({ message: t("removeConfirm"), confirmLabel: t("remove"), danger: true })) void send("DELETE");
+          }}
+        >
           {t("remove")}
         </button>
       )}
@@ -72,6 +81,7 @@ export function AvatarPicker({ memberId, sm }: { memberId: string; sm?: boolean 
           }
         }}
       />
+      {confirmDialog}
     </span>
   );
 }

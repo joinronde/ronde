@@ -1,6 +1,7 @@
+import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { StatsView } from "@/components/stats";
-import { type MeetingPageParams, pageMeeting, requireHostPage } from "@/lib/server/meeting/page";
+import { type MeetingPageParams, pageMeeting } from "@/lib/server/meeting/page";
 
 export async function generateMetadata() {
   const t = await getTranslations("pages");
@@ -8,6 +9,8 @@ export async function generateMetadata() {
 }
 
 export default async function Page(props: MeetingPageParams) {
-  requireHostPage(await pageMeeting(props));
+  // Whoever reads the statistics: the hosts, and a custom role that grants them (an "Auditor")
+  const ctx = await pageMeeting(props);
+  if (!ctx.can("stats.read")) redirect(`${ctx.links.path}/me`);
   return <StatsView />;
 }

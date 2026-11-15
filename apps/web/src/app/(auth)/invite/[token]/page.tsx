@@ -29,14 +29,40 @@ export default async function InvitationPage({ params }: { params: Promise<{ tok
   const t = await getTranslations("invite");
   const tw = await getTranslations("workspace");
   const here = `/invite/${token}`;
+  // A link that no longer opens a seat names the workspace and who invited only to the account it was sent to
+  const named = (s: { email: string }) => !!user && user.email.toLowerCase() === s.email;
 
+  if (state.status === "accepted") {
+    const into = `/w/${state.slug}`;
+    return (
+      <div className="auth-body">
+        <h1>{t("acceptedTitle")}</h1>
+        <p>{named(state) ? t("accepted", { workspace: state.workspace }) : t("acceptedAnonymous")}</p>
+        {user ? (
+          // Signed in with an account that is not in the workspace: the one that accepted it is another
+          <AcceptInvitation token={token} label={t("switchAccount")} switchAccount next={named(state) ? into : "/"} />
+        ) : (
+          <Link href="/sign-in" className="btn primary big">
+            {t("goSignIn")}
+          </Link>
+        )}
+      </div>
+    );
+  }
   if (state.status === "invalid" || state.status === "expired") {
     return (
       <div className="auth-body">
         <h1>{state.status === "invalid" ? t("invalidTitle") : t("expiredTitle")}</h1>
-        <p>{state.status === "invalid" ? t("invalid") : t("expired", { workspace: state.workspace })}</p>
-        <Link href="/" className="link">
-          Ronde
+        <p>
+          {state.status === "invalid"
+            ? t("invalid")
+            : state.inviter && named(state)
+              ? t("expiredFrom", { workspace: state.workspace, inviter: state.inviter })
+              : t("expired", { workspace: state.workspace })}
+        </p>
+        {/* Somewhere to go from here: one's own workspaces, or signing in */}
+        <Link href={user ? "/" : "/sign-in"} className="link">
+          {user ? t("openWorkspaces") : t("goSignIn")}
         </Link>
       </div>
     );

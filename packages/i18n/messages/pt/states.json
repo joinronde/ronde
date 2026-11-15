@@ -9,6 +9,11 @@
   "retry": "Tentar de novo",
   "suspendedTitle": "Este espaço de trabalho está suspenso",
   "suspendedBody": "{workspace} está suspenso no momento: as reuniões, fichas e o histórico são mantidos, mas ninguém pode abri-los. Os proprietários sabem o motivo; escreva ao administrador deste serviço para reabri-lo.",
+  "suspendedBodyOwner": "{workspace} foi suspenso pelo administrador deste serviço: as reuniões, fichas e o histórico são mantidos, mas ninguém pode abri-los. Para reabri-lo, escreva para ele.",
   "suspendedBack": "Voltar aos meus espaços de trabalho",
+  "suspendedCreate": "Criar outro espaço de trabalho",
+  "suspendedMark": "Suspenso",
+  "guestLinkGoneTitle": "Este link não funciona mais",
+  "guestLinkGone": "Este link para a tela compartilhada de uma reunião expirou ou foi removido. Peça um novo a quem o enviou para você.",
   "report": "Conte o que aconteceu"
 }

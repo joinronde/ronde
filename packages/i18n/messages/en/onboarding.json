@@ -12,6 +12,7 @@
   "timezone": "Time zone",
   "create": "Create the workspace",
   "invitationsTitle": "You've been invited",
+  "invitationByLink": "{count, plural, one {You have an invitation waiting: open the link you received by email to join.} other {You have # invitations waiting: open the links you received by email to join.}}",
   "join": "Join",
   "createOwn": "Or create your own workspace",
   "yourWorkspaces": "Your workspaces",

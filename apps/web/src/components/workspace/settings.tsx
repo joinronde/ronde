@@ -38,7 +38,8 @@ interface Props {
   /** Countries with a holiday calendar, and the regions of the one chosen */
   holidayCalendars: { countries: string[]; regions: Record<string, string> };
   urlPrefix: string;
-  categories: { id: string; name: string }[];
+  /** The directory's teams; none for a role without the directory */
+  categories: { id: string; name: string }[] | null;
   canManage: boolean;
   canDelete: boolean;
   /** Notification connectors, for the people managing them (null otherwise) */
@@ -237,7 +238,7 @@ export function WorkspaceSettingsView({
 
       {transcription && <TranscriptionSettings {...transcription} />}
 
-      <JobCategories slug={workspace.slug} categories={categories} />
+      {categories && <JobCategories slug={workspace.slug} categories={categories} />}
 
       {slack && <SlackSettings {...slack} confirm={confirm} />}
 

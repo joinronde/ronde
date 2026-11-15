@@ -33,6 +33,8 @@
     "title": "Secciones de la ficha",
     "name": "Nombre de la sección",
     "nameOf": "Nombre de la sección {n}",
+    "unnamed": "Ponle nombre a esta sección para guardarla. Los demás ajustes se guardan sin ella.",
+    "unnamedKept": "Una sección necesita un nombre: conserva «{label}» hasta que escribas otro.",
     "input": "Formato",
     "inputOf": "Formato de «{label}»",
     "role": "Rol",

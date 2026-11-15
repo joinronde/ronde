@@ -8,6 +8,7 @@ import { cookies } from "next/headers";
 import { setAccountBirthday } from "@/lib/server/account-birthday";
 import { deleteAccount } from "@/lib/server/account-data";
 import { run } from "@/lib/server/action";
+import { THEME_COOKIE } from "@/lib/server/appearance";
 import { requireUser } from "@/lib/server/authz";
 import { OpError } from "@/lib/server/errors";
 import { PUSH_KINDS, type PushKind, removePushDevice, savePushDevice, setPushKind, testPush } from "@/lib/server/push";
@@ -49,8 +50,6 @@ export async function setBirthdayAction(birthday: string | null) {
     return null;
   });
 }
-
-const THEME_COOKIE = "ronde-theme";
 
 /** Light, dark or the device's theme: saved for the user, and in a cookie so pages render in it at once */
 export async function setThemeAction(theme: string) {

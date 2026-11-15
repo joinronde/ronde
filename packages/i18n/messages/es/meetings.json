@@ -88,6 +88,8 @@
       }
     },
     "cancel": "Cancelar",
+    "leaveConfirm": "¿Salir de la nueva reunión? Lo que escribiste no se guarda.",
+    "leave": "Salir",
     "modulesLater": "Puedes añadir otros en cualquier momento desde los ajustes de la reunión.",
     "order": {
       "title": "Orden de intervención",

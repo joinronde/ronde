@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { BillingView } from "@/components/workspace/billing";
 import { pageWorkspace } from "@/lib/server/authz";
@@ -18,7 +18,8 @@ export default async function BillingPage({
   searchParams: Promise<{ checkout?: string }>;
 }) {
   const ctx = await pageWorkspace((await params).ws, "workspace.billing");
-  if (!billingOn()) notFound();
+  // No payments on this instance: the plans are presented on their own page (an old link, a bookmark)
+  if (!billingOn()) redirect(`/w/${ctx.workspace.slug}/settings/plans`);
   return (
     <BillingView
       slug={ctx.workspace.slug}

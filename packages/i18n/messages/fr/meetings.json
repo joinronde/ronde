@@ -88,6 +88,8 @@
       }
     },
     "cancel": "Annuler",
+    "leaveConfirm": "Quitter la nouvelle réunion ? Ce que vous avez saisi n’est pas conservé.",
+    "leave": "Quitter",
     "modulesLater": "D’autres s’ajoutent à tout moment depuis les réglages de la réunion.",
     "order": {
       "title": "Ordre de passage",

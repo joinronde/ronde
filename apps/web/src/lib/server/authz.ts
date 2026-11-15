@@ -208,12 +208,13 @@ export async function pageWorkspace(slug: string, permission?: Permission): Prom
   return ctx;
 }
 
-/** A suspended workspace the signed-in user belongs to: its name, for the notice; null otherwise */
-export async function suspendedFor(slug: string): Promise<{ name: string } | null> {
+/** A suspended workspace the signed-in user belongs to: its name and the user's role, for the notice; null otherwise */
+export async function suspendedFor(slug: string): Promise<{ name: string; role: WorkspaceRole } | null> {
   const user = await currentUser();
   if (!user) return null;
-  return prisma.workspace.findFirst({
+  const workspace = await prisma.workspace.findFirst({
     where: { slug, deletedAt: null, suspendedAt: { not: null }, members: { some: { userId: user.id, status: "active" } } },
-    select: { name: true },
+    select: { name: true, members: { where: { userId: user.id }, select: { role: true } } },
   });
+  return workspace ? { name: workspace.name, role: workspace.members[0]?.role ?? "member" } : null;
 }

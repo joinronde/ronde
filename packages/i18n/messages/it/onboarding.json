@@ -12,6 +12,7 @@
   "timezone": "Fuso orario",
   "create": "Crea lo spazio di lavoro",
   "invitationsTitle": "Hai ricevuto un invito",
+  "invitationByLink": "{count, plural, one {Hai un invito in attesa: apri il link ricevuto via email per unirti.} other {Hai # inviti in attesa: apri i link ricevuti via email per unirti.}}",
   "join": "Unisciti",
   "createOwn": "Oppure crea il tuo spazio di lavoro",
   "yourWorkspaces": "I tuoi spazi di lavoro",

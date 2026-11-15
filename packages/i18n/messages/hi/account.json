@@ -58,6 +58,8 @@
   "workspaces": "आपके वर्कस्पेस",
   "noWorkspace": "आप अभी किसी वर्कस्पेस में नहीं हैं।",
   "createWorkspace": "वर्कस्पेस बनाएँ",
+  "leaveWorkspace": "छोड़ें",
+  "leaveNamed": "{workspace} छोड़ें",
   "calendar": "कैलेंडर",
   "calendarHint": "आपके कैलेंडर ऐप के लिए एक निजी लिंक, जिसमें वे सभी मीटिंग हैं जिनमें आप शामिल होते हैं।",
   "appearance": "रूप-रंग",

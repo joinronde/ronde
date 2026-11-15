@@ -1,10 +1,10 @@
 import { dirOf, resolveLocale } from "@ronde/i18n";
 import type { Metadata, Viewport } from "next";
-import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ServiceWorker } from "@/components/service-worker";
 import { Tooltips } from "@/components/tooltips";
+import { appliedTheme } from "@/lib/server/appearance";
 import { currentUser } from "@/lib/server/authz";
 import { env } from "@/lib/server/env";
 import { withBasePath } from "@/lib/shared/base-path";
@@ -57,15 +57,15 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1, view
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const locale = await getLocale();
-  // Light or dark when the user picked one; otherwise the device decides
-  const theme = (await cookies()).get("ronde-theme")?.value;
+  // Light or dark when the user picked one (on this browser, or in their account); otherwise the device decides
+  const theme = await appliedTheme();
   const sentry = env.sentryDsn();
   const umami = env.umami();
   const feedback = env.feedbackTo();
   // The error page offers feedback to people signed in only: the message needs an account
   const signedIn = feedback ? !!(await currentUser().catch(() => null)) : false;
   return (
-    <html lang={locale} dir={dirOf(resolveLocale(locale))} data-theme={theme === "light" || theme === "dark" ? theme : undefined}>
+    <html lang={locale} dir={dirOf(resolveLocale(locale))} data-theme={theme}>
       <head>
         {/* Optional error reports and audience measure, set up by the instance (see .env.example) */}
         {sentry && (

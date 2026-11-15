@@ -33,6 +33,8 @@
     "title": "Check-in sections",
     "name": "Section name",
     "nameOf": "Name of section {n}",
+    "unnamed": "Name this section to save it. The other settings are saved without it.",
+    "unnamedKept": "A section needs a name: it keeps “{label}” until you type another one.",
     "input": "Format",
     "inputOf": "Format of “{label}”",
     "role": "Role",

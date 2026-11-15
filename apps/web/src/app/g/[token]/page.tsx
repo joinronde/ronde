@@ -16,6 +16,7 @@ export async function generateMetadata() {
 // A guest link: the meeting's shared screen, without an account, until the link expires
 export default async function GuestScreenPage({ params }: { params: Promise<{ token: string }> }) {
   const ctx = await guestContext((await params).token);
+  // Expired, revoked or mistyped: its own notice (not-found.tsx), for a guest who has no account
   if (!ctx) notFound();
   const initial = await loadSnapshot(ctx, await requestLocale());
   return (

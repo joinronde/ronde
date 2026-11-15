@@ -13,6 +13,7 @@
   "until": "Valable jusqu’au {date}",
   "expiredOn": "Expiré le {date}",
   "revoke": "Révoquer",
+  "revokeConfirm": "Révoquer le lien pour « {label} » ? Il cesse de fonctionner aussitôt et ne peut plus être affiché : il faudra envoyer un nouveau lien.",
   "remove": "Retirer",
   "revoked": "Lien révoqué"
 }

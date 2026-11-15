@@ -58,6 +58,8 @@
   "workspaces": "你的工作空间",
   "noWorkspace": "你还没有加入任何工作空间。",
   "createWorkspace": "创建工作空间",
+  "leaveWorkspace": "退出",
+  "leaveNamed": "退出 {workspace}",
   "calendar": "日历",
   "calendarHint": "一个私密链接，包含你参加的所有会议，可添加到你的日历应用。",
   "appearance": "外观",

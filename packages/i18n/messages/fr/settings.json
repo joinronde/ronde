@@ -33,6 +33,8 @@
     "title": "Rubriques de la fiche",
     "name": "Nom de la rubrique",
     "nameOf": "Nom de la rubrique {n}",
+    "unnamed": "Nommez cette rubrique pour l’enregistrer. Les autres réglages sont enregistrés sans elle.",
+    "unnamedKept": "Une rubrique a besoin d’un nom : elle garde « {label} » tant que vous n’en saisissez pas un autre.",
     "input": "Format",
     "inputOf": "Format de « {label} »",
     "role": "Rôle",

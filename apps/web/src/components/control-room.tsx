@@ -54,7 +54,7 @@ import {
   Users,
 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { renderSVG } from "uqr";
 import { Select } from "@/components/select";
 import { withBasePath } from "@/lib/shared/base-path";
@@ -1882,12 +1882,24 @@ function StopControls() {
   const t = useTranslations("control");
   const { s, rpc } = useRonde();
   const [ask, setAsk] = useState<null | "end" | "reset">(null);
+  const askId = useId();
+  // Declined, the question gives the keyboard back to the button that asked it
+  const back = useRef<"end" | "reset" | null>(null);
+  const endBtn = useRef<HTMLButtonElement>(null);
+  const resetBtn = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (ask || !back.current) return;
+    (back.current === "end" ? endBtn : resetBtn).current?.focus();
+    back.current = null;
+  }, [ask]);
   const m = s.meeting;
   if (!m?.startedAt) return null;
   if (ask)
     return (
-      <div className="controls" role="group" aria-label={t("stop.confirmation")} data-tour="stop">
-        <span style={{ flex: 1, minWidth: "14em", fontSize: 14.5 }}>{ask === "end" ? t("stop.endAsk") : t("stop.resetAsk")}</span>
+      <div className="controls" role="group" aria-label={t("stop.confirmation")} aria-describedby={askId} data-tour="stop">
+        <span id={askId} aria-live="polite" style={{ flex: 1, minWidth: "14em", fontSize: 14.5 }}>
+          {ask === "end" ? t("stop.endAsk") : t("stop.resetAsk")}
+        </span>
         <button
           type="button"
           className={`btn ${ask === "reset" ? "danger-solid" : "primary"}`}
@@ -1901,7 +1913,16 @@ function StopControls() {
         >
           {ask === "end" ? t("stop.endYes") : t("stop.resetYes")}
         </button>
-        <button className="btn" onClick={() => setAsk(null)}>
+        {/* The safe answer takes the focus: the question is read with it */}
+        <button
+          type="button"
+          className="btn"
+          autoFocus
+          onClick={() => {
+            back.current = ask;
+            setAsk(null);
+          }}
+        >
           {t("stop.no")}
         </button>
       </div>
@@ -1909,11 +1930,11 @@ function StopControls() {
   return (
     <div className="controls deck-stop" data-tour="stop">
       {m.stepKey !== "end" && (
-        <button type="button" className="btn" onClick={() => setAsk("end")}>
+        <button type="button" className="btn" ref={endBtn} onClick={() => setAsk("end")}>
           <Flag size={16} strokeWidth={2.2} aria-hidden="true" /> {t("stop.end")}
         </button>
       )}
-      <button type="button" className="linkbtn danger" onClick={() => setAsk("reset")}>
+      <button type="button" className="linkbtn danger" ref={resetBtn} onClick={() => setAsk("reset")}>
         <Undo2 size={14} strokeWidth={2.2} aria-hidden="true" /> {t("stop.cancelStart")}
       </button>
     </div>
@@ -1997,6 +2018,15 @@ function PaneMinutes({ draft: saved, setDraft: setSaved }: { draft: MinutesDraft
   const parts = minutesPartsOf(mod);
   // Publishing now, or closing the session and writing the minutes later from the history
   const [confirm, setConfirm] = useState<"publish" | "draft" | null>(null);
+  const publishAskId = useId();
+  const publishBack = useRef<"publish" | "draft" | null>(null);
+  const draftBtn = useRef<HTMLButtonElement>(null);
+  const publishBtn = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (confirm || !publishBack.current) return;
+    (publishBack.current === "draft" ? draftBtn : publishBtn).current?.focus();
+    publishBack.current = null;
+  }, [confirm]);
   const [preview, setPreview] = useState(false);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -2048,8 +2078,10 @@ function PaneMinutes({ draft: saved, setDraft: setSaved }: { draft: MinutesDraft
     }
   };
   const publishControls = confirm ? (
-    <span className="publish-confirm">
-      <span className="publish-ask">{t(confirm === "draft" ? "minutesPane.draftAsk" : "minutesPane.archiveAsk")}</span>
+    <span className="publish-confirm" role="group" aria-label={t("stop.confirmation")} aria-describedby={publishAskId}>
+      <span className="publish-ask" id={publishAskId} aria-live="polite">
+        {t(confirm === "draft" ? "minutesPane.draftAsk" : "minutesPane.archiveAsk")}
+      </span>
       <button type="button" className="btn primary" disabled={busy} aria-busy={busy} onClick={() => void publish(confirm === "draft")}>
         {confirm === "draft" ? (
           <Clock size={15} strokeWidth={2.2} aria-hidden="true" />
@@ -2058,16 +2090,25 @@ function PaneMinutes({ draft: saved, setDraft: setSaved }: { draft: MinutesDraft
         )}{" "}
         {t(confirm === "draft" ? "minutesPane.draftYes" : "minutesPane.archiveYes")}
       </button>
-      <button type="button" className="btn" onClick={() => setConfirm(null)}>
+      {/* The safe answer takes the focus; declined, it goes back to the button that asked */}
+      <button
+        type="button"
+        className="btn"
+        autoFocus
+        onClick={() => {
+          publishBack.current = confirm;
+          setConfirm(null);
+        }}
+      >
         {t("cancel")}
       </button>
     </span>
   ) : (
     <>
-      <button type="button" className="btn" onClick={() => setConfirm("draft")} title={t("minutesPane.draftHint")}>
+      <button type="button" className="btn" ref={draftBtn} onClick={() => setConfirm("draft")} title={t("minutesPane.draftHint")}>
         <Clock size={15} strokeWidth={2.2} aria-hidden="true" /> {t("minutesPane.draft")}
       </button>
-      <button type="button" className="btn primary" onClick={() => setConfirm("publish")}>
+      <button type="button" className="btn primary" ref={publishBtn} onClick={() => setConfirm("publish")}>
         <Send size={15} strokeWidth={2.2} aria-hidden="true" className="flip-rtl" /> {t("minutesPane.archive")}
       </button>
     </>

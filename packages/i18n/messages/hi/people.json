@@ -56,6 +56,8 @@
   "revoke": "आमंत्रण रद्द करें",
   "remove": "हटाएँ",
   "removeConfirm": "{name} को {workspace} से हटाएँ? उनकी प्रोफ़ाइल और पहुँच हटा दी जाएगी; मीटिंग में कही गई बातें रहेंगी, “पूर्व सदस्य” के नाम से।",
+  "roleConfirm": "{name} को “{role}” भूमिका दें? {hint}।",
+  "roleConfirmYes": "भूमिका बदलें",
   "removed": "{name} को हटा दिया गया।",
   "changeRole": "{name} की भूमिका",
   "saved": "सहेजा गया",

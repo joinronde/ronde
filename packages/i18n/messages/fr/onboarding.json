@@ -12,6 +12,7 @@
   "timezone": "Fuseau horaire",
   "create": "Créer l’espace de travail",
   "invitationsTitle": "Vous avez reçu des invitations",
+  "invitationByLink": "{count, plural, one {Une invitation vous attend : ouvrez le lien reçu par e-mail pour rejoindre l’équipe.} other {# invitations vous attendent : ouvrez les liens reçus par e-mail pour rejoindre les équipes.}}",
   "join": "Rejoindre",
   "createOwn": "Ou créez votre propre espace de travail",
   "yourWorkspaces": "Vos espaces de travail",

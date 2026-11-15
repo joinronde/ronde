@@ -33,6 +33,8 @@
     "title": "Abschnitte des Check-ins",
     "name": "Name des Abschnitts",
     "nameOf": "Name von Abschnitt {n}",
+    "unnamed": "Gib diesem Abschnitt einen Namen, um ihn zu speichern. Die übrigen Einstellungen werden ohne ihn gespeichert.",
+    "unnamedKept": "Ein Abschnitt braucht einen Namen: Er behält „{label}“, bis du einen anderen eingibst.",
     "input": "Format",
     "inputOf": "Format von „{label}“",
     "role": "Rolle",

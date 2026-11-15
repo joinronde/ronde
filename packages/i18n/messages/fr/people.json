@@ -56,6 +56,8 @@
   "revoke": "Révoquer l’invitation",
   "remove": "Retirer",
   "removeConfirm": "Retirer {name} de {workspace} ? Son profil et ses accès sont supprimés ; ses interventions en réunion restent, signées « Ancien membre ».",
+  "roleConfirm": "Donner le rôle « {role} » à {name} ? {hint}.",
+  "roleConfirmYes": "Changer le rôle",
   "removed": "{name} ne fait plus partie de l’espace.",
   "changeRole": "Rôle de {name}",
   "saved": "Enregistré",

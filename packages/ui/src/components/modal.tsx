@@ -53,7 +53,13 @@ export function Modal({
       }
     };
     window.addEventListener("keydown", onKey);
-    (self?.querySelector<HTMLElement>("[data-autofocus]") ?? self?.querySelector<HTMLElement>("button,textarea"))?.focus();
+    // The focus starts where the dialog asks for it, otherwise in its first field, otherwise on its first button
+    // (a confirmation's "Cancel"): never on a button below the fields to fill
+    (
+      self?.querySelector<HTMLElement>("[data-autofocus]") ??
+      self?.querySelector<HTMLElement>("input:not([type=hidden]):not([disabled]),textarea:not([disabled]),select:not([disabled])") ??
+      self?.querySelector<HTMLElement>("button")
+    )?.focus();
     return () => {
       window.removeEventListener("keydown", onKey);
       const at = self ? open.indexOf(self) : -1;

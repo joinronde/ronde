@@ -74,6 +74,14 @@ test("the host runs a session from the control room, from the order of the turns
   await expect(agenda.nth(1)).toContainText("Cora Control");
   await grip.press("ArrowDown");
   await expect(agenda.nth(2)).toContainText("Cora Control");
+  // Without dragging nor the keyboard: one click, a step up or down
+  const moves = page.getByRole("group", { name: "Move Cora Control in the order" });
+  await row("Cora Control").hover();
+  await moves.getByRole("button", { name: "Move up" }).click();
+  await expect(agenda.nth(1)).toContainText("Cora Control");
+  await row("Cora Control").hover();
+  await moves.getByRole("button", { name: "Move down" }).click();
+  await expect(agenda.nth(2)).toContainText("Cora Control");
   await page.getByRole("button", { name: "Shuffle" }).click();
   await expect(page.getByText("Order shuffled for those who have not spoken yet")).toBeVisible();
 
@@ -220,6 +228,11 @@ test("the host runs a session from the control room, from the order of the turns
   await expect(coffee).toHaveCount(0);
 
   // End, then the minutes without the open topics, previewed, then archived
+  // The question takes the keyboard to its safe answer, and back to where it came from when declined
+  await page.getByRole("button", { name: /End the meeting/ }).click();
+  await expect(page.getByRole("button", { name: "No, carry on" })).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("button", { name: /End the meeting/ })).toBeFocused();
   await page.getByRole("button", { name: /End the meeting/ }).click();
   await page.getByRole("button", { name: "Yes, end it" }).click();
   await expect(page.getByText("Meeting ended: review the minutes, then publish them.")).toBeVisible();

@@ -9,6 +9,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { createWorkspaceAction, joinInvitationAction, suggestSlugAction } from "@/app/onboarding/actions";
 import { Field, FormAlert } from "@/components/auth/fields";
+import { SignOutButton } from "@/components/auth/sign-out-button";
+import { useHydrated } from "@/components/use-hydrated";
 import { track } from "@/lib/shared/track";
 import { browserTimeZone, LocaleSelect, TimeZoneSelect } from "./inputs";
 
@@ -20,14 +22,21 @@ interface PendingInvitation {
 
 export function Onboarding({
   firstName,
+  email,
   invitations,
+  invitationsByLink = 0,
   workspaces,
   plan = null,
   template = null,
 }: {
   firstName: string;
+  /** The account signed in: shown, with the way out, in case it is the wrong one */
+  email: string;
   invitations: PendingInvitation[];
-  workspaces: { slug: string; name: string }[];
+  /** Invitations waiting for an address not proven yet: their link (sent by email) is the way in */
+  invitationsByLink?: number;
+  /** A suspended one is only marked: opening it would lead to its notice */
+  workspaces: { slug: string; name: string; suspended?: boolean }[];
   /** Chosen on the site (cloud): the new workspace goes on to pay for it */
   plan?: "team" | null;
   /** A built-in template picked on the site: the first meeting starts from it */
@@ -35,6 +44,9 @@ export function Onboarding({
 }) {
   const t = useTranslations("onboarding");
   const tw = useTranslations("workspace");
+  const ts = useTranslations("states");
+  const ti = useTranslations("invite");
+  const ta = useTranslations("auth");
   const locale = useLocale();
   const router = useRouter();
   const [name, setName] = useState("");
@@ -48,6 +60,7 @@ export function Onboarding({
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const suggestion = useRef(0);
+  const hydrated = useHydrated();
   const newMeeting = (ws: string) => `/w/${ws}/meetings/new?template=${encodeURIComponent(`builtin:${template}`)}`;
 
   useEffect(() => setTimezone(browserTimeZone()), []);
@@ -95,7 +108,11 @@ export function Onboarding({
   return (
     <div className="auth-body wide">
       <h1>{t("welcome", { name: firstName })}</h1>
+      <p className="hint onboard-account">
+        {ti.rich("signedInAs", { email, strong: (c) => <strong>{c}</strong> })} <SignOutButton label={ta("signOut")} className="link-btn" />
+      </p>
       <FormAlert>{error}</FormAlert>
+      {invitationsByLink > 0 && <p className="form-alert info">{t("invitationByLink", { count: invitationsByLink })}</p>}
       {invitations.length > 0 && (
         <section className="stack" aria-labelledby="invitations-title">
           <h2 id="invitations-title">{t("invitationsTitle")}</h2>
@@ -121,9 +138,13 @@ export function Onboarding({
             {workspaces.map((w) => (
               <li key={w.slug}>
                 <strong>{w.name}</strong>
-                <Link className="btn" href={template ? newMeeting(w.slug) : `/w/${w.slug}`}>
-                  {t("open")}
-                </Link>
+                {w.suspended ? (
+                  <span className="hint">{ts("suspendedMark")}</span>
+                ) : (
+                  <Link className="btn" href={template ? newMeeting(w.slug) : `/w/${w.slug}`}>
+                    {t("open")}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
@@ -185,7 +206,7 @@ export function Onboarding({
               </button>
             </p>
           )}
-          <button type="submit" className="btn primary big" disabled={!!busy} aria-busy={busy === "create"}>
+          <button type="submit" className="btn primary big" disabled={!!busy || !hydrated} aria-busy={busy === "create"}>
             {t("create")}
           </button>
         </form>

@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { choose } from "./select";
 
 const run = Date.now().toString(36);
 const owner = { name: "Ada Lovelace", email: `ada-${run}@example.com`, password: "correct-horse-battery" };
@@ -33,6 +34,8 @@ test("sign up, create a workspace, invite someone who joins", async ({ page, bro
   await page.getByRole("link", { name: "Directory" }).click();
   await page.getByRole("button", { name: "Invite people" }).click();
   const dialog = page.getByRole("dialog", { name: "Invite someone" });
+  // The keyboard starts in the first field, not on a button further down
+  await expect(dialog.getByLabel("Email", { exact: true })).toBeFocused();
   await dialog.getByLabel("Email", { exact: true }).fill(invitee.email);
   await dialog.getByLabel("First name").fill("Grace");
   await dialog.getByLabel("Last name").fill("Hopper");
@@ -54,8 +57,7 @@ test("sign up, create a workspace, invite someone who joins", async ({ page, bro
   await guest.getByLabel("Full name").fill(invitee.name);
   await guest.getByLabel("Password", { exact: true }).fill(invitee.password);
   await guest.getByRole("button", { name: "Create account" }).click();
-  await guest.waitForURL(/\/invite\//);
-  await guest.getByRole("button", { name: `Join ${workspace}` }).click();
+  // The new account joins at once
   await expect(guest).toHaveURL(new RegExp(`/w/e2e-team-${run}$`));
   await expect(guest.getByRole("heading", { level: 1, name: /\bGrace$/ })).toBeVisible();
 
@@ -128,10 +130,145 @@ test("wrong password shows an error, a stranger's workspace is a 404", async ({ 
   await page.getByRole("button", { name: "Sign in", exact: true }).click();
   // (Next.js also renders a route announcer with role="alert")
   await expect(page.locator(".form-alert")).toHaveText("Wrong email or password.");
+  // The keyboard is back where the mistake is
+  await expect(page.getByLabel("Password", { exact: true })).toBeFocused();
 
   await page.getByLabel("Password", { exact: true }).fill(owner.password);
   await page.getByRole("button", { name: "Sign in", exact: true }).click();
   await expect(page).toHaveURL(/\/w\//);
   const response = await page.goto(`/w/does-not-exist-${run}`);
   expect(response?.status()).toBe(404);
+});
+
+test("an email link used twice opens the email link sign-in, which can send the link again", async ({ page }) => {
+  // The pause before sending again is 30 seconds
+  test.setTimeout(90_000);
+  // Better Auth comes back here with this code for a link already used or expired
+  await page.goto("/sign-in?error=INVALID_TOKEN");
+  await expect(page.locator(".form-alert")).toHaveText("This link has expired. Ask for a new one.");
+  await expect(page.getByRole("radio", { name: "With email link" })).toBeChecked();
+  await page.getByLabel("Email", { exact: true }).fill(owner.email);
+  await page.getByRole("button", { name: "Email me a sign-in link" }).click();
+  await expect(page.getByRole("heading", { name: "Check your inbox" })).toBeVisible();
+  // Sent again only after a pause, so a double click does not send two
+  const again = page.getByRole("button", { name: "Send the link again" });
+  await expect(again).toBeDisabled();
+  await expect(again).toBeEnabled({ timeout: 40_000 });
+});
+
+test("a role that runs the workspace is given after a confirmation; anyone leaves from their account", async ({ page, browser }) => {
+  test.setTimeout(90_000);
+  const role = (p: typeof page) => p.getByRole("combobox", { name: "Role of Grace Hopper" });
+  await page.goto("/sign-in");
+  await page.getByLabel("Email", { exact: true }).fill(owner.email);
+  await page.getByLabel("Password", { exact: true }).fill(owner.password);
+  await page.getByRole("button", { name: "Sign in", exact: true }).click();
+  await expect(page).toHaveURL(/\/w\//);
+  await page.goto(`/w/e2e-team-${run}/people`);
+  // Owner, then cancelled: nothing changes
+  await choose(page, role(page), "owner");
+  const ask = page.getByRole("dialog");
+  await expect(ask).toContainText("Give Grace Hopper the role “Owner”?");
+  await ask.getByRole("button", { name: "Cancel" }).click();
+  await expect(role(page)).toContainText("Member");
+  await page.reload();
+  await expect(role(page)).toContainText("Member");
+  // Admin, confirmed
+  await choose(page, role(page), "admin");
+  await page.getByRole("dialog").getByRole("button", { name: "Change the role" }).click();
+  await expect(role(page)).toContainText("Admin");
+  await page.reload();
+  await expect(role(page)).toContainText("Admin");
+  // Taking the running of the workspace away is asked too
+  await choose(page, role(page), "member");
+  await page.getByRole("dialog").getByRole("button", { name: "Change the role" }).click();
+  await expect(role(page)).toContainText("Member");
+
+  // Grace leaves from her account's list of workspaces, without the settings administrators see
+  const grace = await (await browser.newContext({ locale: "en-US" })).newPage();
+  await grace.goto("/sign-in");
+  await grace.getByLabel("Email", { exact: true }).fill(invitee.email);
+  await grace.getByLabel("Password", { exact: true }).fill(invitee.password);
+  await grace.getByRole("button", { name: "Sign in", exact: true }).click();
+  await expect(grace).toHaveURL(/\/w\//);
+  await grace.goto("/account/workspaces");
+  await grace.getByRole("button", { name: `Leave ${workspace}` }).click();
+  await grace.getByRole("dialog").getByRole("button", { name: "Leave the workspace" }).click();
+  await expect(grace.getByText("You are not in any workspace yet.")).toBeVisible();
+  await grace.context().close();
+});
+
+test("a password too short is refused in Ronde's words, not the browser's", async ({ page }) => {
+  await page.goto("/sign-up");
+  await page.getByLabel("Full name").fill("Short Pass");
+  await page.getByLabel("Email", { exact: true }).fill(`short-${run}@example.com`);
+  await page.getByLabel("Password", { exact: true }).fill("short");
+  await page.getByRole("button", { name: "Create account" }).click();
+  // The message of the app, under the field: the browser's own bubble would leave the page unchanged
+  await expect(page.getByText("Choose a password of at least 10 characters.").first()).toBeVisible();
+  await expect(page).toHaveURL(/\/sign-up/);
+});
+
+test("the forms wait for the page to be ready before they can be sent", async ({ browser }) => {
+  // Before the page's code runs (a slow phone), a click would send the form natively and empty it
+  const page = await (await browser.newContext({ locale: "en-US", javaScriptEnabled: false })).newPage();
+  await page.goto("/sign-in");
+  await expect(page.getByRole("button", { name: "Sign in", exact: true })).toBeDisabled();
+  await page.goto("/sign-up");
+  await expect(page.getByRole("button", { name: "Create account" })).toBeDisabled();
+  await page.context().close();
+});
+
+test("the notifications say they are loading, not that there are none, until they come", async ({ page }) => {
+  await page.goto("/sign-in");
+  await page.getByLabel("Email", { exact: true }).fill(owner.email);
+  await page.getByLabel("Password", { exact: true }).fill(owner.password);
+  await page.getByRole("button", { name: "Sign in", exact: true }).click();
+  await expect(page).toHaveURL(/\/w\//);
+  // A slow network: the list takes its time
+  let release = () => {};
+  const held = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route("**/api/w/*/inbox", async (route) => {
+    await held;
+    await route.continue();
+  });
+  await page.reload();
+  await page.getByRole("button", { name: /^Notifications/ }).click();
+  await expect(page.getByRole("status").filter({ hasText: "Loading…" })).toBeAttached();
+  await expect(page.getByText("You're all caught up.")).toHaveCount(0);
+  release();
+  await expect(page.getByText("You're all caught up.")).toBeVisible();
+});
+
+test("the new meeting's wizard: typing goes to the name, Back goes back a step, leaving is asked", async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.goto("/sign-in");
+  await page.getByLabel("Email", { exact: true }).fill(owner.email);
+  await page.getByLabel("Password", { exact: true }).fill(owner.password);
+  await page.getByRole("button", { name: "Sign in", exact: true }).click();
+  await expect(page).toHaveURL(/\/w\//);
+  await page.goto(`/w/e2e-team-${run}/meetings/new`);
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  // The name is the field to fill: the keyboard is in it
+  await expect(page.getByLabel("Name", { exact: true })).toBeFocused();
+  await page.keyboard.type("Site meeting");
+  await expect(page.getByLabel("Name", { exact: true })).toHaveValue("Site meeting");
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await expect(page.getByLabel("Name", { exact: true })).toHaveCount(0);
+  // The browser's Back (a phone's back gesture) goes back one step, what was typed kept
+  await page.goBack();
+  await expect(page).toHaveURL(/\/meetings\/new/);
+  await expect(page.getByLabel("Name", { exact: true })).toHaveValue("Site meeting");
+  // Leaving from the sidebar asks first; staying keeps everything
+  await page.getByRole("navigation").getByRole("link", { name: "Dashboard" }).first().click();
+  const ask = page.getByRole("dialog");
+  await expect(ask).toContainText("Leave the new meeting?");
+  await ask.getByRole("button", { name: "Cancel" }).click();
+  await expect(page).toHaveURL(/\/meetings\/new/);
+  await expect(page.getByLabel("Name", { exact: true })).toHaveValue("Site meeting");
+  await page.getByRole("navigation").getByRole("link", { name: "Dashboard" }).first().click();
+  await page.getByRole("dialog").getByRole("button", { name: "Leave" }).click();
+  await expect(page).toHaveURL(new RegExp(`/w/e2e-team-${run}$`));
 });

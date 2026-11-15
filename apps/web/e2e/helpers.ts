@@ -59,8 +59,8 @@ export async function joinWithNewAccount(browser: Browser, link: string, who: Wh
   await page.goto(link);
   await page.getByRole("link", { name: "Create an account" }).click();
   await page.waitForURL(/\/sign-up\?/);
+  // The new account joins the workspace at once
   await signUp(page, who, page.url());
-  await page.getByRole("button", { name: /^Join / }).click();
   await page.waitForURL(/\/w\/[^/]+$/);
   return page;
 }

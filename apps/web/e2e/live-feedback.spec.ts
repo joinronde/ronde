@@ -48,7 +48,7 @@ test("the live meeting, as hosts asked for it", async ({ page, browser }) => {
   await max.getByRole("link", { name: "Create an account" }).click();
   await max.waitForURL(/\/sign-up\?/);
   await signUp(max, "Max Mind", `max-${run}@example.com`, max.url());
-  await max.getByRole("button", { name: /^Join / }).click();
+  // The new account joins the workspace at once
   await max.waitForURL(/\/w\/[^/]+$/);
   await max.goto(`${meeting}/me`);
   await max

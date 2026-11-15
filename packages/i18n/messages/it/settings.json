@@ -33,6 +33,8 @@
     "title": "Sezioni della scheda",
     "name": "Nome della sezione",
     "nameOf": "Nome della sezione {n}",
+    "unnamed": "Dai un nome a questa sezione per salvarla. Le altre impostazioni vengono salvate senza di essa.",
+    "unnamedKept": "Una sezione ha bisogno di un nome: mantiene «{label}» finché non ne scrivi un altro.",
     "input": "Formato",
     "inputOf": "Formato di «{label}»",
     "role": "Ruolo",

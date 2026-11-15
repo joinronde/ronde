@@ -688,26 +688,36 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
     setPrevious(before);
     setStatus("saved");
   };
-  const dirty = sig(snapshot()) !== sig(saved);
+  // A section of its own without a name: a new one waits for its name, everything else saves without it; one
+  // already saved keeps its saved name meanwhile (a section left out of the save would be deleted)
+  const savedLabel = (key: string) => saved.secs.find((s) => s.key === key && s.label.trim())?.label;
+  const complete = (x: Saved): Saved => ({
+    ...x,
+    secs: x.secs.flatMap((s) => {
+      if (s.role !== "custom" || s.label.trim()) return [s];
+      const kept = savedLabel(s.key);
+      return kept ? [{ ...s, label: kept }] : [];
+    }),
+  });
+  const dirty = sig(complete(snapshot())) !== sig(saved);
   // A pause in typing, valid fields: saved
   useEffect(() => {
     if (!dirty) return;
     setStatus("pending");
     const id = setTimeout(() => {
       const forms = [...document.querySelectorAll<HTMLFormElement>("form[data-cfg]")];
-      if (forms.some((form) => !form.checkValidity()) || secs.some((x) => x.role === "custom" && !x.label.trim()))
-        return setStatus("invalid");
-      void saveCore(snapshot(), saved);
+      if (forms.some((form) => !form.checkValidity())) return setStatus("invalid");
+      void saveCore(complete(snapshot()), saved);
     }, 900);
     return () => clearTimeout(id);
-  }, [sig(snapshot()), sig(saved)]);
+  }, [sig(complete(snapshot())), sig(saved)]);
   // Left before the pause ran out (another page from the sidebar, a tab put aside): saved at once, as the check-in is
   const flush = useRef(() => {});
   flush.current = () => {
     if (!dirty || status === "saving") return;
     const forms = [...document.querySelectorAll<HTMLFormElement>("form[data-cfg]")];
-    if (forms.some((form) => !form.checkValidity()) || secs.some((x) => x.role === "custom" && !x.label.trim())) return;
-    void saveCore(snapshot(), saved);
+    if (forms.some((form) => !form.checkValidity())) return;
+    void saveCore(complete(snapshot()), saved);
   };
   useEffect(() => {
     const onHide = () => document.visibilityState === "hidden" && flush.current();
@@ -727,7 +737,7 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
   const submit = (e?: React.FormEvent) => {
     e?.preventDefault();
     for (const form of document.querySelectorAll<HTMLFormElement>("form[data-cfg]")) if (!form.reportValidity()) return;
-    if (dirty) void saveCore(snapshot(), saved);
+    if (dirty) void saveCore(complete(snapshot()), saved);
   };
   const meeting = (
     <form className="panel form" data-cfg onSubmit={submit}>
@@ -845,6 +855,8 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
     role === "custom" ? t("sections.customPlaceholder") : tSections(`defaults.${ROLE_KIND[role]}`);
   const roleTaken = (role: SectionRole, i: number) => role !== "custom" && secs.some((x, j) => j !== i && x.role === role);
   const patchSec = (i: number, patch: Partial<SectionDef>) => setSecs(secs.map((x, j) => (j === i ? { ...x, ...patch } : x)));
+  // Sections whose name field was left: a missing name is pointed out only then, never before anything is typed
+  const [left, setLeft] = useState<Set<string>>(() => new Set());
   const sortSecs = useSortable({ items: secs, keyOf: (x) => x.key, onMove: (from, to) => setSecs(moved(secs, from, to)) });
   // The plans that an achievement section can bring back: the section holding the "plan" role, if any
   const planSec = secs.find((x) => x.role === "plan");
@@ -854,6 +866,8 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
         {sortSecs.list.map((x, i) => {
           const label = x.label.trim() || defaultLabel(x.role);
           const place = sortSecs.row(i);
+          const unnamed = x.role === "custom" && !x.label.trim() && left.has(x.key);
+          const keptName = unnamed ? savedLabel(x.key) : undefined;
           return (
             <li key={x.key || `new-${i}`} {...place} className={`sec-item ${place.className}`}>
               <div className="sec-row">
@@ -862,10 +876,12 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
                   type="text"
                   aria-label={t("sections.nameOf", { n: i + 1 })}
                   maxLength={60}
-                  required={x.role === "custom"}
+                  aria-invalid={unnamed || undefined}
+                  aria-describedby={unnamed ? `sec_unnamed${i}` : undefined}
                   value={x.label}
                   placeholder={defaultLabel(x.role)}
                   onChange={(e) => patchSec(i, { label: e.target.value })}
+                  onBlur={() => setLeft((s) => new Set(s).add(x.key))}
                 />
                 <Select
                   aria-label={t("sections.roleOf", { label })}
@@ -900,6 +916,11 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
                   </button>
                 </span>
               </div>
+              {unnamed && (
+                <span className="field-error" id={`sec_unnamed${i}`}>
+                  {keptName ? t("sections.unnamedKept", { label: keptName }) : t("sections.unnamed")}
+                </span>
+              )}
               <span className="hint">{t(`sections.roles.${x.role}.hint`)}</span>
               {x.role === "achievement" && planSec && (
                 <label className={`sec-option${x.carryPlans ? " on" : ""}`}>

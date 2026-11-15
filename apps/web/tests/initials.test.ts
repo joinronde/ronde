@@ -2,8 +2,8 @@ import { initials as liveInitials } from "@ronde/core/util";
 import { describe, expect, it } from "vitest";
 import { initials, meetingInitials } from "@/lib/shared/initials";
 
-// The letters shown where there is no picture: a person's or a project's face, a meeting's mark, the live views.
-// Three ways on purpose (see lib/shared/initials.ts), each checked on the names people really have
+// The letters shown where there is no picture: a person's or a project's face (the same in the live views, so a
+// person keeps one face from screen to screen), and a meeting's mark; checked on the names people really have
 
 describe("a person's or a project's initials", () => {
   it("take the first and the last word", () => {
@@ -89,10 +89,17 @@ describe("a meeting's initials", () => {
 });
 
 describe("initials in the live views", () => {
-  it("take the first two words, split at apostrophes and dashes too", () => {
-    expect(liveInitials("Sarah N'Diaye")).toBe("SN");
-    expect(liveInitials("Jean-Pierre Dupont")).toBe("JP");
-    expect(liveInitials("Ana María López García")).toBe("AM");
+  it("are a person's initials everywhere else: first and last word", () => {
+    for (const name of ["Audit 2A Founder", "Ana María de la Concepción Fernández", "Jean-Pierre Dupont", "Sarah N'Diaye"])
+      expect(liveInitials(name)).toBe(initials(name));
+    expect(liveInitials("Audit 2A Founder")).toBe("AF");
+    expect(liveInitials("Jean-Pierre Dupont")).toBe("JD");
+  });
+
+  it("leave out a suffix after the name", () => {
+    expect(initials("Bartholomew Fitzgerald-Montgomery III")).toBe("BF");
+    expect(initials("Martin Luther King Jr.")).toBe("MK");
+    expect(initials("John Smith Sr")).toBe("JS");
   });
 
   it("are a question mark for no name", () => {
@@ -104,11 +111,6 @@ describe("initials in the live views", () => {
   it("read Arabic and Chinese names", () => {
     expect(liveInitials("ليلى حداد")).toBe("لح");
     expect(liveInitials("李伟")).toBe("李");
-  });
-
-  // Not half of an emoji (a broken character on screen)
-  it("keep an emoji at the start of a name whole", () => {
-    expect(liveInitials("🎉 Party")).toBe("🎉P");
   });
 
   // A name of spaces alone shows "?", as an empty one does

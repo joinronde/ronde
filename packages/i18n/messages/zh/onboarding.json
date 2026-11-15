@@ -12,6 +12,7 @@
   "timezone": "时区",
   "create": "创建工作空间",
   "invitationsTitle": "你收到了邀请",
+  "invitationByLink": "{count, plural, other {你有 # 份待处理的邀请：打开邮件中收到的链接即可加入。}}",
   "join": "加入",
   "createOwn": "或者创建你自己的工作空间",
   "yourWorkspaces": "你的工作空间",

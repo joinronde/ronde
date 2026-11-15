@@ -103,7 +103,9 @@ export type MeetingCreationPolicy = "members" | "admins";
 const MEETING_MAKERS: readonly WorkspaceRole[] = ["owner", "admin", "organizer"];
 
 export function can(p: Principal, permission: Permission, policy: { meetingCreation?: MeetingCreationPolicy } = {}): boolean {
-  if (permission === "meeting.create" && policy.meetingCreation === "admins") return MEETING_MAKERS.includes(p.workspaceRole);
+  // A custom role granting meeting creation holds whatever the policy: it is given on purpose
+  if (permission === "meeting.create" && policy.meetingCreation === "admins")
+    return MEETING_MAKERS.includes(p.workspaceRole) || !!p.extra?.includes("meeting.create");
   if (WORKSPACE_GRANTS[p.workspaceRole].includes(permission)) return true;
   if (p.extra?.includes(permission)) return true;
   return !!p.meetingRole && MEETING_GRANTS[p.meetingRole].includes(permission);
@@ -111,9 +113,21 @@ export function can(p: Principal, permission: Permission, policy: { meetingCreat
 
 /**
  * Roles a person may hand out: never more than their own. Billing goes with the owner (an administrator has no
- * access to it), and only where the workspace pays for a plan (`billing`: in the cloud).
+ * access to it), and only where the workspace pays for a plan (`billing`: in the cloud). A custom role that
+ * invites, manages members or manages people (`extra`, a "people manager") hands out the roles of an organizer,
+ * member and guest, never above the person's own built-in role: a member gives "member" and "guest", a guest
+ * only "guest".
  */
-export function assignableRoles(role: WorkspaceRole, { billing = false }: { billing?: boolean } = {}): WorkspaceRole[] {
+/** Permissions of a custom role that act on people's seats: inviting, changing roles, removing */
+const PEOPLE_MANAGING: readonly Permission[] = ["people.invite", "members.manage", "people.manage"];
+
+/** How far each built-in role reaches, to tell stepping down from stepping up */
+export const ROLE_RANK: Record<WorkspaceRole, number> = { guest: 0, member: 1, organizer: 2, billing: 2, admin: 3, owner: 4 };
+
+export function assignableRoles(
+  role: WorkspaceRole,
+  { billing = false, extra = [] }: { billing?: boolean; extra?: readonly Permission[] } = {},
+): WorkspaceRole[] {
   const roles: WorkspaceRole[] =
     role === "owner"
       ? ["owner", "admin", "billing", "organizer", "member", "guest"]
@@ -121,7 +135,13 @@ export function assignableRoles(role: WorkspaceRole, { billing = false }: { bill
         ? ["admin", "organizer", "member", "guest"]
         : role === "organizer"
           ? ["member", "guest"]
-          : [];
+          : PEOPLE_MANAGING.some((p) => extra.includes(p))
+            ? role === "member"
+              ? ["member", "guest"]
+              : role === "guest"
+                ? ["guest"]
+                : []
+            : [];
   return billing ? roles : roles.filter((r) => r !== "billing");
 }
 

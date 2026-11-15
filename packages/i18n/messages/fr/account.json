@@ -58,6 +58,8 @@
   "workspaces": "Vos espaces de travail",
   "noWorkspace": "Vous ne faites encore partie d’aucun espace de travail.",
   "createWorkspace": "Créer un espace de travail",
+  "leaveWorkspace": "Quitter",
+  "leaveNamed": "Quitter {workspace}",
   "calendar": "Agenda",
   "calendarHint": "Un lien privé avec toutes les réunions auxquelles vous participez, pour votre application d’agenda.",
   "appearance": "Apparence",

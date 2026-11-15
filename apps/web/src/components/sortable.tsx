@@ -1,12 +1,13 @@
 "use client";
 
-import { GripVertical } from "lucide-react";
+import { ArrowDown, ArrowUp, GripVertical } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useId, useRef, useState } from "react";
 import { dropIndex, moved, rowShift } from "@/lib/shared/sortable";
 
-// A list reordered by dragging the grip of a row (mouse, pen or finger), or with the arrow keys once the grip has
-// the focus. The other rows make way as the row moves; the new order shows at once, before the server answers.
+// A list reordered by dragging the grip of a row (mouse, pen or finger), with the arrow keys once the grip has
+// the focus, or with the row's "Move up" and "Move down" buttons (a single click, for whoever cannot drag). The
+// other rows make way as the row moves; the new order shows at once, before the server answers.
 
 interface Drag {
   from: number;
@@ -75,12 +76,23 @@ export function useSortable<T>({
     if (drop && d) commit(d.from, d.over);
   };
 
+  /** One step up or down, the focus staying on the grip of the row moved */
+  const step = (i: number, by: -1 | 1) => {
+    const to = i + by;
+    if (disabled || to < 0 || to >= list.length || !canMove(i, to)) return;
+    focusAfter.current = to;
+    commit(i, to);
+  };
   const grip = (i: number, label: string) => ({
     ref: (el: HTMLButtonElement | null) => {
       grips.current[i] = el;
     },
     label,
     disabled: disabled || list.length < 2,
+    moves: {
+      up: i > 0 && !disabled && canMove(i, i - 1) ? () => step(i, -1) : null,
+      down: i < list.length - 1 && !disabled && canMove(i, i + 1) ? () => step(i, 1) : null,
+    },
     onPointerDown: (e: React.PointerEvent<HTMLButtonElement>) => {
       if (e.button !== 0 || disabled || list.length < 2) return;
       e.preventDefault();
@@ -107,13 +119,10 @@ export function useSortable<T>({
     },
     onKeyDown: (e: React.KeyboardEvent<HTMLButtonElement>) => {
       if (e.key === "Escape" && dragRef.current) return end(false);
-      const step = e.key === "ArrowUp" ? -1 : e.key === "ArrowDown" ? 1 : 0;
-      if (!step) return;
+      const by = e.key === "ArrowUp" ? -1 : e.key === "ArrowDown" ? 1 : 0;
+      if (!by) return;
       e.preventDefault();
-      const to = i + step;
-      if (to < 0 || to >= list.length || !canMove(i, to)) return;
-      focusAfter.current = to;
-      commit(i, to);
+      step(i, by);
     },
   });
 
@@ -129,12 +138,46 @@ export function useSortable<T>({
   return { list, row, grip, dragging: drag !== null };
 }
 
-/** The handle of a row: dragged, or moved with the arrow keys */
-export function SortGrip({ label, ...props }: ReturnType<ReturnType<typeof useSortable>["grip"]>) {
+/** The handle of a row: dragged, or moved with the arrow keys; and its two buttons, one step up or down */
+export function SortGrip({ label, moves, ...props }: ReturnType<ReturnType<typeof useSortable>["grip"]>) {
   const t = useTranslations("common");
+  const tb = useTranslations("board");
   return (
-    <button type="button" className="sort-grip" aria-label={label} title={t("dragToReorder")} {...props}>
-      <GripVertical size={16} strokeWidth={2.2} aria-hidden="true" />
-    </button>
+    <>
+      <button
+        type="button"
+        className="sort-grip"
+        aria-label={label}
+        title={t("dragToReorder")}
+        aria-keyshortcuts="ArrowUp ArrowDown"
+        {...props}
+      >
+        <GripVertical size={16} strokeWidth={2.2} aria-hidden="true" />
+      </button>
+      {!props.disabled && (
+        <span className="sort-moves" role="group" aria-label={label}>
+          <button
+            type="button"
+            className="sort-move"
+            aria-label={tb("up")}
+            title={tb("up")}
+            disabled={!moves.up}
+            onClick={moves.up ?? undefined}
+          >
+            <ArrowUp size={13} strokeWidth={2.2} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className="sort-move"
+            aria-label={tb("down")}
+            title={tb("down")}
+            disabled={!moves.down}
+            onClick={moves.down ?? undefined}
+          >
+            <ArrowDown size={13} strokeWidth={2.2} aria-hidden="true" />
+          </button>
+        </span>
+      )}
+    </>
   );
 }

@@ -9,6 +9,11 @@
   "retry": "Riprova",
   "suspendedTitle": "Questo spazio di lavoro è sospeso",
   "suspendedBody": "{workspace} è sospeso per ora: riunioni, schede e cronologia sono conservati, ma nessuno può aprirli. I proprietari sanno perché; scrivi all'amministratore di questo servizio per riaprirlo.",
+  "suspendedBodyOwner": "{workspace} è stato sospeso dall'amministratore di questo servizio: riunioni, schede e cronologia sono conservati, ma nessuno può aprirli. Per riaprirlo, scrivigli.",
   "suspendedBack": "Torna ai miei spazi di lavoro",
+  "suspendedCreate": "Crea un altro spazio di lavoro",
+  "suspendedMark": "Sospeso",
+  "guestLinkGoneTitle": "Questo link non funziona più",
+  "guestLinkGone": "Questo link allo schermo condiviso di una riunione è scaduto o è stato rimosso. Chiedine uno nuovo a chi te l'ha inviato.",
   "report": "Raccontaci cosa è successo"
 }

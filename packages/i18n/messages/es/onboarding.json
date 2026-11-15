@@ -12,6 +12,7 @@
   "timezone": "Zona horaria",
   "create": "Crear el espacio de trabajo",
   "invitationsTitle": "Te han invitado",
+  "invitationByLink": "{count, plural, one {Tienes una invitación pendiente: abre el enlace que recibiste por correo para unirte.} other {Tienes # invitaciones pendientes: abre los enlaces que recibiste por correo para unirte.}}",
   "join": "Unirse",
   "createOwn": "O crea tu propio espacio de trabajo",
   "yourWorkspaces": "Tus espacios de trabajo",

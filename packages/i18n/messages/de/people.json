@@ -56,6 +56,8 @@
   "revoke": "Einladung widerrufen",
   "remove": "Entfernen",
   "removeConfirm": "{name} aus {workspace} entfernen? Profil und Zugang werden gelöscht. Was die Person in Meetings gesagt hat, bleibt erhalten, gekennzeichnet als „Ehemaliges Mitglied“.",
+  "roleConfirm": "{name} die Rolle „{role}“ geben? {hint}.",
+  "roleConfirmYes": "Rolle ändern",
   "removed": "{name} entfernt.",
   "changeRole": "Rolle von {name}",
   "saved": "Gespeichert",
