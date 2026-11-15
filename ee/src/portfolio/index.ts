@@ -50,7 +50,13 @@ export async function compute(
   const seen = sessions.filter((s) => !readable || readable.has(s.meetingId));
   const done = await db.checkInItem.groupBy({
     by: ["projectId", "sessionId"],
-    where: { sessionId: { in: seen.map((s) => s.id) }, projectId: { not: null }, role: "achievement" },
+    // A box left unticked is not done yet (it may come back to the next check-in, and count once ticked)
+    where: {
+      sessionId: { in: seen.map((s) => s.id) },
+      projectId: { not: null },
+      role: "achievement",
+      NOT: { text: { startsWith: "[ ] " } },
+    },
     _count: { _all: true },
   });
   const byProject = new Map(

@@ -10,7 +10,7 @@ import { readConfig } from "@ronde/module-sdk";
 import { retro, retroColumns } from "@ronde/modules";
 import { OpError } from "../errors";
 import { activeBlocks, blockData, onBlockStep, pollResults } from "./blocks";
-import { archiveCheckIns } from "./checkins";
+import { archiveCheckIns, carryOpenItems } from "./checkins";
 import type { MeetingCtx } from "./context";
 import { personName, toInteraction, toMeeting, toMember, toSection } from "./dto";
 import { type ModuleState, moduleStates } from "./modules";
@@ -98,13 +98,21 @@ export async function archiveSession(
     },
   });
   // The items presented move to the session, and so do the sheets of the projects presented; the next
-  // check-ins start empty. Absent people's own items are kept: they will be presented at the next session.
+  // check-ins start empty (but for the open items brought back). Absent people's own items are kept: they will be
+  // presented at the next session.
   await archiveCheckIns(
     db,
     m.meeting.id,
     s.id,
     Object.values(record.checkIns).flatMap((c) => c.items.map((i) => i.id)),
     record.sections,
+  );
+  // The boxes left unticked in the sections bringing back their open items: back in the next check-ins
+  await carryOpenItems(
+    db,
+    { workspaceId: s.workspaceId, meetingId: m.meeting.id, sessionId: s.id },
+    (await sectionsOf(db, m.meeting.id)).map(toSection),
+    now,
   );
   // Items of a section removed since: they go with the person who was presented, as before the sections changed
   await db.checkInItem.updateMany({

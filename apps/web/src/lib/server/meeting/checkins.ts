@@ -1,7 +1,17 @@
 import "server-only";
 import { sameItem } from "@ronde/core/record";
 import type { CheckInDTO, RecordCheckIn, SectionDef } from "@ronde/core/types";
-import { checkInFromItems, itemsFromCheckIn, plainItem, similarity, taskOf, withEffectiveRoles } from "@ronde/core/util";
+import {
+  carriesOver,
+  checkInFromItems,
+  itemsFromCheckIn,
+  plainItem,
+  sectionBehavior,
+  similarity,
+  taskItem,
+  taskOf,
+  withEffectiveRoles,
+} from "@ronde/core/util";
 import type { CheckInItem, ScopedClient, ScopedTx } from "@ronde/db";
 import { ms } from "./dto";
 
@@ -32,10 +42,13 @@ export async function loadCheckIns(db: Db, meetingId: string, sections: SectionD
   for (const h of heads) {
     const mine = itemsOf.get(h.personId) ?? [];
     const projects = [...new Set(mine.map((i) => i.projectId).filter((p): p is string => !!p))];
+    // Open items brought back from the last session: when they came
+    const carried = mine.filter((i) => i.carriedFromId).map((i) => i.createdAt.getTime());
     out[h.personId] = {
       ...checkInFromItems(grouped(mine.filter((i) => !i.projectId)), sections),
       byProject: Object.fromEntries(projects.map((p) => [p, checkInFromItems(grouped(mine.filter((i) => i.projectId === p)), sections)])),
       updatedAt: ms(h.updatedAt),
+      ...(carried.length ? { carriedAt: Math.max(...carried) } : {}),
     };
   }
   return out;
@@ -113,6 +126,14 @@ export async function saveCheckIn(
     ? await db.checkInItemContributor.findMany({ where: { itemId: { in: [...free] } }, select: { itemId: true, personId: true } })
     : [];
   const reworded = existing.filter((i) => free.has(i.id) && joined.some((j) => j.itemId === i.id));
+  // Open items brought back: ticked (or unticked again), an item is saved anew and still is the one brought back
+  const carried = existing.filter((i) => free.has(i.id) && i.carriedFromId);
+  const carriedFrom = (c: (typeof create)[number]): string | null => {
+    const at = carried.findIndex(
+      (i) => i.projectId === c.projectId && i.sectionKey === c.sectionKey && plainItem(i.text).trim() === plainItem(c.text).trim(),
+    );
+    return at < 0 ? null : carried.splice(at, 1)[0]!.carriedFromId;
+  };
   if (free.size) await db.checkInItem.deleteMany({ where: { id: { in: [...free] } } });
 
   // An achievement reports on a plan of the same tab (the person's own, or the same project); a box not ticked
@@ -131,7 +152,14 @@ export async function saveCheckIn(
   }
   if (create.length) {
     const created = await db.checkInItem.createManyAndReturn({
-      data: create.map((c) => ({ workspaceId, meetingId, personId, ...c, sourceItemId: link(c.role, c.text, c.projectId) })),
+      data: create.map((c) => ({
+        workspaceId,
+        meetingId,
+        personId,
+        ...c,
+        sourceItemId: link(c.role, c.text, c.projectId),
+        carriedFromId: carriedFrom(c),
+      })),
       select: { id: true, projectId: true, sectionKey: true, text: true },
     });
     const moved: { workspaceId: string; itemId: string; personId: string }[] = [];
@@ -159,4 +187,50 @@ export async function archiveCheckIns(db: Db, meetingId: string, sessionId: stri
   await db.checkInItem.updateMany({ where: { meetingId, sessionId: null, id: { in: presented } }, data: { sessionId } });
   for (const def of withEffectiveRoles(sectionRows))
     await db.checkInItem.updateMany({ where: { sessionId, sectionKey: def.key, NOT: { role: def.role } }, data: { role: def.role } });
+}
+
+/**
+ * Archiving a session, in the sections bringing back their open items: each box left unticked among the items
+ * presented comes back in its author's current check-in, in the same tab, still unticked, naming the item it
+ * brings back. The ticked ones stay with the session. An absent person's items were not presented: they are still
+ * there. The check-in is not marked as saved: it still waits for its author, and so does the reminder.
+ */
+export async function carryOpenItems(
+  db: Db,
+  ids: { workspaceId: string; meetingId: string; sessionId: string },
+  sectionRows: SectionDef[],
+  archivedAt: Date,
+) {
+  const keys = withEffectiveRoles(sectionRows)
+    .filter((d) => sectionBehavior(d).carryOpen)
+    .map((d) => d.key);
+  if (!keys.length) return;
+  const { workspaceId, meetingId, sessionId } = ids;
+  const open = (await db.checkInItem.findMany({ where: { sessionId, sectionKey: { in: keys } } })).filter((i) => carriesOver(i.text));
+  if (!open.length) return;
+  await db.checkInItem.createMany({
+    data: open.map((i) => ({
+      workspaceId,
+      meetingId,
+      personId: i.personId,
+      projectId: i.projectId,
+      sectionKey: i.sectionKey,
+      role: i.role,
+      position: i.position,
+      // An item written before the section became a checklist gets its box
+      text: taskOf(i.text).done === null ? taskItem(i.text, false) : i.text,
+      carriedFromId: i.id,
+    })),
+  });
+  // Someone whose items were presented has a check-in; should one be missing, it is created as saved before the
+  // session ended, not since
+  await db.checkIn.createMany({
+    data: [...new Set(open.map((i) => i.personId))].map((personId) => ({
+      workspaceId,
+      meetingId,
+      personId,
+      updatedAt: new Date(archivedAt.getTime() - 1),
+    })),
+    skipDuplicates: true,
+  });
 }

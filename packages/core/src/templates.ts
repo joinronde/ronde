@@ -12,6 +12,7 @@ const sectionDef = z.object({
   role: z.enum(["achievement", "plan", "blocker", "note", "custom"]),
   input: z.enum(["list", "checklist", "text"]),
   carryPlans: z.boolean().optional(),
+  carryOpen: z.boolean().optional(),
 });
 
 /** Recurrence pattern of a template: a schedule rule without its dates */
@@ -420,7 +421,8 @@ const SPECS: Record<BuiltinTemplateId, Spec> = {
       { key: "done", role: "achievement", input: "list", named: true },
       { key: "planned", role: "plan", input: "checklist", named: true },
       { key: "safety", role: "blocker", input: "list", named: true },
-      { key: "punch", role: "custom", input: "checklist", named: true },
+      // The punch list is followed until each item is cleared: what is left open comes back the next week
+      { key: "punch", role: "custom", input: "checklist", named: true, carryOpen: true },
     ],
     modules: {
       icebreaker: false,

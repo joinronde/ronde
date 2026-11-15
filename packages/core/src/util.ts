@@ -58,10 +58,25 @@ export function fieldOf(sections: SectionDef[], key: string): string | null {
   return def.role === "custom" ? `x:${key}` : ROLE_KIND[def.role];
 }
 
-/** Options of a section as stored (`Section.behavior`): only the ones its role and type allow */
-export function sectionBehavior(d: Pick<SectionDef, "role" | "input" | "carryPlans">): { carryPlans?: true } {
-  return d.carryPlans && d.role === "achievement" && d.input === "checklist" ? { carryPlans: true } : {};
+/**
+ * Options of a section as stored (`Section.behavior`): only the ones its role and type allow. Bringing back the
+ * open items is for a checklist whose role brings nothing back already: not the plans, nor an achievement
+ * section bringing them back (that option wins)
+ */
+export function sectionBehavior(d: Pick<SectionDef, "role" | "input" | "carryPlans" | "carryOpen">): {
+  carryPlans?: true;
+  carryOpen?: true;
+} {
+  if (d.input !== "checklist") return {};
+  if (d.carryPlans && d.role === "achievement") return { carryPlans: true };
+  return d.carryOpen && d.role !== "plan" ? { carryOpen: true } : {};
 }
+
+/** A checklist item that comes back at the next check-in of a section bringing back its open items: not ticked */
+export const carriesOver = (item: string) => taskOf(item).done !== true && !!plainItem(item).trim();
+
+/** An item that counts as done in an achievement section: anything but a box left unticked */
+export const countsAsDone = (item: string) => taskOf(item).done !== false;
 
 /**
  * Sections shown in check-ins. A role other than "custom" is held by one section at most: it fills the
@@ -72,10 +87,10 @@ export function resolveSections(st: { sections: SectionDef[] }, locale: Locale):
   const roles = effectiveRoles(st.sections);
   return st.sections.map((d, i) => {
     const role = roles[i]!;
-    if (role === "custom") return { k: "x:" + d.key, label: d.label.trim() || d.key, kind: "extra", type: d.input };
+    const behavior = sectionBehavior({ ...d, role });
+    if (role === "custom") return { k: "x:" + d.key, label: d.label.trim() || d.key, kind: "extra", type: d.input, ...behavior };
     const kind = ROLE_KIND[role];
-    const carryPlans = sectionBehavior({ ...d, role }).carryPlans;
-    return { k: kind, label: d.label.trim() || t(`defaults.${kind}`), kind, type: d.input, ...(carryPlans ? { carryPlans } : {}) };
+    return { k: kind, label: d.label.trim() || t(`defaults.${kind}`), kind, type: d.input, ...behavior };
   });
 }
 
@@ -179,20 +194,25 @@ export function rebaseText(base: string, mine: string, theirs: string): string {
   return mine === base ? theirs : mine;
 }
 
+/** A check-in filled in, not saved since the last meeting */
+const untouched = (f: Parameters<typeof isCheckInStale>[0], lastArchivedAt: number | null) =>
+  isCheckInFilled(f) && lastArchivedAt !== null && (f?.updatedAt ?? 0) < lastArchivedAt;
+
 /**
  * Check-in filled in but not touched since the last meeting: the person was absent, their check-in
- * was kept and will be presented as is unless they update it.
+ * was kept and will be presented as is unless they update it. Open items brought back when that meeting was
+ * archived are not one: the person was there.
  */
 export function isCheckInStale(
-  f: (Partial<RecordCheckIn> & { updatedAt?: number | null }) | null | undefined,
+  f: (Partial<RecordCheckIn> & { updatedAt?: number | null; carriedAt?: number | null }) | null | undefined,
   lastArchivedAt: number | null,
 ): boolean {
-  return isCheckInFilled(f) && lastArchivedAt !== null && (f?.updatedAt ?? 0) < lastArchivedAt;
+  return untouched(f, lastArchivedAt) && (f?.carriedAt ?? 0) < lastArchivedAt!;
 }
 
 /** Check-in ready for the meeting: filled in since the last meeting */
 export const isCheckInReady = (f: Parameters<typeof isCheckInStale>[0], lastArchivedAt: number | null) =>
-  isCheckInFilled(f) && !isCheckInStale(f, lastArchivedAt);
+  isCheckInFilled(f) && !untouched(f, lastArchivedAt);
 
 /** Team mood, from 1 (stormy) to 5 (sunny); labels live in the "moods" messages */
 export const MOODS = [

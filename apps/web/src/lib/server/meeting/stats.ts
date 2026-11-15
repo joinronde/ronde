@@ -1,13 +1,15 @@
 import "server-only";
 import { parseRecord } from "@ronde/core/record";
 import { projectProgress, recurringBlockers, type SessionStats, type StatsDTO } from "@ronde/core/stats";
+import { countsAsDone } from "@ronde/core/util";
 import { Prisma, prisma } from "@ronde/db";
 import type { MeetingCtx } from "./context";
 import { personName } from "./dto";
 
 // Stats of a meeting, computed by the database over its archived sessions: their record (frozen at
-// archive time) and their check-in items (planned → done through `sourceItemId`). Raw SQL runs on the
-// unconfined client, so every query names the workspace and the meeting itself.
+// archive time) and their check-in items (planned → done through `sourceItemId`). An open item brought back
+// (`carriedFromId`) is the same item again: it counts once. Raw SQL runs on the unconfined client, so every
+// query names the workspace and the meeting itself.
 
 const DAY = 86_400_000;
 const STALE_DAYS = 21;
@@ -38,7 +40,7 @@ export async function meetingStats(ctx: MeetingCtx): Promise<StatsDTO> {
             AND p."personId" IN (SELECT x ->> 'id' FROM jsonb_array_elements(${participants}) x)) AS planned,
         (SELECT count(*)::int FROM "CheckInItem" d JOIN "CheckInItem" p ON p."id" = d."sourceItemId"
           WHERE d."sessionId" = s."id" AND d."role" = 'achievement' AND p."sessionId" = s.prev) AS done,
-        (SELECT count(*)::int FROM "CheckInItem" b WHERE b."sessionId" = s."id" AND b."role" = 'blocker') AS blockers,
+        (SELECT count(*)::int FROM "CheckInItem" b WHERE b."sessionId" = s."id" AND b."role" = 'blocker' AND b."carriedFromId" IS NULL) AS blockers,
         (SELECT count(*)::int FROM jsonb_array_elements(${arr(Prisma.sql`s."record" -> 'interactions'`)}) i WHERE i ->> 'type' = 'question') AS questions,
         (SELECT count(*)::int FROM jsonb_array_elements(${arr(Prisma.sql`s."record" -> 'interactions'`)}) i WHERE i ->> 'type' = 'hand') AS hands,
         jsonb_array_length(${arr(Prisma.sql`s."record" -> 'kudos'`)})::int AS kudos,
@@ -74,7 +76,8 @@ export async function meetingStats(ctx: MeetingCtx): Promise<StatsDTO> {
   const [records, blockerItems, current, open] = await Promise.all([
     db.session.findMany({ where: { meetingId: m, status: "archived" }, orderBy: { date: "asc" }, select: { date: true, record: true } }),
     db.checkInItem.findMany({
-      where: { meetingId: m, role: "blocker" },
+      // An open item brought back counts once, at the session it was written for
+      where: { meetingId: m, role: "blocker", carriedFromId: null },
       include: { session: { select: { date: true } }, person: { select: { firstName: true, lastName: true } } },
     }),
     db.session.findFirst({ where: { meetingId: m, status: "current" }, select: { date: true } }),
@@ -94,7 +97,8 @@ export async function meetingStats(ctx: MeetingCtx): Promise<StatsDTO> {
       projectId: p.id,
       name: p.name,
       health: p.health,
-      done: items.filter((i) => i.projectId === p.id && doneKeys.has(i.section)).length,
+      // A box left unticked is not done (it may come back next time, then counted once ticked)
+      done: items.filter((i) => i.projectId === p.id && doneKeys.has(i.section) && countsAsDone(i.text)).length,
     }));
   });
   const now = Date.now();
