@@ -55,11 +55,19 @@ test("pictures of the README and the site", async ({ browser }) => {
   await shot(screen, "screen-intro", { site: false });
   // Past the intro and the irritants slide, to the fourth turn
   for (let i = 0; i < 5; i++) {
-    await page.getByRole("button", { name: /^Next: / }).click();
+    const next = page.getByRole("button", { name: /^Next: / });
+    const label = (await next.textContent())!;
+    await next.click();
+    // Each click names the step it leaves: one sent before the room has moved on would be ignored
+    await expect(next).not.toHaveText(label);
     await screen.waitForTimeout(400);
   }
   await screen.waitForTimeout(3000);
   await shot(screen, "screen-turn");
+  // The same turn at night, before the wheel: a draw settles as a band below the stage once shown
+  await screen.emulateMedia({ colorScheme: "dark" });
+  await shot(screen, "screen-dark");
+  await screen.emulateMedia({ colorScheme: "light" });
   await shot(page, "control");
   // A spin of the wheel, in front of the shared screen while it plays
   await page.getByRole("tab", { name: "Random" }).click();
@@ -68,13 +76,10 @@ test("pictures of the README and the site", async ({ browser }) => {
   await shot(screen, "screen-wheel", { site: false });
   await context.close();
 
-  // Dark: the same session, as the shared screen and the control room show it at night
+  // Dark: the same session, as the control room shows it at night
   const dark = await signedIn(browser, { ...desktop, colorScheme: "dark" });
   await controlRoom(dark.page, meeting);
   await shot(dark.page, "control-dark");
-  const darkScreen = await dark.context.newPage();
-  await darkScreen.goto(`${meeting}/screen`);
-  await shot(darkScreen, "screen-dark");
   await dark.page.goto("/w/demo/projects");
   await shot(dark.page, "portfolio-dark");
   await dark.page.goto("/w/demo");
