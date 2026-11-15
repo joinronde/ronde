@@ -90,6 +90,8 @@
   "doneLabel": "Feito",
   "carriedOver": "Adiado",
   "carriedNote": "O que você tinha previsto da última vez voltou para “{section}”: marque o que está feito e salve.",
+  "openCarried": "As caixas que você deixou sem marcar da última vez voltaram: marque-as quando estiverem feitas.",
+  "openCarriedOther": "As caixas que {name} deixou sem marcar da última vez voltaram.",
   "inSection": "Em “{section}”",
   "dismissed": "Descartado",
   "undo": "Desfazer",

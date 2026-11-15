@@ -106,9 +106,9 @@ beforeAll(async () => {
     });
     // Its sheet was presented that day
     await prisma.projectUpdate.create({ data: { workspaceId, meetingId: meeting.id, projectId: mobile.id, sessionId: s.id, health } });
-    // Two things achieved for the project last week
+    // Two things achieved for the project last week, and a box left unticked (not done yet)
     if (date === lastWeek)
-      for (const text of ["Login screen", "Push notifications"])
+      for (const text of ["Login screen", "[x] Push notifications", "[ ] Offline mode"])
         await prisma.checkInItem.create({
           data: {
             workspaceId,

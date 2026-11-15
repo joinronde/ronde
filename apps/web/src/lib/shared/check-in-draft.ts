@@ -222,6 +222,13 @@ export const savedThisSession = (updatedAt: number | null | undefined, lastArchi
   !!updatedAt && (lastArchivedAt === null || updatedAt >= lastArchivedAt);
 
 /**
+ * Open items of a section bringing them back came back into the check-in when the last session was archived, and
+ * it was not saved since: a note says why they are there
+ */
+export const openCarried = (f: Pick<CheckInDTO, "updatedAt" | "carriedAt"> | null | undefined, lastArchivedAt: number | null) =>
+  !!f?.carriedAt && lastArchivedAt !== null && f.carriedAt >= lastArchivedAt && !savedThisSession(f.updatedAt, lastArchivedAt);
+
+/**
  * A past check-in as "My past check-ins" shows it: the person's own tab, then each project's tab under its
  * project, each with the sections that have items. Empty tabs are left out: none at all for an empty check-in
  */

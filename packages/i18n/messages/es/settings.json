@@ -65,6 +65,8 @@
     "carryPlansSwitch": "La sección pasa a ser una lista de tareas.",
     "carryPlansHint": "Cada persona encuentra lo que había previsto como casillas que marcar a medida que avanza. Una casilla sin marcar no cuenta como hecha.",
     "carryPlans": "Recuperar lo que había en «{plan}» la última vez",
+    "carryOpen": "Recuperar las casillas sin marcar la próxima vez",
+    "carryOpenHint": "Cada persona encuentra en su siguiente ficha las casillas que dejó sin marcar, hasta que las marque. Una casilla marcada no vuelve.",
     "removeOf": "Quitar «{label}»",
     "reorder": "Mover «{label}»",
     "customPlaceholder": "P. ej. Investigación, Demo que enseñar, Necesito ayuda",

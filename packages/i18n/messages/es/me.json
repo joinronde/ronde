@@ -90,6 +90,8 @@
   "doneLabel": "Hecho",
   "carriedOver": "Trasladado",
   "carriedNote": "Lo que habías previsto la última vez está de vuelta en «{section}»: marca lo que está hecho y guarda.",
+  "openCarried": "Las casillas que dejaste sin marcar la última vez están de vuelta: márcalas cuando estén hechas.",
+  "openCarriedOther": "Las casillas que {name} dejó sin marcar la última vez están de vuelta.",
   "inSection": "En «{section}»",
   "dismissed": "Descartado",
   "undo": "Deshacer",

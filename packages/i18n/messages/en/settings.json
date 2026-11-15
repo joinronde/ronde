@@ -65,6 +65,8 @@
     "carryPlansSwitch": "This section becomes a checklist.",
     "carryPlansHint": "Everyone finds last time's plans as boxes to tick off. A box left unticked doesn't count as done.",
     "carryPlans": "Bring back what was in “{plan}” last time",
+    "carryOpen": "Bring back unticked boxes next time",
+    "carryOpenHint": "Each person finds the boxes they left unticked in their next check-in, until they tick them. Ticked boxes don't come back.",
     "removeOf": "Remove “{label}”",
     "reorder": "Move “{label}”",
     "customPlaceholder": "E.g. Research, Demo to show, Need help",

@@ -29,6 +29,11 @@ export interface SectionDef {
   input: SectionType;
   /** Achievement section in checklist form: what each person planned last time comes back in it, as boxes to tick */
   carryPlans?: boolean;
+  /**
+   * Checklist whose role brings nothing back on its own (not "plan", not an achievement section bringing back the
+   * plans): the boxes a person left unticked are back in their next check-in, still unticked (a punch list)
+   */
+  carryOpen?: boolean;
 }
 
 export interface MemberDTO {
@@ -65,6 +70,8 @@ export interface CheckInDTO extends CheckInFields {
   /** Items written in the tab of a project, per project id */
   byProject: Record<string, CheckInFields>;
   updatedAt: number | null;
+  /** When open items of the last check-in were brought back into it (see `SectionDef.carryOpen`), null: never */
+  carriedAt?: number | null;
 }
 
 export type ProjectStatus = "proposed" | "active" | "paused" | "done" | "cancelled";
@@ -339,6 +346,8 @@ export interface Section {
   type?: SectionType;
   /** Last time's plans come back in it (see `SectionDef.carryPlans`) */
   carryPlans?: boolean;
+  /** Its boxes left unticked come back at the next check-in (see `SectionDef.carryOpen`) */
+  carryOpen?: boolean;
 }
 
 export interface CommentDTO {

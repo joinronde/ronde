@@ -1,8 +1,10 @@
 import { expect, test } from "@playwright/test";
 import { createMeeting, fillCheckIn, hostWithWorkspace, invite, joinWithNewAccount, openTab } from "./helpers";
+import { choose } from "./select";
 
 // A participant's side of a session: a check-in saved from two tabs, the bar that tells when their turn comes,
-// a question and a thank-you from the dock, the rating at the end, and last time's plans back afterwards
+// a question and a thank-you from the dock, the rating at the end, and last time's plans and the boxes left
+// unticked of a punch list back afterwards
 
 const run = Date.now().toString(36);
 
@@ -26,6 +28,20 @@ test("a participant's session, from two tabs of check-in to last time's plans", 
   });
   await leo.context().close();
   const meeting = await createMeeting(page, workspace, "Participant sync");
+  // A punch list of the meeting's own: what is left unticked comes back the next week
+  await page.goto(`${meeting}/settings#sections`);
+  await page.getByRole("button", { name: "+ Add a section" }).click();
+  await page.getByRole("textbox", { name: "Name of section 5" }).fill("Punch list");
+  await choose(page, page.getByRole("combobox", { name: "Format of “Punch list”" }), "checklist");
+  const punchSaved = page.waitForResponse(
+    (r) =>
+      r.url().endsWith("/rpc") &&
+      (r.request().postData() ?? "").includes(
+        '"label":"Punch list","role":"custom","input":"checklist","carryPlans":false,"carryOpen":true',
+      ),
+  );
+  await page.getByRole("checkbox", { name: /Bring back unticked boxes next time/ }).check();
+  await punchSaved;
 
   // Two tabs of the same check-in: the second one saved is told, and keeps both
   await pia.goto(`${meeting}/me`);
@@ -51,6 +67,19 @@ test("a participant's session, from two tabs of check-in to last time's plans", 
   await expect(others).toContainText("From the first tab");
   await expect(others).toContainText("From the second tab");
   await expect(pia.getByRole("group", { name: "Done this week" })).toContainText("Shipped the invoices");
+  // Her punch list: one item cleared, one still open
+  // The field that adds a line (the section's name gets its count of lines once there is one)
+  const punch = pia
+    .getByRole("group", { name: /^Punch list/ })
+    .locator(".list-new")
+    .getByRole("textbox");
+  await punch.fill("Fix the railing");
+  await punch.press("Enter");
+  await punch.fill("Clean the site");
+  await punch.press("Enter");
+  const ticked = pia.waitForResponse((r) => r.url().endsWith("/rpc") && (r.request().postData() ?? "").includes("[x] Clean the site"));
+  await pia.getByRole("checkbox", { name: "Clean the site" }).check();
+  await ticked;
 
   // Live: the bar on Pia's other tabs says when her turn comes
   await page.goto(`${meeting}/control`);
@@ -141,8 +170,12 @@ test("a participant's session, from two tabs of check-in to last time's plans", 
   await page.goto(`${workspace}/kudos`);
   await expect(page.getByRole("main")).toContainText("Thanks for the review of the exports");
 
-  // Next week: what Pia planned comes back, to tick off or carry over
+  // Next week: the box Pia left unticked is back, still unticked; the ticked one stays with last week's minutes
   await pia.goto(`${meeting}/me`);
+  await expect(pia.getByRole("status").filter({ hasText: "The boxes you left unticked last time are back." })).toBeVisible();
+  await expect(pia.getByRole("checkbox", { name: "Fix the railing" })).not.toBeChecked();
+  await expect(pia.getByRole("group", { name: /^Punch list/ })).not.toContainText("Clean the site");
+  // …and what she planned comes back, to tick off or carry over
   await expect(pia.getByRole("status").filter({ hasText: "item planned last time: done or carried over?" })).toBeVisible();
   const item = pia
     .getByRole("listitem")

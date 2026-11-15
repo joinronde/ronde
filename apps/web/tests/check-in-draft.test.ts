@@ -10,6 +10,7 @@ import {
   draftOf,
   fieldsOf,
   normDraft,
+  openCarried,
   pastTabs,
   pendingPlans,
   planStatus,
@@ -394,6 +395,16 @@ describe("a new session's check-in", () => {
     expect(savedThisSession(3000, 2000)).toBe(true);
     expect(savedThisSession(1000, null)).toBe(true);
     expect(savedThisSession(null, 2000)).toBe(false);
+  });
+
+  it("says its open items came back from the last session until it is saved", () => {
+    // Brought back when the last session was archived, not saved since
+    expect(openCarried({ updatedAt: 1000, carriedAt: 2000 }, 2000)).toBe(true);
+    expect(openCarried({ updatedAt: 3000, carriedAt: 2000 }, 2000)).toBe(false);
+    // Brought back a session earlier: the person was absent since, the check-in says so instead
+    expect(openCarried({ updatedAt: 1000, carriedAt: 1500 }, 2000)).toBe(false);
+    expect(openCarried({ updatedAt: 1000 }, 2000)).toBe(false);
+    expect(openCarried(undefined, null)).toBe(false);
   });
 
   it("has last time's plans all sorted only once each one got an answer, a plan brought back unticked not being one", () => {

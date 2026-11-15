@@ -37,6 +37,7 @@ import {
   draftOf,
   fieldsOf as fieldsOfTab,
   normDraft,
+  openCarried,
   pastTabs,
   pendingPlans,
   planKey,
@@ -976,6 +977,11 @@ export function CheckInForm({
       {byHost && <div className="note-box">{t("editingOther", { name: who })}</div>}
       {isCheckInStale(f, s.lastArchivedAt) && (
         <div className="note-box">{byHost ? t("otherWasAbsent", { name: who }) : t("youWereAbsent")}</div>
+      )}
+      {openCarried(f, s.lastArchivedAt) && (
+        <div className="note-box carried" role="status">
+          <span aria-hidden="true">☑</span> {byHost ? t("openCarriedOther", { name: who }) : t("openCarried")}
+        </div>
       )}
       {draft.merged && (
         <div className="note-box merged" role="status">

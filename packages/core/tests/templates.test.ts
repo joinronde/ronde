@@ -31,6 +31,14 @@ describe("built-in templates", () => {
     expect(translator("en", "templates")("shiftHandover.description")).toContain("One meeting per handover");
   });
 
+  it("brings the open items of a site meeting's punch list back to the next meeting", () => {
+    const t = builtinTemplate("siteMeeting", "en");
+    expect(t.sections.find((s) => s.key === "punch")).toMatchObject({ role: "custom", input: "checklist", carryOpen: true });
+    // Kept by a stored template, refused nowhere
+    expect(parseTemplate(JSON.parse(JSON.stringify(t)))?.sections.find((s) => s.key === "punch")?.carryOpen).toBe(true);
+    expect(t.sections.filter((s) => s.carryOpen).map((s) => s.key)).toEqual(["punch"]);
+  });
+
   it("names sections in the workspace language", () => {
     expect(builtinTemplate("standup", "fr").sections.map((s) => s.label)).toEqual(["Hier", "Aujourd’hui", ""]);
   });

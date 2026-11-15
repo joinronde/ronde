@@ -65,6 +65,8 @@
     "carryPlansSwitch": "La sezione diventa una checklist.",
     "carryPlansHint": "Ognuno ritrova ciò che aveva previsto come caselle da spuntare man mano. Una casella non spuntata non conta come fatta.",
     "carryPlans": "Riprendere ciò che c'era in «{plan}» l'ultima volta",
+    "carryOpen": "Riprendere le caselle non spuntate la volta successiva",
+    "carryOpenHint": "Ognuno ritrova nella scheda successiva le caselle che non ha spuntato, finché non le spunta. Una casella spuntata non torna.",
     "removeOf": "Rimuovi «{label}»",
     "reorder": "Sposta «{label}»",
     "customPlaceholder": "Es. Ricerca, Demo da mostrare, Mi serve aiuto",

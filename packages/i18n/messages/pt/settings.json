@@ -65,6 +65,8 @@
     "carryPlansSwitch": "A seção passa a ser um checklist.",
     "carryPlansHint": "Cada pessoa encontra o que tinha previsto como caixas para marcar à medida que avança. Uma caixa não marcada não conta como feita.",
     "carryPlans": "Retomar o que estava em “{plan}” da última vez",
+    "carryOpen": "Retomar as caixas não marcadas na próxima vez",
+    "carryOpenHint": "Cada pessoa encontra na ficha seguinte as caixas que deixou sem marcar, até marcá-las. Uma caixa marcada não volta.",
     "removeOf": "Remover “{label}”",
     "reorder": "Mover “{label}”",
     "customPlaceholder": "Ex.: Pesquisa, Demo para mostrar, Preciso de ajuda",

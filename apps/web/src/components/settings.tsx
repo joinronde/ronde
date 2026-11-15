@@ -4,7 +4,17 @@ import { ACCENTS, type Accent } from "@ronde/core/appearance";
 import { reminderEmail } from "@ronde/core/notifications";
 import { describeSchedule } from "@ronde/core/schedule";
 import type { MemberDTO, SectionDef, SectionRole, SectionType, SettingsDTO } from "@ronde/core/types";
-import { fmtMinutes, hostName, lines, mmssPlain, ROLE_KIND, reminderDate, SECTION_ROLES, SECTION_TYPES } from "@ronde/core/util";
+import {
+  fmtMinutes,
+  hostName,
+  lines,
+  mmssPlain,
+  ROLE_KIND,
+  reminderDate,
+  SECTION_ROLES,
+  SECTION_TYPES,
+  sectionBehavior,
+} from "@ronde/core/util";
 import { formatters, type Locale, localeNames, locales } from "@ronde/i18n";
 import {
   Bell,
@@ -674,6 +684,7 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
         role: x.role,
         input: x.input,
         carryPlans: !!x.carryPlans,
+        carryOpen: !!x.carryOpen,
       })),
     });
     // Settings that belong to a module are saved by the module, when it is on
@@ -854,7 +865,17 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
   const defaultLabel = (role: SectionRole) =>
     role === "custom" ? t("sections.customPlaceholder") : tSections(`defaults.${ROLE_KIND[role]}`);
   const roleTaken = (role: SectionRole, i: number) => role !== "custom" && secs.some((x, j) => j !== i && x.role === role);
-  const patchSec = (i: number, patch: Partial<SectionDef>) => setSecs(secs.map((x, j) => (j === i ? { ...x, ...patch } : x)));
+  /** Bringing back the open items is offered to a checklist whose role brings nothing back already */
+  const offersCarryOpen = (x: SectionDef) => !!sectionBehavior({ ...x, carryOpen: true }).carryOpen;
+  const patchSec = (i: number, patch: Partial<SectionDef>) =>
+    setSecs(
+      secs.map((x, j) => {
+        if (j !== i) return x;
+        const next = { ...x, ...patch };
+        // Another role or format, or the plans brought back instead: the option goes
+        return next.carryOpen && !offersCarryOpen(next) ? { ...next, carryOpen: false } : next;
+      }),
+    );
   // Sections whose name field was left: a missing name is pointed out only then, never before anything is typed
   const [left, setLeft] = useState<Set<string>>(() => new Set());
   const sortSecs = useSortable({ items: secs, keyOf: (x) => x.key, onMove: (from, to) => setSecs(moved(secs, from, to)) });
@@ -937,6 +958,22 @@ function SettingsForm({ initial }: { initial: SettingsDTO }) {
                     <span className="hint" id={`sec_carry${i}`}>
                       {t("sections.carryPlansHint")}
                       {x.input !== "checklist" && ` ${t("sections.carryPlansSwitch")}`}
+                    </span>
+                  </span>
+                </label>
+              )}
+              {offersCarryOpen(x) && (
+                <label className={`sec-option${x.carryOpen ? " on" : ""}`}>
+                  <input
+                    type="checkbox"
+                    checked={!!x.carryOpen}
+                    aria-describedby={`sec_open${i}`}
+                    onChange={(e) => patchSec(i, { carryOpen: e.target.checked })}
+                  />
+                  <span>
+                    <span className="sec-option-title">{t("sections.carryOpen")}</span>
+                    <span className="hint" id={`sec_open${i}`}>
+                      {t("sections.carryOpenHint")}
                     </span>
                   </span>
                 </label>

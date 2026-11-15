@@ -1,9 +1,12 @@
+import type { SectionRole, SectionType } from "@ronde/core/types";
 import {
   ago,
   COMBO_WINDOW_MS,
+  carriesOver,
   checkInFromItems,
   comboCount,
   comboThreshold,
+  countsAsDone,
   DEFAULT_SECTIONS,
   fmtMinutes,
   hostName,
@@ -25,6 +28,7 @@ import {
   reminderDate,
   repoPath,
   resolveSections,
+  sectionBehavior,
   signalCombo,
   similarity,
 } from "@ronde/core/util";
@@ -69,6 +73,16 @@ describe("util", () => {
     expect(isCheckInReady({ done: ["a"], updatedAt: 1_500 }, archivedAt)).toBe(true);
     expect(isCheckInReady({ done: [], updatedAt: 1_500 }, archivedAt)).toBe(false);
     expect(isCheckInReady({ done: ["a"], updatedAt: 500 }, null)).toBe(true);
+  });
+
+  it("does not take open items brought back at the last meeting for a check-in kept during an absence", () => {
+    const archivedAt = 1_000;
+    // Brought back when the last meeting was archived: the person was there, their check-in still waits for them
+    const back = { extra: { punch: ["[ ] Fix the railing"] }, updatedAt: 500, carriedAt: 1_000 };
+    expect(isCheckInStale(back, archivedAt)).toBe(false);
+    expect(isCheckInReady(back, archivedAt)).toBe(false);
+    // Brought back one meeting earlier, untouched since: this time they were absent
+    expect(isCheckInStale({ ...back, carriedAt: 400 }, archivedAt)).toBe(true);
   });
 
   it("spots a blocker that comes back in other words", () => {
@@ -147,6 +161,48 @@ describe("sections and mood", () => {
     expect(items).toEqual({ done: ["shipped"], k9: ["late vendor"] });
     const after = [before[0]!, { ...before[1]!, role: "blocker" as const }];
     expect(checkInFromItems(items, after)).toEqual({ done: ["shipped"], next: [], blockers: ["late vendor"], other: [], extra: {} });
+  });
+
+  it("brings back the open items of a checklist whose role does not bring anything back already", () => {
+    const def = (role: SectionRole, input: SectionType, more: { carryPlans?: boolean } = {}) => ({ role, input, carryOpen: true, ...more });
+    for (const role of ["custom", "blocker", "note", "achievement"] as const)
+      expect(sectionBehavior(def(role, "checklist")), role).toEqual({ carryOpen: true });
+    // Plans come back on their own; a list or a free text has no box left unticked
+    expect(sectionBehavior(def("plan", "checklist"))).toEqual({});
+    expect(sectionBehavior(def("custom", "list"))).toEqual({});
+    expect(sectionBehavior(def("blocker", "text"))).toEqual({});
+    // An achievement section bringing back last time's plans: that option wins
+    expect(sectionBehavior(def("achievement", "checklist", { carryPlans: true }))).toEqual({ carryPlans: true });
+    expect(sectionBehavior({ role: "custom", input: "checklist" })).toEqual({});
+  });
+
+  it("shows which sections bring back their open items, custom or not", () => {
+    const secs = resolveSections(
+      {
+        sections: [
+          { key: "done", label: "", role: "achievement", input: "checklist", carryOpen: true },
+          { key: "punch", label: "Punch list", role: "custom", input: "checklist", carryOpen: true },
+          { key: "safety", label: "Safety", role: "blocker", input: "list", carryOpen: true },
+        ],
+      },
+      "en",
+    );
+    expect(secs.map((x) => [x.k, !!x.carryOpen])).toEqual([
+      ["done", true],
+      ["x:punch", true],
+      ["blockers", false],
+    ]);
+  });
+
+  it("brings back the boxes left unticked, and counts as done only the ticked ones", () => {
+    expect(["[ ] Fix the railing", "[x] Clean the site", "[X] Paint", "No box yet", "[ ] "].map(carriesOver)).toEqual([
+      true,
+      false,
+      false,
+      true,
+      false,
+    ]);
+    expect(["[ ] Fix the railing", "[x] Clean the site", "Shipped"].map(countsAsDone)).toEqual([false, true, true]);
   });
 
   it("starts new meetings with the weekly sync sections", () => {

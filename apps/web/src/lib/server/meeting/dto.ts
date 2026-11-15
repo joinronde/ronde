@@ -65,8 +65,14 @@ export const numMap = (v: unknown): Record<string, number> => {
 };
 
 export const toSection = (s: Section): SectionDef => {
-  const behavior = (s.behavior ?? {}) as { carryPlans?: boolean };
-  return { key: s.key, label: s.label, role: s.role, input: s.input, ...sectionBehavior({ ...s, carryPlans: behavior.carryPlans }) };
+  const behavior = (s.behavior ?? {}) as { carryPlans?: boolean; carryOpen?: boolean };
+  return {
+    key: s.key,
+    label: s.label,
+    role: s.role,
+    input: s.input,
+    ...sectionBehavior({ ...s, carryPlans: behavior.carryPlans, carryOpen: behavior.carryOpen }),
+  };
 };
 
 export function toSettings(

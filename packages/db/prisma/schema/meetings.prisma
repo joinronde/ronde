@@ -290,38 +290,43 @@ model CheckIn {
 
 /// One item of a check-in. It belongs to the person's current check-in until it is presented, then to that session.
 model CheckInItem {
-  id           String                   @id @default(uuid(7))
-  workspaceId  String
-  meetingId    String
-  meeting      Meeting                  @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
-  personId     String
-  person       Person                   @relation(fields: [personId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  id            String                   @id @default(uuid(7))
+  workspaceId   String
+  meetingId     String
+  meeting       Meeting                  @relation(fields: [meetingId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  personId      String
+  person        Person                   @relation(fields: [personId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
   /// Null while in the current check-in; the archived session it was presented at afterwards
-  sessionId    String?
-  session      Session?                 @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  sessionId     String?
+  session       Session?                 @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   /// Project the item is about (written in the project's tab of the check-in); null: the person's own
-  projectId    String?
-  project      Project?                 @relation(fields: [projectId], references: [id], onDelete: SetNull)
-  sectionKey   String
+  projectId     String?
+  project       Project?                 @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  sectionKey    String
   /// Role of the section when the item was saved, then presented: the stats read it
-  role         SectionRole
-  position     Int                      @default(0)
+  role          SectionRole
+  position      Int                      @default(0)
   /// Markdown; a checklist item starts with "[ ] " or "[x] "
-  text         String
+  text          String
   /// Planned item of an earlier session this item reports on (planned → done)
-  sourceItemId String?
-  source       CheckInItem?             @relation("ItemSource", fields: [sourceItemId], references: [id], onDelete: SetNull)
-  outcomes     CheckInItem[]            @relation("ItemSource")
-  comments     CheckInComment[]
+  sourceItemId  String?
+  source        CheckInItem?             @relation("ItemSource", fields: [sourceItemId], references: [id], onDelete: SetNull)
+  outcomes      CheckInItem[]            @relation("ItemSource")
+  /// Item of an earlier session this one brings back, left unticked in a section bringing back its open items
+  carriedFromId String?
+  carriedFrom   CheckInItem?             @relation("ItemCarry", fields: [carriedFromId], references: [id], onDelete: SetNull)
+  carriedTo     CheckInItem[]            @relation("ItemCarry")
+  comments      CheckInComment[]
   /// People who took part in it besides its author (a feature of a project built together)
-  contributors CheckInItemContributor[]
-  createdAt    DateTime                 @default(now())
-  updatedAt    DateTime                 @updatedAt
+  contributors  CheckInItemContributor[]
+  createdAt     DateTime                 @default(now())
+  updatedAt     DateTime                 @updatedAt
 
   @@unique([id, workspaceId])
   @@index([meetingId, personId, sessionId])
   @@index([sessionId])
   @@index([projectId])
+  @@index([carriedFromId])
   @@index([workspaceId])
 }
 

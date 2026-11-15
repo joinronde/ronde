@@ -43,6 +43,8 @@ const SectionInput = z.object({
   input: z.enum(["list", "checklist", "text"]),
   /** Achievement section in checklist form: last time's plans come back in it */
   carryPlans: z.boolean().optional(),
+  /** Checklist whose boxes left unticked come back at the next check-in */
+  carryOpen: z.boolean().optional(),
 });
 
 const newKey = () => randomBytes(4).toString("hex");
