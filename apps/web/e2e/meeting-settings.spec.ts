@@ -81,6 +81,26 @@ test("people, sections, schedule, template and deletion of a meeting; leaving an
   await rui.reload();
   await expect(rui.getByRole("group", { name: "Demo to show" })).toContainText("The new login page");
 
+  // Its boxes left unticked can come back to the next check-in: offered once it is a checklist, turned off with it
+  await page.goto(`${meeting}/settings#sections`);
+  const carryOpen = page.getByRole("checkbox", { name: /Bring back unticked boxes next time/ });
+  const format = page.getByRole("combobox", { name: "Format of “Demo to show”" });
+  const saving = (part: string) => page.waitForResponse((r) => r.url().endsWith("/rpc") && (r.request().postData() ?? "").includes(part));
+  await expect(carryOpen).toHaveCount(0);
+  await choose(page, format, "checklist");
+  await expect(carryOpen).not.toBeChecked();
+  let saved = saving('"label":"Demo to show","role":"custom","input":"checklist","carryPlans":false,"carryOpen":true');
+  await carryOpen.check();
+  await saved;
+  await page.reload();
+  await expect(carryOpen).toBeChecked();
+  saved = saving('"label":"Demo to show","role":"custom","input":"list","carryPlans":false,"carryOpen":false');
+  await choose(page, format, "list");
+  await expect(carryOpen).toHaveCount(0);
+  await saved;
+  await choose(page, format, "checklist");
+  await expect(carryOpen).not.toBeChecked();
+
   // Left right after a keystroke, from the breadcrumb: the change is saved all the same
   await page.goto(`${meeting}/settings`);
   await page.getByLabel("Name shown for the host").fill("Captain");

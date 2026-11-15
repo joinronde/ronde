@@ -65,6 +65,8 @@
     "carryPlansSwitch": "该栏目将改为清单。",
     "carryPlansHint": "每个人会以复选框形式看到自己上次的计划，完成一项勾一项。未勾选的不计为已完成。",
     "carryPlans": "沿用上次“{plan}”中的内容",
+    "carryOpen": "下次沿用未勾选的事项",
+    "carryOpenHint": "每个人会在下一张进展卡中看到自己未勾选的事项，直到勾选为止。已勾选的不会再出现。",
     "removeOf": "移除“{label}”",
     "reorder": "移动“{label}”",
     "customPlaceholder": "例如：调研、演示内容、需要协助",

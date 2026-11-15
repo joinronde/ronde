@@ -90,6 +90,8 @@
   "doneLabel": "Erledigt",
   "carriedOver": "Verschoben",
   "carriedNote": "Was du beim letzten Mal geplant hattest, steht wieder in „{section}“: Hake ab, was erledigt ist, und speichere.",
+  "openCarried": "Die Kästchen, die du beim letzten Mal nicht abgehakt hattest, sind wieder da. Hake sie ab, sobald sie erledigt sind.",
+  "openCarriedOther": "Die Kästchen, die {name} beim letzten Mal nicht abgehakt hatte, sind wieder da.",
   "inSection": "In „{section}“",
   "dismissed": "Verworfen",
   "undo": "Rückgängig",

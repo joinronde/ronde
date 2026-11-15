@@ -90,6 +90,8 @@
   "doneLabel": "Fatto",
   "carriedOver": "Rimandato",
   "carriedNote": "Ciò che avevi previsto l'ultima volta è di nuovo in «{section}»: spunta ciò che è fatto, poi salva.",
+  "openCarried": "Le caselle che non avevi spuntato l'ultima volta sono di nuovo qui: spuntale quando sono fatte.",
+  "openCarriedOther": "Le caselle che {name} non aveva spuntato l'ultima volta sono di nuovo qui.",
   "inSection": "In «{section}»",
   "dismissed": "Scartato",
   "undo": "Annulla",

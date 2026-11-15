@@ -65,6 +65,8 @@
     "carryPlansSwitch": "Der Abschnitt wird zur Checkliste.",
     "carryPlansHint": "Alle finden ihre Pläne als Kästchen wieder und haken sie nach und nach ab. Ein leeres Kästchen zählt nicht als erledigt.",
     "carryPlans": "Übernehmen, was beim letzten Mal in „{plan}“ stand",
+    "carryOpen": "Nicht abgehakte Kästchen beim nächsten Mal übernehmen",
+    "carryOpenHint": "Alle finden die Kästchen, die sie nicht abgehakt haben, im nächsten Check-in wieder, bis sie abgehakt sind. Abgehakte Kästchen kommen nicht wieder.",
     "removeOf": "„{label}“ entfernen",
     "reorder": "„{label}“ verschieben",
     "customPlaceholder": "Z. B. Recherche, Demo, Hilfe gesucht",

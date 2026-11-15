@@ -90,6 +90,8 @@
   "doneLabel": "Fait",
   "carriedOver": "Reporté",
   "carriedNote": "Ce que vous aviez prévu la dernière fois est repris dans « {section} » : cochez ce qui est fait, puis enregistrez.",
+  "openCarried": "Les cases que vous n’aviez pas cochées la dernière fois sont reprises : cochez-les une fois faites.",
+  "openCarriedOther": "Les cases que {name} n’avait pas cochées la dernière fois sont reprises.",
   "inSection": "Dans « {section} »",
   "dismissed": "Écarté",
   "undo": "Annuler",

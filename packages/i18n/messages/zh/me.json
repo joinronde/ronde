@@ -90,6 +90,8 @@
   "doneLabel": "已完成",
   "carriedOver": "已顺延",
   "carriedNote": "你上次的计划已带回“{section}”：勾选已完成的事项，然后保存。",
+  "openCarried": "你上次未勾选的事项已带回：完成后请勾选。",
+  "openCarriedOther": "{name} 上次未勾选的事项已带回。",
   "inSection": "在“{section}”中",
   "dismissed": "已放弃",
   "undo": "撤销",

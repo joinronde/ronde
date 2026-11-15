@@ -65,6 +65,8 @@
     "carryPlansSwitch": "La rubrique passe en liste à cocher.",
     "carryPlansHint": "Chacun retrouve ce qu’il avait prévu en cases à cocher, à cocher au fil de l’avancement. Une case non cochée ne compte pas comme fait.",
     "carryPlans": "Reprendre ce qui était dans « {plan} » la dernière fois",
+    "carryOpen": "Reprendre les cases non cochées la fois suivante",
+    "carryOpenHint": "Chacun retrouve dans sa fiche suivante les cases qu’il n’a pas cochées, jusqu’à ce qu’il les coche. Une case cochée ne revient pas.",
     "removeOf": "Retirer « {label} »",
     "reorder": "Déplacer « {label} »",
     "customPlaceholder": "Ex. : Veille, Démo à montrer, Besoin d’aide",

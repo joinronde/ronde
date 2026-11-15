@@ -90,6 +90,8 @@
   "doneLabel": "Done",
   "carriedOver": "Carried over",
   "carriedNote": "What you planned last time is back in “{section}”: tick what's done, then save.",
+  "openCarried": "The boxes you left unticked last time are back. Tick them off once they're done.",
+  "openCarriedOther": "The boxes {name} left unticked last time are back.",
   "inSection": "In “{section}”",
   "dismissed": "Dismissed",
   "undo": "Undo",

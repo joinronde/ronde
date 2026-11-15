@@ -134,7 +134,7 @@ The Community Edition is the whole product for a team, free in the cloud or on y
 
 #### Check-ins, minutes and follow-up
 
-- **Check-ins with sections**: done, planned, blockers, other or custom, each a list, a checklist or free text. What was planned last time comes back to be ticked off. A reply to the reminder email can fill it in.
+- **Check-ins with sections**: done, planned, blockers, other or custom, each a list, a checklist or free text. What was planned last time comes back to be ticked off; a checklist can also bring back the boxes each person left unticked, until they are ticked (a site meeting's punch list). A reply to the reminder email can fill it in.
 - **Minutes**, written from the check-ins, the notes and the decisions, with a summary on top; searchable across every session, exported as Markdown or PDF, or published to Notion and Confluence.
 - **Follow-up actions**: a blocker becomes an action with an owner; it comes back every week until it is done, and can open a ticket in Jira, Linear, GitLab or GitHub.
 - **Stats**: planned against done, attendance, turns on time, speaking time, recurring blockers, action resolution time; CSV exports.
