@@ -16,6 +16,9 @@ if (meta?.content)
       beforeSendTransaction: (event) => scrubEvent(event),
       beforeBreadcrumb: (b) => scrubBreadcrumb(b),
       tracesSampleRate: 0,
+      // Microsoft's link scanner (Outlook Safe Links) opens the links of an email in a headless browser whose own
+      // script rejects with this; no user is behind it
+      ignoreErrors: [/Object Not Found Matching Id:\d+, MethodName:\w+, ParamCount:\d+/],
       initialScope: { tags: { component: "app" } },
     }),
   );
