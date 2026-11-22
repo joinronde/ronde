@@ -54,6 +54,8 @@ LABEL org.opencontainers.image.source="https://github.com/joinronde/ronde" \
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=migrate-files --chown=node:node /migrate ./
+# npm, npx, yarn and corepack only serve the build: removed from the final image (their own dependencies carry CVEs; it runs on `node` alone)
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /opt/yarn-* /usr/local/bin/yarn /usr/local/bin/yarnpkg
 USER node
 CMD ["node", "scripts/migrate.mjs"]
 
@@ -77,6 +79,8 @@ COPY --from=build --chown=node:node /repo/apps/web/.next/standalone ./
 COPY --from=build --chown=node:node /repo/apps/web/.next/static ./apps/web/.next/static
 COPY --from=build --chown=node:node /repo/apps/web/public ./apps/web/public
 COPY --chown=node:node docker/entrypoint.mjs ./apps/web/entrypoint.mjs
+# npm, npx, yarn and corepack only serve the build: removed from the final image (their own dependencies carry CVEs; it runs on `node` alone)
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /opt/yarn-* /usr/local/bin/yarn /usr/local/bin/yarnpkg
 USER node
 EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s CMD wget -qO- http://127.0.0.1:3000/api/health || exit 1
