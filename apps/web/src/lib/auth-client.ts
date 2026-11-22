@@ -5,8 +5,29 @@ import { inferAdditionalFields, magicLinkClient, twoFactorClient } from "better-
 import { createAuthClient } from "better-auth/react";
 import { withBasePath } from "./shared/base-path";
 
+/** The code of a request that never reached the server (the connection dropped, the device is offline) */
+const NETWORK_ERROR = "NETWORK_ERROR";
+
+/**
+ * fetch, except that a request that cannot reach the server is answered with an error the forms show ("check your
+ * connection"), instead of a rejection ("Failed to fetch") that would leave them waiting. Aborts still reject.
+ */
+async function reachingFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+  try {
+    return await fetch(input, init);
+  } catch (e) {
+    if (!(e instanceof TypeError)) throw e;
+    return new Response(JSON.stringify({ code: NETWORK_ERROR, message: "The server cannot be reached" }), {
+      status: 503,
+      statusText: "Network Error",
+      headers: { "content-type": "application/json" },
+    });
+  }
+}
+
 export const authClient = createAuthClient({
   basePath: withBasePath("/api/auth"),
+  fetchOptions: { customFetchImpl: reachingFetch },
   plugins: [
     inferAdditionalFields({ user: { locale: { type: "string", required: false }, timezone: { type: "string", required: false } } }),
     magicLinkClient(),
@@ -24,6 +45,7 @@ export const authClient = createAuthClient({
 /** Better Auth error codes mapped to the "auth.failure" messages */
 export function failureKey(error: { code?: string; status?: number; message?: string } | null | undefined) {
   const code = error?.code ?? "";
+  if (code === NETWORK_ERROR) return "network" as const;
   if (error?.status === 429) return "tooManyRequests" as const;
   if (code === "INVALID_EMAIL_OR_PASSWORD" || code === "INVALID_PASSWORD" || code === "CREDENTIAL_ACCOUNT_NOT_FOUND")
     return "invalidCredentials" as const;

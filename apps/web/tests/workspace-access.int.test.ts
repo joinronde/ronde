@@ -302,6 +302,7 @@ describe("the two-step verification page", () => {
     expect(await redirectOf(open())).toBe("/sign-in?error=TWO_FACTOR_EXPIRED");
     // A code sent once the challenge is gone is not "invalid": the sign-in expired
     expect(failureKey({ code: "INVALID_TWO_FACTOR_COOKIE" })).toBe("twoFactorExpired");
+    expect(failureKey({ code: "NETWORK_ERROR", status: 503 })).toBe("network");
   });
 
   it("offers another account, and says what to do without the app or the codes", async () => {

@@ -8,6 +8,7 @@ import { resolveLocale } from "@ronde/i18n";
 import EmailReplyParser from "email-reply-parser";
 import { ImapFlow } from "imapflow";
 import { simpleParser } from "mailparser";
+import { backoff } from "./backoff";
 import { emailBrand } from "./branding";
 import { publish } from "./bus";
 import { env } from "./env";
@@ -167,14 +168,47 @@ function imapClient(url: string): { client: ImapFlow; mailbox: string } {
   };
 }
 
+/** Failures to reach the mailbox in a row: the next runs wait a little longer, and only a lasting one is reported */
+const mailboxBackoff = backoff();
+
 /** Reads the replies waiting in the mailbox (every minute); returns how many were taken into check-ins */
 export async function checkInbound(now = new Date()): Promise<number> {
   const url = env.inboundImapUrl();
   if (!url || !inboundAddress()) return 0;
+  if (!mailboxBackoff.ready(now.getTime())) return 0;
+  try {
+    const read = await readMailbox(url, now);
+    mailboxBackoff.succeeded();
+    return read;
+  } catch (e) {
+    // A timeout or a network cut now and then: tried again on a later run, the job itself does not fail
+    const { failures, retryInMs, report } = mailboxBackoff.failed(now.getTime());
+    console.warn(`[inbound] mailbox not read (${failures} failure(s) in a row), next try in ${Math.round(retryInMs / 1000)} s`, e);
+    if (report) await reportLasting(e, failures);
+    return 0;
+  }
+}
+
+/** A mailbox that cannot be read for a while: to Sentry when the instance has a project there */
+async function reportLasting(e: unknown, failures: number) {
+  console.error(`[inbound] mailbox unreachable after ${failures} tries`, e);
+  if (!env.sentryDsn()) return;
+  try {
+    const Sentry = await import("@sentry/nextjs");
+    Sentry.captureException(e, { tags: { job: "inbound.check" }, extra: { failures } });
+  } catch (err) {
+    console.error("[inbound] not sent to Sentry", err);
+  }
+}
+
+async function readMailbox(url: string, now: Date): Promise<number> {
   const { client, mailbox } = imapClient(url);
-  await client.connect();
+  // Without a listener, an error of the connection (a socket timeout…) would crash out of the job as an uncaught
+  // exception; with one, imapflow closes the connection and the command waiting fails, which ends this run
+  client.on("error", (e: Error) => console.warn("[inbound] IMAP connection", e.message));
   let read = 0;
   try {
+    await client.connect();
     await client.mailboxCreate(DONE_FOLDER).catch(() => undefined);
     const lock = await client.getMailboxLock(mailbox);
     try {
@@ -209,7 +243,8 @@ export async function checkInbound(now = new Date()): Promise<number> {
       lock.release();
     }
   } finally {
-    await client.logout().catch(() => undefined);
+    // A broken connection cannot log out: it is closed instead
+    await client.logout().catch(() => client.close());
   }
   if (read) console.log(`[inbound] ${read} check-in${read > 1 ? "s" : ""} written by email`);
   return read;

@@ -19,13 +19,24 @@ const imap = vi.hoisted(() => ({
   created: [] as string[],
   released: 0,
   loggedOut: 0,
+  closed: 0,
+  /** The connection fails (a socket timeout) */
+  down: false,
 }));
 vi.mock("imapflow", () => ({
   ImapFlow: class {
     constructor(options: Record<string, unknown>) {
       imap.options.push(options);
     }
-    async connect() {}
+    on() {
+      return this;
+    }
+    async connect() {
+      if (imap.down) throw new Error("Socket timeout");
+    }
+    close() {
+      imap.closed++;
+    }
     async mailboxCreate(name: string) {
       imap.created.push(name);
     }
@@ -52,6 +63,7 @@ vi.mock("imapflow", () => ({
       imap.messages.find((x) => String(x.uid) === uid)!.folder = folder;
     }
     async logout() {
+      if (imap.down) throw new Error("Connection not available");
       imap.loggedOut++;
     }
   },
@@ -564,7 +576,17 @@ describe("inbound.check", () => {
     member = await prisma.person.findUniqueOrThrow({ where: { id: f.memberId }, select: { id: true, email: true } });
   });
   beforeEach(() => {
-    Object.assign(imap, { messages: [], options: [], locked: [], sourcesRead: [], created: [], released: 0, loggedOut: 0 });
+    Object.assign(imap, {
+      messages: [],
+      options: [],
+      locked: [],
+      sourcesRead: [],
+      created: [],
+      released: 0,
+      loggedOut: 0,
+      closed: 0,
+      down: false,
+    });
     mails.length = 0;
   });
 
@@ -611,6 +633,28 @@ describe("inbound.check", () => {
       // Nothing left to read on the next run
       expect(await checkInbound()).toBe(0);
     } finally {
+      vi.stubEnv("INBOUND_IMAP_URL", "");
+    }
+  });
+
+  it("lets a mailbox that times out wait for a later run, without failing the job", async () => {
+    vi.stubEnv("INBOUND_IMAP_URL", "imaps://checkins%40ronde.test:p%40ss@imap.ronde.test/Replies");
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    try {
+      imap.down = true;
+      expect(await checkInbound()).toBe(0);
+      // The broken connection closed, not logged out
+      expect([imap.loggedOut, imap.closed]).toEqual([0, 1]);
+      // The next minute is skipped: the mailbox is not asked again yet
+      imap.down = false;
+      expect(await checkInbound()).toBe(0);
+      expect(imap.options).toHaveLength(1);
+      // Once the wait is over, read again as usual
+      expect(await checkInbound(new Date(Date.now() + 61_000))).toBe(0);
+      expect(imap.options).toHaveLength(2);
+      expect(imap.loggedOut).toBe(1);
+    } finally {
+      warn.mockRestore();
       vi.stubEnv("INBOUND_IMAP_URL", "");
     }
   });

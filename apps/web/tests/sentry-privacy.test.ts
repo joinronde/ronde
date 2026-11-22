@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { scrubBreadcrumb, scrubEvent, scrubText } from "@/lib/shared/sentry-privacy";
+import { BROWSER_NOISE, scrubBreadcrumb, scrubEvent, scrubText } from "@/lib/shared/sentry-privacy";
 
 // Error reports leave without the secrets of a link or anyone's address
 
@@ -26,5 +26,18 @@ describe("error reports", () => {
       category: "fetch",
       data: { url: "/api/g/…/state" },
     });
+  });
+
+  it("leave out the requests a dropped connection stopped, and only those", () => {
+    const ignored = (m: string) => BROWSER_NOISE.some((r) => r.test(m));
+    for (const m of [
+      "TypeError: Failed to fetch (app.joinronde.com)",
+      "Failed to fetch",
+      "TypeError: NetworkError when attempting to fetch resource.",
+      "TypeError: Load failed",
+    ])
+      expect(ignored(m), m).toBe(true);
+    for (const m of ["Error: Failed to fetch the meeting", "ChunkLoadError: Loading chunk 42 failed.", "TypeError: x is undefined"])
+      expect(ignored(m), m).toBe(false);
   });
 });

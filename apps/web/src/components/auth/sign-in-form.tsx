@@ -96,7 +96,7 @@ export function SignInForm({
     // Only a web address: the provider's page, never a script
     if (error || !data?.url || !/^https?:\/\//i.test(data.url)) {
       setBusy(false);
-      setError("ssoNoProvider");
+      setError(failureKey(error) === "network" ? "network" : "ssoNoProvider");
       return;
     }
     window.location.href = data.url;
@@ -131,6 +131,11 @@ export function SignInForm({
       if (!ldapError) {
         router.replace(next);
         router.refresh();
+        return;
+      }
+      if (failureKey(ldapError) === "network") {
+        setBusy(false);
+        setError("network");
         return;
       }
       if (ldapError.status !== 404) {

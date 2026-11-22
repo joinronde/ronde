@@ -55,3 +55,12 @@ export function scrubBreadcrumb<B extends Breadcrumb>(b: B): B | null {
   if (b.data) for (const k of ["url", "from", "to"]) if (typeof b.data[k] === "string") b.data[k] = scrubText(b.data[k] as string);
   return b;
 }
+
+/**
+ * Browser errors that are not the app's: a request that never reached the server because the visitor's connection
+ * dropped, as Chrome ("Failed to fetch", sometimes followed by the host), Firefox and Safari word it. The forms show
+ * their own "check your connection" message; the report would be noise.
+ */
+export const BROWSER_NOISE: RegExp[] = [
+  /^(TypeError: )?(Failed to fetch|NetworkError when attempting to fetch resource\.?|Load failed)( \([^)]*\))?$/,
+];

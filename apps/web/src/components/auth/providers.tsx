@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { authClient } from "@/lib/auth-client";
+import { authClient, failureKey } from "@/lib/auth-client";
 import { withBasePath } from "@/lib/shared/base-path";
 
 export interface ProviderInfo {
@@ -57,7 +57,7 @@ export function ProviderButtons({
 }: {
   providers: ProviderInfo[];
   next: string;
-  onError: (key: "generic") => void;
+  onError: (key: "generic" | "network") => void;
 }) {
   const t = useTranslations("auth");
   const [busy, setBusy] = useState<string | null>(null);
@@ -72,7 +72,8 @@ export function ProviderButtons({
     });
     if (error) {
       setBusy(null);
-      onError("generic");
+      // The connection dropped: said as such, anything else stays a generic failure
+      onError(failureKey(error) === "network" ? "network" : "generic");
     }
   };
   return (
