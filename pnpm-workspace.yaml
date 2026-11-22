@@ -18,6 +18,7 @@ overrides:
   # Advisories on transitive dependencies that their parents' ranges kept on the flawed versions (pnpm audit, Nov 2026):
   # they come with Prisma, imapflow and Better Auth SSO (vite, a peer of vitest, is a root devDependency)
   deepmerge-ts: ^8.0.2
+  effect: ^3.22.1
   fast-uri: ^3.1.9
   fast-xml-parser: ^5.12.0
   ip-address: ^10.7.4
