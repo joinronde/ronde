@@ -21,6 +21,12 @@ updates:
       default-days: 3
     commit-message:
       prefix: "📦 "
+    # Prisma 8 is only a release candidate (and npm publishes it under "latest"): stay on 7 until the final release
+    ignore:
+      - dependency-name: prisma
+        versions: [">=8.0.0-0"]
+      - dependency-name: "@prisma/*"
+        versions: [">=8.0.0-0"]
     groups:
       security:
         applies-to: security-updates
