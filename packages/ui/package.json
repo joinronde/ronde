@@ -27,21 +27,21 @@
     "@tiptap/pm": "3.34.0",
     "@tiptap/react": "3.34.0",
     "@tiptap/starter-kit": "3.34.0",
-    "lucide-react": "1.56.0"
+    "lucide-react": "1.76.0"
   },
   "peerDependencies": {
-    "next-intl": "^4.14.9",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "next-intl": "^4.15.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
     "@ronde/config": "workspace:*",
     "@ronde/i18n": "workspace:*",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "next-intl": "^4.14.9",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
+    "next-intl": "^4.15.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "typescript": "~5.9.3"
   }
 }
