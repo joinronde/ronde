@@ -27,12 +27,6 @@ updates:
         versions: [">=8.0.0-0"]
       - dependency-name: "@prisma/*"
         versions: [">=8.0.0-0"]
-      # axe-core 4.14 turns on "label-content-name-mismatch" (WCAG 2.5.3, label in name): the buttons of the shared
-      # menu (components/workspace/menu.tsx: an aria-label that leaves out what the button shows, e.g. the language
-      # picker) and the search button of the top bar fail it on every page. Stay on 4.13 until their names include
-      # their visible text, then drop this rule.
-      - dependency-name: "@axe-core/playwright"
-        versions: [">=4.14.0"]
     groups:
       security:
         applies-to: security-updates
