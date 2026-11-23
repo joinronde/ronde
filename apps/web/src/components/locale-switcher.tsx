@@ -19,7 +19,7 @@ export function LocaleSwitcher({ up = false }: { up?: boolean }) {
   };
   return (
     <Menu
-      label={t("language")}
+      label={t("languageMenu", { language: localeNames[locale] })}
       up={up}
       align="start"
       className="pick-menu"

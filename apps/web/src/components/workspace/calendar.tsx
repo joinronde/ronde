@@ -188,9 +188,12 @@ export function CalendarView({ slug, month, start, end, today, events, upcoming,
                         key={d}
                         role="gridcell"
                         className={`cal-day${out ? " out" : ""}${d === today ? " today" : ""}${d < today ? " past" : ""}${i >= 5 ? " weekend" : ""}`}
-                        aria-label={fmt.date(d)}
                       >
-                        <span className="cal-num">{Number(d.slice(8))}</span>
+                        {/* The cell is named by its content: the whole date for screen readers, then its events */}
+                        <span className="cal-num">
+                          <span aria-hidden="true">{Number(d.slice(8))}</span>
+                          <span className="sr-only">{fmt.date(d)}</span>
+                        </span>
                         {fit.map((e) => (
                           <EventChip key={keyOf(e)} e={e} slug={slug} />
                         ))}

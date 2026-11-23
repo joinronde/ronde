@@ -1445,10 +1445,11 @@ function CheckInBoard({ memberId, draft }: { memberId: string; draft: ReturnType
                     type="button"
                     className="vote-btn"
                     aria-pressed={x.mine}
-                    aria-label={x.mine ? t("unvote") : t("vote")}
                     onClick={() => rpc({ op: "topic.vote", id: x.id })}
                   >
-                    ▲ {x.votes}
+                    {/* Named "Vote for this topic 3": the action, then the count it shows */}
+                    <span className="sr-only">{x.mine ? t("unvote") : t("vote")} </span>
+                    <span aria-hidden="true">▲</span> {x.votes}
                   </button>
                 )}
                 {x.byId === memberId && (

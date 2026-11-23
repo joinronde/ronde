@@ -10,7 +10,7 @@
   "newMeeting": "اجتماع جديد",
   "noMeetings": "لا اجتماعات بعد.",
   "live": "مباشر الآن",
-  "switcher": "تبديل مساحة العمل",
+  "switcher": "{name}، تبديل مساحة العمل",
   "newWorkspace": "مساحة عمل جديدة",
   "userMenu": "حسابك",
   "account": "الحساب",

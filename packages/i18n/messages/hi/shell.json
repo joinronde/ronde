@@ -10,7 +10,7 @@
   "newMeeting": "नई मीटिंग",
   "noMeetings": "अभी कोई मीटिंग नहीं।",
   "live": "अभी लाइव",
-  "switcher": "वर्कस्पेस बदलें",
+  "switcher": "{name}, वर्कस्पेस बदलें",
   "newWorkspace": "नया वर्कस्पेस",
   "userMenu": "आपका खाता",
   "account": "खाता",

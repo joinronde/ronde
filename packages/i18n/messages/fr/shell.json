@@ -10,7 +10,7 @@
   "newMeeting": "Nouvelle réunion",
   "noMeetings": "Aucune réunion pour l’instant.",
   "live": "En direct",
-  "switcher": "Changer d’espace de travail",
+  "switcher": "{name}, changer d’espace de travail",
   "newWorkspace": "Nouvel espace",
   "userMenu": "Votre compte",
   "account": "Compte",

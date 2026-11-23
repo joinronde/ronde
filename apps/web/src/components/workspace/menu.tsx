@@ -3,7 +3,11 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { menuPlacement, menuShift } from "@/lib/shared/menu-placement";
 
-/** Disclosure menu: a button opening a popover; Escape, a click outside or a choice closes it */
+/**
+ * Disclosure menu: a button opening a popover; Escape, a click outside or a choice closes it.
+ * `label` names a button that shows an icon only, or one whose name adds to its text: it then starts with what
+ * the button shows (WCAG 2.5.3, label in name). Without it the button is named by its content.
+ */
 export function Menu({
   label,
   button,
@@ -13,7 +17,7 @@ export function Menu({
   onOpen,
   children,
 }: {
-  label: string;
+  label?: string;
   button: React.ReactNode;
   align?: "start" | "end";
   /** Opens above the button (near the bottom of the page), unless there is more room below */

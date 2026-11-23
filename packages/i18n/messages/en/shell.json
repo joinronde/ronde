@@ -10,7 +10,7 @@
   "newMeeting": "New meeting",
   "noMeetings": "No meeting yet.",
   "live": "Live now",
-  "switcher": "Switch workspace",
+  "switcher": "{name}, switch workspace",
   "newWorkspace": "New workspace",
   "userMenu": "Your account",
   "account": "Account",

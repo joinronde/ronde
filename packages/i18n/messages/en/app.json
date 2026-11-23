@@ -6,5 +6,6 @@
   "kudoFrom": "Kudos from {from} to {to}",
   "quoted": "“{text}”",
   "language": "Language",
+  "languageMenu": "{language}, choose the language",
   "newTab": "(opens in a new tab)"
 }

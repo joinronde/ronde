@@ -277,7 +277,7 @@ function WorkspaceSwitcher({ data }: { data: ShellData }) {
   const t = useTranslations("shell");
   return (
     <Menu
-      label={t("switcher")}
+      label={t("switcher", { name: data.workspace?.name ?? "Ronde" })}
       align="start"
       button={
         <>
@@ -329,8 +329,9 @@ function UserMenu({ user }: { user: ShellData["user"] }) {
     router.refresh();
   };
   return (
+    // Named by what it shows, then "Your account" (on its own when the sidebar is folded): no label that would
+    // leave out the name and address shown
     <Menu
-      label={t("userMenu")}
       align="start"
       button={
         <>
@@ -345,6 +346,7 @@ function UserMenu({ user }: { user: ShellData["user"] }) {
             <strong>{user.name || user.email}</strong>
             <span>{user.email}</span>
           </span>
+          <span className="sr-only">{t("userMenu")}</span>
         </>
       }
     >
@@ -421,7 +423,7 @@ export function TopBar({ crumbs, children }: { crumbs: Crumb[]; children?: React
       {/* Search sits in the middle of the bar, within reach on any screen; the page's actions and the bell at the end */}
       {openSearch && (
         <div className="topbar-search">
-          <button type="button" className="search-btn" onClick={openSearch} aria-label={t("search")}>
+          <button type="button" className="search-btn" onClick={openSearch} aria-keyshortcuts="Meta+K Control+K">
             <Icon name="search" size={16} />
             <span className="search-btn-label">{t("search")}</span>
             <span className="search-btn-hint">{tSearch("placeholder")}</span>

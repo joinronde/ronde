@@ -544,11 +544,12 @@ function LogoPicker({
         className="logo-pick"
         disabled={busy}
         aria-busy={busy}
-        aria-label={project.logo ? t("logo.change") : t("logo.add")}
         title={project.logo ? t("logo.change") : t("logo.add")}
         onClick={() => input.current?.click()}
       >
+        {/* Named by the hidden words, not by a label that would leave out the initials the mark shows */}
         {mark}
+        <span className="sr-only">{project.logo ? t("logo.change") : t("logo.add")}</span>
         <span className="logo-pick-badge" aria-hidden="true">
           <Icon name="camera" size={14} />
         </span>

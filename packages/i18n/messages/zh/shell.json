@@ -10,7 +10,7 @@
   "newMeeting": "新建会议",
   "noMeetings": "还没有会议。",
   "live": "正在进行",
-  "switcher": "切换工作空间",
+  "switcher": "{name}，切换工作空间",
   "newWorkspace": "新建工作空间",
   "userMenu": "你的账户",
   "account": "账户",

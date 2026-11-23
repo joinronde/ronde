@@ -10,7 +10,7 @@
   "newMeeting": "Neues Meeting",
   "noMeetings": "Noch kein Meeting.",
   "live": "Jetzt live",
-  "switcher": "Arbeitsbereich wechseln",
+  "switcher": "{name}, Arbeitsbereich wechseln",
   "newWorkspace": "Neuer Arbeitsbereich",
   "userMenu": "Dein Konto",
   "account": "Konto",

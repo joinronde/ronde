@@ -6,5 +6,6 @@
   "kudoFrom": "{from} 感谢 {to}",
   "quoted": "“{text}”",
   "language": "语言",
+  "languageMenu": "{language}，切换语言",
   "newTab": "（在新标签页中打开）"
 }

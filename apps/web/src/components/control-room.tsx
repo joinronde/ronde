@@ -1757,11 +1757,12 @@ function PaneTopics() {
               type="button"
               className="vote-btn"
               aria-pressed={x.mine}
-              aria-label={x.mine ? tMe("unvote") : tMe("vote")}
               title={x.mine ? tMe("unvote") : tMe("vote")}
               onClick={() => rpc({ op: "topic.vote", id: x.id })}
             >
-              ▲ {x.votes}
+              {/* Named "Vote for this topic 3": the action, then the count it shows */}
+              <span className="sr-only">{x.mine ? tMe("unvote") : tMe("vote")} </span>
+              <span aria-hidden="true">▲</span> {x.votes}
             </button>
             {/* Put forward by the spotlight, pressed while it is on screen (a second click takes it off): without
                 its module, the screen would show nothing */}

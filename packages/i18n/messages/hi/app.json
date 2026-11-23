@@ -6,5 +6,6 @@
   "kudoFrom": "{from} ने {to} को धन्यवाद दिया",
   "quoted": "“{text}”",
   "language": "भाषा",
+  "languageMenu": "{language}, भाषा बदलें",
   "newTab": "(नए टैब में खुलता है)"
 }

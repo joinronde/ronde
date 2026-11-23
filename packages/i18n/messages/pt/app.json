@@ -6,5 +6,6 @@
   "kudoFrom": "{from} agradece a {to}",
   "quoted": "“{text}”",
   "language": "Idioma",
+  "languageMenu": "{language}, trocar de idioma",
   "newTab": "(abre em uma nova aba)"
 }

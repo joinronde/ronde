@@ -2399,7 +2399,8 @@ a.step-tile:hover .step-mark{border-color:var(--accent)}
 .search-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .search-btn-label{flex:1;text-align:start}
 .search-btn kbd,.search-field kbd,.search-enter{font-family:var(--mono);font-size:11px;padding:1px 6px;border:1px solid var(--line);border-radius:5px;background:var(--bg);color:var(--ink-2)}
-@media (max-width:760px){.search-btn{min-width:0;padding:0 9px}.search-btn-label,.search-btn kbd{display:none}}
+/* Narrow screens: the magnifier only, "Search" left for screen readers as the button's name */
+@media (max-width:760px){.search-btn{min-width:0;padding:0 9px}.search-btn kbd{display:none}.search-btn-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
 .search-btn-hint{display:none}
 /* Wide screens: the search in the middle of the bar, as wide as a sentence that says what it finds */
 @media (min-width:1080px){

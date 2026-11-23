@@ -33,7 +33,7 @@
   "emptyHosted": "Keine Aufgaben in den Meetings, die du leitest.",
   "emptyHint": "In einer Sitzung beschlossene Aufgaben und die, die du selbst hinzufügst, erscheinen hier mit dem Meeting, in dem sie verfolgt werden.",
   "openTicket": "Ticket öffnen",
-  "ticketFor": "Ticket für „{text}“ erstellen",
+  "ticketFor": "Ticket erstellen für „{text}“",
   "ticket": "Ticket erstellen",
   "ticketing": "Ticket wird erstellt…",
   "ticketWhere": "In welchem Tool?",
