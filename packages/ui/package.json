@@ -27,7 +27,7 @@
     "@tiptap/pm": "3.34.0",
     "@tiptap/react": "3.34.0",
     "@tiptap/starter-kit": "3.34.0",
-    "lucide-react": "1.76.0"
+    "lucide-react": "1.77.0"
   },
   "peerDependencies": {
     "next-intl": "^4.15.3",
