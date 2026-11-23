@@ -35,7 +35,17 @@ test("adds a passkey, then signs in with it alone", async ({ page, context }) =>
   await expect(page.getByText("Passkey added")).toBeVisible();
   await expect(page.getByText("1 passkey")).toBeVisible();
 
-  // Signed out: the passkey button signs back in, no email nor password typed
+  // Signed out: the sign-in page asks the browser on load for a passkey to suggest in the email field. A real
+  // person picks it there; the virtual authenticator answers by itself, so the page signs back in untouched.
+  await context.clearCookies();
+  await page.goto("/sign-in");
+  await expect(page).toHaveURL(/\/onboarding$/);
+
+  // A browser without those suggestions: the passkey button signs back in, no email nor password typed. With them
+  // on, the request made on load would win the race against the click and leave the page before it lands.
+  await page.addInitScript(() => {
+    PublicKeyCredential.isConditionalMediationAvailable = async () => false;
+  });
   await context.clearCookies();
   await page.goto("/sign-in");
   await page.getByRole("button", { name: "Sign in with a passkey" }).click();

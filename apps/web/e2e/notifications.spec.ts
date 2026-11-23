@@ -18,7 +18,9 @@ test("an admin adds a connector, a meeting sends its notifications through it", 
 
   // Workspace settings: a signed webhook; its signing key is shown once
   await page.goto(`${workspace}/settings`);
-  const connectors = page.locator("#connectors");
+  // By its role, not its id: while the page streams in, React holds a hidden copy of the section (with the same
+  // id) until it swaps it into place, and a locator matching both fails strict mode at once
+  const connectors = page.getByRole("region", { name: "Notification connectors" });
   await choose(page, connectors.getByLabel("Add a connector"), "webhook");
   await connectors.getByLabel("Name").fill("CI hook");
   await connectors.getByLabel("Receiving address (https)").fill("https://hooks.example.org/ronde");
@@ -51,16 +53,24 @@ test("an admin adds a connector, a meeting sends its notifications through it", 
   await expect(rules.first()).toHaveAttribute("data-value", "checkin.reminder");
 
   // General settings save by themselves; the accent colour applies to every page of the meeting
-  await page.goto(`${meeting}/settings#general`);
+  // From the category menu, not by the address: a page.goto() that only changes the #fragment is a same-page
+  // navigation, and it sometimes left the page on #notifications (the address the settings had just written)
+  const categories = page.getByRole("navigation", { name: "Settings categories" });
+  await categories.getByRole("button", { name: "General" }).click();
   await page.getByLabel("Meeting name").fill("Release crew");
   await expect(page.getByRole("status").filter({ hasText: "Saved" })).toBeVisible();
-  await page.getByRole("navigation", { name: "Settings categories" }).getByRole("button", { name: "Appearance" }).click();
+  await categories.getByRole("button", { name: "Appearance" }).click();
+  // The status still reads "Saved" from the name: the reload waits for the colour's own save instead
+  const accentSaved = page.waitForResponse((r) => r.url().endsWith("/rpc") && (r.request().postData() ?? "").includes('"accent":"ocean"'));
   await page.locator("label", { hasText: "Ocean" }).click();
   await expect(page.getByRole("radio", { name: "Ocean" })).toBeChecked();
+  expect((await accentSaved).ok()).toBe(true);
   await expect(page.getByRole("status").filter({ hasText: "Saved" })).toBeVisible();
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-accent", "ocean");
-  await page.goto(`${meeting}/settings#general`);
+  // The category of the address is open once the page has hydrated: a click before that would do nothing
+  await expect(categories.getByRole("button", { name: "Appearance" })).toHaveAttribute("aria-current", "page");
+  await categories.getByRole("button", { name: "General" }).click();
   await expect(page.getByLabel("Meeting name")).toHaveValue("Release crew");
 
   // A check-in reminder rule exists: the control room offers to nudge the team
