@@ -110,8 +110,21 @@ export async function assertPublicHost(name: string): Promise<void> {
 
 const lookupAll = (host: string) => lookupPromise(host, { all: true });
 
+/**
+ * The fetch of the undici package does not recognise a FormData of the built-in fetch (Node bundles its own copy
+ * of undici): it would send "[object FormData]" as text. Such a form (the sound sent to a speech-to-text service)
+ * is encoded here with the built-in Response, its boundary in the content type.
+ */
+async function portableInit(init?: RequestInit): Promise<RequestInit | undefined> {
+  if (!(init?.body instanceof FormData)) return init;
+  const encoded = new Response(init.body);
+  const headers = new Headers(init.headers);
+  headers.set("content-type", encoded.headers.get("content-type") ?? "multipart/form-data");
+  return { ...init, headers, body: await encoded.arrayBuffer() };
+}
+
 /** fetch for configured addresses: when guarded, the check above on every connection, redirects included */
-export const outboundFetch = ((input: Parameters<typeof fetch>[0], init?: RequestInit) =>
+export const outboundFetch = (async (input: Parameters<typeof fetch>[0], init?: RequestInit) =>
   guarded()
-    ? undiciFetch(input as Parameters<typeof undiciFetch>[0], { ...(init as object), dispatcher: agent })
+    ? undiciFetch(input as Parameters<typeof undiciFetch>[0], { ...((await portableInit(init)) as object), dispatcher: agent })
     : globalThis.fetch(input, init)) as unknown as typeof fetch;
