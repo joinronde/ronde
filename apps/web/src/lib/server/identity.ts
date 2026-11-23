@@ -154,7 +154,10 @@ export async function trustedOrigins(request?: Request): Promise<string[]> {
   if (request && !/\/sign-in\/sso$|\/sso\//.test(new URL(request.url).pathname)) return own;
   own.push(...pending);
   if (Date.now() - providerOrigins.at > 30_000) {
-    const rows = await prisma.ssoProvider.findMany({ where: { oidcConfig: { not: null } }, select: { issuer: true } }).catch(() => []);
+    // Asked once while the app is built too, with no database then: no provider, rather than an error
+    const rows = await Promise.resolve()
+      .then(() => prisma.ssoProvider.findMany({ where: { oidcConfig: { not: null } }, select: { issuer: true } }))
+      .catch(() => []);
     const list: string[] = [];
     for (const p of rows) {
       try {

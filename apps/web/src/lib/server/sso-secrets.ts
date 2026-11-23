@@ -70,6 +70,9 @@ let client: ReturnType<typeof extend> | undefined;
  */
 export const authPrisma = new Proxy({} as ReturnType<typeof extend>, {
   get(_target, prop) {
+    // Better Auth's adapter looks for the generated data model as soon as it is made, on import: a stand-in has
+    // none to give, so the build still never opens the database
+    if (prop === "_runtimeDataModel") return undefined;
     client ??= extend();
     const value = Reflect.get(client, prop, client) as unknown;
     return typeof value === "function" ? (value as (...a: unknown[]) => unknown).bind(client) : value;
