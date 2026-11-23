@@ -22,11 +22,11 @@
     "@dicebear/collection": "^9.4.3",
     "@dicebear/core": "^9.4.3",
     "@ronde/core": "workspace:*",
-    "@tiptap/extension-table": "3.34.0",
-    "@tiptap/extensions": "3.34.0",
-    "@tiptap/pm": "3.34.0",
-    "@tiptap/react": "3.34.0",
-    "@tiptap/starter-kit": "3.34.0",
+    "@tiptap/extension-table": "3.35.0",
+    "@tiptap/extensions": "3.35.0",
+    "@tiptap/pm": "3.35.0",
+    "@tiptap/react": "3.35.0",
+    "@tiptap/starter-kit": "3.35.0",
     "lucide-react": "1.76.0"
   },
   "peerDependencies": {
