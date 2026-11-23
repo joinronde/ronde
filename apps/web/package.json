@@ -42,7 +42,7 @@
     "@sentry/nextjs": "11.15.0",
     "better-auth": "^1.7.26",
     "date-holidays": "3.39.2",
-    "email-reply-parser": "2.3.9",
+    "email-reply-parser": "3.0.0",
     "imapflow": "2.12.1",
     "lucide-react": "^1.76.0",
     "mailparser": "3.14.5",
