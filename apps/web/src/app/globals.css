@@ -4011,7 +4011,7 @@ a[target="_blank"]:not(.btn) > svg.ico:last-of-type{display:inline;margin-inline
 .cal-tile strong{font-family:var(--display);font-size:20px}
 .cal-tile-wd,.cal-tile-mo{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3)}
 .cal-tile.today{background:var(--accent);color:var(--accent-ink)}
-.cal-tile.today .cal-tile-wd,.cal-tile.today .cal-tile-mo{color:inherit;opacity:.8}
+.cal-tile.today .cal-tile-wd,.cal-tile.today .cal-tile-mo{color:inherit}
 /* Agenda: day by day */
 .cal-agenda{list-style:none;margin:0;padding:0;display:grid;gap:12px}
 .cal-agenda-day{display:flex;gap:14px;align-items:flex-start}
