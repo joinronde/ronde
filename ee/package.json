@@ -29,7 +29,7 @@
   "devDependencies": {
     "@ronde/config": "workspace:*",
     "@types/ldapjs": "^3.0.6",
-    "@types/node": "^22.20.4",
+    "@types/node": "^24.19.2",
     "ldapjs": "3.0.7",
     "typescript": "~5.9.3",
     "vitest": "^5.1.1"

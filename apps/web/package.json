@@ -65,7 +65,7 @@
     "@sentry/core": "11.15.0",
     "@types/ldapjs": "^3.0.6",
     "@types/mailparser": "3.9.0",
-    "@types/node": "^22.20.4",
+    "@types/node": "^24.19.2",
     "@types/nodemailer": "^8.0.2",
     "@types/pg": "^8.23.1",
     "@types/react": "^19.3.0",

@@ -200,7 +200,7 @@ Every change of a meeting goes through `POST /api/w/<workspace>/m/<meeting>/rpc`
 
 ## Local development
 
-Requirements: Node.js 22, pnpm 10, Docker.
+Requirements: Node.js 24 or later (26 recommended), pnpm 10, Docker.
 
 ```bash
 make dev
