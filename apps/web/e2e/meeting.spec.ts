@@ -46,12 +46,12 @@ test("a host creates a meeting, a participant fills in their check-in and raises
   await page.goto(`${workspace}/meetings/new`);
   await expect(page.getByRole("radio", { name: /Weekly sync/ })).toBeChecked();
   // A meeting of two starts with nobody picked: the other person is chosen, not everyone else unticked
-  await page.locator("label.nm-tpl").filter({ hasText: "One-on-one" }).click();
+  await page.getByRole("main").locator("label.nm-tpl").filter({ hasText: "One-on-one" }).click();
   await page.getByRole("button", { name: "Next", exact: true }).click();
   await expect(page.getByRole("checkbox", { name: /Gus Guest/ })).not.toBeChecked();
   await page.getByRole("button", { name: "Back", exact: true }).click();
   // The weekly sync of a small workspace starts with everyone
-  await page.locator("label.nm-tpl").filter({ hasText: "Weekly sync" }).click();
+  await page.getByRole("main").locator("label.nm-tpl").filter({ hasText: "Weekly sync" }).click();
   await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByLabel("Name").fill("Weekly sync");
   await expect(page.getByRole("checkbox", { name: /Gus Guest/ })).toBeChecked();

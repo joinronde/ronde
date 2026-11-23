@@ -186,8 +186,10 @@ test("people, sections, schedule, template and deletion of a meeting; leaving an
   await page.goto(`${workspace}/meetings/new`);
   const mine = page.getByRole("radio", { name: new RegExp(`Our sync ${run}`) });
   await expect(mine).toBeVisible();
-  // Picked, its preview lists the section added above
+  // Picked, its preview lists the section added above. Within the page's main region: while the page streams
+  // in, React holds a hidden copy of the templates outside it until it swaps it into place
   await page
+    .getByRole("main")
     .locator("label.nm-tpl")
     .filter({ hasText: `Our sync ${run}` })
     .click();

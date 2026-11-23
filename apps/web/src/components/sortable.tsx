@@ -56,11 +56,17 @@ export function useSortable<T>({
     focusAfter.current = null;
   });
 
+  // Moves reach the server one after the other: two quick steps sent together could be applied in reverse order,
+  // and the list would come back as the first step left it
+  const sending = useRef<Promise<unknown>>(Promise.resolve());
+
   const commit = (from: number, to: number) => {
     if (from === to || !canMove(from, to)) return;
     const next = moved(order, from, to);
     setPending({ base, keys: next });
-    void Promise.resolve(onMove(from, to, next)).then((ok) => {
+    const sent = sending.current.then(() => onMove(from, to, next));
+    sending.current = sent.catch(() => undefined);
+    void sent.then((ok) => {
       if (ok === false) setPending(null);
     });
   };
