@@ -26,10 +26,10 @@
     "build:ce": "RONDE_PURE_CE=1 turbo run build --filter=@ronde/web && node scripts/check-pure-ce.mjs"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.4",
+    "@biomejs/biome": "^2.6.8",
     "semantic-release": "^24.2.9",
     "semantic-release-gitmoji": "^1.6.9",
-    "turbo": "^2.5.8",
+    "turbo": "^2.11.13",
     "vite": "^8.3.3"
   }
 }

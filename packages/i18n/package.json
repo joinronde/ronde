@@ -15,12 +15,12 @@
     "generate": "node scripts/generate.mjs"
   },
   "dependencies": {
-    "next-intl": "^4.4.0"
+    "next-intl": "^4.15.3"
   },
   "devDependencies": {
-    "@formatjs/icu-messageformat-parser": "^3.5.20",
+    "@formatjs/icu-messageformat-parser": "^3.5.23",
     "@ronde/config": "workspace:*",
     "typescript": "~5.9.3",
-    "vitest": "^5.0.2"
+    "vitest": "^5.1.1"
   }
 }
