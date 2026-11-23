@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@dicebear/collection": "^9.4.3",
-    "@dicebear/core": "^9.4.3",
+    "@dicebear/core": "^10.7.0",
     "@ronde/core": "workspace:*",
     "@tiptap/extension-table": "3.34.0",
     "@tiptap/extensions": "3.34.0",
