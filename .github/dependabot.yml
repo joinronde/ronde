@@ -27,6 +27,13 @@ updates:
         versions: [">=8.0.0-0"]
       - dependency-name: "@prisma/*"
         versions: [">=8.0.0-0"]
+      # The Node types follow the lowest Node version supported ("engines": >=22.12): newer ones would accept APIs
+      # missing at run time
+      - dependency-name: "@types/node"
+        versions: [">=23.0.0"]
+      # semantic-release 26 needs a newer Node than the one Dependabot runs: its update fails every week
+      - dependency-name: semantic-release
+        update-types: ["version-update:semver-major"]
     groups:
       security:
         applies-to: security-updates
