@@ -12,8 +12,9 @@ ARG NODE_IMAGE=node:26.13.1-alpine3.23
 ############################
 FROM ${NODE_IMAGE} AS deps
 WORKDIR /repo
-RUN corepack enable
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json .npmrc ./
+# Node 25 and later no longer bundle corepack: pnpm is installed with npm, at the version of "packageManager"
+RUN npm install -g --no-fund --no-audit "$(node -p "require('./package.json').packageManager")"
 COPY apps/web/package.json apps/web/package.json
 COPY packages ./packages
 COPY ee/package.json ee/package.json
