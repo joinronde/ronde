@@ -1,7 +1,7 @@
 import "server-only";
 import { prisma } from "@ronde/db";
 import { type Locale, resolveLocale, translator } from "@ronde/i18n";
-import webpush from "web-push";
+import * as webpush from "web-push";
 import { env } from "./env";
 import { publicUrl } from "./public-url";
 

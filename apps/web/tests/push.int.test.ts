@@ -10,13 +10,11 @@ import { type Fixture, meeting, workspace } from "./fixtures";
 const sent: { endpoint: string; payload: { title: string; body: string; url: string; tag?: string } }[] = [];
 let failWith: number | null = null;
 vi.mock("web-push", () => ({
-  default: {
-    setVapidDetails: () => undefined,
-    sendNotification: async (sub: { endpoint: string }, payload: string) => {
-      if (failWith) throw Object.assign(new Error("gone"), { statusCode: failWith });
-      sent.push({ endpoint: sub.endpoint, payload: JSON.parse(payload) });
-      return { statusCode: 201 };
-    },
+  setVapidDetails: () => undefined,
+  sendNotification: async (sub: { endpoint: string }, payload: string) => {
+    if (failWith) throw Object.assign(new Error("gone"), { statusCode: failWith });
+    sent.push({ endpoint: sub.endpoint, payload: JSON.parse(payload) });
+    return { statusCode: 201 };
   },
 }));
 

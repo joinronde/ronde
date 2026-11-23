@@ -70,12 +70,10 @@ vi.mock("imapflow", () => ({
 }));
 const pushed = vi.hoisted(() => [] as { endpoint: string; payload: { url: string } }[]);
 vi.mock("web-push", () => ({
-  default: {
-    setVapidDetails: () => undefined,
-    sendNotification: async (sub: { endpoint: string }, payload: string) => {
-      pushed.push({ endpoint: sub.endpoint, payload: JSON.parse(payload) });
-      return { statusCode: 201 };
-    },
+  setVapidDetails: () => undefined,
+  sendNotification: async (sub: { endpoint: string }, payload: string) => {
+    pushed.push({ endpoint: sub.endpoint, payload: JSON.parse(payload) });
+    return { statusCode: 201 };
   },
 }));
 const mails = vi.hoisted(() => [] as { to: string; subject: string }[]);
