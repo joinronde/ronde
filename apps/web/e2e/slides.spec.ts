@@ -22,8 +22,8 @@ test("irritants raised before the meeting, dealt with right after the intro", as
   // A slide goes right after the intro, where irritants are best raised
   await page.goto(`${meeting}/settings#agenda`);
   await page.getByRole("button", { name: "Add a block" }).click();
-  await expect(page.getByRole("button", { name: /^Slide/ })).toContainText("pain points");
-  await page.getByRole("button", { name: /^Slide/ }).click();
+  await expect(page.getByRole("button", { name: /^Slide(?!s)/ })).toContainText("pain points");
+  await page.getByRole("button", { name: /^Slide(?!s)/ }).click();
   const rows = page.locator(".agenda-blocks > li");
   await expect(rows.nth(0)).toContainText("Intro");
   await expect(rows.nth(1).getByLabel("Slide title")).toHaveValue("Pain points");
