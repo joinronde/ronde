@@ -76,7 +76,7 @@
     "ldapjs": "3.0.7",
     "sharp": "0.35.5",
     "tsx": "^4.23.15",
-    "typescript": "~5.9.3",
+    "typescript": "~7.0.2",
     "vitest": "^5.1.1"
   }
 }

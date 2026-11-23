@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@ronde/config": "workspace:*",
-    "typescript": "~5.9.3",
+    "typescript": "~7.0.2",
     "vitest": "^5.1.1",
     "dotenv": "^18.0.10",
     "pg": "^8.23.0",

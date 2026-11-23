@@ -20,7 +20,7 @@
   "devDependencies": {
     "@formatjs/icu-messageformat-parser": "^3.5.23",
     "@ronde/config": "workspace:*",
-    "typescript": "~5.9.3",
+    "typescript": "~7.0.2",
     "vitest": "^5.1.1"
   }
 }
